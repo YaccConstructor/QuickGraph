@@ -15,10 +15,10 @@ namespace QuickGraph
         IMutableVertexAndEdgeListGraph<Vertex, Edge>
         where Edge : IEdge<Vertex>
     {
-        private bool isDirected = true;
-        private bool allowParallelEdges;
-        private VertexEdgeDictionary vertexOutEdges = new VertexEdgeDictionary();
-        private VertexEdgeDictionary vertexInEdges = new VertexEdgeDictionary();
+        private readonly bool isDirected = true;
+        private readonly bool allowParallelEdges;
+        private readonly VertexEdgeDictionary vertexOutEdges = new VertexEdgeDictionary();
+        private readonly VertexEdgeDictionary vertexInEdges = new VertexEdgeDictionary();
         private int edgeCount = 0;
         private int edgeCapacity = -1;
 

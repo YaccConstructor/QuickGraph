@@ -7,7 +7,7 @@ namespace QuickGraph
         IBidirectionalGraph<Vertex,ReversedEdge<Vertex,Edge>>
         where Edge : IEdge<Vertex>
     {
-        private IBidirectionalGraph<Vertex,Edge> originalGraph;
+        private readonly IBidirectionalGraph<Vertex,Edge> originalGraph;
         public ReversedBidirectionalGraph(IBidirectionalGraph<Vertex,Edge> originalGraph)
         {
             if (originalGraph==null)

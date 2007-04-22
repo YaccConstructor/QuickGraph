@@ -4,7 +4,8 @@ using System.Text;
 
 namespace QuickGraph
 {
-    public interface IHierarchy<Vertex,Edge> : IMutableVertexAndEdgeListGraph<Vertex,Edge>
+    public interface IHierarchy<Vertex,Edge> : 
+        IMutableVertexAndEdgeListGraph<Vertex,Edge>
         where Edge : IEdge<Vertex>
     {
         /// <summary>

@@ -5,8 +5,8 @@ namespace QuickGraph
     [Serializable]
     public class Edge<Vertex> : IEdge<Vertex>
     {
-        private Vertex source;
-        private Vertex target;
+        private readonly Vertex source;
+        private readonly Vertex target;
 
         public Edge(Vertex source, Vertex target)
         {

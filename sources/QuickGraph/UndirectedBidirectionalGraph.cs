@@ -9,7 +9,7 @@ namespace QuickGraph
         IUndirectedGraph<Vertex,Edge>
         where Edge : IEdge<Vertex>
     {
-        private IBidirectionalGraph<Vertex, Edge> visitedGraph;
+        private readonly IBidirectionalGraph<Vertex, Edge> visitedGraph;
 
         public UndirectedBidirectionalGraph(IBidirectionalGraph<Vertex, Edge> visitedGraph)
         {

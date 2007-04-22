@@ -7,8 +7,8 @@ namespace QuickGraph
         IMutableUndirectedGraph<Vertex,Edge>
         where Edge : IEdge<Vertex>
     {
-        private bool allowParallelEdges = true;
-        private Dictionary<Vertex, IList<Edge> > adjacentEdges = new Dictionary<Vertex, IList<Edge>>();
+        private readonly bool allowParallelEdges = true;
+        private readonly Dictionary<Vertex, IList<Edge> > adjacentEdges = new Dictionary<Vertex, IList<Edge>>();
         private int edgeCount = 0;
 
         public UndirectedGraph()
@@ -16,7 +16,9 @@ namespace QuickGraph
         {}
 
         public UndirectedGraph(bool allowParallelEdges)
-        { }
+        {
+            this.allowParallelEdges = allowParallelEdges;
+        }
     
         #region IGraph<Vertex,Edge> Members
         public bool  IsDirected

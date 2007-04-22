@@ -8,9 +8,9 @@ namespace QuickGraph
         IMutableEdgeListGraph<int, Edge>
         where Edge : IEdge<int>
     {
-        private int vertexCount;
+        private readonly int vertexCount;
         private int edgeCount;
-        private Edge[,] edges;
+        private readonly Edge[,] edges;
 
         public BidirectionalMatrixGraph(int vertexCount)
         {

@@ -9,12 +9,22 @@ namespace QuickGraph
         IMutableEdgeListGraph<Vertex,Edge>
         where Edge : IEdge<Vertex>
     {
-        private bool isDirected = true;
-        private bool allowParralelEdges = true;
-        private IDictionary<Edge, Edge> edges = new Dictionary<Edge, Edge>();
+        private readonly bool isDirected = true;
+        private readonly bool allowParralelEdges = true;
+        private readonly EdgeEdgeDictionary edges = new EdgeEdgeDictionary();
+
+        [Serializable]
+        public class EdgeEdgeDictionary : Dictionary<Edge, Edge>
+        { }
 
         public EdgeListGraph()
         {}
+
+        public EdgeListGraph(bool isDirected, bool allowParralelEdges)
+        {
+            this.isDirected = isDirected;
+            this.allowParralelEdges = allowParralelEdges;
+        }
 
         public bool IsEdgesEmpty
         {
@@ -40,7 +50,6 @@ namespace QuickGraph
             }
         }
 
-
         public bool ContainsEdge(Edge edge)
         {
             return this.edges.ContainsKey(edge);
@@ -52,10 +61,6 @@ namespace QuickGraph
             { 
                 return this.isDirected;
             }
-            set 
-            {
-                this.isDirected = value;
-            }
         }
 
         public bool AllowParallelEdges
@@ -63,10 +68,6 @@ namespace QuickGraph
             get 
             { 
                 return this.allowParralelEdges;
-            }
-            set 
-            {
-                this.allowParralelEdges = value;
             }
         }
 

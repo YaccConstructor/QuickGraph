@@ -5,7 +5,7 @@ namespace QuickGraph
     public sealed class ReversedEdge<Vertex,Edge> : IEdge<Vertex>
         where Edge : IEdge<Vertex>
     {
-        private Edge originalEdge;
+        private readonly Edge originalEdge;
         public ReversedEdge(Edge originalEdge)
         {
             if (originalEdge == null)
