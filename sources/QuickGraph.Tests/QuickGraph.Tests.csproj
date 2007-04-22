@@ -1,0 +1,106 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QuickGraph.Tests</RootNamespace>
+    <AssemblyName>QuickGraph.Tests</AssemblyName>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MbUnit.Framework, Version=1.0.2462.37122, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5" />
+    <Reference Include="MbUnit.Framework.1.1, Version=1.0.2462.37126, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdjacencyGraphFactory.cs" />
+    <Compile Include="Algorithms\CentralityApproximationAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Condensation\WeaklyConnectedCondensationGraphTest.cs" />
+    <Compile Include="Algorithms\DoubleDenseMatrixFactory.cs" />
+    <Compile Include="Algorithms\DoubleDenseMatrixTest.cs" />
+    <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Layout\BreasdthFirstSearchRandomLayoutAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Layout\GdiGraphLayoutRendererTest.cs" />
+    <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTest.cs" />
+    <Compile Include="Algorithms\MaximumFlow\MaximumFlowAlgorithmTest.cs" />
+    <Compile Include="Algorithms\MinimumSpanningTree\PrimMinimumSpanningTreeAlgorithmTest.cs" />
+    <Compile Include="Algorithms\RandomWalks\CyclePoppingRandomTreeAlgorithmTest.cs" />
+    <Compile Include="Algorithms\RandomWalks\EdgeChainFactory.cs" />
+    <Compile Include="Algorithms\RandomWalks\EdgeChainTest.cs" />
+    <Compile Include="Algorithms\RandomWalks\RandomWalkAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Search\BidirectionalDepthFirstSearchAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Search\BreadthFirstSearchAlgirthmTest.cs" />
+    <Compile Include="Algorithms\Search\DepthFirstSearchAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Search\UndirectedBreathFirstSearchAlgorithmTest.cs" />
+    <Compile Include="Algorithms\ShortestPath\DagShortestPathAlgorithmTest.cs" />
+    <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest.cs" />
+    <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest2.cs" />
+    <Compile Include="Algorithms\SourceFirstTopologicalSortAlgorithmTest.cs" />
+    <Compile Include="Algorithms\StronglyConnectedComponentsAlgorithmTest.cs" />
+    <Compile Include="Algorithms\TopologicalSortAlgorithmTest.cs" />
+    <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
+    <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />
+    <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithmTest.cs" />
+    <Compile Include="BidirectionalGraphFactory.cs" />
+    <Compile Include="BidirectionalMatrixGraphFactory.cs" />
+    <Compile Include="EdgeListGraphFactory.cs" />
+    <Compile Include="EdgeListGraphTest.cs" />
+    <Compile Include="FactoryCompilerTest.cs" />
+    <Compile Include="GraphConsoleSerializer.cs" />
+    <Compile Include="GraphFactory.cs" />
+    <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\GraphMLSerializerTest.cs" />
+    <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest.cs" />
+    <Compile Include="UndirectedGraphFactory.cs" />
+    <Compile Include="UndirectedGraphTest.cs" />
+    <Compile Include="VertexListGraphTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuickGraph.Glee\QuickGraph.Glee.csproj">
+      <Project>{ACDD0973-E5D9-4C2B-9EAF-B5B5DF44EDDD}</Project>
+      <Name>QuickGraph.Glee</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
+      <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
+      <Name>QuickGraph</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
