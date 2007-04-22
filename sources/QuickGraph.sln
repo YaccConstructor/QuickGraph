@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Tests", "QuickGr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Unit", "QuickGraph.Unit\QuickGraph.Unit.csproj", "{9FF2B839-743F-4A15-9D33-F11253BF6AE1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{6EC5788D-DB36-4094-AB0F-A9E2C0F56B62}"
+	ProjectSection(SolutionItems) = preProject
+		ccnet.config.xml = ccnet.config.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 5
