@@ -32,14 +32,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MbUnit.Framework, Version=1.0.2462.37122, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5" />
-    <Reference Include="MbUnit.Framework.1.1, Version=1.0.2462.37126, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\version.cs">
+      <Link>Properties\version.cs</Link>
+    </Compile>
     <Compile Include="AdjacencyGraphFactory.cs" />
     <Compile Include="Algorithms\CentralityApproximationAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />
@@ -89,6 +90,10 @@
     <ProjectReference Include="..\QuickGraph.Glee\QuickGraph.Glee.csproj">
       <Project>{ACDD0973-E5D9-4C2B-9EAF-B5B5DF44EDDD}</Project>
       <Name>QuickGraph.Glee</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuickGraph.Unit\QuickGraph.Unit.csproj">
+      <Project>{9FF2B839-743F-4A15-9D33-F11253BF6AE1}</Project>
+      <Name>QuickGraph.Unit</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
       <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>

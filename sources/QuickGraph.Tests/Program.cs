@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MbUnit.Core;
+using QuickGraph.Unit;
 
 namespace QuickGraph.Tests
 {
@@ -9,13 +9,7 @@ namespace QuickGraph.Tests
     {
         static int Main(string[] args)
         {
-            using (AutoRunner runner = new AutoRunner())
-            {
-                runner.Load();
-                runner.Run();
-                runner.ReportToHtml();
-                return runner.ExitCode;
-            }
+            return TestRunner.TestMain(args);
         }
     }
 }

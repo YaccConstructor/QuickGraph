@@ -1,4 +1,4 @@
-﻿namespace QuickGraph
+﻿namespace QuickGraph.Collections
 {
     using System;
     using System.Collections.Generic;
