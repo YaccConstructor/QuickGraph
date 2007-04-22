@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Algorithms.RandomWalks

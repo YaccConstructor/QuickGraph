@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Algorithms.MinimumSpanningTree
 {
     [TypeFixture(typeof(IUndirectedGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(UndirectedGraphFactory), typeof(IUndirectedGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(UndirectedGraphFactory))]
     public class PrimMinimumSpanningTreeAlgorithmTest
     {
         [Test]

@@ -1,10 +1,11 @@
 using System;
-using MbUnit.Framework;
+using QuickGraph.Unit;
+using QuickGraph.Algorithms.Matrix;
 
 namespace QuickGraph.Algorithms
 {
     [TypeFixture(typeof(DoubleDenseMatrix))]
-    [ProviderFactory(typeof(DoubleDenseMatrixFactory), typeof(DoubleDenseMatrix))]
+    [TypeFactory(typeof(DoubleDenseMatrixFactory))]
     public sealed class DoubleDenseMatrixTest
     {
         [Test]

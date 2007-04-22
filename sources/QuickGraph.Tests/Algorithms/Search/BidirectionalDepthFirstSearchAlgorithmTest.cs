@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 namespace QuickGraph.Algorithms.Search
 {
     [TypeFixture(typeof(IBidirectionalGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(BidirectionalGraphFactory), typeof(IBidirectionalGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(BidirectionalGraphFactory))]
     public class BidirectionalDepthFirstSearchAlgorithmTest
     {
         private BidirectionalDepthFirstSearchAlgorithm<string, Edge<string>> dfs;

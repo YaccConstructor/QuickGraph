@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 namespace QuickGraph.Algorithms
 {
 //    [TypeFixture(typeof(IVertexAndEdgeListGraph<string,Edge<string>>))]
-//    [ProviderFactory(typeof(AdjacencyGraphFactory))]
-//    [ProviderFactory(typeof(BidirectionalGraphFactory))]
+//    [TypeFactory(typeof(AdjacencyGraphFactory))]
+//    [TypeFactory(typeof(BidirectionalGraphFactory))]
     public class EulerianTrailAlgorithmTest
     {
         [Test]
@@ -48,7 +48,7 @@ namespace QuickGraph.Algorithms
                 edgeColors.Add(edge, GraphColor.White);
             foreach (ICollection<Edge<string>> t in trails)
                 foreach (Edge<string> edge in t)
-                    CollectionAssert.Contains(edgeColors, edge);
+                    CollectionAssert.ContainsKey(edgeColors, edge);
 
         }
     }

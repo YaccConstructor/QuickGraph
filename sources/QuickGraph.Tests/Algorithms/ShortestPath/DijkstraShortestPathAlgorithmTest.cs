@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 using QuickGraph.Collections;
 using QuickGraph.Predicates;
@@ -53,9 +53,9 @@ namespace QuickGraph.Algorithms.ShortestPath
             DijkstraShortestPathAlgorithm<int, Edge<int>> dij = new DijkstraShortestPathAlgorithm<int, Edge<int>>(g, weights);
             dij.Compute(1);
 
-            Assert.AreEqual(0, dij.Distances[1], 0.0001);
-            Assert.AreEqual(1, dij.Distances[2], 0.0001);
-            Assert.AreEqual(2, dij.Distances[3], 0.0001);
+            Assert.AreEqual<double>(0, dij.Distances[1]);
+            Assert.AreEqual<double>(1, dij.Distances[2]);
+            Assert.AreEqual<double>(2, dij.Distances[3]);
         }
 
         [Test]

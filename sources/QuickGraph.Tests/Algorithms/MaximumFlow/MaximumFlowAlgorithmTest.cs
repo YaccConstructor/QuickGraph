@@ -4,7 +4,7 @@ using QuickGraph.Collections;
 using QuickGraph.Predicates;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.Search;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {

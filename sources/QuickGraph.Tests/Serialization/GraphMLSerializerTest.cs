@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 namespace QuickGraph.Serialization
 {
@@ -26,7 +26,9 @@ namespace QuickGraph.Serialization
             {
                 serializer.Serialize(writer, g);
                 baseLine = writer.ToString();
+                TestConsole.WriteLineBold("Original graph:");
                 Console.WriteLine(writer.ToString());
+                TestConsole.WriteLineBold("---");
 
                 using (XmlTextReader reader = new XmlTextReader(new StringReader(writer.ToString())))
                 {
@@ -39,6 +41,7 @@ namespace QuickGraph.Serialization
                 }
             }
 
+            TestConsole.WriteLineBold("Roundtripped graph:");
             using (StringWriter sw = new StringWriter())
             {
                 serializer.Serialize(sw, gd);
@@ -48,9 +51,10 @@ namespace QuickGraph.Serialization
 
             Assert.AreEqual(g.VertexCount, gd.VertexCount);
             Assert.AreEqual(g.EdgeCount, gd.EdgeCount);
-            StringAssert.AreEqualIgnoreCase(
+            StringAssert.AreEqual(
                 baseLine,
-                output
+                output,
+                StringComparison.InvariantCulture
                 );
         }
     }

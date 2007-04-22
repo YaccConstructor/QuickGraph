@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 namespace QuickGraph.Algorithms.Search
 {
     [TypeFixture(typeof(IUndirectedGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(UndirectedGraphFactory), typeof(IUndirectedGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(UndirectedGraphFactory))]
     public class UndirectedBreadthFirstAlgorithmSearchTest
     {
         private IDictionary<string, string> parents;

@@ -2,15 +2,15 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 using QuickGraph.Algorithms.Condensation;
 
 namespace QuickGraph.Algorithms.Condensation
 {
     [TypeFixture(typeof(IMutableVertexAndEdgeListGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(AdjacencyGraphFactory), typeof(IMutableVertexAndEdgeListGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(BidirectionalGraphFactory), typeof(IMutableVertexAndEdgeListGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(AdjacencyGraphFactory))]
+    [TypeFactory(typeof(BidirectionalGraphFactory))]
     public class WeaklyConnectedCondensationGraphAlgorithmTest
     {
         private CondensationGraphAlgorithm<string, Edge<string>, AdjacencyGraph<string, Edge<string>>> algo;

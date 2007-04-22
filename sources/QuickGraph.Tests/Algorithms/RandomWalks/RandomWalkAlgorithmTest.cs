@@ -1,13 +1,13 @@
 ﻿using System;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
     [TypeFixture(typeof(IVertexListGraph<string,Edge<string>>))]
-    [ProviderFactory(typeof(AdjacencyGraphFactory), typeof(IVertexListGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(BidirectionalGraphFactory), typeof(IVertexListGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(AdjacencyGraphFactory))]
+    [TypeFactory(typeof(BidirectionalGraphFactory))]
     public class RandomWalkAlgorithmTest
     {
         [Test]

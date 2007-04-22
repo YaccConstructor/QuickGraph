@@ -1,12 +1,12 @@
 ﻿using System;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 namespace QuickGraph
 {
     [TypeFixture(typeof(IVertexListGraph<string,Edge<string>>))]
-    [ProviderFactory(typeof(AdjacencyGraphFactory), typeof(IVertexListGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(BidirectionalGraphFactory), typeof(IVertexListGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(UndirectedGraphFactory), typeof(IVertexListGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(AdjacencyGraphFactory))]
+    [TypeFactory(typeof(BidirectionalGraphFactory))]
+    [TypeFactory(typeof(UndirectedGraphFactory))]
     public class VertexListGraphTest
     {
         [Test]

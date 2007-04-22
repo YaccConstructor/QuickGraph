@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
     [TypeFixture(typeof(IVertexAndEdgeListGraph<string,Edge<string>>))]
-    [ProviderFactory(typeof(AdjacencyGraphFactory), typeof(IVertexAndEdgeListGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(BidirectionalGraphFactory), typeof(IVertexAndEdgeListGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(AdjacencyGraphFactory))]
+    [TypeFactory(typeof(BidirectionalGraphFactory))]
     public class DijkstraShortestPathAlgorithmTest2
     {
         [Test]

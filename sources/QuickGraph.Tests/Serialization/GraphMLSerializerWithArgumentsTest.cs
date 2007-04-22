@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 namespace QuickGraph.Serialization
 {
@@ -181,9 +181,7 @@ namespace QuickGraph.Serialization
                 serializer.Serialize(writer, g);
                 String xml = writer.ToString();
                 Console.WriteLine(xml);
-                using(XmlReader reader = XmlReader.Create(new StringReader(xml)))
-                    while (reader.Read())
-                    { }
+                XmlAssert.IsWellFormedXml(xml);
             }
         }
 

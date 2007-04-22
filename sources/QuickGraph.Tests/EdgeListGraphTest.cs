@@ -1,12 +1,12 @@
 ﻿using System;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 namespace QuickGraph
 {
     [TypeFixture(typeof(IEdgeListGraph<string,Edge<string>>))]
-    [ProviderFactory(typeof(AdjacencyGraphFactory), typeof(IEdgeListGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(BidirectionalGraphFactory), typeof(IEdgeListGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(UndirectedGraphFactory), typeof(IEdgeListGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(AdjacencyGraphFactory))]
+    [TypeFactory(typeof(BidirectionalGraphFactory))]
+    [TypeFactory(typeof(UndirectedGraphFactory))]
     public class EdgeListGraphTest
     {
         [Test]

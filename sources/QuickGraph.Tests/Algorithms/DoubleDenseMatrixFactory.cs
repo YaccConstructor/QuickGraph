@@ -1,5 +1,6 @@
 using System;
-using MbUnit.Framework;
+using QuickGraph.Unit;
+using QuickGraph.Algorithms.Matrix;
 
 namespace QuickGraph.Algorithms
 {

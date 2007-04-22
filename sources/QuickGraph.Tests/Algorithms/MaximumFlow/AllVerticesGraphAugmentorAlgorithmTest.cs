@@ -1,11 +1,11 @@
 ﻿using System;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
     [TypeFixture(typeof(IMutableVertexAndEdgeListGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(AdjacencyGraphFactory), typeof(IMutableVertexAndEdgeListGraph<string, Edge<string>>))]
-    [ProviderFactory(typeof(BidirectionalGraphFactory), typeof(IMutableVertexAndEdgeListGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(AdjacencyGraphFactory))]
+    [TypeFactory(typeof(BidirectionalGraphFactory))]
     public class AllVerticesGraphAugmentorAlgorithmTest
     {
         private AllVerticesGraphAugmentorAlgorithm<string, Edge<string>> augmentor;

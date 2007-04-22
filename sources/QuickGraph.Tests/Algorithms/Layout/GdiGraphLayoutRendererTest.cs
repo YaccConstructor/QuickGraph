@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 namespace QuickGraph.Algorithms.Layout
 {
     [TypeFixture(typeof(IVertexAndEdgeListGraph<string,Edge<string>>))]
-    [ProviderFactory(typeof(AdjacencyGraphFactory), typeof(IVertexAndEdgeListGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(AdjacencyGraphFactory))]
     public class GdiGraphLayoutRendererTest
     {
         private static int imageCount;
@@ -48,7 +48,7 @@ namespace QuickGraph.Algorithms.Layout
 
                 string output = string.Format("layout_{0:0000}.png", imageCount++);
                 image.Save(output);
-                Console.WriteLine(new Uri(output).AbsoluteUri);
+                TestConsole.WriteImage(Path.GetFullPath(output));
             }
         }
     }

@@ -1,5 +1,5 @@
 using System;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 
 namespace QuickGraph
 {

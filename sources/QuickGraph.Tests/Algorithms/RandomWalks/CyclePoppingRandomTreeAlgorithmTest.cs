@@ -1,5 +1,5 @@
 ﻿using System;
-using MbUnit.Framework;
+using QuickGraph.Unit;
 using QuickGraph.Algorithms.RandomWalks;
 
 namespace QuickGraph.Algorithms.RandomWalks
