@@ -13,9 +13,9 @@ namespace QuickGraph
         IMutableVertexAndEdgeListGraph<Vertex,Edge>
         where Edge : IEdge<Vertex>
     {
-        private bool isDirected = true;
-        private bool allowParallelEdges;
-        private VertexEdgeDictionary vertexEdges;
+        private readonly bool isDirected = true;
+        private readonly bool allowParallelEdges;
+        private readonly VertexEdgeDictionary vertexEdges;
         private int edgeCount = 0;
         private int edgeCapacity = -1;
 
@@ -103,11 +103,21 @@ namespace QuickGraph
             return this.vertexEdges[v][index];
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is edges empty.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance is edges empty; otherwise, <c>false</c>.
+        /// </value>
         public bool IsEdgesEmpty
         {
             get { return this.edgeCount == 0; }
         }
 
+        /// <summary>
+        /// Gets the edge count.
+        /// </summary>
+        /// <value>The edge count.</value>
         public int EdgeCount
         {
             get 
@@ -117,6 +127,10 @@ namespace QuickGraph
             }
         }
 
+        /// <summary>
+        /// Gets the edges.
+        /// </summary>
+        /// <value>The edges.</value>
         public IEnumerable<Edge> Edges
         {
             get
@@ -295,7 +309,7 @@ namespace QuickGraph
         }
 
         [Serializable]
-        private sealed class VertexList : List<Vertex>
+        public sealed class VertexList : List<Vertex>
         {
             public VertexList() { }
             public VertexList(int capacity)
@@ -303,7 +317,7 @@ namespace QuickGraph
         }
 
         [Serializable]
-        private sealed class EdgeList : List<Edge>
+        public sealed class EdgeList : List<Edge>
         {
             public EdgeList() { }
             public EdgeList(int capacity)
@@ -312,7 +326,7 @@ namespace QuickGraph
         }
 
         [Serializable]
-        private sealed class VertexEdgeDictionary : Dictionary<Vertex, EdgeList>
+        public sealed class VertexEdgeDictionary : Dictionary<Vertex, EdgeList>
         {
             public VertexEdgeDictionary() { }
             public VertexEdgeDictionary(int capacity)

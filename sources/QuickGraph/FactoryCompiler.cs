@@ -13,27 +13,27 @@ namespace QuickGraph
 
         private static void CreateAssembly()
         {
-                if (assembly == null)
-                {
-                    assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(
-                        new AssemblyName("QuickGraph.FactoryCompilers"),
-                        AssemblyBuilderAccess.Run
-                        );
-                    module = assembly.DefineDynamicModule("QuickGraph.FactoryCompilers");
-                }
+            if (assembly == null)
+            {
+                assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(
+                    new AssemblyName("QuickGraph.FactoryCompilers"),
+                    AssemblyBuilderAccess.Run
+                    );
+                module = assembly.DefineDynamicModule("QuickGraph.FactoryCompilers");
+            }
         }
 
         private static string GetVertexFactoryName(Type factoredType)
         {
             return string.Format(
-                "{0}VertexFactory",factoredType.MetadataToken
+                "{0}VertexFactory", factoredType.MetadataToken
                 );
         }
 
         private static string GetEdgeFactoryName(Type vertexType, Type edgeType)
         {
             return string.Format(
-                "{0}{1}EdgeFactory",vertexType.MetadataToken, edgeType.MetadataToken);
+                "{0}{1}EdgeFactory", vertexType.MetadataToken, edgeType.MetadataToken);
         }
 
         public static IVertexFactory<Vertex> GetVertexFactory<Vertex>()
@@ -43,10 +43,10 @@ namespace QuickGraph
 
         private static Type GetVertexFactoryType<Vertex>()
         {
-            lock(syncRoot)
+            lock (syncRoot)
             {
                 CreateAssembly();
-                Type factoryType = assembly.GetType(GetVertexFactoryName(typeof(Vertex)),false);
+                Type factoryType = assembly.GetType(GetVertexFactoryName(typeof(Vertex)), false);
                 if (factoryType != null)
                     return factoryType;
 
@@ -70,24 +70,24 @@ namespace QuickGraph
                 ILGenerator gen = createVertex.GetILGenerator();
                 gen.Emit(OpCodes.Newobj, constructor);
                 gen.Emit(OpCodes.Ret);
-                factoryType=type.CreateType();
+                factoryType = type.CreateType();
                 return factoryType;
             }
         }
 
-        public static IEdgeFactory<Vertex,Edge> GetEdgeFactory<Vertex,Edge>()
+        public static IEdgeFactory<Vertex, Edge> GetEdgeFactory<Vertex, Edge>()
             where Edge : IEdge<Vertex>
         {
             return (IEdgeFactory<Vertex, Edge>)Activator.CreateInstance(GetEdgeFactoryType<Vertex, Edge>());
         }
 
-        private static Type GetEdgeFactoryType<Vertex,Edge>()
-            where Edge:IEdge<Vertex>
+        private static Type GetEdgeFactoryType<Vertex, Edge>()
+            where Edge : IEdge<Vertex>
         {
             lock (syncRoot)
             {
                 CreateAssembly();
-                string typeName = GetEdgeFactoryName(typeof(Vertex),typeof(Edge));
+                string typeName = GetEdgeFactoryName(typeof(Vertex), typeof(Edge));
                 Type factoryType = assembly.GetType(typeName, false);
                 if (factoryType != null)
                     return factoryType;
@@ -99,7 +99,7 @@ namespace QuickGraph
 
                 TypeBuilder type = module.DefineType(typeName,
                     TypeAttributes.Sealed | TypeAttributes.Public);
-                type.AddInterfaceImplementation(typeof(IEdgeFactory<Vertex,Edge>));
+                type.AddInterfaceImplementation(typeof(IEdgeFactory<Vertex, Edge>));
 
                 // CreateVertex method
                 MethodBuilder createEdge = type.DefineMethod(
