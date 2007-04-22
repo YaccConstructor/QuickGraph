@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-namespace QuickGraph.Algorithms
+namespace QuickGraph.Algorithms.Matrix
 {
     [Serializable]
     public sealed class DoubleDenseMatrix : ICloneable
