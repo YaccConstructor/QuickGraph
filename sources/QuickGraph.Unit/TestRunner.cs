@@ -249,7 +249,7 @@ namespace QuickGraph.Unit
                 Directory.CreateDirectory(this.report.OutputFolderName);
             TestConsole.SetReportDirectoryName(this.report.OutputFolderName);
 
-          //  this.LoadPreviousResult();
+            this.LoadPreviousResult();
         }
 
         private void LoadPreviousResult()

@@ -37,8 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Build.Framework" />
-    <Reference Include="Microsoft.Build.Utilities" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
@@ -328,6 +326,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Operations\operations.banner.png" />
     <EmbeddedResource Include="Operations\operations.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
+      <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
+      <Name>QuickGraph</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
 </Project>

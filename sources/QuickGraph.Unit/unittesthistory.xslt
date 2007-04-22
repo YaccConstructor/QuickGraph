@@ -7,7 +7,7 @@
 	<xsl:key name="machines" match="Machine" use="concat(@MachineName,concat(@FrameworkVersion,@OperatingSystem))"/>
 <xsl:template match="/MergedBatch">
 	<html>
-		<xsl:comment> saved from url=(0028)http://blog.dotnetwiki.org/ </xsl:comment>
+		<xsl:comment> saved from url=(0027)http://blog.dotnetwiki.org/ </xsl:comment>
 		<head>
                 <title>Test Summary</title>
                 <xsl:call-template name="meta-html" />

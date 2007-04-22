@@ -3,7 +3,7 @@
     <xsl:include href ="common.xslt"/>
     <xsl:template match="/TestBatch">
 		<html>
-			<xsl:comment> saved from url=(0028)http://blog.dotnetwiki.org/ </xsl:comment>
+			<xsl:comment> saved from url=(0027)http://blog.dotnetwiki.org/ </xsl:comment>
 			<head>
                 <title>
                     <xsl:value-of select="@EntryAssemblyLocation"/> Test Report

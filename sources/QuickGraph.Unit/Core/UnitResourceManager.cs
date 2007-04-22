@@ -137,6 +137,7 @@ namespace QuickGraph.Unit.Core
                     DumpImage(ui.ToString(), path);
                 DumpImage("unit", path);
                 DumpImage("unit.banner", path);
+                QuickGraphResourceManager.DumpResources(path);
             }
         }
 

@@ -23,5 +23,11 @@ namespace QuickGraph
             using (Stream stream = typeof(QuickGraphResourceManager).Assembly.GetManifestResourceStream(String.Format("QuickGraph.{0}.png", name)))
                 return Image.FromStream(stream);
         }
+
+        public static void DumpResources(string path)
+        {
+            GetLogo().Save(Path.Combine(path, "quickgraph.png"), System.Drawing.Imaging.ImageFormat.Png);
+            GetBanner().Save(Path.Combine(path, "quickgraph.banner.png"), System.Drawing.Imaging.ImageFormat.Png);
+        }
     }
 }
