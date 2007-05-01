@@ -2,16 +2,18 @@ using System;
 using System.Collections.Generic;
 using QuickGraph.Unit;
 using QuickGraph.Algorithms.Observers;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
+    [PexClass]
     [TypeFixture(typeof(IVertexAndEdgeListGraph<string,Edge<string>>))]
     [TypeFactory(typeof(AdjacencyGraphFactory))]
     [TypeFactory(typeof(BidirectionalGraphFactory))]
-    public class DijkstraShortestPathAlgorithmTest2
+    public partial class DijkstraShortestPathAlgorithmTest2
     {
-        [Test]
-        public void Compute(IVertexAndEdgeListGraph<string,Edge<string>> g)
+        [Test, PexTest]
+        public void Compute([PexAssumeIsNotNull]IVertexAndEdgeListGraph<string,Edge<string>> g)
         {
             List<string> vertices = new List<string>(g.Vertices);
             foreach (string root in vertices)

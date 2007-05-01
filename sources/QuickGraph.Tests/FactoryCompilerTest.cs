@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph
 {
-    [TestFixture]
-    public sealed class FactoryCompilerTest
+    [TestFixture, PexClass]
+    public partial class FactoryCompilerTest
     {
         public interface IFoo<T>
         {
@@ -20,7 +21,7 @@ namespace QuickGraph
             }
         }
 
-        [Test]
+        [Test, PexTest]
         public void CreateVertexFactory()
         {
             MethodInfo boo = typeof(Foo).GetMethod("Boo");
@@ -31,7 +32,7 @@ namespace QuickGraph
             Assert.IsNotNull(foo);
         }
 
-        [Test]
+        [Test, PexTest]
         public void CreateVertexFactoryTwice()
         {
             IVertexFactory<object> factory = FactoryCompiler.GetVertexFactory<object>();
@@ -42,7 +43,7 @@ namespace QuickGraph
             Assert.IsNotNull(factory2.CreateVertex());
         }
 
-        [Test]
+        [Test, PexTest]
         public void CreateEdgeFactory()
         {
             IEdgeFactory<Foo,Edge<Foo>> factory = FactoryCompiler.GetEdgeFactory<Foo,Edge<Foo>>();
@@ -56,14 +57,14 @@ namespace QuickGraph
             Assert.IsNotNull(edge.Target);
         }
 
-        [Test]
+        [Test, PexTest]
         public void CreateEdgeFactoryTwice()
         {
             CreateEdgeFactory();
             CreateEdgeFactory();
         }
 
-        [Test]
+        [Test, PexTest]
         public void CreateDifferentFactories()
         {
             FactoryCompiler.GetEdgeFactory<int, Edge<int>>();

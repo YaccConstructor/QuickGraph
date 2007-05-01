@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph
 {
-    [TypeFixture(typeof(IUndirectedGraph<string,Edge<string>>))]
+    [TypeFixture(typeof(IUndirectedGraph<string,Edge<string>>)), PexClass]
     [TypeFactory(typeof(UndirectedGraphFactory))]
-    public class UndirectedGraphTest
+    public partial class UndirectedGraphTest
     {
-        [Test]
-        public void IsAdjacentEdgesEmpty(IUndirectedGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void IsAdjacentEdgesEmpty([PexAssumeIsNotNull]IUndirectedGraph<string, Edge<string>> g)
         {
             foreach (string v in g.Vertices)
             {

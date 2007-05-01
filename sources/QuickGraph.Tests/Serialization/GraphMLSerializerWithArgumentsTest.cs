@@ -4,11 +4,12 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Serialization
 {
-    [TestFixture]
-    public sealed class GraphMLSerializerWithArgumentsTest
+    [TestFixture, PexClass]
+    public partial class GraphMLSerializerWithArgumentsTest
     {
         public sealed class TestVertex : IIdentifiable
         {
@@ -152,7 +153,7 @@ namespace QuickGraph.Serialization
         public sealed class TestAdjacencyGraph : AdjacencyGraph<TestVertex, TestEdge>
         { }
 
-        [Test]
+        [Test, PexTest]
         [Repeat(2)]
         public void WriteVertex()
         {
@@ -185,7 +186,7 @@ namespace QuickGraph.Serialization
             }
         }
 
-        [Test]
+        [Test, PexTest]
         [Repeat(2)]
         public void WriteEdge()
         {

@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms
 {
-    [TypeFixture(typeof(IUndirectedGraph<string, Edge<string>>))]
+    [TypeFixture(typeof(IUndirectedGraph<string, Edge<string>>)), PexClass]
     [TypeFactory(typeof(UndirectedGraphFactory))]
-    public class UndirectedTopologicalSortAlgorithmTest
+    public partial class UndirectedTopologicalSortAlgorithmTest
     {
-        [Test]
-        public void Compute(IUndirectedGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void Compute([PexAssumeIsNotNull]IUndirectedGraph<string, Edge<string>> g)
         {
             UndirectedTopologicalSortAlgorithm<string, Edge<string>> topo =
                 new UndirectedTopologicalSortAlgorithm<string, Edge<string>>(g);

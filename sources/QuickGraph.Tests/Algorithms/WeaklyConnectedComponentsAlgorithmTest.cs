@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms
 {
-    [TypeFixture(typeof(IVertexListGraph<string,Edge<string>>))]
+    [TypeFixture(typeof(IVertexListGraph<string,Edge<string>>)), PexClass]
     [TypeFactory(typeof(AdjacencyGraphFactory))]
     [TypeFactory(typeof(BidirectionalGraphFactory))]
-    public sealed class WeaklyConnectedComponentsAlgorithmTest
+    public partial class WeaklyConnectedComponentsAlgorithmTest
     {
-        [Test]
-        public void Compute(IVertexListGraph<string,Edge<string>> g)
+        [Test, PexTest]
+        public void Compute([PexAssumeIsNotNull]IVertexListGraph<string, Edge<string>> g)
         {
             GraphConsoleSerializer.DisplayGraph(g);
 

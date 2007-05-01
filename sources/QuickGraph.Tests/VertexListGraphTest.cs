@@ -1,22 +1,23 @@
 ﻿using System;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph
 {
-    [TypeFixture(typeof(IVertexListGraph<string,Edge<string>>))]
+    [TypeFixture(typeof(IVertexListGraph<string,Edge<string>>)), PexClass]
     [TypeFactory(typeof(AdjacencyGraphFactory))]
     [TypeFactory(typeof(BidirectionalGraphFactory))]
     [TypeFactory(typeof(UndirectedGraphFactory))]
-    public class VertexListGraphTest
+    public partial class VertexListGraphTest
     {
-        [Test]
-        public void Count(IVertexListGraph<string,Edge<string>> g)
+        [Test, PexTest]
+        public void Count([PexAssumeIsNotNull]IVertexListGraph<string,Edge<string>> g)
         {
             int n = g.VertexCount;
         }
 
-        [Test]
-        public void Iteration(IVertexListGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void Iteration([PexAssumeIsNotNull]IVertexListGraph<string, Edge<string>> g)
         {
             int n = g.VertexCount;
             int i = 0;

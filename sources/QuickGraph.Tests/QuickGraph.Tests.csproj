@@ -32,6 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Pex.Framework, Version=1.1.20426.0, Culture=neutral, PublicKeyToken=a27a9e8bc1ade8b4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\depots\pex\bin\debug\Microsoft.Pex.Framework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -44,9 +49,48 @@
     <Compile Include="AdjacencyGraphFactory.cs" />
     <Compile Include="Algorithms\CentralityApproximationAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest_CondensateAndCheckComponentCount_70430_084748_2.cs">
+      <DependentUpon>StronglyConnectedCondensationGraphAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest_CondensateAndCheckDAG_70430_084750_3.cs">
+      <DependentUpon>StronglyConnectedCondensationGraphAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest_CondensateAndCheckEdgeCount_70430_084745_1.cs">
+      <DependentUpon>StronglyConnectedCondensationGraphAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest_CondensateAndCheckVertexCount_70430_084604_1.cs">
+      <DependentUpon>StronglyConnectedCondensationGraphAlgorithmTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Algorithms\Condensation\WeaklyConnectedCondensationGraphTest.cs" />
     <Compile Include="Algorithms\DoubleDenseMatrixFactory.cs" />
     <Compile Include="Algorithms\DoubleDenseMatrixTest.cs" />
+    <Compile Include="Algorithms\DoubleDenseMatrixTest_SelfSimilarity_70429_223801_6.cs">
+      <DependentUpon>DoubleDenseMatrixTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\DoubleDenseMatrixTest_SelfSimilarity_70429_224209_7.cs">
+      <DependentUpon>DoubleDenseMatrixTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\DoubleDenseMatrixTest_SelfSimilarity_70429_230700_8.cs">
+      <DependentUpon>DoubleDenseMatrixTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\DoubleDenseMatrixTest_ToString_70429_214620_1.cs">
+      <DependentUpon>DoubleDenseMatrixTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\DoubleDenseMatrixTest_WriteMatrix_70429_214056_1.cs">
+      <DependentUpon>DoubleDenseMatrixTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\DoubleDenseMatrixTest_WriteMatrix_70429_214811_2.cs">
+      <DependentUpon>DoubleDenseMatrixTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\DoubleDenseMatrixTest_WriteMatrix_70429_215555_3.cs">
+      <DependentUpon>DoubleDenseMatrixTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\DoubleDenseMatrixTest_WriteMatrix_70429_220609_4.cs">
+      <DependentUpon>DoubleDenseMatrixTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\DoubleDenseMatrixTest_WriteMatrix_70429_222045_5.cs">
+      <DependentUpon>DoubleDenseMatrixTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
     <Compile Include="Algorithms\Layout\BreasdthFirstSearchRandomLayoutAlgorithmTest.cs" />
     <Compile Include="Algorithms\Layout\GdiGraphLayoutRendererTest.cs" />
@@ -62,29 +106,135 @@
     <Compile Include="Algorithms\Search\DepthFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\UndirectedBreathFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\ShortestPath\DagShortestPathAlgorithmTest.cs" />
+    <Compile Include="Algorithms\ShortestPath\DagShortestPathAlgorithmTest_Compute_70429_213524_29.cs">
+      <DependentUpon>DagShortestPathAlgorithmTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest.cs" />
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest2.cs" />
+    <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest2_Compute_70429_213421_12.cs">
+      <DependentUpon>DijkstraShortestPathAlgorithmTest2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Algorithms\SourceFirstTopologicalSortAlgorithmTest.cs" />
+    <Compile Include="Algorithms\SourceFirstTopologicalSortAlgorithmTest_SortCyclic_70429_213346_3.cs">
+      <DependentUpon>SourceFirstTopologicalSortAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\SourceFirstTopologicalSortAlgorithmTest_Sort_70429_213350_4.cs">
+      <DependentUpon>SourceFirstTopologicalSortAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\StronglyConnectedComponentAlgorithmTest_EmptyGraph_70429_213528_30.cs">
+      <DependentUpon>StronglyConnectedComponentsAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\StronglyConnectedComponentAlgorithmTest_FileDependency_70430_000942_12.cs">
+      <DependentUpon>StronglyConnectedComponentsAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\StronglyConnectedComponentAlgorithmTest_Loop_70430_000933_10.cs">
+      <DependentUpon>StronglyConnectedComponentsAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\StronglyConnectedComponentAlgorithmTest_OneVertex_70429_213532_31.cs">
+      <DependentUpon>StronglyConnectedComponentsAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\StronglyConnectedComponentAlgorithmTest_RegularLattice_70430_000946_13.cs">
+      <DependentUpon>StronglyConnectedComponentsAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\StronglyConnectedComponentAlgorithmTest_Simple_70430_000937_11.cs">
+      <DependentUpon>StronglyConnectedComponentsAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\StronglyConnectedComponentAlgorithmTest_TwoVertexCycle_70430_000929_9.cs">
+      <DependentUpon>StronglyConnectedComponentsAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\StronglyConnectedComponentAlgorithmTest_TwoVertexOnEdge_70429_213539_33.cs">
+      <DependentUpon>StronglyConnectedComponentsAlgorithmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithms\StronglyConnectedComponentAlgorithmTest_TwoVertex_70429_213536_32.cs">
+      <DependentUpon>StronglyConnectedComponentsAlgorithmTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Algorithms\StronglyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\TopologicalSortAlgorithmTest.cs" />
+    <Compile Include="Algorithms\TopologicalSortAlgorithmTest_SortCyclic_70429_213354_5.cs">
+      <DependentUpon>TopologicalSortAlgorithmTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
+    <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest_Compute_70429_213426_14.cs">
+      <DependentUpon>UndirectedFirstTopologicalSortAlgorithmTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />
+    <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest_Compute_70429_213423_13.cs">
+      <DependentUpon>UndirectedTopologicalSortAlgorithmTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithmTest.cs" />
+    <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithmTest_Compute_70429_213505_25.cs">
+      <DependentUpon>WeaklyConnectedComponentsAlgorithmTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="BidirectionalGraphFactory.cs" />
     <Compile Include="BidirectionalMatrixGraphFactory.cs" />
     <Compile Include="EdgeListGraphFactory.cs" />
     <Compile Include="EdgeListGraphTest.cs" />
+    <Compile Include="EdgeListGraphTest_Count_70429_213520_28.cs">
+      <DependentUpon>EdgeListGraphTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeListGraphTest_Iteration_70429_213516_27.cs">
+      <DependentUpon>EdgeListGraphTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="FactoryCompilerTest.cs" />
+    <Compile Include="FactoryCompilerTest_CreateDifferentFactories_70429_213501_24.cs">
+      <DependentUpon>FactoryCompilerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FactoryCompilerTest_CreateEdgeFactoryTwice_70429_213457_23.cs">
+      <DependentUpon>FactoryCompilerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FactoryCompilerTest_CreateEdgeFactory_70429_213453_22.cs">
+      <DependentUpon>FactoryCompilerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FactoryCompilerTest_CreateVertexFactoryTwice_70429_213450_21.cs">
+      <DependentUpon>FactoryCompilerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FactoryCompilerTest_CreateVertexFactory_70429_213446_20.cs">
+      <DependentUpon>FactoryCompilerTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="GraphConsoleSerializer.cs" />
     <Compile Include="GraphFactory.cs" />
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />
+    <Compile Include="MutableVertexAndEdgeListGraphTest_AddAndRemoveVertex_70429_213410_9.cs">
+      <DependentUpon>MutableVertexAndEdgeListGraphTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MutableVertexAndEdgeListGraphTest_AddVertexAddEdgesAndRemoveSourceVertex_70429_213417_11.cs">
+      <DependentUpon>MutableVertexAndEdgeListGraphTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MutableVertexAndEdgeListGraphTest_AddVertexAddEdgesAndRemoveTargetVertex_70429_213413_10.cs">
+      <DependentUpon>MutableVertexAndEdgeListGraphTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MutableVertexAndEdgeListGraphTest_AddVertex_70429_213406_8.cs">
+      <DependentUpon>MutableVertexAndEdgeListGraphTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\PexAssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\GraphMLSerializerTest.cs" />
+    <Compile Include="Serialization\GraphMLSerializerTest_RoundTripGraph_70429_213403_7.cs">
+      <DependentUpon>GraphMLSerializerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Serialization\GraphMLSerializerTest_RoundTrip_70429_213359_6.cs">
+      <DependentUpon>GraphMLSerializerTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest.cs" />
+    <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest_WriteEdge_70429_213341_2.cs">
+      <DependentUpon>GraphMLSerializerWithArgumentsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest_WriteVertex_70429_213337_1.cs">
+      <DependentUpon>GraphMLSerializerWithArgumentsTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="UndirectedGraphFactory.cs" />
     <Compile Include="UndirectedGraphTest.cs" />
+    <Compile Include="UndirectedGraphTest_IsAdjacentEdgesEmpty_70429_213510_26.cs">
+      <DependentUpon>UndirectedGraphTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="VertexListGraphTest.cs" />
+    <Compile Include="VertexListGraphTest_Count_70429_213430_15.cs">
+      <DependentUpon>VertexListGraphTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VertexListGraphTest_Iteration_70429_213435_16.cs">
+      <DependentUpon>VertexListGraphTest.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickGraph.Glee\QuickGraph.Glee.csproj">

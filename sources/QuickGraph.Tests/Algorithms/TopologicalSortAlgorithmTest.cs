@@ -1,12 +1,13 @@
 ﻿using System;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms
 {
-    [TestFixture]
-    public class TopologicalSortAlgorithmTest
+    [TestFixture, PexClass]
+    public partial class TopologicalSortAlgorithmTest
     {
-        [Test]
+        [Test, PexTest]
         [ExpectedException(typeof(NonAcyclicGraphException))]
         public void SortCyclic()
         {

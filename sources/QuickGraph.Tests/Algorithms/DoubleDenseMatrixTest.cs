@@ -1,27 +1,29 @@
 using System;
 using QuickGraph.Unit;
 using QuickGraph.Algorithms.Matrix;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms
 {
+    [PexClass]
     [TypeFixture(typeof(DoubleDenseMatrix))]
     [TypeFactory(typeof(DoubleDenseMatrixFactory))]
-    public sealed class DoubleDenseMatrixTest
+    public partial class DoubleDenseMatrixTest
     {
-        [Test]
-        public void ToString(DoubleDenseMatrix matrix)
+        [Test, PexTest]
+        public void ToString([PexAssumeIsNotNull]DoubleDenseMatrix matrix)
         {
             Console.WriteLine(matrix);
         }
 
-        [Test]
-        public void WriteMatrix(DoubleDenseMatrix matrix)
+        [Test, PexTest]
+        public void WriteMatrix([PexAssumeIsNotNull]DoubleDenseMatrix matrix)
         {
             matrix.WriteMatrix(Console.Out);
         }
 
-        [Test]
-        public void SelfSimilarity(DoubleDenseMatrix matrix)
+        [Test, PexTest]
+        public void SelfSimilarity([PexAssumeIsNotNull]DoubleDenseMatrix matrix)
         {
             Console.WriteLine("Matrix");
             matrix.WriteMatrix(Console.Out);

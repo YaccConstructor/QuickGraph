@@ -1,15 +1,16 @@
 ﻿using System;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph
 {
-    [TypeFixture(typeof(IMutableVertexAndEdgeListGraph<string,Edge<string>>))]
+    [TypeFixture(typeof(IMutableVertexAndEdgeListGraph<string,Edge<string>>)), PexClass]
     [TypeFactory(typeof(AdjacencyGraphFactory))]
     [TypeFactory(typeof(BidirectionalGraphFactory))]
-    public class MutableVertexAndEdgeListGraphTest
+    public partial class MutableVertexAndEdgeListGraphTest
     {
-        [Test]
-        public void AddVertex(IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void AddVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             int vertexCount = g.VertexCount;
             g.AddVertex("xxx");
@@ -18,8 +19,8 @@ namespace QuickGraph
             VerifyCounts(g);
         }
 
-        [Test]
-        public void AddAndRemoveVertex(IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void AddAndRemoveVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             int vertexCount = g.VertexCount;
             g.AddVertex("xxx");
@@ -31,8 +32,8 @@ namespace QuickGraph
             VerifyCounts(g);
         }
 
-        [Test]
-        public void AddVertexAddEdgesAndRemoveTargetVertex(IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void AddVertexAddEdgesAndRemoveTargetVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             int vertexCount = g.VertexCount;
             int edgeCount = g.EdgeCount;
@@ -54,8 +55,8 @@ namespace QuickGraph
             VerifyCounts(g);
         }
 
-        [Test]
-        public void AddVertexAddEdgesAndRemoveSourceVertex(IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void AddVertexAddEdgesAndRemoveSourceVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             int vertexCount = g.VertexCount;
             int edgeCount = g.EdgeCount;

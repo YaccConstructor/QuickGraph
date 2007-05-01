@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Serialization
 {
-    [TestFixture]
-    public sealed class GraphMLSerializerTest
+    [TestFixture, PexClass]
+    public partial class GraphMLSerializerTest
     {
-        [Test]
+        [Test, PexTest]
         public void RoundTrip()
         {
             RoundTripGraph(new AdjacencyGraphFactory().SimpleIdentifiable());
         }
 
-        private void RoundTripGraph(IMutableVertexAndEdgeListGraph<NamedVertex, NamedEdge> g)
+        [PexTest]
+        public void RoundTripGraph([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<NamedVertex, NamedEdge> g)
         {
             GraphMLSerializer<NamedVertex, NamedEdge> serializer = new GraphMLSerializer<NamedVertex, NamedEdge>();
             AdjacencyGraph<NamedVertex, NamedEdge> gd = new AdjacencyGraph<NamedVertex, NamedEdge>();

@@ -1,16 +1,17 @@
 ﻿using System;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph
 {
-    [TypeFixture(typeof(IEdgeListGraph<string,Edge<string>>))]
+    [TypeFixture(typeof(IEdgeListGraph<string,Edge<string>>)), PexClass]
     [TypeFactory(typeof(AdjacencyGraphFactory))]
     [TypeFactory(typeof(BidirectionalGraphFactory))]
     [TypeFactory(typeof(UndirectedGraphFactory))]
-    public class EdgeListGraphTest
+    public partial class EdgeListGraphTest
     {
-        [Test]
-        public void Iteration(IEdgeListGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void Iteration([PexAssumeIsNotNull]IEdgeListGraph<string, Edge<string>> g)
         {
             int n = g.EdgeCount;
             int i = 0;
@@ -21,8 +22,8 @@ namespace QuickGraph
             }
         }
 
-        [Test]
-        public void Count(IEdgeListGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void Count([PexAssumeIsNotNull]IEdgeListGraph<string, Edge<string>> g)
         {
             int n = g.EdgeCount;
             if (n == 0)

@@ -5,46 +5,52 @@ using System.Collections.Generic;
 using QuickGraph.Unit;
 
 using QuickGraph.Algorithms.Condensation;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms.Condensation
 {
-    [TypeFixture(typeof(IMutableVertexAndEdgeListGraph<string, Edge<string>>))]
+    [TypeFixture(typeof(IMutableVertexAndEdgeListGraph<string, Edge<string>>)), PexClass]
     [TypeFactory(typeof(AdjacencyGraphFactory))]
     [TypeFactory(typeof(BidirectionalGraphFactory))]
-    public class StronglyConnectedCondensationGraphAlgorithmTest
+    public partial class StronglyConnectedCondensationGraphAlgorithmTest
     {
         private CondensationGraphAlgorithm<string, Edge<string>,AdjacencyGraph<string,Edge<string>>> algo;
-        [Test]
-        public void CondensateAndCheckVertexCount(IVertexAndEdgeListGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void CondensateAndCheckVertexCount(
+            [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             this.algo = new CondensationGraphAlgorithm<string, Edge<string>, AdjacencyGraph<string, Edge<string>>>(g);
             algo.Compute();
             CheckVertexCount(g);
         }
 
-        [Test]
-        public void CondensateAndCheckEdgeCount(IVertexAndEdgeListGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void CondensateAndCheckEdgeCount(
+            [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             this.algo = new CondensationGraphAlgorithm<string, Edge<string>, AdjacencyGraph<string, Edge<string>>>(g);
             algo.Compute();
             CheckEdgeCount(g);
         }
-        [Test]
-        public void CondensateAndCheckComponentCount(IVertexAndEdgeListGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void CondensateAndCheckComponentCount(
+            [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             this.algo = new CondensationGraphAlgorithm<string, Edge<string>, AdjacencyGraph<string, Edge<string>>>(g);
             algo.Compute();
             CheckComponentCount(g);
         }
-        [Test]
-        public void CondensateAndCheckDAG(IVertexAndEdgeListGraph<string, Edge<string>> g)
+        [Test, PexTest]
+        public void CondensateAndCheckDAG(
+            [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             this.algo = new CondensationGraphAlgorithm<string, Edge<string>, AdjacencyGraph<string, Edge<string>>>(g);
             algo.Compute();
             CheckDAG(g);
         }
 
-        private void CheckVertexCount(IVertexAndEdgeListGraph<string, Edge<string>> g)
+        private void CheckVertexCount(
+            IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             int count = 0;
             foreach (AdjacencyGraph<string,Edge<string>> vertices in this.algo.CondensatedGraph.Vertices)

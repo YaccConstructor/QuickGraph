@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using QuickGraph.Unit;
 using QuickGraph.Algorithms.Observers;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
+    [PexClass]
     [TypeFixture(typeof(IVertexListGraph<string, Edge<string>>))]
     [TypeFactory(typeof(AdjacencyGraphFactory))]
     [TypeFactory(typeof(BidirectionalGraphFactory))]
-    public class DagShortestPathAlgorithmTest
+    public partial class DagShortestPathAlgorithmTest
     {
-        [Test]
+        [Test, PexTest]
         public void Compute(IVertexListGraph<string, Edge<string>> g)
         {
             // is this a dag ?
