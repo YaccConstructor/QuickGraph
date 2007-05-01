@@ -13,31 +13,26 @@ namespace QuickGraph.Graphviz
         private IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph;
         private StringWriter output;
         private GraphvizImageType imageType;
-        private readonly IDotEngine dot;
         private readonly Dictionary<Vertex, int> vertexIds = new Dictionary<Vertex, int>();
 
         private GraphvizGraph graphFormat;
         private GraphvizVertex commonVertexFormat;
         private GraphvizEdge commonEdgeFormat;
 
-        public GraphvizAlgorithm(IDotEngine dot, IVertexAndEdgeListGraph<Vertex, Edge> g)
-            :this(dot,g,".",GraphvizImageType.Png)
+        public GraphvizAlgorithm(IVertexAndEdgeListGraph<Vertex, Edge> g)
+            :this(g,".",GraphvizImageType.Png)
         {}
 
         public GraphvizAlgorithm(
-            IDotEngine dot,
             IVertexAndEdgeListGraph<Vertex,Edge> g,
             String path,
             GraphvizImageType imageType
             )
         {
-            if (dot == null)
-                throw new ArgumentNullException("dot");
             if (g == null)
                 throw new ArgumentNullException("g");
             if (path == null)
                 throw new ArgumentNullException("path");
-            this.dot = dot;
             this.visitedGraph = g;
             this.imageType = imageType;
             this.graphFormat = new GraphvizGraph();
@@ -159,8 +154,10 @@ namespace QuickGraph.Graphviz
             }
         }
 
-        public string Generate(string outputFileName)
+        public string Generate(IDotEngine dot, string outputFileName)
         {
+            if (dot == null)
+                throw new ArgumentNullException("dot");
             if (outputFileName == null)
                 throw new ArgumentNullException("outputFileName");
 

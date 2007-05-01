@@ -10,10 +10,9 @@ namespace QuickGraph.Graphviz
         private GraphvizAlgorithm<Vertex, Edge> graphviz;
 
         public GraphRendererBase(
-            IDotEngine dot,
             IVertexAndEdgeListGraph<Vertex,Edge> visitedGraph)
         {
-            this.graphviz = new GraphvizAlgorithm<Vertex, Edge>(dot, visitedGraph);
+            this.graphviz = new GraphvizAlgorithm<Vertex, Edge>(visitedGraph);
             this.Initialize();
         }
 
@@ -37,9 +36,9 @@ namespace QuickGraph.Graphviz
             get { return this.graphviz.VisitedGraph; }
         }
 
-        public string Generate(string fileName)
+        public string Generate(IDotEngine dot, string fileName)
         {
-            return this.graphviz.Generate(fileName);
+            return this.graphviz.Generate(dot, fileName);
         }
     }
 }

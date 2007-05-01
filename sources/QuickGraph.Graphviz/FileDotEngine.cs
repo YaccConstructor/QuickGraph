@@ -13,8 +13,9 @@ namespace QuickGraph.Graphviz
     {
         public string Run(GraphvizImageType imageType, string dot, string outputFileName)
         {
-            File.WriteAllText(outputFileName, dot);
-            return outputFileName;
+            string output = outputFileName + ".dot";
+            File.WriteAllText(output, dot);
+            return output;
         }
     }
 }
