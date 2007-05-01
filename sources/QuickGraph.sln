@@ -14,9 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{6EC5788D-DB36-
 		ccnet.config.xml = ccnet.config.xml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Graphviz", "QuickGraph.Graphviz\QuickGraph.Graphviz.csproj", "{595D6322-637A-4A36-97F1-D53F3F9ECEA7}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs03.codeplex.com/
 		SccLocalPath0 = .
@@ -32,6 +34,9 @@ Global
 		SccProjectUniqueName4 = QuickGraph.Unit\\QuickGraph.Unit.csproj
 		SccProjectName4 = QuickGraph.Unit
 		SccLocalPath4 = QuickGraph.Unit
+		SccProjectUniqueName5 = QuickGraph.Graphviz\\QuickGraph.Graphviz.csproj
+		SccProjectName5 = QuickGraph.Graphviz
+		SccLocalPath5 = QuickGraph.Graphviz
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +59,10 @@ Global
 		{9FF2B839-743F-4A15-9D33-F11253BF6AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FF2B839-743F-4A15-9D33-F11253BF6AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FF2B839-743F-4A15-9D33-F11253BF6AE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
