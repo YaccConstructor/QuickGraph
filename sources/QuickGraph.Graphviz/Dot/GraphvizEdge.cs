@@ -7,24 +7,24 @@ namespace QuickGraph.Graphviz.Dot
 
     public class GraphvizEdge
     {
-        private string m_Comment = null;
-        private GraphvizEdgeDirection m_Dir = GraphvizEdgeDirection.Forward;
-        private System.Drawing.Font m_Font = null;
-        private Color m_FontColor = Color.Black;
-        private GraphvizEdgeExtremity m_Head = new GraphvizEdgeExtremity(true);
-        private GraphvizArrow m_HeadArrow = null;
-        private bool m_IsConstrained = true;
-        private bool m_IsDecorated = false;
-        private GraphvizEdgeLabel m_Label = new GraphvizEdgeLabel();
-        private GraphvizLayer m_Layer = null;
-        private int m_MinLength = 1;
-        private Color m_StrokeColor = Color.Black;
-        private GraphvizEdgeStyle m_Style = GraphvizEdgeStyle.Unspecified;
-        private GraphvizEdgeExtremity m_Tail = new GraphvizEdgeExtremity(false);
-        private GraphvizArrow m_TailArrow = null;
-        private string m_ToolTip = null;
-        private string m_Url = null;
-        private double m_Weight = 1;
+        private string comment = null;
+        private GraphvizEdgeDirection dir = GraphvizEdgeDirection.Forward;
+        private System.Drawing.Font font = null;
+        private Color fontColor = Color.Black;
+        private GraphvizEdgeExtremity head = new GraphvizEdgeExtremity(true);
+        private GraphvizArrow headArrow = null;
+        private bool isConstrained = true;
+        private bool isDecorated = false;
+        private GraphvizEdgeLabel label = new GraphvizEdgeLabel();
+        private GraphvizLayer layer = null;
+        private int minLength = 1;
+        private Color strokeColor = Color.Black;
+        private GraphvizEdgeStyle style = GraphvizEdgeStyle.Unspecified;
+        private GraphvizEdgeExtremity tail = new GraphvizEdgeExtremity(false);
+        private GraphvizArrow tailArrow = null;
+        private string tooltip = null;
+        private string url = null;
+        private double weight = 1;
 
         internal string GenerateDot(Hashtable pairs)
         {
@@ -145,11 +145,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Comment;
+                return this.comment;
             }
             set
             {
-                this.m_Comment = value;
+                this.comment = value;
             }
         }
 
@@ -157,11 +157,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Dir;
+                return this.dir;
             }
             set
             {
-                this.m_Dir = value;
+                this.dir = value;
             }
         }
 
@@ -169,11 +169,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Font;
+                return this.font;
             }
             set
             {
-                this.m_Font = value;
+                this.font = value;
             }
         }
 
@@ -181,11 +181,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_FontColor;
+                return this.fontColor;
             }
             set
             {
-                this.m_FontColor = value;
+                this.fontColor = value;
             }
         }
 
@@ -193,11 +193,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Head;
+                return this.head;
             }
             set
             {
-                this.m_Head = value;
+                this.head = value;
             }
         }
 
@@ -205,11 +205,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_HeadArrow;
+                return this.headArrow;
             }
             set
             {
-                this.m_HeadArrow = value;
+                this.headArrow = value;
             }
         }
 
@@ -217,11 +217,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_IsConstrained;
+                return this.isConstrained;
             }
             set
             {
-                this.m_IsConstrained = value;
+                this.isConstrained = value;
             }
         }
 
@@ -229,11 +229,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_IsDecorated;
+                return this.isDecorated;
             }
             set
             {
-                this.m_IsDecorated = value;
+                this.isDecorated = value;
             }
         }
 
@@ -241,11 +241,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Label;
+                return this.label;
             }
             set
             {
-                this.m_Label = value;
+                this.label = value;
             }
         }
 
@@ -253,11 +253,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Layer;
+                return this.layer;
             }
             set
             {
-                this.m_Layer = value;
+                this.layer = value;
             }
         }
 
@@ -265,11 +265,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_MinLength;
+                return this.minLength;
             }
             set
             {
-                this.m_MinLength = value;
+                this.minLength = value;
             }
         }
 
@@ -277,11 +277,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_StrokeColor;
+                return this.strokeColor;
             }
             set
             {
-                this.m_StrokeColor = value;
+                this.strokeColor = value;
             }
         }
 
@@ -289,11 +289,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Style;
+                return this.style;
             }
             set
             {
-                this.m_Style = value;
+                this.style = value;
             }
         }
 
@@ -301,11 +301,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Tail;
+                return this.tail;
             }
             set
             {
-                this.m_Tail = value;
+                this.tail = value;
             }
         }
 
@@ -313,11 +313,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_TailArrow;
+                return this.tailArrow;
             }
             set
             {
-                this.m_TailArrow = value;
+                this.tailArrow = value;
             }
         }
 
@@ -325,11 +325,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_ToolTip;
+                return this.tooltip;
             }
             set
             {
-                this.m_ToolTip = value;
+                this.tooltip = value;
             }
         }
 
@@ -337,11 +337,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Url;
+                return this.url;
             }
             set
             {
-                this.m_Url = value;
+                this.url = value;
             }
         }
 
@@ -349,11 +349,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Weight;
+                return this.weight;
             }
             set
             {
-                this.m_Weight = value;
+                this.weight = value;
             }
         }
     }

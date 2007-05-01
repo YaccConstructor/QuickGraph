@@ -5,23 +5,23 @@ namespace QuickGraph.Graphviz.Dot
 
     public class GraphvizEdgeExtremity
     {
-        private bool m_IsClipped;
-        private bool m_IsHead;
-        private string m_Label;
-        private string m_Logical;
-        private string m_Same;
-        private string m_ToolTip;
-        private string m_Url;
+        private bool isClipped;
+        private bool isHead;
+        private string label;
+        private string logical;
+        private string same;
+        private string tooltip;
+        private string url;
 
         public GraphvizEdgeExtremity(bool isHead)
         {
-            this.m_IsHead = isHead;
-            this.m_Url = null;
-            this.m_IsClipped = true;
-            this.m_Label = null;
-            this.m_ToolTip = null;
-            this.m_Logical = null;
-            this.m_Same = null;
+            this.isHead = isHead;
+            this.url = null;
+            this.isClipped = true;
+            this.label = null;
+            this.tooltip = null;
+            this.logical = null;
+            this.same = null;
         }
 
         public void AddParameters(IDictionary dic)
@@ -69,11 +69,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_IsClipped;
+                return this.isClipped;
             }
             set
             {
-                this.m_IsClipped = value;
+                this.isClipped = value;
             }
         }
 
@@ -81,7 +81,7 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_IsHead;
+                return this.isHead;
             }
         }
 
@@ -89,11 +89,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Label;
+                return this.label;
             }
             set
             {
-                this.m_Label = value;
+                this.label = value;
             }
         }
 
@@ -101,11 +101,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Logical;
+                return this.logical;
             }
             set
             {
-                this.m_Logical = value;
+                this.logical = value;
             }
         }
 
@@ -113,11 +113,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Same;
+                return this.same;
             }
             set
             {
-                this.m_Same = value;
+                this.same = value;
             }
         }
 
@@ -125,11 +125,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_ToolTip;
+                return this.tooltip;
             }
             set
             {
-                this.m_ToolTip = value;
+                this.tooltip = value;
             }
         }
 
@@ -137,11 +137,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Url;
+                return this.url;
             }
             set
             {
-                this.m_Url = value;
+                this.url = value;
             }
         }
     }

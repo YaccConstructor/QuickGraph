@@ -6,12 +6,12 @@ namespace QuickGraph.Graphviz.Dot
 
     public class GraphvizEdgeLabel
     {
-        private double m_Angle = -25;
-        private double m_Distance = 1;
-        private bool m_Float = true;
-        private System.Drawing.Font m_Font = null;
-        private Color m_FontColor = Color.Black;
-        private string m_Value = null;
+        private double angle = -25;
+        private double distance = 1;
+        private bool @float = true;
+        private System.Drawing.Font font = null;
+        private Color fontColor = Color.Black;
+        private string value = null;
 
         public void AddParameters(IDictionary dic)
         {
@@ -42,11 +42,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Angle;
+                return this.angle;
             }
             set
             {
-                this.m_Angle = value;
+                this.angle = value;
             }
         }
 
@@ -54,11 +54,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Distance;
+                return this.distance;
             }
             set
             {
-                this.m_Distance = value;
+                this.distance = value;
             }
         }
 
@@ -66,11 +66,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Float;
+                return this.@float;
             }
             set
             {
-                this.m_Float = value;
+                this.@float = value;
             }
         }
 
@@ -78,11 +78,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Font;
+                return this.font;
             }
             set
             {
-                this.m_Font = value;
+                this.font = value;
             }
         }
 
@@ -90,11 +90,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_FontColor;
+                return this.fontColor;
             }
             set
             {
-                this.m_FontColor = value;
+                this.fontColor = value;
             }
         }
 
@@ -102,11 +102,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Value;
+                return this.value;
             }
             set
             {
-                this.m_Value = value;
+                this.value = value;
             }
         }
     }
