@@ -5,7 +5,7 @@ namespace QuickGraph.Graphviz.Dot
 
     public class GraphvizRecord
     {
-        private GraphvizRecordCellCollection m_Cells = new GraphvizRecordCellCollection();
+        private readonly GraphvizRecordCellCollection cells = new GraphvizRecordCellCollection();
 
         public string ToDot()
         {
@@ -37,7 +37,7 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Cells;
+                return this.cells;
             }
         }
     }

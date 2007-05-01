@@ -3,9 +3,9 @@ namespace QuickGraph.Graphviz.Dot
     using System;
     using System.Text.RegularExpressions;
 
-    public class GraphvizRecordEscaper
+    public sealed class GraphvizRecordEscaper
     {
-        private Regex m_EscapeRegExp = new Regex("(?<Eol>\\n)|(?<Common>\\[|\\]|\\||<|>|\"| )", RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.Multiline);
+        private Regex escapeRegExp = new Regex("(?<Eol>\\n)|(?<Common>\\[|\\]|\\||<|>|\"| )", RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.Multiline);
 
         public string Escape(string text)
         {
@@ -13,7 +13,7 @@ namespace QuickGraph.Graphviz.Dot
             {
                 throw new ArgumentNullException("text");
             }
-            return this.m_EscapeRegExp.Replace(text, new System.Text.RegularExpressions.MatchEvaluator(this.MatchEvaluator));
+            return this.escapeRegExp.Replace(text, new System.Text.RegularExpressions.MatchEvaluator(this.MatchEvaluator));
         }
 
         public string MatchEvaluator(Match m)

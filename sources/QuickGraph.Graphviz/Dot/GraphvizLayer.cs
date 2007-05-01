@@ -4,7 +4,7 @@ namespace QuickGraph.Graphviz.Dot
 
     public class GraphvizLayer
     {
-        private string m_Name;
+        private string name;
 
         public GraphvizLayer(string name)
         {
@@ -16,18 +16,18 @@ namespace QuickGraph.Graphviz.Dot
             {
                 throw new ArgumentException("name is empty");
             }
-            this.m_Name = name;
+            this.name = name;
         }
 
         public string Name
         {
             get
             {
-                return this.m_Name;
+                return this.name;
             }
             set
             {
-                this.m_Name = value;
+                this.name = value;
             }
         }
     }

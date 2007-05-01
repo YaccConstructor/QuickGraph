@@ -7,30 +7,30 @@ namespace QuickGraph.Graphviz.Dot
 
     public class GraphvizVertex
     {
-        private string m_BottomLabel = null;
-        private string m_Comment = null;
-        private double m_Distorsion = 0;
-        private Color m_FillColor = Color.White;
-        private bool m_FixedSize = false;
-        private System.Drawing.Font m_Font = null;
-        private Color m_FontColor = Color.Black;
-        private string m_Group = null;
-        private string m_Label = null;
-        private GraphvizLayer m_Layer = null;
-        private double m_Orientation = 0;
-        private int m_Peripheries = -1;
-        private GraphvizRecord m_Record = new GraphvizRecord();
-        private bool m_Regular = false;
-        private GraphvizVertexShape m_Shape = GraphvizVertexShape.Unspecified;
-        private int m_Sides = 4;
-        private SizeF m_Size = new SizeF(0f, 0f);
-        private double m_Skew = 0;
-        private Color m_StrokeColor = Color.Black;
-        private GraphvizVertexStyle m_Style = GraphvizVertexStyle.Unspecified;
-        private string m_ToolTip = null;
-        private string m_TopLabel = null;
-        private string m_Url = null;
-        private double m_Z = -1;
+        private string bottomLabel = null;
+        private string comment = null;
+        private double distorsion = 0;
+        private Color fillColor = Color.White;
+        private bool fixedSize = false;
+        private System.Drawing.Font font = null;
+        private Color fontColor = Color.Black;
+        private string group = null;
+        private string label = null;
+        private GraphvizLayer layer = null;
+        private double orientation = 0;
+        private int peripheries = -1;
+        private GraphvizRecord record = new GraphvizRecord();
+        private bool regular = false;
+        private GraphvizVertexShape shape = GraphvizVertexShape.Unspecified;
+        private int sides = 4;
+        private SizeF size = new SizeF(0f, 0f);
+        private double skew = 0;
+        private Color strokeColor = Color.Black;
+        private GraphvizVertexStyle style = GraphvizVertexStyle.Unspecified;
+        private string toolTip = null;
+        private string topLabel = null;
+        private string url = null;
+        private double z = -1;
 
         internal string GenerateDot(Hashtable pairs)
         {
@@ -199,11 +199,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_BottomLabel;
+                return this.bottomLabel;
             }
             set
             {
-                this.m_BottomLabel = value;
+                this.bottomLabel = value;
             }
         }
 
@@ -211,11 +211,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Comment;
+                return this.comment;
             }
             set
             {
-                this.m_Comment = value;
+                this.comment = value;
             }
         }
 
@@ -223,11 +223,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Distorsion;
+                return this.distorsion;
             }
             set
             {
-                this.m_Distorsion = value;
+                this.distorsion = value;
             }
         }
 
@@ -235,11 +235,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_FillColor;
+                return this.fillColor;
             }
             set
             {
-                this.m_FillColor = value;
+                this.fillColor = value;
             }
         }
 
@@ -247,11 +247,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_FixedSize;
+                return this.fixedSize;
             }
             set
             {
-                this.m_FixedSize = value;
+                this.fixedSize = value;
             }
         }
 
@@ -259,11 +259,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Font;
+                return this.font;
             }
             set
             {
-                this.m_Font = value;
+                this.font = value;
             }
         }
 
@@ -271,11 +271,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_FontColor;
+                return this.fontColor;
             }
             set
             {
-                this.m_FontColor = value;
+                this.fontColor = value;
             }
         }
 
@@ -283,11 +283,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Group;
+                return this.group;
             }
             set
             {
-                this.m_Group = value;
+                this.group = value;
             }
         }
 
@@ -295,11 +295,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Label;
+                return this.label;
             }
             set
             {
-                this.m_Label = value;
+                this.label = value;
             }
         }
 
@@ -307,11 +307,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Layer;
+                return this.layer;
             }
             set
             {
-                this.m_Layer = value;
+                this.layer = value;
             }
         }
 
@@ -319,11 +319,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Orientation;
+                return this.orientation;
             }
             set
             {
-                this.m_Orientation = value;
+                this.orientation = value;
             }
         }
 
@@ -331,11 +331,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Peripheries;
+                return this.peripheries;
             }
             set
             {
-                this.m_Peripheries = value;
+                this.peripheries = value;
             }
         }
 
@@ -343,11 +343,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Record;
+                return this.record;
             }
             set
             {
-                this.m_Record = value;
+                this.record = value;
             }
         }
 
@@ -355,11 +355,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Regular;
+                return this.regular;
             }
             set
             {
-                this.m_Regular = value;
+                this.regular = value;
             }
         }
 
@@ -367,11 +367,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Shape;
+                return this.shape;
             }
             set
             {
-                this.m_Shape = value;
+                this.shape = value;
             }
         }
 
@@ -379,11 +379,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Sides;
+                return this.sides;
             }
             set
             {
-                this.m_Sides = value;
+                this.sides = value;
             }
         }
 
@@ -391,11 +391,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Size;
+                return this.size;
             }
             set
             {
-                this.m_Size = value;
+                this.size = value;
             }
         }
 
@@ -403,11 +403,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Skew;
+                return this.skew;
             }
             set
             {
-                this.m_Skew = value;
+                this.skew = value;
             }
         }
 
@@ -415,11 +415,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_StrokeColor;
+                return this.strokeColor;
             }
             set
             {
-                this.m_StrokeColor = value;
+                this.strokeColor = value;
             }
         }
 
@@ -427,11 +427,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Style;
+                return this.style;
             }
             set
             {
-                this.m_Style = value;
+                this.style = value;
             }
         }
 
@@ -439,11 +439,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_ToolTip;
+                return this.toolTip;
             }
             set
             {
-                this.m_ToolTip = value;
+                this.toolTip = value;
             }
         }
 
@@ -451,11 +451,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_TopLabel;
+                return this.topLabel;
             }
             set
             {
-                this.m_TopLabel = value;
+                this.topLabel = value;
             }
         }
 
@@ -463,11 +463,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Url;
+                return this.url;
             }
             set
             {
-                this.m_Url = value;
+                this.url = value;
             }
         }
 
@@ -475,11 +475,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Z;
+                return this.z;
             }
             set
             {
-                this.m_Z = value;
+                this.z = value;
             }
         }
     }

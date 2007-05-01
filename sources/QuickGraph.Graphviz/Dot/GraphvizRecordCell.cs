@@ -5,10 +5,10 @@ namespace QuickGraph.Graphviz.Dot
 
     public class GraphvizRecordCell
     {
-        private GraphvizRecordCellCollection m_Cells = new GraphvizRecordCellCollection();
-        private GraphvizRecordEscaper m_Escaper = new GraphvizRecordEscaper();
-        private string m_Port = null;
-        private string m_Text = null;
+        private readonly GraphvizRecordCellCollection cells = new GraphvizRecordCellCollection();
+        private GraphvizRecordEscaper escaper = new GraphvizRecordEscaper();
+        private string port = null;
+        private string text = null;
 
         public string ToDot()
         {
@@ -49,7 +49,7 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Cells;
+                return this.cells;
             }
         }
 
@@ -57,7 +57,7 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Escaper;
+                return this.escaper;
             }
         }
 
@@ -77,9 +77,9 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                if (this.m_Text != null)
+                if (this.text != null)
                 {
-                    return (this.m_Text.Length > 0);
+                    return (this.text.Length > 0);
                 }
                 return false;
             }
@@ -89,11 +89,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Port;
+                return this.port;
             }
             set
             {
-                this.m_Port = value;
+                this.port = value;
             }
         }
 
@@ -101,11 +101,11 @@ namespace QuickGraph.Graphviz.Dot
         {
             get
             {
-                return this.m_Text;
+                return this.text;
             }
             set
             {
-                this.m_Text = value;
+                this.text = value;
             }
         }
     }
