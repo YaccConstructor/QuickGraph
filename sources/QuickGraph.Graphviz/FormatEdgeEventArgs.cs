@@ -1,5 +1,5 @@
 ﻿using System;
-using NGraphviz.Helpers;
+using QuickGraph.Graphviz.Dot;
 
 namespace QuickGraph.Graphviz
 {

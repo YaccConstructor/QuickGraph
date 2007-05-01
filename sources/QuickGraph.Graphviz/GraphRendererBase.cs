@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using NGraphviz.Helpers;
+using QuickGraph.Graphviz.Dot;
 
 namespace QuickGraph.Graphviz
 {
@@ -9,9 +9,11 @@ namespace QuickGraph.Graphviz
     {
         private GraphvizAlgorithm<Vertex, Edge> graphviz;
 
-        public GraphRendererBase(IVertexAndEdgeListGraph<Vertex,Edge> visitedGraph)
+        public GraphRendererBase(
+            IDotEngine dot,
+            IVertexAndEdgeListGraph<Vertex,Edge> visitedGraph)
         {
-            this.graphviz = new GraphvizAlgorithm<Vertex, Edge>(visitedGraph);
+            this.graphviz = new GraphvizAlgorithm<Vertex, Edge>(dot, visitedGraph);
             this.Initialize();
         }
 

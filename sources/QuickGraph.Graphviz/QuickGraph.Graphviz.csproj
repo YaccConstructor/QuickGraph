@@ -34,10 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NGraphviz.Helpers, Version=1.5.1609.21362, Culture=neutral, PublicKeyToken=05e526eb3b1f8001">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\external\NGraphviz\NGraphviz.Helpers.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -48,11 +44,40 @@
       <Link>Properties\version.cs</Link>
     </Compile>
     <Compile Include="CondensatedGraphRenderer.cs" />
+    <Compile Include="Dot\GraphvizArrow.cs" />
+    <Compile Include="Dot\GraphvizArrowClipping.cs" />
+    <Compile Include="Dot\GraphvizArrowFilling.cs" />
+    <Compile Include="Dot\GraphvizArrowShape.cs" />
+    <Compile Include="Dot\GraphvizClusterMode.cs" />
+    <Compile Include="Dot\GraphvizEdge.cs" />
+    <Compile Include="Dot\GraphvizEdgeDirection.cs" />
+    <Compile Include="Dot\GraphvizEdgeExtremity.cs" />
+    <Compile Include="Dot\GraphvizEdgeLabel.cs" />
+    <Compile Include="Dot\GraphvizEdgeStyle.cs" />
+    <Compile Include="Dot\GraphvizGraph.cs" />
+    <Compile Include="Dot\GraphvizImageType.cs" />
+    <Compile Include="Dot\GraphvizLabelJustification.cs" />
+    <Compile Include="Dot\GraphvizLabelLocation.cs" />
+    <Compile Include="Dot\GraphvizLayer.cs" />
+    <Compile Include="Dot\GraphvizLayerCollection.cs" />
+    <Compile Include="Dot\GraphvizOutputMode.cs" />
+    <Compile Include="Dot\GraphvizPageDirection.cs" />
+    <Compile Include="Dot\GraphvizRankDirection.cs" />
+    <Compile Include="Dot\GraphvizRatioMode.cs" />
+    <Compile Include="Dot\GraphvizRecord.cs" />
+    <Compile Include="Dot\GraphvizRecordCell.cs" />
+    <Compile Include="Dot\GraphvizRecordCellCollection.cs" />
+    <Compile Include="Dot\GraphvizRecordEscaper.cs" />
+    <Compile Include="Dot\GraphvizVertex.cs" />
+    <Compile Include="Dot\GraphvizVertexShape.cs" />
+    <Compile Include="Dot\GraphvizVertexStyle.cs" />
     <Compile Include="EdgeMergeCondensatedGraphRenderer.cs" />
+    <Compile Include="FileDotEngine.cs" />
     <Compile Include="FormatEdgeEventArgs.cs" />
     <Compile Include="FormatVertexEventArgs.cs" />
     <Compile Include="GraphRendererBase.cs" />
     <Compile Include="GraphvizAlgorithm.cs" />
+    <Compile Include="IDotEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SvgHtmlWrapper.cs" />
   </ItemGroup>

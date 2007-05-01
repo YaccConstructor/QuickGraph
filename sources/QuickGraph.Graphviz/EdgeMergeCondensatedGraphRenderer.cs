@@ -9,8 +9,9 @@ namespace QuickGraph.Graphviz
         where Edge : IEdge<Vertex>
     {
         public EdgeMergeCondensatedGraphRenderer(
+            IDotEngine dot,
             IVertexAndEdgeListGraph<Vertex, MergedEdge<Vertex, Edge>> visitedGraph)
-            :base(visitedGraph)
+            :base(dot, visitedGraph)
         { }
 
         protected override void Initialize()

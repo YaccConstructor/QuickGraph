@@ -2,41 +2,43 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using NGraphviz;
-using NGraphviz.Helpers;
+using QuickGraph.Graphviz.Dot;
 
 namespace QuickGraph.Graphviz
 {
     public sealed class GraphvizAlgorithm<Vertex,Edge>
         where Edge : IEdge<Vertex>
     {
-        private static Regex writeLineReplace = new Regex("\n", RegexOptions.Compiled | RegexOptions.Multiline);
+        private readonly static Regex writeLineReplace = new Regex("\n", RegexOptions.Compiled | RegexOptions.Multiline);
         private IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph;
         private StringWriter output;
-        private Dot dot;
         private GraphvizImageType imageType;
-        private Dictionary<Vertex, int> vertexIds = new Dictionary<Vertex, int>();
+        private readonly IDotEngine dot;
+        private readonly Dictionary<Vertex, int> vertexIds = new Dictionary<Vertex, int>();
 
         private GraphvizGraph graphFormat;
         private GraphvizVertex commonVertexFormat;
         private GraphvizEdge commonEdgeFormat;
 
-        public GraphvizAlgorithm(IVertexAndEdgeListGraph<Vertex, Edge> g)
-            :this(g,".",GraphvizImageType.Png)
+        public GraphvizAlgorithm(IDotEngine dot, IVertexAndEdgeListGraph<Vertex, Edge> g)
+            :this(dot,g,".",GraphvizImageType.Png)
         {}
 
         public GraphvizAlgorithm(
+            IDotEngine dot,
             IVertexAndEdgeListGraph<Vertex,Edge> g,
             String path,
             GraphvizImageType imageType
             )
         {
+            if (dot == null)
+                throw new ArgumentNullException("dot");
             if (g == null)
                 throw new ArgumentNullException("g");
             if (path == null)
                 throw new ArgumentNullException("path");
+            this.dot = dot;
             this.visitedGraph = g;
-            this.dot = new Dot(path);
             this.imageType = imageType;
             this.graphFormat = new GraphvizGraph();
             this.commonVertexFormat = new GraphvizVertex();
@@ -83,17 +85,6 @@ namespace QuickGraph.Graphviz
                 if (value == null)
                     throw new ArgumentNullException("graph");
                 visitedGraph = value;
-            }
-        }
-
-        /// <summary>
-        /// Renderer
-        /// </summary>
-        public Dot Renderer
-        {
-            get
-            {
-                return dot;
             }
         }
 
@@ -202,10 +193,6 @@ namespace QuickGraph.Graphviz
             foreach (Edge e in VisitedGraph.Edges)
                 edgeColors[e] = GraphColor.White;
 
-            // write
-  //          if (VisitedGraph is IClusteredGraph)
-//                WriteClusters(vertexColors, edgeColors, VisitedGraph as IClusteredGraph);
-
             WriteVertices(colors, VisitedGraph.Vertices);
             WriteEdges(edgeColors, VisitedGraph.Edges);
 
@@ -213,49 +200,7 @@ namespace QuickGraph.Graphviz
 
             return dot.Run(ImageType, Output.ToString(), outputFileName);
         }
-/*
-        private void WriteClusters(
-            VertexColorDictionary<Vertex,Edge> vertexColors,
-            EdgeColorDictionary<Vertex,Edge> edgeColors,
-            IClusteredGraph parent
-            )
-        {
-            ++ClusterCount;
-            foreach (IVertexAndEdgeListGraph g in parent.Clusters)
-            {
-                Output.Write("subgraph cluster{0}", ClusterCount.ToString());
-                Output.WriteLine(" {");
 
-                OnFormatCluster(g);
-
-                if (g is IClusteredGraph)
-                    WriteClusters(vertexColors, edgeColors, g as IClusteredGraph);
-
-                if (parent.Colapsed)
-                {
-                    // draw cluster
-                    // put vertices as black
-                    foreach (IVertex v in g.Vertices)
-                    {
-                        vertexColors[v] = GraphColor.Black;
-
-                    }
-                    foreach (IEdge e in g.Edges)
-                        edgeColors[e] = GraphColor.Black;
-
-                    // add fake vertex
-
-                }
-                else
-                {
-                    WriteVertices(vertexColors, g.Vertices);
-                    WriteEdges(edgeColors, g.Edges);
-                }
-
-                Output.WriteLine("}");
-            }
-        }
-*/
         private void WriteVertices(
             IDictionary<Vertex,GraphColor> colors,
             IEnumerable<Vertex> vertices)

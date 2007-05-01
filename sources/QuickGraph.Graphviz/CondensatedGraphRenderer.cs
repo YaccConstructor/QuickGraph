@@ -10,8 +10,9 @@ namespace QuickGraph.Graphviz
         where Graph : IMutableVertexAndEdgeListGraph<Vertex, Edge>, new()
     {
         public CondensatedGraphRenderer(
+            IDotEngine dot,
             IVertexAndEdgeListGraph<Graph, CondensatedEdge<Vertex, Edge, Graph>> visitedGraph)
-            :base(visitedGraph)
+            :base(dot, visitedGraph)
         {}
 
         protected override void Initialize()
