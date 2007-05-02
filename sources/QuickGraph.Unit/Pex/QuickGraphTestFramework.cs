@@ -6,6 +6,7 @@ using Microsoft.ExtendedReflection.Metadata;
 using System.CodeDom;
 using Microsoft.ExtendedReflection.Utilities;
 using QuickGraph.Unit.Core;
+using Microsoft.ExtendedReflection.Metadata.Names;
 
 namespace QuickGraph.Unit.Pex
 {
@@ -192,7 +193,7 @@ namespace QuickGraph.Unit.Pex
             ICustomAttributeProviderEx target, 
             out TypeEx exceptionType)
         {
-            object[] attributes = target.GetAttributes(
+            object[] attributes = target.GetAttributeValues(
                 Metadata<ExpectedExceptionAttribute>.Type, true);
             if (attributes != null && attributes.Length > 0)
             {
@@ -210,7 +211,7 @@ namespace QuickGraph.Unit.Pex
 
         public override bool TryReadRollback(ICustomAttributeProviderEx target)
         {
-            object[] attributes = target.GetAttributes(
+            object[] attributes = target.GetAttributeValues(
                 Metadata<ExpectedExceptionAttribute>.Type, true);
             return attributes != null && attributes.Length > 0;
         }

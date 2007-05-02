@@ -162,6 +162,8 @@ namespace QuickGraph
         {
             if (v == null)
                 throw new ArgumentNullException("v");
+            if (this.vertexEdges.ContainsKey(v))
+                throw new ArgumentException("vertex already in graph", "v");
             if (this.EdgeCapacity>0)
                 this.vertexEdges.Add(v, new EdgeList(this.EdgeCapacity));
             else

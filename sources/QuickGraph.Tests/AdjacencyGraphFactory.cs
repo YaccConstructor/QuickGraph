@@ -1,5 +1,12 @@
 ﻿using System;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
+using QuickGraph;
+
+[assembly: PexUseTypesFromFactory(typeof(AdjacencyGraphFactory))]
+[assembly: PexExplorableFromConstructor(
+    typeof(AdjacencyGraph<string, Edge<string>>),
+    typeof(bool))]
 
 namespace QuickGraph
 {
@@ -55,6 +62,12 @@ namespace QuickGraph
         private static AdjacencyGraph<String,Edge<String>> CreateGraph()
         {
             return new AdjacencyGraph<String, Edge<String>>(false);
+        }
+
+        [PexFactory(typeof(Type))]
+        public static Type CreateType()
+        {
+            return typeof(AdjacencyGraph<String, Edge<String>>);
         }
 
         [Factory]

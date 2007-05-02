@@ -169,41 +169,11 @@
     <Compile Include="BidirectionalMatrixGraphFactory.cs" />
     <Compile Include="EdgeListGraphFactory.cs" />
     <Compile Include="EdgeListGraphTest.cs" />
-    <Compile Include="EdgeListGraphTest_Count_70429_213520_28.cs">
-      <DependentUpon>EdgeListGraphTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EdgeListGraphTest_Iteration_70429_213516_27.cs">
-      <DependentUpon>EdgeListGraphTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="FactoryCompilerTest.cs" />
-    <Compile Include="FactoryCompilerTest_CreateDifferentFactories_70429_213501_24.cs">
-      <DependentUpon>FactoryCompilerTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FactoryCompilerTest_CreateEdgeFactoryTwice_70429_213457_23.cs">
-      <DependentUpon>FactoryCompilerTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FactoryCompilerTest_CreateEdgeFactory_70429_213453_22.cs">
-      <DependentUpon>FactoryCompilerTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FactoryCompilerTest_CreateVertexFactoryTwice_70429_213450_21.cs">
-      <DependentUpon>FactoryCompilerTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FactoryCompilerTest_CreateVertexFactory_70429_213446_20.cs">
-      <DependentUpon>FactoryCompilerTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="GraphConsoleSerializer.cs" />
     <Compile Include="GraphFactory.cs" />
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />
-    <Compile Include="MutableVertexAndEdgeListGraphTest_AddAndRemoveVertex_70429_213410_9.cs">
-      <DependentUpon>MutableVertexAndEdgeListGraphTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MutableVertexAndEdgeListGraphTest_AddVertexAddEdgesAndRemoveSourceVertex_70429_213417_11.cs">
-      <DependentUpon>MutableVertexAndEdgeListGraphTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MutableVertexAndEdgeListGraphTest_AddVertexAddEdgesAndRemoveTargetVertex_70429_213413_10.cs">
-      <DependentUpon>MutableVertexAndEdgeListGraphTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MutableVertexAndEdgeListGraphTest_AddVertex_70429_213406_8.cs">
+    <Compile Include="MutableVertexAndEdgeListGraphTest_AddVertexAddEdgesAndRemoveTargetVertex_70501_191002_1.cs">
       <DependentUpon>MutableVertexAndEdgeListGraphTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\PexAssemblyInfo.cs" />
@@ -225,14 +195,11 @@
     </Compile>
     <Compile Include="UndirectedGraphFactory.cs" />
     <Compile Include="UndirectedGraphTest.cs" />
-    <Compile Include="UndirectedGraphTest_IsAdjacentEdgesEmpty_70429_213510_26.cs">
-      <DependentUpon>UndirectedGraphTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="VertexListGraphTest.cs" />
-    <Compile Include="VertexListGraphTest_Count_70429_213430_15.cs">
+    <Compile Include="VertexListGraphTest_Count_70501_175750_1.cs">
       <DependentUpon>VertexListGraphTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="VertexListGraphTest_Iteration_70429_213435_16.cs">
+    <Compile Include="VertexListGraphTest_Iteration_70501_175755_2.cs">
       <DependentUpon>VertexListGraphTest.cs</DependentUpon>
     </Compile>
   </ItemGroup>
