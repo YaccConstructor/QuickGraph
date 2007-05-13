@@ -12,6 +12,8 @@ using Microsoft.Pex.TestFrameworks;
 [assembly: PexFocusOnAssembly("QuickGraph")]
 [assembly: PexInstrumentAssembly("QuickGraph")]
 [assembly: PexUseAssembly("QuickGraph")]
-[assembly: PexAllowedException(typeof(ArgumentException), AcceptExceptionSubtypes = true, 
+[assembly: PexAllowedException(
+    typeof(ArgumentException), 
+    AcceptExceptionSubtypes = true, 
     UserAssemblies = "QuickGraph")]
 [assembly: PexInvariantCheck]

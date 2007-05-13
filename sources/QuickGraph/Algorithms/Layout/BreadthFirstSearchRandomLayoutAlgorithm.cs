@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
+using System.Diagnostics;
 
 namespace QuickGraph.Algorithms.Layout
 {
@@ -57,6 +58,7 @@ namespace QuickGraph.Algorithms.Layout
             Edge parent;
             if (this.observer.VertexPredecessors.TryGetValue(e.Vertex, out parent))
             {
+                Debug.Assert(parent != null);
                 float angle = (float)(this.Rnd.NextDouble() * Math.PI * 2);
                 PointF parentPosition = this.VertexPositions[parent.Source];
                 PointF position = new PointF(

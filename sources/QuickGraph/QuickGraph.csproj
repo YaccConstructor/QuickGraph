@@ -253,7 +253,6 @@
     <None Include="quickgraph.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Algorithms\CriticalPath\" />
     <Folder Include="Algorithms\Similarity\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />

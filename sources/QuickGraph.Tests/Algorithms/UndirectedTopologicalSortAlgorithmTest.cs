@@ -5,11 +5,10 @@ using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms
 {
-    [TypeFixture(typeof(IUndirectedGraph<string, Edge<string>>)), PexClass]
-    [TypeFactory(typeof(UndirectedGraphFactory))]
+    [TestFixture, PexClass]
     public partial class UndirectedTopologicalSortAlgorithmTest
     {
-        [Test, PexTest]
+        [PexTest]
         public void Compute([PexAssumeIsNotNull]IUndirectedGraph<string, Edge<string>> g)
         {
             UndirectedTopologicalSortAlgorithm<string, Edge<string>> topo =

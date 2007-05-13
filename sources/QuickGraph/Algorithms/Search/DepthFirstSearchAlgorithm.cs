@@ -22,7 +22,7 @@ namespace QuickGraph.Algorithms.Search
         ITreeBuilderAlgorithm<Vertex,Edge>
         where Edge : IEdge<Vertex>
     {
-		private IDictionary<Vertex,GraphColor> colors;
+		private readonly IDictionary<Vertex,GraphColor> colors;
 		private int maxDepth = int.MaxValue;
 
         public DepthFirstSearchAlgorithm(IVertexListGraph<Vertex,Edge> g)
@@ -64,57 +64,65 @@ namespace QuickGraph.Algorithms.Search
 		public event VertexEventHandler<Vertex> InitializeVertex;
 		private void OnInitializeVertex(Vertex v)
 		{
-			if (InitializeVertex!=null)
-				InitializeVertex(this, new VertexEventArgs<Vertex>(v));
+            VertexEventHandler<Vertex> eh = this.InitializeVertex;
+			if (eh!=null)
+				eh(this, new VertexEventArgs<Vertex>(v));
 		}
 
 		public event VertexEventHandler<Vertex> StartVertex;
 		private void OnStartVertex(Vertex v)
 		{
-			if (StartVertex!=null)
-				StartVertex(this, new VertexEventArgs<Vertex>(v));
+            VertexEventHandler<Vertex> eh = this.StartVertex;
+			if (eh!=null)
+				eh(this, new VertexEventArgs<Vertex>(v));
 		}
 
 		public event VertexEventHandler<Vertex> DiscoverVertex;
 		private void OnDiscoverVertex(Vertex v)
 		{
-			if (DiscoverVertex!=null)
-				DiscoverVertex(this, new VertexEventArgs<Vertex>(v));
+            VertexEventHandler<Vertex> eh = this.DiscoverVertex;
+			if (eh!=null)
+				eh(this, new VertexEventArgs<Vertex>(v));
 		}
 
 		public event EdgeEventHandler<Vertex,Edge> ExamineEdge;
 		private void OnExamineEdge(Edge e)
 		{
-			if (ExamineEdge!=null)
-				ExamineEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+            EdgeEventHandler<Vertex, Edge> eh = this.ExamineEdge;
+			if (eh!=null)
+				eh(this, new EdgeEventArgs<Vertex,Edge>(e));
 		}
 
 		public event EdgeEventHandler<Vertex,Edge> TreeEdge;
 		private void OnTreeEdge(Edge e)
 		{
-			if (TreeEdge!=null)
-				TreeEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+            EdgeEventHandler<Vertex, Edge> eh = this.TreeEdge;
+			if (eh!=null)
+				eh(this, new EdgeEventArgs<Vertex,Edge>(e));
 		}
 
 		public event EdgeEventHandler<Vertex,Edge> BackEdge;
 		private void OnBackEdge(Edge e)
 		{
-			if (BackEdge!=null)
-				BackEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+            EdgeEventHandler<Vertex, Edge> eh = this.BackEdge;
+			if (eh!=null)
+				eh(this, new EdgeEventArgs<Vertex,Edge>(e));
 		}
 
 		public event EdgeEventHandler<Vertex,Edge> ForwardOrCrossEdge;
 		private void OnForwardOrCrossEdge(Edge e)
 		{
-			if (ForwardOrCrossEdge!=null)
-				ForwardOrCrossEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+            EdgeEventHandler<Vertex, Edge> eh = this.ForwardOrCrossEdge;
+			if (eh!=null)
+				eh(this, new EdgeEventArgs<Vertex,Edge>(e));
 		}
 
 		public event VertexEventHandler<Vertex> FinishVertex;
 		private void OnFinishVertex(Vertex v)
 		{
-			if (FinishVertex!=null)
-				FinishVertex(this, new VertexEventArgs<Vertex>(v));
+            VertexEventHandler<Vertex> eh = this.FinishVertex;
+			if (eh!=null)
+				eh(this, new VertexEventArgs<Vertex>(v));
 		}
 
         protected override void InternalCompute()
@@ -164,7 +172,17 @@ namespace QuickGraph.Algorithms.Search
                 if (this.IsAborting)
                     return;
 
-                Vertex u = todo.Pop();
+                Vertex u = todo.Peek();
+                // are we done?
+                GraphColor color = VertexColors[u];
+                if (color != GraphColor.White)
+                {
+                    VertexColors[u] = GraphColor.Black;
+                    OnFinishVertex(u);
+                    todo.Pop();
+                    continue;
+                }
+
                 VertexColors[u] = GraphColor.Gray;
                 OnDiscoverVertex(u);
 
@@ -180,7 +198,9 @@ namespace QuickGraph.Algorithms.Search
                     {
                         OnTreeEdge(e);
                         if (depth < this.MaxDepth)
+                        {
                             todo.Push(v);
+                        }
                     }
                     else if (c == GraphColor.Gray)
                     {
@@ -191,8 +211,6 @@ namespace QuickGraph.Algorithms.Search
                         OnForwardOrCrossEdge(e);
                     }
                 }
-                VertexColors[u] = GraphColor.Black;
-                OnFinishVertex(u);
             }
 		}
     }
