@@ -31,8 +31,15 @@ namespace QuickGraph.Algorithms.ShortestPath
        // IDistanceRecorderAlgorithm<Vertex,Edge>
         where Edge : IEdge<Vertex>
     {
-        private IDictionary<Vertex,Vertex> predecessors;
+        private readonly Dictionary<Vertex,Vertex> predecessors;
         private bool foundNegativeCycle;
+
+        public BellmanFordShortestPathAlgorithm(
+            IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph,
+            IDictionary<Edge, double> weights
+            )
+            : this(visitedGraph, weights, new ShortestDistanceRelaxer())
+        { }
 
         /// <summary>
         /// Builds a new Bellman Ford searcher.
@@ -43,9 +50,10 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// <remarks>This algorithm uses the <seealso cref="BreadthFirstSearchAlgorithm"/>.</remarks>
         public BellmanFordShortestPathAlgorithm(
             IVertexAndEdgeListGraph<Vertex,Edge> visitedGraph,
-            IDictionary<Edge,double> weights
+            IDictionary<Edge,double> weights,
+            IDistanceRelaxer distanceRelaxer
             )
-            :base(visitedGraph,weights)
+            :base(visitedGraph, weights, distanceRelaxer)
         {
             this.predecessors = new Dictionary<Vertex,Vertex>();
         }

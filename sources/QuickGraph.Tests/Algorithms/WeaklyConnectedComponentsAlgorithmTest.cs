@@ -5,12 +5,10 @@ using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms
 {
-    [TypeFixture(typeof(IVertexListGraph<string,Edge<string>>)), PexClass]
-    [TypeFactory(typeof(AdjacencyGraphFactory))]
-    [TypeFactory(typeof(BidirectionalGraphFactory))]
+    [TestFixture, PexClass]
     public partial class WeaklyConnectedComponentsAlgorithmTest
     {
-        [Test, PexTest]
+        [PexTest]
         public void Compute([PexAssumeIsNotNull]IVertexListGraph<string, Edge<string>> g)
         {
             GraphConsoleSerializer.DisplayGraph(g);

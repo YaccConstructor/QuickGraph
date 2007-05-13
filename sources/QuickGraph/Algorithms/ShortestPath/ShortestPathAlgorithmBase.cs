@@ -11,22 +11,34 @@ namespace QuickGraph.Algorithms.ShortestPath
         RootedAlgorithmBase<Vertex,Graph>
         where Edge : IEdge<Vertex>
     {
-        private IDictionary<Vertex, GraphColor> vertexColors;
-        private IDictionary<Vertex, double> distances;
-        private IDictionary<Edge, double> weights;
+        private readonly IDictionary<Vertex, GraphColor> vertexColors;
+        private readonly IDictionary<Vertex, double> distances;
+        private readonly IDictionary<Edge, double> weights;
+        private readonly IDistanceRelaxer distanceRelaxer;
 
-        public ShortestPathAlgorithmBase(
+        protected ShortestPathAlgorithmBase(
             Graph visitedGraph,
             IDictionary<Edge, double> weights
+            )
+            :this(visitedGraph, weights, new ShortestDistanceRelaxer())
+        {}
+
+        protected ShortestPathAlgorithmBase(
+            Graph visitedGraph,
+            IDictionary<Edge, double> weights,
+            IDistanceRelaxer distanceRelaxer
             )
             :base(visitedGraph)
         {
             if (weights == null)
                 throw new ArgumentNullException("weights");
+            if (distanceRelaxer == null)
+                throw new ArgumentNullException("distanceRelaxer");
 
             this.vertexColors = new Dictionary<Vertex, GraphColor>();
             this.distances = new Dictionary<Vertex, double>();
             this.weights = weights;
+            this.distanceRelaxer = distanceRelaxer;
         }
 
         public static Dictionary<Edge, double> UnaryWeightsFromEdgeList(
@@ -73,14 +85,19 @@ namespace QuickGraph.Algorithms.ShortestPath
             get { return this.weights; }
         }
 
-        protected static bool Compare(double a, double b)
+        public IDistanceRelaxer DistanceRelaxer
         {
-            return a < b;
+            get { return this.distanceRelaxer; }
         }
 
-        protected static double Combine(double d, double w)
+        protected bool Compare(double a, double b)
         {
-            return d + w;
+            return this.distanceRelaxer.Compare(a, b);
+        }
+
+        protected double Combine(double distance, double weight)
+        {
+            return this.distanceRelaxer.Combine(distance, weight);
         }
     }
 }

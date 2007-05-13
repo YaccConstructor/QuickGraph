@@ -53,7 +53,7 @@ namespace QuickGraph
             VerifyCounts(g);
         }
 
-        [Test, PexTest]
+        [PexTest]
         public void AddVertexAddEdgesAndRemoveSourceVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g, string v1, string v2)
         {
             int vertexCount = g.VertexCount;

@@ -27,9 +27,10 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public UndirectedDijkstraShortestPathAlgorithm(
             IUndirectedGraph<Vertex, Edge> visitedGraph,
-            IDictionary<Edge, double> weights
+            IDictionary<Edge, double> weights,
+            IDistanceRelaxer distanceRelaxer
             )
-            : base(visitedGraph, weights)
+            : base(visitedGraph, weights, distanceRelaxer)
         { }
 
         public event VertexEventHandler<Vertex> InitializeVertex;

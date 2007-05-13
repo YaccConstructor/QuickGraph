@@ -27,7 +27,8 @@ namespace QuickGraph.Algorithms
                 throw new ArgumentNullException("distances");
             this.dijkstra = new DijkstraShortestPathAlgorithm<Vertex, Edge>(
                 this.VisitedGraph,
-                distances
+                distances,
+                new ShortestDistanceRelaxer()
                 );
             this.predecessorRecorder = new VertexPredecessorRecorderObserver<Vertex, Edge>();
             this.predecessorRecorder.Attach(this.dijkstra);

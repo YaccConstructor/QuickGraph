@@ -106,9 +106,6 @@
     <Compile Include="Algorithms\Search\DepthFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\UndirectedBreathFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\ShortestPath\DagShortestPathAlgorithmTest.cs" />
-    <Compile Include="Algorithms\ShortestPath\DagShortestPathAlgorithmTest_Compute_70429_213524_29.cs">
-      <DependentUpon>DagShortestPathAlgorithmTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest.cs" />
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest2.cs" />
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest2_Compute_70429_213421_12.cs">
@@ -170,9 +167,6 @@
     <Compile Include="GraphConsoleSerializer.cs" />
     <Compile Include="GraphFactory.cs" />
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />
-    <Compile Include="MutableVertexAndEdgeListGraphTest_AddAndRemoveVertex_70502_144435_1.cs">
-      <DependentUpon>MutableVertexAndEdgeListGraphTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\PexAssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

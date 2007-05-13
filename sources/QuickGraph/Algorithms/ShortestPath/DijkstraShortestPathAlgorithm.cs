@@ -27,9 +27,16 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public DijkstraShortestPathAlgorithm(
             IVertexListGraph<Vertex, Edge> visitedGraph,
-            IDictionary<Edge, double> weights
+            IDictionary<Edge, double> weights)
+            : this(visitedGraph, weights, new ShortestDistanceRelaxer())
+        { }
+
+        public DijkstraShortestPathAlgorithm(
+            IVertexListGraph<Vertex, Edge> visitedGraph,
+            IDictionary<Edge, double> weights,
+            IDistanceRelaxer distanceRelaxer
             )
-            :base(visitedGraph,weights)
+            :base(visitedGraph,weights, distanceRelaxer)
         { }
 
         public event VertexEventHandler<Vertex> InitializeVertex;

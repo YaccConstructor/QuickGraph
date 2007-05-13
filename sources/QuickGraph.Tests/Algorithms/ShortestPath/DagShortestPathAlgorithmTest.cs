@@ -6,28 +6,26 @@ using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
-    [PexClass]
-    [TypeFixture(typeof(IVertexListGraph<string, Edge<string>>))]
-    [TypeFactory(typeof(AdjacencyGraphFactory))]
-    [TypeFactory(typeof(BidirectionalGraphFactory))]
+    [TestFixture, PexClass]
     public partial class DagShortestPathAlgorithmTest
     {
-        [Test, PexTest]
+        [PexTest]
         public void Compute(IVertexListGraph<string, Edge<string>> g)
         {
             // is this a dag ?
             bool isDag = AlgoUtility.IsDirectedAcyclicGraph(g);
 
+            IDistanceRelaxer relaxer = new ShortestDistanceRelaxer();
             List<string> vertices = new List<string>(g.Vertices);
             foreach (string root in vertices)
             {
                 if (isDag)
-                    Search(g, root);
+                    Search(g, root, relaxer);
                 else
                 {
                     try
                     {
-                        Search(g, root);
+                        Search(g, root, relaxer);
                     }
                     catch (NonAcyclicGraphException)
                     {
@@ -37,12 +35,41 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        private void Search(IVertexListGraph<string, Edge<string>> g, string root)
+        [PexTest]
+        public void ComputeCriticalPath(IVertexListGraph<string, Edge<string>> g)
+        {
+            // is this a dag ?
+            bool isDag = AlgoUtility.IsDirectedAcyclicGraph(g);
+
+            IDistanceRelaxer relaxer = new CriticalDistanceRelaxer();
+            List<string> vertices = new List<string>(g.Vertices);
+            foreach (string root in vertices)
+            {
+                if (isDag)
+                    Search(g, root, relaxer);
+                else
+                {
+                    try
+                    {
+                        Search(g, root, relaxer);
+                    }
+                    catch (NonAcyclicGraphException)
+                    {
+                        Console.WriteLine("NonAcyclicGraphException caught (as expected)");
+                    }
+                }
+            }
+        }
+
+        private void Search(
+            IVertexListGraph<string, Edge<string>> g, 
+            string root, IDistanceRelaxer relaxer)
         {
             DagShortestPathAlgorithm<string, Edge<string>> algo = 
                 new DagShortestPathAlgorithm<string, Edge<string>>(
                     g,
-                    DagShortestPathAlgorithm<string, Edge<string>>.UnaryWeightsFromVertexList(g)
+                    DagShortestPathAlgorithm<string, Edge<string>>.UnaryWeightsFromVertexList(g),
+                    relaxer
                     );
             VertexPredecessorRecorderObserver<string, Edge<string>> predecessors = new VertexPredecessorRecorderObserver<string, Edge<string>>();
             predecessors.Attach(algo);

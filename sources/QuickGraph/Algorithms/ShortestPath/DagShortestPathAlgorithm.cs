@@ -25,10 +25,18 @@ namespace QuickGraph.Algorithms.ShortestPath
         where Edge : IEdge<Vertex>
     {
         public DagShortestPathAlgorithm(
-            IVertexListGraph<Vertex,Edge> g,
-            IDictionary<Edge,double> weights
+            IVertexListGraph<Vertex, Edge> g,
+            IDictionary<Edge, double> weights
             )
-            :base(g,weights)
+            : this(g, weights, new ShortestDistanceRelaxer())
+        { }
+
+        public DagShortestPathAlgorithm(
+            IVertexListGraph<Vertex,Edge> g,
+            IDictionary<Edge,double> weights,
+            IDistanceRelaxer distanceRelaxer
+            )
+            :base(g,weights, distanceRelaxer)
         {}
 
         public event VertexEventHandler<Vertex> InitializeVertex;
@@ -105,9 +113,9 @@ namespace QuickGraph.Algorithms.ShortestPath
         protected override void  InternalCompute()
         {
             this.Initialize();
-
+            double initialDistance = this.DistanceRelaxer.InitialDistance;
             VertexColors[this.RootVertex] = GraphColor.Gray;
-            Distances[this.RootVertex] = 0;
+            Distances[this.RootVertex] = initialDistance;
             ComputeNoInit(this.RootVertex);
         }
 

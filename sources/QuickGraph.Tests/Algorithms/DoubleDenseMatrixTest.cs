@@ -5,24 +5,22 @@ using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms
 {
-    [PexClass]
-    [TypeFixture(typeof(DoubleDenseMatrix))]
-    [TypeFactory(typeof(DoubleDenseMatrixFactory))]
+    [TestFixture, PexClass]
     public partial class DoubleDenseMatrixTest
     {
-        [Test, PexTest]
+        [PexTest]
         public void ToString([PexAssumeIsNotNull]DoubleDenseMatrix matrix)
         {
             Console.WriteLine(matrix);
         }
 
-        [Test, PexTest]
+        [PexTest]
         public void WriteMatrix([PexAssumeIsNotNull]DoubleDenseMatrix matrix)
         {
             matrix.WriteMatrix(Console.Out);
         }
 
-        [Test, PexTest]
+        [PexTest]
         public void SelfSimilarity([PexAssumeIsNotNull]DoubleDenseMatrix matrix)
         {
             Console.WriteLine("Matrix");

@@ -6,13 +6,10 @@ using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
-    [PexClass]
-    [TypeFixture(typeof(IVertexAndEdgeListGraph<string,Edge<string>>))]
-    [TypeFactory(typeof(AdjacencyGraphFactory))]
-    [TypeFactory(typeof(BidirectionalGraphFactory))]
+    [TestFixture, PexClass]
     public partial class DijkstraShortestPathAlgorithmTest2
     {
-        [Test, PexTest]
+        [PexTest]
         public void Compute([PexAssumeIsNotNull]IVertexAndEdgeListGraph<string,Edge<string>> g)
         {
             List<string> vertices = new List<string>(g.Vertices);
