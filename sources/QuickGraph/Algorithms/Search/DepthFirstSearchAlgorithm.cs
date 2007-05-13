@@ -151,43 +151,49 @@ namespace QuickGraph.Algorithms.Search
 			}
 		}
 
-		public void Visit(Vertex u, int depth)
+		public void Visit(Vertex root, int depth)
 		{
-			if (depth > this.maxDepth)
-				return;
-			if (u==null)
-				throw new ArgumentNullException("u");
-            if (this.IsAborting)
-                return;
+			if (root==null)
+				throw new ArgumentNullException("root");
 
-            VertexColors[u] = GraphColor.Gray;
-            OnDiscoverVertex(u);
+            Stack<Vertex> todo = new Stack<Vertex>(this.VisitedGraph.VertexCount / 4);
+            todo.Push(root);
 
-			Vertex v = default(Vertex);
-			foreach(Edge e in VisitedGraph.OutEdges(u))
-			{
+            while (todo.Count > 0)
+            {
                 if (this.IsAborting)
                     return;
-                OnExamineEdge(e);
-                v = e.Target;
-                GraphColor c = VertexColors[v];
-                if (c == GraphColor.White)
-				{
-					OnTreeEdge(e);
-					Visit(v,depth+1);
-				}
-				else if (c == GraphColor.Gray)
-				{
-					OnBackEdge(e);
-				}
-				else
-				{
-					OnForwardOrCrossEdge(e);
-				}
-			}
 
-            VertexColors[u] = GraphColor.Black;
-            OnFinishVertex(u);
+                Vertex u = todo.Pop();
+                VertexColors[u] = GraphColor.Gray;
+                OnDiscoverVertex(u);
+
+                Vertex v = default(Vertex);
+                foreach (Edge e in VisitedGraph.OutEdges(u))
+                {
+                    if (this.IsAborting)
+                        return;
+                    OnExamineEdge(e);
+                    v = e.Target;
+                    GraphColor c = VertexColors[v];
+                    if (c == GraphColor.White)
+                    {
+                        OnTreeEdge(e);
+                        if (depth < this.MaxDepth)
+                            todo.Push(v);
+                    }
+                    else if (c == GraphColor.Gray)
+                    {
+                        OnBackEdge(e);
+                    }
+                    else
+                    {
+                        OnForwardOrCrossEdge(e);
+                    }
+                }
+                VertexColors[u] = GraphColor.Black;
+                OnFinishVertex(u);
+            }
 		}
     }
 }

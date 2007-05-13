@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
 using QuickGraph.Unit;
+using QuickGraph;
+using Microsoft.Pex.Framework;
+
+[assembly: PexExplorableFromConstructor(
+    typeof(BidirectionalMatrixGraph<Edge<int>>),
+    typeof(int))]
 
 namespace QuickGraph
 {

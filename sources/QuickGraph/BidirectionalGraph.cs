@@ -181,6 +181,8 @@ namespace QuickGraph
         {
             if (v == null)
                 throw new ArgumentNullException("v");
+            if (this.vertexInEdges.ContainsKey(v))
+                throw new ArgumentException("vertex already in graph", "v");
 
             if (this.EdgeCapacity > 0)
             {

@@ -1,5 +1,10 @@
 ﻿using System;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
+using QuickGraph;
+
+[assembly: PexUseTypesFromFactory(typeof(BidirectionalGraphFactory))]
+[assembly: PexExplorableFromConstructor(typeof(BidirectionalGraph<string, Edge<string>>), typeof(bool))]
 
 namespace QuickGraph
 {
@@ -8,6 +13,12 @@ namespace QuickGraph
         private static BidirectionalGraph<String, Edge<String>> CreateGraph()
         {
             return new BidirectionalGraph<String, Edge<String>>(false);
+        }
+
+        [PexFactory(typeof(Type))]
+        public static Type CreateType()
+        {
+            return typeof(BidirectionalGraph<String, Edge<String>>);
         }
 
         [Factory]

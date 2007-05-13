@@ -7,11 +7,10 @@ namespace QuickGraph.Algorithms
     [TestFixture, PexClass]
     public partial class TopologicalSortAlgorithmTest
     {
-        [Test, PexTest]
-        [ExpectedException(typeof(NonAcyclicGraphException))]
-        public void SortCyclic()
+        [PexTest]
+        public void SortCyclic(
+            [PexAssumeIsNotNull]IVertexListGraph<string,Edge<string>> g)
         {
-            IVertexListGraph<string,Edge<string>> g=new AdjacencyGraphFactory().Loop();
             TopologicalSortAlgorithm<string, Edge<string>> topo = new TopologicalSortAlgorithm<string, Edge<string>>(g);
             topo.Compute();
         }

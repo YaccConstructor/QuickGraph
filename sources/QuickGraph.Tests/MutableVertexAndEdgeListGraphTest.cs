@@ -4,9 +4,7 @@ using Microsoft.Pex.Framework;
 
 namespace QuickGraph
 {
-    [TypeFixture(typeof(IMutableVertexAndEdgeListGraph<string,Edge<string>>)), PexClass]
-    [TypeFactory(typeof(AdjacencyGraphFactory))]
-    [TypeFactory(typeof(BidirectionalGraphFactory))]
+    [TestFixture, PexClass(MaxBranchHits = 2, MaxRuns = 50)]
     public partial class MutableVertexAndEdgeListGraphTest
     {
         [PexTest]
@@ -20,7 +18,7 @@ namespace QuickGraph
         }
 
         [PexTest]
-        public void AddAndRemoveVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g, string v)
+        public void AddAndRemoveVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<int, Edge<int>> g, int v)
         {
             int vertexCount = g.VertexCount;
             g.AddVertex(v);
@@ -29,7 +27,7 @@ namespace QuickGraph
             g.RemoveVertex(v);
             Assert.AreEqual(vertexCount, g.VertexCount);
             Assert.IsFalse(g.ContainsVertex(v));
-            VerifyCounts(g);
+            //VerifyCounts(g);
         }
 
         [PexTest]
@@ -56,25 +54,25 @@ namespace QuickGraph
         }
 
         [Test, PexTest]
-        public void AddVertexAddEdgesAndRemoveSourceVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
+        public void AddVertexAddEdgesAndRemoveSourceVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g, string v1, string v2)
         {
             int vertexCount = g.VertexCount;
             int edgeCount = g.EdgeCount;
 
-            g.AddVertex("v1");
-            g.AddVertex("v2");
+            g.AddVertex(v1);
+            g.AddVertex(v2);
             Assert.AreEqual(vertexCount + 2, g.VertexCount);
-            Assert.IsTrue(g.ContainsVertex("v1"));
-            Assert.IsTrue(g.ContainsVertex("v2"));
+            Assert.IsTrue(g.ContainsVertex(v1));
+            Assert.IsTrue(g.ContainsVertex(v2));
 
-            g.AddEdge(new Edge<string>("v1", "v2"));
+            g.AddEdge(new Edge<string>(v1, v2));
             Assert.AreEqual(edgeCount + 1, g.EdgeCount);
 
-            g.RemoveVertex("v1");
+            g.RemoveVertex(v1);
             Assert.AreEqual(vertexCount + 1, g.VertexCount);
             Assert.AreEqual(edgeCount, g.EdgeCount);
-            Assert.IsTrue(g.ContainsVertex("v2"));
-            Assert.IsFalse(g.ContainsVertex("v1"));
+            Assert.IsTrue(g.ContainsVertex(v2));
+            Assert.IsFalse(g.ContainsVertex(v1));
             VerifyCounts(g);
         }
 

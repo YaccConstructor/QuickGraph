@@ -37,11 +37,6 @@ namespace QuickGraph.Unit.Pex
             get { return false; }
         }
 
-        public override bool FixtureSetUpTearDownSupported
-        {
-            get { return true; }
-        }
-
         public override TypeName FixtureTearDownAttribute
         {
             get { return Metadata<QuickGraph.Unit.TestFixtureTearDownAttribute>.SerializableName; }
@@ -172,15 +167,6 @@ namespace QuickGraph.Unit.Pex
             get { return Metadata<QuickGraph.Unit.TestAttribute>.SerializableName; }
         }
 
-        public override bool TryGetAssemblySetUpTearDownAttribute(
-            AssemblyEx assembly, 
-            out Method setUp, 
-            out Method tearDown)
-        {
-            setUp = tearDown = null;
-            return false;
-        }
-
         protected override bool TryGetCategories(
             ICustomAttributeProviderEx element, 
             out IEnumerable<string> names)
@@ -214,6 +200,12 @@ namespace QuickGraph.Unit.Pex
             object[] attributes = target.GetAttributeValues(
                 Metadata<ExpectedExceptionAttribute>.Type, true);
             return attributes != null && attributes.Length > 0;
+        }
+
+        public override bool TryGetAssemblySetupTeardownMethods(AssemblyEx assembly, out Method setup, out Method teardown)
+        {
+            setup = teardown = null;
+            return false;
         }
     }
 }

@@ -150,13 +150,10 @@
     </Compile>
     <Compile Include="Algorithms\StronglyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\TopologicalSortAlgorithmTest.cs" />
-    <Compile Include="Algorithms\TopologicalSortAlgorithmTest_SortCyclic_70429_213354_5.cs">
+    <Compile Include="Algorithms\TopologicalSortAlgorithmTest_SortCyclic_70502_012546_1.cs">
       <DependentUpon>TopologicalSortAlgorithmTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
-    <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest_Compute_70429_213426_14.cs">
-      <DependentUpon>UndirectedFirstTopologicalSortAlgorithmTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest_Compute_70429_213423_13.cs">
       <DependentUpon>UndirectedTopologicalSortAlgorithmTest.cs</DependentUpon>
@@ -168,12 +165,12 @@
     <Compile Include="BidirectionalGraphFactory.cs" />
     <Compile Include="BidirectionalMatrixGraphFactory.cs" />
     <Compile Include="EdgeListGraphFactory.cs" />
-    <Compile Include="EdgeListGraphTest.cs" />
+    <Compile Include="EdgeListGraphInvariant.cs" />
     <Compile Include="FactoryCompilerTest.cs" />
     <Compile Include="GraphConsoleSerializer.cs" />
     <Compile Include="GraphFactory.cs" />
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />
-    <Compile Include="MutableVertexAndEdgeListGraphTest_AddVertexAddEdgesAndRemoveTargetVertex_70501_191002_1.cs">
+    <Compile Include="MutableVertexAndEdgeListGraphTest_AddAndRemoveVertex_70502_144435_1.cs">
       <DependentUpon>MutableVertexAndEdgeListGraphTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\PexAssemblyInfo.cs" />
@@ -193,15 +190,10 @@
     <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest_WriteVertex_70429_213337_1.cs">
       <DependentUpon>GraphMLSerializerWithArgumentsTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="testframework.cs" />
     <Compile Include="UndirectedGraphFactory.cs" />
-    <Compile Include="UndirectedGraphTest.cs" />
-    <Compile Include="VertexListGraphTest.cs" />
-    <Compile Include="VertexListGraphTest_Count_70501_175750_1.cs">
-      <DependentUpon>VertexListGraphTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VertexListGraphTest_Iteration_70501_175755_2.cs">
-      <DependentUpon>VertexListGraphTest.cs</DependentUpon>
-    </Compile>
+    <Compile Include="UndirectedGraphInvariant.cs" />
+    <Compile Include="VertexListGraphInvariant.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickGraph.Glee\QuickGraph.Glee.csproj">

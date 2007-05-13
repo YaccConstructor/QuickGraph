@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 using QuickGraph.Unit;
+using Microsoft.Pex.Framework;
+using QuickGraph;
+
+[assembly: PexExplorableFromConstructor(typeof(EdgeListGraph<string, Edge<string>>), typeof(bool), typeof(bool))]
 
 namespace QuickGraph
 {
