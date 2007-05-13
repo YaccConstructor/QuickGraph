@@ -9,11 +9,14 @@ using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Algorithms.Condensation
 {
-    [TestFixture, PexClass]
+    [PexClass]
+    [TypeFixture(typeof(IMutableVertexAndEdgeListGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(AdjacencyGraphFactory))]
+    [TypeFactory(typeof(BidirectionalGraphFactory))]
     public partial class StronglyConnectedCondensationGraphAlgorithmTest
     {
         private CondensationGraphAlgorithm<string, Edge<string>,AdjacencyGraph<string,Edge<string>>> algo;
-        [PexTest]
+        [Test, PexTest]
         public void CondensateAndCheckVertexCount(
             [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
@@ -22,7 +25,7 @@ namespace QuickGraph.Algorithms.Condensation
             CheckVertexCount(g);
         }
 
-        [PexTest]
+        [Test, PexTest]
         public void CondensateAndCheckEdgeCount(
             [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
@@ -30,7 +33,7 @@ namespace QuickGraph.Algorithms.Condensation
             algo.Compute();
             CheckEdgeCount(g);
         }
-        [PexTest]
+        [Test, PexTest]
         public void CondensateAndCheckComponentCount(
             [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
@@ -38,7 +41,7 @@ namespace QuickGraph.Algorithms.Condensation
             algo.Compute();
             CheckComponentCount(g);
         }
-        [PexTest]
+        [Test, PexTest]
         public void CondensateAndCheckDAG(
             [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {

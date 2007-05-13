@@ -11,11 +11,11 @@ namespace QuickGraph.Algorithms
         IConnectedComponentAlgorithm<Vertex,Edge,IVertexListGraph<Vertex,Edge>>
         where Edge : IEdge<Vertex>
     {
-        private IDictionary<Vertex, int> components;
+        private readonly IDictionary<Vertex, int> components;
+        private readonly Dictionary<int, int> componentEquivalences = new Dictionary<int, int>();
+        private readonly DepthFirstSearchAlgorithm<Vertex, Edge> dfs;
         private int componentCount = 0;
         private int currentComponent = 0;
-        private DepthFirstSearchAlgorithm<Vertex, Edge> dfs;
-        private Dictionary<int, int> componentEquivalences = new Dictionary<int, int>();
 
         public WeaklyConnectedComponentsAlgorithm(
             IVertexListGraph<Vertex, Edge> visitedGraph

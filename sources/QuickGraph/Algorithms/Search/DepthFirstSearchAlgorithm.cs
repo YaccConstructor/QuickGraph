@@ -159,58 +159,63 @@ namespace QuickGraph.Algorithms.Search
 			}
 		}
 
+        private sealed class SearchFrame
+        {
+            public readonly Vertex Vertex;
+            public readonly IEnumerator<Edge> Edges;
+            public SearchFrame(Vertex vertex, IEnumerator<Edge> edges)
+            {
+                this.Vertex = vertex;
+                this.Edges = edges;
+            }
+        }
+
 		public void Visit(Vertex root, int depth)
 		{
 			if (root==null)
 				throw new ArgumentNullException("root");
 
-            Stack<Vertex> todo = new Stack<Vertex>(this.VisitedGraph.VertexCount / 4);
-            todo.Push(root);
+            Stack<SearchFrame> todo = new Stack<SearchFrame>();
+            this.VertexColors[root] = GraphColor.Gray;
+            OnDiscoverVertex(root);
 
+            todo.Push(new SearchFrame(root, this.VisitedGraph.OutEdges(root).GetEnumerator()));
             while (todo.Count > 0)
             {
                 if (this.IsAborting)
                     return;
 
-                Vertex u = todo.Peek();
-                // are we done?
-                GraphColor color = VertexColors[u];
-                if (color != GraphColor.White)
-                {
-                    VertexColors[u] = GraphColor.Black;
-                    OnFinishVertex(u);
-                    todo.Pop();
-                    continue;
-                }
+                SearchFrame frame = todo.Pop();
 
-                VertexColors[u] = GraphColor.Gray;
-                OnDiscoverVertex(u);
-
-                Vertex v = default(Vertex);
-                foreach (Edge e in VisitedGraph.OutEdges(u))
+                Vertex u = frame.Vertex;
+                IEnumerator<Edge> edges = frame.Edges;
+                while(edges.MoveNext())
                 {
+                    Edge e = edges.Current;
                     if (this.IsAborting)
                         return;
-                    OnExamineEdge(e);
-                    v = e.Target;
-                    GraphColor c = VertexColors[v];
-                    if (c == GraphColor.White)
+                    this.OnExamineEdge(e);
+                    Vertex v = e.Target;
+                    GraphColor c = this.VertexColors[v];
+                    switch (c)
                     {
-                        OnTreeEdge(e);
-                        if (depth < this.MaxDepth)
-                        {
-                            todo.Push(v);
-                        }
-                    }
-                    else if (c == GraphColor.Gray)
-                    {
-                        OnBackEdge(e);
-                    }
-                    else
-                    {
-                        OnForwardOrCrossEdge(e);
+                        case GraphColor.White:
+                            OnTreeEdge(e);
+                            todo.Push(new SearchFrame(u, edges));
+                            u = v;
+                            edges = this.VisitedGraph.OutEdges(u).GetEnumerator();
+                            this.VertexColors[u] = GraphColor.Gray;
+                            this.OnDiscoverVertex(u);
+                            break;
+                        case GraphColor.Gray:
+                            OnBackEdge(e); break;
+                        case GraphColor.Black:
+                            OnForwardOrCrossEdge(e); break;
                     }
                 }
+
+                this.VertexColors[u] = GraphColor.Black;
+                this.OnFinishVertex(u);
             }
 		}
     }
