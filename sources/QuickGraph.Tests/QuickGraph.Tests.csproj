@@ -87,19 +87,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\GraphMLSerializerTest.cs" />
-    <Compile Include="Serialization\GraphMLSerializerTest_RoundTripGraph_70429_213403_7.cs">
-      <DependentUpon>GraphMLSerializerTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Serialization\GraphMLSerializerTest_RoundTrip_70429_213359_6.cs">
-      <DependentUpon>GraphMLSerializerTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest.cs" />
-    <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest_WriteEdge_70429_213341_2.cs">
-      <DependentUpon>GraphMLSerializerWithArgumentsTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest_WriteVertex_70429_213337_1.cs">
-      <DependentUpon>GraphMLSerializerWithArgumentsTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="testframework.cs" />
     <Compile Include="UndirectedGraphFactory.cs" />
     <Compile Include="UndirectedGraphInvariant.cs" />

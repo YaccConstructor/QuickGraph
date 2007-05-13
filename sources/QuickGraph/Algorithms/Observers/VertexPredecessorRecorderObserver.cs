@@ -16,9 +16,9 @@ namespace QuickGraph.Algorithms.Observers
         IObserver<Vertex,Edge,IVertexPredecessorRecorderAlgorithm<Vertex, Edge>>
         where Edge : IEdge<Vertex>
     {
-        private IDictionary<Vertex, Edge> vertexPredecessors;
+        private readonly IDictionary<Vertex, Edge> vertexPredecessors;
+        private readonly List<Vertex> endPathVertices = new List<Vertex>();
         private bool recordEndPath = true;
-        private IList<Vertex> endPathVertices = new List<Vertex>();
 
         public VertexPredecessorRecorderObserver()
             :this(new Dictionary<Vertex,Edge>())
@@ -64,7 +64,7 @@ namespace QuickGraph.Algorithms.Observers
 
         void StartVertex(object sender, VertexEventArgs<Vertex> e)
         {
-            VertexPredecessors[e.Vertex] = default(Edge);
+//            VertexPredecessors[e.Vertex] = default(Edge);
         }
 
         void TreeEdge(Object sender, EdgeEventArgs<Vertex, Edge> e)
@@ -78,7 +78,7 @@ namespace QuickGraph.Algorithms.Observers
             {
                 foreach (Edge edge in this.VertexPredecessors.Values)
                 {
-                    if (edge!=null && edge.Source.Equals(e.Vertex))
+                    if (edge.Source.Equals(e.Vertex))
                         return;
                 }
                 this.endPathVertices.Add(e.Vertex);
@@ -93,8 +93,6 @@ namespace QuickGraph.Algorithms.Observers
             Edge e;
             while (this.VertexPredecessors.TryGetValue(vc, out e))
             {
-                if (e == null)
-                    break;
                 path.Insert(0, e);
                 vc = e.Source;
             }

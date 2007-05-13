@@ -373,6 +373,11 @@ namespace QuickGraph.Serialization
 
         public void Serialize(TextWriter writer, IVertexAndEdgeSet<Vertex,Edge> visitedGraph)
         {
+            if (writer == null)
+                throw new ArgumentNullException("writer");
+            if (visitedGraph == null)
+                throw new ArgumentNullException("visitedGraph");
+
             using (XmlTextWriter xwriter = new XmlTextWriter(writer))
             {
                 xwriter.Formatting = Formatting.Indented;
@@ -382,6 +387,13 @@ namespace QuickGraph.Serialization
 
         public void Serialize(Stream stream, Encoding encoding, IVertexAndEdgeSet<Vertex,Edge> visitedGraph)
         {
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+            if (encoding == null)
+                throw new ArgumentNullException("encoding");
+            if (visitedGraph == null)
+                throw new ArgumentNullException("visitedGraph");
+
             using (XmlTextWriter xwriter = new XmlTextWriter(stream, encoding))
             {
                 xwriter.Formatting = Formatting.Indented;
@@ -391,6 +403,11 @@ namespace QuickGraph.Serialization
 
         public void Serialize(XmlWriter writer, IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
         {
+            if (writer == null)
+                throw new ArgumentNullException("writer");
+            if (visitedGraph == null)
+                throw new ArgumentNullException("visitedGraph");
+
             WriterWorker worker = new WriterWorker(this, writer, visitedGraph);
             worker.Serialize();
         }
@@ -401,6 +418,15 @@ namespace QuickGraph.Serialization
             IIdentifiableVertexFactory<Vertex> vertexFactory,
             IIdentifiableEdgeFactory<Vertex, Edge> edgeFactory)
         {
+            if (reader == null)
+                throw new ArgumentNullException("reader");
+            if (visitedGraph == null)
+                throw new ArgumentNullException("visitedGraph");
+            if (vertexFactory == null)
+                throw new ArgumentNullException("vertexFactory");
+            if (edgeFactory == null)
+                throw new ArgumentNullException("edgeFactory");
+
             ReaderWorker worker = new ReaderWorker(
                 this,
                 reader,

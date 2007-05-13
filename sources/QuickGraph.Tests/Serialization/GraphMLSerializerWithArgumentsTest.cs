@@ -153,7 +153,7 @@ namespace QuickGraph.Serialization
         public sealed class TestAdjacencyGraph : AdjacencyGraph<TestVertex, TestEdge>
         { }
 
-        [Test, PexTest]
+        [Test]
         [Repeat(2)]
         public void WriteVertex()
         {
@@ -186,7 +186,7 @@ namespace QuickGraph.Serialization
             }
         }
 
-        [Test, PexTest]
+        [Test]
         [Repeat(2)]
         public void WriteEdge()
         {
