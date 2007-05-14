@@ -2,6 +2,9 @@ using System;
 
 namespace QuickGraph
 {
+    /// <summary>
+    /// Specialized exception to report unconnected vertices
+    /// </summary>
     [Serializable]
     public sealed class VertexNotConnectedException : ApplicationException
     {
