@@ -210,26 +210,33 @@ namespace QuickGraph
             if (!this.ContainsVertex(v))
                 return false;
 
-            int count = 0;
+            // collect edges to remove
+            EdgeList edgesToRemove = new EdgeList(this.EdgeCapacity);
             foreach (Edge outEdge in this.OutEdges(v))
             {
                 this.vertexInEdges[outEdge.Target].Remove(outEdge);
-                count++;
+                edgesToRemove.Add(outEdge);
             }
             foreach (Edge inEdge in this.InEdges(v))
             {
-                if (!inEdge.Source.Equals(inEdge.Target))
-                    count++;
-                this.vertexOutEdges[inEdge.Source].Remove(inEdge);
+                // might already have been removed
+                if(this.vertexOutEdges[inEdge.Source].Remove(inEdge))
+                    edgesToRemove.Add(inEdge);
+            }
+
+            // notify users
+            if (this.EdgeRemoved != null)
+            {
+                foreach(Edge edge in edgesToRemove)
+                    this.OnEdgeRemoved(new EdgeEventArgs<Vertex,Edge>(edge));
             }
 
             this.vertexOutEdges.Remove(v);
             this.vertexInEdges.Remove(v);
-            this.edgeCount -= count;
-            System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
-
+            this.edgeCount -= edgesToRemove.Count;
             this.OnVertexRemoved(new VertexEventArgs<Vertex>(v));
 
+            System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
             return true;
         }
 
@@ -338,20 +345,30 @@ namespace QuickGraph
 
         public void ClearOutEdges(Vertex v)
         {
-            this.edgeCount -= this.vertexOutEdges[v].Count;
-            System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
-            foreach (Edge edge in this.OutEdges(v))
+            EdgeList outEdges = this.vertexOutEdges[v];
+            foreach (Edge edge in outEdges)
+            {
                 this.vertexInEdges[edge.Target].Remove(edge);
-            this.vertexOutEdges[v].Clear();
+                this.OnEdgeRemoved(new EdgeEventArgs<Vertex, Edge>(edge));
+            }
+
+            this.edgeCount -= outEdges.Count;
+            outEdges.Clear();
+            System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
         }
 
         public void ClearInEdges(Vertex v)
         {
-            this.edgeCount -= this.vertexInEdges[v].Count;
-            System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
-            foreach (Edge edge in this.InEdges(v))
+            EdgeList inEdges = this.vertexInEdges[v];
+            foreach (Edge edge in inEdges)
+            {
                 this.vertexOutEdges[edge.Source].Remove(edge);
-            this.vertexInEdges[v].Clear();
+                this.OnEdgeRemoved(new EdgeEventArgs<Vertex, Edge>(edge));
+            }
+
+            this.edgeCount -= inEdges.Count;
+            inEdges.Clear();
+            System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
         }
 
         public void ClearEdges(Vertex v)
@@ -370,11 +387,11 @@ namespace QuickGraph
         public void MergeVertex(Vertex v, IEdgeFactory<Vertex, Edge> edgeFactory)
         {
             // storing edges in local array
-            List<Edge> inedges = new List<Edge>(this.InEdges(v));
-            List<Edge> outedges = new List<Edge>(this.OutEdges(v));
+            EdgeList inedges = this.vertexInEdges[v];
+            EdgeList outedges = this.vertexOutEdges[v];
 
             // remove vertex
-            RemoveVertex(v);
+            this.RemoveVertex(v);
 
             // add edges from each source to each target
             foreach (Edge source in inedges)
@@ -395,7 +412,7 @@ namespace QuickGraph
         public void MergeVertexIf(IVertexPredicate<Vertex> vertexPredicate, IEdgeFactory<Vertex, Edge> edgeFactory)
         {
             // storing vertices to merge
-            List<Vertex> mergeVertices = new List<Vertex>();
+            VertexList mergeVertices = new VertexList(this.VertexCount / 4);
             foreach (Vertex v in this.Vertices)
                 if (vertexPredicate.Test(v))
                     mergeVertices.Add(v);

@@ -42,90 +42,29 @@ namespace QuickGraph.Unit.Pex
             get { return Metadata<QuickGraph.Unit.TestFixtureTearDownAttribute>.SerializableName; }
         }
 
-        public override CodeAttributeDeclarationCollection GetIgnoreAttributes(string message)
-        {
-            return new CodeAttributeDeclarationCollection(
-                new CodeAttributeDeclaration[]{
-                    new CodeAttributeDeclaration(
-                        CodeDomHelper.ToTypeReference(typeof(QuickGraph.Unit.IgnoreAttribute)),
-                        new CodeAttributeArgument(
-                            CodeDomHelper.Expr.Prim(message)
-                            )
-                    )
-                });
-        }
-
-        public override CodeNamespaceImport[] GetImports()
-        {
-            return new CodeNamespaceImport[]{
-                new CodeNamespaceImport(typeof(QuickGraph.Unit.TestFixtureAttribute).Namespace)
-            };
-        }
-
-        public override CodeAttributeDeclarationCollection GetTestClassAttributes()
-        {
-            return new CodeAttributeDeclarationCollection(
-                new CodeAttributeDeclaration[]{
-                    new CodeAttributeDeclaration(
-                        CodeDomHelper.ToTypeReference(typeof(QuickGraph.Unit.TestFixtureAttribute))
-                        )
-                    }
-                );
-        }
-
-        public override CodeAttributeDeclarationCollection GetTestMethodAttributes(Microsoft.Pex.Execution.PexGeneratedTest test)
-        {
-            return new CodeAttributeDeclarationCollection(
-                new CodeAttributeDeclaration[]{
-                    new CodeAttributeDeclaration(
-                        CodeDomHelper.ToTypeReference(typeof(QuickGraph.Unit.TestAttribute))
-                        )
-                    }
-                );
-        }
-
         public override TypeName IgnoreAttribute
         {
             get { return Metadata<QuickGraph.Unit.IgnoreAttribute>.SerializableName; }
         }
 
+        public override TypeName AssumptionExceptionType
+        {
+            get { return Metadata<QuickGraph.Unit.Exceptions.AssertionException>.SerializableName; }        
+        }
+
+        public override TypeName ExpectedExceptionAttribute
+        {
+            get { return Metadata<QuickGraph.Unit.ExpectedExceptionAttribute>.SerializableName;}
+        }
+
+        public override TypeName RollbackAttribute
+        {
+            get { return Metadata<QuickGraph.Unit.RollbackAttribute>.SerializableName; }
+        }
+
         protected override string IgnoreMessageProperty
         {
             get { return "Message"; }
-        }
-
-        public override void MarkExpectedException(System.CodeDom.CodeMemberMethod method, Type exceptionType)
-        {
-            if (exceptionType == typeof(ArgumentNullException))
-                method.CustomAttributes.Add(
-                    new CodeAttributeDeclaration(
-                        CodeDomHelper.ToTypeReference(typeof(QuickGraph.Unit.ExpectedArgumentNullExceptionAttribute))
-                        )
-                    );
-            else if (exceptionType == typeof(ArgumentException))
-                method.CustomAttributes.Add(
-                    new CodeAttributeDeclaration(
-                        CodeDomHelper.ToTypeReference(typeof(QuickGraph.Unit.ExpectedArgumentExceptionAttribute))
-                        )
-                    );
-            else
-                method.CustomAttributes.Add(
-                    new CodeAttributeDeclaration(
-                        CodeDomHelper.ToTypeReference(typeof(QuickGraph.Unit.ExpectedExceptionAttribute)),
-                        new CodeAttributeArgument(
-                            CodeDomHelper.Expr.TypeOf(exceptionType)
-                            )
-                        )
-                    );
-        }
-
-        public override void MarkRollback(System.CodeDom.CodeMemberMethod method)
-        {
-            method.CustomAttributes.Add(
-                new CodeAttributeDeclaration(
-                    CodeDomHelper.ToTypeReference(typeof(QuickGraph.Unit.RollbackAttribute))
-                )
-            );
         }
 
         public override string Name
@@ -179,7 +118,8 @@ namespace QuickGraph.Unit.Pex
             ICustomAttributeProviderEx target, 
             out TypeEx exceptionType)
         {
-            object[] attributes = target.GetAttributeValues(
+            object[] attributes = AttributeHelper.GetAttributes(
+                target,
                 Metadata<ExpectedExceptionAttribute>.Type, true);
             if (attributes != null && attributes.Length > 0)
             {
@@ -197,7 +137,8 @@ namespace QuickGraph.Unit.Pex
 
         public override bool TryReadRollback(ICustomAttributeProviderEx target)
         {
-            object[] attributes = target.GetAttributeValues(
+            object[] attributes = AttributeHelper.GetAttributes(
+                target,
                 Metadata<ExpectedExceptionAttribute>.Type, true);
             return attributes != null && attributes.Length > 0;
         }

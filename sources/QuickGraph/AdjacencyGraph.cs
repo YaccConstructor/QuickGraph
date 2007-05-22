@@ -184,22 +184,42 @@ namespace QuickGraph
             if (!this.ContainsVertex(v))
                 return false;
             // remove outedges
-            this.edgeCount -= this.vertexEdges[v].Count;
-            this.vertexEdges.Remove(v);
+            {
+                EdgeList edges = this.vertexEdges[v];
+                if (this.EdgeRemoved != null) // lazily notify
+                {
+                    foreach (Edge edge in edges)
+                        this.OnEdgeRemoved(new EdgeEventArgs<Vertex, Edge>(edge));
+                }
+                this.edgeCount -= edges.Count;
+                edges.Clear();
+            }
 
-            // iterage over edges and remove each edge touching the verte
-            List<Edge> edgeToRemove = new List<Edge>();
-            foreach (Edge edge in this.Edges)
-                if (edge.Target.Equals(v))
-                    edgeToRemove.Add(edge);
-            // removing edges
-            foreach (Edge edge in edgeToRemove)
-                this.vertexEdges[edge.Source].Remove(edge);
+            // iterage over edges and remove each edge touching the vertex
+            EdgeList edgeToRemove = new EdgeList();
+            foreach (KeyValuePair<Vertex,EdgeList> kv in this.vertexEdges)
+            {
+                if (kv.Key.Equals(v)) continue; // we've already 
+                // collect edge to remove
+                foreach(Edge edge in kv.Value)
+                {
+                    if (edge.Target.Equals(v))
+                        edgeToRemove.Add(edge);
+                }
 
-            // update count
-            this.edgeCount -= edgeToRemove.Count;
+                // remove edges
+                foreach (Edge edge in edgeToRemove)
+                {
+                    kv.Value.Remove(edge);
+                    this.OnEdgeRemoved(new EdgeEventArgs<Vertex, Edge>(edge));
+                }
+                // update count
+                this.edgeCount -= edgeToRemove.Count;
+                edgeToRemove.Clear();
+            }
+
             System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
-
+            this.vertexEdges.Remove(v);
             this.OnVertexRemoved(new VertexEventArgs<Vertex>(v));
 
             return true;
@@ -286,22 +306,36 @@ namespace QuickGraph
 
         public void ClearOutEdges(Vertex v)
         {
-            int count = this.OutDegree(v);
-            this.vertexEdges[v].Clear();
+            EdgeList edges = this.vertexEdges[v];
+            int count = edges.Count;
+            if (this.EdgeRemoved != null) // call only if someone is listening
+            {
+                foreach (Edge edge in edges)
+                    this.OnEdgeRemoved(new EdgeEventArgs<Vertex, Edge>(edge));
+            }
+            edges.Clear();
             this.edgeCount -= count;
             System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
         }
 
         public int RemoveOutEdgeIf(Vertex v, IEdgePredicate<Vertex, Edge> predicate)
         {
-            EdgeList edges = new EdgeList();
-            foreach (Edge edge in this.OutEdges(v))
-                if (predicate.Test(edge))
-                    edges.Add(edge);
+            EdgeList edges = this.vertexEdges[v];
+            EdgeList edgeToRemove = new EdgeList(edges.Count);
             foreach (Edge edge in edges)
-                this.RemoveEdge(edge);
+            {
+                if (predicate.Test(edge))
+                    edgeToRemove.Add(edge);
+            }
+            foreach (Edge edge in edgeToRemove)
+            {
+                edges.Remove(edge);
+                this.OnEdgeRemoved(new EdgeEventArgs<Vertex, Edge>(edge));
+            }
+            this.edgeCount -= edgeToRemove.Count;
             System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
-            return edges.Count;
+
+            return edgeToRemove.Count;
         }
 
         public void Clear()

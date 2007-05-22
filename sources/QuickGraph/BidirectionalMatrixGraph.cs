@@ -326,7 +326,6 @@ namespace QuickGraph
         {
             throw new NotImplementedException();
         }
-
         #endregion
 }
 }
