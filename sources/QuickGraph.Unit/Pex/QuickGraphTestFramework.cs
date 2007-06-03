@@ -114,39 +114,20 @@ namespace QuickGraph.Unit.Pex
             return false;
         }
 
-        public override bool TryReadExpectedException(
-            ICustomAttributeProviderEx target, 
-            out TypeEx exceptionType)
-        {
-            object[] attributes = AttributeHelper.GetAttributes(
-                target,
-                Metadata<ExpectedExceptionAttribute>.Type, true);
-            if (attributes != null && attributes.Length > 0)
-            {
-                ExpectedExceptionAttribute attribute = attributes[0] as ExpectedExceptionAttribute;
-                if (attribute != null)
-                {
-                    exceptionType = MetadataFromReflection.GetType(attribute.ExpectedExceptionType);
-                    return true;
-                }
-            }
-
-            exceptionType = null;
-            return false;
-        }
-
-        public override bool TryReadRollback(ICustomAttributeProviderEx target)
-        {
-            object[] attributes = AttributeHelper.GetAttributes(
-                target,
-                Metadata<ExpectedExceptionAttribute>.Type, true);
-            return attributes != null && attributes.Length > 0;
-        }
-
         public override bool TryGetAssemblySetupTeardownMethods(AssemblyEx assembly, out Method setup, out Method teardown)
         {
             setup = teardown = null;
             return false;
+        }
+
+        protected override string ExpectedExceptionProperty
+        {
+            get { return "ExpectedExceptionType"; }
+        }
+
+        protected override bool HasIgnoreAttributeMessage
+        {
+            get { return true; }
         }
     }
 }
