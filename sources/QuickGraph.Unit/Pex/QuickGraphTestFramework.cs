@@ -32,6 +32,11 @@ namespace QuickGraph.Unit.Pex
             get { return Metadata<QuickGraph.Unit.TestFixtureSetUpAttribute>.SerializableName; }
         }
 
+        public override string RootNamespace
+        {
+            get { return "QuickGraph.Unit";}
+        }
+
         public override bool FixtureSetUpTearDownInstance
         {
             get { return false; }

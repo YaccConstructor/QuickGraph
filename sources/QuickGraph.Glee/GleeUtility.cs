@@ -7,7 +7,7 @@ namespace QuickGraph.Glee
     public static class GleeGraphUtility
     {
         public static GleeGraphPopulator<Vertex, Edge> Create<Vertex, Edge>(
-            IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph,
+            IVertexAndEdgeSet<Vertex, Edge> visitedGraph,
             IFormatProvider formatProvider,
             string format)
             where Edge : IEdge<Vertex>
@@ -16,14 +16,14 @@ namespace QuickGraph.Glee
         }
 
         public static GleeGraphPopulator<Vertex, Edge> Create<Vertex, Edge>(
-            IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph)
+            IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
             where Edge : IEdge<Vertex>
         {
             return new GleeDefaultGraphPopulator<Vertex, Edge>(visitedGraph);
         }
 
         public static GleeGraphPopulator<Vertex, Edge> CreateIdentifiable<Vertex, Edge>(
-            IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph)
+            IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
             where Vertex : IIdentifiable
             where Edge : IEdge<Vertex>
         {

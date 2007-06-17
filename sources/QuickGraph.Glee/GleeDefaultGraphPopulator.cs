@@ -8,7 +8,7 @@ namespace QuickGraph.Glee
         : GleeGraphPopulator<Vertex, Edge>
         where Edge : IEdge<Vertex>
     {
-        public GleeDefaultGraphPopulator(IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph)
+        public GleeDefaultGraphPopulator(IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
             : base(visitedGraph)
         { }
 

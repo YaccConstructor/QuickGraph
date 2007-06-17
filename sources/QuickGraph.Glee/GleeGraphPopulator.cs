@@ -5,11 +5,11 @@ using Microsoft.Glee.Drawing;
 
 namespace QuickGraph.Glee
 {
-    public abstract class GleeGraphPopulator<Vertex,Edge> : 
-        AlgorithmBase<IVertexAndEdgeListGraph<Vertex,Edge>>
+    public abstract class GleeGraphPopulator<Vertex,Edge> :
+        AlgorithmBase<IVertexAndEdgeSet<Vertex, Edge>>
         where Edge : IEdge<Vertex>
     {
-        protected GleeGraphPopulator(IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph)
+        protected GleeGraphPopulator(IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
             : base(visitedGraph)
         { }
 

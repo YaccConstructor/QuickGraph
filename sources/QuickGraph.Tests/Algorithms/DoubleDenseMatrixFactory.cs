@@ -9,7 +9,7 @@ namespace QuickGraph.Algorithms
         [Factory]
         public DoubleDenseMatrix Scalar()
         {
-            return new DoubleDenseMatrix(1, 1, 1);
+            return DoubleDenseMatrix.Create(1, 1, 1);
         }
 
         [Factory]

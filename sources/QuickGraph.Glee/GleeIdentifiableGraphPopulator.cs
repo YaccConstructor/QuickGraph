@@ -9,7 +9,7 @@ namespace QuickGraph.Glee
         where Edge : IEdge<Vertex>
         where Vertex : IIdentifiable
     {
-        public GleeIndentifiableGraphPopulator(IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph)
+        public GleeIndentifiableGraphPopulator(IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
             : base(visitedGraph)
         { }
 
