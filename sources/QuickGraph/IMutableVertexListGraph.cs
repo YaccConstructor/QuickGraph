@@ -10,6 +10,7 @@ namespace QuickGraph
     {
         event VertexEventHandler<Vertex> VertexAdded;
         void AddVertex(Vertex v);
+        void AddVertexRange(IEnumerable<Vertex> vertices);
 
         event VertexEventHandler<Vertex> VertexRemoved;
         bool RemoveVertex(Vertex v);
