@@ -13,6 +13,8 @@
 
         public void Push(Vertex v)
         {
+            if (v == null)
+                throw new ArgumentNullException("v");
             this.Add(v);
         }
 

@@ -197,6 +197,14 @@ namespace QuickGraph
             this.OnVertexAdded(new VertexEventArgs<Vertex>(v));
         }
 
+        public virtual void AddVertexRange(IEnumerable<Vertex> vertices)
+        {
+            if (vertices == null)
+                throw new ArgumentNullException("vertices");
+            foreach (Vertex v in vertices)
+                this.AddVertex(v);
+        }
+
         public event VertexEventHandler<Vertex> VertexAdded;
         protected virtual void OnVertexAdded(VertexEventArgs<Vertex> args)
         {
