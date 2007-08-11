@@ -9,7 +9,7 @@ namespace QuickGraph
     {
         int RemoveOutEdgeIf(
             Vertex v,
-            IEdgePredicate<Vertex, Edge> predicate);
+            EdgePredicate<Vertex, Edge> predicate);
         void ClearOutEdges(Vertex v);
     }
 }

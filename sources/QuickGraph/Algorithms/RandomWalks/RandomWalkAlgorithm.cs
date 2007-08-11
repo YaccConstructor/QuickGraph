@@ -11,7 +11,7 @@ namespace QuickGraph.Algorithms.RandomWalks
         where Edge : IEdge<Vertex>
     {
         private IImplicitGraph<Vertex,Edge> visitedGraph;
-        private IEdgePredicate<Vertex,Edge> endPredicate;
+        private EdgePredicate<Vertex,Edge> endPredicate;
         private IEdgeChain<Vertex,Edge> edgeChain;
 
         public RandomWalkAlgorithm(IImplicitGraph<Vertex,Edge> visitedGraph)
@@ -53,7 +53,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
         }
 
-        public IEdgePredicate<Vertex,Edge> EndPredicate
+        public EdgePredicate<Vertex,Edge> EndPredicate
         {
             get
             {
@@ -115,7 +115,7 @@ namespace QuickGraph.Algorithms.RandomWalks
                 if (e==null)
                     break;
                 // if end predicate, test
-                if (this.endPredicate != null && this.endPredicate.Test(e))
+                if (this.endPredicate != null && this.endPredicate(e))
                     break;
                 OnTreeEdge(e);
                 v = e.Target;

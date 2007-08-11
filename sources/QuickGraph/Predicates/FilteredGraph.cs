@@ -8,13 +8,13 @@ namespace QuickGraph.Predicates
         where Graph : IGraph<Vertex,Edge>
     {
         private Graph baseGraph;
-        private IEdgePredicate<Vertex,Edge> edgePredicate;
-        private IVertexPredicate<Vertex> vertexPredicate;
+        private EdgePredicate<Vertex,Edge> edgePredicate;
+        private VertexPredicate<Vertex> vertexPredicate;
 
         public FilteredGraph(
             Graph baseGraph,
-            IVertexPredicate<Vertex> vertexPredicate,
-            IEdgePredicate<Vertex, Edge> edgePredicate
+            VertexPredicate<Vertex> vertexPredicate,
+            EdgePredicate<Vertex, Edge> edgePredicate
             )
         {
             if (baseGraph == null)
@@ -42,7 +42,7 @@ namespace QuickGraph.Predicates
         /// <summary>
         /// Edge predicate used to filter the edges
         /// </summary>
-        public IEdgePredicate<Vertex, Edge> EdgePredicate
+        public EdgePredicate<Vertex, Edge> EdgePredicate
         {
             get
             {
@@ -50,7 +50,7 @@ namespace QuickGraph.Predicates
             }
         }
 
-        public IVertexPredicate<Vertex> VertexPredicate
+        public VertexPredicate<Vertex> VertexPredicate
         {
             get
             {
@@ -60,9 +60,9 @@ namespace QuickGraph.Predicates
 
         protected bool TestEdge(Edge edge)
         {
-            return this.VertexPredicate.Test(edge.Source)
-                    && this.VertexPredicate.Test(edge.Target)
-                    && this.EdgePredicate.Test(edge);
+            return this.VertexPredicate(edge.Source)
+                    && this.VertexPredicate(edge.Target)
+                    && this.EdgePredicate(edge);
         }
 
         public bool IsDirected

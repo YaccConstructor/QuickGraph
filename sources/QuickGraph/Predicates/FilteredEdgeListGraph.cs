@@ -13,8 +13,8 @@ namespace QuickGraph.Predicates
     {
         public FilteredEdgeListGraph(
             Graph baseGraph,
-            IVertexPredicate<Vertex> vertexPredicate,
-            IEdgePredicate<Vertex,Edge> edgePredicate
+            VertexPredicate<Vertex> vertexPredicate,
+            EdgePredicate<Vertex,Edge> edgePredicate
             )
         :base(baseGraph, vertexPredicate, edgePredicate)
         {
@@ -47,9 +47,9 @@ namespace QuickGraph.Predicates
                 foreach(Edge edge in this.BaseGraph.Edges)
                 {
                     if (
-                        this.VertexPredicate.Test(edge.Source)
-                        && this.VertexPredicate.Test(edge.Target)
-                        && this.EdgePredicate.Test(edge)
+                        this.VertexPredicate(edge.Source)
+                        && this.VertexPredicate(edge.Target)
+                        && this.EdgePredicate(edge)
                         )
                         yield return edge;
                 }
@@ -59,9 +59,9 @@ namespace QuickGraph.Predicates
         public bool ContainsEdge(Edge edge)
         {
             if (
-                this.VertexPredicate.Test(edge.Source)
-                && this.VertexPredicate.Test(edge.Target)
-                && this.EdgePredicate.Test(edge)
+                this.VertexPredicate(edge.Source)
+                && this.VertexPredicate(edge.Target)
+                && this.EdgePredicate(edge)
                 )
                 return this.BaseGraph.ContainsEdge(edge);
             else

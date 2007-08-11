@@ -13,15 +13,15 @@ namespace QuickGraph.Predicates
     {
         public FilteredUndirectedGraph(
             Graph baseGraph,
-            IVertexPredicate<Vertex> vertexPredicate,
-            IEdgePredicate<Vertex, Edge> edgePredicate
+            VertexPredicate<Vertex> vertexPredicate,
+            EdgePredicate<Vertex, Edge> edgePredicate
             )
             : base(baseGraph, vertexPredicate, edgePredicate)
         { }
 
         public IEnumerable<Edge> AdjacentEdges(Vertex v)
         {
-            if (this.VertexPredicate.Test(v))
+            if (this.VertexPredicate(v))
             {
                 foreach (Edge edge in this.BaseGraph.AdjacentEdges(v))
                 {
@@ -48,7 +48,7 @@ namespace QuickGraph.Predicates
 
         public Edge AdjacentEdge(Vertex v, int index)
         {
-            if (this.VertexPredicate.Test(v))
+            if (this.VertexPredicate(v))
             {
                 int count = 0;
                 foreach (Edge edge in this.AdjacentEdges(v))
@@ -64,9 +64,9 @@ namespace QuickGraph.Predicates
 
         public bool ContainsEdge(Vertex source, Vertex target)
         {
-            if (!this.VertexPredicate.Test(source))
+            if (!this.VertexPredicate(source))
                 return false;
-            if (!this.VertexPredicate.Test(target))
+            if (!this.VertexPredicate(target))
                 return false;
             if (!this.BaseGraph.ContainsEdge(source, target))
                 return false;
@@ -74,7 +74,7 @@ namespace QuickGraph.Predicates
             foreach (Edge edge in this.Edges)
             {
                 if (edge.Source.Equals(source) && edge.Target.Equals(target)
-                    && this.EdgePredicate.Test(edge))
+                    && this.EdgePredicate(edge))
                     return true;
             }
 
@@ -145,14 +145,14 @@ namespace QuickGraph.Predicates
             get 
             {
                 foreach (Vertex vertex in this.BaseGraph.Vertices)
-                    if (this.VertexPredicate.Test(vertex))
+                    if (this.VertexPredicate(vertex))
                         yield return vertex;
             }
         }
 
         public bool ContainsVertex(Vertex vertex)
         {
-            if (!this.VertexPredicate.Test(vertex))
+            if (!this.VertexPredicate(vertex))
                 return false;
             else
                 return this.BaseGraph.ContainsVertex(vertex);

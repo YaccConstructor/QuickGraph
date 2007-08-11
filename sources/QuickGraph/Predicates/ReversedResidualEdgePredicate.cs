@@ -3,8 +3,7 @@ using System.Collections.Generic;
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public sealed class ReversedResidualEdgePredicate<Vertex,Edge> :
-        IEdgePredicate<Vertex,Edge>
+    public sealed class ReversedResidualEdgePredicate<Vertex,Edge>
         where Edge : IEdge<Vertex>
     {
         private IDictionary<Edge,double> residualCapacities;

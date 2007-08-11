@@ -145,8 +145,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
             FilteredVertexListGraph<int, Edge<int>, IVertexListGraph<int, Edge<int>>> residualGraph =
                 new FilteredVertexListGraph<int, Edge<int>, IVertexListGraph<int, Edge<int>>>(
                 maxFlow.VisitedGraph,
-                new AnyVertexPredicate<int>(),
-                new ReversedResidualEdgePredicate<int,Edge<int>>(maxFlow.ResidualCapacities, maxFlow.ReversedEdges)
+                new AnyVertexPredicate<int>().Test,
+                new ReversedResidualEdgePredicate<int,Edge<int>>(maxFlow.ResidualCapacities, maxFlow.ReversedEdges).Test
                 );
             BreadthFirstSearchAlgorithm<int, Edge<int>> bfs = new BreadthFirstSearchAlgorithm<int, Edge<int>>(residualGraph);
 

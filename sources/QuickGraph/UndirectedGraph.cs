@@ -45,11 +45,11 @@ namespace QuickGraph
             return this.adjacentEdges.Remove(v);
         }
 
-        public int RemoveVertexIf(IVertexPredicate<Vertex> pred)
+        public int RemoveVertexIf(VertexPredicate<Vertex> pred)
         {
             List<Vertex> vertices = new List<Vertex>();
             foreach (Vertex v in this.Vertices)
-                if (pred.Test(v))
+                if (pred(v))
                     vertices.Add(v);
 
             foreach (Vertex v in vertices)
@@ -59,12 +59,12 @@ namespace QuickGraph
         #endregion
 
         #region IMutableIncidenceGraph<Vertex,Edge> Members
-        public int RemoveAdjacentEdgeIf(Vertex v, IEdgePredicate<Vertex, Edge> predicate)
+        public int RemoveAdjacentEdgeIf(Vertex v, EdgePredicate<Vertex, Edge> predicate)
         {
             IList<Edge> outEdges = this.adjacentEdges[v];
             List<Edge> edges = new List<Edge>(outEdges.Count);
             foreach (Edge edge in outEdges)
-                if (predicate.Test(edge))
+                if (predicate(edge))
                     edges.Add(edge);
 
             this.RemoveEdges(edges);
@@ -190,12 +190,12 @@ namespace QuickGraph
                 eh(this, args);
         }
 
-        public int RemoveEdgeIf(IEdgePredicate<Vertex, Edge> predicate)
+        public int RemoveEdgeIf(EdgePredicate<Vertex, Edge> predicate)
         {
             List<Edge> edges = new List<Edge>();
             foreach (Edge edge in this.Edges)
             {
-                if (predicate.Test(edge))
+                if (predicate(edge))
                     edges.Add(edge);
             }
             return this.RemoveEdges(edges);

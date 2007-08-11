@@ -12,21 +12,21 @@ namespace QuickGraph.Predicates
     {
         public FilteredIncidenceGraph(
             Graph baseGraph,
-            IVertexPredicate<Vertex> vertexPredicate,
-            IEdgePredicate<Vertex,Edge> edgePredicate
+            VertexPredicate<Vertex> vertexPredicate,
+            EdgePredicate<Vertex,Edge> edgePredicate
             )
             :base(baseGraph,vertexPredicate,edgePredicate)
         {}
 
         public bool ContainsEdge(Vertex source, Vertex target)
         {
-            if (!this.VertexPredicate.Test(source))
+            if (!this.VertexPredicate(source))
                 return false;
-            if (!this.VertexPredicate.Test(target))
+            if (!this.VertexPredicate(target))
                 return false;
 
             foreach (Edge edge in this.BaseGraph.OutEdges(source))
-                if (edge.Target.Equals(target) && this.EdgePredicate.Test(edge))
+                if (edge.Target.Equals(target) && this.EdgePredicate(edge))
                     return true;
             return false;
         }
@@ -37,12 +37,12 @@ namespace QuickGraph.Predicates
             out Edge edge)
         {
             IEnumerable<Edge> unfilteredEdges;
-            if (this.VertexPredicate.Test(source) &&
-                this.VertexPredicate.Test(target) &&
+            if (this.VertexPredicate(source) &&
+                this.VertexPredicate(target) &&
                 this.BaseGraph.TryGetEdges(source, target, out unfilteredEdges))
             {
                 foreach (Edge ufe in unfilteredEdges)
-                    if (this.EdgePredicate.Test(ufe))
+                    if (this.EdgePredicate(ufe))
                     {
                         edge = ufe;
                         return true;
@@ -58,9 +58,9 @@ namespace QuickGraph.Predicates
             out IEnumerable<Edge> edges)
         {
             edges = null;
-            if (!this.VertexPredicate.Test(source))
+            if (!this.VertexPredicate(source))
                 return false;
-            if (!this.VertexPredicate.Test(target))
+            if (!this.VertexPredicate(target))
                 return false;
 
             IEnumerable<Edge> unfilteredEdges;
@@ -68,7 +68,7 @@ namespace QuickGraph.Predicates
             {
                 List<Edge> filtered = new List<Edge>();
                 foreach (Edge edge in unfilteredEdges)
-                    if (this.EdgePredicate.Test(edge))
+                    if (this.EdgePredicate(edge))
                         filtered.Add(edge);
                 edges = filtered;
                 return true;

@@ -15,9 +15,9 @@ namespace QuickGraph.Algorithms.Exploration
 
         private Queue<Vertex> unexploredVertices = new Queue<Vertex>();
 
-        private IVertexPredicate<Vertex> addVertexPredicate = new AnyVertexPredicate<Vertex>();
-        private IVertexPredicate<Vertex> exploreVertexPredicate = new AnyVertexPredicate<Vertex>();
-        private IEdgePredicate<Vertex, Edge> addEdgePredicate = new AnyEdgePredicate<Vertex, Edge>();
+        private VertexPredicate<Vertex> addVertexPredicate = new AnyVertexPredicate<Vertex>().Test;
+        private VertexPredicate<Vertex> exploreVertexPredicate = new AnyVertexPredicate<Vertex>().Test;
+        private EdgePredicate<Vertex, Edge> addEdgePredicate = new AnyEdgePredicate<Vertex, Edge>().Test;
         private IPredicate<CloneableVertexGraphExplorerAlgorithm<Vertex, Edge>> finishedPredicate =
             new DefaultFinishedPredicate();
         private bool finishedSuccessfully;
@@ -33,19 +33,19 @@ namespace QuickGraph.Algorithms.Exploration
             get { return this.transitionFactories; }
         }
 
-        public IVertexPredicate<Vertex> AddVertexPredicate
+        public VertexPredicate<Vertex> AddVertexPredicate
         {
             get { return this.addVertexPredicate; }
             set { this.addVertexPredicate = value; }
         }
 
-        public IVertexPredicate<Vertex> ExploreVertexPredicate
+        public VertexPredicate<Vertex> ExploreVertexPredicate
         {
             get { return this.exploreVertexPredicate; }
             set { this.exploreVertexPredicate = value; }
         }
 
-        public IEdgePredicate<Vertex, Edge> AddEdgePredicate
+        public EdgePredicate<Vertex, Edge> AddEdgePredicate
         {
             get { return this.addEdgePredicate; }
             set { this.addEdgePredicate = value; }
@@ -103,7 +103,7 @@ namespace QuickGraph.Algorithms.Exploration
             this.unexploredVertices.Clear();
             this.finishedSuccessfully = false;
 
-            if (!this.AddVertexPredicate.Test(this.RootVertex))
+            if (!this.AddVertexPredicate(this.RootVertex))
                 throw new ArgumentException("StartVertex does not satisfy AddVertexPredicate");
             this.OnDiscoverVertex(this.RootVertex);
 
@@ -120,7 +120,7 @@ namespace QuickGraph.Algorithms.Exploration
                 Vertex clone = (Vertex)current.Clone();
 
                 // let's make sure we want to explore this one
-                if (!this.ExploreVertexPredicate.Test(clone))
+                if (!this.ExploreVertexPredicate(clone))
                     continue;
 
                 foreach (ITransitionFactory<Vertex, Edge> transitionFactory in this.TransitionFactories)
@@ -143,9 +143,8 @@ namespace QuickGraph.Algorithms.Exploration
             foreach (Edge transition in transitionFactory.Apply(current))
             {
                 if (    
-                    !this.AddVertexPredicate.Test(transition.Target)
-                 || !this.AddEdgePredicate.Test(transition)
-                 )
+                    !this.AddVertexPredicate(transition.Target)
+                 || !this.AddEdgePredicate(transition))
                 {
                     this.OnEdgeSkipped(transition);
                     continue;

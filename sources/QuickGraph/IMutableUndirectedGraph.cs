@@ -8,7 +8,7 @@ namespace QuickGraph
         IUndirectedGraph<Vertex,Edge>
         where Edge : IEdge<Vertex>
     {
-        int RemoveAdjacentEdgeIf(Vertex vertex, IEdgePredicate<Vertex, Edge> predicate);
+        int RemoveAdjacentEdgeIf(Vertex vertex, EdgePredicate<Vertex, Edge> predicate);
         void ClearAdjacentEdges(Vertex vertex);
 
     }

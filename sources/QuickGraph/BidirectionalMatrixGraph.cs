@@ -230,13 +230,13 @@ namespace QuickGraph
 
         #region IMutableBidirectionalGraph<int,Edge> Members
 
-        public int RemoveInEdgeIf(int v, IEdgePredicate<int, Edge> edgePredicate)
+        public int RemoveInEdgeIf(int v, EdgePredicate<int, Edge> edgePredicate)
         {
             int count = 0;
             for (int i = 0; i < this.VertexCount; ++i)
             {
                 Edge e = this.edges[i, v];
-                if (e != null && edgePredicate.Test(e))
+                if (e != null && edgePredicate(e))
                 {
                     this.RemoveEdge(e);
                     count++;
@@ -265,13 +265,13 @@ namespace QuickGraph
 
         #region IMutableIncidenceGraph<int,Edge> Members
 
-        public int RemoveOutEdgeIf(int v, IEdgePredicate<int, Edge> predicate)
+        public int RemoveOutEdgeIf(int v, EdgePredicate<int, Edge> predicate)
         {
             int count = 0;
             for (int j = 0; j < this.VertexCount; ++j)
             {
                 Edge e = this.edges[v, j];
-                if (e != null && predicate.Test(e))
+                if (e != null && predicate(e))
                 {
                     this.RemoveEdge(e);
                     count++;
@@ -343,7 +343,7 @@ namespace QuickGraph
                 eh(this, args);
         }
 
-        public int RemoveEdgeIf(IEdgePredicate<int, Edge> predicate)
+        public int RemoveEdgeIf(EdgePredicate<int, Edge> predicate)
         {
             throw new NotImplementedException();
         }

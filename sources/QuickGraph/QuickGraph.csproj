@@ -209,7 +209,6 @@
     <Compile Include="IEdgeFactory.cs" />
     <Compile Include="IEdgeListAndIncidenceGraph.cs" />
     <Compile Include="IEdgeListGraph.cs" />
-    <Compile Include="IEdgePredicate.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="IImplicitGraph.cs" />
     <Compile Include="IIncidenceGraph.cs" />
@@ -222,7 +221,6 @@
     <Compile Include="IVertexAndEdgeListGraph.cs" />
     <Compile Include="IVertexFactory.cs" />
     <Compile Include="IVertexListGraph.cs" />
-    <Compile Include="IVertexPredicate.cs" />
     <Compile Include="NamedEdge.cs" />
     <Compile Include="NonAcyclicGraphException.cs" />
     <Compile Include="Predicates\InDictionaryVertexPredicate.cs" />

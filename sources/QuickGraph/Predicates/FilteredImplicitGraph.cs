@@ -12,8 +12,8 @@ namespace QuickGraph.Predicates
     {
         public FilteredImplicitGraph(
             Graph baseGraph,
-            IVertexPredicate<Vertex> vertexPredicate,
-            IEdgePredicate<Vertex, Edge> edgePredicate
+            VertexPredicate<Vertex> vertexPredicate,
+            EdgePredicate<Vertex, Edge> edgePredicate
             )
             :base(baseGraph,vertexPredicate,edgePredicate)
         { }

@@ -13,10 +13,10 @@ namespace QuickGraph.Algorithms.Exploration
     {
         private IList<ITransitionFactory<Vertex, Edge>> transitionFactories
             = new List<ITransitionFactory<Vertex, Edge>>();
-        private IVertexPredicate<Vertex> successorVertexPredicate
-            = new AnyVertexPredicate<Vertex>();
-        private IEdgePredicate<Vertex, Edge> successorEdgePredicate
-            = new AnyEdgePredicate<Vertex, Edge>();
+        private VertexPredicate<Vertex> successorVertexPredicate
+            = new AnyVertexPredicate<Vertex>().Test;
+        private EdgePredicate<Vertex, Edge> successorEdgePredicate
+            = new AnyEdgePredicate<Vertex, Edge>().Test;
 
         public TransitionFactoryImplicitGraph()
         {}
@@ -26,13 +26,13 @@ namespace QuickGraph.Algorithms.Exploration
             get { return this.transitionFactories; }
         }
 
-        public IVertexPredicate<Vertex> SuccessorVertexPredicate
+        public VertexPredicate<Vertex> SuccessorVertexPredicate
         {
             get { return this.successorVertexPredicate; }
             set { this.successorVertexPredicate = value; }
         }
 
-        public IEdgePredicate<Vertex, Edge> SuccessorEdgePredicate
+        public EdgePredicate<Vertex, Edge> SuccessorEdgePredicate
         {
             get { return this.successorEdgePredicate; }
             set { this.successorEdgePredicate = value; }
@@ -61,11 +61,9 @@ namespace QuickGraph.Algorithms.Exploration
 
                 foreach (Edge edge in transitionFactory.Apply(v))
                 {
-                    if (!this.SuccessorVertexPredicate.Test(edge.Target))
-                        continue;
-                    if (!this.SuccessorEdgePredicate.Test(edge))
-                        continue;
-                    yield return edge;
+                    if (this.SuccessorVertexPredicate(edge.Target) &&
+                        this.SuccessorEdgePredicate(edge))
+                        yield return edge;
                 }
             }
         }

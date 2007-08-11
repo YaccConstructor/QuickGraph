@@ -107,11 +107,11 @@ namespace QuickGraph
                 eh(this, args);
         }
 
-        public int RemoveEdgeIf(IEdgePredicate<Vertex, Edge> predicate)
+        public int RemoveEdgeIf(EdgePredicate<Vertex, Edge> predicate)
         {
             List<Edge> edgesToRemove = new List<Edge>();
             foreach (Edge edge in this.Edges)
-                if (predicate.Test(edge))
+                if (predicate(edge))
                     edgesToRemove.Add(edge);
 
             foreach (Edge edge in edgesToRemove)

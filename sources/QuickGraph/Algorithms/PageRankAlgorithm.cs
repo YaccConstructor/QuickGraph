@@ -112,8 +112,8 @@ namespace QuickGraph.Algorithms.Ranking
                 IBidirectionalGraph<Vertex,Edge>
                 > fg = new FilteredBidirectionalGraph<Vertex, Edge, IBidirectionalGraph<Vertex, Edge>>(
                 this.VisitedGraph,
-                new InDictionaryVertexPredicate<Vertex,double>(this.ranks),
-                new AnyEdgePredicate<Vertex,Edge>()
+                new InDictionaryVertexPredicate<Vertex,double>(this.ranks).Test,
+                new AnyEdgePredicate<Vertex,Edge>().Test
                 );
 
             int iter = 0;

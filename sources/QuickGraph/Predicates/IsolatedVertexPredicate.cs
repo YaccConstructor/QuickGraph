@@ -2,8 +2,7 @@ using System;
 
 namespace QuickGraph.Predicates
 {
-    public sealed class IsolatedVertexPredicate<Vertex,Edge> :
-        IVertexPredicate<Vertex>
+    public sealed class IsolatedVertexPredicate<Vertex,Edge>
         where Edge : IEdge<Vertex>
     {
         private IBidirectionalGraph<Vertex, Edge> visitedGraph;

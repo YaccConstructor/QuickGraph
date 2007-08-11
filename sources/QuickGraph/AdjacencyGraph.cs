@@ -286,11 +286,13 @@ namespace QuickGraph
                 eh(this, args);
         }
 
-        public int RemoveVertexIf(IVertexPredicate<Vertex> predicate)
+        public int RemoveVertexIf(VertexPredicate<Vertex> predicate)
         {
+            if (predicate == null)
+                throw new ArgumentNullException("predicate");
             VertexList vertices = new VertexList();
             foreach (Vertex v in this.Vertices)
-                if (predicate.Test(v))
+                if (predicate(v))
                     vertices.Add(v);
 
             foreach (Vertex v in vertices)
@@ -343,11 +345,11 @@ namespace QuickGraph
                 eh(this, args);
         }
 
-        public int RemoveEdgeIf(IEdgePredicate<Vertex, Edge> predicate)
+        public int RemoveEdgeIf(EdgePredicate<Vertex, Edge> predicate)
         {
             EdgeList edges = new EdgeList();
             foreach (Edge edge in this.Edges)
-                if (predicate.Test(edge))
+                if (predicate(edge))
                     edges.Add(edge);
 
             foreach (Edge edge in edges)
@@ -371,13 +373,13 @@ namespace QuickGraph
             System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
         }
 
-        public int RemoveOutEdgeIf(Vertex v, IEdgePredicate<Vertex, Edge> predicate)
+        public int RemoveOutEdgeIf(Vertex v, EdgePredicate<Vertex, Edge> predicate)
         {
             EdgeList edges = this.vertexEdges[v];
             EdgeList edgeToRemove = new EdgeList(edges.Count);
             foreach (Edge edge in edges)
             {
-                if (predicate.Test(edge))
+                if (predicate(edge))
                     edgeToRemove.Add(edge);
             }
             foreach (Edge edge in edgeToRemove)

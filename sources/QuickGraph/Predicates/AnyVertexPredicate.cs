@@ -3,7 +3,7 @@
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public sealed class AnyVertexPredicate<Vertex> : IVertexPredicate<Vertex>
+    public sealed class AnyVertexPredicate<Vertex>
     {
         public bool Test(Vertex vertex)
         {

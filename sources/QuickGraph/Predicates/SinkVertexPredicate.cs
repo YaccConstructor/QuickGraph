@@ -3,8 +3,7 @@
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public sealed class SinkVertexPredicate<Vertex, Edge> :
-        IVertexPredicate<Vertex>
+    public sealed class SinkVertexPredicate<Vertex, Edge>
         where Edge : IEdge<Vertex>
     {
         private IIncidenceGraph<Vertex, Edge> visitedGraph;

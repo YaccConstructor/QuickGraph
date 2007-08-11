@@ -11,12 +11,12 @@ namespace QuickGraph.Algorithms.Condensation
             Vertex, 
             MergedEdge<Vertex,Edge>
             > condensatedGraph;
-        private IVertexPredicate<Vertex> vertexPredicate;
+        private VertexPredicate<Vertex> vertexPredicate;
 
         public EdgeMergeCondensationGraphAlgorithm(
                 IBidirectionalGraph<Vertex, Edge> visitedGraph,
                 IMutableBidirectionalGraph<Vertex, MergedEdge<Vertex,Edge>> condensatedGraph,
-                IVertexPredicate<Vertex> vertexPredicate
+                VertexPredicate<Vertex> vertexPredicate
             )
             :base(visitedGraph)
         {
@@ -36,7 +36,7 @@ namespace QuickGraph.Algorithms.Condensation
             get { return this.condensatedGraph; }
         }
 
-        public IVertexPredicate<Vertex> VertexPredicate
+        public VertexPredicate<Vertex> VertexPredicate
         {
             get { return this.vertexPredicate; }
         }
@@ -49,7 +49,7 @@ namespace QuickGraph.Algorithms.Condensation
             foreach (Vertex v in this.VisitedGraph.Vertices)
             {
                 this.CondensatedGraph.AddVertex(v);
-                if (!this.VertexPredicate.Test(v))
+                if (!this.VertexPredicate(v))
                     filteredVertices.Enqueue(v);
             }
 

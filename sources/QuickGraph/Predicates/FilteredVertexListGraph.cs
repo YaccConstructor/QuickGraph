@@ -11,8 +11,8 @@ namespace QuickGraph.Predicates
     {
         public FilteredVertexListGraph(
             Graph baseGraph,
-            IVertexPredicate<Vertex> vertexPredicate,
-            IEdgePredicate<Vertex, Edge> edgePredicate
+            VertexPredicate<Vertex> vertexPredicate,
+            EdgePredicate<Vertex, Edge> edgePredicate
             )
             :base(baseGraph,vertexPredicate,edgePredicate)
         { }
@@ -43,14 +43,14 @@ namespace QuickGraph.Predicates
             get 
             {
                 foreach (Vertex v in this.BaseGraph.Vertices)
-                    if (this.VertexPredicate.Test(v))
+                    if (this.VertexPredicate(v))
                         yield return v;
             }
         }
 
         public bool ContainsVertex(Vertex vertex)
         {
-            if (!this.VertexPredicate.Test(vertex))
+            if (!this.VertexPredicate(vertex))
                 return false;
             return this.ContainsVertex(vertex);
         }

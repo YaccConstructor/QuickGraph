@@ -29,12 +29,20 @@ namespace QuickGraph.Glee
         {
             string id = this.GetVertexId(v);
             this.vertexIds.Add(v, id);
-            return (Node)this.GleeGraph.AddNode(id);
+            Node node = (Node)this.GleeGraph.AddNode(id);
+            node.Attr.Shape = Shape.Box;
+            node.Attr.Label = this.GetVertexLabel(id, v);
+            return node;
         }
 
         protected virtual string GetVertexId(Vertex v)
         {
             return this.vertexIds.Count.ToString();
+        }
+
+        protected virtual string GetVertexLabel(string id, Vertex v)
+        {
+            return String.Format("{0}: {1}", id, v.ToString());
         }
 
         protected override Microsoft.Glee.Drawing.Edge AddEdge(Edge e)

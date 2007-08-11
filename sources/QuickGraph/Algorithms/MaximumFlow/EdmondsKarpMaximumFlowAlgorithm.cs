@@ -37,8 +37,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
                         IVertexListGraph<Vertex,Edge>
                         >(
         					VisitedGraph,
-                            new AnyVertexPredicate<Vertex>(),
-				        	new ResidualEdgePredicate<Vertex,Edge>(ResidualCapacities)
+                            new AnyVertexPredicate<Vertex>().Test,
+				        	new ResidualEdgePredicate<Vertex,Edge>(ResidualCapacities).Test
     					);
 			}
 		}

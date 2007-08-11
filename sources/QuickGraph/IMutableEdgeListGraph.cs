@@ -14,6 +14,6 @@ namespace QuickGraph
         bool RemoveEdge(Edge edge);
         event EdgeEventHandler<Vertex, Edge> EdgeRemoved;
 
-        int RemoveEdgeIf(IEdgePredicate<Vertex,Edge> predicate);
+        int RemoveEdgeIf(EdgePredicate<Vertex,Edge> predicate);
     }
 }
