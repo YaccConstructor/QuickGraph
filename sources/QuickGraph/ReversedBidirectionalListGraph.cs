@@ -56,6 +56,45 @@ namespace QuickGraph
             return this.OriginalGraph.ContainsEdge(target,source);
         }
 
+        public bool TryGetEdge(
+            Vertex source,
+            Vertex target,
+            out ReversedEdge<Vertex, Edge> edge)
+        {
+            Edge oedge;
+            if (this.OriginalGraph.TryGetEdge(target, source, out oedge))
+            {
+                edge = new ReversedEdge<Vertex, Edge>(oedge);
+                return true;
+            }
+            else
+            {
+                edge = default(ReversedEdge<Vertex, Edge>);
+                return false;
+            }
+        }
+
+        public bool TryGetEdges(
+            Vertex source,
+            Vertex target,
+            out IEnumerable<ReversedEdge<Vertex,Edge>> edges)
+        {
+            IEnumerable<Edge> oedges;
+            if (this.OriginalGraph.TryGetEdges(target, source, out oedges))
+            {
+                List<ReversedEdge<Vertex, Edge>> list = new List<ReversedEdge<Vertex, Edge>>();
+                foreach (Edge oedge in oedges)
+                    list.Add(new ReversedEdge<Vertex, Edge>(oedge));
+                edges = list;
+                return true;
+            }
+            else
+            {
+                edges = null;
+                return false;
+            }
+        }
+
         public bool  IsOutEdgesEmpty(Vertex v)
         {
             return this.OriginalGraph.IsInEdgesEmpty(v);
@@ -76,7 +115,7 @@ namespace QuickGraph
         {
             Edge edge = this.OriginalGraph.OutEdge(v, index);
             if (edge == null)
-                return null;
+                return default(ReversedEdge<Vertex,Edge>);
             return new ReversedEdge<Vertex, Edge>(edge);
         }
 
@@ -100,7 +139,7 @@ namespace QuickGraph
         {
             Edge edge = this.OriginalGraph.InEdge(v, index);
             if (edge == null)
-                return null;
+                return default(ReversedEdge<Vertex,Edge>);
             return new ReversedEdge<Vertex, Edge>(edge);
         }
 

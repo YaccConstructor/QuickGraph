@@ -7,5 +7,13 @@ namespace QuickGraph
         where Edge : IEdge<Vertex>
     {
         bool ContainsEdge(Vertex source, Vertex target);
+        bool TryGetEdges(
+            Vertex source,
+            Vertex target,
+            out IEnumerable<Edge> edges);
+        bool TryGetEdge(
+            Vertex source,
+            Vertex target,
+            out Edge edge);
     }
 }

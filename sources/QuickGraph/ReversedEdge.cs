@@ -2,7 +2,7 @@
 
 namespace QuickGraph
 {
-    public sealed class ReversedEdge<Vertex,Edge> : IEdge<Vertex>
+    public struct ReversedEdge<Vertex,Edge> : IEdge<Vertex>, IEquatable<ReversedEdge<Vertex, Edge>>
         where Edge : IEdge<Vertex>
     {
         private readonly Edge originalEdge;
@@ -30,11 +30,10 @@ namespace QuickGraph
         
         public override bool  Equals(object obj)
         {
-            ReversedEdge<Vertex, Edge> edge = obj as ReversedEdge<Vertex, Edge>;
-            if (obj == null)
+            if (!(obj is ReversedEdge<Vertex, Edge>))
                 return false;
 
-            return this.OriginalEdge.Equals(edge.OriginalEdge);
+            return Equals((ReversedEdge<Vertex, Edge>)obj);
         }
 
         public override int GetHashCode()
@@ -45,6 +44,11 @@ namespace QuickGraph
         public override string ToString()
         {
             return String.Format("R()", this.OriginalEdge);
+        }
+
+        public bool Equals(ReversedEdge<Vertex, Edge> other)
+        {
+            return this.OriginalEdge.Equals(other.OriginalEdge);
         }
     }
 }

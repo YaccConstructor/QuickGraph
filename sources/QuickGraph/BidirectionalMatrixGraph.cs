@@ -130,6 +130,27 @@ namespace QuickGraph
             return this.edges[source, target] != null;
         }
 
+        public bool TryGetEdge(int source, int target, out Edge edge)
+        {
+            edge = this.edges[source, target];
+            return edge != null;
+        }
+
+        public bool TryGetEdges(int source, int target, out IEnumerable<Edge> edges)
+        {
+            Edge edge;
+            if (this.TryGetEdge(source, target, out edge))
+            {
+                edges = new Edge[] { edge };
+                return true;
+            }
+            else
+            {
+                edges = null;
+                return false;
+            }
+        }
+
         #endregion
 
         #region IImplicitGraph<int,Edge> Members

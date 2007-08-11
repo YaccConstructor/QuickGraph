@@ -77,6 +77,11 @@ namespace QuickGraph.Unit.Pex
             get { return "QuickGraph"; }
         }
 
+        protected override string GetHintPath(string assemblyName)
+        {
+            return null;
+        }
+
         public override TypeName SetUpAttribute
         {
             get { return Metadata<QuickGraph.Unit.SetUpAttribute>.SerializableName; }

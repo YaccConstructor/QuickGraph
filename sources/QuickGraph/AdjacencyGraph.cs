@@ -158,6 +158,51 @@ namespace QuickGraph
             return this.vertexEdges[edge.Source].Contains(edge);
         }
 
+        public bool TryGetEdge(
+            Vertex source,
+            Vertex target,
+            out Edge edge)
+        {
+            EdgeList edgeList;
+            if (this.vertexEdges.TryGetValue(source, out edgeList) &&
+                edgeList.Count > 0)
+            {
+                foreach (Edge e in edgeList)
+                {
+                    if (e.Target.Equals(target))
+                    {
+                        edge = e;
+                        return true;
+                    }
+                }
+            }
+            edge = default(Edge);
+            return false;
+        }
+
+        public bool TryGetEdges(
+            Vertex source,
+            Vertex target,
+            out IEnumerable<Edge> edges)
+        {
+            EdgeList outEdges;
+            if (this.vertexEdges.TryGetValue(source, out outEdges))
+            {
+                List<Edge> list = new List<Edge>(outEdges.Count);
+                foreach (Edge edge in outEdges)
+                    if (edge.Target.Equals(target))
+                        list.Add(edge);
+
+                edges = list;
+                return true;
+            }
+            else
+            {
+                edges = null;
+                return false;
+            }
+        }
+
         public virtual void AddVertex(Vertex v)
         {
             if (v == null)
