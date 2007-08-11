@@ -25,7 +25,7 @@ namespace QuickGraph
 
         public Vertex Target
         {
-            get { return this.OriginalEdge.Target; }
+            get { return this.OriginalEdge.Source; }
         }
         
         public override bool  Equals(object obj)
@@ -43,7 +43,7 @@ namespace QuickGraph
 
         public override string ToString()
         {
-            return String.Format("R()", this.OriginalEdge);
+            return String.Format("R({0})", this.OriginalEdge);
         }
 
         public bool Equals(ReversedEdge<Vertex, Edge> other)

@@ -159,7 +159,7 @@ namespace QuickGraph.Algorithms.Search
 			}
 		}
 
-        private sealed class SearchFrame
+        private struct SearchFrame
         {
             public readonly Vertex Vertex;
             public readonly IEnumerator<Edge> Edges;
@@ -172,7 +172,7 @@ namespace QuickGraph.Algorithms.Search
 
 		public void Visit(Vertex root, int depth)
 		{
-			if (root==null)
+			if ((object)root==null)
 				throw new ArgumentNullException("root");
 
             Stack<SearchFrame> todo = new Stack<SearchFrame>();

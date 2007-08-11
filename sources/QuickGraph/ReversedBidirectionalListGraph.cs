@@ -40,7 +40,7 @@ namespace QuickGraph
         	get { return this.OriginalGraph.VertexCount; }
         }
 
-        public IEnumerable<Vertex>  Vertices
+        public IEnumerable<Vertex> Vertices
         {
         	get { return this.OriginalGraph.Vertices; }
         }
@@ -95,7 +95,7 @@ namespace QuickGraph
             }
         }
 
-        public bool  IsOutEdgesEmpty(Vertex v)
+        public bool IsOutEdgesEmpty(Vertex v)
         {
             return this.OriginalGraph.IsInEdgesEmpty(v);
         }
