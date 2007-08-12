@@ -12,7 +12,8 @@ namespace QuickGraph
         IMutableVertexListGraph<Vertex, Edge>,
         IBidirectionalGraph<Vertex,Edge>,
         IMutableBidirectionalGraph<Vertex,Edge>,
-        IMutableVertexAndEdgeListGraph<Vertex, Edge>
+        IMutableVertexAndEdgeListGraph<Vertex, Edge>,
+        ICloneable
         where Edge : IEdge<Vertex>
     {
         private readonly bool isDirected = true;
@@ -172,6 +173,50 @@ namespace QuickGraph
             return false;
         }
 
+        public bool TryGetEdge(
+            Vertex source,
+            Vertex target,
+            out Edge edge)
+        {
+            EdgeList edgeList;
+            if (this.vertexOutEdges.TryGetValue(source, out edgeList) &&
+                edgeList.Count > 0)
+            {
+                foreach (Edge e in edgeList)
+                {
+                    if (e.Target.Equals(target))
+                    {
+                        edge = e;
+                        return true;
+                    }
+                }
+            }
+            edge = default(Edge);
+            return false;
+        }
+
+        public bool TryGetEdges(
+            Vertex source,
+            Vertex target,
+            out IEnumerable<Edge> edges)
+        {
+            EdgeList edgeList;
+            if (this.vertexOutEdges.TryGetValue(source, out edgeList))
+            {
+                List<Edge> list = new List<Edge>(edgeList.Count);
+                foreach (Edge edge in edgeList)
+                    if (edge.Target.Equals(target))
+                        list.Add(edge);
+                edges = list;
+                return true;
+            }
+            else
+            {
+                edges = null;
+                return false;
+            }
+        }
+
         public bool ContainsEdge(Edge edge)
         {
             return this.vertexOutEdges[edge.Source].Contains(edge);
@@ -219,7 +264,7 @@ namespace QuickGraph
                 return false;
 
             // collect edges to remove
-            EdgeList edgesToRemove = new EdgeList(this.EdgeCapacity);
+            EdgeList edgesToRemove = new EdgeList();
             foreach (Edge outEdge in this.OutEdges(v))
             {
                 this.vertexInEdges[outEdge.Target].Remove(outEdge);
@@ -256,11 +301,14 @@ namespace QuickGraph
                 eh(this, args);
         }
 
-        public int RemoveVertexIf(IVertexPredicate<Vertex> predicate)
+        public int RemoveVertexIf(VertexPredicate<Vertex> predicate)
         {
+            if (predicate == null)
+                throw new ArgumentNullException("predicate");
+
             VertexList vertices = new VertexList();
             foreach (Vertex v in this.Vertices)
-                if (predicate.Test(v))
+                if (predicate(v))
                     vertices.Add(v);
 
             foreach (Vertex v in vertices)
@@ -270,6 +318,8 @@ namespace QuickGraph
 
         public virtual bool AddEdge(Edge e)
         {
+            if (e == null)
+                throw new ArgumentNullException("e");
             if (!this.AllowParallelEdges)
             {
                 if (this.ContainsEdge(e.Source, e.Target))
@@ -317,11 +367,11 @@ namespace QuickGraph
                 eh(this, args);
         }
 
-        public int RemoveEdgeIf(IEdgePredicate<Vertex, Edge> predicate)
+        public int RemoveEdgeIf(EdgePredicate<Vertex, Edge> predicate)
         {
             EdgeList edges = new EdgeList();
             foreach (Edge edge in this.Edges)
-                if (predicate.Test(edge))
+                if (predicate(edge))
                     edges.Add(edge);
 
             foreach (Edge edge in edges)
@@ -329,22 +379,22 @@ namespace QuickGraph
             return edges.Count;
         }
 
-        public int RemoveOutEdgeIf(Vertex v, IEdgePredicate<Vertex, Edge> predicate)
+        public int RemoveOutEdgeIf(Vertex v, EdgePredicate<Vertex, Edge> predicate)
         {
             EdgeList edges = new EdgeList();
             foreach (Edge edge in this.OutEdges(v))
-                if (predicate.Test(edge))
+                if (predicate(edge))
                     edges.Add(edge);
             foreach (Edge edge in edges)
                 this.RemoveEdge(edge);
             return edges.Count;
         }
 
-        public int RemoveInEdgeIf(Vertex v, IEdgePredicate<Vertex, Edge> predicate)
+        public int RemoveInEdgeIf(Vertex v, EdgePredicate<Vertex, Edge> predicate)
         {
             EdgeList edges = new EdgeList();
             foreach (Edge edge in this.InEdges(v))
-                if (predicate.Test(edge))
+                if (predicate(edge))
                     edges.Add(edge);
             foreach (Edge edge in edges)
                 this.RemoveEdge(edge);
@@ -417,12 +467,12 @@ namespace QuickGraph
             }
         }
 
-        public void MergeVertexIf(IVertexPredicate<Vertex> vertexPredicate, IEdgeFactory<Vertex, Edge> edgeFactory)
+        public void MergeVertexIf(VertexPredicate<Vertex> vertexPredicate, IEdgeFactory<Vertex, Edge> edgeFactory)
         {
             // storing vertices to merge
             VertexList mergeVertices = new VertexList(this.VertexCount / 4);
             foreach (Vertex v in this.Vertices)
-                if (vertexPredicate.Test(v))
+                if (vertexPredicate(v))
                     mergeVertices.Add(v);
 
             // applying merge recursively
@@ -439,21 +489,81 @@ namespace QuickGraph
         }
 
         [Serializable]
-        private sealed class EdgeList : List<Edge>
+        private sealed class EdgeList : List<Edge>, ICloneable
         {
             public EdgeList() { }
             public EdgeList(int capacity)
                 : base(capacity)
             { }
+            private EdgeList(EdgeList list)
+                : base(list)
+            { }
+
+            public EdgeList Clone()
+            {
+                return new EdgeList(this);
+            }
+
+            object ICloneable.Clone()
+            {
+                return this.Clone();
+            }
         }
 
         [Serializable]
-        private sealed class VertexEdgeDictionary : Dictionary<Vertex, EdgeList>
+        private sealed class VertexEdgeDictionary 
+            : Dictionary<Vertex, EdgeList>, ICloneable
         {
             public VertexEdgeDictionary() { }
             public VertexEdgeDictionary(int capacity)
                 : base(capacity)
             { }
+
+            public VertexEdgeDictionary Clone()
+            {
+                VertexEdgeDictionary clone = new VertexEdgeDictionary(this.Count);
+                foreach (KeyValuePair<Vertex, EdgeList> kv in this)
+                    clone.Add(kv.Key, kv.Value.Clone());
+                return clone;
+            }
+
+            object ICloneable.Clone()
+            {
+                return this.Clone();
+            }
         }
+
+        #region ICloneable Members
+        private BidirectionalGraph(
+            VertexEdgeDictionary vertexInEdges,
+            VertexEdgeDictionary vertexOutEdges,
+            int edgeCount,
+            int edgeCapacity,
+            bool allowParallelEdges
+            )
+        {
+            this.vertexInEdges = vertexInEdges;
+            this.vertexOutEdges = vertexOutEdges;
+            this.edgeCount = edgeCount;
+            this.edgeCapacity = edgeCapacity;
+            this.allowParallelEdges = allowParallelEdges;
+        }
+
+        public BidirectionalGraph<Vertex, Edge> Clone()
+        {
+            return new BidirectionalGraph<Vertex, Edge>(
+                this.vertexInEdges.Clone(),
+                this.vertexOutEdges.Clone(),
+                this.edgeCount,
+                this.edgeCapacity,
+                this.allowParallelEdges
+                );
+        }
+        
+        object ICloneable.Clone()
+        {
+            return this.Clone();
+        }
+        #endregion
     }
 }

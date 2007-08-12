@@ -9,22 +9,33 @@ namespace QuickGraph.Algorithms.Matrix
         private readonly int rowCount;
         private readonly int columnCount;
 
-        public DoubleDenseMatrix(DoubleDenseMatrix matrix)
-            :this(matrix.RowCount, matrix.ColumnCount, matrix.GetData())
-        {}
-
-        public DoubleDenseMatrix(int rowCount, int columnCount, Double value)
-            : this(rowCount, columnCount)
+        public static DoubleDenseMatrix Create(DoubleDenseMatrix matrix)
         {
-            for (int i = 0; i < this.data.Length; ++i)
-                this.data[i] = value;
+            return new DoubleDenseMatrix(matrix.RowCount, matrix.ColumnCount, matrix.GetData());
+        }
+
+        public static DoubleDenseMatrix Create(int rowCount, int columnCount, Double value)
+        {
+            double[] data = new double[rowCount * columnCount];
+            for (int i = 0; i < data.Length; ++i)
+                data[i] = value;
+
+            return new DoubleDenseMatrix(rowCount, columnCount, data);
         }
 
         public DoubleDenseMatrix (int rowCount, int columnCount)
-            :this(rowCount, columnCount, new double[rowCount * columnCount])
-        {}
+        {
+            if (rowCount < 0)
+                throw new ArgumentOutOfRangeException("rowCount");
+            if (columnCount < 0)
+                throw new ArgumentOutOfRangeException("rowCount");
 
-        internal DoubleDenseMatrix(int rowCount, int columnCount, double[] data)
+            this.rowCount = rowCount;
+            this.columnCount = columnCount;
+            this.data = new double[rowCount * columnCount];
+        }
+
+        private DoubleDenseMatrix(int rowCount, int columnCount, double[] data)
         {
             if (rowCount < 0)
                 throw new ArgumentOutOfRangeException("rowCount");
@@ -103,7 +114,7 @@ namespace QuickGraph.Algorithms.Matrix
 
         public static DoubleDenseMatrix Add(DoubleDenseMatrix left, DoubleDenseMatrix right)
         {
-            DoubleDenseMatrix m = new DoubleDenseMatrix(left);
+            DoubleDenseMatrix m = Create(left);
             return m.Add(right);
         }
 
@@ -124,7 +135,7 @@ namespace QuickGraph.Algorithms.Matrix
 
         public static DoubleDenseMatrix Sub(DoubleDenseMatrix left, DoubleDenseMatrix right)
         {
-            DoubleDenseMatrix m = new DoubleDenseMatrix(left);
+            DoubleDenseMatrix m = Create(left);
             return m.Sub(right);
         }
 
@@ -142,7 +153,7 @@ namespace QuickGraph.Algorithms.Matrix
 
         public static DoubleDenseMatrix Mul(DoubleDenseMatrix left, double factor)
         {
-            DoubleDenseMatrix m = new DoubleDenseMatrix(left);
+            DoubleDenseMatrix m = Create(left);
             return m.Mul(factor);
         }
 
@@ -153,7 +164,7 @@ namespace QuickGraph.Algorithms.Matrix
 
         public static DoubleDenseMatrix Mul(double factor, DoubleDenseMatrix right)
         {
-            DoubleDenseMatrix m = new DoubleDenseMatrix(right);
+            DoubleDenseMatrix m = Create(right);
             return m.Mul(factor);
         }
 
@@ -282,7 +293,7 @@ namespace QuickGraph.Algorithms.Matrix
         {
             DoubleDenseMatrix AT = A.Transpose();
             DoubleDenseMatrix BT = B.Transpose();
-            DoubleDenseMatrix Zk = new DoubleDenseMatrix(B.RowCount, A.RowCount, 1.0/(A.RowCount*B.RowCount));
+            DoubleDenseMatrix Zk = DoubleDenseMatrix.Create(B.RowCount, A.RowCount, 1.0/(A.RowCount*B.RowCount));
             DoubleDenseMatrix Zk1 = null;
             DoubleDenseMatrix ZkOld = null;
 

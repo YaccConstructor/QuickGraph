@@ -4,8 +4,7 @@ using System.Collections.Generic;
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public sealed class InDictionaryVertexPredicate<Vertex, Value> :
-        IVertexPredicate<Vertex>
+    public sealed class InDictionaryVertexPredicate<Vertex, Value>
     {
         private IDictionary<Vertex, Value> dictionary;
 
@@ -17,6 +16,8 @@ namespace QuickGraph.Predicates
 
         public bool Test(Vertex v)
         {
+            if (v == null)
+                throw new ArgumentNullException("v");
             return this.dictionary.ContainsKey(v);
         }
     }

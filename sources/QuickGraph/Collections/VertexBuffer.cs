@@ -8,6 +8,8 @@
     {
         public Vertex Peek()
         {
+            if (this.Count == 0)
+                throw new InvalidOperationException("Buffer is empty");
             return this[0];
         }
 
@@ -20,6 +22,8 @@
 
         public Vertex Pop()
         {
+            if (this.Count == 0)
+                throw new InvalidOperationException("Buffer is empty");
             Vertex v = this[0];
             this.RemoveAt(0);
             return v;

@@ -26,6 +26,8 @@ namespace QuickGraph
 
         public static void DumpResources(string path)
         {
+            if (String.IsNullOrEmpty(path))
+                throw new ArgumentNullException("path");
             GetLogo().Save(Path.Combine(path, "quickgraph.png"), System.Drawing.Imaging.ImageFormat.Png);
             GetBanner().Save(Path.Combine(path, "quickgraph.banner.png"), System.Drawing.Imaging.ImageFormat.Png);
         }
