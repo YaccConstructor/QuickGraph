@@ -18,9 +18,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Graphviz", "Quic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Data", "QuickGraph.Data\QuickGraph.Data.csproj", "{960C14D1-EDBD-40E5-8AE6-25E311551B87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Heap", "QuickGraph.Heap\QuickGraph.Heap.csproj", "{2DEC7C6E-68DF-47EC-A75E-2C1238986B8E}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 7
+		SccNumberOfProjects = 8
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs03.codeplex.com/
 		SccLocalPath0 = .
@@ -42,6 +44,9 @@ Global
 		SccProjectUniqueName6 = QuickGraph.Data\\QuickGraph.Data.csproj
 		SccProjectName6 = QuickGraph.Data
 		SccLocalPath6 = QuickGraph.Data
+		SccProjectUniqueName7 = QuickGraph.Heap\\QuickGraph.Heap.csproj
+		SccProjectName7 = QuickGraph.Heap
+		SccLocalPath7 = QuickGraph.Heap
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +77,10 @@ Global
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DEC7C6E-68DF-47EC-A75E-2C1238986B8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DEC7C6E-68DF-47EC-A75E-2C1238986B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DEC7C6E-68DF-47EC-A75E-2C1238986B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DEC7C6E-68DF-47EC-A75E-2C1238986B8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<gcheap>
+	<types>
+		<type id="1" name="System.Object[]"/>
+		<type id="2" name="System.Char[]"/>
+		<type id="3" name="System.Byte[]"/>
+		<type id="4" name="System.String"/>
+		<type id="5" name="System.Text.StringBuilder"/>
+		<type id="6" name="System.OutOfMemoryException"/>
+		<type id="7" name="System.StackOverflowException"/>
+		<type id="8" name="System.ExecutionEngineException"/>
+		<type id="9" name="System.SharedStatics"/>
+		<type id="10" name="System.AppDomain"/>
+		<type id="11" name="System.AppDomainSetup"/>
+		<type id="12" name="System.IO.Stream/NullStream"/>
+		<type id="13" name="System.Text.UTF8Encoding"/>
+		<type id="14" name="System.RuntimeType"/>
+		<type id="15" name="System.Reflection.Missing"/>
+		<type id="16" name="System.__Filters"/>
+		<type id="17" name="System.Reflection.MemberFilter"/>
+		<type id="18" name="System.IO.StreamWriter"/>
+		<type id="19" name="System.Text.CodePageEncoding"/>
+		<type id="20" name="System.IO.TextWriter/NullTextWriter"/>
+		<type id="21" name="System.Text.UTF8Encoding/UTF8Encoder"/>
+		<type id="22" name="System.IO.TextReader/NullTextReader"/>
+		<type id="23" name="System.IO.StreamReader"/>
+		<type id="24" name="System.IO.StreamReader/NullStreamReader"/>
+		<type id="25" name="System.Text.CodePageEncoding/Decoder"/>
+		<type id="26" name="System.IO.__ConsoleStream"/>
+		<type id="27" name="System.Text.Encoding/DefaultEncoder"/>
+		<type id="28" name="System.IO.TextWriter/SyncTextWriter"/>
+		<type id="29" name="System.IO.TextReader/SyncTextReader"/>
+	</types>
+	<roots>
+		<root kind="HANDLE(Strong):3e11d4" address="0x1aa4000"/>
+		<root kind="HANDLE(Strong):3e11e4" address="0xaa10e4"/>
+		<root kind="HANDLE(Strong):3e11e8" address="0x1aa1000"/>
+		<root kind="HANDLE(Strong):3e11ec" address="0xaa10a4"/>
+		<root kind="HANDLE(Strong):3e11f0" address="0xaa1064"/>
+		<root kind="HANDLE(Strong):3e11f4" address="0xaa1024"/>
+		<root kind="HANDLE(Strong):9811c0" address="0x1aa2000"/>
+		<root kind="HANDLE(Strong):9811fc" address="0xaa1104"/>
+		<root kind="stack" address="0xaa2f48"/>
+		<root kind="stack" address="0xaa2dc8"/>
+		<root kind="stack" address="0xaa2df0"/>
+		<root kind="stack" address="0xaa2df0"/>
+		<root kind="stack" address="0xaa32a4"/>
+		<root kind="stack" address="0xaa32a4"/>
+		<root kind="stack" address="0xaa1b88"/>
+		<root kind="stack" address="0xaa1b88"/>
+		<root kind="stack" address="0xaa1b88"/>
+		<root kind="stack" address="0x12fea0"/>
+		<root kind="stack" address="0x12feec"/>
+	</roots>
+	<objects>
+		<object address="0xaa1024" typeid="6" size="64">
+		</object>
+		<object address="0xaa1064" typeid="7" size="64">
+		</object>
+		<object address="0xaa10a4" typeid="8" size="64">
+		</object>
+		<object address="0xaa10e4" typeid="9" size="32">
+		</object>
+		<object address="0xaa1104" typeid="10" size="80">
+			<member address="0xaa1170"/>
+		</object>
+		<object address="0xaa1154" typeid="4" size="28">
+		</object>
+		<object address="0xaa1170" typeid="11" size="20">
+			<member address="0xaa1184"/>
+		</object>
+		<object address="0xaa1184" typeid="1" size="72">
+			<member address="0xaa1430"/>
+			<member address="0xaa15a4"/>
+		</object>
+		<object address="0xaa11cc" typeid="4" size="32">
+		</object>
+		<object address="0xaa11ec" typeid="4" size="32">
+		</object>
+		<object address="0xaa120c" typeid="2" size="16">
+		</object>
+		<object address="0xaa121c" typeid="4" size="144">
+		</object>
+		<object address="0xaa12ac" typeid="4" size="20">
+		</object>
+		<object address="0xaa12c0" typeid="2" size="56">
+		</object>
+		<object address="0xaa12f8" typeid="4" size="40">
+		</object>
+		<object address="0xaa1320" typeid="4" size="76">
+		</object>
+		<object address="0xaa136c" typeid="4" size="32">
+		</object>
+		<object address="0xaa138c" typeid="4" size="84">
+		</object>
+		<object address="0xaa13e0" typeid="4" size="80">
+		</object>
+		<object address="0xaa1430" typeid="4" size="124">
+		</object>
+		<object address="0xaa14ac" typeid="5" size="20">
+			<member address="0xaa15a4"/>
+		</object>
+		<object address="0xaa14c0" typeid="4" size="40">
+		</object>
+		<object address="0xaa14e8" typeid="4" size="52">
+		</object>
+		<object address="0xaa151c" typeid="4" size="88">
+		</object>
+		<object address="0xaa1574" typeid="4" size="48">
+		</object>
+		<object address="0xaa15a4" typeid="4" size="84">
+		</object>
+		<object address="0xaa15f8" typeid="2" size="20">
+		</object>
+		<object address="0xaa160c" typeid="4" size="20">
+		</object>
+		<object address="0xaa1620" typeid="4" size="32">
+		</object>
+		<object address="0xaa1640" typeid="4" size="48">
+		</object>
+		<object address="0xaa1670" typeid="4" size="36">
+		</object>
+		<object address="0xaa1694" typeid="4" size="44">
+		</object>
+		<object address="0xaa16c0" typeid="4" size="64">
+		</object>
+		<object address="0xaa1700" typeid="4" size="64">
+		</object>
+		<object address="0xaa1740" typeid="4" size="56">
+		</object>
+		<object address="0xaa1778" typeid="4" size="52">
+		</object>
+		<object address="0xaa17ac" typeid="4" size="40">
+		</object>
+		<object address="0xaa17d4" typeid="4" size="56">
+		</object>
+		<object address="0xaa180c" typeid="4" size="48">
+		</object>
+		<object address="0xaa183c" typeid="4" size="36">
+		</object>
+		<object address="0xaa1860" typeid="4" size="44">
+		</object>
+		<object address="0xaa188c" typeid="4" size="60">
+		</object>
+		<object address="0xaa18c8" typeid="4" size="48">
+		</object>
+		<object address="0xaa18f8" typeid="4" size="40">
+		</object>
+		<object address="0xaa1920" typeid="5" size="20">
+			<member address="0xaa1abc"/>
+		</object>
+		<object address="0xaa1934" typeid="4" size="36">
+		</object>
+		<object address="0xaa1958" typeid="4" size="84">
+		</object>
+		<object address="0xaa19ac" typeid="4" size="52">
+		</object>
+		<object address="0xaa19e0" typeid="4" size="108">
+		</object>
+		<object address="0xaa1a4c" typeid="4" size="112">
+		</object>
+		<object address="0xaa1abc" typeid="4" size="204">
+		</object>
+		<object address="0xaa1b88" typeid="1" size="16">
+		</object>
+		<object address="0xaa1b98" typeid="26" size="20">
+		</object>
+		<object address="0xaa1bac" typeid="12" size="12">
+		</object>
+		<object address="0xaa1bb8" typeid="19" size="20">
+		</object>
+		<object address="0xaa1bcc" typeid="4" size="80">
+		</object>
+		<object address="0xaa1c1c" typeid="4" size="36">
+		</object>
+		<object address="0xaa1c40" typeid="18" size="52">
+			<member address="0xaa2228"/>
+			<member address="0xaa1b98"/>
+			<member address="0xaa1bb8"/>
+			<member address="0xaa2244"/>
+			<member address="0xaa245c"/>
+			<member address="0xaa2250"/>
+		</object>
+		<object address="0xaa1c74" typeid="13" size="20">
+		</object>
+		<object address="0xaa1c88" typeid="18" size="52">
+			<member address="0xaa1e14"/>
+			<member address="0xaa1bac"/>
+			<member address="0xaa1c74"/>
+			<member address="0xaa1e24"/>
+			<member address="0xaa201c"/>
+			<member address="0xaa1e38"/>
+		</object>
+		<object address="0xaa1cbc" typeid="4" size="32">
+		</object>
+		<object address="0xaa1cdc" typeid="4" size="36">
+		</object>
+		<object address="0xaa1d00" typeid="4" size="72">
+		</object>
+		<object address="0xaa1d48" typeid="4" size="76">
+		</object>
+		<object address="0xaa1d94" typeid="20" size="20">
+			<member address="0xaa1e04"/>
+		</object>
+		<object address="0xaa1da8" typeid="4" size="24">
+		</object>
+		<object address="0xaa1dc0" typeid="4" size="68">
+		</object>
+		<object address="0xaa1e04" typeid="2" size="16">
+		</object>
+		<object address="0xaa1e14" typeid="2" size="16">
+		</object>
+		<object address="0xaa1e24" typeid="21" size="20">
+			<member address="0xaa1c74"/>
+		</object>
+		<object address="0xaa1e38" typeid="2" size="268">
+		</object>
+		<object address="0xaa1f44" typeid="4" size="36">
+		</object>
+		<object address="0xaa1f68" typeid="4" size="84">
+		</object>
+		<object address="0xaa1fbc" typeid="4" size="96">
+		</object>
+		<object address="0xaa201c" typeid="3" size="524">
+		</object>
+		<object address="0xaa2228" typeid="2" size="16">
+		</object>
+		<object address="0xaa2238" typeid="3" size="12">
+		</object>
+		<object address="0xaa2244" typeid="27" size="12">
+			<member address="0xaa1bb8"/>
+		</object>
+		<object address="0xaa2250" typeid="2" size="524">
+		</object>
+		<object address="0xaa245c" typeid="3" size="268">
+		</object>
+		<object address="0xaa2568" typeid="4" size="28">
+		</object>
+		<object address="0xaa2584" typeid="4" size="28">
+		</object>
+		<object address="0xaa25a0" typeid="4" size="56">
+		</object>
+		<object address="0xaa25d8" typeid="4" size="36">
+		</object>
+		<object address="0xaa25fc" typeid="4" size="88">
+		</object>
+		<object address="0xaa2654" typeid="4" size="36">
+		</object>
+		<object address="0xaa2678" typeid="4" size="72">
+		</object>
+		<object address="0xaa26c0" typeid="4" size="32">
+		</object>
+		<object address="0xaa26e0" typeid="28" size="24">
+			<member address="0xaa26f8"/>
+			<member address="0xaa1c40"/>
+		</object>
+		<object address="0xaa26f8" typeid="2" size="16">
+		</object>
+		<object address="0xaa2708" typeid="26" size="20">
+		</object>
+		<object address="0xaa271c" typeid="18" size="52">
+			<member address="0xaa2750"/>
+			<member address="0xaa2708"/>
+			<member address="0xaa1bb8"/>
+			<member address="0xaa2760"/>
+			<member address="0xaa2978"/>
+			<member address="0xaa276c"/>
+		</object>
+		<object address="0xaa2750" typeid="2" size="16">
+		</object>
+		<object address="0xaa2760" typeid="27" size="12">
+			<member address="0xaa1bb8"/>
+		</object>
+		<object address="0xaa276c" typeid="2" size="524">
+		</object>
+		<object address="0xaa2978" typeid="3" size="268">
+		</object>
+		<object address="0xaa2a84" typeid="28" size="24">
+			<member address="0xaa2a9c"/>
+			<member address="0xaa271c"/>
+		</object>
+		<object address="0xaa2a9c" typeid="2" size="16">
+		</object>
+		<object address="0xaa2aac" typeid="4" size="40">
+		</object>
+		<object address="0xaa2ad4" typeid="2" size="36">
+		</object>
+		<object address="0xaa2af8" typeid="4" size="40">
+		</object>
+		<object address="0xaa2b20" typeid="4" size="28">
+		</object>
+		<object address="0xaa2b3c" typeid="4" size="84">
+		</object>
+		<object address="0xaa2b90" typeid="4" size="40">
+		</object>
+		<object address="0xaa2bb8" typeid="4" size="76">
+		</object>
+		<object address="0xaa2c04" typeid="4" size="52">
+		</object>
+		<object address="0xaa2c38" typeid="4" size="32">
+		</object>
+		<object address="0xaa2c58" typeid="4" size="56">
+		</object>
+		<object address="0xaa2c90" typeid="4" size="28">
+		</object>
+		<object address="0xaa2cac" typeid="4" size="64">
+		</object>
+		<object address="0xaa2cec" typeid="4" size="32">
+		</object>
+		<object address="0xaa2d0c" typeid="15" size="12">
+		</object>
+		<object address="0xaa2d18" typeid="1" size="16">
+		</object>
+		<object address="0xaa2d28" typeid="14" size="16">
+		</object>
+		<object address="0xaa2d38" typeid="14" size="16">
+		</object>
+		<object address="0xaa2d48" typeid="14" size="16">
+		</object>
+		<object address="0xaa2d58" typeid="16" size="12">
+		</object>
+		<object address="0xaa2d64" typeid="17" size="28">
+			<member address="0xaa2d58"/>
+		</object>
+		<object address="0xaa2d80" typeid="17" size="28">
+			<member address="0xaa2d58"/>
+		</object>
+		<object address="0xaa2d9c" typeid="17" size="28">
+			<member address="0xaa2d58"/>
+		</object>
+		<object address="0xaa2db8" typeid="14" size="16">
+		</object>
+		<object address="0xaa2dc8" typeid="26" size="20">
+		</object>
+		<object address="0xaa2ddc" typeid="19" size="20">
+		</object>
+		<object address="0xaa2df0" typeid="23" size="56">
+			<member address="0xaa2dc8"/>
+			<member address="0xaa2ddc"/>
+			<member address="0xaa2edc"/>
+			<member address="0xaa2f48"/>
+			<member address="0xaa3078"/>
+			<member address="0xaa2238"/>
+		</object>
+		<object address="0xaa2e28" typeid="24" size="56">
+		</object>
+		<object address="0xaa2e60" typeid="22" size="12">
+		</object>
+		<object address="0xaa2e6c" typeid="4" size="72">
+		</object>
+		<object address="0xaa2eb4" typeid="4" size="40">
+		</object>
+		<object address="0xaa2edc" typeid="25" size="20">
+			<member address="0xaa2ddc"/>
+			<member address="0xaa2f38"/>
+		</object>
+		<object address="0xaa2ef0" typeid="4" size="72">
+		</object>
+		<object address="0xaa2f38" typeid="3" size="16">
+		</object>
+		<object address="0xaa2f48" typeid="3" size="268">
+		</object>
+		<object address="0xaa3054" typeid="4" size="36">
+		</object>
+		<object address="0xaa3078" typeid="2" size="524">
+		</object>
+		<object address="0xaa3284" typeid="4" size="32">
+		</object>
+		<object address="0xaa32a4" typeid="29" size="16">
+			<member address="0xaa2df0"/>
+		</object>
+		<object address="0xaa32b4" typeid="4" size="80">
+		</object>
+		<object address="0x1aa1000" typeid="1" size="2064">
+			<member address="0xaa1154"/>
+			<member address="0xaa11cc"/>
+			<member address="0xaa11ec"/>
+			<member address="0xaa12ac"/>
+			<member address="0xaa12f8"/>
+			<member address="0xaa1320"/>
+			<member address="0xaa136c"/>
+			<member address="0xaa138c"/>
+			<member address="0xaa13e0"/>
+			<member address="0xaa151c"/>
+			<member address="0xaa1574"/>
+			<member address="0xaa160c"/>
+			<member address="0xaa1620"/>
+			<member address="0xaa1640"/>
+			<member address="0xaa1670"/>
+			<member address="0xaa1694"/>
+			<member address="0xaa16c0"/>
+			<member address="0xaa1700"/>
+			<member address="0xaa1740"/>
+			<member address="0xaa1778"/>
+			<member address="0xaa17ac"/>
+			<member address="0xaa17d4"/>
+			<member address="0xaa180c"/>
+			<member address="0xaa183c"/>
+			<member address="0xaa1860"/>
+			<member address="0xaa188c"/>
+			<member address="0xaa18c8"/>
+			<member address="0xaa18f8"/>
+			<member address="0xaa1934"/>
+			<member address="0xaa1958"/>
+			<member address="0xaa1bcc"/>
+			<member address="0xaa1c1c"/>
+			<member address="0xaa1cbc"/>
+			<member address="0xaa1cdc"/>
+			<member address="0xaa1d00"/>
+			<member address="0xaa1d48"/>
+			<member address="0xaa1da8"/>
+			<member address="0xaa1dc0"/>
+			<member address="0xaa1f44"/>
+			<member address="0xaa1f68"/>
+			<member address="0xaa1fbc"/>
+			<member address="0xaa2568"/>
+			<member address="0xaa2584"/>
+			<member address="0xaa25a0"/>
+			<member address="0xaa25d8"/>
+			<member address="0xaa25fc"/>
+			<member address="0xaa2654"/>
+			<member address="0xaa2678"/>
+			<member address="0xaa26c0"/>
+			<member address="0xaa2aac"/>
+			<member address="0xaa2af8"/>
+			<member address="0xaa2b20"/>
+			<member address="0xaa2b3c"/>
+			<member address="0xaa2b90"/>
+			<member address="0xaa2bb8"/>
+			<member address="0xaa2c04"/>
+			<member address="0xaa2c38"/>
+			<member address="0xaa2c58"/>
+			<member address="0xaa2c90"/>
+			<member address="0xaa2cac"/>
+			<member address="0xaa2cec"/>
+			<member address="0xaa2e6c"/>
+			<member address="0xaa2eb4"/>
+			<member address="0xaa2ef0"/>
+			<member address="0xaa3054"/>
+			<member address="0xaa3284"/>
+			<member address="0xaa32b4"/>
+		</object>
+		<object address="0x1aa2000" typeid="1" size="4096">
+			<member address="0xaa10e4"/>
+			<member address="0xaa12ac"/>
+			<member address="0xaa12c0"/>
+			<member address="0xaa15f8"/>
+			<member address="0xaa32a4"/>
+			<member address="0xaa26e0"/>
+			<member address="0xaa2a84"/>
+			<member address="0xaa1bac"/>
+			<member address="0xaa1c88"/>
+			<member address="0xaa1d94"/>
+			<member address="0xaa2238"/>
+			<member address="0xaa2d28"/>
+			<member address="0xaa2d64"/>
+			<member address="0xaa2d80"/>
+			<member address="0xaa2d9c"/>
+			<member address="0xaa2d0c"/>
+			<member address="0xaa2d18"/>
+			<member address="0xaa2d28"/>
+			<member address="0xaa2d38"/>
+			<member address="0xaa2d48"/>
+			<member address="0xaa2d0c"/>
+			<member address="0xaa2e28"/>
+			<member address="0xaa2e60"/>
+		</object>
+		<object address="0x1aa4000" typeid="1" size="4096">
+			<member address="0xaa2d28"/>
+			<member address="0xaa2d38"/>
+			<member address="0xaa2d48"/>
+			<member address="0xaa2db8"/>
+		</object>
+	</objects>
+</gcheap>
