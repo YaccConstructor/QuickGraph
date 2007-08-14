@@ -5,12 +5,22 @@ using QuickGraph;
 using System.IO;
 using System.Xml;
 using QuickGraph.Algorithms.Search;
+using QuickGraph.Glee;
+using Microsoft.Glee.GraphViewerGdi;
 
 namespace QuickGraph.Heap
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// http://www.cs.utexas.edu/users/speedway/DaCapo/papers/cork-popl-2007.pdf
+    /// </remarks>
     public sealed class GcTypeHeap
     {
         private readonly BidirectionalGraph<GcType, GcTypeEdge> graph;
+        private int size = -1;
+        private GViewer viewer;
 
         internal GcTypeHeap(BidirectionalGraph<GcType, GcTypeEdge> graph)
         {
@@ -20,6 +30,21 @@ namespace QuickGraph.Heap
             this.graph = graph;
         }
 
+        public int Size
+        {
+            get 
+            {
+                if (this.size < 0)
+                {
+                    int s = 0;
+                    foreach (GcType type in this.graph.Vertices)
+                        s += type.Size;
+                    this.size = s;
+                }
+                return this.size; 
+            }
+        }
+
         public static GcTypeHeap Load(string heapXmlFileName)
         {
             if (String.IsNullOrEmpty(heapXmlFileName))
@@ -27,17 +52,23 @@ namespace QuickGraph.Heap
             if (!File.Exists(heapXmlFileName))
                 throw new FileNotFoundException(heapXmlFileName);
 
+            Console.WriteLine("loading {0}", heapXmlFileName);
             using (XmlReader reader = XmlReader.Create(heapXmlFileName))
             {
                 GcTypeGraphReader greader = new GcTypeGraphReader();
                 greader.Read(reader);
-                return new GcTypeHeap(greader.Graph).RemoveDefault(); ;
+                GcTypeHeap heap = new GcTypeHeap(greader.Graph).RemoveDefault(); ;
+                Console.WriteLine("heap: {0}", heap);
+                return heap;
             }
         }
 
         public override string ToString()
         {
-            return String.Format("{0} types", this.graph.VertexCount);
+            return String.Format("{0} types, {1} edges, {2}", 
+                this.graph.VertexCount,
+                this.graph.EdgeCount,
+                FormatHelper.ToSize(this.Size));
         }
 
         public GcTypeCollection Types
@@ -52,6 +83,59 @@ namespace QuickGraph.Heap
         {
             return new GcTypeHeap(this.graph.Clone());
         }
+
+        #region Rendering
+        public GcTypeHeap Render()
+        {
+            Console.WriteLine("rendering...");
+            if (this.graph.VertexCount > 500)
+            {
+                Console.WriteLine("too many vertices");
+                return this;
+            }
+
+            GleeGraphPopulator<GcType, GcTypeEdge> populator = GleeGraphUtility.Create(this.graph);
+            try
+            {
+                populator.NodeAdded += new GleeVertexNodeEventHandler<GcType>(populator_NodeAdded);
+                populator.EdgeAdded += new GleeEdgeEventHandler<GcType, GcTypeEdge>(populator_EdgeAdded);
+                populator.Compute();
+
+                if (viewer == null)
+                    viewer = new GViewer();
+                viewer.Graph = populator.GleeGraph;
+            }
+            finally
+            {
+                populator.NodeAdded -= new GleeVertexNodeEventHandler<GcType>(populator_NodeAdded);
+                populator.EdgeAdded -= new GleeEdgeEventHandler<GcType, GcTypeEdge>(populator_EdgeAdded);
+            }
+
+            return this;
+        }
+
+        void populator_EdgeAdded(object sender, GleeEdgeEventArgs<GcType, GcTypeEdge> e)
+        {
+            e.GEdge.Attr.Label = e.Edge.Count.ToString();
+        }
+
+        void populator_NodeAdded(object sender, GleeVertexEventArgs<GcType> args)
+        {
+            // root -> cirle
+            if (args.Vertex.Root)
+                args.Node.Attr.Shape = Microsoft.Glee.Drawing.Shape.Circle;
+            else
+                args.Node.Attr.Shape = Microsoft.Glee.Drawing.Shape.Box;
+
+            // label
+            args.Node.Attr.Label =
+                String.Format("{0}\n{1} {2}",
+                    args.Vertex.Name,
+                    args.Vertex.Count,
+                    FormatHelper.ToSize(args.Vertex.Size)
+                    );
+        }
+        #endregion
 
         #region Filtering
         private GcTypeHeap RemoveDefault()
@@ -92,6 +176,14 @@ namespace QuickGraph.Heap
         }
 
         public GcTypeHeap Touching(string typeNames)
+        {
+            if (String.IsNullOrEmpty(typeNames))
+                throw new ArgumentNullException("typeNames");
+
+            return this.Clone().TouchingInPlace(typeNames);
+        }
+
+        private GcTypeHeap TouchingInPlace(string typeNames)
         {
             if (String.IsNullOrEmpty(typeNames))
                 throw new ArgumentNullException("typeNames");
