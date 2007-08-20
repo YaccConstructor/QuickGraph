@@ -9,8 +9,11 @@ namespace QuickGraph.Heap
     internal sealed class GcTypeGraphReader : GcHeapXmlReader
     {
         private readonly BidirectionalGraph<GcType, GcTypeEdge> graph = new BidirectionalGraph<GcType, GcTypeEdge>();
+        // id -> type
         private readonly Dictionary<int, GcType> types = new Dictionary<int, GcType>();
+        // adress -> root
         private readonly Dictionary<int, GcRoot> roots = new Dictionary<int,GcRoot>();
+        // adress -> type
         private readonly Dictionary<int, GcType> objectTypes = new Dictionary<int, GcType>();
         private readonly List<GcMember> unresolvedMembers = new List<GcMember>();
 
@@ -91,13 +94,12 @@ namespace QuickGraph.Heap
             this.unresolvedMembers.Clear();
         }
 
-        private void ParseDump(string fileName)
+        public void ParseDump(StreamReader reader)
         {
-            if (string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName");
-            using (StreamReader reader = new StreamReader(fileName))
-                while (!reader.EndOfStream)
-                    this.ParseDumpLine(reader.ReadLine());
+            if (reader == null)
+                throw new ArgumentNullException("reader");
+            while (!reader.EndOfStream)
+                this.ParseDumpLine(reader.ReadLine());
         }
 
         private static IEnumerable<string> SplitLine(string line)
@@ -122,20 +124,25 @@ namespace QuickGraph.Heap
             List<string> elements = new List<string>(SplitLine(l));
             if (!elements[0].ToLowerInvariant().StartsWith("0x"))
                 return;
-            int address = int.Parse(elements[0].Substring(2), System.Globalization.NumberStyles.AllowHexSpecifier);
+            int address;
+            if (!TryParseAddress(elements[0].Substring(2), out address))
+            {
+                Console.WriteLine("failed to parse address {0}", elements[0].Substring(2));
+                return;
+            }
 
             // element[3] contains the gen
             int gen;
             if (!int.TryParse(elements[3], out gen))
+            {
+                Console.WriteLine("failed to parse gen {0}", elements[3]);
                 return;
+            }
 
             // we can update the object
-            // TODO
-            //GcObjectVertex v = this.ObjectGraph.FromAddress(address);
-            //if (v == null)
-            //    return;
-
-            //v.Gen = gen;
+            GcType type;
+            if (this.objectTypes.TryGetValue(address, out type))
+                type.AddObjectGeneration(gen);
         }
     }
 }

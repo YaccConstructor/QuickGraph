@@ -7,6 +7,9 @@ using System.Xml;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Glee;
 using Microsoft.Glee.GraphViewerGdi;
+using QuickGraph.Algorithms;
+using QuickGraph.Algorithms.Condensation;
+using System.Windows.Forms;
 
 namespace QuickGraph.Heap
 {
@@ -20,6 +23,7 @@ namespace QuickGraph.Heap
     {
         private readonly BidirectionalGraph<GcType, GcTypeEdge> graph;
         private int size = -1;
+        private Form viewerForm;
         private GViewer viewer;
 
         internal GcTypeHeap(BidirectionalGraph<GcType, GcTypeEdge> graph)
@@ -45,22 +49,45 @@ namespace QuickGraph.Heap
             }
         }
 
+        /// <summary>
+        /// Loads the specified heap XML file name.
+        /// </summary>
+        /// <param name="heapXmlFileName">Name of the heap XML file.</param>
+        /// <returns></returns>
         public static GcTypeHeap Load(string heapXmlFileName)
+        {
+            return Load(heapXmlFileName, null);
+        }
+
+        /// <summary>
+        /// Loads the specified heap XML file name.
+        /// </summary>
+        /// <param name="heapXmlFileName">Name of the heap XML file.</param>
+        /// <param name="dumpFileName">Name of the dump file.</param>
+        /// <returns></returns>
+        public static GcTypeHeap Load(string heapXmlFileName, string dumpFileName)
         {
             if (String.IsNullOrEmpty(heapXmlFileName))
                 throw new ArgumentNullException("heapXmlFileName");
             if (!File.Exists(heapXmlFileName))
-                throw new FileNotFoundException(heapXmlFileName);
+                throw new FileNotFoundException("could not find heap file", heapXmlFileName);
 
             Console.WriteLine("loading {0}", heapXmlFileName);
+            GcTypeGraphReader greader = new GcTypeGraphReader();
+
             using (XmlReader reader = XmlReader.Create(heapXmlFileName))
-            {
-                GcTypeGraphReader greader = new GcTypeGraphReader();
                 greader.Read(reader);
-                GcTypeHeap heap = new GcTypeHeap(greader.Graph).RemoveDefault(); ;
-                Console.WriteLine("heap: {0}", heap);
-                return heap;
+            if (!String.IsNullOrEmpty(dumpFileName))
+            {
+                if (!File.Exists(dumpFileName))
+                    throw new FileNotFoundException("could not find dump file", dumpFileName);
+                using (StreamReader reader = new StreamReader(File.OpenRead(dumpFileName)))
+                    greader.ParseDump(reader);
             }
+
+            GcTypeHeap heap = new GcTypeHeap(greader.Graph).RemoveDefault(); ;
+            Console.WriteLine("heap: {0}", heap);
+            return heap;
         }
 
         public override string ToString()
@@ -71,11 +98,29 @@ namespace QuickGraph.Heap
                 FormatHelper.ToSize(this.Size));
         }
 
+        /// <summary>
+        /// Gets the list of types in the graph
+        /// </summary>
         public GcTypeCollection Types
         {
             get
             {
                 return new GcTypeCollection(this.graph.Vertices).SortSize();
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of root types
+        /// </summary>
+        public GcTypeCollection Roots
+        {
+            get
+            {
+                GcTypeCollection roots = new GcTypeCollection(this.graph.Vertices);
+                foreach (GcType type in this.graph.Vertices)
+                    if (type.Root)
+                        roots.Add(type);
+                return roots;
             }
         }
 
@@ -90,7 +135,7 @@ namespace QuickGraph.Heap
             Console.WriteLine("rendering...");
             if (this.graph.VertexCount > 500)
             {
-                Console.WriteLine("too many vertices");
+                Console.WriteLine("too many vertices ");
                 return this;
             }
 
@@ -102,8 +147,14 @@ namespace QuickGraph.Heap
                 populator.Compute();
 
                 if (viewer == null)
+                {
+                    viewerForm = new Form();
                     viewer = new GViewer();
+                    viewer.Dock = DockStyle.Fill;
+                    viewerForm.Controls.Add(viewer);
+                }
                 viewer.Graph = populator.GleeGraph;
+                viewerForm.ShowDialog();
             }
             finally
             {
@@ -121,17 +172,27 @@ namespace QuickGraph.Heap
 
         void populator_NodeAdded(object sender, GleeVertexEventArgs<GcType> args)
         {
-            // root -> cirle
-            if (args.Vertex.Root)
-                args.Node.Attr.Shape = Microsoft.Glee.Drawing.Shape.Circle;
+            args.Node.Attr.Shape = Microsoft.Glee.Drawing.Shape.Box;
+            double gen = args.Vertex.Gen;
+            if (gen > 2)
+                args.Node.Attr.Fillcolor = Microsoft.Glee.Drawing.Color.LightBlue;
+            else if (gen > 1)
+                args.Node.Attr.Fillcolor = Microsoft.Glee.Drawing.Color.LightGoldenrodYellow;
+            else if (gen >= 0)
+                args.Node.Attr.Fillcolor = Microsoft.Glee.Drawing.Color.LightPink;
             else
-                args.Node.Attr.Shape = Microsoft.Glee.Drawing.Shape.Box;
+                args.Node.Attr.Fillcolor = Microsoft.Glee.Drawing.Color.LightSalmon;
+
+            // root -> other color
+            if (args.Vertex.Root)
+                args.Node.Attr.AddStyle(Microsoft.Glee.Drawing.Style.Dashed);
 
             // label
             args.Node.Attr.Label =
-                String.Format("{0}\n{1} {2}",
+                String.Format("{0}\nc:{1} g:{2:0.0} s:{3}",
                     args.Vertex.Name,
                     args.Vertex.Count,
+                    args.Vertex.Gen,
                     FormatHelper.ToSize(args.Vertex.Size)
                     );
         }
@@ -215,8 +276,36 @@ namespace QuickGraph.Heap
             {
                 return colors[t] == GraphColor.White;
             });
-            Console.WriteLine("{0} types, {1} edges", graph.VertexCount, graph.EdgeCount);
+            Console.WriteLine("resulting {0} types, {1} edges", graph.VertexCount, graph.EdgeCount);
             return this;
+        }
+
+        public GcTypeHeap Merge(int minimumSize)
+        {
+            BidirectionalGraph<GcType, MergedEdge<GcType, GcTypeEdge>> merged = new BidirectionalGraph<GcType,MergedEdge<GcType,GcTypeEdge>>(false, this.graph.VertexCount);
+            EdgeMergeCondensationGraphAlgorithm<GcType, GcTypeEdge> merger = new EdgeMergeCondensationGraphAlgorithm<GcType, GcTypeEdge>(
+                this.graph,
+                merged,
+                delegate(GcType type)
+                {
+                    return type.Size >= minimumSize;
+                });
+
+            BidirectionalGraph<GcType, GcTypeEdge> clone = new BidirectionalGraph<GcType, GcTypeEdge>(
+                false,
+                merged.VertexCount);
+            foreach (GcType type in merged.Vertices)
+                clone.AddVertex(type);
+            foreach (MergedEdge<GcType, GcTypeEdge> medge in merged.Edges)
+            {
+                GcTypeEdge edge = new GcTypeEdge(medge.Source, medge.Target);
+                foreach (GcTypeEdge e in medge.Edges)
+                    edge.Count += e.Count;
+                clone.AddEdge(edge);
+            }
+
+            Console.WriteLine("resulting {0} types, {1} edges", clone.VertexCount, clone.EdgeCount);
+            return new GcTypeHeap(clone);
         }
         #endregion
     }

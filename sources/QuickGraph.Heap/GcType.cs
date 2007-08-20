@@ -12,6 +12,9 @@ namespace QuickGraph.Heap
         public bool Root;
         public int Count;
         public int Size;
+        private int genCount;
+        private int genSum;
+
 
         internal GcType(int id, string name)
         {
@@ -43,6 +46,22 @@ namespace QuickGraph.Heap
                 this.Count,
                 FormatHelper.ToSize(this.Size),
                 this.Name);
+        }
+
+        public double Gen
+        {
+            get
+            {
+                if (this.genCount == 0)
+                    return -1;
+                else
+                    return this.genSum / (double)this.genCount;
+            }
+        }
+
+        public void AddObjectGeneration(int gen)
+        {
+            throw new Exception("The method or operation is not implemented.");
         }
     }
 
@@ -79,6 +98,17 @@ namespace QuickGraph.Heap
                 delegate(GcType left, GcType right)
                 {
                     return -left.Count.CompareTo(right.Count);
+                });
+            return clone;
+        }
+
+        public GcTypeCollection SortGen()
+        {
+            GcTypeCollection clone = new GcTypeCollection(this);
+            clone.Sort(
+                delegate(GcType left, GcType right)
+                {
+                    return left.Gen.CompareTo(right.Gen);
                 });
             return clone;
         }

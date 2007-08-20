@@ -151,7 +151,7 @@ namespace QuickGraph.Heap
             }
         }
 
-        private static bool TryParseAddress(string value, out int address)
+        protected static bool TryParseAddress(string value, out int address)
         {
             address = 0;
             return
