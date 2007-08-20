@@ -290,7 +290,7 @@ namespace QuickGraph.Heap
                 {
                     return type.Size >= minimumSize;
                 });
-
+            merger.Compute();
             BidirectionalGraph<GcType, GcTypeEdge> clone = new BidirectionalGraph<GcType, GcTypeEdge>(
                 false,
                 merged.VertexCount);

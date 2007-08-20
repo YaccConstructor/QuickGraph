@@ -116,6 +116,9 @@ namespace QuickGraph.Unit
         [System.Diagnostics.DebuggerStepThrough]
         public int Run()
         {
+            if (this.Arguments.BreakOnStart)
+                Debugger.Break();
+
             System.Runtime.CompilerServices.RuntimeHelpers.PrepareConstrainedRegions();
             try
             {

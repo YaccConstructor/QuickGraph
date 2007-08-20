@@ -82,6 +82,7 @@
     <Compile Include="FactoryCompilerTest.cs" />
     <Compile Include="GraphConsoleSerializer.cs" />
     <Compile Include="GraphFactory.cs" />
+    <Compile Include="Heap\HeapTest.cs" />
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />
     <Compile Include="Properties\PexAssemblyInfo.cs" />
     <Compile Include="Program.cs" />
@@ -102,6 +103,10 @@
     <ProjectReference Include="..\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
       <Project>{595D6322-637A-4A36-97F1-D53F3F9ECEA7}</Project>
       <Name>QuickGraph.Graphviz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuickGraph.Heap\QuickGraph.Heap.csproj">
+      <Project>{2DEC7C6E-68DF-47EC-A75E-2C1238986B8E}</Project>
+      <Name>QuickGraph.Heap</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickGraph.Unit\QuickGraph.Unit.csproj">
       <Project>{9FF2B839-743F-4A15-9D33-F11253BF6AE1}</Project>

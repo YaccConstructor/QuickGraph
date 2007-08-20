@@ -114,6 +114,14 @@ namespace QuickGraph.Unit
         public bool OpenReportHistory = true;
 
         [Argument(
+            ShortName = "bs",
+            LongName = "break-on-start",
+            Description = "Debugger break on start"
+            )]
+        [XmlAttribute("break-on-start")]
+        public bool BreakOnStart = false;
+
+        [Argument(
             ShortName ="rfa",
             LongName = "run-failures",
             Description="Run failures from report"
