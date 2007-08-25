@@ -159,7 +159,7 @@ namespace QuickGraph
 
         public int Degree(Vertex v)
         {
-            throw new NotImplementedException();
+            return this.OriginalGraph.Degree(v);
         }
 
         public bool IsEdgesEmpty

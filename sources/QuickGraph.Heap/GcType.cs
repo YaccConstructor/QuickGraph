@@ -42,9 +42,10 @@ namespace QuickGraph.Heap
 
         public override string ToString()
         {
-            return String.Format("{0}\t{1}\t{2}",
+            return String.Format("{0}\t{1}\t{2:0.0}\t{3}",
                 this.Count,
                 FormatHelper.ToSize(this.Size),
+                this.Gen,
                 this.Name);
         }
 
@@ -61,7 +62,8 @@ namespace QuickGraph.Heap
 
         public void AddObjectGeneration(int gen)
         {
-            throw new Exception("The method or operation is not implemented.");
+            this.genCount++;
+            this.genSum += gen;
         }
     }
 

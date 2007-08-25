@@ -41,7 +41,7 @@ namespace QuickGraph.Predicates
 
         public int Degree(Vertex v)
         {
-            return this.OutDegree(v) - this.InDegree(v);
+            return this.OutDegree(v) + this.InDegree(v);
         }
 
         public bool IsEdgesEmpty

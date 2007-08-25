@@ -29,6 +29,7 @@ namespace QuickGraph.Heap
         protected override void VisitType(int id, string name)
         {
             GcType type = new GcType(id, name);
+          
             this.types.Add(type.ID, type);
             this.graph.AddVertex(type);
         }

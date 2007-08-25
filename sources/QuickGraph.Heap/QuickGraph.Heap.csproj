@@ -65,7 +65,7 @@
     <Compile Include="QueryableList.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="gcheap.xml">
+    <Content Include="dumpheap.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -80,6 +80,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="dumpheap.cmd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="heap.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

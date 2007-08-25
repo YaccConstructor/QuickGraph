@@ -10,6 +10,7 @@ using Microsoft.Glee.GraphViewerGdi;
 using QuickGraph.Algorithms;
 using QuickGraph.Algorithms.Condensation;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace QuickGraph.Heap
 {
@@ -59,6 +60,23 @@ namespace QuickGraph.Heap
             return Load(heapXmlFileName, null);
         }
 
+        private readonly static Regex regex = new Regex(
+              "name=\"(?<Type>[^\"]*)\"",
+            RegexOptions.IgnoreCase
+            | RegexOptions.CultureInvariant
+            | RegexOptions.IgnorePatternWhitespace
+            | RegexOptions.Compiled
+            );
+
+        private static string EscapeXmlAttribute(Match m)
+        {
+            string value = m.Groups["Type"].Value;
+            return String.Format("name=\"{0}\"",
+                        value.Replace("<", "&lt;")
+                            .Replace(">", "&gt;")
+                        );
+        }
+
         /// <summary>
         /// Loads the specified heap XML file name.
         /// </summary>
@@ -75,8 +93,27 @@ namespace QuickGraph.Heap
             Console.WriteLine("loading {0}", heapXmlFileName);
             GcTypeGraphReader greader = new GcTypeGraphReader();
 
-            using (XmlReader reader = XmlReader.Create(heapXmlFileName))
-                greader.Read(reader);
+            try
+            {
+                using (XmlReader reader = XmlReader.Create(heapXmlFileName))
+                    greader.Read(reader);
+            }
+            catch (XmlException)
+            {
+                Console.WriteLine("fixing up xml file (incorrect xml with generics)");
+                // fix the xml and save back to disk.
+                File.WriteAllText(
+                    heapXmlFileName,
+                    regex.Replace(
+                        File.ReadAllText(heapXmlFileName),
+                        EscapeXmlAttribute)
+                    );
+                // try again
+                greader = new GcTypeGraphReader();
+                using (XmlReader reader = XmlReader.Create(heapXmlFileName))
+                    greader.Read(reader);
+            }
+
             if (!String.IsNullOrEmpty(dumpFileName))
             {
                 if (!File.Exists(dumpFileName))

@@ -1,0 +1,11 @@
+.echo dumping process managed heap, this might take a while...
+.loadby sos mscorwks
+!TraverseHeap -xml heap.xml
+!TraverseHeap heap.txt
+.echo "Memory dump succesfull,"
+.echo "to load the resulting data ipy:"
+.echo ">>> execfile("heap.py")"
+.echo ">>> g = GcTypeHeap.Load('heap.xml', 'heap.txt')"
+.detach
+q
+
