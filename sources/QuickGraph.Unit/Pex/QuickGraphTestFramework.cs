@@ -32,6 +32,11 @@ namespace QuickGraph.Unit.Pex
             get { return Metadata<QuickGraph.Unit.TestFixtureSetUpAttribute>.SerializableName; }
         }
 
+        protected override string GetHintPath(string assemblyName)
+        {
+            return null;
+        }
+
         public override string RootNamespace
         {
             get { return "QuickGraph.Unit";}

@@ -6,6 +6,7 @@ using Microsoft.Pex.Framework.Invariants;
 using Microsoft.Pex.TestFrameworks;
 
 [assembly: PexTestFramework(typeof(QuickGraph.Unit.Pex.QuickGraphTestFramework))]
+[assembly: PexAssemblyUnderTest(typeof(QuickGraph.GraphColor))]
 [assembly: PexAssemblySettings(
     TestFramework = "QuickGraph")]
 [assembly: PexFromAssembly("QuickGraph")]
