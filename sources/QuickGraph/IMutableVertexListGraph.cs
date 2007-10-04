@@ -3,22 +3,22 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public delegate bool EdgePredicate<Vertex, Edge>(Edge e)
-        where Edge : IEdge<Vertex>;
+    public delegate bool EdgePredicate<TVertex, TEdge>(TEdge e)
+        where TEdge : IEdge<TVertex>;
 
-    public delegate bool VertexPredicate<Vertex>(Vertex v);
+    public delegate bool VertexPredicate<TVertex>(TVertex v);
 
-    public interface IMutableVertexListGraph<Vertex, Edge> : 
-        IMutableIncidenceGraph<Vertex, Edge>,
-        IVertexListGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IMutableVertexListGraph<TVertex, TEdge> : 
+        IMutableIncidenceGraph<TVertex, TEdge>,
+        IVertexListGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        event VertexEventHandler<Vertex> VertexAdded;
-        void AddVertex(Vertex v);
-        void AddVertexRange(IEnumerable<Vertex> vertices);
+        event VertexEventHandler<TVertex> VertexAdded;
+        void AddVertex(TVertex v);
+        void AddVertexRange(IEnumerable<TVertex> vertices);
 
-        event VertexEventHandler<Vertex> VertexRemoved;
-        bool RemoveVertex(Vertex v);
-        int RemoveVertexIf(VertexPredicate<Vertex> pred);
+        event VertexEventHandler<TVertex> VertexRemoved;
+        bool RemoveVertex(TVertex v);
+        int RemoveVertexIf(VertexPredicate<TVertex> pred);
     }
 }

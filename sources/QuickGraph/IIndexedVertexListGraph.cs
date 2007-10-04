@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public interface IIndexedVertexListGraph<Vertex, Edge> :
-        IVertexListGraph<Vertex, Edge>,
-        IIndexedImplicitGraph<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public interface IIndexedVertexListGraph<TVertex, TEdge> :
+        IVertexListGraph<TVertex, TEdge>,
+        IIndexedImplicitGraph<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public interface IIndexedImplicitGraph<Vertex,Edge> : IImplicitGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IIndexedImplicitGraph<TVertex,TEdge> : IImplicitGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        IIndexedEnumerable<Vertex> Vertices { get;}
+        IIndexable<TVertex> Vertices { get;}
     }
 }

@@ -2,10 +2,10 @@
 
 namespace QuickGraph
 {
-    public interface IMutableVertexAndEdgeListGraph<Vertex,Edge> :
-        IMutableVertexListGraph<Vertex,Edge>,
-        IMutableEdgeListGraph<Vertex,Edge>,
-        IVertexAndEdgeListGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IMutableVertexAndEdgeListGraph<TVertex,TEdge> :
+        IMutableVertexListGraph<TVertex,TEdge>,
+        IMutableEdgeListGraph<TVertex,TEdge>,
+        IVertexAndEdgeListGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {}
 }

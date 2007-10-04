@@ -1,12 +1,12 @@
 ﻿namespace QuickGraph
 {
-    public interface IMutableBidirectionalGraph<Vertex,Edge> :
-        IMutableVertexAndEdgeListGraph<Vertex,Edge>,
-        IBidirectionalGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IMutableBidirectionalGraph<TVertex,TEdge> :
+        IMutableVertexAndEdgeListGraph<TVertex,TEdge>,
+        IBidirectionalGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        int RemoveInEdgeIf(Vertex v, EdgePredicate<Vertex, Edge> edgePredicate);
-        void ClearInEdges(Vertex v);
-        void ClearEdges(Vertex v);
+        int RemoveInEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> edgePredicate);
+        void ClearInEdges(TVertex v);
+        void ClearEdges(TVertex v);
     }
 }

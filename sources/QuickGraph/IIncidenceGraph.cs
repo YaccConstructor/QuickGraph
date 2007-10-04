@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public interface IIncidenceGraph<Vertex,Edge> : IImplicitGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IIncidenceGraph<TVertex,TEdge> : IImplicitGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        bool ContainsEdge(Vertex source, Vertex target);
+        bool ContainsEdge(TVertex source, TVertex target);
         bool TryGetEdges(
-            Vertex source,
-            Vertex target,
-            out IEnumerable<Edge> edges);
+            TVertex source,
+            TVertex target,
+            out IEnumerable<TEdge> edges);
         bool TryGetEdge(
-            Vertex source,
-            Vertex target,
-            out Edge edge);
+            TVertex source,
+            TVertex target,
+            out TEdge edge);
     }
 }

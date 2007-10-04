@@ -2,14 +2,14 @@
 
 namespace QuickGraph
 {
-    public interface IMutableIncidenceGraph<Vertex,Edge> :
-        IMutableGraph<Vertex,Edge>,
-        IIncidenceGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IMutableIncidenceGraph<TVertex,TEdge> :
+        IMutableGraph<TVertex,TEdge>,
+        IIncidenceGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
         int RemoveOutEdgeIf(
-            Vertex v,
-            EdgePredicate<Vertex, Edge> predicate);
-        void ClearOutEdges(Vertex v);
+            TVertex v,
+            EdgePredicate<TVertex, TEdge> predicate);
+        void ClearOutEdges(TVertex v);
     }
 }

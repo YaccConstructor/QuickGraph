@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public interface IMutableEdgeListGraph<Vertex, Edge> : 
-        IMutableGraph<Vertex, Edge>,
-        IEdgeListGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IMutableEdgeListGraph<TVertex, TEdge> : 
+        IMutableGraph<TVertex, TEdge>,
+        IEdgeListGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        bool AddEdge(Edge edge);
-        event EdgeEventHandler<Vertex, Edge> EdgeAdded;
+        bool AddEdge(TEdge edge);
+        event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
 
-        bool RemoveEdge(Edge edge);
-        event EdgeEventHandler<Vertex, Edge> EdgeRemoved;
+        bool RemoveEdge(TEdge edge);
+        event EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
 
-        int RemoveEdgeIf(EdgePredicate<Vertex,Edge> predicate);
+        int RemoveEdgeIf(EdgePredicate<TVertex,TEdge> predicate);
     }
 }

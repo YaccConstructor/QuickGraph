@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public interface IMutableUndirectedGraph<Vertex,Edge> :
-        IMutableEdgeListGraph<Vertex,Edge>,
-        IUndirectedGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IMutableUndirectedGraph<TVertex,TEdge> :
+        IMutableEdgeListGraph<TVertex,TEdge>,
+        IUndirectedGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        int RemoveAdjacentEdgeIf(Vertex vertex, EdgePredicate<Vertex, Edge> predicate);
-        void ClearAdjacentEdges(Vertex vertex);
+        int RemoveAdjacentEdgeIf(TVertex vertex, EdgePredicate<TVertex, TEdge> predicate);
+        void ClearAdjacentEdges(TVertex vertex);
 
     }
 }

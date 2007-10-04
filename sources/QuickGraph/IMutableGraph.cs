@@ -2,8 +2,8 @@
 
 namespace QuickGraph
 {
-    public interface IMutableGraph<Vertex,Edge> : IGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IMutableGraph<TVertex,TEdge> : IGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
         void Clear();
     }
