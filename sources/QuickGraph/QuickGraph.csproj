@@ -142,6 +142,7 @@
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithm.cs" />
     <Compile Include="Algorithms\VertexAdjacencyMatrixBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithm.cs" />
+    <Compile Include="EdgeNotFoundException.cs" />
     <Compile Include="GraphContracts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BidirectionalGraph.cs" />
