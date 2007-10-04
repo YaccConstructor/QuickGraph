@@ -16,6 +16,10 @@ namespace QuickGraph.Algorithms.Matrix
 
         public static DoubleDenseMatrix Create(int rowCount, int columnCount, Double value)
         {
+            // <preconditions>
+            if (columnCount * rowCount < 0)
+                throw new ArgumentException("columnCount * rowCount < 0");
+            // </preconditions>
             double[] data = new double[rowCount * columnCount];
             for (int i = 0; i < data.Length; ++i)
                 data[i] = value;
@@ -25,10 +29,14 @@ namespace QuickGraph.Algorithms.Matrix
 
         public DoubleDenseMatrix (int rowCount, int columnCount)
         {
+            // <preconditions>
             if (rowCount < 0)
                 throw new ArgumentOutOfRangeException("rowCount");
             if (columnCount < 0)
                 throw new ArgumentOutOfRangeException("rowCount");
+            if (columnCount * rowCount < 0)
+                throw new ArgumentException("columnCount * rowCount < 0");
+            // </preconditions>
 
             this.rowCount = rowCount;
             this.columnCount = columnCount;
@@ -114,6 +122,10 @@ namespace QuickGraph.Algorithms.Matrix
 
         public static DoubleDenseMatrix Add(DoubleDenseMatrix left, DoubleDenseMatrix right)
         {
+            // <preconditions>
+            if (left == (DoubleDenseMatrix)null)
+                throw new ArgumentNullException("left");
+            // </preconditions>
             DoubleDenseMatrix m = Create(left);
             return m.Add(right);
         }
@@ -175,6 +187,12 @@ namespace QuickGraph.Algorithms.Matrix
 
         public static DoubleDenseMatrix Mul(DoubleDenseMatrix left, DoubleDenseMatrix right)
         {
+            // <preconditions>
+            if (left == (DoubleDenseMatrix)null)
+                throw new ArgumentNullException("left");
+            if (right == (DoubleDenseMatrix)null)
+                throw new ArgumentNullException("right");
+            // </preconditions>
             if (left.ColumnCount != right.RowCount)
                 throw new MatrixSizeMistmatchException();
 
@@ -291,6 +309,12 @@ namespace QuickGraph.Algorithms.Matrix
             double tolerance
             )
         {
+            // <preconditions>
+            if (A == (DoubleDenseMatrix)null)
+                throw new ArgumentNullException("A");
+            if (B == (DoubleDenseMatrix)null)
+                throw new ArgumentNullException("B");
+            // </preconditions>
             DoubleDenseMatrix AT = A.Transpose();
             DoubleDenseMatrix BT = B.Transpose();
             DoubleDenseMatrix Zk = DoubleDenseMatrix.Create(B.RowCount, A.RowCount, 1.0/(A.RowCount*B.RowCount));

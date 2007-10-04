@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
@@ -80,26 +81,36 @@ namespace QuickGraph
 
         public bool ContainsVertex(Vertex v)
         {
+            if (object.Equals(v, null))
+                throw new ArgumentNullException("v");
             return this.vertexEdges.ContainsKey(v);
         }
 
         public bool IsOutEdgesEmpty(Vertex v)
         {
+            if (object.Equals(v, null))
+                throw new ArgumentNullException("v");
             return this.vertexEdges[v].Count == 0;
         }
 
         public int OutDegree(Vertex v)
         {
+            if (object.Equals(v, null))
+                throw new ArgumentNullException("v");
             return this.vertexEdges[v].Count;
         }
 
         public IEnumerable<Edge> OutEdges(Vertex v)
         {
+            if (object.Equals(v, null))
+                throw new ArgumentNullException("v");
             return this.vertexEdges[v];
         }
 
         public Edge OutEdge(Vertex v, int index)
         {
+            if (object.Equals(v, null))
+                throw new ArgumentNullException("v");
             return this.vertexEdges[v][index];
         }
 
@@ -143,10 +154,14 @@ namespace QuickGraph
 
         public bool ContainsEdge(Vertex source, Vertex target)
         {
+            if (object.Equals(source, null))
+                throw new ArgumentNullException("source");
+            if (object.Equals(target, null))
+                throw new ArgumentNullException("target");
             if (!this.ContainsVertex(source))
-                throw new VertexNotFoundException(source.ToString());
+                throw new VertexNotFoundException("source");
             if (!this.ContainsVertex(target))
-                throw new VertexNotFoundException(target.ToString());
+                throw new VertexNotFoundException("target");
             foreach (Edge outEdge in this.OutEdges(source))
                 if (outEdge.Target.Equals(target))
                     return true;
@@ -155,6 +170,10 @@ namespace QuickGraph
 
         public bool ContainsEdge(Edge edge)
         {
+            if (object.Equals(edge, null))
+                throw new ArgumentNullException("edge");
+            if (!this.ContainsVertex(edge.Source))
+                throw new VertexNotFoundException("source");
             return this.vertexEdges[edge.Source].Contains(edge);
         }
 
@@ -163,6 +182,12 @@ namespace QuickGraph
             Vertex target,
             out Edge edge)
         {
+            GraphContracts.ValidateVertex(this, source);
+            if (object.Equals(target, null))
+                throw new ArgumentNullException("target");
+            if (!this.ContainsVertex(target))
+                throw new VertexNotFoundException("target");
+
             EdgeList edgeList;
             if (this.vertexEdges.TryGetValue(source, out edgeList) &&
                 edgeList.Count > 0)
@@ -303,6 +328,12 @@ namespace QuickGraph
 
         public virtual bool AddEdge(Edge e)
         {
+            if (object.Equals(e, null))
+                throw new ArgumentNullException("e");
+            if (!this.ContainsVertex(e.Source))
+                throw new ArgumentException("source vertex is not part of the graph", "e");
+            if (!this.ContainsVertex(e.Target))
+                throw new ArgumentException("target vertex is not part of the graph", "e");
             if (!this.AllowParallelEdges)
             {
                 if (this.ContainsEdge(e.Source, e.Target))
@@ -326,6 +357,12 @@ namespace QuickGraph
 
         public virtual bool RemoveEdge(Edge e)
         {
+            if (object.Equals(e, null))
+                throw new ArgumentNullException("e");
+            if (!this.ContainsVertex(e.Source))
+                throw new ArgumentException("source vertex is not part of the graph", "e");
+            if (!this.ContainsVertex(e.Target))
+                throw new ArgumentException("target vertex is not part of the graph", "e");
             if (this.vertexEdges[e.Source].Remove(e))
             {
                 this.edgeCount--;
@@ -347,6 +384,9 @@ namespace QuickGraph
 
         public int RemoveEdgeIf(EdgePredicate<Vertex, Edge> predicate)
         {
+            if (predicate == null)
+                throw new ArgumentNullException("predicate");
+
             EdgeList edges = new EdgeList();
             foreach (Edge edge in this.Edges)
                 if (predicate(edge))
@@ -361,6 +401,9 @@ namespace QuickGraph
 
         public void ClearOutEdges(Vertex v)
         {
+            if (object.Equals(v, null))
+                throw new ArgumentNullException("v");
+
             EdgeList edges = this.vertexEdges[v];
             int count = edges.Count;
             if (this.EdgeRemoved != null) // call only if someone is listening
@@ -375,6 +418,11 @@ namespace QuickGraph
 
         public int RemoveOutEdgeIf(Vertex v, EdgePredicate<Vertex, Edge> predicate)
         {
+            if (object.Equals(v, null))
+                throw new ArgumentNullException("v");
+            if (predicate == null)
+                throw new ArgumentNullException("predicate");
+
             EdgeList edges = this.vertexEdges[v];
             EdgeList edgeToRemove = new EdgeList(edges.Count);
             foreach (Edge edge in edges)
