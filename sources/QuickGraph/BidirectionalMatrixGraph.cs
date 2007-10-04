@@ -3,20 +3,22 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public class BidirectionalMatrixGraph<Edge> :
-        IBidirectionalGraph<int, Edge>,
-        IMutableEdgeListGraph<int, Edge>
-        where Edge : IEdge<int>
+    public class BidirectionalMatrixGraph<TEdge> :
+        IBidirectionalGraph<int, TEdge>,
+        IMutableEdgeListGraph<int, TEdge>
+        where TEdge : IEdge<int>
     {
         private readonly int vertexCount;
         private int edgeCount;
-        private readonly Edge[,] edges;
+        private readonly TEdge[,] edges;
 
-        public BidirectionalMatrixGraph(int vertexCount)
+        public BidirectionalMatrixGraph(int vertexCount)        
         {
+            if (vertexCount < 1)
+                throw new ArgumentOutOfRangeException("vertexCount");
             this.vertexCount = vertexCount;
             this.edgeCount = 0;
-            this.edges = new Edge[vertexCount, vertexCount];
+            this.edges = new TEdge[vertexCount, vertexCount];
         }
 
         #region IGraph
@@ -54,7 +56,7 @@ namespace QuickGraph
             get { return this.EdgeCount == 0; }
         }
 
-        public IEnumerable<Edge> Edges
+        public IEnumerable<TEdge> Edges
         {
             get
             {
@@ -62,7 +64,7 @@ namespace QuickGraph
                 {
                     for (int j = 0; j < this.VertexCount; ++j)
                     {
-                        Edge e = this.edges[i, j];
+                        TEdge e = this.edges[i, j];
                         if (e != null)
                             yield return e;
                     }
@@ -90,22 +92,22 @@ namespace QuickGraph
             return count;
         }
 
-        public IEnumerable<Edge> InEdges(int v)
+        public IEnumerable<TEdge> InEdges(int v)
         {
             for (int i = 0; i < this.VertexCount; ++i)
             {
-                Edge e = this.edges[i, v];
+                TEdge e = this.edges[i, v];
                 if (e != null)
                     yield return e;
             }
         }
 
-        public Edge InEdge(int v, int index)
+        public TEdge InEdge(int v, int index)
         {
             int count = 0;
             for (int i = 0; i < this.VertexCount; ++i)
             {
-                Edge e = this.edges[i, v];
+                TEdge e = this.edges[i, v];
                 if (e != null)
                 {
                     if (count == index)
@@ -130,18 +132,18 @@ namespace QuickGraph
             return this.edges[source, target] != null;
         }
 
-        public bool TryGetEdge(int source, int target, out Edge edge)
+        public bool TryGetEdge(int source, int target, out TEdge edge)
         {
             edge = this.edges[source, target];
             return edge != null;
         }
 
-        public bool TryGetEdges(int source, int target, out IEnumerable<Edge> edges)
+        public bool TryGetEdges(int source, int target, out IEnumerable<TEdge> edges)
         {
-            Edge edge;
+            TEdge edge;
             if (this.TryGetEdge(source, target, out edge))
             {
-                edges = new Edge[] { edge };
+                edges = new TEdge[] { edge };
                 return true;
             }
             else
@@ -172,22 +174,22 @@ namespace QuickGraph
             return count;
         }
 
-        public IEnumerable<Edge> OutEdges(int v)
+        public IEnumerable<TEdge> OutEdges(int v)
         {
             for (int j = 0; j < this.vertexCount; ++j)
             {
-                Edge e = this.edges[v, j];
+                TEdge e = this.edges[v, j];
                 if (e != null)
                     yield return e;
             }
         }
 
-        public Edge OutEdge(int v, int index)
+        public TEdge OutEdge(int v, int index)
         {
             int count = 0;
             for (int j = 0; j < this.vertexCount; ++j)
             {
-                Edge e = this.edges[v, j];
+                TEdge e = this.edges[v, j];
                 if (e != null)
                 {
                     if (count==index)
@@ -220,9 +222,9 @@ namespace QuickGraph
 
         #region IEdgeListGraph<int,Edge> Members
 
-        public bool ContainsEdge(Edge edge)
+        public bool ContainsEdge(TEdge edge)
         {
-            Edge e = this.edges[edge.Source, edge.Target];
+            TEdge e = this.edges[edge.Source, edge.Target];
             return e!=null && e.Equals(edge);
         }
 
@@ -230,12 +232,12 @@ namespace QuickGraph
 
         #region IMutableBidirectionalGraph<int,Edge> Members
 
-        public int RemoveInEdgeIf(int v, EdgePredicate<int, Edge> edgePredicate)
+        public int RemoveInEdgeIf(int v, EdgePredicate<int, TEdge> edgePredicate)
         {
             int count = 0;
             for (int i = 0; i < this.VertexCount; ++i)
             {
-                Edge e = this.edges[i, v];
+                TEdge e = this.edges[i, v];
                 if (e != null && edgePredicate(e))
                 {
                     this.RemoveEdge(e);
@@ -249,7 +251,7 @@ namespace QuickGraph
         {
             for (int i = 0; i < this.VertexCount; ++i)
             {
-                Edge e = this.edges[i, v];
+                TEdge e = this.edges[i, v];
                 if (e != null)
                     this.RemoveEdge(e);
             }
@@ -265,12 +267,12 @@ namespace QuickGraph
 
         #region IMutableIncidenceGraph<int,Edge> Members
 
-        public int RemoveOutEdgeIf(int v, EdgePredicate<int, Edge> predicate)
+        public int RemoveOutEdgeIf(int v, EdgePredicate<int, TEdge> predicate)
         {
             int count = 0;
             for (int j = 0; j < this.VertexCount; ++j)
             {
-                Edge e = this.edges[v, j];
+                TEdge e = this.edges[v, j];
                 if (e != null && predicate(e))
                 {
                     this.RemoveEdge(e);
@@ -284,7 +286,7 @@ namespace QuickGraph
         {
             for (int j = 0; j < this.VertexCount; ++j)
             {
-                Edge e = this.edges[v, j];
+                TEdge e = this.edges[v, j];
                 if (e != null)
                     this.RemoveEdge(e);
             }
@@ -303,47 +305,47 @@ namespace QuickGraph
 
         #region IMutableEdgeListGraph<int,Edge> Members
 
-        public bool AddEdge(Edge edge)
+        public bool AddEdge(TEdge edge)
         {
             if (this.edges[edge.Source, edge.Target]!=null)
                 throw new ParallelEdgeNotAllowedException();
             this.edges[edge.Source,edge.Target] = edge;
             this.edgeCount++;
-            this.OnEdgeAdded(new EdgeEventArgs<int, Edge>(edge));
+            this.OnEdgeAdded(new EdgeEventArgs<int, TEdge>(edge));
             return true;
         }
 
-        public event EdgeEventHandler<int, Edge> EdgeAdded;
-        protected virtual void OnEdgeAdded(EdgeEventArgs<int, Edge> args)
+        public event EdgeEventHandler<int, TEdge> EdgeAdded;
+        protected virtual void OnEdgeAdded(EdgeEventArgs<int, TEdge> args)
         {
-            EdgeEventHandler<int, Edge> eh = this.EdgeAdded;
+            EdgeEventHandler<int, TEdge> eh = this.EdgeAdded;
             if (eh != null)
                 eh(this, args);
         }
 
-        public bool RemoveEdge(Edge edge)
+        public bool RemoveEdge(TEdge edge)
         {
-            Edge e = this.edges[edge.Source, edge.Target];
-            this.edges[edge.Source, edge.Target] = default(Edge);
-            if (!e.Equals(default(Edge)))
+            TEdge e = this.edges[edge.Source, edge.Target];
+            this.edges[edge.Source, edge.Target] = default(TEdge);
+            if (!e.Equals(default(TEdge)))
             {
                 this.edgeCount--;
-                this.OnEdgeRemoved(new EdgeEventArgs<int, Edge>(edge));
+                this.OnEdgeRemoved(new EdgeEventArgs<int, TEdge>(edge));
                 return true;
             }
             else
                 return false;
         }
 
-        public event EdgeEventHandler<int, Edge> EdgeRemoved;
-        protected virtual void OnEdgeRemoved(EdgeEventArgs<int, Edge> args)
+        public event EdgeEventHandler<int, TEdge> EdgeRemoved;
+        protected virtual void OnEdgeRemoved(EdgeEventArgs<int, TEdge> args)
         {
-            EdgeEventHandler<int, Edge> eh = this.EdgeRemoved;
+            EdgeEventHandler<int, TEdge> eh = this.EdgeRemoved;
             if (eh != null)
                 eh(this, args);
         }
 
-        public int RemoveEdgeIf(EdgePredicate<int, Edge> predicate)
+        public int RemoveEdgeIf(EdgePredicate<int, TEdge> predicate)
         {
             throw new NotImplementedException();
         }

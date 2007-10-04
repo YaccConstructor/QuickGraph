@@ -2,8 +2,8 @@
 
 namespace QuickGraph
 {
-    public interface IEdgeFactory<Vertex, Edge> where Edge : IEdge<Vertex>
+    public interface IEdgeFactory<TVertex, TEdge> where TEdge : IEdge<TVertex>
     {
-        Edge CreateEdge(Vertex source, Vertex target);
+        TEdge CreateEdge(TVertex source, TVertex target);
     }
 }

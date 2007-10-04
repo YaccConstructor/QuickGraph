@@ -29,9 +29,9 @@ namespace QuickGraph
         }
 
         [Conditional("DEBUG")]
-        public static void AssumeInVertexSet<Vertex>(
-            IVertexSet<Vertex> g, 
-            Vertex v,
+        public static void AssumeInVertexSet<TVertex>(
+            IVertexSet<TVertex> g, 
+            TVertex v,
             string parameterName)
         {
             AssumeNotNull(g, "g");
@@ -41,9 +41,9 @@ namespace QuickGraph
         }
 
         [Conditional("DEBUG")]
-        public static void AssumeNotInVertexSet<Vertex>(
-            IVertexSet<Vertex> g,
-            Vertex v,
+        public static void AssumeNotInVertexSet<TVertex>(
+            IVertexSet<TVertex> g,
+            TVertex v,
             string parameterName)
         {
             AssumeNotNull(g, "g");
@@ -53,24 +53,24 @@ namespace QuickGraph
         }
 
         [Conditional("DEBUG")]
-        public static void AssumeInVertexSet<Vertex, Edge>(
-            IVertexAndEdgeSet<Vertex, Edge> g,
-            Edge e,
+        public static void AssumeInVertexSet<TVertex, TEdge>(
+            IVertexAndEdgeSet<TVertex, TEdge> g,
+            TEdge e,
             string parameterName)
-            where Edge : IEdge<Vertex>
+            where TEdge : IEdge<TVertex>
         {
             AssumeNotNull(g, "g");
             AssumeNotNull(e, parameterName);
-            AssumeInVertexSet<Vertex>(g, e.Source, parameterName + ".Source");
-            AssumeInVertexSet<Vertex>(g, e.Target, parameterName + ".Target");
+            AssumeInVertexSet<TVertex>(g, e.Source, parameterName + ".Source");
+            AssumeInVertexSet<TVertex>(g, e.Target, parameterName + ".Target");
         }
 
         [Conditional("DEBUG")]
-        public static void AssumeInEdgeSet<Vertex, Edge>(
-            IVertexAndEdgeSet<Vertex, Edge> g,
-            Edge e,
+        public static void AssumeInEdgeSet<TVertex, TEdge>(
+            IVertexAndEdgeSet<TVertex, TEdge> g,
+            TEdge e,
             string parameterName)
-            where Edge : IEdge<Vertex>
+            where TEdge : IEdge<TVertex>
         {
             AssumeInVertexSet(g, e, parameterName);
             if (!g.ContainsEdge(e))

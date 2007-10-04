@@ -3,18 +3,18 @@
 namespace QuickGraph
 {
     [Serializable]
-    public class EdgeEventArgs<V, E> : EventArgs
-        where E : IEdge<V>
+    public class EdgeEventArgs<TVertex, TEdge> : EventArgs
+        where TEdge : IEdge<TVertex>
     {
-        private E edge;
-        public EdgeEventArgs(E edge)
+        private TEdge edge;
+        public EdgeEventArgs(TEdge edge)
         {
             if (edge == null)
                 throw new ArgumentNullException("edge");
             this.edge = edge;
         }
 
-        public E Edge
+        public TEdge Edge
         {
             get { return this.edge; }
         }

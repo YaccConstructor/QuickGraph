@@ -36,35 +36,35 @@ namespace QuickGraph
                 "{0}{1}EdgeFactory", vertexType.MetadataToken, edgeType.MetadataToken);
         }
 
-        public static IVertexFactory<Vertex> GetVertexFactory<Vertex>()
+        public static IVertexFactory<TVertex> GetVertexFactory<TVertex>()
         {
-            return (IVertexFactory<Vertex>)Activator.CreateInstance(GetVertexFactoryType<Vertex>());
+            return (IVertexFactory<TVertex>)Activator.CreateInstance(GetVertexFactoryType<TVertex>());
         }
 
-        private static Type GetVertexFactoryType<Vertex>()
+        private static Type GetVertexFactoryType<TVertex>()
         {
             lock (syncRoot)
             {
                 CreateAssembly();
-                Type factoryType = assembly.GetType(GetVertexFactoryName(typeof(Vertex)), false);
+                Type factoryType = assembly.GetType(GetVertexFactoryName(typeof(TVertex)), false);
                 if (factoryType != null)
                     return factoryType;
 
                 ConstructorInfo constructor =
-                    typeof(Vertex).GetConstructor(new Type[] { });
+                    typeof(TVertex).GetConstructor(new Type[] { });
                 if (constructor == null)
-                    throw new ArgumentException(String.Format("Type {0} does not have public construtor", typeof(Vertex)));
+                    throw new ArgumentException(String.Format("Type {0} does not have public construtor", typeof(TVertex)));
 
-                TypeBuilder type = module.DefineType(GetVertexFactoryName(typeof(Vertex)),
+                TypeBuilder type = module.DefineType(GetVertexFactoryName(typeof(TVertex)),
                     TypeAttributes.Sealed | TypeAttributes.Public);
-                type.AddInterfaceImplementation(typeof(IVertexFactory<Vertex>));
+                type.AddInterfaceImplementation(typeof(IVertexFactory<TVertex>));
 
 
                 // CreateVertex method
                 MethodBuilder createVertex = type.DefineMethod(
                     "CreateVertex",
                     MethodAttributes.FamANDAssem | MethodAttributes.Family | MethodAttributes.Final | MethodAttributes.Virtual | MethodAttributes.HideBySig | MethodAttributes.VtableLayoutMask,
-                    typeof(Vertex),
+                    typeof(TVertex),
                     Type.EmptyTypes
                     );
                 ILGenerator gen = createVertex.GetILGenerator();
@@ -75,38 +75,38 @@ namespace QuickGraph
             }
         }
 
-        public static IEdgeFactory<Vertex, Edge> GetEdgeFactory<Vertex, Edge>()
-            where Edge : IEdge<Vertex>
+        public static IEdgeFactory<TVertex, TEdge> GetEdgeFactory<TVertex, TEdge>()
+            where TEdge : IEdge<TVertex>
         {
-            return (IEdgeFactory<Vertex, Edge>)Activator.CreateInstance(GetEdgeFactoryType<Vertex, Edge>());
+            return (IEdgeFactory<TVertex, TEdge>)Activator.CreateInstance(GetEdgeFactoryType<TVertex, TEdge>());
         }
 
-        private static Type GetEdgeFactoryType<Vertex, Edge>()
-            where Edge : IEdge<Vertex>
+        private static Type GetEdgeFactoryType<TVertex, TEdge>()
+            where TEdge : IEdge<TVertex>
         {
             lock (syncRoot)
             {
                 CreateAssembly();
-                string typeName = GetEdgeFactoryName(typeof(Vertex), typeof(Edge));
+                string typeName = GetEdgeFactoryName(typeof(TVertex), typeof(TEdge));
                 Type factoryType = assembly.GetType(typeName, false);
                 if (factoryType != null)
                     return factoryType;
 
                 ConstructorInfo constructor =
-                    typeof(Edge).GetConstructor(new Type[] { typeof(Vertex), typeof(Vertex) });
+                    typeof(TEdge).GetConstructor(new Type[] { typeof(TVertex), typeof(TVertex) });
                 if (constructor == null)
-                    throw new ArgumentException(String.Format("Type {0} does not have a construtor that takes 2 Vertex", typeof(Vertex)));
+                    throw new ArgumentException(String.Format("Type {0} does not have a construtor that takes 2 Vertex", typeof(TVertex)));
 
                 TypeBuilder type = module.DefineType(typeName,
                     TypeAttributes.Sealed | TypeAttributes.Public);
-                type.AddInterfaceImplementation(typeof(IEdgeFactory<Vertex, Edge>));
+                type.AddInterfaceImplementation(typeof(IEdgeFactory<TVertex, TEdge>));
 
                 // CreateVertex method
                 MethodBuilder createEdge = type.DefineMethod(
                     "CreateEdge",
                     MethodAttributes.FamANDAssem | MethodAttributes.Family | MethodAttributes.Final | MethodAttributes.Virtual | MethodAttributes.HideBySig | MethodAttributes.VtableLayoutMask,
-                    typeof(Edge),
-                    new Type[] { typeof(Vertex), typeof(Vertex) }
+                    typeof(TEdge),
+                    new Type[] { typeof(TVertex), typeof(TVertex) }
                     );
                 ILGenerator gen = createEdge.GetILGenerator();
                 gen.Emit(OpCodes.Ldarg_1);

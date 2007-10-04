@@ -2,11 +2,11 @@ using System;
 
 namespace QuickGraph
 {
-    public class IdentifiableEdge<Vertex> : Edge<Vertex>, IIdentifiable
+    public class IdentifiableEdge<TVertex> : Edge<TVertex>, IIdentifiable
     {
         private string id;
 
-        public IdentifiableEdge(string id, Vertex source, Vertex target)
+        public IdentifiableEdge(string id, TVertex source, TVertex target)
             : base(source, target)
         {
             this.id = id;

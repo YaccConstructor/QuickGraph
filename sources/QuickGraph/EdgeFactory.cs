@@ -3,11 +3,11 @@
 namespace QuickGraph
 {
     [Serializable]
-    public sealed class EdgeFactory<Vertex> : IEdgeFactory<Vertex, Edge<Vertex>>
+    public sealed class EdgeFactory<TVertex> : IEdgeFactory<TVertex, Edge<TVertex>>
     {
-        public Edge<Vertex> CreateEdge(Vertex source, Vertex target)
+        public Edge<TVertex> CreateEdge(TVertex source, TVertex target)
         {
-            return new Edge<Vertex>(source, target);
+            return new Edge<TVertex>(source, target);
         }
     }
 }

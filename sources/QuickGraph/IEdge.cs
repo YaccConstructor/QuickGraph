@@ -1,8 +1,8 @@
 ﻿namespace QuickGraph
 {
-    public interface IEdge<Vertex>
+    public interface IEdge<TVertex>
     {
-        Vertex Source { get;}
-        Vertex Target { get;}
+        TVertex Source { get;}
+        TVertex Target { get;}
     }
 }

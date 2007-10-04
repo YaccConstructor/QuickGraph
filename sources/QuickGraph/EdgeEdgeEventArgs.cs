@@ -3,34 +3,32 @@
 namespace QuickGraph
 {
     [Serializable]
-    public sealed class EdgeEdgeEventArgs<V, E> : EventArgs
-        where E : IEdge<V>
+    public sealed class EdgeEdgeEventArgs<TVertex, TEdge> : EventArgs
+        where TEdge : IEdge<TVertex>
     {
-        private E edge;
-        private E targetEdge;
-        public EdgeEdgeEventArgs(E edge, E targetEdge)
+        private readonly TEdge edge;
+        private readonly TEdge targetEdge;
+        public EdgeEdgeEventArgs(TEdge edge, TEdge targetEdge)
         {
-            if (edge == null)
-                throw new ArgumentNullException("edge");
-            if (targetEdge==null)
-                throw new ArgumentNullException("targetEdge");
+            GraphContracts.AssumeNotNull(edge, "edge");
+            GraphContracts.AssumeNotNull(targetEdge, "targetEdge");
             this.edge = edge;
             this.targetEdge = targetEdge;
         }
 
-        public E Edge
+        public TEdge Edge
         {
             get { return this.edge; }
         }
 
-        public E TargetEdge
+        public TEdge TargetEdge
         {
             get { return this.targetEdge;}
         }
     }
 
-    public delegate void EdgeEdgeEventHandler<Vertex, Edge>(
+    public delegate void EdgeEdgeEventHandler<TVertex, TEdge>(
         Object sender,
-        EdgeEdgeEventArgs<Vertex, Edge> e)
-        where Edge : IEdge<Vertex>;
+        EdgeEdgeEventArgs<TVertex, TEdge> e)
+        where TEdge : IEdge<TVertex>;
 }

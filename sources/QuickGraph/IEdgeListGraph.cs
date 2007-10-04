@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public interface IEdgeListGraph<Vertex, Edge> : IGraph<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public interface IEdgeListGraph<TVertex, TEdge> : IGraph<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
         bool IsEdgesEmpty { get;}
         int EdgeCount { get;}
-        IEnumerable<Edge> Edges { get;}
-        bool ContainsEdge(Edge edge);
+        IEnumerable<TEdge> Edges { get;}
+        bool ContainsEdge(TEdge edge);
     }
 }

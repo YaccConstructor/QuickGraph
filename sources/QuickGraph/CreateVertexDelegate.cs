@@ -2,7 +2,7 @@
 namespace QuickGraph
 {
     [Serializable]
-    public delegate Vertex CreateVertexDelegate<Vertex, Edge>(
-        IVertexListGraph<Vertex,Edge> g) 
-    where Edge : IEdge<Vertex>;
+    public delegate TVertex CreateVertexDelegate<TVertex, TEdge>(
+        IVertexListGraph<TVertex,TEdge> g) 
+    where TEdge : IEdge<TVertex>;
 }

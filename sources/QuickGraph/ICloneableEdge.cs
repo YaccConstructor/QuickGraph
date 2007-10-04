@@ -2,8 +2,8 @@
 
 namespace QuickGraph
 {
-    public interface ICloneableEdge<Vertex> : IEdge<Vertex>
+    public interface ICloneableEdge<TVertex> : IEdge<TVertex>
     {
-        ICloneableEdge<Vertex> Clone(Vertex source, Vertex target);
+        ICloneableEdge<TVertex> Clone(TVertex source, TVertex target);
     }
 }

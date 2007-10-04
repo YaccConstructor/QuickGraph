@@ -4,9 +4,9 @@ using System.Text;
 
 namespace QuickGraph
 {
-    public interface IIdentifiableVertexFactory<Vertex>
-        where Vertex : IIdentifiable
+    public interface IIdentifiableVertexFactory<TVertex>
+        where TVertex : IIdentifiable
     {
-        Vertex CreateVertex(string id);
+        TVertex CreateVertex(string id);
     }
 }

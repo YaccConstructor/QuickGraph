@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public interface IHyperEdge<Vertex>
+    public interface IHyperEdge<TVertex>
     {
         int EndPointCount { get;}
-        IEnumerable<Vertex> EndPoints { get;}
+        IEnumerable<TVertex> EndPoints { get;}
     }
 }

@@ -4,9 +4,9 @@ using System.Text;
 
 namespace QuickGraph
 {
-    public interface IIdentifiableEdgeFactory<Vertex,Edge>
-        where Edge: IIdentifiable, IEdge<Vertex>
+    public interface IIdentifiableEdgeFactory<TVertex,TEdge>
+        where TEdge: IIdentifiable, IEdge<TVertex>
     {
-        Edge CreateEdge(string id, Vertex source, Vertex target);
+        TEdge CreateEdge(string id, TVertex source, TVertex target);
     }
 }

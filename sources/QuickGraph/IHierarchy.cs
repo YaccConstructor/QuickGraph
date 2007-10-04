@@ -4,14 +4,14 @@ using System.Text;
 
 namespace QuickGraph
 {
-    public interface IHierarchy<Vertex,Edge> : 
-        IMutableVertexAndEdgeListGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IHierarchy<TVertex,TEdge> : 
+        IMutableVertexAndEdgeListGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
         /// <summary>
         /// Gets the roots of the hierarchy
         /// </summary>
-        Vertex Root { get;}
+        TVertex Root { get;}
 
         /// <summary>
         /// Gets the parent <typeparamref name="Vertex"/> of <paramref name="vertex"/>
@@ -21,7 +21,7 @@ namespace QuickGraph
         /// <exception cref="ArgumentException">
         /// <paramref name="vertex"/> is the root of the graph.
         /// </exception>
-        Vertex GetParent(Vertex vertex);
+        TVertex GetParent(TVertex vertex);
 
         /// <summary>
         /// Gets the parent <typeparamref name="Edge"/> of <paramref name="vertex"/>
@@ -31,7 +31,7 @@ namespace QuickGraph
         /// <exception cref="ArgumentException">
         /// <paramref name="vertex"/> is the root of the graph.
         /// </exception>
-        Edge GetParentEdge(Vertex vertex);
+        TEdge GetParentEdge(TVertex vertex);
 
         /// <summary>
         /// Gets a value indicating if <paramref name="edge"/> is 
@@ -39,7 +39,7 @@ namespace QuickGraph
         /// </summary>
         /// <param name="edge"></param>
         /// <returns></returns>
-        bool IsCrossEdge(Edge edge);
+        bool IsCrossEdge(TEdge edge);
 
         /// <summary>
         /// Gets a value indicating whether <paramref name="edge"/> 
@@ -47,7 +47,7 @@ namespace QuickGraph
         /// </summary>
         /// <param name="edge"></param>
         /// <returns></returns>
-        bool IsRealEdge(Edge edge);
+        bool IsRealEdge(TEdge edge);
 
         /// <summary>
         /// Gets a value indicating if <paramref name="source"/>
@@ -59,7 +59,7 @@ namespace QuickGraph
         /// true if <paramref name="source"/> is a predecessor of
         /// <paramref name="target"/>
         /// </returns>
-        bool IsPredecessorOf(Vertex source, Vertex target);
+        bool IsPredecessorOf(TVertex source, TVertex target);
 
         /// <summary>
         /// Gets the number of edges between <paramref name="source"/>
@@ -72,7 +72,7 @@ namespace QuickGraph
         /// <paramref name="source"/> is a predecessor of <paramref name="target"/>
         /// or the otherway round.
         /// </exception>
-        int InducedEdgeCount(Vertex source, Vertex target);
+        int InducedEdgeCount(TVertex source, TVertex target);
 
         /// <summary>
         /// Gets a value indicating if <paramref name="vertex"/> is 
@@ -82,7 +82,7 @@ namespace QuickGraph
         /// <returns>
         /// true if not a leaf
         /// </returns>
-        bool IsInnerNode(Vertex vertex);
+        bool IsInnerNode(TVertex vertex);
 
         /// <summary>
         /// Gets the collection of children <typeparamref name="Edge"/>
@@ -90,7 +90,7 @@ namespace QuickGraph
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        IEnumerable<Edge> ChildrenEdges(Vertex vertex);
+        IEnumerable<TEdge> ChildrenEdges(TVertex vertex);
 
 
         /// <summary>
@@ -99,6 +99,6 @@ namespace QuickGraph
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        IEnumerable<Vertex> ChildrenVertices(Vertex vertex);
+        IEnumerable<TVertex> ChildrenVertices(TVertex vertex);
     }
 }

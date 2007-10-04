@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public interface IImplicitGraph<Vertex,Edge> : IGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IImplicitGraph<TVertex,TEdge> : IGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        bool IsOutEdgesEmpty(Vertex v);
-        int OutDegree(Vertex v);
-        IEnumerable<Edge> OutEdges(Vertex v);
-        Edge OutEdge(Vertex v, int index);
+        bool IsOutEdgesEmpty(TVertex v);
+        int OutDegree(TVertex v);
+        IEnumerable<TEdge> OutEdges(TVertex v);
+        TEdge OutEdge(TVertex v, int index);
     }
 }

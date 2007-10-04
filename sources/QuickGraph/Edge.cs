@@ -3,28 +3,31 @@
 namespace QuickGraph
 {
     [Serializable]
-    public class Edge<Vertex> : IEdge<Vertex>
+    public class Edge<TVertex> : IEdge<TVertex>
     {
-        private readonly Vertex source;
-        private readonly Vertex target;
+        private readonly TVertex source;
+        private readonly TVertex target;
 
-        public Edge(Vertex source, Vertex target)
+        public Edge(TVertex source, TVertex target)
         {
+            GraphContracts.AssumeNotNull(source, "source");
+            GraphContracts.AssumeNotNull(target, "target");
+
             this.source = source;
             this.target = target;
         }
 
         public static Type VertexType
         {
-            get { return typeof(Vertex); }
+            get { return typeof(TVertex); }
         }
 
-        public Vertex Source
+        public TVertex Source
         {
             get { return this.source; }
         }
 
-        public Vertex Target
+        public TVertex Target
         {
             get { return this.target; }
         }

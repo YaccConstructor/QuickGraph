@@ -4,17 +4,17 @@ using System.Collections.Generic;
 namespace QuickGraph
 {
     [Serializable]
-    public class EdgeListGraph<Vertex,Edge> :
-        IEdgeListGraph<Vertex,Edge>,
-        IMutableEdgeListGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public class EdgeListGraph<TVertex,TEdge> :
+        IEdgeListGraph<TVertex,TEdge>,
+        IMutableEdgeListGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
         private readonly bool isDirected = true;
         private readonly bool allowParralelEdges = true;
         private readonly EdgeEdgeDictionary edges = new EdgeEdgeDictionary();
 
         [Serializable]
-        public class EdgeEdgeDictionary : Dictionary<Edge, Edge>
+        public class EdgeEdgeDictionary : Dictionary<TEdge, TEdge>
         { }
 
         public EdgeListGraph()
@@ -42,7 +42,7 @@ namespace QuickGraph
             }
         }
 
-        public IEnumerable<Edge> Edges
+        public IEnumerable<TEdge> Edges
         {
             get 
             { 
@@ -50,7 +50,7 @@ namespace QuickGraph
             }
         }
 
-        public bool ContainsEdge(Edge edge)
+        public bool ContainsEdge(TEdge edge)
         {
             return this.edges.ContainsKey(edge);
         }
@@ -71,50 +71,50 @@ namespace QuickGraph
             }
         }
 
-        public bool AddEdge(Edge edge)
+        public bool AddEdge(TEdge edge)
         {
             if(this.ContainsEdge(edge))
                 return false;
             this.edges.Add(edge, edge);
-            this.OnEdgeAdded(new EdgeEventArgs<Vertex,Edge>(edge));
+            this.OnEdgeAdded(new EdgeEventArgs<TVertex,TEdge>(edge));
             return true;
         }
 
-        public event EdgeEventHandler<Vertex, Edge> EdgeAdded;
-        protected virtual void OnEdgeAdded(EdgeEventArgs<Vertex, Edge> args)
+        public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        protected virtual void OnEdgeAdded(EdgeEventArgs<TVertex, TEdge> args)
         {
-            EdgeEventHandler<Vertex, Edge> eh = this.EdgeAdded;
+            EdgeEventHandler<TVertex, TEdge> eh = this.EdgeAdded;
             if (eh != null)
                 eh(this, args);
         }
 
-        public bool RemoveEdge(Edge edge)
+        public bool RemoveEdge(TEdge edge)
         {
             if (this.edges.Remove(edge))
             {
-                this.OnEdgeRemoved(new EdgeEventArgs<Vertex, Edge>(edge));
+                this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
                 return true;
             }
             else
                 return false;
         }
 
-        public event EdgeEventHandler<Vertex, Edge> EdgeRemoved;
-        protected virtual void OnEdgeRemoved(EdgeEventArgs<Vertex, Edge> args)
+        public event EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+        protected virtual void OnEdgeRemoved(EdgeEventArgs<TVertex, TEdge> args)
         {
-            EdgeEventHandler<Vertex, Edge> eh = this.EdgeRemoved;
+            EdgeEventHandler<TVertex, TEdge> eh = this.EdgeRemoved;
             if (eh != null)
                 eh(this, args);
         }
 
-        public int RemoveEdgeIf(EdgePredicate<Vertex, Edge> predicate)
+        public int RemoveEdgeIf(EdgePredicate<TVertex, TEdge> predicate)
         {
-            List<Edge> edgesToRemove = new List<Edge>();
-            foreach (Edge edge in this.Edges)
+            List<TEdge> edgesToRemove = new List<TEdge>();
+            foreach (TEdge edge in this.Edges)
                 if (predicate(edge))
                     edgesToRemove.Add(edge);
 
-            foreach (Edge edge in edgesToRemove)
+            foreach (TEdge edge in edgesToRemove)
                 edges.Remove(edge);
             return edgesToRemove.Count;
         }
