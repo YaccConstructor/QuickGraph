@@ -7,24 +7,24 @@ namespace QuickGraph.Algorithms.MaximumFlow
     /// Abstract base class for maximum flow algorithms.
     /// </summary>
     [Serializable]
-    public abstract class MaximumFlowAlgorithm<Vertex, Edge> :
-        AlgorithmBase<IVertexListGraph<Vertex, Edge>>,
-        IVertexColorizerAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public abstract class MaximumFlowAlgorithm<TVertex, TEdge> :
+        AlgorithmBase<IVertexListGraph<TVertex, TEdge>>,
+        IVertexColorizerAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        private IDictionary<Vertex,Edge> predecessors;
-        private IDictionary<Edge,double> capacities;
-        private IDictionary<Edge,double> residualCapacities;
-        private IDictionary<Edge,Edge> reversedEdges;
-        private IDictionary<Vertex,GraphColor> vertexColors;
-        private Vertex source;
-        private Vertex sink;
+        private IDictionary<TVertex,TEdge> predecessors;
+        private IDictionary<TEdge,double> capacities;
+        private IDictionary<TEdge,double> residualCapacities;
+        private IDictionary<TEdge,TEdge> reversedEdges;
+        private IDictionary<TVertex,GraphColor> vertexColors;
+        private TVertex source;
+        private TVertex sink;
         private double maxFlow = 0;
 
         public MaximumFlowAlgorithm(
-            IVertexListGraph<Vertex,Edge> visitedGraph,
-            IDictionary<Edge, double> capacities,
-            IDictionary<Edge,Edge> reversedEdges
+            IVertexListGraph<TVertex,TEdge> visitedGraph,
+            IDictionary<TEdge, double> capacities,
+            IDictionary<TEdge,TEdge> reversedEdges
             )
             :base(visitedGraph)
         {
@@ -36,12 +36,12 @@ namespace QuickGraph.Algorithms.MaximumFlow
             this.capacities = capacities;
             this.reversedEdges = reversedEdges;
 
-            this.predecessors = new Dictionary<Vertex,Edge>();
-            this.residualCapacities = new Dictionary<Edge,double>();
-            this.vertexColors = new Dictionary<Vertex, GraphColor>();
+            this.predecessors = new Dictionary<TVertex,TEdge>();
+            this.residualCapacities = new Dictionary<TEdge,double>();
+            this.vertexColors = new Dictionary<TVertex, GraphColor>();
         }
 
-        public IDictionary<Vertex,Edge> Predecessors
+        public IDictionary<TVertex,TEdge> Predecessors
         {
             get
             {
@@ -49,7 +49,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IDictionary<Edge,double> Capacities
+        public IDictionary<TEdge,double> Capacities
         {
             get
             {
@@ -57,7 +57,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IDictionary<Edge,double> ResidualCapacities
+        public IDictionary<TEdge,double> ResidualCapacities
         {
             get
             {
@@ -65,7 +65,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IDictionary<Edge,Edge> ReversedEdges
+        public IDictionary<TEdge,TEdge> ReversedEdges
         {
             get
             {
@@ -73,7 +73,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IDictionary<Vertex,GraphColor> VertexColors
+        public IDictionary<TVertex,GraphColor> VertexColors
         {
             get
             {
@@ -81,7 +81,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public Vertex Source
+        public TVertex Source
         {
             get { return this.source; }
             set 
@@ -92,7 +92,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public Vertex Sink
+        public TVertex Sink
         {
             get { return this.sink; }
             set 
@@ -109,7 +109,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             set { this.maxFlow = value; }
         }
 
-        public double Compute(Vertex source, Vertex sink)
+        public double Compute(TVertex source, TVertex sink)
         {
             this.Source = source;
             this.Sink = sink;

@@ -2,30 +2,30 @@
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
-    public sealed class MultiSourceSinkGraphAugmentorAlgorithm<Vertex, Edge> :
-        GraphAugmentorAlgorithmBase<Vertex, Edge, IMutableBidirectionalGraph<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class MultiSourceSinkGraphAugmentorAlgorithm<TVertex, TEdge> :
+        GraphAugmentorAlgorithmBase<TVertex, TEdge, IMutableBidirectionalGraph<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
         public MultiSourceSinkGraphAugmentorAlgorithm(
-            IMutableBidirectionalGraph<Vertex, Edge> visitedGraph
+            IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph
             )
             : this(visitedGraph,
-                FactoryCompiler.GetVertexFactory<Vertex>(),
-                FactoryCompiler.GetEdgeFactory<Vertex, Edge>()
+                FactoryCompiler.GetVertexFactory<TVertex>(),
+                FactoryCompiler.GetEdgeFactory<TVertex, TEdge>()
                 )
         { }
 
         public MultiSourceSinkGraphAugmentorAlgorithm(
-            IMutableBidirectionalGraph<Vertex, Edge> visitedGraph,
-            IVertexFactory<Vertex> vertexFactory,
-            IEdgeFactory<Vertex,Edge> edgeFactory
+            IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph,
+            IVertexFactory<TVertex> vertexFactory,
+            IEdgeFactory<TVertex,TEdge> edgeFactory
             )
             :base(visitedGraph,vertexFactory,edgeFactory)
         {}
 
         protected override void AugmentGraph()
         {
-            foreach (Vertex v in this.VisitedGraph.Vertices)
+            foreach (TVertex v in this.VisitedGraph.Vertices)
             {
                 if (this.IsAborting)
                     return;

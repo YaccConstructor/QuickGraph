@@ -4,49 +4,49 @@ using System.Collections.Generic;
 namespace QuickGraph.Algorithms.MaximumFlow
 {
     [Serializable]
-    public class GraphBalancerAlgorithm<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public class GraphBalancerAlgorithm<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        private IMutableBidirectionalGraph<Vertex,Edge> visitedGraph;
-        private IVertexFactory<Vertex> vertexFactory;
-        private IEdgeFactory<Vertex,Edge> edgeFactory;
+        private IMutableBidirectionalGraph<TVertex,TEdge> visitedGraph;
+        private IVertexFactory<TVertex> vertexFactory;
+        private IEdgeFactory<TVertex,TEdge> edgeFactory;
 
-        private Vertex source;
-        private Vertex sink;
+        private TVertex source;
+        private TVertex sink;
 
-        private Vertex balancingSource;
-        private Edge balancingSourceEdge;
+        private TVertex balancingSource;
+        private TEdge balancingSourceEdge;
 
-        private Vertex balancingSink;
-        private Edge balancingSinkEdge;
+        private TVertex balancingSink;
+        private TEdge balancingSinkEdge;
 
-        private IDictionary<Edge,double> capacities = new Dictionary<Edge,double>();
-        private Dictionary<Edge,int> preFlow = new Dictionary<Edge,int>();
-        private List<Vertex> surplusVertices = new List<Vertex>();
-        private List<Edge> surplusEdges = new List<Edge>();
-        private List<Vertex> deficientVertices = new List<Vertex>();
-        private List<Edge> deficientEdges = new List<Edge>();
+        private IDictionary<TEdge,double> capacities = new Dictionary<TEdge,double>();
+        private Dictionary<TEdge,int> preFlow = new Dictionary<TEdge,int>();
+        private List<TVertex> surplusVertices = new List<TVertex>();
+        private List<TEdge> surplusEdges = new List<TEdge>();
+        private List<TVertex> deficientVertices = new List<TVertex>();
+        private List<TEdge> deficientEdges = new List<TEdge>();
         private bool balanced = false;
 
         public GraphBalancerAlgorithm(
-            IMutableBidirectionalGraph<Vertex, Edge> visitedGraph,
-            Vertex source,
-            Vertex sink
+            IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph,
+            TVertex source,
+            TVertex sink
             )
             : this(visitedGraph,
                 source,
                 sink,
-                FactoryCompiler.GetVertexFactory<Vertex>(),
-                FactoryCompiler.GetEdgeFactory<Vertex, Edge>()
+                FactoryCompiler.GetVertexFactory<TVertex>(),
+                FactoryCompiler.GetEdgeFactory<TVertex, TEdge>()
                 )
         { }
 
         public GraphBalancerAlgorithm(
-            IMutableBidirectionalGraph<Vertex, Edge> visitedGraph,
-            Vertex source,
-            Vertex sink,
-            IVertexFactory<Vertex> vertexFactory,
-            IEdgeFactory<Vertex,Edge> edgeFactory
+            IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph,
+            TVertex source,
+            TVertex sink,
+            IVertexFactory<TVertex> vertexFactory,
+            IEdgeFactory<TVertex,TEdge> edgeFactory
             )
         {
             if (visitedGraph == null)
@@ -71,21 +71,21 @@ namespace QuickGraph.Algorithms.MaximumFlow
             this.sink = sink;
 
             // setting capacities = u(e) = +infty
-            foreach (Edge edge in this.VisitedGraph.Edges)
+            foreach (TEdge edge in this.VisitedGraph.Edges)
                 this.capacities.Add(edge, double.MaxValue);
 
             // setting preflow = l(e) = 1
-            foreach (Edge edge in this.VisitedGraph.Edges)
+            foreach (TEdge edge in this.VisitedGraph.Edges)
                 this.preFlow.Add(edge, 1);
         }
 
         public GraphBalancerAlgorithm(
-            IMutableBidirectionalGraph<Vertex, Edge> visitedGraph,
-            IVertexFactory<Vertex> vertexFactory,
-            IEdgeFactory<Vertex,Edge> edgeFactory,
-            Vertex source,
-            Vertex sink,
-            IDictionary<Edge,double> capacities)
+            IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph,
+            IVertexFactory<TVertex> vertexFactory,
+            IEdgeFactory<TVertex,TEdge> edgeFactory,
+            TVertex source,
+            TVertex sink,
+            IDictionary<TEdge,double> capacities)
         {
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");
@@ -110,11 +110,11 @@ namespace QuickGraph.Algorithms.MaximumFlow
             this.capacities = capacities;
 
             // setting preflow = l(e) = 1
-            foreach (Edge edge in this.VisitedGraph.Edges)
+            foreach (TEdge edge in this.VisitedGraph.Edges)
                 this.preFlow.Add(edge, 1);
         }
 
-        public IMutableBidirectionalGraph<Vertex, Edge> VisitedGraph
+        public IMutableBidirectionalGraph<TVertex, TEdge> VisitedGraph
         {
             get
             {
@@ -122,12 +122,12 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IVertexFactory<Vertex> VertexFactory
+        public IVertexFactory<TVertex> VertexFactory
         {
             get { return this.vertexFactory;}
         }
 
-        public IEdgeFactory<Vertex,Edge> EdgeFactory
+        public IEdgeFactory<TVertex,TEdge> EdgeFactory
         {
             get { return this.edgeFactory;}
         }
@@ -140,77 +140,77 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public Vertex Source
+        public TVertex Source
         {
             get
             {
                 return this.source;
             }
         }
-        public Vertex Sink
+        public TVertex Sink
         {
             get
             {
                 return this.sink;
             }
         }
-        public Vertex BalancingSource
+        public TVertex BalancingSource
         {
             get
             {
                 return this.balancingSource;
             }
         }
-        public Edge BalancingSourceEdge
+        public TEdge BalancingSourceEdge
         {
             get
             {
                 return this.balancingSourceEdge;
             }
         }
-        public Vertex BalancingSink
+        public TVertex BalancingSink
         {
             get
             {
                 return this.balancingSink;
             }
         }
-        public Edge BalancingSinkEdge
+        public TEdge BalancingSinkEdge
         {
             get
             {
                 return this.balancingSinkEdge;
             }
         }
-        public ICollection<Vertex> SurplusVertices
+        public ICollection<TVertex> SurplusVertices
         {
             get
             {
                 return this.surplusVertices;
             }
         }
-        public ICollection<Edge> SurplusEdges
+        public ICollection<TEdge> SurplusEdges
         {
             get
             {
                 return this.surplusEdges;
             }
         }
-        public ICollection<Vertex> DeficientVertices
+        public ICollection<TVertex> DeficientVertices
         {
             get
             {
                 return this.deficientVertices;
             }
         }
-        public ICollection<Edge> DeficientEdges
+        public ICollection<TEdge> DeficientEdges
         {
             get
             {
                 return this.deficientEdges;
             }
         }
-        public IDictionary<Edge,double> Capacities
+        public IDictionary<TEdge,double> Capacities
         {
             get
             {
@@ -218,46 +218,46 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public event VertexEventHandler<Vertex> BalancingSourceAdded;
+        public event VertexEventHandler<TVertex> BalancingSourceAdded;
         private void OnBalancingSourceAdded()
         {
             if (this.BalancingSourceAdded != null)
-                this.BalancingSourceAdded(this, new VertexEventArgs<Vertex>(source));
+                this.BalancingSourceAdded(this, new VertexEventArgs<TVertex>(source));
         }
-        public event VertexEventHandler<Vertex> BalancingSinkAdded;
+        public event VertexEventHandler<TVertex> BalancingSinkAdded;
         private void OnBalancingSinkAdded()
         {
             if (this.BalancingSinkAdded != null)
-                this.BalancingSinkAdded(this, new VertexEventArgs<Vertex>(this.sink));
+                this.BalancingSinkAdded(this, new VertexEventArgs<TVertex>(this.sink));
         }
-        public event EdgeEventHandler<Vertex,Edge> EdgeAdded;
-        private void OnEdgeAdded(Edge edge)
+        public event EdgeEventHandler<TVertex,TEdge> EdgeAdded;
+        private void OnEdgeAdded(TEdge edge)
         {
             if (this.EdgeAdded != null)
-                this.EdgeAdded(this, new EdgeEventArgs<Vertex,Edge>(edge));
+                this.EdgeAdded(this, new EdgeEventArgs<TVertex,TEdge>(edge));
         }
-        public event VertexEventHandler<Vertex> SurplusVertexAdded;
-        private void OnSurplusVertexAdded(Vertex vertex)
+        public event VertexEventHandler<TVertex> SurplusVertexAdded;
+        private void OnSurplusVertexAdded(TVertex vertex)
         {
             if (this.SurplusVertexAdded != null)
-                this.SurplusVertexAdded(this, new VertexEventArgs<Vertex>(vertex));
+                this.SurplusVertexAdded(this, new VertexEventArgs<TVertex>(vertex));
         }
-        public event VertexEventHandler<Vertex> DeficientVertexAdded;
-        private void OnDeficientVertexAdded(Vertex vertex)
+        public event VertexEventHandler<TVertex> DeficientVertexAdded;
+        private void OnDeficientVertexAdded(TVertex vertex)
         {
             if (this.DeficientVertexAdded != null)
-                this.DeficientVertexAdded(this, new VertexEventArgs<Vertex>(vertex));
+                this.DeficientVertexAdded(this, new VertexEventArgs<TVertex>(vertex));
         }
 
-        public int GetBalancingIndex(Vertex v)
+        public int GetBalancingIndex(TVertex v)
         {
             int bi = 0;
-            foreach (Edge edge in this.VisitedGraph.OutEdges(v))
+            foreach (TEdge edge in this.VisitedGraph.OutEdges(v))
             {
                 int pf = this.preFlow[edge];
                 bi += pf;
             }
-            foreach (Edge edge in this.VisitedGraph.InEdges(v))
+            foreach (TEdge edge in this.VisitedGraph.InEdges(v))
             {
                 int pf = this.preFlow[edge];
                 bi -= pf;
@@ -295,7 +295,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
             // step 2
             // for each surplus vertex v, add (source -> v)
-            foreach (Vertex v in this.VisitedGraph.Vertices)
+            foreach (TVertex v in this.VisitedGraph.Vertices)
             {
                 if (v.Equals(this.balancingSource))
                     continue;
@@ -313,7 +313,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 if (balacingIndex < 0)
                 {
                     // surplus vertex
-                    Edge edge = this.EdgeFactory.CreateEdge(this.BalancingSource, v);
+                    TEdge edge = this.EdgeFactory.CreateEdge(this.BalancingSource, v);
                     this.VisitedGraph.AddEdge(edge);
                     this.surplusEdges.Add(edge);
                     this.surplusVertices.Add(v);
@@ -325,7 +325,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 else
                 {
                     // deficient vertex
-                    Edge edge = this.EdgeFactory.CreateEdge(v, this.BalancingSink);
+                    TEdge edge = this.EdgeFactory.CreateEdge(v, this.BalancingSink);
                     this.deficientEdges.Add(edge);
                     this.deficientVertices.Add(v);
                     this.preFlow.Add(edge, 0);
@@ -342,13 +342,13 @@ namespace QuickGraph.Algorithms.MaximumFlow
         {
             if (!this.Balanced)
                 throw new InvalidOperationException("Graph is not balanced");
-            foreach (Edge edge in this.surplusEdges)
+            foreach (TEdge edge in this.surplusEdges)
             {
                 this.VisitedGraph.RemoveEdge(edge);
                 this.capacities.Remove(edge);
                 this.preFlow.Remove(edge);
             }
-            foreach (Edge edge in this.deficientEdges)
+            foreach (TEdge edge in this.deficientEdges)
             {
                 this.VisitedGraph.RemoveEdge(edge);
                 this.capacities.Remove(edge);
@@ -364,10 +364,10 @@ namespace QuickGraph.Algorithms.MaximumFlow
             this.VisitedGraph.RemoveVertex(this.BalancingSource);
             this.VisitedGraph.RemoveVertex(this.BalancingSink);
 
-            this.balancingSource = default(Vertex);
-            this.balancingSink = default(Vertex);
-            this.balancingSourceEdge = default(Edge);
-            this.balancingSinkEdge = default(Edge);
+            this.balancingSource = default(TVertex);
+            this.balancingSink = default(TVertex);
+            this.balancingSourceEdge = default(TEdge);
+            this.balancingSinkEdge = default(TEdge);
 
             this.surplusEdges.Clear();
             this.deficientEdges.Clear();

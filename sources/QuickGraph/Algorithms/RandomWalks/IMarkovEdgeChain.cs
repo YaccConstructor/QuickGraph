@@ -1,8 +1,8 @@
 ﻿using System;
 namespace QuickGraph.Algorithms.RandomWalks
 {
-    public interface IMarkovEdgeChain<Vertex,Edge> : IEdgeChain<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IMarkovEdgeChain<TVertex,TEdge> : IEdgeChain<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
         Random Rand { get;set;}
     }

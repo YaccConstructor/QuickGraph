@@ -3,17 +3,17 @@ using System.Collections.Generic;
 namespace QuickGraph.Algorithms.RandomWalks
 {
     [Serializable]
-    public sealed class VanishingWeightedMarkovEdgeChain<Vertex, Edge> :
-        WeightedMarkovEdgeChainBase<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class VanishingWeightedMarkovEdgeChain<TVertex, TEdge> :
+        WeightedMarkovEdgeChainBase<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
 		private double factor;
 
-		public VanishingWeightedMarkovEdgeChain(IDictionary<Edge,double> weights)
+		public VanishingWeightedMarkovEdgeChain(IDictionary<TEdge,double> weights)
             :this(weights,0.2)
         {}
 
-		public VanishingWeightedMarkovEdgeChain(IDictionary<Edge,double> weights, double factor)
+		public VanishingWeightedMarkovEdgeChain(IDictionary<TEdge,double> weights, double factor)
 			:base(weights)
 		{
 			this.factor = factor;
@@ -31,20 +31,20 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
 		}
 
-        public override Edge Successor(IImplicitGraph<Vertex,Edge> g, Vertex u)
+        public override TEdge Successor(IImplicitGraph<TVertex,TEdge> g, TVertex u)
         {
             if (g.IsOutEdgesEmpty(u))
-                return default(Edge);
+                return default(TEdge);
             // get outweight
             double outWeight = GetOutWeight(g, u);
             // get succesor
-            Edge s = Successor(g,u,this.Rand.NextDouble() * outWeight);
+            TEdge s = Successor(g,u,this.Rand.NextDouble() * outWeight);
 
 			// update probabilities
 			this.Weights[s]*=this.Factor;
 
             // normalize
-            foreach(Edge e in g.OutEdges(u))
+            foreach(TEdge e in g.OutEdges(u))
             {
                 checked
                 {

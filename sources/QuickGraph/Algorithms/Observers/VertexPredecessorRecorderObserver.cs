@@ -12,32 +12,32 @@ namespace QuickGraph.Algorithms.Observers
     ///     idref="boost"
     ///     />
     [Serializable]
-    public sealed class VertexPredecessorRecorderObserver<Vertex, Edge> :
-        IObserver<Vertex,Edge,IVertexPredecessorRecorderAlgorithm<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class VertexPredecessorRecorderObserver<TVertex, TEdge> :
+        IObserver<TVertex,TEdge,IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private readonly IDictionary<Vertex, Edge> vertexPredecessors;
-        private readonly List<Vertex> endPathVertices = new List<Vertex>();
+        private readonly IDictionary<TVertex, TEdge> vertexPredecessors;
+        private readonly List<TVertex> endPathVertices = new List<TVertex>();
         private bool recordEndPath = true;
 
         public VertexPredecessorRecorderObserver()
-            :this(new Dictionary<Vertex,Edge>())
+            :this(new Dictionary<TVertex,TEdge>())
         {}
 
         public VertexPredecessorRecorderObserver(
-            IDictionary<Vertex, Edge> vertexPredecessors)
+            IDictionary<TVertex, TEdge> vertexPredecessors)
         {
             if (vertexPredecessors == null)
                 throw new ArgumentNullException("vertexPredecessors");
             this.vertexPredecessors = vertexPredecessors;
         }
 
-        public IDictionary<Vertex, Edge> VertexPredecessors
+        public IDictionary<TVertex, TEdge> VertexPredecessors
         {
             get { return this.vertexPredecessors; }
         }
 
-        public ICollection<Vertex> EndPathVertices
+        public ICollection<TVertex> EndPathVertices
         {
             get { return this.endPathVertices; }
         }
@@ -48,35 +48,35 @@ namespace QuickGraph.Algorithms.Observers
             set { this.recordEndPath = value; }
         }
 
-        public void Attach(IVertexPredecessorRecorderAlgorithm<Vertex, Edge> algorithm)
+        public void Attach(IVertexPredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.StartVertex += new VertexEventHandler<Vertex>(StartVertex);
-            algorithm.TreeEdge+=new EdgeEventHandler<Vertex,Edge>(TreeEdge);
-            algorithm.FinishVertex+=new VertexEventHandler<Vertex>(FinishVertex);
+            algorithm.StartVertex += new VertexEventHandler<TVertex>(StartVertex);
+            algorithm.TreeEdge+=new EdgeEventHandler<TVertex,TEdge>(TreeEdge);
+            algorithm.FinishVertex+=new VertexEventHandler<TVertex>(FinishVertex);
         }
 
-        public void Detach(IVertexPredecessorRecorderAlgorithm<Vertex, Edge> algorithm)
+        public void Detach(IVertexPredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.StartVertex -= new VertexEventHandler<Vertex>(StartVertex);
-            algorithm.TreeEdge -= new EdgeEventHandler<Vertex, Edge>(TreeEdge);
-            algorithm.FinishVertex -= new VertexEventHandler<Vertex>(FinishVertex);
+            algorithm.StartVertex -= new VertexEventHandler<TVertex>(StartVertex);
+            algorithm.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(TreeEdge);
+            algorithm.FinishVertex -= new VertexEventHandler<TVertex>(FinishVertex);
         }
 
-        void StartVertex(object sender, VertexEventArgs<Vertex> e)
+        void StartVertex(object sender, VertexEventArgs<TVertex> e)
         {
 //            VertexPredecessors[e.Vertex] = default(Edge);
         }
 
-        void TreeEdge(Object sender, EdgeEventArgs<Vertex, Edge> e)
+        void TreeEdge(Object sender, EdgeEventArgs<TVertex, TEdge> e)
         {
             VertexPredecessors[e.Edge.Target] = e.Edge;
         }
 
-        void FinishVertex(Object sender, VertexEventArgs<Vertex> e)
+        void FinishVertex(Object sender, VertexEventArgs<TVertex> e)
         {
             if (this.RecordEndPath)
             {
-                foreach (Edge edge in this.VertexPredecessors.Values)
+                foreach (TEdge edge in this.VertexPredecessors.Values)
                 {
                     if (edge.Source.Equals(e.Vertex))
                         return;
@@ -85,12 +85,12 @@ namespace QuickGraph.Algorithms.Observers
             }
         }
 
-        public List<Edge> Path(Vertex v)
+        public List<TEdge> Path(TVertex v)
         {
-            List<Edge> path = new List<Edge>();
+            List<TEdge> path = new List<TEdge>();
 
-            Vertex vc = v;
-            Edge e;
+            TVertex vc = v;
+            TEdge e;
             while (this.VertexPredecessors.TryGetValue(vc, out e))
             {
                 path.Insert(0, e);
@@ -100,10 +100,10 @@ namespace QuickGraph.Algorithms.Observers
             return path;
         }
 
-        public IList<IList<Edge>> AllPaths()
+        public IList<IList<TEdge>> AllPaths()
         {
-            List<IList<Edge>> es = new List<IList<Edge>>();
-            foreach (Vertex v in this.EndPathVertices)
+            List<IList<TEdge>> es = new List<IList<TEdge>>();
+            foreach (TVertex v in this.EndPathVertices)
                 es.Add(Path(v));
 
             return es;

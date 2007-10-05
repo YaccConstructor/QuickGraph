@@ -2,30 +2,30 @@
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
-    public sealed class AllVerticesGraphAugmentorAlgorithm<Vertex,Edge> :
-        GraphAugmentorAlgorithmBase<Vertex,Edge,IMutableVertexAndEdgeListGraph<Vertex,Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class AllVerticesGraphAugmentorAlgorithm<TVertex,TEdge> :
+        GraphAugmentorAlgorithmBase<TVertex,TEdge,IMutableVertexAndEdgeListGraph<TVertex,TEdge>>
+        where TEdge : IEdge<TVertex>
     {
         public AllVerticesGraphAugmentorAlgorithm(
-            IMutableVertexAndEdgeListGraph<Vertex, Edge> visitedGraph
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph
             )
             : this(visitedGraph,
-                FactoryCompiler.GetVertexFactory<Vertex>(),
-                FactoryCompiler.GetEdgeFactory<Vertex, Edge>()
+                FactoryCompiler.GetVertexFactory<TVertex>(),
+                FactoryCompiler.GetEdgeFactory<TVertex, TEdge>()
                 )
         { }
 
         public AllVerticesGraphAugmentorAlgorithm(
-            IMutableVertexAndEdgeListGraph<Vertex, Edge> visitedGraph,
-            IVertexFactory<Vertex> vertexFactory,
-            IEdgeFactory<Vertex,Edge> edgeFactory
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            IVertexFactory<TVertex> vertexFactory,
+            IEdgeFactory<TVertex,TEdge> edgeFactory
             )
             :base(visitedGraph,vertexFactory,edgeFactory)
         {}
 
         protected override void AugmentGraph()
         {
-            foreach (Vertex v in this.VisitedGraph.Vertices)
+            foreach (TVertex v in this.VisitedGraph.Vertices)
             {
                 if (this.IsAborting)
                     return;

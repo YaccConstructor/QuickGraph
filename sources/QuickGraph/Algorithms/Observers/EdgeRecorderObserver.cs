@@ -12,23 +12,23 @@ namespace QuickGraph.Algorithms.Observers
     ///     idref="boost"
     ///     />
     [Serializable]
-    public sealed class EdgeRecorderObserver<Vertex, Edge> :
-        IObserver<Vertex,Edge,ITreeBuilderAlgorithm<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class EdgeRecorderObserver<TVertex, TEdge> :
+        IObserver<TVertex,TEdge,ITreeBuilderAlgorithm<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private IList<Edge> edges;
+        private IList<TEdge> edges;
         public EdgeRecorderObserver()
-            :this(new List<Edge>())
+            :this(new List<TEdge>())
         {}
 
-        public EdgeRecorderObserver(IList<Edge> edges)
+        public EdgeRecorderObserver(IList<TEdge> edges)
         {
             if (edges == null)
                 throw new ArgumentNullException("edges");
             this.edges = edges;
         }
 
-        public IList<Edge> Edges
+        public IList<TEdge> Edges
         {
             get
             {
@@ -36,25 +36,25 @@ namespace QuickGraph.Algorithms.Observers
             }
         }
 
-        public void Attach(ITreeBuilderAlgorithm<Vertex, Edge> algorithm)
+        public void Attach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.TreeEdge +=new EdgeEventHandler<Vertex,Edge>(RecordEdge);
+            algorithm.TreeEdge +=new EdgeEventHandler<TVertex,TEdge>(RecordEdge);
         }
 
-        public void Detach(ITreeBuilderAlgorithm<Vertex, Edge> algorithm)
+        public void Detach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.TreeEdge -=new EdgeEventHandler<Vertex,Edge>(RecordEdge);
+            algorithm.TreeEdge -=new EdgeEventHandler<TVertex,TEdge>(RecordEdge);
         }
 
-        public void RecordEdge(Object sender, EdgeEventArgs<Vertex,Edge> args)
+        public void RecordEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
         {
             this.Edges.Add(args.Edge);
         }
-        public void RecordSource(Object sender, EdgeEdgeEventArgs<Vertex,Edge> args)
+        public void RecordSource(Object sender, EdgeEdgeEventArgs<TVertex,TEdge> args)
         {
             this.Edges.Add(args.Edge);
         }
-        public void RecordTarget(Object sender, EdgeEdgeEventArgs<Vertex,Edge> args)
+        public void RecordTarget(Object sender, EdgeEdgeEventArgs<TVertex,TEdge> args)
         {
             this.Edges.Add(args.TargetEdge);
         }

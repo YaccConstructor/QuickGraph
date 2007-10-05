@@ -14,54 +14,54 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
     ///     idref="shi03datastructures"
     ///     />
     [Serializable]
-    public sealed class PrimMinimumSpanningTreeAlgorithm<Vertex,Edge> : 
-        RootedAlgorithmBase<Vertex,IUndirectedGraph<Vertex,Edge>>,
-        ITreeBuilderAlgorithm<Vertex,Edge>,
-        IVertexPredecessorRecorderAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class PrimMinimumSpanningTreeAlgorithm<TVertex,TEdge> : 
+        RootedAlgorithmBase<TVertex,IUndirectedGraph<TVertex,TEdge>>,
+        ITreeBuilderAlgorithm<TVertex,TEdge>,
+        IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {        
-        private IDictionary<Edge, double> edgeWeights;
-        private Dictionary<Vertex, double> minimumWeights;
-        private PriorithizedVertexBuffer<Vertex, double> queue;
+        private IDictionary<TEdge, double> edgeWeights;
+        private Dictionary<TVertex, double> minimumWeights;
+        private PriorithizedVertexBuffer<TVertex, double> queue;
 
         public PrimMinimumSpanningTreeAlgorithm(
-            IUndirectedGraph<Vertex, Edge> visitedGraph,
-            IDictionary<Edge, double> edgeWeights
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TEdge, double> edgeWeights
             )
             :base(visitedGraph)
         {
             this.edgeWeights = edgeWeights;
         }
 
-        public IDictionary<Edge, double> EdgeWeights
+        public IDictionary<TEdge, double> EdgeWeights
         {
             get { return this.edgeWeights; }
         }
 
 
-        public event VertexEventHandler<Vertex> StartVertex;
-        private void OnStartVertex(Vertex v)
+        public event VertexEventHandler<TVertex> StartVertex;
+        private void OnStartVertex(TVertex v)
         {
-            VertexEventHandler<Vertex> eh = this.StartVertex;
+            VertexEventHandler<TVertex> eh = this.StartVertex;
             if (eh != null)
-                eh(this, new VertexEventArgs<Vertex>(v));
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public event EdgeEventHandler<Vertex, Edge> TreeEdge;
-        private void OnTreeEdge(Edge e)
+        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        private void OnTreeEdge(TEdge e)
         {
-            EdgeEventHandler<Vertex, Edge> eh = this.TreeEdge;
+            EdgeEventHandler<TVertex, TEdge> eh = this.TreeEdge;
             if (eh != null)
-                eh(this, new EdgeEventArgs<Vertex,Edge>(e));
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        public event VertexEventHandler<Vertex> FinishVertex;
+        public event VertexEventHandler<TVertex> FinishVertex;
 
-        private void OnFinishVertex(Vertex v)
+        private void OnFinishVertex(TVertex v)
         {
-            VertexEventHandler<Vertex> eh = this.FinishVertex;
+            VertexEventHandler<TVertex> eh = this.FinishVertex;
             if (eh != null)
-                eh(this, new VertexEventArgs<Vertex>(v));
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         protected override void InternalCompute()
@@ -69,7 +69,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             if (this.VisitedGraph.VertexCount == 0)
                 return;
             if (this.RootVertex == null)
-                this.RootVertex = TraversalHelper.GetFirstVertex<Vertex, Edge>(this.VisitedGraph);
+                this.RootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
 
             this.Initialize();
 
@@ -83,8 +83,8 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
                 {
                     if (this.IsAborting)
                         return;
-                    Vertex u = queue.Pop();
-                    foreach (Edge edge in this.VisitedGraph.AdjacentEdges(u))
+                    TVertex u = queue.Pop();
+                    foreach (TEdge edge in this.VisitedGraph.AdjacentEdges(u))
                     {
                         if (this.IsAborting)
                             return;
@@ -110,9 +110,9 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
 
         private void Initialize()
         {
-            this.minimumWeights = new Dictionary<Vertex, double>(this.VisitedGraph.VertexCount);
-            this.queue = new PriorithizedVertexBuffer<Vertex, double>(this.minimumWeights);
-            foreach (Vertex u in this.VisitedGraph.Vertices)
+            this.minimumWeights = new Dictionary<TVertex, double>(this.VisitedGraph.VertexCount);
+            this.queue = new PriorithizedVertexBuffer<TVertex, double>(this.minimumWeights);
+            foreach (TVertex u in this.VisitedGraph.Vertices)
             {
                 this.minimumWeights.Add(u, double.MaxValue);
                 this.queue.Add(u);

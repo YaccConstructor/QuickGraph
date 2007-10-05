@@ -3,15 +3,15 @@
 namespace QuickGraph.Algorithms.Observers
 {
     [Serializable]
-    public sealed class ObserverGuardian<Vertex,Edge,A,O> :
+    public sealed class ObserverGuardian<TVertex,TEdge,TAlgorithm,TObserver> :
         IDisposable
-        where Edge : IEdge<Vertex>
-        where O : IObserver<Vertex,Edge,A>
+        where TEdge : IEdge<TVertex>
+        where TObserver : IObserver<TVertex,TEdge,TAlgorithm>
     {
-        private A algorithm;
-        private O observer;
+        private TAlgorithm algorithm;
+        private TObserver observer;
 
-        public ObserverGuardian(A algorithm, O observer)
+        public ObserverGuardian(TAlgorithm algorithm, TObserver observer)
         {
             this.algorithm = algorithm;
             this.observer = observer;
@@ -19,12 +19,12 @@ namespace QuickGraph.Algorithms.Observers
             this.observer.Attach(this.algorithm);
         }
 
-        public A Algorithm
+        public TAlgorithm Algorithm
         {
             get { return this.algorithm; }
         }
 
-        public O Observer
+        public TObserver Observer
         {
             get { return this.observer; }
         }
@@ -34,8 +34,8 @@ namespace QuickGraph.Algorithms.Observers
             if (this.observer != null && this.algorithm != null)
             {
                 this.observer.Detach(this.algorithm);
-                this.algorithm = default(A);
-                this.observer = default(O);
+                this.algorithm = default(TAlgorithm);
+                this.observer = default(TObserver);
             }
         }
     }

@@ -7,22 +7,22 @@ namespace QuickGraph.Algorithms.RandomWalks
     /// Wilson-Propp Cycle-Popping Algorithm for Random Tree Generation.
     /// </summary>
     [Serializable]
-    public sealed class CyclePoppingRandomTreeAlgorithm<Vertex, Edge> :
-        RootedAlgorithmBase<Vertex,IVertexListGraph<Vertex,Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class CyclePoppingRandomTreeAlgorithm<TVertex, TEdge> :
+        RootedAlgorithmBase<TVertex,IVertexListGraph<TVertex,TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private IDictionary<Vertex, GraphColor> vertexColors = new Dictionary<Vertex, GraphColor>();
-        private IMarkovEdgeChain<Vertex,Edge> edgeChain = new NormalizedMarkovEdgeChain<Vertex,Edge>();
-        private IDictionary<Vertex, Edge> successors = new Dictionary<Vertex, Edge>();
+        private IDictionary<TVertex, GraphColor> vertexColors = new Dictionary<TVertex, GraphColor>();
+        private IMarkovEdgeChain<TVertex,TEdge> edgeChain = new NormalizedMarkovEdgeChain<TVertex,TEdge>();
+        private IDictionary<TVertex, TEdge> successors = new Dictionary<TVertex, TEdge>();
         private Random rnd = new Random((int)DateTime.Now.Ticks);
 
-        public CyclePoppingRandomTreeAlgorithm(IVertexListGraph<Vertex,Edge> visitedGraph)
+        public CyclePoppingRandomTreeAlgorithm(IVertexListGraph<TVertex,TEdge> visitedGraph)
             :base(visitedGraph)
         {}
 
         public CyclePoppingRandomTreeAlgorithm(
-            IVertexListGraph<Vertex,Edge> visitedGraph,
-            IMarkovEdgeChain<Vertex,Edge> edgeChain
+            IVertexListGraph<TVertex,TEdge> visitedGraph,
+            IMarkovEdgeChain<TVertex,TEdge> edgeChain
             )
             :base(visitedGraph)
         {
@@ -32,7 +32,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             this.edgeChain = edgeChain;
         }
 
-        public IDictionary<Vertex,GraphColor> VertexColors
+        public IDictionary<TVertex,GraphColor> VertexColors
         {
             get
             {
@@ -40,7 +40,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
         }
 
-        public IMarkovEdgeChain<Vertex,Edge> EdgeChain
+        public IMarkovEdgeChain<TVertex,TEdge> EdgeChain
         {
             get
             {
@@ -66,7 +66,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
         }
 
-        public IDictionary<Vertex,Edge> Successors
+        public IDictionary<TVertex,TEdge> Successors
         {
             get
             {
@@ -74,63 +74,63 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
         }
 
-        public event VertexEventHandler<Vertex> InitializeVertex;
-        private void OnInitializeVertex(Vertex v)
+        public event VertexEventHandler<TVertex> InitializeVertex;
+        private void OnInitializeVertex(TVertex v)
         {
             if (this.InitializeVertex != null)
-                this.InitializeVertex(this, new VertexEventArgs<Vertex>(v));
+                this.InitializeVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public event VertexEventHandler<Vertex> FinishVertex;
-        private void OnFinishVertex(Vertex v)
+        public event VertexEventHandler<TVertex> FinishVertex;
+        private void OnFinishVertex(TVertex v)
         {
             if (this.FinishVertex != null)
-                this.FinishVertex(this, new VertexEventArgs<Vertex>(v));
+                this.FinishVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public event EdgeEventHandler<Vertex,Edge> TreeEdge;
-        private void OnTreeEdge(Edge e)
+        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
+        private void OnTreeEdge(TEdge e)
         {
             if (this.TreeEdge != null)
-                this.TreeEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+                this.TreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        public event VertexEventHandler<Vertex> ClearTreeVertex;
-        private void OnClearTreeVertex(Vertex v)
+        public event VertexEventHandler<TVertex> ClearTreeVertex;
+        private void OnClearTreeVertex(TVertex v)
         {
             if (this.ClearTreeVertex != null)
-                this.ClearTreeVertex(this, new VertexEventArgs<Vertex>(v));
+                this.ClearTreeVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
         private void Initialize()
         {
             this.successors.Clear();
             this.vertexColors.Clear();
-            foreach (Vertex v in this.VisitedGraph.Vertices)
+            foreach (TVertex v in this.VisitedGraph.Vertices)
             {
                 this.vertexColors.Add(v,GraphColor.White);
                 OnInitializeVertex(v);
             }
         }
 
-        private bool NotInTree(Vertex u)
+        private bool NotInTree(TVertex u)
         {
             GraphColor color = this.vertexColors[u];
             return color == GraphColor.White;
         }
 
-        private void SetInTree(Vertex u)
+        private void SetInTree(TVertex u)
         {
             this.vertexColors[u] = GraphColor.Black;
             OnFinishVertex(u);
         }
 
-        private Edge RandomSuccessor(Vertex u)
+        private TEdge RandomSuccessor(TVertex u)
         {
             return this.EdgeChain.Successor(this.VisitedGraph, u);
         }
 
-        private void Tree(Vertex u, Edge next)
+        private void Tree(TVertex u, TEdge next)
         {
             this.successors[u] = next;
             if (next == null)
@@ -138,11 +138,11 @@ namespace QuickGraph.Algorithms.RandomWalks
             OnTreeEdge(next);
         }
 
-        private Vertex NextInTree(Vertex u)
+        private TVertex NextInTree(TVertex u)
         {
-            Edge next = this.successors[u];
+            TEdge next = this.successors[u];
             if (next == null)
-                return default(Vertex);
+                return default(TVertex);
             else
                 return next.Target;
         }
@@ -152,13 +152,13 @@ namespace QuickGraph.Algorithms.RandomWalks
             return this.rnd.NextDouble() <= eps;
         }
 
-        private void ClearTree(Vertex u)
+        private void ClearTree(TVertex u)
         {
-            this.successors[u] = default(Edge);
+            this.successors[u] = default(TEdge);
             OnClearTreeVertex(u);
         }
 
-        public void RandomTreeWithRoot(Vertex root)
+        public void RandomTreeWithRoot(TVertex root)
         {
             if (root == null)
                 throw new ArgumentNullException("root");
@@ -177,8 +177,8 @@ namespace QuickGraph.Algorithms.RandomWalks
             ClearTree(this.RootVertex);
             SetInTree(this.RootVertex);
 
-            Vertex u;
-            foreach (Vertex i in this.VisitedGraph.Vertices)
+            TVertex u;
+            foreach (TVertex i in this.VisitedGraph.Vertices)
             {
                 u = i;
 
@@ -215,8 +215,8 @@ namespace QuickGraph.Algorithms.RandomWalks
             Initialize();
             int numRoots = 0;
 
-            Vertex u;
-            foreach (Vertex i in this.VisitedGraph.Vertices)
+            TVertex u;
+            foreach (TVertex i in this.VisitedGraph.Vertices)
             {
                 u = i;
 

@@ -15,41 +15,41 @@ namespace QuickGraph.Algorithms.MaximumFlow
     /// <typeparam name="Vertex"></typeparam>
     /// <typeparam name="Edge"></typeparam>
     [Serializable]
-    public sealed class EdmondsKarpMaximumFlowAlgorithm<Vertex, Edge>
-        : MaximumFlowAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class EdmondsKarpMaximumFlowAlgorithm<TVertex, TEdge>
+        : MaximumFlowAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
 		public EdmondsKarpMaximumFlowAlgorithm(
-			IVertexListGraph<Vertex,Edge> g,
-			IDictionary<Edge,double> capacities,
-			IDictionary<Edge,Edge> reversedEdges
+			IVertexListGraph<TVertex,TEdge> g,
+			IDictionary<TEdge,double> capacities,
+			IDictionary<TEdge,TEdge> reversedEdges
 			)
 			: base(g,capacities,reversedEdges)
 		{}
 	
-		private IVertexListGraph<Vertex,Edge> ResidualGraph
+		private IVertexListGraph<TVertex,TEdge> ResidualGraph
 		{
 			get
 			{
 				return new FilteredVertexListGraph<
-                        Vertex,
-                        Edge,
-                        IVertexListGraph<Vertex,Edge>
+                        TVertex,
+                        TEdge,
+                        IVertexListGraph<TVertex,TEdge>
                         >(
         					VisitedGraph,
-                            new AnyVertexPredicate<Vertex>().Test,
-				        	new ResidualEdgePredicate<Vertex,Edge>(ResidualCapacities).Test
+                            new AnyVertexPredicate<TVertex>().Test,
+				        	new ResidualEdgePredicate<TVertex,TEdge>(ResidualCapacities).Test
     					);
 			}
 		}
 	
 		private void Augment(
-			Vertex src,
-			Vertex sink
+			TVertex src,
+			TVertex sink
 			)
 		{
-			Edge e;
-			Vertex u;
+			TEdge e;
+			TVertex u;
 
 			// find minimum residual capacity along the augmenting path
 			double delta = double.MaxValue;
@@ -86,9 +86,9 @@ namespace QuickGraph.Algorithms.MaximumFlow
 			if (this.Sink==null)
                 throw new InvalidOperationException("Sink is not specified");
 
-            foreach(Vertex u in VisitedGraph.Vertices)
+            foreach(TVertex u in VisitedGraph.Vertices)
 			{
-				foreach(Edge e in VisitedGraph.OutEdges(u))
+				foreach(TEdge e in VisitedGraph.OutEdges(u))
 				{
 					ResidualCapacities[e] = Capacities[e];   			
 				}
@@ -97,11 +97,11 @@ namespace QuickGraph.Algorithms.MaximumFlow
 			VertexColors[Sink] = GraphColor.Gray;
 			while (VertexColors[Sink] != GraphColor.White)
 			{
-                VertexPredecessorRecorderObserver<Vertex,Edge> vis = new VertexPredecessorRecorderObserver<Vertex,Edge>(
+                VertexPredecessorRecorderObserver<TVertex,TEdge> vis = new VertexPredecessorRecorderObserver<TVertex,TEdge>(
                     Predecessors
 					);
-				VertexBuffer<Vertex> Q = new VertexBuffer<Vertex>();
-				BreadthFirstSearchAlgorithm<Vertex,Edge> bfs = new BreadthFirstSearchAlgorithm<Vertex,Edge>(
+				VertexBuffer<TVertex> Q = new VertexBuffer<TVertex>();
+				BreadthFirstSearchAlgorithm<TVertex,TEdge> bfs = new BreadthFirstSearchAlgorithm<TVertex,TEdge>(
 					ResidualGraph,
 					Q,
 					VertexColors
@@ -115,7 +115,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 			} // while
 
             this.MaxFlow = 0;
-            foreach(Edge e in VisitedGraph.OutEdges(Source))
+            foreach(TEdge e in VisitedGraph.OutEdges(Source))
 				this.MaxFlow += (Capacities[e] - ResidualCapacities[e]);
 		} 
 	}

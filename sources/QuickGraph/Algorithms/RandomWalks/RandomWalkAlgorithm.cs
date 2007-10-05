@@ -6,21 +6,21 @@ using QuickGraph.Algorithms.Observers;
 namespace QuickGraph.Algorithms.RandomWalks
 {
     [Serializable]
-    public sealed class RandomWalkAlgorithm<Vertex, Edge> :
-        ITreeBuilderAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class RandomWalkAlgorithm<TVertex, TEdge> :
+        ITreeBuilderAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        private IImplicitGraph<Vertex,Edge> visitedGraph;
-        private EdgePredicate<Vertex,Edge> endPredicate;
-        private IEdgeChain<Vertex,Edge> edgeChain;
+        private IImplicitGraph<TVertex,TEdge> visitedGraph;
+        private EdgePredicate<TVertex,TEdge> endPredicate;
+        private IEdgeChain<TVertex,TEdge> edgeChain;
 
-        public RandomWalkAlgorithm(IImplicitGraph<Vertex,Edge> visitedGraph)
-            :this(visitedGraph,new NormalizedMarkovEdgeChain<Vertex,Edge>())
+        public RandomWalkAlgorithm(IImplicitGraph<TVertex,TEdge> visitedGraph)
+            :this(visitedGraph,new NormalizedMarkovEdgeChain<TVertex,TEdge>())
         {}
 
         public RandomWalkAlgorithm(
-            IImplicitGraph<Vertex,Edge> visitedGraph,
-            IEdgeChain<Vertex,Edge> edgeChain
+            IImplicitGraph<TVertex,TEdge> visitedGraph,
+            IEdgeChain<TVertex,TEdge> edgeChain
             )
         {
             if (visitedGraph == null)
@@ -31,7 +31,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             this.edgeChain = edgeChain;
         }
 
-        public IImplicitGraph<Vertex,Edge> VisitedGraph
+        public IImplicitGraph<TVertex,TEdge> VisitedGraph
         {
             get
             {
@@ -39,7 +39,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
         }
 
-        public IEdgeChain<Vertex,Edge> EdgeChain
+        public IEdgeChain<TVertex,TEdge> EdgeChain
         {
             get
             {
@@ -53,7 +53,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
         }
 
-        public EdgePredicate<Vertex,Edge> EndPredicate
+        public EdgePredicate<TVertex,TEdge> EndPredicate
         {
             get
             {
@@ -65,47 +65,47 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
         }
 
-        public event VertexEventHandler<Vertex> StartVertex;
-        private void OnStartVertex(Vertex v)
+        public event VertexEventHandler<TVertex> StartVertex;
+        private void OnStartVertex(TVertex v)
         {
             if (StartVertex != null)
-                StartVertex(this, new VertexEventArgs<Vertex>(v));
+                StartVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public event VertexEventHandler<Vertex> EndVertex;
-        private void OnEndVertex(Vertex v)
+        public event VertexEventHandler<TVertex> EndVertex;
+        private void OnEndVertex(TVertex v)
         {
             if (EndVertex != null)
-                EndVertex(this, new VertexEventArgs<Vertex>(v));
+                EndVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public event EdgeEventHandler<Vertex,Edge> TreeEdge;
-        private void OnTreeEdge(Edge e)
+        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
+        private void OnTreeEdge(TEdge e)
         {
             if (this.TreeEdge != null)
-                this.TreeEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+                this.TreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        private Edge Successor(Vertex u)
+        private TEdge Successor(TVertex u)
         {
             return this.EdgeChain.Successor(this.VisitedGraph, u);
         }
 
-        public void Generate(Vertex root)
+        public void Generate(TVertex root)
         {
             if (root == null)
                 throw new ArgumentNullException("root");
             Generate(root, 100);
         }
 
-        public void Generate(Vertex root, int walkCount)
+        public void Generate(TVertex root, int walkCount)
         {
             if (root == null)
                 throw new ArgumentNullException("root");
 
             int count = 0;
-            Edge e = default(Edge);
-            Vertex v = root;
+            TEdge e = default(TEdge);
+            TVertex v = root;
 
             OnStartVertex(root);
             while (count < walkCount)

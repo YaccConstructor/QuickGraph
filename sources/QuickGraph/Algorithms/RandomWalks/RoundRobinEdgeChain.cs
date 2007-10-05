@@ -4,16 +4,17 @@ using System.Collections.Generic;
 namespace QuickGraph.Algorithms.RandomWalks
 {
     [Serializable]
-    public sealed class RoundRobinEdgeChain<Vertex, Edge> : IEdgeChain<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class RoundRobinEdgeChain<TVertex, TEdge> : 
+        IEdgeChain<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        private Dictionary<Vertex, int> outEdgeIndices = new Dictionary<Vertex, int>();
+        private Dictionary<TVertex, int> outEdgeIndices = new Dictionary<TVertex, int>();
 
-        public Edge Successor(IImplicitGraph<Vertex, Edge> g, Vertex u)
+        public TEdge Successor(IImplicitGraph<TVertex, TEdge> g, TVertex u)
         {
             int outDegree = g.OutDegree(u);
             if (outDegree == 0)
-                return default(Edge);
+                return default(TEdge);
 
             int index;
             if (!outEdgeIndices.TryGetValue(u, out index))
@@ -21,7 +22,7 @@ namespace QuickGraph.Algorithms.RandomWalks
                 index = 0;
                 outEdgeIndices.Add(u, index);
             }
-            Edge e = g.OutEdge(u, index);
+            TEdge e = g.OutEdge(u, index);
             this.outEdgeIndices[u] = (++index) % outDegree;
 
             return e;

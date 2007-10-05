@@ -12,21 +12,21 @@ namespace QuickGraph.Algorithms.Observers
     ///     idref="boost"
     ///     />
     [Serializable]
-    public sealed class VertexTimeStamperObserver<Vertex, Edge> :
-        IObserver<Vertex, Edge, IVertexTimeStamperAlgorithm<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class VertexTimeStamperObserver<TVertex, TEdge> :
+        IObserver<TVertex, TEdge, IVertexTimeStamperAlgorithm<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private IDictionary<Vertex, int> discoverTimes;
-        private IDictionary<Vertex, int> finishTimes;
+        private IDictionary<TVertex, int> discoverTimes;
+        private IDictionary<TVertex, int> finishTimes;
         private int currentTime = 0;
 
         public VertexTimeStamperObserver()
-            :this(new Dictionary<Vertex,int>(), new Dictionary<Vertex,int>())
+            :this(new Dictionary<TVertex,int>(), new Dictionary<TVertex,int>())
         {}
 
         public VertexTimeStamperObserver(
-            IDictionary<Vertex, int> discoverTimes,
-            IDictionary<Vertex, int> finishTimes)
+            IDictionary<TVertex, int> discoverTimes,
+            IDictionary<TVertex, int> finishTimes)
         {
             if (discoverTimes == null)
                 throw new ArgumentNullException("discoverTimes");
@@ -36,34 +36,34 @@ namespace QuickGraph.Algorithms.Observers
             this.finishTimes = finishTimes;
         }
 
-        public IDictionary<Vertex, int> DiscoverTimes
+        public IDictionary<TVertex, int> DiscoverTimes
         {
             get { return this.discoverTimes; }
         }
 
-        public IDictionary<Vertex, int> FinishTimes
+        public IDictionary<TVertex, int> FinishTimes
         {
             get { return this.finishTimes; }
         }
 
-        public void Attach(IVertexTimeStamperAlgorithm<Vertex, Edge> algorithm)
+        public void Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.DiscoverVertex+=new VertexEventHandler<Vertex>(DiscoverVertex);
-            algorithm.FinishVertex+=new VertexEventHandler<Vertex>(FinishVertex);
+            algorithm.DiscoverVertex+=new VertexEventHandler<TVertex>(DiscoverVertex);
+            algorithm.FinishVertex+=new VertexEventHandler<TVertex>(FinishVertex);
         }
 
-        public void Detach(IVertexTimeStamperAlgorithm<Vertex, Edge> algorithm)
+        public void Detach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.DiscoverVertex -= new VertexEventHandler<Vertex>(DiscoverVertex);
-            algorithm.FinishVertex -= new VertexEventHandler<Vertex>(FinishVertex);
+            algorithm.DiscoverVertex -= new VertexEventHandler<TVertex>(DiscoverVertex);
+            algorithm.FinishVertex -= new VertexEventHandler<TVertex>(FinishVertex);
         }
 
-        void DiscoverVertex(Object sender, VertexEventArgs<Vertex> e)
+        void DiscoverVertex(Object sender, VertexEventArgs<TVertex> e)
         {
             this.discoverTimes[e.Vertex] = this.currentTime++;
         }
 
-        void FinishVertex(Object sender, VertexEventArgs<Vertex> e)
+        void FinishVertex(Object sender, VertexEventArgs<TVertex> e)
         {
             this.finishTimes[e.Vertex] = this.currentTime++;
         }

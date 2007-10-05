@@ -4,15 +4,15 @@ using System.Collections.Generic;
 namespace QuickGraph.Algorithms.RandomWalks
 {
     [Serializable]
-    public sealed class WeightedMarkovEdgeChain<Vertex, Edge> :
-        WeightedMarkovEdgeChainBase<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class WeightedMarkovEdgeChain<TVertex, TEdge> :
+        WeightedMarkovEdgeChainBase<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        public WeightedMarkovEdgeChain(IDictionary<Edge,double> weights)
+        public WeightedMarkovEdgeChain(IDictionary<TEdge,double> weights)
             :base(weights)
         {}
 
-        public override Edge Successor(IImplicitGraph<Vertex, Edge> g, Vertex u)
+        public override TEdge Successor(IImplicitGraph<TVertex, TEdge> g, TVertex u)
         {
             if (g == null)
                 throw new ArgumentNullException("g");
@@ -22,7 +22,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             // get number of out-edges
             int n = g.OutDegree(u);
             if (n == 0)
-                return default(Edge);
+                return default(TEdge);
             // compute out-edge su
             double outWeight = GetOutWeight(g, u);
             // scale and get next edge

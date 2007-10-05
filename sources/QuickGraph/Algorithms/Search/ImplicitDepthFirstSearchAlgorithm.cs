@@ -11,17 +11,17 @@ namespace QuickGraph.Algorithms.Search
     ///     chapter="4.2"
     ///     />
     [Serializable]
-    public sealed class ImplicitDepthFirstSearchAlgorithm<Vertex,Edge> :
-        RootedAlgorithmBase<Vertex,IIncidenceGraph<Vertex,Edge>>,
-        IVertexPredecessorRecorderAlgorithm<Vertex,Edge>,
-        IVertexTimeStamperAlgorithm<Vertex,Edge>,
-        ITreeBuilderAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class ImplicitDepthFirstSearchAlgorithm<TVertex,TEdge> :
+        RootedAlgorithmBase<TVertex,IIncidenceGraph<TVertex,TEdge>>,
+        IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>,
+        IVertexTimeStamperAlgorithm<TVertex,TEdge>,
+        ITreeBuilderAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
         private int maxDepth = int.MaxValue;
-        private IDictionary<Vertex, GraphColor> vertexColors = new Dictionary<Vertex, GraphColor>();
+        private IDictionary<TVertex, GraphColor> vertexColors = new Dictionary<TVertex, GraphColor>();
 
-        public ImplicitDepthFirstSearchAlgorithm(IIncidenceGraph<Vertex,Edge> visitedGraph)
+        public ImplicitDepthFirstSearchAlgorithm(IIncidenceGraph<TVertex,TEdge> visitedGraph)
             :base(visitedGraph)
         {}
 
@@ -31,7 +31,7 @@ namespace QuickGraph.Algorithms.Search
         /// <value>
         /// Vertex color (<see cref="GraphColor"/>) dictionary
         /// </value>
-        public IDictionary<Vertex,GraphColor> VertexColors
+        public IDictionary<TVertex,GraphColor> VertexColors
         {
             get
             {
@@ -64,48 +64,48 @@ namespace QuickGraph.Algorithms.Search
         /// <summary>
         /// Invoked on the source vertex once before the start of the search. 
         /// </summary>
-        public event VertexEventHandler<Vertex> StartVertex;
+        public event VertexEventHandler<TVertex> StartVertex;
 
         /// <summary>
         /// Raises the <see cref="StartVertex"/> event.
         /// </summary>
         /// <param name="v">vertex that raised the event</param>
-        private void OnStartVertex(Vertex v)
+        private void OnStartVertex(TVertex v)
         {
             if (StartVertex != null)
-                StartVertex(this, new VertexEventArgs<Vertex>(v));
+                StartVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
         /// <summary>
         /// Invoked when a vertex is encountered for the first time. 
         /// </summary>
-        public event VertexEventHandler<Vertex> DiscoverVertex;
+        public event VertexEventHandler<TVertex> DiscoverVertex;
 
 
         /// <summary>
         /// Raises the <see cref="DiscoverVertex"/> event.
         /// </summary>
         /// <param name="v">vertex that raised the event</param>
-        private void OnDiscoverVertex(Vertex v)
+        private void OnDiscoverVertex(TVertex v)
         {
             if (DiscoverVertex != null)
-                DiscoverVertex(this, new VertexEventArgs<Vertex>(v));
+                DiscoverVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
         /// <summary>
         /// Invoked on every out-edge of each vertex after it is discovered. 
         /// </summary>
-        public event EdgeEventHandler<Vertex,Edge> ExamineEdge;
+        public event EdgeEventHandler<TVertex,TEdge> ExamineEdge;
 
 
         /// <summary>
         /// Raises the <see cref="ExamineEdge"/> event.
         /// </summary>
         /// <param name="e">edge that raised the event</param>
-        private void OnExamineEdge(Edge e)
+        private void OnExamineEdge(TEdge e)
         {
             if (ExamineEdge != null)
-                ExamineEdge(this, new EdgeEventArgs<Vertex, Edge>(e));
+                ExamineEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         /// <summary>
@@ -113,50 +113,50 @@ namespace QuickGraph.Algorithms.Search
         /// the search tree. If you wish to record predecessors, do so at this 
         /// event point. 
         /// </summary>
-        public event EdgeEventHandler<Vertex, Edge> TreeEdge;
+        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
 
 
         /// <summary>
         /// Raises the <see cref="TreeEdge"/> event.
         /// </summary>
         /// <param name="e">edge that raised the event</param>
-        private void OnTreeEdge(Edge e)
+        private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<Vertex, Edge>(e));
+                TreeEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         /// <summary>
         /// Invoked on the back edges in the graph. 
         /// </summary>
-        public event EdgeEventHandler<Vertex, Edge> BackEdge;
+        public event EdgeEventHandler<TVertex, TEdge> BackEdge;
 
 
         /// <summary>
         /// Raises the <see cref="BackEdge"/> event.
         /// </summary>
         /// <param name="e">edge that raised the event</param>
-        private void OnBackEdge(Edge e)
+        private void OnBackEdge(TEdge e)
         {
             if (BackEdge != null)
-                BackEdge(this, new EdgeEventArgs<Vertex, Edge>(e));
+                BackEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         /// <summary>
         /// Invoked on forward or cross edges in the graph. 
         /// (In an undirected graph this method is never called.) 
         /// </summary>
-        public event EdgeEventHandler<Vertex, Edge> ForwardOrCrossEdge;
+        public event EdgeEventHandler<TVertex, TEdge> ForwardOrCrossEdge;
 
 
         /// <summary>
         /// Raises the <see cref="ForwardOrCrossEdge"/> event.
         /// </summary>
         /// <param name="e">edge that raised the event</param>
-        private void OnForwardOrCrossEdge(Edge e)
+        private void OnForwardOrCrossEdge(TEdge e)
         {
             if (ForwardOrCrossEdge != null)
-                ForwardOrCrossEdge(this, new EdgeEventArgs<Vertex, Edge>(e));
+                ForwardOrCrossEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         /// <summary>
@@ -164,16 +164,16 @@ namespace QuickGraph.Algorithms.Search
         /// the search tree and all of the adjacent vertices have been 
         /// discovered (but before their out-edges have been examined). 
         /// </summary>
-        public event VertexEventHandler<Vertex> FinishVertex;
+        public event VertexEventHandler<TVertex> FinishVertex;
 
         /// <summary>
         /// Raises the <see cref="FinishVertex"/> event.
         /// </summary>
         /// <param name="v">vertex that raised the event</param>
-        private void OnFinishVertex(Vertex v)
+        private void OnFinishVertex(TVertex v)
         {
             if (FinishVertex != null)
-                FinishVertex(this, new VertexEventArgs<Vertex>(v));
+                FinishVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
         protected override void InternalCompute()
@@ -190,7 +190,7 @@ namespace QuickGraph.Algorithms.Search
             this.VertexColors.Clear();
         }
 
-        private void Visit(Vertex u, int depth)
+        private void Visit(TVertex u, int depth)
         {
             if (depth > this.MaxDepth)
                 return;
@@ -200,12 +200,12 @@ namespace QuickGraph.Algorithms.Search
             VertexColors[u] = GraphColor.Gray;
             OnDiscoverVertex(u);
 
-            foreach (Edge e in VisitedGraph.OutEdges(u))
+            foreach (TEdge e in VisitedGraph.OutEdges(u))
             {
                 if (this.IsAborting)
                     return;
                 OnExamineEdge(e);
-                Vertex v = e.Target;
+                TVertex v = e.Target;
 
                 if (!this.VertexColors.ContainsKey(v))
                 {

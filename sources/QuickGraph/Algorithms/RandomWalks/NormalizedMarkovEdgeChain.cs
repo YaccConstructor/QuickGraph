@@ -4,15 +4,15 @@ using System.Collections.Generic;
 namespace QuickGraph.Algorithms.RandomWalks
 {
     [Serializable]
-    public sealed class NormalizedMarkovEdgeChain<Vertex, Edge> :
-        MarkovEdgeChainBase<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class NormalizedMarkovEdgeChain<TVertex, TEdge> :
+        MarkovEdgeChainBase<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        public override Edge Successor(IImplicitGraph<Vertex,Edge> g, Vertex u)
+        public override TEdge Successor(IImplicitGraph<TVertex,TEdge> g, TVertex u)
         {
             int outDegree = g.OutDegree(u);
             if (outDegree == 0)
-                return default(Edge);
+                return default(TEdge);
 
             int index = this.Rand.Next(0, outDegree);
             return g.OutEdge(u, index);

@@ -1,8 +1,8 @@
 ﻿namespace QuickGraph.Algorithms.RandomWalks
 {
-    public interface IEdgeChain<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public interface IEdgeChain<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        Edge Successor(IImplicitGraph<Vertex, Edge> g, Vertex u);
+        TEdge Successor(IImplicitGraph<TVertex, TEdge> g, TVertex u);
     }
 }

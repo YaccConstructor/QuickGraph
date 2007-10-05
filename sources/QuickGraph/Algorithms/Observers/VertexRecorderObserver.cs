@@ -12,23 +12,23 @@ namespace QuickGraph.Algorithms.Observers
     ///     idref="boost"
     ///     />
     [Serializable]
-    public sealed class VertexRecorderObserver<Vertex, Edge> :
-        IObserver<Vertex, Edge, IVertexTimeStamperAlgorithm<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class VertexRecorderObserver<TVertex, TEdge> :
+        IObserver<TVertex, TEdge, IVertexTimeStamperAlgorithm<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private IList<Vertex> vertices;
+        private IList<TVertex> vertices;
         public VertexRecorderObserver()
-            : this(new List<Vertex>())
+            : this(new List<TVertex>())
         { }
 
-        public VertexRecorderObserver(IList<Vertex> vertices)
+        public VertexRecorderObserver(IList<TVertex> vertices)
         {
             if (vertices == null)
                 throw new ArgumentNullException("edges");
             this.vertices = vertices;
         }
 
-        public IList<Vertex> Vertices
+        public IList<TVertex> Vertices
         {
             get
             {
@@ -36,17 +36,17 @@ namespace QuickGraph.Algorithms.Observers
             }
         }
 
-        public void Attach(IVertexTimeStamperAlgorithm<Vertex, Edge> algorithm)
+        public void Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.DiscoverVertex += new VertexEventHandler<Vertex>(algorithm_DiscoverVertex);
+            algorithm.DiscoverVertex += new VertexEventHandler<TVertex>(algorithm_DiscoverVertex);
         }
 
-        public void Detach(IVertexTimeStamperAlgorithm<Vertex, Edge> algorithm)
+        public void Detach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.DiscoverVertex -= new VertexEventHandler<Vertex>(algorithm_DiscoverVertex);
+            algorithm.DiscoverVertex -= new VertexEventHandler<TVertex>(algorithm_DiscoverVertex);
         }
 
-        void algorithm_DiscoverVertex(object sender, VertexEventArgs<Vertex> e)
+        void algorithm_DiscoverVertex(object sender, VertexEventArgs<TVertex> e)
         {
             this.Vertices.Add(e.Vertex);
         }

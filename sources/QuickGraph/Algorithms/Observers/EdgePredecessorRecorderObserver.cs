@@ -12,20 +12,20 @@ namespace QuickGraph.Algorithms.Observers
     ///     idref="boost"
     ///     />
     [Serializable]
-    public sealed class EdgePredecessorRecorderObserver<Vertex, Edge> :
-        IObserver<Vertex, Edge, IEdgePredecessorRecorderAlgorithm<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class EdgePredecessorRecorderObserver<TVertex, TEdge> :
+        IObserver<TVertex, TEdge, IEdgePredecessorRecorderAlgorithm<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private IDictionary<Edge,Edge> edgePredecessors;
-        private IList<Edge> endPathEdges;
+        private IDictionary<TEdge,TEdge> edgePredecessors;
+        private IList<TEdge> endPathEdges;
 
         public EdgePredecessorRecorderObserver()
-            :this(new Dictionary<Edge,Edge>(), new List<Edge>())
+            :this(new Dictionary<TEdge,TEdge>(), new List<TEdge>())
         {}
 
         public EdgePredecessorRecorderObserver(
-            IDictionary<Edge,Edge> edgePredecessors,
-            IList<Edge> endPathEdges
+            IDictionary<TEdge,TEdge> edgePredecessors,
+            IList<TEdge> endPathEdges
             )
         {
             if (edgePredecessors == null)
@@ -37,7 +37,7 @@ namespace QuickGraph.Algorithms.Observers
             this.endPathEdges = endPathEdges;
         }
 
-        public IDictionary<Edge,Edge> EdgePredecessors
+        public IDictionary<TEdge,TEdge> EdgePredecessors
         {
             get
             {
@@ -45,7 +45,7 @@ namespace QuickGraph.Algorithms.Observers
             }
         }
 
-        public IList<Edge> EndPathEdges
+        public IList<TEdge> EndPathEdges
         {
             get
             {
@@ -53,48 +53,48 @@ namespace QuickGraph.Algorithms.Observers
             }
         }
 
-        public void Attach(IEdgePredecessorRecorderAlgorithm<Vertex, Edge> algorithm)
+        public void Attach(IEdgePredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.DiscoverTreeEdge +=new EdgeEdgeEventHandler<Vertex,Edge>(this.DiscoverTreeEdge);
-            algorithm.FinishEdge +=new EdgeEventHandler<Vertex,Edge>(this.FinishEdge);
+            algorithm.DiscoverTreeEdge +=new EdgeEdgeEventHandler<TVertex,TEdge>(this.DiscoverTreeEdge);
+            algorithm.FinishEdge +=new EdgeEventHandler<TVertex,TEdge>(this.FinishEdge);
         }
 
-        public void Detach(IEdgePredecessorRecorderAlgorithm<Vertex, Edge> algorithm)
+        public void Detach(IEdgePredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.DiscoverTreeEdge -= new EdgeEdgeEventHandler<Vertex, Edge>(this.DiscoverTreeEdge);
-            algorithm.FinishEdge -= new EdgeEventHandler<Vertex, Edge>(this.FinishEdge);
+            algorithm.DiscoverTreeEdge -= new EdgeEdgeEventHandler<TVertex, TEdge>(this.DiscoverTreeEdge);
+            algorithm.FinishEdge -= new EdgeEventHandler<TVertex, TEdge>(this.FinishEdge);
         }
 
-        public ICollection<Edge> Path(Edge se)
+        public ICollection<TEdge> Path(TEdge se)
         {
-            List<Edge> path = new List<Edge>();
+            List<TEdge> path = new List<TEdge>();
 
-            Edge ec = se;
+            TEdge ec = se;
             path.Insert(0, ec);
             while (EdgePredecessors.ContainsKey(ec))
             {
-                Edge e = EdgePredecessors[ec];
+                TEdge e = EdgePredecessors[ec];
                 path.Insert(0, e);
                 ec = e;
             }
             return path;
         }
 
-        public ICollection<ICollection<Edge>> AllPaths()
+        public ICollection<ICollection<TEdge>> AllPaths()
         {
-            IList<ICollection<Edge>> es = new List<ICollection<Edge>>();
+            IList<ICollection<TEdge>> es = new List<ICollection<TEdge>>();
 
-            foreach (Edge e in EndPathEdges)
+            foreach (TEdge e in EndPathEdges)
                 es.Add(Path(e));
 
             return es;
         }
 
-        public ICollection<Edge> MergedPath(Edge se, IDictionary<Edge,GraphColor> colors)
+        public ICollection<TEdge> MergedPath(TEdge se, IDictionary<TEdge,GraphColor> colors)
         {
-            List<Edge> path = new List<Edge>();
+            List<TEdge> path = new List<TEdge>();
 
-            Edge ec = se;
+            TEdge ec = se;
             GraphColor c = colors[ec];
             if (c != GraphColor.White)
                 return path;
@@ -104,7 +104,7 @@ namespace QuickGraph.Algorithms.Observers
             path.Insert(0, ec);
             while (EdgePredecessors.ContainsKey(ec))
             {
-                Edge e = EdgePredecessors[ec];
+                TEdge e = EdgePredecessors[ec];
                 c = colors[e];
                 if (c != GraphColor.White)
                     return path;
@@ -117,12 +117,12 @@ namespace QuickGraph.Algorithms.Observers
             return path;
         }
 
-        public ICollection<ICollection<Edge>> AllMergedPaths()
+        public ICollection<ICollection<TEdge>> AllMergedPaths()
         {
-            List<ICollection<Edge>> es = new List<ICollection<Edge>>(EndPathEdges.Count);
-            IDictionary<Edge,GraphColor> colors = new Dictionary<Edge,GraphColor>();
+            List<ICollection<TEdge>> es = new List<ICollection<TEdge>>(EndPathEdges.Count);
+            IDictionary<TEdge,GraphColor> colors = new Dictionary<TEdge,GraphColor>();
 
-            foreach (KeyValuePair<Edge,Edge> de in EdgePredecessors)
+            foreach (KeyValuePair<TEdge,TEdge> de in EdgePredecessors)
             {
                 colors[de.Key] = GraphColor.White;
                 colors[de.Value] = GraphColor.White;
@@ -134,15 +134,15 @@ namespace QuickGraph.Algorithms.Observers
             return es;
         }
 
-        private void DiscoverTreeEdge(Object sender, EdgeEdgeEventArgs<Vertex,Edge> args)
+        private void DiscoverTreeEdge(Object sender, EdgeEdgeEventArgs<TVertex,TEdge> args)
         {
             if (!args.Edge.Equals(args.TargetEdge))
                 EdgePredecessors[args.TargetEdge] = args.Edge;
         }
 
-        private void FinishEdge(Object sender, EdgeEventArgs<Vertex,Edge> args)
+        private void FinishEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
         {
-            foreach (Edge edge in this.EdgePredecessors.Values)
+            foreach (TEdge edge in this.EdgePredecessors.Values)
                 if (edge.Equals(args.Edge))
                     return;
 

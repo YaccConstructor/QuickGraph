@@ -3,8 +3,9 @@
 namespace QuickGraph.Algorithms.RandomWalks
 {
     [Serializable]
-    public abstract class MarkovEdgeChainBase<Vertex, Edge> : IMarkovEdgeChain<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public abstract class MarkovEdgeChainBase<TVertex, TEdge> : 
+        IMarkovEdgeChain<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
         private Random rand = new Random();
 
@@ -20,6 +21,6 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
         }
 
-        public abstract Edge Successor(IImplicitGraph<Vertex, Edge> g, Vertex u);
+        public abstract TEdge Successor(IImplicitGraph<TVertex, TEdge> g, TVertex u);
     }
 }

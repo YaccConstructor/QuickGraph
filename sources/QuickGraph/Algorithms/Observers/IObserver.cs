@@ -10,10 +10,10 @@ namespace QuickGraph.Algorithms.Observers
     /// <reference-ref
     ///     id="gof02designpatterns"
     ///     />
-    public interface IObserver<Vertex,Edge,Algorithm>
-        where Edge : IEdge<Vertex>
+    public interface IObserver<TVertex,TEdge,TAlgorithm>
+        where TEdge : IEdge<TVertex>
     {
-        void Attach(Algorithm algorithm);
-        void Detach(Algorithm algorithm);
+        void Attach(TAlgorithm algorithm);
+        void Detach(TAlgorithm algorithm);
     }
 }
