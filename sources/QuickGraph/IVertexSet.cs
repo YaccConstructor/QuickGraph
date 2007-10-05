@@ -4,11 +4,11 @@ using System.Text;
 
 namespace QuickGraph
 {
-    public interface IVertexSet<Vertex>
+    public interface IVertexSet<TVertex>
     {
         bool IsVerticesEmpty { get;}
         int VertexCount { get;}
-        IEnumerable<Vertex> Vertices { get;}
-        bool ContainsVertex(Vertex vertex);
+        IEnumerable<TVertex> Vertices { get;}
+        bool ContainsVertex(TVertex vertex);
     }
 }

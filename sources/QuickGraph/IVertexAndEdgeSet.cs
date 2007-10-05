@@ -4,10 +4,10 @@ using System.Text;
 
 namespace QuickGraph
 {
-    public interface IVertexAndEdgeSet<Vertex,Edge> :
-        IVertexSet<Vertex>,
-        IEdgeListGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IVertexAndEdgeSet<TVertex,TEdge> :
+        IVertexSet<TVertex>,
+        IEdgeListGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
     }
 }

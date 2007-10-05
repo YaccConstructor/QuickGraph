@@ -2,38 +2,39 @@
 
 namespace QuickGraph
 {
-    public struct ReversedEdge<Vertex,Edge> : IEdge<Vertex>, IEquatable<ReversedEdge<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public struct ReversedEdge<TVertex,TEdge> : 
+        IEdge<TVertex>, 
+        IEquatable<ReversedEdge<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private readonly Edge originalEdge;
-        public ReversedEdge(Edge originalEdge)
+        private readonly TEdge originalEdge;
+        public ReversedEdge(TEdge originalEdge)
         {
-            if (originalEdge == null)
-                throw new ArgumentNullException("originalEdge");
+            GraphContracts.AssumeNotNull(originalEdge, "originalEdge");
             this.originalEdge = originalEdge;
         }
 
-        public Edge OriginalEdge
+        public TEdge OriginalEdge
         {
             get { return this.originalEdge; }
         }
 
-        public Vertex Source
+        public TVertex Source
         {
             get { return this.OriginalEdge.Target; }
         }
 
-        public Vertex Target
+        public TVertex Target
         {
             get { return this.OriginalEdge.Source; }
         }
         
         public override bool  Equals(object obj)
         {
-            if (!(obj is ReversedEdge<Vertex, Edge>))
+            if (!(obj is ReversedEdge<TVertex, TEdge>))
                 return false;
 
-            return Equals((ReversedEdge<Vertex, Edge>)obj);
+            return Equals((ReversedEdge<TVertex, TEdge>)obj);
         }
 
         public override int GetHashCode()
@@ -46,7 +47,7 @@ namespace QuickGraph
             return String.Format("R({0})", this.OriginalEdge);
         }
 
-        public bool Equals(ReversedEdge<Vertex, Edge> other)
+        public bool Equals(ReversedEdge<TVertex, TEdge> other)
         {
             return this.OriginalEdge.Equals(other.OriginalEdge);
         }

@@ -3,14 +3,13 @@
 namespace QuickGraph
 {
     [Serializable]
-    public class NamedEdge<Vertex> : Edge<Vertex>
+    public class NamedEdge<TVertex> : Edge<TVertex>
     {
         private string name;
-        public NamedEdge(Vertex source, Vertex target, string name)
+        public NamedEdge(TVertex source, TVertex target, string name)
             :base(source,target)
         {
-            if (name == null)
-                throw new ArgumentNullException("name");
+            GraphContracts.AssumeNotNull(name, "name");
             this.name = name;
         }
 

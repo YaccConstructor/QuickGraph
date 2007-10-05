@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public class UndirectedGraph<Vertex,Edge> :
-        IMutableUndirectedGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public class UndirectedGraph<TVertex,TEdge> :
+        IMutableUndirectedGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
         private readonly bool allowParallelEdges = true;
-        private readonly Dictionary<Vertex, IList<Edge> > adjacentEdges = new Dictionary<Vertex, IList<Edge>>();
+        private readonly Dictionary<TVertex, IList<TEdge> > adjacentEdges = new Dictionary<TVertex, IList<TEdge>>();
         private int edgeCount = 0;
 
         public UndirectedGraph()
@@ -34,36 +34,42 @@ namespace QuickGraph
 
         #region IMutableUndirected<Vertex,Edge> Members
 
-        public void AddVertex(Vertex v)
+        public void AddVertex(TVertex v)
         {
-            this.adjacentEdges.Add(v, new List<Edge>());
+            GraphContracts.AssumeNotInVertexSet(this, v, "v");
+            this.adjacentEdges.Add(v, new List<TEdge>());
         }
 
-        public bool RemoveVertex(Vertex v)
+        public bool RemoveVertex(TVertex v)
         {
+            GraphContracts.AssumeNotNull(v, "v");
             this.ClearAdjacentEdges(v);
             return this.adjacentEdges.Remove(v);
         }
 
-        public int RemoveVertexIf(VertexPredicate<Vertex> pred)
+        public int RemoveVertexIf(VertexPredicate<TVertex> pred)
         {
-            List<Vertex> vertices = new List<Vertex>();
-            foreach (Vertex v in this.Vertices)
+            GraphContracts.AssumeNotNull(pred, "pred");
+            List<TVertex> vertices = new List<TVertex>();
+            foreach (TVertex v in this.Vertices)
                 if (pred(v))
                     vertices.Add(v);
 
-            foreach (Vertex v in vertices)
+            foreach (TVertex v in vertices)
                 RemoveVertex(v);
             return vertices.Count;
         }
         #endregion
 
         #region IMutableIncidenceGraph<Vertex,Edge> Members
-        public int RemoveAdjacentEdgeIf(Vertex v, EdgePredicate<Vertex, Edge> predicate)
+        public int RemoveAdjacentEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
         {
-            IList<Edge> outEdges = this.adjacentEdges[v];
-            List<Edge> edges = new List<Edge>(outEdges.Count);
-            foreach (Edge edge in outEdges)
+            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContracts.AssumeNotNull(predicate, "predicate");
+
+            IList<TEdge> outEdges = this.adjacentEdges[v];
+            List<TEdge> edges = new List<TEdge>(outEdges.Count);
+            foreach (TEdge edge in outEdges)
                 if (predicate(edge))
                     edges.Add(edge);
 
@@ -71,11 +77,12 @@ namespace QuickGraph
             return edges.Count;
         }
 
-        public void ClearAdjacentEdges(Vertex v)
+        public void ClearAdjacentEdges(TVertex v)
         {
-            IList<Edge> edges = this.adjacentEdges[v];
+            GraphContracts.AssumeInVertexSet(this, v, "v");
+            IList<TEdge> edges = this.adjacentEdges[v];
             this.edgeCount -= edges.Count;
-            foreach (Edge edge in edges)
+            foreach (TEdge edge in edges)
             {
                 if (edge.Source.Equals(v))
                     this.adjacentEdges[edge.Target].Remove(edge);
@@ -97,9 +104,9 @@ namespace QuickGraph
 
         #region IUndirectedGraph<Vertex,Edge> Members
 
-        public bool ContainsEdge(Vertex source, Vertex target)
+        public bool ContainsEdge(TVertex source, TVertex target)
         {
-            foreach(Edge edge in this.AdjacentEdges(source))
+            foreach(TEdge edge in this.AdjacentEdges(source))
             {
                 if (edge.Source.Equals(source) && edge.Target.Equals(target))
                     return true;
@@ -110,7 +117,7 @@ namespace QuickGraph
             return false;
         }
 
-        public Edge AdjacentEdge(Vertex v, int index)
+        public TEdge AdjacentEdge(TVertex v, int index)
         {
             return this.adjacentEdges[v][index];
         }
@@ -125,24 +132,24 @@ namespace QuickGraph
             get { return this.adjacentEdges.Count; }
         }
 
-        public IEnumerable<Vertex> Vertices
+        public IEnumerable<TVertex> Vertices
         {
             get { return this.adjacentEdges.Keys; }
         }
 
 
-        public bool ContainsVertex(Vertex vertex)
+        public bool ContainsVertex(TVertex vertex)
         {
+            GraphContracts.AssumeNotNull(vertex, "vertex");
             return this.adjacentEdges.ContainsKey(vertex);
         }
         #endregion
 
         #region IMutableEdgeListGraph<Vertex,Edge> Members
 
-        public bool AddEdge(Edge edge)
+        public bool AddEdge(TEdge edge)
         {
-            if (edge == null)
-                throw new ArgumentNullException("edge");
+            GraphContracts.AssumeInVertexSet(this, edge, "edge");
 
             if (!this.AllowParallelEdges)
             {
@@ -153,47 +160,49 @@ namespace QuickGraph
             this.adjacentEdges[edge.Target].Add(edge);
             this.edgeCount++;
 
-            this.OnEdgeAdded(new EdgeEventArgs<Vertex, Edge>(edge));
+            this.OnEdgeAdded(new EdgeEventArgs<TVertex, TEdge>(edge));
 
             return true;
         }
 
-        public event EdgeEventHandler<Vertex, Edge> EdgeAdded;
-        protected virtual void OnEdgeAdded(EdgeEventArgs<Vertex, Edge> args)
+        public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        protected virtual void OnEdgeAdded(EdgeEventArgs<TVertex, TEdge> args)
         {
-            EdgeEventHandler<Vertex, Edge> eh = this.EdgeAdded;
+            EdgeEventHandler<TVertex, TEdge> eh = this.EdgeAdded;
             if (eh != null)
                 eh(this, args);
         }
 
-        public bool RemoveEdge(Edge edge)
+        public bool RemoveEdge(TEdge edge)
         {
-            if (edge == null)
-                throw new ArgumentNullException("edge");
+            GraphContracts.AssumeInVertexSet(this, edge, "edge");
+
             this.adjacentEdges[edge.Source].Remove(edge);
             if (this.adjacentEdges[edge.Target].Remove(edge))
             {
                 this.edgeCount--;
                 System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
-                this.OnEdgeRemoved(new EdgeEventArgs<Vertex, Edge>(edge));
+                this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
                 return true;
             }
             else
                 return false;
         }
 
-        public event EdgeEventHandler<Vertex, Edge> EdgeRemoved;
-        protected virtual void OnEdgeRemoved(EdgeEventArgs<Vertex, Edge> args)
+        public event EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+        protected virtual void OnEdgeRemoved(EdgeEventArgs<TVertex, TEdge> args)
         {
-            EdgeEventHandler<Vertex, Edge> eh = this.EdgeRemoved;
+            EdgeEventHandler<TVertex, TEdge> eh = this.EdgeRemoved;
             if (eh != null)
                 eh(this, args);
         }
 
-        public int RemoveEdgeIf(EdgePredicate<Vertex, Edge> predicate)
+        public int RemoveEdgeIf(EdgePredicate<TVertex, TEdge> predicate)
         {
-            List<Edge> edges = new List<Edge>();
-            foreach (Edge edge in this.Edges)
+            GraphContracts.AssumeNotNull(predicate, "predicate");
+
+            List<TEdge> edges = new List<TEdge>();
+            foreach (TEdge edge in this.Edges)
             {
                 if (predicate(edge))
                     edges.Add(edge);
@@ -201,10 +210,12 @@ namespace QuickGraph
             return this.RemoveEdges(edges);
         }
 
-        public int RemoveEdges(IEnumerable<Edge> edges)
+        public int RemoveEdges(IEnumerable<TEdge> edges)
         {
+            GraphContracts.AssumeNotNull(edges, "edges");
+
             int count = 0;
-            foreach (Edge edge in edges)
+            foreach (TEdge edge in edges)
             {
                 if (RemoveEdge(edge))
                     count++;
@@ -224,14 +235,14 @@ namespace QuickGraph
             get { return this.edgeCount; }
         }
 
-        public IEnumerable<Edge> Edges
+        public IEnumerable<TEdge> Edges
         {
             get 
             {
-                Dictionary<Edge, GraphColor> edgeColors = new Dictionary<Edge, GraphColor>(this.EdgeCount);
-                foreach (IList<Edge> edges in this.adjacentEdges.Values)
+                Dictionary<TEdge, GraphColor> edgeColors = new Dictionary<TEdge, GraphColor>(this.EdgeCount);
+                foreach (IList<TEdge> edges in this.adjacentEdges.Values)
                 {
-                    foreach(Edge edge in edges)
+                    foreach(TEdge edge in edges)
                     {
                         GraphColor c;
                         if (edgeColors.TryGetValue(edge, out c))
@@ -243,9 +254,10 @@ namespace QuickGraph
             }
         }
 
-        public bool ContainsEdge(Edge edge)
+        public bool ContainsEdge(TEdge edge)
         {
-            foreach (Edge e in this.Edges)
+            GraphContracts.AssumeInVertexSet(this, edge, "edge");
+            foreach (TEdge e in this.Edges)
                 if (e.Equals(edge))
                     return true;
             return false;
@@ -254,18 +266,21 @@ namespace QuickGraph
 
         #region IUndirectedGraph<Vertex,Edge> Members
 
-        public IEnumerable<Edge> AdjacentEdges(Vertex v)
+        public IEnumerable<TEdge> AdjacentEdges(TVertex v)
         {
+            GraphContracts.AssumeInVertexSet(this, v, "v");
             return this.adjacentEdges[v];
         }
 
-        public int AdjacentDegree(Vertex v)
+        public int AdjacentDegree(TVertex v)
         {
+            GraphContracts.AssumeInVertexSet(this, v, "v");
             return this.adjacentEdges[v].Count;
         }
 
-        public bool IsAdjacentEdgesEmpty(Vertex v)
+        public bool IsAdjacentEdgesEmpty(TVertex v)
         {
+            GraphContracts.AssumeInVertexSet(this, v, "v");
             return this.adjacentEdges[v].Count == 0;
         }
 

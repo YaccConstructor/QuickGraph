@@ -3,17 +3,16 @@
 namespace QuickGraph
 {
     [Serializable]
-    public class VertexEventArgs<V> : EventArgs
+    public class VertexEventArgs<TVertex> : EventArgs
     {
-        private readonly V vertex;
-        public VertexEventArgs(V vertex)
+        private readonly TVertex vertex;
+        public VertexEventArgs(TVertex vertex)
         {
-            if (vertex == null)
-                throw new ArgumentNullException("v");
+            GraphContracts.AssumeNotNull(vertex, "vertex");
             this.vertex = vertex;
         }
 
-        public V Vertex
+        public TVertex Vertex
         {
             get { return this.vertex; }
         }

@@ -6,20 +6,20 @@ namespace QuickGraph
 {
     public static class TraversalHelper
     {
-        public static Vertex GetFirstVertex<Vertex,Edge>(IVertexListGraph<Vertex, Edge> g)
-            where Edge : IEdge<Vertex>
+        public static TVertex GetFirstVertex<TVertex,TEdge>(IVertexListGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
-            foreach (Vertex v in g.Vertices)
+            foreach (TVertex v in g.Vertices)
                 return v;
-            return default(Vertex);
+            return default(TVertex);
         }
 
-        public static Vertex GetFirstVertex<Vertex, Edge>(IUndirectedGraph<Vertex, Edge> g)
-            where Edge : IEdge<Vertex>
+        public static TVertex GetFirstVertex<TVertex, TEdge>(IUndirectedGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
-            foreach (Vertex v in g.Vertices)
+            foreach (TVertex v in g.Vertices)
                 return v;
-            return default(Vertex);
+            return default(TVertex);
         }
     }
 }

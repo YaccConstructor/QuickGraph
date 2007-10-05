@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public interface IUndirectedGraph<Vertex,Edge> :
-        IVertexAndEdgeSet<Vertex,Edge>,
-        IGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IUndirectedGraph<TVertex,TEdge> :
+        IVertexAndEdgeSet<TVertex,TEdge>,
+        IGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        IEnumerable<Edge> AdjacentEdges(Vertex v);
-        int AdjacentDegree(Vertex v);
-        bool IsAdjacentEdgesEmpty(Vertex v);
-        Edge AdjacentEdge(Vertex v, int index);
+        IEnumerable<TEdge> AdjacentEdges(TVertex v);
+        int AdjacentDegree(TVertex v);
+        bool IsAdjacentEdgesEmpty(TVertex v);
+        TEdge AdjacentEdge(TVertex v, int index);
 
-        bool ContainsEdge(Vertex source, Vertex target);
+        bool ContainsEdge(TVertex source, TVertex target);
     }
 }

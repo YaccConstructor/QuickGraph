@@ -2,11 +2,11 @@
 
 namespace QuickGraph
 {
-    public class TaggedEdge<Vertex,Marker> : Edge<Vertex>
+    public class TaggedEdge<TVertex,TTag> : Edge<TVertex>
     {
-        private Marker tag;
+        private TTag tag;
 
-        public TaggedEdge(Vertex source, Vertex target, Marker tag)
+        public TaggedEdge(TVertex source, TVertex target, TTag tag)
             :base(source,target)
         {
             this.tag = tag;
@@ -20,12 +20,12 @@ namespace QuickGraph
                 this.TagChanged(this, e);
         }
 
-        public Marker Tag
+        public TTag Tag
         {
             get { return this.tag; }
             set 
             {
-                if (!Comparison<Marker>.Equals(this.tag, value))
+                if (!Comparison<TTag>.Equals(this.tag, value))
                 {
                     this.tag = value;
                     this.OnTagChanged(EventArgs.Empty);
