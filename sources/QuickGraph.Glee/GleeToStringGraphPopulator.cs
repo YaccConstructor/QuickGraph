@@ -4,14 +4,14 @@ using System.Text;
 
 namespace QuickGraph.Glee
 {
-    public sealed class GleeToStringGraphPopulator<Vertex,Edge> : GleeDefaultGraphPopulator<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class GleeToStringGraphPopulator<TVertex,TEdge> : GleeDefaultGraphPopulator<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
         private readonly IFormatProvider formatProvider;
         private readonly string format;
 
         public GleeToStringGraphPopulator(
-            IVertexAndEdgeSet<Vertex, Edge> visitedGraph,
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             IFormatProvider formatProvider,
             string format
             )
@@ -34,7 +34,7 @@ namespace QuickGraph.Glee
             get { return this.format; }
         }
 
-        protected override string GetVertexId(Vertex v)
+        protected override string GetVertexId(TVertex v)
         {
             return String.Format(this.formatProvider, this.format, v);
         }

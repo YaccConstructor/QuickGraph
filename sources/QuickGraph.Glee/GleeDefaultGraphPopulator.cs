@@ -4,19 +4,19 @@ using Microsoft.Glee.Drawing;
 
 namespace QuickGraph.Glee
 {
-    public class GleeDefaultGraphPopulator<Vertex, Edge>
-        : GleeGraphPopulator<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public class GleeDefaultGraphPopulator<TVertex, TEdge>
+        : GleeGraphPopulator<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        public GleeDefaultGraphPopulator(IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
+        public GleeDefaultGraphPopulator(IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
             : base(visitedGraph)
         { }
 
-        private Dictionary<Vertex, string> vertexIds;
+        private Dictionary<TVertex, string> vertexIds;
         protected override void OnStarted(EventArgs e)
         {
             base.OnStarted(e);
-            this.vertexIds = new Dictionary<Vertex, string>(this.VisitedGraph.VertexCount);
+            this.vertexIds = new Dictionary<TVertex, string>(this.VisitedGraph.VertexCount);
         }
 
         protected override void OnFinished(EventArgs e)
@@ -25,7 +25,7 @@ namespace QuickGraph.Glee
             base.OnFinished(e);
         }
 
-        protected override Node AddNode(Vertex v)
+        protected override Node AddNode(TVertex v)
         {
             string id = this.GetVertexId(v);
             this.vertexIds.Add(v, id);
@@ -35,17 +35,17 @@ namespace QuickGraph.Glee
             return node;
         }
 
-        protected virtual string GetVertexId(Vertex v)
+        protected virtual string GetVertexId(TVertex v)
         {
             return this.vertexIds.Count.ToString();
         }
 
-        protected virtual string GetVertexLabel(string id, Vertex v)
+        protected virtual string GetVertexLabel(string id, TVertex v)
         {
             return String.Format("{0}: {1}", id, v.ToString());
         }
 
-        protected override Microsoft.Glee.Drawing.Edge AddEdge(Edge e)
+        protected override Microsoft.Glee.Drawing.Edge AddEdge(TEdge e)
         {
             return (Microsoft.Glee.Drawing.Edge)this.GleeGraph.AddEdge(
                 this.vertexIds[e.Source],

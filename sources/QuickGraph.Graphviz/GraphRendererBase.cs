@@ -4,15 +4,15 @@ using QuickGraph.Graphviz.Dot;
 
 namespace QuickGraph.Graphviz
 {
-    public abstract class GraphRendererBase<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public abstract class GraphRendererBase<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        private GraphvizAlgorithm<Vertex, Edge> graphviz;
+        private GraphvizAlgorithm<TVertex, TEdge> graphviz;
 
         public GraphRendererBase(
-            IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
         {
-            this.graphviz = new GraphvizAlgorithm<Vertex, Edge>(visitedGraph);
+            this.graphviz = new GraphvizAlgorithm<TVertex, TEdge>(visitedGraph);
             this.Initialize();
         }
 
@@ -26,12 +26,12 @@ namespace QuickGraph.Graphviz
             this.graphviz.CommonEdgeFormat.Font = new System.Drawing.Font("Tahoma", 8.25F);
         }
 
-        public GraphvizAlgorithm<Vertex, Edge> Graphviz
+        public GraphvizAlgorithm<TVertex, TEdge> Graphviz
         {
             get { return this.graphviz; }
         }
 
-        public IVertexAndEdgeSet<Vertex, Edge> VisitedGraph
+        public IVertexAndEdgeSet<TVertex, TEdge> VisitedGraph
         {
             get { return this.graphviz.VisitedGraph; }
         }

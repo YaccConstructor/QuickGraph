@@ -4,32 +4,32 @@ using QuickGraph.Algorithms.Condensation;
 
 namespace QuickGraph.Graphviz
 {
-    public class EdgeMergeCondensatedGraphRenderer<Vertex, Edge> :
-        GraphRendererBase<Vertex, MergedEdge<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public class EdgeMergeCondensatedGraphRenderer<TVertex, TEdge> :
+        GraphRendererBase<TVertex, MergedEdge<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
         public EdgeMergeCondensatedGraphRenderer(
-            IVertexAndEdgeListGraph<Vertex, MergedEdge<Vertex, Edge>> visitedGraph)
+            IVertexAndEdgeListGraph<TVertex, MergedEdge<TVertex, TEdge>> visitedGraph)
             :base(visitedGraph)
         { }
 
         protected override void Initialize()
         {
             base.Initialize();
-            this.Graphviz.FormatVertex += new FormatVertexEventHandler<Vertex>(Graphviz_FormatVertex);
-            this.Graphviz.FormatEdge += new FormatEdgeEventHandler<Vertex, MergedEdge<Vertex, Edge>>(Graphviz_FormatEdge);
+            this.Graphviz.FormatVertex += new FormatVertexEventHandler<TVertex>(Graphviz_FormatVertex);
+            this.Graphviz.FormatEdge += new FormatEdgeEventHandler<TVertex, MergedEdge<TVertex, TEdge>>(Graphviz_FormatEdge);
         }
 
-        void Graphviz_FormatEdge(object sender, FormatEdgeEventArgs<Vertex, MergedEdge<Vertex, Edge>> e)
+        void Graphviz_FormatEdge(object sender, FormatEdgeEventArgs<TVertex, MergedEdge<TVertex, TEdge>> e)
         {
             StringWriter sw = new StringWriter();
             sw.WriteLine("{0}", e.Edge.Edges.Count);
-            foreach (Edge edge in e.Edge.Edges)
+            foreach (TEdge edge in e.Edge.Edges)
                 sw.WriteLine("  {0}", edge);
             e.EdgeFormatter.Label.Value = this.Graphviz.Escape(sw.ToString());
         }
 
-        void Graphviz_FormatVertex(Object sender, FormatVertexEventArgs<Vertex> e)
+        void Graphviz_FormatVertex(Object sender, FormatVertexEventArgs<TVertex> e)
         {
             e.VertexFormatter.Label = e.Vertex.ToString();
         }

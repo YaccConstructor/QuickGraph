@@ -4,8 +4,8 @@ using System.Text;
 
 namespace QuickGraph.Glee
 {
-    public sealed class GleeEdgeEventArgs<Vertex, Edge> : EdgeEventArgs<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class GleeEdgeEventArgs<TVertex, TEdge> : EdgeEventArgs<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
         private readonly Microsoft.Glee.Drawing.Edge gedge;
         public Microsoft.Glee.Drawing.Edge GEdge
@@ -13,7 +13,7 @@ namespace QuickGraph.Glee
             get { return this.gedge; }
         }
 
-        public GleeEdgeEventArgs(Edge edge, Microsoft.Glee.Drawing.Edge gedge)
+        public GleeEdgeEventArgs(TEdge edge, Microsoft.Glee.Drawing.Edge gedge)
             :base(edge)
         {
             this.gedge = gedge;

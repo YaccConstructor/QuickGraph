@@ -6,25 +6,25 @@ using QuickGraph.Graphviz.Dot;
 
 namespace QuickGraph.Graphviz
 {
-    public sealed class GraphvizAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class GraphvizAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
         private readonly static Regex writeLineReplace = new Regex("\n", RegexOptions.Compiled | RegexOptions.Multiline);
-        private IVertexAndEdgeSet<Vertex, Edge> visitedGraph;
+        private IVertexAndEdgeSet<TVertex, TEdge> visitedGraph;
         private StringWriter output;
         private GraphvizImageType imageType;
-        private readonly Dictionary<Vertex, int> vertexIds = new Dictionary<Vertex, int>();
+        private readonly Dictionary<TVertex, int> vertexIds = new Dictionary<TVertex, int>();
 
         private GraphvizGraph graphFormat;
         private GraphvizVertex commonVertexFormat;
         private GraphvizEdge commonEdgeFormat;
 
-        public GraphvizAlgorithm(IVertexAndEdgeSet<Vertex, Edge> g)
+        public GraphvizAlgorithm(IVertexAndEdgeSet<TVertex, TEdge> g)
             :this(g,".",GraphvizImageType.Png)
         {}
 
         public GraphvizAlgorithm(
-            IVertexAndEdgeSet<Vertex, Edge> g,
+            IVertexAndEdgeSet<TVertex, TEdge> g,
             String path,
             GraphvizImageType imageType
             )
@@ -69,7 +69,7 @@ namespace QuickGraph.Graphviz
             }
         }
 
-        public IVertexAndEdgeSet<Vertex, Edge> VisitedGraph
+        public IVertexAndEdgeSet<TVertex, TEdge> VisitedGraph
         {
             get
             {
@@ -126,15 +126,15 @@ namespace QuickGraph.Graphviz
             }
         }
 */
-        public event FormatVertexEventHandler<Vertex> FormatVertex;
-        private void OnFormatVertex(Vertex v)
+        public event FormatVertexEventHandler<TVertex> FormatVertex;
+        private void OnFormatVertex(TVertex v)
         {
             Output.Write("{0} ", this.vertexIds[v]);
             if (FormatVertex != null)
             {
                 GraphvizVertex gv = new GraphvizVertex();
                 gv.Label = v.ToString();
-                FormatVertex(this, new FormatVertexEventArgs<Vertex>(gv, v));
+                FormatVertex(this, new FormatVertexEventArgs<TVertex>(gv, v));
 
                 string s = gv.ToDot();
                 if (s.Length != 0)
@@ -143,13 +143,13 @@ namespace QuickGraph.Graphviz
             Output.WriteLine(";");
         }
 
-        public event FormatEdgeEventHandler<Vertex,Edge> FormatEdge;
-        private void OnFormatEdge(Edge e)
+        public event FormatEdgeEventHandler<TVertex,TEdge> FormatEdge;
+        private void OnFormatEdge(TEdge e)
         {
             if (FormatEdge != null)
             {
                 GraphvizEdge ev = new GraphvizEdge();
-                FormatEdge(this, new FormatEdgeEventArgs<Vertex,Edge>(ev, e));
+                FormatEdge(this, new FormatEdgeEventArgs<TVertex,TEdge>(ev, e));
                 Output.Write(" {0}", ev.ToDot());
             }
         }
@@ -167,7 +167,7 @@ namespace QuickGraph.Graphviz
 
             // build vertex id map
             int i=0;
-            foreach(Vertex v in this.VisitedGraph.Vertices)
+            foreach(TVertex v in this.VisitedGraph.Vertices)
                 this.vertexIds.Add(v,i++);
 
             Output.WriteLine("digraph G {");
@@ -183,11 +183,11 @@ namespace QuickGraph.Graphviz
                 Output.WriteLine("edge [{0}];", ef);
 
             // initialize vertex map
-            IDictionary<Vertex,GraphColor> colors = new Dictionary<Vertex,GraphColor>();
-            foreach (Vertex v in VisitedGraph.Vertices)
+            IDictionary<TVertex,GraphColor> colors = new Dictionary<TVertex,GraphColor>();
+            foreach (TVertex v in VisitedGraph.Vertices)
                 colors[v] = GraphColor.White;
-            IDictionary<Edge, GraphColor> edgeColors = new Dictionary<Edge, GraphColor>();
-            foreach (Edge e in VisitedGraph.Edges)
+            IDictionary<TEdge, GraphColor> edgeColors = new Dictionary<TEdge, GraphColor>();
+            foreach (TEdge e in VisitedGraph.Edges)
                 edgeColors[e] = GraphColor.White;
 
             WriteVertices(colors, VisitedGraph.Vertices);
@@ -199,10 +199,10 @@ namespace QuickGraph.Graphviz
         }
 
         private void WriteVertices(
-            IDictionary<Vertex,GraphColor> colors,
-            IEnumerable<Vertex> vertices)
+            IDictionary<TVertex,GraphColor> colors,
+            IEnumerable<TVertex> vertices)
         {
-            foreach (Vertex v in vertices)
+            foreach (TVertex v in vertices)
             {
                 if (colors[v] == GraphColor.White)
                 {
@@ -213,10 +213,10 @@ namespace QuickGraph.Graphviz
         }
 
         private void WriteEdges(
-            IDictionary<Edge,GraphColor> edgeColors,
-            IEnumerable<Edge> edges)
+            IDictionary<TEdge,GraphColor> edgeColors,
+            IEnumerable<TEdge> edges)
         {
-            foreach (Edge e in edges)
+            foreach (TEdge e in edges)
             {
                 if (edgeColors[e] != GraphColor.White)
                     continue;

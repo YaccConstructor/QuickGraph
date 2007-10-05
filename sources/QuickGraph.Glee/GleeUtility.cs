@@ -6,28 +6,28 @@ namespace QuickGraph.Glee
 {
     public static class GleeGraphUtility
     {
-        public static GleeGraphPopulator<Vertex, Edge> Create<Vertex, Edge>(
-            IVertexAndEdgeSet<Vertex, Edge> visitedGraph,
+        public static GleeGraphPopulator<TVertex, TEdge> Create<TVertex, TEdge>(
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             IFormatProvider formatProvider,
             string format)
-            where Edge : IEdge<Vertex>
+            where TEdge : IEdge<TVertex>
         {
-            return new GleeToStringGraphPopulator<Vertex, Edge>(visitedGraph, formatProvider, format);
+            return new GleeToStringGraphPopulator<TVertex, TEdge>(visitedGraph, formatProvider, format);
         }
 
-        public static GleeGraphPopulator<Vertex, Edge> Create<Vertex, Edge>(
-            IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
-            where Edge : IEdge<Vertex>
+        public static GleeGraphPopulator<TVertex, TEdge> Create<TVertex, TEdge>(
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
         {
-            return new GleeDefaultGraphPopulator<Vertex, Edge>(visitedGraph);
+            return new GleeDefaultGraphPopulator<TVertex, TEdge>(visitedGraph);
         }
 
-        public static GleeGraphPopulator<Vertex, Edge> CreateIdentifiable<Vertex, Edge>(
-            IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
-            where Vertex : IIdentifiable
-            where Edge : IEdge<Vertex>
+        public static GleeGraphPopulator<TVertex, TEdge> CreateIdentifiable<TVertex, TEdge>(
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+            where TVertex : IIdentifiable
+            where TEdge : IEdge<TVertex>
         {
-            return new GleeIndentifiableGraphPopulator<Vertex, Edge>(visitedGraph);
+            return new GleeIndentifiableGraphPopulator<TVertex, TEdge>(visitedGraph);
         }
     }
 }

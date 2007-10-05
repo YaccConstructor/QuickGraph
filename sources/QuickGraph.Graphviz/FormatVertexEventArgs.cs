@@ -24,7 +24,7 @@ namespace QuickGraph.Graphviz
         }
     }
 
-    public delegate void FormatVertexEventHandler<Vertex>(
+    public delegate void FormatVertexEventHandler<TVertex>(
         Object sender,
-        FormatVertexEventArgs<Vertex> e);
+        FormatVertexEventArgs<TVertex> e);
 }

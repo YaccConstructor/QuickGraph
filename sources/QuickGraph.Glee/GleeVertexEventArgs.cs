@@ -3,11 +3,11 @@ using Microsoft.Glee.Drawing;
 
 namespace QuickGraph.Glee
 {
-    public sealed class GleeVertexEventArgs<Vertex> : VertexEventArgs<Vertex>
+    public sealed class GleeVertexEventArgs<TVertex> : VertexEventArgs<TVertex>
     {
         private readonly Node node;
 
-        public GleeVertexEventArgs(Vertex vertex, Node node)
+        public GleeVertexEventArgs(TVertex vertex, Node node)
             : base(vertex)
         {
             this.node = node;

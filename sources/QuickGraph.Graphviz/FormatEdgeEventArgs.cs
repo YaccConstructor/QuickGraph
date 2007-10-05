@@ -28,8 +28,8 @@ namespace QuickGraph.Graphviz
         }
     }
 
-    public delegate void FormatEdgeEventHandler<Vertex, Edge>(
+    public delegate void FormatEdgeEventHandler<TVertex, TEdge>(
         object sender, 
-        FormatEdgeEventArgs<Vertex,Edge> e)
-        where Edge : IEdge<Vertex>;
+        FormatEdgeEventArgs<TVertex,TEdge> e)
+        where TEdge : IEdge<TVertex>;
 }

@@ -5,31 +5,31 @@ using System.Text;
 namespace QuickGraph
 {
     [Serializable]
-    public sealed class UndirectedBidirectionalGraph<Vertex,Edge> :
-        IUndirectedGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class UndirectedBidirectionalGraph<TVertex,TEdge> :
+        IUndirectedGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        private readonly IBidirectionalGraph<Vertex, Edge> visitedGraph;
+        private readonly IBidirectionalGraph<TVertex, TEdge> visitedGraph;
 
-        public UndirectedBidirectionalGraph(IBidirectionalGraph<Vertex, Edge> visitedGraph)
+        public UndirectedBidirectionalGraph(IBidirectionalGraph<TVertex, TEdge> visitedGraph)
         {
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");
             this.visitedGraph = visitedGraph;
         }
 
-        public IBidirectionalGraph<Vertex, Edge> VisitedGraph
+        public IBidirectionalGraph<TVertex, TEdge> VisitedGraph
         {
             get { return this.visitedGraph; }
         }
 
         #region IUndirectedGraph<Vertex,Edge> Members
 
-        public IEnumerable<Edge> AdjacentEdges(Vertex v)
+        public IEnumerable<TEdge> AdjacentEdges(TVertex v)
         {
-            foreach (Edge e in this.VisitedGraph.OutEdges(v))
+            foreach (TEdge e in this.VisitedGraph.OutEdges(v))
                 yield return e;
-            foreach (Edge e in this.VisitedGraph.InEdges(v))
+            foreach (TEdge e in this.VisitedGraph.InEdges(v))
             {
                 // we skip selfedges here since
                 // we already did those in the outedge run
@@ -39,22 +39,22 @@ namespace QuickGraph
             }
         }
 
-        public int AdjacentDegree(Vertex v)
+        public int AdjacentDegree(TVertex v)
         {
             return this.VisitedGraph.Degree(v);
         }
 
-        public bool IsAdjacentEdgesEmpty(Vertex v)
+        public bool IsAdjacentEdgesEmpty(TVertex v)
         {
             return this.VisitedGraph.IsOutEdgesEmpty(v) && this.VisitedGraph.IsInEdgesEmpty(v);
         }
 
-        public Edge AdjacentEdge(Vertex v, int index)
+        public TEdge AdjacentEdge(TVertex v, int index)
         {
             throw new NotSupportedException();
         }
 
-        public bool ContainsEdge(Vertex source, Vertex target)
+        public bool ContainsEdge(TVertex source, TVertex target)
         {
             throw new NotSupportedException();
         }
@@ -73,12 +73,12 @@ namespace QuickGraph
             get { return this.VisitedGraph.VertexCount; }
         }
 
-        public IEnumerable<Vertex> Vertices
+        public IEnumerable<TVertex> Vertices
         {
             get { return this.VisitedGraph.Vertices; }
         }
 
-        public bool ContainsVertex(Vertex vertex)
+        public bool ContainsVertex(TVertex vertex)
         {
             return this.VisitedGraph.ContainsVertex(vertex);
         }
@@ -97,12 +97,12 @@ namespace QuickGraph
             get { return this.VisitedGraph.EdgeCount; }
         }
 
-        public IEnumerable<Edge> Edges
+        public IEnumerable<TEdge> Edges
         {
             get { return this.VisitedGraph.Edges; }
         }
 
-        public bool ContainsEdge(Edge edge)
+        public bool ContainsEdge(TEdge edge)
         {
             return this.VisitedGraph.ContainsEdge(edge);
         }

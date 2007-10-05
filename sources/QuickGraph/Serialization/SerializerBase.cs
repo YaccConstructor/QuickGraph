@@ -3,8 +3,8 @@ using System.Xml;
 
 namespace QuickGraph.Serialization
 {
-    public abstract class SerializerBase<Vertex,Edge>
-        where Edge :IEdge<Vertex>
+    public abstract class SerializerBase<TVertex,TEdge>
+        where TEdge :IEdge<TVertex>
     {
         private bool emitDocumentDeclaration = true;
 

@@ -31,23 +31,23 @@ namespace QuickGraph.Serialization
     /// Hyperedge, nodes, nested graphs not supported.
     /// </para>
     /// </remarks>
-    public sealed class GraphMLSerializer<Vertex,Edge> : SerializerBase<Vertex,Edge>
-        where Vertex : IIdentifiable
-        where Edge : IIdentifiable, IEdge<Vertex>
+    public sealed class GraphMLSerializer<TVertex,TEdge> : SerializerBase<TVertex,TEdge>
+        where TVertex : IIdentifiable
+        where TEdge : IIdentifiable, IEdge<TVertex>
     {
         #region Attributes
         private delegate void WriteVertexAttributesDelegate(
             XmlWriter writer,
-            Vertex v);
+            TVertex v);
         private delegate void WriteEdgeAttributesDelegate(
             XmlWriter writer,
-            Edge e);
+            TEdge e);
         private delegate void ReadVertexAttributesDelegate(
             XmlReader reader,
-            Vertex v);
+            TVertex v);
         private delegate void ReadEdgeAttributesDelegate(
             XmlReader reader,
-            Edge e);
+            TEdge e);
 
         private static class DelegateCompiler
         {
@@ -114,13 +114,13 @@ namespace QuickGraph.Serialization
                 readVertexAttributesDelegate =
                     (ReadVertexAttributesDelegate)CreateReadDelegate(
                     typeof(ReadVertexAttributesDelegate),
-                    typeof(Vertex),
+                    typeof(TVertex),
                     "id"
                     );
                 readEdgeAttributesDelegate =
                     (ReadEdgeAttributesDelegate)CreateReadDelegate(
                     typeof(ReadEdgeAttributesDelegate),
-                    typeof(Edge),
+                    typeof(TEdge),
                     "id", "source", "target"
                     );
             }
@@ -129,11 +129,11 @@ namespace QuickGraph.Serialization
             {
                 writeVertexAttributesDelegate =
                     (WriteVertexAttributesDelegate)CreateWriteDelegate(
-                        typeof(Vertex),
+                        typeof(TVertex),
                         typeof(WriteVertexAttributesDelegate));
                 writeEdgeAttributesDelegate =
                     (WriteEdgeAttributesDelegate)CreateWriteDelegate(
-                        typeof(Edge),
+                        typeof(TEdge),
                         typeof(WriteEdgeAttributesDelegate)
                         );
             }
@@ -371,7 +371,7 @@ namespace QuickGraph.Serialization
         }
         #endregion
 
-        public void Serialize(TextWriter writer, IVertexAndEdgeSet<Vertex,Edge> visitedGraph)
+        public void Serialize(TextWriter writer, IVertexAndEdgeSet<TVertex,TEdge> visitedGraph)
         {
             if (writer == null)
                 throw new ArgumentNullException("writer");
@@ -385,7 +385,7 @@ namespace QuickGraph.Serialization
             }
         }
 
-        public void Serialize(Stream stream, Encoding encoding, IVertexAndEdgeSet<Vertex,Edge> visitedGraph)
+        public void Serialize(Stream stream, Encoding encoding, IVertexAndEdgeSet<TVertex,TEdge> visitedGraph)
         {
             if (stream == null)
                 throw new ArgumentNullException("stream");
@@ -401,7 +401,7 @@ namespace QuickGraph.Serialization
             }
         }
 
-        public void Serialize(XmlWriter writer, IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
+        public void Serialize(XmlWriter writer, IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
         {
             if (writer == null)
                 throw new ArgumentNullException("writer");
@@ -414,9 +414,9 @@ namespace QuickGraph.Serialization
 
         public void Deserialize(
             XmlReader reader,
-            IMutableVertexAndEdgeListGraph<Vertex, Edge> visitedGraph,
-            IIdentifiableVertexFactory<Vertex> vertexFactory,
-            IIdentifiableEdgeFactory<Vertex, Edge> edgeFactory)
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            IIdentifiableVertexFactory<TVertex> vertexFactory,
+            IIdentifiableEdgeFactory<TVertex, TEdge> edgeFactory)
         {
             if (reader == null)
                 throw new ArgumentNullException("reader");
@@ -438,18 +438,18 @@ namespace QuickGraph.Serialization
 
         private sealed class ReaderWorker
         {
-            private GraphMLSerializer<Vertex, Edge> serializer;
+            private GraphMLSerializer<TVertex, TEdge> serializer;
             private XmlReader reader;
-            private IMutableVertexAndEdgeListGraph<Vertex, Edge> visitedGraph;
-            private IIdentifiableVertexFactory<Vertex> vertexFactory;
-            private IIdentifiableEdgeFactory<Vertex, Edge> edgeFactory;
+            private IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph;
+            private IIdentifiableVertexFactory<TVertex> vertexFactory;
+            private IIdentifiableEdgeFactory<TVertex, TEdge> edgeFactory;
 
             public ReaderWorker(
-                GraphMLSerializer<Vertex,Edge> serializer,
+                GraphMLSerializer<TVertex,TEdge> serializer,
                 XmlReader reader,
-                IMutableVertexAndEdgeListGraph<Vertex, Edge> visitedGraph,
-                IIdentifiableVertexFactory<Vertex> vertexFactory,
-                IIdentifiableEdgeFactory<Vertex, Edge> edgeFactory
+                IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+                IIdentifiableVertexFactory<TVertex> vertexFactory,
+                IIdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
                 )
             {
                 this.serializer = serializer;
@@ -459,7 +459,7 @@ namespace QuickGraph.Serialization
                 this.edgeFactory = edgeFactory;
             }
 
-            public GraphMLSerializer<Vertex, Edge> Serializer
+            public GraphMLSerializer<TVertex, TEdge> Serializer
             {
                 get { return this.serializer; }
             }
@@ -469,7 +469,7 @@ namespace QuickGraph.Serialization
                 get { return this.reader; }
             }
 
-            public IMutableVertexAndEdgeListGraph<Vertex, Edge> VisitedGraph
+            public IMutableVertexAndEdgeListGraph<TVertex, TEdge> VisitedGraph
             {
                 get { return this.visitedGraph; }
             }
@@ -498,7 +498,7 @@ namespace QuickGraph.Serialization
             {
                 this.Reader.ReadStartElement("graph");
 
-                Dictionary<string, Vertex> vertices = new Dictionary<string, Vertex>();
+                Dictionary<string, TVertex> vertices = new Dictionary<string, TVertex>();
 
                 // read vertices or edges
                 while (this.Reader.Read())
@@ -512,9 +512,9 @@ namespace QuickGraph.Serialization
                             // read id
                             string id = this.ReadAttributeValue("id");
                             // create new vertex
-                            Vertex vertex = vertexFactory.CreateVertex(id);
+                            TVertex vertex = vertexFactory.CreateVertex(id);
                             // read data
-                            GraphMLSerializer<Vertex, Edge>.DelegateCompiler.VertexAttributesReader(subReader, vertex);
+                            GraphMLSerializer<TVertex, TEdge>.DelegateCompiler.VertexAttributesReader(subReader, vertex);
                             // add to graph
                             this.VisitedGraph.AddVertex(vertex);
                             vertices.Add(vertex.ID, vertex);
@@ -526,18 +526,18 @@ namespace QuickGraph.Serialization
                             // read id
                             string id = this.ReadAttributeValue("id");
                             string sourceid = this.ReadAttributeValue("source");
-                            Vertex source;
+                            TVertex source;
                             if (!vertices.TryGetValue(sourceid, out source))
                                 throw new ArgumentException("Could not find vertex " + sourceid);
                             string targetid = this.ReadAttributeValue("target");
-                            Vertex target;
+                            TVertex target;
                             if (!vertices.TryGetValue(targetid, out target))
                                 throw new ArgumentException("Could not find vertex " + targetid);
 
-                            Edge edge = this.edgeFactory.CreateEdge(id, source, target);
+                            TEdge edge = this.edgeFactory.CreateEdge(id, source, target);
 
                             // read data
-                            GraphMLSerializer<Vertex, Edge>.DelegateCompiler.EdgeAttributesReader(subReader, edge);
+                            GraphMLSerializer<TVertex, TEdge>.DelegateCompiler.EdgeAttributesReader(subReader, edge);
 
                             this.VisitedGraph.AddEdge(edge);
                         }
@@ -556,21 +556,21 @@ namespace QuickGraph.Serialization
 
         private sealed class WriterWorker
         {
-            private GraphMLSerializer<Vertex, Edge> serializer;
+            private GraphMLSerializer<TVertex, TEdge> serializer;
             private XmlWriter writer;
-            private IVertexAndEdgeSet<Vertex, Edge> visitedGraph;
+            private IVertexAndEdgeSet<TVertex, TEdge> visitedGraph;
 
             public WriterWorker(
-                GraphMLSerializer<Vertex,Edge> serializer,
+                GraphMLSerializer<TVertex,TEdge> serializer,
                 XmlWriter writer,
-                IVertexAndEdgeSet<Vertex, Edge> visitedGraph)
+                IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
             {
                 this.serializer = serializer;
                 this.writer = writer;
                 this.visitedGraph = visitedGraph;
             }
 
-            public GraphMLSerializer<Vertex, Edge> Serializer
+            public GraphMLSerializer<TVertex, TEdge> Serializer
             {
                 get { return this.serializer; }
             }
@@ -580,7 +580,7 @@ namespace QuickGraph.Serialization
                 get { return this.writer; }
             }
 
-            public IVertexAndEdgeSet<Vertex, Edge> VisitedGraph
+            public IVertexAndEdgeSet<TVertex, TEdge> VisitedGraph
             {
                 get { return this.visitedGraph; }
             }
@@ -635,7 +635,7 @@ namespace QuickGraph.Serialization
             private void WriteVertexAttributeDefinitions()
             {
                 string forNode = "node";
-                Type nodeType = typeof(Vertex);
+                Type nodeType = typeof(TVertex);
 
                 WriteAttributeDefinitions(forNode, nodeType);
             }
@@ -643,7 +643,7 @@ namespace QuickGraph.Serialization
             private void WriteEdgeAttributeDefinitions()
             {
                 string forNode = "edge";
-                Type nodeType = typeof(Edge);
+                Type nodeType = typeof(TEdge);
 
                 WriteAttributeDefinitions(forNode, nodeType);
             }
@@ -677,24 +677,24 @@ namespace QuickGraph.Serialization
             
             private void WriteVertices()
             {
-                foreach (Vertex v in this.VisitedGraph.Vertices)
+                foreach (TVertex v in this.VisitedGraph.Vertices)
                 {
                     this.Writer.WriteStartElement("node");
                     this.Writer.WriteAttributeString("id", v.ID);
-                    GraphMLSerializer<Vertex, Edge>.DelegateCompiler.VertexAttributesWriter(this.Writer, v);
+                    GraphMLSerializer<TVertex, TEdge>.DelegateCompiler.VertexAttributesWriter(this.Writer, v);
                     this.Writer.WriteEndElement();
                 }
             }
             
             private void WriteEdges()
             {
-                foreach (Edge e in this.VisitedGraph.Edges)
+                foreach (TEdge e in this.VisitedGraph.Edges)
                 {
                     this.Writer.WriteStartElement("edge");
                     this.Writer.WriteAttributeString("id", e.ID);
                     this.Writer.WriteAttributeString("source", e.Source.ID);
                     this.Writer.WriteAttributeString("target", e.Target.ID);
-                    GraphMLSerializer<Vertex, Edge>.DelegateCompiler.EdgeAttributesWriter(this.Writer, e);
+                    GraphMLSerializer<TVertex, TEdge>.DelegateCompiler.EdgeAttributesWriter(this.Writer, e);
                     this.Writer.WriteEndElement();
                 }
             }
