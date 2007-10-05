@@ -4,16 +4,16 @@ using System.Drawing;
 
 namespace QuickGraph.Algorithms.Layout
 {
-    public sealed class ForceDirectedLayoutAlgorithm<Vertex, Edge, Graph> : 
-        LayoutAlgorithmBase<Vertex,Edge,Graph>
-        where Edge : IEdge<Vertex>
-        where Graph : IVertexAndEdgeListGraph<Vertex, Edge>
+    public sealed class ForceDirectedLayoutAlgorithm<TVertex, TEdge, TGraph> : 
+        LayoutAlgorithmBase<TVertex,TEdge,TGraph>
+        where TEdge : IEdge<TVertex>
+        where TGraph : IVertexAndEdgeListGraph<TVertex, TEdge>
     {
         private float springFactor = 0.2F;
         private PointF magneticDirection = new PointF(1, 0);
         private float gravitationFactor = 0.1F;
 
-        public ForceDirectedLayoutAlgorithm(Graph visitedGraph)
+        public ForceDirectedLayoutAlgorithm(TGraph visitedGraph)
             :base(visitedGraph)
         {}
 

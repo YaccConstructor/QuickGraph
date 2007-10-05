@@ -3,15 +3,15 @@ using System.Collections.Generic;
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public sealed class ReversedResidualEdgePredicate<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class ReversedResidualEdgePredicate<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        private IDictionary<Edge,double> residualCapacities;
-        private IDictionary<Edge,Edge> reversedEdges;
+        private IDictionary<TEdge,double> residualCapacities;
+        private IDictionary<TEdge,TEdge> reversedEdges;
 
         public ReversedResidualEdgePredicate(
-            IDictionary<Edge, double> residualCapacities,
-            IDictionary<Edge, Edge> reversedEdges)
+            IDictionary<TEdge, double> residualCapacities,
+            IDictionary<TEdge, TEdge> reversedEdges)
         {
             if (residualCapacities == null)
                 throw new ArgumentNullException("residualCapacities");
@@ -24,7 +24,7 @@ namespace QuickGraph.Predicates
         /// <summary>
         /// Residual capacities map
         /// </summary>
-        public IDictionary<Edge,double> ResidualCapacities
+        public IDictionary<TEdge,double> ResidualCapacities
         {
             get
             {
@@ -35,7 +35,7 @@ namespace QuickGraph.Predicates
         /// <summary>
         /// Reversed edges map
         /// </summary>
-        public IDictionary<Edge,Edge> ReversedEdges
+        public IDictionary<TEdge,TEdge> ReversedEdges
         {
             get
             {
@@ -43,7 +43,7 @@ namespace QuickGraph.Predicates
             }
         }
 
-        public bool Test(Edge e)
+        public bool Test(TEdge e)
         {
             if (e == null)
                 throw new ArgumentNullException("e");

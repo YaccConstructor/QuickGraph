@@ -2,17 +2,17 @@ using System;
 
 namespace QuickGraph.Predicates
 {
-    public sealed class IsolatedVertexPredicate<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class IsolatedVertexPredicate<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        private IBidirectionalGraph<Vertex, Edge> visitedGraph;
+        private IBidirectionalGraph<TVertex, TEdge> visitedGraph;
 
-        public IsolatedVertexPredicate(IBidirectionalGraph<Vertex,Edge> visitedGraph)
+        public IsolatedVertexPredicate(IBidirectionalGraph<TVertex,TEdge> visitedGraph)
         {
             this.visitedGraph = visitedGraph;
         }
 
-        public bool Test(Vertex v)
+        public bool Test(TVertex v)
         {
             return this.visitedGraph.IsInEdgesEmpty(v)
                 && this.visitedGraph.IsOutEdgesEmpty(v);

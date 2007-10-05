@@ -27,8 +27,6 @@ namespace QuickGraph.Algorithms.ShortestPath
     public sealed class BellmanFordShortestPathAlgorithm<TVertex, TEdge> :
         ShortestPathAlgorithmBase<TVertex,TEdge,IVertexAndEdgeListGraph<TVertex,TEdge>>,
         ITreeBuilderAlgorithm<TVertex,TEdge>
-       // IVertexPredecessorRecorderAlgorithm<Vertex,Edge>,
-       // IDistanceRecorderAlgorithm<Vertex,Edge>
         where TEdge : IEdge<TVertex>
     {
         private readonly Dictionary<TVertex,TVertex> predecessors;

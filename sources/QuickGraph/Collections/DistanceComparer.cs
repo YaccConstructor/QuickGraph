@@ -4,28 +4,28 @@
     using System.Collections.Generic;
 
     [Serializable]
-    public sealed class DistanceComparer<Vertex, Distance> : 
-        IComparer<Vertex>
-        where Distance : IComparable
+    public sealed class DistanceComparer<TVertex, TDistance> : 
+        IComparer<TVertex>
+        where TDistance : IComparable
     {
-        IDictionary<Vertex,Distance> distances;
+        IDictionary<TVertex,TDistance> distances;
 
-        public DistanceComparer(IDictionary<Vertex, Distance> distances)
+        public DistanceComparer(IDictionary<TVertex, TDistance> distances)
         {
             this.distances = distances;
         }
 
-        public int Compare(Vertex v, Vertex y)
+        public int Compare(TVertex v, TVertex y)
         {
             return distances[v].CompareTo(distances[y]);
         }
 
-        public bool Equals(Vertex v, Vertex w)
+        public bool Equals(TVertex v, TVertex w)
         {
             return v.Equals(w);
         }
 
-        public int GetHashCode(Vertex v)
+        public int GetHashCode(TVertex v)
         {
             return this.distances[v].GetHashCode();
         }

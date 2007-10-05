@@ -3,19 +3,19 @@
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public sealed class SinkVertexPredicate<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class SinkVertexPredicate<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        private IIncidenceGraph<Vertex, Edge> visitedGraph;
+        private IIncidenceGraph<TVertex, TEdge> visitedGraph;
 
-        public SinkVertexPredicate(IIncidenceGraph<Vertex, Edge> visitedGraph)
+        public SinkVertexPredicate(IIncidenceGraph<TVertex, TEdge> visitedGraph)
         {
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");
             this.visitedGraph = visitedGraph;
         }
 
-        public bool Test(Vertex v)
+        public bool Test(TVertex v)
         {
             return this.visitedGraph.IsOutEdgesEmpty(v);
         }

@@ -4,24 +4,24 @@ using System.Drawing;
 
 namespace QuickGraph.Algorithms.Layout
 {
-    public abstract class LayoutAlgorithmBase<Vertex,Edge,Graph> : AlgorithmBase<Graph>
-        where Edge : IEdge<Vertex>
-        where Graph : IVertexAndEdgeListGraph<Vertex,Edge>
+    public abstract class LayoutAlgorithmBase<TVertex,TEdge,TGraph> : AlgorithmBase<TGraph>
+        where TEdge : IEdge<TVertex>
+        where TGraph : IVertexAndEdgeListGraph<TVertex,TEdge>
     {
-        private Dictionary<Vertex, PointF> vertexPositions;
+        private Dictionary<TVertex, PointF> vertexPositions;
 
-        public LayoutAlgorithmBase(Graph visitedGraph, Dictionary<Vertex,PointF> vertexPositions)
+        public LayoutAlgorithmBase(TGraph visitedGraph, Dictionary<TVertex,PointF> vertexPositions)
             : base(visitedGraph)
         {
             this.vertexPositions = vertexPositions;
         }
 
-        public LayoutAlgorithmBase(Graph visitedGraph)
-            :this(visitedGraph, new Dictionary<Vertex, PointF>(visitedGraph.VertexCount))
+        public LayoutAlgorithmBase(TGraph visitedGraph)
+            :this(visitedGraph, new Dictionary<TVertex, PointF>(visitedGraph.VertexCount))
         {
         }
 
-        public Dictionary<Vertex, PointF> VertexPositions
+        public Dictionary<TVertex, PointF> VertexPositions
         {
             get { return this.vertexPositions; }
         }

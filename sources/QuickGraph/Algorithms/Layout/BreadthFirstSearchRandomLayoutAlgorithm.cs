@@ -7,16 +7,16 @@ using System.Diagnostics;
 
 namespace QuickGraph.Algorithms.Layout
 {
-    public sealed class BreadthFirstSearchRandomLayoutAlgorithm<Vertex,Edge,Graph>: 
-        RandomLayoutAlgorithmBase<Vertex,Edge,Graph>
-        where Edge : IEdge<Vertex>
-        where Graph : IVertexAndEdgeListGraph<Vertex, Edge>
+    public sealed class BreadthFirstSearchRandomLayoutAlgorithm<TVertex,TEdge,TGraph>: 
+        RandomLayoutAlgorithmBase<TVertex,TEdge,TGraph>
+        where TEdge : IEdge<TVertex>
+        where TGraph : IVertexAndEdgeListGraph<TVertex, TEdge>
     {
-        private BreadthFirstSearchAlgorithm<Vertex, Edge> bfs;
-        private VertexPredecessorRecorderObserver<Vertex, Edge> observer;
+        private BreadthFirstSearchAlgorithm<TVertex, TEdge> bfs;
+        private VertexPredecessorRecorderObserver<TVertex, TEdge> observer;
         private float vertexDistance = 50;
 
-        public BreadthFirstSearchRandomLayoutAlgorithm(Graph visitedGraph, Dictionary<Vertex, PointF> vertexPositions)
+        public BreadthFirstSearchRandomLayoutAlgorithm(TGraph visitedGraph, Dictionary<TVertex, PointF> vertexPositions)
             : base(visitedGraph, vertexPositions)
         { }
 
@@ -28,13 +28,13 @@ namespace QuickGraph.Algorithms.Layout
 
         protected override void InternalCompute()
         {
-            this.bfs = new BreadthFirstSearchAlgorithm<Vertex, Edge>(this.VisitedGraph);
-            this.observer = new VertexPredecessorRecorderObserver<Vertex, Edge>();
+            this.bfs = new BreadthFirstSearchAlgorithm<TVertex, TEdge>(this.VisitedGraph);
+            this.observer = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
 
             try
             {
                 this.observer.Attach(this.bfs);
-                this.bfs.DiscoverVertex += new VertexEventHandler<Vertex>(bfs_DiscoverVertex);
+                this.bfs.DiscoverVertex += new VertexEventHandler<TVertex>(bfs_DiscoverVertex);
                 bfs.Compute();
                 this.OnIterationEnded(EventArgs.Empty);
             }
@@ -47,15 +47,15 @@ namespace QuickGraph.Algorithms.Layout
                 }
                 if (this.bfs != null)
                 {
-                    this.bfs.DiscoverVertex -= new VertexEventHandler<Vertex>(bfs_DiscoverVertex);
+                    this.bfs.DiscoverVertex -= new VertexEventHandler<TVertex>(bfs_DiscoverVertex);
                     this.bfs = null;
                 }
             }
         }
 
-        void bfs_DiscoverVertex(object sender, VertexEventArgs<Vertex> e)
+        void bfs_DiscoverVertex(object sender, VertexEventArgs<TVertex> e)
         {
-            Edge parent;
+            TEdge parent;
             if (this.observer.VertexPredecessors.TryGetValue(e.Vertex, out parent))
             {
                 Debug.Assert(parent != null);

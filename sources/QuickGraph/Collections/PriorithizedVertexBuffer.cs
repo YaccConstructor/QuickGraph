@@ -4,27 +4,27 @@ using System.Collections.Generic;
 namespace QuickGraph.Collections
 {
     [Serializable]
-    public sealed class PriorithizedVertexBuffer<Vertex, Distance> : VertexBuffer<Vertex>
-        where Distance : IComparable
+    public sealed class PriorithizedVertexBuffer<TVertex, TDistance> : VertexBuffer<TVertex>
+        where TDistance : IComparable
     {
-        private IDictionary<Vertex, Distance> distances;
-        private DistanceComparer<Vertex,Distance> comparer;
+        private IDictionary<TVertex, TDistance> distances;
+        private DistanceComparer<TVertex,TDistance> comparer;
 
 		public PriorithizedVertexBuffer(
-            IDictionary<Vertex, Distance> distances)
+            IDictionary<TVertex, TDistance> distances)
 		{
 			if ( distances == null)
 				throw new ArgumentNullException("Distance map is null");
 			this.distances = distances;
-			this.comparer = new DistanceComparer<Vertex,Distance>(this.distances);
+			this.comparer = new DistanceComparer<TVertex,TDistance>(this.distances);
 		}
 
-		public void Update(Vertex v)
+		public void Update(TVertex v)
 		{
             Sort(this.comparer);
         }
 
-		public new void Push(Vertex v)
+		public new void Push(TVertex v)
 		{
 			// add to queue
 			base.Push(v);

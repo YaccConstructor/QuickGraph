@@ -4,17 +4,17 @@ using System.Collections.Generic;
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public sealed class InDictionaryVertexPredicate<Vertex, Value>
+    public sealed class InDictionaryVertexPredicate<TVertex, TValue>
     {
-        private IDictionary<Vertex, Value> dictionary;
+        private IDictionary<TVertex, TValue> dictionary;
 
         public InDictionaryVertexPredicate(
-            IDictionary<Vertex,Value> dictionary)
+            IDictionary<TVertex,TValue> dictionary)
         {
             this.dictionary = dictionary;
         }
 
-        public bool Test(Vertex v)
+        public bool Test(TVertex v)
         {
             if (v == null)
                 throw new ArgumentNullException("v");

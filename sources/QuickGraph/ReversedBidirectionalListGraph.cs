@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public sealed class ReversedBidirectionalGraph<Vertex,Edge> : 
-        IBidirectionalGraph<Vertex,ReversedEdge<Vertex,Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class ReversedBidirectionalGraph<TVertex,TEdge> : 
+        IBidirectionalGraph<TVertex,ReversedEdge<TVertex,TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private readonly IBidirectionalGraph<Vertex,Edge> originalGraph;
-        public ReversedBidirectionalGraph(IBidirectionalGraph<Vertex,Edge> originalGraph)
+        private readonly IBidirectionalGraph<TVertex,TEdge> originalGraph;
+        public ReversedBidirectionalGraph(IBidirectionalGraph<TVertex,TEdge> originalGraph)
         {
             if (originalGraph==null)
                 throw new ArgumentNullException("originalGraph");
             this.originalGraph = originalGraph;
         }
 
-        public IBidirectionalGraph<Vertex,Edge> OriginalGraph
+        public IBidirectionalGraph<TVertex,TEdge> OriginalGraph
         {
             get { return this.originalGraph;}
         }
@@ -40,51 +40,51 @@ namespace QuickGraph
         	get { return this.OriginalGraph.VertexCount; }
         }
 
-        public IEnumerable<Vertex> Vertices
+        public IEnumerable<TVertex> Vertices
         {
         	get { return this.OriginalGraph.Vertices; }
         }
 
 
-        public bool ContainsVertex(Vertex vertex)
+        public bool ContainsVertex(TVertex vertex)
         {
             return this.OriginalGraph.ContainsVertex(vertex);
         }   
 
-        public bool ContainsEdge(Vertex source, Vertex target)
+        public bool ContainsEdge(TVertex source, TVertex target)
         {
             return this.OriginalGraph.ContainsEdge(target,source);
         }
 
         public bool TryGetEdge(
-            Vertex source,
-            Vertex target,
-            out ReversedEdge<Vertex, Edge> edge)
+            TVertex source,
+            TVertex target,
+            out ReversedEdge<TVertex, TEdge> edge)
         {
-            Edge oedge;
+            TEdge oedge;
             if (this.OriginalGraph.TryGetEdge(target, source, out oedge))
             {
-                edge = new ReversedEdge<Vertex, Edge>(oedge);
+                edge = new ReversedEdge<TVertex, TEdge>(oedge);
                 return true;
             }
             else
             {
-                edge = default(ReversedEdge<Vertex, Edge>);
+                edge = default(ReversedEdge<TVertex, TEdge>);
                 return false;
             }
         }
 
         public bool TryGetEdges(
-            Vertex source,
-            Vertex target,
-            out IEnumerable<ReversedEdge<Vertex,Edge>> edges)
+            TVertex source,
+            TVertex target,
+            out IEnumerable<ReversedEdge<TVertex,TEdge>> edges)
         {
-            IEnumerable<Edge> oedges;
+            IEnumerable<TEdge> oedges;
             if (this.OriginalGraph.TryGetEdges(target, source, out oedges))
             {
-                List<ReversedEdge<Vertex, Edge>> list = new List<ReversedEdge<Vertex, Edge>>();
-                foreach (Edge oedge in oedges)
-                    list.Add(new ReversedEdge<Vertex, Edge>(oedge));
+                List<ReversedEdge<TVertex, TEdge>> list = new List<ReversedEdge<TVertex, TEdge>>();
+                foreach (TEdge oedge in oedges)
+                    list.Add(new ReversedEdge<TVertex, TEdge>(oedge));
                 edges = list;
                 return true;
             }
@@ -95,69 +95,69 @@ namespace QuickGraph
             }
         }
 
-        public bool IsOutEdgesEmpty(Vertex v)
+        public bool IsOutEdgesEmpty(TVertex v)
         {
             return this.OriginalGraph.IsInEdgesEmpty(v);
         }
 
-        public int OutDegree(Vertex v)
+        public int OutDegree(TVertex v)
         {
             return this.OriginalGraph.InDegree(v);
         }
 
-        public IEnumerable<ReversedEdge<Vertex,Edge>> InEdges(Vertex v)
+        public IEnumerable<ReversedEdge<TVertex,TEdge>> InEdges(TVertex v)
         {
-            foreach(Edge edge in this.OriginalGraph.OutEdges(v))
-                yield return new ReversedEdge<Vertex,Edge>(edge);
+            foreach(TEdge edge in this.OriginalGraph.OutEdges(v))
+                yield return new ReversedEdge<TVertex,TEdge>(edge);
         }
 
-        public ReversedEdge<Vertex,Edge> InEdge(Vertex v, int index)
+        public ReversedEdge<TVertex,TEdge> InEdge(TVertex v, int index)
         {
-            Edge edge = this.OriginalGraph.OutEdge(v, index);
+            TEdge edge = this.OriginalGraph.OutEdge(v, index);
             if (edge == null)
-                return default(ReversedEdge<Vertex,Edge>);
-            return new ReversedEdge<Vertex, Edge>(edge);
+                return default(ReversedEdge<TVertex,TEdge>);
+            return new ReversedEdge<TVertex, TEdge>(edge);
         }
 
-        public bool IsInEdgesEmpty(Vertex v)
+        public bool IsInEdgesEmpty(TVertex v)
         {
             return this.OriginalGraph.IsOutEdgesEmpty(v);
         }
 
-        public int InDegree(Vertex v)
+        public int InDegree(TVertex v)
         {
             return this.OriginalGraph.OutDegree(v);
         }
 
-        public IEnumerable<ReversedEdge<Vertex,Edge>>  OutEdges(Vertex v)
+        public IEnumerable<ReversedEdge<TVertex,TEdge>>  OutEdges(TVertex v)
         {
-            foreach(Edge edge in this.OriginalGraph.InEdges(v))
-                yield return new ReversedEdge<Vertex,Edge>(edge);
+            foreach(TEdge edge in this.OriginalGraph.InEdges(v))
+                yield return new ReversedEdge<TVertex,TEdge>(edge);
         }
 
-        public ReversedEdge<Vertex,Edge> OutEdge(Vertex v, int index)
+        public ReversedEdge<TVertex,TEdge> OutEdge(TVertex v, int index)
         {
-            Edge edge = this.OriginalGraph.InEdge(v, index);
+            TEdge edge = this.OriginalGraph.InEdge(v, index);
             if (edge == null)
-                return default(ReversedEdge<Vertex,Edge>);
-            return new ReversedEdge<Vertex, Edge>(edge);
+                return default(ReversedEdge<TVertex,TEdge>);
+            return new ReversedEdge<TVertex, TEdge>(edge);
         }
 
-        public IEnumerable<ReversedEdge<Vertex,Edge>>  Edges
+        public IEnumerable<ReversedEdge<TVertex,TEdge>>  Edges
         {
         	get 
             {
-                foreach(Edge edge in this.OriginalGraph.Edges)
-                    yield return new ReversedEdge<Vertex,Edge>(edge);
+                foreach(TEdge edge in this.OriginalGraph.Edges)
+                    yield return new ReversedEdge<TVertex,TEdge>(edge);
             }
         }
 
-        public bool  ContainsEdge(ReversedEdge<Vertex,Edge> edge)
+        public bool  ContainsEdge(ReversedEdge<TVertex,TEdge> edge)
         {
             return this.OriginalGraph.ContainsEdge(edge.OriginalEdge);
         }
 
-        public int Degree(Vertex v)
+        public int Degree(TVertex v)
         {
             return this.OriginalGraph.Degree(v);
         }

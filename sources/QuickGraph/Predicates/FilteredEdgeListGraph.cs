@@ -5,16 +5,16 @@ using System.Text;
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public sealed class FilteredEdgeListGraph<Vertex,Edge,Graph> :
-        FilteredGraph<Vertex,Edge,Graph>,
-        IEdgeListGraph<Vertex,Edge>
-        where Graph : IEdgeListGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class FilteredEdgeListGraph<TVertex,TEdge,TGraph> :
+        FilteredGraph<TVertex,TEdge,TGraph>,
+        IEdgeListGraph<TVertex,TEdge>
+        where TGraph : IEdgeListGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
         public FilteredEdgeListGraph(
-            Graph baseGraph,
-            VertexPredicate<Vertex> vertexPredicate,
-            EdgePredicate<Vertex,Edge> edgePredicate
+            TGraph baseGraph,
+            VertexPredicate<TVertex> vertexPredicate,
+            EdgePredicate<TVertex,TEdge> edgePredicate
             )
         :base(baseGraph, vertexPredicate, edgePredicate)
         {
@@ -23,7 +23,7 @@ namespace QuickGraph.Predicates
         {
             get 
             { 
-                foreach(Edge edge in this.Edges)
+                foreach(TEdge edge in this.Edges)
                     return false;
                 return true;
             }
@@ -34,17 +34,17 @@ namespace QuickGraph.Predicates
             get 
             { 
                 int count = 0;
-                foreach(Edge edge in this.Edges)
+                foreach(TEdge edge in this.Edges)
                     count++;
                 return count;
             }
         }
 
-        public IEnumerable<Edge> Edges
+        public IEnumerable<TEdge> Edges
         {
             get 
             { 
-                foreach(Edge edge in this.BaseGraph.Edges)
+                foreach(TEdge edge in this.BaseGraph.Edges)
                 {
                     if (
                         this.VertexPredicate(edge.Source)
@@ -56,7 +56,7 @@ namespace QuickGraph.Predicates
             }
         }
 
-        public bool ContainsEdge(Edge edge)
+        public bool ContainsEdge(TEdge edge)
         {
             if (
                 this.VertexPredicate(edge.Source)

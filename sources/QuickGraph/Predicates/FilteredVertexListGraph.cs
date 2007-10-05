@@ -3,16 +3,16 @@ using System.Collections.Generic;
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public class FilteredVertexListGraph<Vertex, Edge, Graph> :
-        FilteredIncidenceGraph<Vertex,Edge,Graph>,
-        IVertexListGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
-        where Graph : IVertexListGraph<Vertex,Edge>
+    public class FilteredVertexListGraph<TVertex, TEdge, Graph> :
+        FilteredIncidenceGraph<TVertex,TEdge,Graph>,
+        IVertexListGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
+        where Graph : IVertexListGraph<TVertex,TEdge>
     {
         public FilteredVertexListGraph(
             Graph baseGraph,
-            VertexPredicate<Vertex> vertexPredicate,
-            EdgePredicate<Vertex, Edge> edgePredicate
+            VertexPredicate<TVertex> vertexPredicate,
+            EdgePredicate<TVertex, TEdge> edgePredicate
             )
             :base(baseGraph,vertexPredicate,edgePredicate)
         { }
@@ -21,7 +21,7 @@ namespace QuickGraph.Predicates
         {
             get 
             {
-                foreach (Vertex v in this.Vertices)
+                foreach (TVertex v in this.Vertices)
                         return false;
                 return true;
             }
@@ -32,23 +32,23 @@ namespace QuickGraph.Predicates
             get 
             {
                 int count = 0;
-                foreach (Vertex v in this.Vertices)
+                foreach (TVertex v in this.Vertices)
                         count++;
                 return count;
             }
         }
 
-        public IEnumerable<Vertex> Vertices
+        public IEnumerable<TVertex> Vertices
         {
             get 
             {
-                foreach (Vertex v in this.BaseGraph.Vertices)
+                foreach (TVertex v in this.BaseGraph.Vertices)
                     if (this.VertexPredicate(v))
                         yield return v;
             }
         }
 
-        public bool ContainsVertex(Vertex vertex)
+        public bool ContainsVertex(TVertex vertex)
         {
             if (!this.VertexPredicate(vertex))
                 return false;

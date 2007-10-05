@@ -3,20 +3,20 @@ using System.Collections.Generic;
 
 namespace QuickGraph.Predicates
 {
-    public sealed class ResidualEdgePredicate<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class ResidualEdgePredicate<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-		private IDictionary<Edge,double> residualCapacities;
+		private IDictionary<TEdge,double> residualCapacities;
 
         public ResidualEdgePredicate(
-            IDictionary<Edge,double> residualCapacities)
+            IDictionary<TEdge,double> residualCapacities)
 		{
 			if (residualCapacities == null)
 				throw new ArgumentNullException("residualCapacities");
 			this.residualCapacities = residualCapacities;
 		}
 
-		public IDictionary<Edge,double> ResidualCapacities
+		public IDictionary<TEdge,double> ResidualCapacities
 		{
 			get
 			{
@@ -24,7 +24,7 @@ namespace QuickGraph.Predicates
 			}
 		}
 
-		public bool Test(Edge e)
+		public bool Test(TEdge e)
 		{
 			if (e == null)
 				throw new ArgumentNullException("e");

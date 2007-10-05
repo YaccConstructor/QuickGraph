@@ -5,11 +5,11 @@ using System.Drawing.Drawing2D;
 
 namespace QuickGraph.Algorithms.Layout
 {
-    public class GdiGraphLayoutRenderer<Vertex,Edge,Graph,LayoutAlgorithm> : 
-        GraphLayoutRendererBase<Vertex,Edge,Graph,LayoutAlgorithm>
-        where Edge : IEdge<Vertex>
-        where Graph : IVertexAndEdgeListGraph<Vertex, Edge>
-        where LayoutAlgorithm : LayoutAlgorithmBase<Vertex, Edge, Graph>
+    public class GdiGraphLayoutRenderer<TVertex,TEdge,TGraph,TLayoutAlgorithm> : 
+        GraphLayoutRendererBase<TVertex,TEdge,TGraph,TLayoutAlgorithm>
+        where TEdge : IEdge<TVertex>
+        where TGraph : IVertexAndEdgeListGraph<TVertex, TEdge>
+        where TLayoutAlgorithm : LayoutAlgorithmBase<TVertex, TEdge, TGraph>
     {
         private Graphics canvas;
         private Color backgroundColor = Color.White;
@@ -31,7 +31,7 @@ namespace QuickGraph.Algorithms.Layout
         private Color vertexLabelColor = Color.Black;
         private Brush vertexLabelBrush = null;
 
-        public GdiGraphLayoutRenderer(LayoutAlgorithm algorithm, Graphics canvas)
+        public GdiGraphLayoutRenderer(TLayoutAlgorithm algorithm, Graphics canvas)
             : base(algorithm)
         {
             this.canvas = canvas;
@@ -118,7 +118,7 @@ namespace QuickGraph.Algorithms.Layout
         {
         }
 
-        protected override void DrawVertex(Vertex vertex, PointF position)
+        protected override void DrawVertex(TVertex vertex, PointF position)
         {
             this.Canvas.FillEllipse(
                 this.VertexBrush,
@@ -136,7 +136,7 @@ namespace QuickGraph.Algorithms.Layout
         }
 
         protected override void DrawEdge(
-            Edge edge,
+            TEdge edge,
             PointF sourcePosition,
             PointF targetPosition
             )

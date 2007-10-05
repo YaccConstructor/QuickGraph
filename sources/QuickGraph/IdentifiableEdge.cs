@@ -23,11 +23,11 @@ namespace QuickGraph
         }
     }
 
-    public sealed class IdentifiableEdgeFactory<Vertex> : IIdentifiableEdgeFactory<Vertex,IdentifiableEdge<Vertex>>
+    public sealed class IdentifiableEdgeFactory<TVertex> : IIdentifiableEdgeFactory<TVertex,IdentifiableEdge<TVertex>>
     {
-        public IdentifiableEdge<Vertex> CreateEdge(string id, Vertex source, Vertex target)
+        public IdentifiableEdge<TVertex> CreateEdge(string id, TVertex source, TVertex target)
         {
-            return new IdentifiableEdge<Vertex>(id, source, target);
+            return new IdentifiableEdge<TVertex>(id, source, target);
         }
     }
 }

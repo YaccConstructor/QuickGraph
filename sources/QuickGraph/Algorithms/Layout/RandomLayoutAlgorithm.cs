@@ -4,17 +4,17 @@ using System.Drawing;
 
 namespace QuickGraph.Algorithms.Layout
 {
-    public sealed class RandomLayoutAlgorithm<Vertex,Edge,Graph> : RandomLayoutAlgorithmBase<Vertex,Edge,Graph>
-        where Edge : IEdge<Vertex>
-        where Graph : IVertexAndEdgeListGraph<Vertex, Edge>
+    public sealed class RandomLayoutAlgorithm<TVertex,TEdge,TGraph> : RandomLayoutAlgorithmBase<TVertex,TEdge,TGraph>
+        where TEdge : IEdge<TVertex>
+        where TGraph : IVertexAndEdgeListGraph<TVertex, TEdge>
     {
-        public RandomLayoutAlgorithm(Graph visitedGraph, Dictionary<Vertex,PointF> vertexPositions)
+        public RandomLayoutAlgorithm(TGraph visitedGraph, Dictionary<TVertex,PointF> vertexPositions)
             : base(visitedGraph, vertexPositions)
         {}
 
         protected override void InternalCompute()
         {
-            foreach (Vertex v in this.VisitedGraph.Vertices)
+            foreach (TVertex v in this.VisitedGraph.Vertices)
             {
                 if (this.IsAborting)
                     break;

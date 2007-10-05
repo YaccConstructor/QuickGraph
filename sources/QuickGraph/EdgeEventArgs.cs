@@ -20,8 +20,8 @@ namespace QuickGraph
         }
     }
 
-    public delegate void EdgeEventHandler<Vertex,Edge>(
+    public delegate void EdgeEventHandler<TVertex,TEdge>(
         Object sender,
-        EdgeEventArgs<Vertex,Edge> e)
-        where Edge : IEdge<Vertex>;
+        EdgeEventArgs<TVertex,TEdge> e)
+        where TEdge : IEdge<TVertex>;
 }

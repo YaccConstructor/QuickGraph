@@ -4,42 +4,42 @@ using System.Collections.Generic;
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public class FilteredBidirectionalGraph<Vertex, Edge, Graph> :
-        FilteredVertexListGraph<Vertex, Edge, Graph>,
-        IBidirectionalGraph<Vertex, Edge>
-        where Edge : IEdge<Vertex>
-        where Graph : IVertexAndEdgeListGraph<Vertex, Edge>
+    public class FilteredBidirectionalGraph<TVertex, TEdge, TGraph> :
+        FilteredVertexListGraph<TVertex, TEdge, TGraph>,
+        IBidirectionalGraph<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
+        where TGraph : IVertexAndEdgeListGraph<TVertex, TEdge>
     {
         public FilteredBidirectionalGraph(
-            Graph baseGraph,
-            VertexPredicate<Vertex> vertexPredicate,
-            EdgePredicate<Vertex, Edge> edgePredicate
+            TGraph baseGraph,
+            VertexPredicate<TVertex> vertexPredicate,
+            EdgePredicate<TVertex, TEdge> edgePredicate
             )
             :base(baseGraph,vertexPredicate,edgePredicate)
         { }
 
-        public bool IsInEdgesEmpty(Vertex v)
+        public bool IsInEdgesEmpty(TVertex v)
         {
             return this.InDegree(v) == 0;
         }
 
-        public int InDegree(Vertex v)
+        public int InDegree(TVertex v)
         {
             int count = 0;
-            foreach (Edge edge in this.InEdges(v))
+            foreach (TEdge edge in this.InEdges(v))
                 if (TestEdge(edge))
                     count++;
             return count;
         }
 
-        public IEnumerable<Edge> InEdges(Vertex v)
+        public IEnumerable<TEdge> InEdges(TVertex v)
         {
-            foreach (Edge edge in this.InEdges(v))
+            foreach (TEdge edge in this.InEdges(v))
                 if (TestEdge(edge))
                     yield return edge;
         }
 
-        public int Degree(Vertex v)
+        public int Degree(TVertex v)
         {
             return this.OutDegree(v) + this.InDegree(v);
         }
@@ -48,7 +48,7 @@ namespace QuickGraph.Predicates
         {
             get
             {
-                foreach (Edge edge in this.BaseGraph.Edges)
+                foreach (TEdge edge in this.BaseGraph.Edges)
                     if (TestEdge(edge))
                         return false;
                 return true;
@@ -60,31 +60,31 @@ namespace QuickGraph.Predicates
             get
             {
                 int count = 0;
-                foreach (Edge edge in this.BaseGraph.Edges)
+                foreach (TEdge edge in this.BaseGraph.Edges)
                     if (TestEdge(edge))
                         count++;
                 return count;
             }
         }
 
-        public IEnumerable<Edge> Edges
+        public IEnumerable<TEdge> Edges
         {
             get
             {
-                foreach (Edge edge in this.BaseGraph.Edges)
+                foreach (TEdge edge in this.BaseGraph.Edges)
                     if (TestEdge(edge))
                         yield return edge;
             }
         }
 
-        public bool ContainsEdge(Edge edge)
+        public bool ContainsEdge(TEdge edge)
         {
             if (!TestEdge(edge))
                 return false;
             return this.BaseGraph.ContainsEdge(edge);
         }
 
-        public Edge InEdge(Vertex v, int index)
+        public TEdge InEdge(TVertex v, int index)
         {
             throw new NotSupportedException();
         }

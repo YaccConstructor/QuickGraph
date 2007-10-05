@@ -3,18 +3,18 @@
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public class FilteredGraph<Vertex, Edge, Graph> : IGraph<Vertex, Edge>
-        where Edge : IEdge<Vertex>
-        where Graph : IGraph<Vertex,Edge>
+    public class FilteredGraph<TVertex, TEdge, TGraph> : IGraph<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
+        where TGraph : IGraph<TVertex,TEdge>
     {
-        private Graph baseGraph;
-        private EdgePredicate<Vertex,Edge> edgePredicate;
-        private VertexPredicate<Vertex> vertexPredicate;
+        private TGraph baseGraph;
+        private EdgePredicate<TVertex,TEdge> edgePredicate;
+        private VertexPredicate<TVertex> vertexPredicate;
 
         public FilteredGraph(
-            Graph baseGraph,
-            VertexPredicate<Vertex> vertexPredicate,
-            EdgePredicate<Vertex, Edge> edgePredicate
+            TGraph baseGraph,
+            VertexPredicate<TVertex> vertexPredicate,
+            EdgePredicate<TVertex, TEdge> edgePredicate
             )
         {
             if (baseGraph == null)
@@ -31,7 +31,7 @@ namespace QuickGraph.Predicates
         /// <summary>
         /// Underlying filtered graph
         /// </summary>
-        public Graph BaseGraph
+        public TGraph BaseGraph
         {
             get
             {
@@ -42,7 +42,7 @@ namespace QuickGraph.Predicates
         /// <summary>
         /// Edge predicate used to filter the edges
         /// </summary>
-        public EdgePredicate<Vertex, Edge> EdgePredicate
+        public EdgePredicate<TVertex, TEdge> EdgePredicate
         {
             get
             {
@@ -50,7 +50,7 @@ namespace QuickGraph.Predicates
             }
         }
 
-        public VertexPredicate<Vertex> VertexPredicate
+        public VertexPredicate<TVertex> VertexPredicate
         {
             get
             {
@@ -58,7 +58,7 @@ namespace QuickGraph.Predicates
             }
         }
 
-        protected bool TestEdge(Edge edge)
+        protected bool TestEdge(TEdge edge)
         {
             return this.VertexPredicate(edge.Source)
                     && this.VertexPredicate(edge.Target)

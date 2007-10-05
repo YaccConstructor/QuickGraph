@@ -4,58 +4,58 @@ using System.Collections.Generic;
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public class FilteredIncidenceGraph<Vertex, Edge, Graph> :
-        FilteredImplicitGraph<Vertex,Edge,Graph>,
-        IIncidenceGraph<Vertex,Edge>
-        where Edge : IEdge<Vertex>
-        where Graph : IIncidenceGraph<Vertex,Edge>
+    public class FilteredIncidenceGraph<TVertex, TEdge, TGraph> :
+        FilteredImplicitGraph<TVertex,TEdge,TGraph>,
+        IIncidenceGraph<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
+        where TGraph : IIncidenceGraph<TVertex,TEdge>
     {
         public FilteredIncidenceGraph(
-            Graph baseGraph,
-            VertexPredicate<Vertex> vertexPredicate,
-            EdgePredicate<Vertex,Edge> edgePredicate
+            TGraph baseGraph,
+            VertexPredicate<TVertex> vertexPredicate,
+            EdgePredicate<TVertex,TEdge> edgePredicate
             )
             :base(baseGraph,vertexPredicate,edgePredicate)
         {}
 
-        public bool ContainsEdge(Vertex source, Vertex target)
+        public bool ContainsEdge(TVertex source, TVertex target)
         {
             if (!this.VertexPredicate(source))
                 return false;
             if (!this.VertexPredicate(target))
                 return false;
 
-            foreach (Edge edge in this.BaseGraph.OutEdges(source))
+            foreach (TEdge edge in this.BaseGraph.OutEdges(source))
                 if (edge.Target.Equals(target) && this.EdgePredicate(edge))
                     return true;
             return false;
         }
 
         public bool TryGetEdge(
-            Vertex source,
-            Vertex target,
-            out Edge edge)
+            TVertex source,
+            TVertex target,
+            out TEdge edge)
         {
-            IEnumerable<Edge> unfilteredEdges;
+            IEnumerable<TEdge> unfilteredEdges;
             if (this.VertexPredicate(source) &&
                 this.VertexPredicate(target) &&
                 this.BaseGraph.TryGetEdges(source, target, out unfilteredEdges))
             {
-                foreach (Edge ufe in unfilteredEdges)
+                foreach (TEdge ufe in unfilteredEdges)
                     if (this.EdgePredicate(ufe))
                     {
                         edge = ufe;
                         return true;
                     }
             }
-            edge = default(Edge);
+            edge = default(TEdge);
             return false;
         }
 
         public bool TryGetEdges(
-            Vertex source,
-            Vertex target,
-            out IEnumerable<Edge> edges)
+            TVertex source,
+            TVertex target,
+            out IEnumerable<TEdge> edges)
         {
             edges = null;
             if (!this.VertexPredicate(source))
@@ -63,11 +63,11 @@ namespace QuickGraph.Predicates
             if (!this.VertexPredicate(target))
                 return false;
 
-            IEnumerable<Edge> unfilteredEdges;
+            IEnumerable<TEdge> unfilteredEdges;
             if (this.BaseGraph.TryGetEdges(source, target, out unfilteredEdges))
             {
-                List<Edge> filtered = new List<Edge>();
-                foreach (Edge edge in unfilteredEdges)
+                List<TEdge> filtered = new List<TEdge>();
+                foreach (TEdge edge in unfilteredEdges)
                     if (this.EdgePredicate(edge))
                         filtered.Add(edge);
                 edges = filtered;

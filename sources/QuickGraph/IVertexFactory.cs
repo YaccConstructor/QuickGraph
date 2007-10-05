@@ -2,8 +2,8 @@
 
 namespace QuickGraph
 {
-    public interface IVertexFactory<Vertex>
+    public interface IVertexFactory<TVertex>
     {
-        Vertex CreateVertex();
+        TVertex CreateVertex();
     }
 }

@@ -4,16 +4,16 @@ using System.Collections.Generic;
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public class FilteredVertexAndEdgeListGraph<Vertex, Edge, Graph> :
-        FilteredVertexListGraph<Vertex, Edge, Graph>,
-        IVertexAndEdgeListGraph<Vertex, Edge>
-        where Edge : IEdge<Vertex>
-        where Graph : IVertexAndEdgeListGraph<Vertex, Edge>
+    public class FilteredVertexAndEdgeListGraph<TVertex, TEdge, TGraph> :
+        FilteredVertexListGraph<TVertex, TEdge, TGraph>,
+        IVertexAndEdgeListGraph<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
+        where TGraph : IVertexAndEdgeListGraph<TVertex, TEdge>
     {
         public FilteredVertexAndEdgeListGraph(
-            Graph baseGraph,
-            VertexPredicate<Vertex> vertexPredicate,
-            EdgePredicate<Vertex, Edge> edgePredicate
+            TGraph baseGraph,
+            VertexPredicate<TVertex> vertexPredicate,
+            EdgePredicate<TVertex, TEdge> edgePredicate
             )
             :base(baseGraph,vertexPredicate,edgePredicate)
         { }
@@ -31,7 +31,7 @@ namespace QuickGraph.Predicates
             get
             {
                 int count = 0;
-                foreach (Edge edge in this.BaseGraph.Edges)
+                foreach (TEdge edge in this.BaseGraph.Edges)
                 {
                     if (
                            this.VertexPredicate(edge.Source)
@@ -43,11 +43,11 @@ namespace QuickGraph.Predicates
             }
         }
 
-        public IEnumerable<Edge> Edges
+        public IEnumerable<TEdge> Edges
         {
             get
             {
-                foreach(Edge edge in this.BaseGraph.Edges)
+                foreach(TEdge edge in this.BaseGraph.Edges)
                 {
                     if (
                            this.VertexPredicate(edge.Source)
@@ -58,10 +58,10 @@ namespace QuickGraph.Predicates
             }
         }
 
-        public bool ContainsEdge(Edge edge)
+        public bool ContainsEdge(TEdge edge)
         {
-            foreach (Edge e in this.Edges)
-                if (Comparison<Edge>.Equals(edge, e))
+            foreach (TEdge e in this.Edges)
+                if (Comparison<TEdge>.Equals(edge, e))
                     return true;
             return false;
         }
