@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace QuickGraph.Algorithms
 {
-    public interface IVertexColorizerAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IVertexColorizerAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        IDictionary<Vertex, GraphColor> VertexColors { get;}
+        IDictionary<TVertex, GraphColor> VertexColors { get;}
     }
 }

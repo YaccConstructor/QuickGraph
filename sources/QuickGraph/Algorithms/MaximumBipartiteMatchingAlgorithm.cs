@@ -5,27 +5,27 @@ using QuickGraph.Algorithms.MaximumFlow;
 
 namespace QuickGraph.Algorithms
 {
-    public sealed class MaximumBipartiteMatchingAlgorithm<Vertex,Edge> :
-        AlgorithmBase<IMutableVertexAndEdgeListGraph<Vertex,Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class MaximumBipartiteMatchingAlgorithm<TVertex,TEdge> :
+        AlgorithmBase<IMutableVertexAndEdgeListGraph<TVertex,TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private IVertexFactory<Vertex> vertexFactory;
-        private IEdgeFactory<Vertex, Edge> edgeFactory;
-        private IList<Edge> matchedEdges = new List<Edge>();
+        private IVertexFactory<TVertex> vertexFactory;
+        private IEdgeFactory<TVertex, TEdge> edgeFactory;
+        private IList<TEdge> matchedEdges = new List<TEdge>();
 
         public MaximumBipartiteMatchingAlgorithm(
-            IMutableVertexAndEdgeListGraph<Vertex, Edge> visitedGraph
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph
             )
             : this(visitedGraph,
-                FactoryCompiler.GetVertexFactory<Vertex>(),
-                FactoryCompiler.GetEdgeFactory<Vertex, Edge>()
+                FactoryCompiler.GetVertexFactory<TVertex>(),
+                FactoryCompiler.GetEdgeFactory<TVertex, TEdge>()
                 )
         { }
 
         public MaximumBipartiteMatchingAlgorithm(
-            IMutableVertexAndEdgeListGraph<Vertex,Edge> visitedGraph,
-            IVertexFactory<Vertex> vertexFactory,
-            IEdgeFactory<Vertex,Edge> edgeFactory
+            IMutableVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph,
+            IVertexFactory<TVertex> vertexFactory,
+            IEdgeFactory<TVertex,TEdge> edgeFactory
             )
             :base(visitedGraph)
         {
@@ -38,17 +38,17 @@ namespace QuickGraph.Algorithms
             this.edgeFactory = edgeFactory;
         }
 
-        public IVertexFactory<Vertex> VertexFactory
+        public IVertexFactory<TVertex> VertexFactory
         {
             get { return this.vertexFactory; }
         }
 
-        public IEdgeFactory<Vertex, Edge> EdgeFactory
+        public IEdgeFactory<TVertex, TEdge> EdgeFactory
         {
             get { return this.edgeFactory; }
         }
 
-        public ICollection<Edge> MatchedEdges
+        public ICollection<TEdge> MatchedEdges
         {
             get { return this.matchedEdges; }
         }
@@ -56,15 +56,15 @@ namespace QuickGraph.Algorithms
         protected override void InternalCompute()
         {
             this.matchedEdges.Clear();
-            AllVerticesGraphAugmentorAlgorithm<Vertex, Edge> augmentor=null;
-            ReversedEdgeAugmentorAlgorithm<Vertex,Edge> reverser=null;
+            AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge> augmentor=null;
+            ReversedEdgeAugmentorAlgorithm<TVertex,TEdge> reverser=null;
             try
             {
                 if (this.IsAborting)
                     return;
 
                 //augmenting graph
-                augmentor = new AllVerticesGraphAugmentorAlgorithm<Vertex, Edge>(
+                augmentor = new AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge>(
                     this.VisitedGraph,
                     this.VertexFactory,
                     this.EdgeFactory);
@@ -74,7 +74,7 @@ namespace QuickGraph.Algorithms
 
 
                 // adding reverse edges
-                reverser = new ReversedEdgeAugmentorAlgorithm<Vertex,Edge>(
+                reverser = new ReversedEdgeAugmentorAlgorithm<TVertex,TEdge>(
                     this.VisitedGraph,
                     this.EdgeFactory
                     );
@@ -84,7 +84,7 @@ namespace QuickGraph.Algorithms
 
 
                 // compute maxflow
-                EdmondsKarpMaximumFlowAlgorithm<Vertex, Edge> flow = new EdmondsKarpMaximumFlowAlgorithm<Vertex, Edge>(
+                EdmondsKarpMaximumFlowAlgorithm<TVertex, TEdge> flow = new EdmondsKarpMaximumFlowAlgorithm<TVertex, TEdge>(
                     this.VisitedGraph,
                     AlgoUtility.ConstantCapacities(this.VisitedGraph, 1),
                     reverser.ReversedEdges
@@ -94,7 +94,7 @@ namespace QuickGraph.Algorithms
                     return;
 
 
-                foreach (Edge edge in this.VisitedGraph.Edges)
+                foreach (TEdge edge in this.VisitedGraph.Edges)
                 {
                     if (this.IsAborting)
                         return;

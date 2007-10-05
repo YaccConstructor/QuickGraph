@@ -6,44 +6,44 @@ using QuickGraph.Algorithms.Search;
 namespace QuickGraph.Algorithms
 {
     [Serializable]
-    public sealed class StronglyConnectedComponentsAlgorithm<Vertex, Edge> :
-        AlgorithmBase<IVertexListGraph<Vertex, Edge>>,
-        IConnectedComponentAlgorithm<Vertex,Edge,IVertexListGraph<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class StronglyConnectedComponentsAlgorithm<TVertex, TEdge> :
+        AlgorithmBase<IVertexListGraph<TVertex, TEdge>>,
+        IConnectedComponentAlgorithm<TVertex,TEdge,IVertexListGraph<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-		private IDictionary<Vertex,int> components;
-		private IDictionary<Vertex,int> discoverTimes;
-		private IDictionary<Vertex,Vertex> roots;
-		private Stack<Vertex> stack;
+		private IDictionary<TVertex,int> components;
+		private IDictionary<TVertex,int> discoverTimes;
+		private IDictionary<TVertex,TVertex> roots;
+		private Stack<TVertex> stack;
 		int componentCount;
 		int dfsTime;
-        private DepthFirstSearchAlgorithm<Vertex, Edge> dfs;
+        private DepthFirstSearchAlgorithm<TVertex, TEdge> dfs;
 
         public StronglyConnectedComponentsAlgorithm(
-            IVertexListGraph<Vertex,Edge> g)
-            :this(g, new Dictionary<Vertex,int>())
+            IVertexListGraph<TVertex,TEdge> g)
+            :this(g, new Dictionary<TVertex,int>())
 		{}
 
         public StronglyConnectedComponentsAlgorithm(
-            IVertexListGraph<Vertex,Edge> g,
-			IDictionary<Vertex,int> components)
+            IVertexListGraph<TVertex,TEdge> g,
+			IDictionary<TVertex,int> components)
             :base(g)
 		{
 			if (components==null)
 				throw new ArgumentNullException("components");
 
 			this.components = components;
-            this.roots = new Dictionary<Vertex, Vertex>();
-            this.discoverTimes = new Dictionary<Vertex, int>();
-            this.stack = new Stack<Vertex>();
+            this.roots = new Dictionary<TVertex, TVertex>();
+            this.discoverTimes = new Dictionary<TVertex, int>();
+            this.stack = new Stack<TVertex>();
 			this.componentCount = 0;
 			this.dfsTime = 0;
-            this.dfs = new DepthFirstSearchAlgorithm<Vertex, Edge>(VisitedGraph);
-            this.dfs.DiscoverVertex += new VertexEventHandler<Vertex>(this.DiscoverVertex);
-            this.dfs.FinishVertex += new VertexEventHandler<Vertex>(this.FinishVertex);
+            this.dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(VisitedGraph);
+            this.dfs.DiscoverVertex += new VertexEventHandler<TVertex>(this.DiscoverVertex);
+            this.dfs.FinishVertex += new VertexEventHandler<TVertex>(this.FinishVertex);
         }
 
-		public IDictionary<Vertex,int> Components
+		public IDictionary<TVertex,int> Components
 		{
 			get
 			{
@@ -51,7 +51,7 @@ namespace QuickGraph.Algorithms
 			}
 		}
 
-		public IDictionary<Vertex,Vertex> Roots
+		public IDictionary<TVertex,TVertex> Roots
 		{
 			get
 			{
@@ -59,7 +59,7 @@ namespace QuickGraph.Algorithms
 			}
 		}
 
-        public IDictionary<Vertex, int> DiscoverTimes
+        public IDictionary<TVertex, int> DiscoverTimes
         {
 			get
 			{
@@ -75,9 +75,9 @@ namespace QuickGraph.Algorithms
 			}
 		}
 
-		private void DiscoverVertex(Object sender, VertexEventArgs<Vertex> args)
+		private void DiscoverVertex(Object sender, VertexEventArgs<TVertex> args)
 		{
-			Vertex v = args.Vertex;
+			TVertex v = args.Vertex;
 			this.Roots[v]=v;
 			this.Components[v]=int.MaxValue;
 			this.DiscoverTimes[v]=dfsTime++;
@@ -89,19 +89,19 @@ namespace QuickGraph.Algorithms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		private void FinishVertex(Object sender, VertexEventArgs<Vertex> args)
+		private void FinishVertex(Object sender, VertexEventArgs<TVertex> args)
 		{
-			Vertex v = args.Vertex;
-			foreach(Edge e in VisitedGraph.OutEdges(v))
+			TVertex v = args.Vertex;
+			foreach(TEdge e in VisitedGraph.OutEdges(v))
 			{
-				Vertex w = e.Target;
+				TVertex w = e.Target;
 				if (this.Components[w] == int.MaxValue)
 					this.Roots[v]=MinDiscoverTime(this.Roots[v], this.Roots[w]);
 			}
 
 			if (Roots[v].Equals(v)) 
 			{
-				Vertex w=default(Vertex);
+				TVertex w=default(TVertex);
 				do 
 				{
 					w = this.stack.Pop(); 
@@ -112,7 +112,7 @@ namespace QuickGraph.Algorithms
 			}	
 		}
 
-		private Vertex MinDiscoverTime(Vertex u, Vertex v)
+		private TVertex MinDiscoverTime(TVertex u, TVertex v)
 		{
 			if (this.DiscoverTimes[u]<this.DiscoverTimes[v])
 				return u;

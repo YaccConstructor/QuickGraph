@@ -2,10 +2,10 @@
 
 namespace QuickGraph.Algorithms
 {
-    public interface IVertexTimeStamperAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IVertexTimeStamperAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        event VertexEventHandler<Vertex> DiscoverVertex;
-        event VertexEventHandler<Vertex> FinishVertex;
+        event VertexEventHandler<TVertex> DiscoverVertex;
+        event VertexEventHandler<TVertex> FinishVertex;
     }
 }

@@ -6,8 +6,8 @@ namespace QuickGraph.Algorithms
     [Serializable]
     public static class RandomGraphFactory
     {
-        public static Vertex GetVertex<Vertex,Edge>(IVertexListGraph<Vertex,Edge> g, Random rnd)
-            where Edge : IEdge<Vertex>
+        public static TVertex GetVertex<TVertex,TEdge>(IVertexListGraph<TVertex,TEdge> g, Random rnd)
+            where TEdge : IEdge<TVertex>
         {
             if (g == null)
                 throw new ArgumentNullException("g");
@@ -15,11 +15,11 @@ namespace QuickGraph.Algorithms
                 throw new ArgumentNullException("random generator");
             if (g.VertexCount == 0)
                 throw new ArgumentException("g is empty");
-            return GetVertex<Vertex,Edge>(g.Vertices, g.VertexCount, rnd);
+            return GetVertex<TVertex,TEdge>(g.Vertices, g.VertexCount, rnd);
         }
 
-        public static Vertex GetVertex<Vertex,Edge>(IEnumerable<Vertex> vertices, int count, Random rnd)
-            where Edge : IEdge<Vertex>
+        public static TVertex GetVertex<TVertex,TEdge>(IEnumerable<TVertex> vertices, int count, Random rnd)
+            where TEdge : IEdge<TVertex>
         {
             if (vertices == null)
                 throw new ArgumentNullException("vertices");
@@ -29,7 +29,7 @@ namespace QuickGraph.Algorithms
                 throw new ArgumentException("vertices is empty");
 
             int i = rnd.Next(count);
-            foreach (Vertex v in vertices)
+            foreach (TVertex v in vertices)
             {
                 if (i == 0)
                     return v;
@@ -41,8 +41,8 @@ namespace QuickGraph.Algorithms
             throw new InvalidOperationException("Could not find vertex");
         }
 
-        public static Edge GetEdge<Vertex,Edge>(IEdgeListGraph<Vertex,Edge> g, Random rnd)
-            where Edge : IEdge<Vertex>
+        public static TEdge GetEdge<TVertex,TEdge>(IEdgeListGraph<TVertex,TEdge> g, Random rnd)
+            where TEdge : IEdge<TVertex>
         {
             if (g == null)
                 throw new ArgumentNullException("g");
@@ -52,7 +52,7 @@ namespace QuickGraph.Algorithms
                 throw new ArgumentException("g is empty");
 
             int i = rnd.Next(g.EdgeCount);
-            foreach (Edge e in g.Edges)
+            foreach (TEdge e in g.Edges)
             {
                 if (i == 0)
                     return e;
@@ -64,8 +64,8 @@ namespace QuickGraph.Algorithms
             throw new InvalidOperationException("Could not find edge");
         }
 
-        public static Edge GetEdge<Vertex,Edge>(IEnumerable<Edge> edges, int count, Random rnd)
-            where Edge : IEdge<Vertex>
+        public static TEdge GetEdge<TVertex,TEdge>(IEnumerable<TEdge> edges, int count, Random rnd)
+            where TEdge : IEdge<TVertex>
         {
             if (edges == null)
                 throw new ArgumentNullException("edges");
@@ -75,7 +75,7 @@ namespace QuickGraph.Algorithms
                 throw new ArgumentException("edges is empty");
 
             int i = rnd.Next(count);
-            foreach (Edge e in edges)
+            foreach (TEdge e in edges)
             {
                 if (i == 0)
                     return e;
@@ -87,18 +87,18 @@ namespace QuickGraph.Algorithms
             throw new InvalidOperationException("Could not find edge");
         }
 
-        public static void Create<Vertex, Edge>(
-            IMutableVertexAndEdgeListGraph<Vertex, Edge> g,
+        public static void Create<TVertex, TEdge>(
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> g,
             Random rnd,
             int vertexCount,
             int edgeCount,
             bool selfEdges
-            ) where Edge : IEdge<Vertex>
+            ) where TEdge : IEdge<TVertex>
         {
-            Create<Vertex, Edge>(
+            Create<TVertex, TEdge>(
                 g,
-                FactoryCompiler.GetVertexFactory<Vertex>(),
-                FactoryCompiler.GetEdgeFactory<Vertex, Edge>(),
+                FactoryCompiler.GetVertexFactory<TVertex>(),
+                FactoryCompiler.GetEdgeFactory<TVertex, TEdge>(),
                 rnd,
                 vertexCount,
                 edgeCount,
@@ -106,15 +106,15 @@ namespace QuickGraph.Algorithms
                 );
         }
 
-        public static void Create<Vertex, Edge>(
-            IMutableVertexAndEdgeListGraph<Vertex, Edge> g,
-            IVertexFactory<Vertex> vertexFactory,
-            IEdgeFactory<Vertex,Edge> edgeFactory,
+        public static void Create<TVertex, TEdge>(
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> g,
+            IVertexFactory<TVertex> vertexFactory,
+            IEdgeFactory<TVertex,TEdge> edgeFactory,
             Random rnd,
             int vertexCount,
             int edgeCount,
             bool selfEdges
-            ) where Edge : IEdge<Vertex>
+            ) where TEdge : IEdge<TVertex>
         {
             if (g == null)
                 throw new ArgumentNullException("g");
@@ -130,8 +130,8 @@ namespace QuickGraph.Algorithms
                 g.AddVertex( vertexFactory.CreateVertex() );
 
 
-            Vertex a;
-            Vertex b;
+            TVertex a;
+            TVertex b;
             int j = 0;
             while (j < edgeCount)
             {

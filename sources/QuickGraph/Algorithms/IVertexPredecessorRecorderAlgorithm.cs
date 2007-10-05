@@ -2,11 +2,11 @@
 
 namespace QuickGraph.Algorithms
 {
-    public interface IVertexPredecessorRecorderAlgorithm<Vertex,Edge> :
-        ITreeBuilderAlgorithm<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public interface IVertexPredecessorRecorderAlgorithm<TVertex,TEdge> :
+        ITreeBuilderAlgorithm<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        event VertexEventHandler<Vertex> StartVertex;
-        event VertexEventHandler<Vertex> FinishVertex;
+        event VertexEventHandler<TVertex> StartVertex;
+        event VertexEventHandler<TVertex> FinishVertex;
     }
 }

@@ -16,50 +16,50 @@ namespace QuickGraph.Algorithms.ShortestPath
     ///     idref="lawler01combinatorial"
     ///     />
     [Serializable]
-    public sealed class DijkstraShortestPathAlgorithm<Vertex, Edge> :
-        ShortestPathAlgorithmBase<Vertex,Edge,IVertexListGraph<Vertex,Edge>>,
-        IVertexColorizerAlgorithm<Vertex,Edge>,
-        IVertexPredecessorRecorderAlgorithm<Vertex, Edge>,
-        IDistanceRecorderAlgorithm<Vertex, Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class DijkstraShortestPathAlgorithm<TVertex, TEdge> :
+        ShortestPathAlgorithmBase<TVertex,TEdge,IVertexListGraph<TVertex,TEdge>>,
+        IVertexColorizerAlgorithm<TVertex,TEdge>,
+        IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>,
+        IDistanceRecorderAlgorithm<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        private PriorithizedVertexBuffer<Vertex,double> vertexQueue;
+        private PriorithizedVertexBuffer<TVertex,double> vertexQueue;
 
         public DijkstraShortestPathAlgorithm(
-            IVertexListGraph<Vertex, Edge> visitedGraph,
-            IDictionary<Edge, double> weights)
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TEdge, double> weights)
             : this(visitedGraph, weights, new ShortestDistanceRelaxer())
         { }
 
         public DijkstraShortestPathAlgorithm(
-            IVertexListGraph<Vertex, Edge> visitedGraph,
-            IDictionary<Edge, double> weights,
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
             :base(visitedGraph,weights, distanceRelaxer)
         { }
 
-        public event VertexEventHandler<Vertex> InitializeVertex;
-        public event VertexEventHandler<Vertex> DiscoverVertex;
-        public event VertexEventHandler<Vertex> StartVertex;
-        public event VertexEventHandler<Vertex> ExamineVertex;
-        public event EdgeEventHandler<Vertex, Edge> ExamineEdge;
-        public event VertexEventHandler<Vertex> FinishVertex;
+        public event VertexEventHandler<TVertex> InitializeVertex;
+        public event VertexEventHandler<TVertex> DiscoverVertex;
+        public event VertexEventHandler<TVertex> StartVertex;
+        public event VertexEventHandler<TVertex> ExamineVertex;
+        public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
+        public event VertexEventHandler<TVertex> FinishVertex;
 
-        public event EdgeEventHandler<Vertex, Edge> TreeEdge;
-        private void OnTreeEdge(Edge e)
+        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<Vertex, Edge>(e));
+                TreeEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
-        public event EdgeEventHandler<Vertex,Edge> EdgeNotRelaxed;
-        private void OnEdgeNotRelaxed(Edge e)
+        public event EdgeEventHandler<TVertex,TEdge> EdgeNotRelaxed;
+        private void OnEdgeNotRelaxed(TEdge e)
         {
             if (EdgeNotRelaxed != null)
-                EdgeNotRelaxed(this, new EdgeEventArgs<Vertex,Edge>(e));
+                EdgeNotRelaxed(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        private void InternalTreeEdge(Object sender, EdgeEventArgs<Vertex,Edge> args)
+        private void InternalTreeEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
         {
             bool decreased = Relax(args.Edge);
             if (decreased)
@@ -68,7 +68,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 OnEdgeNotRelaxed(args.Edge);
         }
 
-        private void InternalGrayTarget(Object sender, EdgeEventArgs<Vertex, Edge> args)
+        private void InternalGrayTarget(Object sender, EdgeEventArgs<TVertex, TEdge> args)
         {
             bool decreased = Relax(args.Edge);
             if (decreased)
@@ -87,7 +87,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.VertexColors.Clear();
             this.Distances.Clear();
             // init color, distance
-            foreach (Vertex u in VisitedGraph.Vertices)
+            foreach (TVertex u in VisitedGraph.Vertices)
             {
                 this.VertexColors.Add(u, GraphColor.White);
                 this.Distances.Add(u, double.MaxValue);
@@ -105,10 +105,10 @@ namespace QuickGraph.Algorithms.ShortestPath
             ComputeNoInit(this.RootVertex);
         }
 
-        public void ComputeNoInit(Vertex s)
+        public void ComputeNoInit(TVertex s)
         {
-            this.vertexQueue = new PriorithizedVertexBuffer<Vertex,double>(this.Distances);
-            BreadthFirstSearchAlgorithm<Vertex,Edge> bfs = new BreadthFirstSearchAlgorithm<Vertex,Edge>(
+            this.vertexQueue = new PriorithizedVertexBuffer<TVertex,double>(this.Distances);
+            BreadthFirstSearchAlgorithm<TVertex,TEdge> bfs = new BreadthFirstSearchAlgorithm<TVertex,TEdge>(
                 this.VisitedGraph,
                 this.vertexQueue,
                 VertexColors
@@ -123,8 +123,8 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 
-                bfs.TreeEdge += new EdgeEventHandler<Vertex,Edge>(this.InternalTreeEdge);
-                bfs.GrayTarget += new EdgeEventHandler<Vertex, Edge>(this.InternalGrayTarget);
+                bfs.TreeEdge += new EdgeEventHandler<TVertex,TEdge>(this.InternalTreeEdge);
+                bfs.GrayTarget += new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
 
                 bfs.Visit(s);
             }
@@ -139,13 +139,13 @@ namespace QuickGraph.Algorithms.ShortestPath
                     bfs.ExamineVertex -= this.ExamineVertex;
                     bfs.FinishVertex -= this.FinishVertex;
 
-                    bfs.TreeEdge -= new EdgeEventHandler<Vertex, Edge>(this.InternalTreeEdge);
-                    bfs.GrayTarget -= new EdgeEventHandler<Vertex, Edge>(this.InternalGrayTarget);
+                    bfs.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
+                    bfs.GrayTarget -= new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
                 }
             }
         }
 
-        private bool Relax(Edge e)
+        private bool Relax(TEdge e)
         {
             double du = this.Distances[e.Source];
             double dv = this.Distances[e.Target];

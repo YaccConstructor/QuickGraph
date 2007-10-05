@@ -6,33 +6,33 @@ using QuickGraph.Algorithms.Search;
 namespace QuickGraph.Algorithms
 {
     [Serializable]
-    public sealed class UndirectedTopologicalSortAlgorithm<Vertex, Edge> :
-        AlgorithmBase<IUndirectedGraph<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class UndirectedTopologicalSortAlgorithm<TVertex, TEdge> :
+        AlgorithmBase<IUndirectedGraph<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private IList<Vertex> vertices;
-        private UndirectedDepthFirstSearchAlgorithm<Vertex, Edge> dfs;
+        private IList<TVertex> vertices;
+        private UndirectedDepthFirstSearchAlgorithm<TVertex, TEdge> dfs;
         private bool allowCyclicGraph = false;
 
-        public UndirectedTopologicalSortAlgorithm(IUndirectedGraph<Vertex, Edge> g)
-            : this(g, new List<Vertex>())
+        public UndirectedTopologicalSortAlgorithm(IUndirectedGraph<TVertex, TEdge> g)
+            : this(g, new List<TVertex>())
         { }
 
         public UndirectedTopologicalSortAlgorithm(
-            IUndirectedGraph<Vertex, Edge> g,
-            IList<Vertex> vertices)
+            IUndirectedGraph<TVertex, TEdge> g,
+            IList<TVertex> vertices)
             : base(g)
         {
             if (vertices == null)
                 throw new ArgumentNullException("vertices");
 
             this.vertices = vertices;
-            this.dfs = new UndirectedDepthFirstSearchAlgorithm<Vertex, Edge>(VisitedGraph);
-            this.dfs.BackEdge += new EdgeEventHandler<Vertex, Edge>(this.BackEdge);
-            this.dfs.FinishVertex += new VertexEventHandler<Vertex>(this.FinishVertex);
+            this.dfs = new UndirectedDepthFirstSearchAlgorithm<TVertex, TEdge>(VisitedGraph);
+            this.dfs.BackEdge += new EdgeEventHandler<TVertex, TEdge>(this.BackEdge);
+            this.dfs.FinishVertex += new VertexEventHandler<TVertex>(this.FinishVertex);
         }
 
-        public IList<Vertex> SortedVertices
+        public IList<TVertex> SortedVertices
         {
             get
             {
@@ -46,13 +46,13 @@ namespace QuickGraph.Algorithms
             set { this.allowCyclicGraph = value; }
         }
 
-        private void BackEdge(Object sender, EdgeEventArgs<Vertex, Edge> args)
+        private void BackEdge(Object sender, EdgeEventArgs<TVertex, TEdge> args)
         {
             if (!this.AllowCyclicGraph)
                 throw new NonAcyclicGraphException();
         }
 
-        private void FinishVertex(Object sender, VertexEventArgs<Vertex> args)
+        private void FinishVertex(Object sender, VertexEventArgs<TVertex> args)
         {
             vertices.Insert(0, args.Vertex);
         }
@@ -68,7 +68,7 @@ namespace QuickGraph.Algorithms
             base.Abort();
         }
 
-        public void Compute(IList<Vertex> vertices)
+        public void Compute(IList<TVertex> vertices)
         {
             this.vertices = vertices;
             this.vertices.Clear();

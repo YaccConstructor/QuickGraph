@@ -6,60 +6,60 @@ using QuickGraph.Predicates;
 
 namespace QuickGraph.Algorithms.Exploration
 {
-    public sealed class TransitionFactoryImplicitGraph<Vertex,Edge> :
-        IImplicitGraph<Vertex,Edge>
-        where Vertex : ICloneable
-        where Edge : IEdge<Vertex>
+    public sealed class TransitionFactoryImplicitGraph<TVertex,TEdge> :
+        IImplicitGraph<TVertex,TEdge>
+        where TVertex : ICloneable
+        where TEdge : IEdge<TVertex>
     {
-        private IList<ITransitionFactory<Vertex, Edge>> transitionFactories
-            = new List<ITransitionFactory<Vertex, Edge>>();
-        private VertexPredicate<Vertex> successorVertexPredicate
-            = new AnyVertexPredicate<Vertex>().Test;
-        private EdgePredicate<Vertex, Edge> successorEdgePredicate
-            = new AnyEdgePredicate<Vertex, Edge>().Test;
+        private IList<ITransitionFactory<TVertex, TEdge>> transitionFactories
+            = new List<ITransitionFactory<TVertex, TEdge>>();
+        private VertexPredicate<TVertex> successorVertexPredicate
+            = new AnyVertexPredicate<TVertex>().Test;
+        private EdgePredicate<TVertex, TEdge> successorEdgePredicate
+            = new AnyEdgePredicate<TVertex, TEdge>().Test;
 
         public TransitionFactoryImplicitGraph()
         {}
 
-        public IList<ITransitionFactory<Vertex, Edge>> TransitionFactories
+        public IList<ITransitionFactory<TVertex, TEdge>> TransitionFactories
         {
             get { return this.transitionFactories; }
         }
 
-        public VertexPredicate<Vertex> SuccessorVertexPredicate
+        public VertexPredicate<TVertex> SuccessorVertexPredicate
         {
             get { return this.successorVertexPredicate; }
             set { this.successorVertexPredicate = value; }
         }
 
-        public EdgePredicate<Vertex, Edge> SuccessorEdgePredicate
+        public EdgePredicate<TVertex, TEdge> SuccessorEdgePredicate
         {
             get { return this.successorEdgePredicate; }
             set { this.successorEdgePredicate = value; }
         }
 
-        public bool IsOutEdgesEmpty(Vertex v)
+        public bool IsOutEdgesEmpty(TVertex v)
         {
             return this.OutDegree(v) == 0;
         }
 
-        public int OutDegree(Vertex v)
+        public int OutDegree(TVertex v)
         {
             int i = 0;
-            foreach(Edge edge in this.OutEdges(v))
+            foreach(TEdge edge in this.OutEdges(v))
                 i++;
             return i;
         }
 
-        public IEnumerable<Edge> OutEdges(Vertex v)
+        public IEnumerable<TEdge> OutEdges(TVertex v)
         {
-            foreach (ITransitionFactory<Vertex, Edge> transitionFactory
+            foreach (ITransitionFactory<TVertex, TEdge> transitionFactory
                 in this.TransitionFactories)
             {
                 if (!transitionFactory.IsValid(v))
                     continue;
 
-                foreach (Edge edge in transitionFactory.Apply(v))
+                foreach (TEdge edge in transitionFactory.Apply(v))
                 {
                     if (this.SuccessorVertexPredicate(edge.Target) &&
                         this.SuccessorEdgePredicate(edge))
@@ -68,10 +68,10 @@ namespace QuickGraph.Algorithms.Exploration
             }
         }
 
-        public Edge OutEdge(Vertex v, int index)
+        public TEdge OutEdge(TVertex v, int index)
         {
             int i = 0;
-            foreach (Edge e in this.OutEdges(v))
+            foreach (TEdge e in this.OutEdges(v))
                 if (i++ == index)
                     return e;
             throw new ArgumentOutOfRangeException("index");

@@ -16,84 +16,84 @@ namespace QuickGraph.Algorithms.ShortestPath
     ///     id="boost"
     ///     />
     [Serializable]
-    public sealed class DagShortestPathAlgorithm<Vertex, Edge> :
-        ShortestPathAlgorithmBase<Vertex,Edge,IVertexListGraph<Vertex,Edge>>,
-        IVertexColorizerAlgorithm<Vertex,Edge>,
-        ITreeBuilderAlgorithm<Vertex,Edge>,
-        IDistanceRecorderAlgorithm<Vertex,Edge>,
-        IVertexPredecessorRecorderAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class DagShortestPathAlgorithm<TVertex, TEdge> :
+        ShortestPathAlgorithmBase<TVertex,TEdge,IVertexListGraph<TVertex,TEdge>>,
+        IVertexColorizerAlgorithm<TVertex,TEdge>,
+        ITreeBuilderAlgorithm<TVertex,TEdge>,
+        IDistanceRecorderAlgorithm<TVertex,TEdge>,
+        IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
         public DagShortestPathAlgorithm(
-            IVertexListGraph<Vertex, Edge> g,
-            IDictionary<Edge, double> weights
+            IVertexListGraph<TVertex, TEdge> g,
+            IDictionary<TEdge, double> weights
             )
             : this(g, weights, new ShortestDistanceRelaxer())
         { }
 
         public DagShortestPathAlgorithm(
-            IVertexListGraph<Vertex,Edge> g,
-            IDictionary<Edge,double> weights,
+            IVertexListGraph<TVertex,TEdge> g,
+            IDictionary<TEdge,double> weights,
             IDistanceRelaxer distanceRelaxer
             )
             :base(g,weights, distanceRelaxer)
         {}
 
-        public event VertexEventHandler<Vertex> InitializeVertex;
-        private void OnInitializeVertex(Vertex v)
+        public event VertexEventHandler<TVertex> InitializeVertex;
+        private void OnInitializeVertex(TVertex v)
         {
             if (InitializeVertex != null)
-                InitializeVertex(this, new VertexEventArgs<Vertex>(v));
+                InitializeVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public event VertexEventHandler<Vertex> StartVertex;
-        private void OnStartVertex(Vertex v)
+        public event VertexEventHandler<TVertex> StartVertex;
+        private void OnStartVertex(TVertex v)
         {
-            VertexEventHandler<Vertex> eh = this.StartVertex;
+            VertexEventHandler<TVertex> eh = this.StartVertex;
             if (eh!=null)
-                eh(this, new VertexEventArgs<Vertex>(v));
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public event VertexEventHandler<Vertex> DiscoverVertex;
-        private void OnDiscoverVertex(Vertex v)
+        public event VertexEventHandler<TVertex> DiscoverVertex;
+        private void OnDiscoverVertex(TVertex v)
         {
             if (DiscoverVertex != null)
-                DiscoverVertex(this, new VertexEventArgs<Vertex>(v));
+                DiscoverVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public event VertexEventHandler<Vertex> ExamineVertex;
-        private void OnExamineVertex(Vertex v)
+        public event VertexEventHandler<TVertex> ExamineVertex;
+        private void OnExamineVertex(TVertex v)
         {
             if (ExamineVertex != null)
-                ExamineVertex(this, new VertexEventArgs<Vertex>(v));
+                ExamineVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public event EdgeEventHandler<Vertex,Edge> ExamineEdge;
-        private void OnExamineEdge(Edge e)
+        public event EdgeEventHandler<TVertex,TEdge> ExamineEdge;
+        private void OnExamineEdge(TEdge e)
         {
             if (ExamineEdge != null)
-                ExamineEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+                ExamineEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        public event EdgeEventHandler<Vertex,Edge> TreeEdge;
-        private void OnTreeEdge(Edge e)
+        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
+        private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+                TreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        public event EdgeEventHandler<Vertex,Edge> EdgeNotRelaxed;
-        private void OnEdgeNotRelaxed(Edge e)
+        public event EdgeEventHandler<TVertex,TEdge> EdgeNotRelaxed;
+        private void OnEdgeNotRelaxed(TEdge e)
         {
             if (EdgeNotRelaxed != null)
-                EdgeNotRelaxed(this, new EdgeEventArgs<Vertex,Edge>(e));
+                EdgeNotRelaxed(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        public event VertexEventHandler<Vertex> FinishVertex;
-        private void OnFinishVertex(Vertex v)
+        public event VertexEventHandler<TVertex> FinishVertex;
+        private void OnFinishVertex(TVertex v)
         {
             if (FinishVertex != null)
-                FinishVertex(this, new VertexEventArgs<Vertex>(v));
+                FinishVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
         public void Initialize()
@@ -102,7 +102,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.Distances.Clear();
 
             // init color, distance
-            foreach (Vertex u in VisitedGraph.Vertices)
+            foreach (TVertex u in VisitedGraph.Vertices)
             {
                 this.VertexColors[u] = GraphColor.White;
                 this.Distances[u] = double.MaxValue;
@@ -119,15 +119,15 @@ namespace QuickGraph.Algorithms.ShortestPath
             ComputeNoInit(this.RootVertex);
         }
 
-        public void ComputeNoInit(Vertex s)
+        public void ComputeNoInit(TVertex s)
         {
-            ICollection<Vertex> orderedVertices = AlgoUtility.TopologicalSort<Vertex, Edge>(this.VisitedGraph);
+            ICollection<TVertex> orderedVertices = AlgoUtility.TopologicalSort<TVertex, TEdge>(this.VisitedGraph);
 
             OnDiscoverVertex(s);
-            foreach (Vertex v in orderedVertices)
+            foreach (TVertex v in orderedVertices)
             {
                 OnExamineVertex(v);
-                foreach (Edge e in VisitedGraph.OutEdges(v))
+                foreach (TEdge e in VisitedGraph.OutEdges(v))
                 {
                     OnDiscoverVertex(e.Target);
                     bool decreased = Relax(e);
@@ -140,7 +140,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        private bool Relax(Edge e)
+        private bool Relax(TEdge e)
         {
             double du = this.Distances[e.Source];
             double dv = this.Distances[e.Target];

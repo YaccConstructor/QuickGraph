@@ -6,24 +6,24 @@ using QuickGraph.Collections;
 namespace QuickGraph.Algorithms
 {
     [Serializable]
-    public sealed class UndirectedFirstTopologicalSortAlgorithm<Vertex, Edge> :
-        AlgorithmBase<IUndirectedGraph<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class UndirectedFirstTopologicalSortAlgorithm<TVertex, TEdge> :
+        AlgorithmBase<IUndirectedGraph<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private IDictionary<Vertex, int> degrees = new Dictionary<Vertex, int>();
-        private PriorithizedVertexBuffer<Vertex, int> heap;
-        private IList<Vertex> sortedVertices = new List<Vertex>();
+        private IDictionary<TVertex, int> degrees = new Dictionary<TVertex, int>();
+        private PriorithizedVertexBuffer<TVertex, int> heap;
+        private IList<TVertex> sortedVertices = new List<TVertex>();
         private bool allowCyclicGraph = false;
 
         public UndirectedFirstTopologicalSortAlgorithm(
-            IUndirectedGraph<Vertex, Edge> visitedGraph
+            IUndirectedGraph<TVertex, TEdge> visitedGraph
             )
             : base(visitedGraph)
         {
-            this.heap = new PriorithizedVertexBuffer<Vertex, int>(this.degrees);
+            this.heap = new PriorithizedVertexBuffer<TVertex, int>(this.degrees);
         }
 
-        public ICollection<Vertex> SortedVertices
+        public ICollection<TVertex> SortedVertices
         {
             get
             {
@@ -31,7 +31,7 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        public PriorithizedVertexBuffer<Vertex, int> Heap
+        public PriorithizedVertexBuffer<TVertex, int> Heap
         {
             get
             {
@@ -39,7 +39,7 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        public IDictionary<Vertex, int> Degrees
+        public IDictionary<TVertex, int> Degrees
         {
             get
             {
@@ -54,14 +54,14 @@ namespace QuickGraph.Algorithms
             set { this.allowCyclicGraph = value; }
         }
 
-        public event VertexEventHandler<Vertex> AddVertex;
-        private void OnAddVertex(Vertex v)
+        public event VertexEventHandler<TVertex> AddVertex;
+        private void OnAddVertex(TVertex v)
         {
             if (this.AddVertex != null)
-                this.AddVertex(this, new VertexEventArgs<Vertex>(v));
+                this.AddVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public void Compute(IList<Vertex> vertices)
+        public void Compute(IList<TVertex> vertices)
         {
             if (vertices == null)
                 throw new ArgumentNullException("vertices");
@@ -79,7 +79,7 @@ namespace QuickGraph.Algorithms
                 if (this.IsAborting)
                     return;
 
-                Vertex v = this.heap.Pop();
+                TVertex v = this.heap.Pop();
                 if (this.degrees[v] != 0 && !this.AllowCyclicGraph)
                     throw new NonAcyclicGraphException();
 
@@ -87,7 +87,7 @@ namespace QuickGraph.Algorithms
                 this.OnAddVertex(v);
 
                 // update the count of it's adjacent vertices
-                foreach (Edge e in this.VisitedGraph.AdjacentEdges(v))
+                foreach (TEdge e in this.VisitedGraph.AdjacentEdges(v))
                 {
                     if (e.Source.Equals(e.Target))
                         continue;
@@ -102,7 +102,7 @@ namespace QuickGraph.Algorithms
 
         private void InitializeInDegrees()
         {
-            foreach (Vertex v in this.VisitedGraph.Vertices)
+            foreach (TVertex v in this.VisitedGraph.Vertices)
             {
                 this.degrees.Add(v, this.VisitedGraph.AdjacentDegree(v));
                 this.heap.Push(v);

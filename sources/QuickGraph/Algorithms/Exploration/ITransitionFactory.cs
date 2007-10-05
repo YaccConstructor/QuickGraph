@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace QuickGraph.Algorithms.Exploration
 {
-    public interface ITransitionFactory<Vertex,Edge>
-        where Vertex : ICloneable
-        where Edge : IEdge<Vertex>
+    public interface ITransitionFactory<TVertex,TEdge>
+        where TVertex : ICloneable
+        where TEdge : IEdge<TVertex>
     {
-        bool IsValid(Vertex v);
-        IEnumerable<Edge> Apply(Vertex source);
+        bool IsValid(TVertex v);
+        IEnumerable<TEdge> Apply(TVertex source);
     }
 }

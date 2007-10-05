@@ -3,21 +3,21 @@
 namespace QuickGraph.Algorithms
 {
     [Serializable]
-    public abstract class RootedAlgorithmBase<Vertex,Graph> : 
-        AlgorithmBase<Graph>
+    public abstract class RootedAlgorithmBase<TVertex,TGraph> : 
+        AlgorithmBase<TGraph>
     {
-        private Vertex rootVertex;
+        private TVertex rootVertex;
 
-        public RootedAlgorithmBase(Graph visitedGraph)
+        public RootedAlgorithmBase(TGraph visitedGraph)
             :base(visitedGraph)
         {}
 
-        public Vertex RootVertex
+        public TVertex RootVertex
         {
             get { return this.rootVertex; }
             set 
             {
-                bool changed = !Comparison<Vertex>.Equals(this.rootVertex, value);
+                bool changed = !Comparison<TVertex>.Equals(this.rootVertex, value);
                 this.rootVertex = value;
                 if (changed)
                     this.OnRooVertexChanged(EventArgs.Empty);
@@ -31,7 +31,7 @@ namespace QuickGraph.Algorithms
                 this.RootVertexChanged(this, e);
         }
 
-        public void Compute(Vertex rootVertex)
+        public void Compute(TVertex rootVertex)
         {
             if (rootVertex == null)
                 throw new ArgumentNullException("rootVertex");

@@ -6,21 +6,21 @@ using QuickGraph.Collections;
 namespace QuickGraph.Algorithms.Ranking
 {
     [Serializable]
-    public sealed class PageRankAlgorithm<Vertex, Edge> :
-        AlgorithmBase<IBidirectionalGraph<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class PageRankAlgorithm<TVertex, TEdge> :
+        AlgorithmBase<IBidirectionalGraph<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private IDictionary<Vertex,double> ranks = new Dictionary<Vertex,double>();
+        private IDictionary<TVertex,double> ranks = new Dictionary<TVertex,double>();
 
         private int maxIterations = 60;
         private double tolerance = 2 * double.Epsilon;
         private double damping = 0.85;
 
-        public PageRankAlgorithm(IBidirectionalGraph<Vertex, Edge> visitedGraph)
+        public PageRankAlgorithm(IBidirectionalGraph<TVertex, TEdge> visitedGraph)
             :base(visitedGraph)
         {}
 
-        public IDictionary<Vertex,double> Ranks
+        public IDictionary<TVertex,double> Ranks
         {
             get
             {
@@ -67,7 +67,7 @@ namespace QuickGraph.Algorithms.Ranking
         public void InitializeRanks()
         {
             this.ranks.Clear();
-            foreach (Vertex v in this.VisitedGraph.Vertices)
+            foreach (TVertex v in this.VisitedGraph.Vertices)
             {
                 this.ranks.Add(v, 0);
             }
@@ -104,16 +104,16 @@ namespace QuickGraph.Algorithms.Ranking
 */
         protected override void InternalCompute()
         {
-            IDictionary<Vertex,double> tempRanks = new Dictionary<Vertex,double>();
+            IDictionary<TVertex,double> tempRanks = new Dictionary<TVertex,double>();
             // create filtered graph
             FilteredBidirectionalGraph<
-                Vertex,
-                Edge,
-                IBidirectionalGraph<Vertex,Edge>
-                > fg = new FilteredBidirectionalGraph<Vertex, Edge, IBidirectionalGraph<Vertex, Edge>>(
+                TVertex,
+                TEdge,
+                IBidirectionalGraph<TVertex,TEdge>
+                > fg = new FilteredBidirectionalGraph<TVertex, TEdge, IBidirectionalGraph<TVertex, TEdge>>(
                 this.VisitedGraph,
-                new InDictionaryVertexPredicate<Vertex,double>(this.ranks).Test,
-                new AnyEdgePredicate<Vertex,Edge>().Test
+                new InDictionaryVertexPredicate<TVertex,double>(this.ranks).Test,
+                new AnyEdgePredicate<TVertex,TEdge>().Test
                 );
 
             int iter = 0;
@@ -125,16 +125,16 @@ namespace QuickGraph.Algorithms.Ranking
                   
                 // compute page ranks
                 error = 0;
-                foreach (KeyValuePair<Vertex,double> de in this.Ranks)
+                foreach (KeyValuePair<TVertex,double> de in this.Ranks)
                 {
                     if (this.IsAborting)
                         return;
 
-                    Vertex v = de.Key;
+                    TVertex v = de.Key;
                     double rank = de.Value;
                     // compute ARi
                     double r = 0;
-                    foreach (Edge e in fg.InEdges(v))
+                    foreach (TEdge e in fg.InEdges(v))
                     {
                         r += this.ranks[e.Source] / fg.OutDegree(e.Source);
                     }
@@ -147,7 +147,7 @@ namespace QuickGraph.Algorithms.Ranking
                 }
 
                 // swap ranks
-                IDictionary<Vertex,double> temp = ranks;
+                IDictionary<TVertex,double> temp = ranks;
                 ranks = tempRanks;
                 tempRanks = temp;
 

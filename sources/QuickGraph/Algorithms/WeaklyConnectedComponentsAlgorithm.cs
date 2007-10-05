@@ -6,27 +6,27 @@ using QuickGraph.Algorithms.Observers;
 namespace QuickGraph.Algorithms
 {
     [Serializable]
-    public sealed class WeaklyConnectedComponentsAlgorithm<Vertex,Edge> :
-        AlgorithmBase<IVertexListGraph<Vertex,Edge>>,
-        IConnectedComponentAlgorithm<Vertex,Edge,IVertexListGraph<Vertex,Edge>>
-        where Edge : IEdge<Vertex>
+    public sealed class WeaklyConnectedComponentsAlgorithm<TVertex,TEdge> :
+        AlgorithmBase<IVertexListGraph<TVertex,TEdge>>,
+        IConnectedComponentAlgorithm<TVertex,TEdge,IVertexListGraph<TVertex,TEdge>>
+        where TEdge : IEdge<TVertex>
     {
-        private readonly IDictionary<Vertex, int> components;
+        private readonly IDictionary<TVertex, int> components;
         private readonly Dictionary<int, int> componentEquivalences = new Dictionary<int, int>();
-        private readonly DepthFirstSearchAlgorithm<Vertex, Edge> dfs;
+        private readonly DepthFirstSearchAlgorithm<TVertex, TEdge> dfs;
         private int componentCount = 0;
         private int currentComponent = 0;
 
         public WeaklyConnectedComponentsAlgorithm(
-            IVertexListGraph<Vertex, Edge> visitedGraph
+            IVertexListGraph<TVertex, TEdge> visitedGraph
             )
-            : this(visitedGraph, new Dictionary<Vertex, int>()
+            : this(visitedGraph, new Dictionary<TVertex, int>()
             )
         { }
 
         public WeaklyConnectedComponentsAlgorithm(
-            IVertexListGraph<Vertex, Edge> visitedGraph,
-            IDictionary<Vertex,int> components
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TVertex,int> components
             )
             :base(visitedGraph)
         {
@@ -34,13 +34,13 @@ namespace QuickGraph.Algorithms
                 throw new ArgumentNullException("components");
             this.components = components;
 
-            this.dfs = new DepthFirstSearchAlgorithm<Vertex, Edge>(this.VisitedGraph);
-            this.dfs.StartVertex += new VertexEventHandler<Vertex>(dfs_StartVertex);
-            this.dfs.TreeEdge += new EdgeEventHandler<Vertex, Edge>(dfs_TreeEdge);
-            this.dfs.ForwardOrCrossEdge += new EdgeEventHandler<Vertex, Edge>(dfs_ForwardOrCrossEdge);
+            this.dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(this.VisitedGraph);
+            this.dfs.StartVertex += new VertexEventHandler<TVertex>(dfs_StartVertex);
+            this.dfs.TreeEdge += new EdgeEventHandler<TVertex, TEdge>(dfs_TreeEdge);
+            this.dfs.ForwardOrCrossEdge += new EdgeEventHandler<TVertex, TEdge>(dfs_ForwardOrCrossEdge);
         }
 
-        public IDictionary<Vertex, int> Components
+        public IDictionary<TVertex, int> Components
         {
             get { return this.components; }
         }
@@ -59,7 +59,7 @@ namespace QuickGraph.Algorithms
             this.dfs.Compute();
 
             // updating component numbers
-            foreach (Vertex v in this.VisitedGraph.Vertices)
+            foreach (TVertex v in this.VisitedGraph.Vertices)
             {
                 int component = this.Components[v];
                 int equivalent = this.componentEquivalences[component];
@@ -68,7 +68,7 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        void dfs_StartVertex(object sender, VertexEventArgs<Vertex> e)
+        void dfs_StartVertex(object sender, VertexEventArgs<TVertex> e)
         {
             // we are looking on a new tree
             this.currentComponent = this.componentEquivalences.Count;
@@ -77,13 +77,13 @@ namespace QuickGraph.Algorithms
             this.components.Add(e.Vertex, this.currentComponent);
         }
 
-        void dfs_TreeEdge(object sender, EdgeEventArgs<Vertex, Edge> e)
+        void dfs_TreeEdge(object sender, EdgeEventArgs<TVertex, TEdge> e)
         {
             // new edge, we store with the current component number
             this.components.Add(e.Edge.Target, this.currentComponent);
         }
 
-        void dfs_ForwardOrCrossEdge(object sender, EdgeEventArgs<Vertex, Edge> e)
+        void dfs_ForwardOrCrossEdge(object sender, EdgeEventArgs<TVertex, TEdge> e)
         {
             // we have touched another tree, updating count and current component
             int otherComponent = this.componentEquivalences[this.components[e.Edge.Target]];

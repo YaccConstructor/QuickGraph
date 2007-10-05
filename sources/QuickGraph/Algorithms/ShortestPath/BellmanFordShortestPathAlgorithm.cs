@@ -24,19 +24,19 @@ namespace QuickGraph.Algorithms.ShortestPath
     /// <reference-ref
     ///     idref="shi03datastructures"
     ///     />
-    public sealed class BellmanFordShortestPathAlgorithm<Vertex, Edge> :
-        ShortestPathAlgorithmBase<Vertex,Edge,IVertexAndEdgeListGraph<Vertex,Edge>>,
-        ITreeBuilderAlgorithm<Vertex,Edge>
+    public sealed class BellmanFordShortestPathAlgorithm<TVertex, TEdge> :
+        ShortestPathAlgorithmBase<TVertex,TEdge,IVertexAndEdgeListGraph<TVertex,TEdge>>,
+        ITreeBuilderAlgorithm<TVertex,TEdge>
        // IVertexPredecessorRecorderAlgorithm<Vertex,Edge>,
        // IDistanceRecorderAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+        where TEdge : IEdge<TVertex>
     {
-        private readonly Dictionary<Vertex,Vertex> predecessors;
+        private readonly Dictionary<TVertex,TVertex> predecessors;
         private bool foundNegativeCycle;
 
         public BellmanFordShortestPathAlgorithm(
-            IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph,
-            IDictionary<Edge, double> weights
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TEdge, double> weights
             )
             : this(visitedGraph, weights, new ShortestDistanceRelaxer())
         { }
@@ -49,13 +49,13 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// <exception cref="ArgumentNullException">Any argument is null</exception>
         /// <remarks>This algorithm uses the <seealso cref="BreadthFirstSearchAlgorithm"/>.</remarks>
         public BellmanFordShortestPathAlgorithm(
-            IVertexAndEdgeListGraph<Vertex,Edge> visitedGraph,
-            IDictionary<Edge,double> weights,
+            IVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph,
+            IDictionary<TEdge,double> weights,
             IDistanceRelaxer distanceRelaxer
             )
             :base(visitedGraph, weights, distanceRelaxer)
         {
-            this.predecessors = new Dictionary<Vertex,Vertex>();
+            this.predecessors = new Dictionary<TVertex,TVertex>();
         }
 
         public bool FoundNegativeCycle
@@ -67,31 +67,31 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// Invoked on each vertex in the graph before the start of the 
         /// algorithm.
         /// </summary>
-        public event VertexEventHandler<Vertex> InitializeVertex;
+        public event VertexEventHandler<TVertex> InitializeVertex;
 
         /// <summary>
         /// Raises the <see cref="InitializeVertex"/> event.
         /// </summary>
         /// <param name="v">vertex that raised the event</param>
-        private void OnInitializeVertex(Vertex v)
+        private void OnInitializeVertex(TVertex v)
         {
             if (InitializeVertex != null)
-                InitializeVertex(this, new VertexEventArgs<Vertex>(v));
+                InitializeVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
         /// <summary>
         /// Invoked on every edge in the graph |V| times.
         /// </summary>
-        public event EdgeEventHandler<Vertex,Edge> ExamineEdge;
+        public event EdgeEventHandler<TVertex,TEdge> ExamineEdge;
 
         /// <summary>
         /// Raises the <see cref="ExamineEdge"/> event.
         /// </summary>
         /// <param name="e">edge that raised the event</param>
-        private void OnExamineEdge(Edge e)
+        private void OnExamineEdge(TEdge e)
         {
             if (ExamineEdge != null)
-                ExamineEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+                ExamineEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         /// <summary>
@@ -99,33 +99,33 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// The edge that participated in the last relaxation for vertex v is 
         /// an edge in the shortest paths tree.
         /// </summary>
-        public event EdgeEventHandler<Vertex,Edge> TreeEdge;
+        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
 
 
         /// <summary>
         /// Raises the <see cref="TreeEdge"/> event.
         /// </summary>
         /// <param name="e">edge that raised the event</param>
-        private void OnTreeEdge(Edge e)
+        private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+                TreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         /// <summary>
         ///  Invoked if the distance label for the target vertex is not 
         ///  decreased.
         /// </summary>
-        public event EdgeEventHandler<Vertex,Edge> EdgeNotRelaxed;
+        public event EdgeEventHandler<TVertex,TEdge> EdgeNotRelaxed;
 
         /// <summary>
         /// Raises the <see cref="EdgeNotRelaxed"/> event.
         /// </summary>
         /// <param name="e">edge that raised the event</param>
-        private void OnEdgeNotRelaxed(Edge e)
+        private void OnEdgeNotRelaxed(TEdge e)
         {
             if (EdgeNotRelaxed != null)
-                EdgeNotRelaxed(this, new EdgeEventArgs<Vertex,Edge>(e));
+                EdgeNotRelaxed(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         /// <summary>
@@ -134,17 +134,17 @@ namespace QuickGraph.Algorithms.ShortestPath
         ///  
         ///  If the edge is minimized then this function is invoked.
         /// </summary>
-        public event EdgeEventHandler<Vertex,Edge> EdgeMinimized;
+        public event EdgeEventHandler<TVertex,TEdge> EdgeMinimized;
 
 
         /// <summary>
         /// Raises the <see cref="EdgeMinimized"/> event.
         /// </summary>
         /// <param name="e">edge that raised the event</param>
-        private void OnEdgeMinimized(Edge e)
+        private void OnEdgeMinimized(TEdge e)
         {
             if (EdgeMinimized != null)
-                EdgeMinimized(this, new EdgeEventArgs<Vertex,Edge>(e));
+                EdgeMinimized(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         /// <summary>
@@ -154,23 +154,23 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// If the edge was not minimized, this function is invoked. 
         /// This happens when there is a negative cycle in the graph. 
         /// </summary>
-        public event EdgeEventHandler<Vertex,Edge> EdgeNotMinimized;
+        public event EdgeEventHandler<TVertex,TEdge> EdgeNotMinimized;
 
 
         /// <summary>
         /// Raises the <see cref="EdgeNotMinimized"/> event.
         /// </summary>
         /// <param name="e">edge that raised the event</param>
-        private void OnEdgeNotMinimized(Edge e)
+        private void OnEdgeNotMinimized(TEdge e)
         {
             if (EdgeNotMinimized != null)
-                EdgeNotMinimized(this, new EdgeEventArgs<Vertex,Edge>(e));
+                EdgeNotMinimized(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         /// <summary>
         /// Constructed predecessor map
         /// </summary>
-        public IDictionary<Vertex,Vertex> Predecessors
+        public IDictionary<TVertex,TVertex> Predecessors
         {
             get
             {
@@ -182,7 +182,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             this.foundNegativeCycle = false;
             // init color, distance
-            foreach (Vertex u in VisitedGraph.Vertices)
+            foreach (TVertex u in VisitedGraph.Vertices)
             {
                 VertexColors[u] = GraphColor.White;
                 Distances[u] = double.PositiveInfinity;
@@ -206,7 +206,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             for (int k = 0; k < N; ++k)
             {
                 bool atLeastOneTreeEdge = false;
-                foreach (Edge e in this.VisitedGraph.Edges)
+                foreach (TEdge e in this.VisitedGraph.Edges)
                 {
                     OnExamineEdge(e);
 
@@ -222,7 +222,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                     break;
             }
 
-            foreach (Edge e in VisitedGraph.Edges)
+            foreach (TEdge e in VisitedGraph.Edges)
             {
                 if (
                     Compare(
@@ -242,7 +242,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.foundNegativeCycle = false;
         }
 
-        private bool Relax(Edge e)
+        private bool Relax(TEdge e)
         {
             double du = this.Distances[e.Source];
             double dv = this.Distances[e.Target];

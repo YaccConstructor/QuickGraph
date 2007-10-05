@@ -2,9 +2,9 @@
 
 namespace QuickGraph.Algorithms
 {
-    public interface ITreeBuilderAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface ITreeBuilderAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        event EdgeEventHandler<Vertex, Edge> TreeEdge;
+        event EdgeEventHandler<TVertex, TEdge> TreeEdge;
     }
 }

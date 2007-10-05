@@ -5,28 +5,28 @@ using QuickGraph.Collections;
 namespace QuickGraph.Algorithms.Condensation
 {
     [Serializable]
-    public sealed class MergedEdge<V, E> : Edge<V>
-        where E : IEdge<V>
+    public sealed class MergedEdge<TVertex, TEdge> : Edge<TVertex>
+        where TEdge : IEdge<TVertex>
     {
-        private List<E> edges = new List<E>();
+        private List<TEdge> edges = new List<TEdge>();
 
-        public MergedEdge(V source, V target)
+        public MergedEdge(TVertex source, TVertex target)
             :base(source,target)
         { }
 
-        public IList<E> Edges
+        public IList<TEdge> Edges
         {
             get { return this.edges; }
         }
 
-        public static MergedEdge<V, E> Merge(
-            MergedEdge<V, E> inEdge,
-            MergedEdge<V, E> outEdge
+        public static MergedEdge<TVertex, TEdge> Merge(
+            MergedEdge<TVertex, TEdge> inEdge,
+            MergedEdge<TVertex, TEdge> outEdge
             )
         {
-            MergedEdge<V, E> newEdge = new MergedEdge<V, E>(
+            MergedEdge<TVertex, TEdge> newEdge = new MergedEdge<TVertex, TEdge>(
                 inEdge.Source, outEdge.Target);
-            newEdge.edges = new List<E>(inEdge.Edges.Count + outEdge.Edges.Count);
+            newEdge.edges = new List<TEdge>(inEdge.Edges.Count + outEdge.Edges.Count);
             newEdge.edges.AddRange(inEdge.Edges);
             newEdge.edges.AddRange(outEdge.edges);
 

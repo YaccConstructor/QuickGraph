@@ -4,30 +4,26 @@ using QuickGraph.Collections;
 
 namespace QuickGraph.Algorithms.Condensation
 {
-    public sealed class CondensationGraphAlgorithm<
-            Vertex,
-            Edge,
-            Graph
-            > :
-        AlgorithmBase<IVertexAndEdgeListGraph<Vertex, Edge>>
-        where Edge : IEdge<Vertex>
-        where Graph : IMutableVertexAndEdgeListGraph<Vertex, Edge>, new()
+    public sealed class CondensationGraphAlgorithm<TVertex,TEdge,TGraph> :
+        AlgorithmBase<IVertexAndEdgeListGraph<TVertex, TEdge>>
+        where TEdge : IEdge<TVertex>
+        where TGraph : IMutableVertexAndEdgeListGraph<TVertex, TEdge>, new()
     {
         private bool stronglyConnected = true;
-        private IConnectedComponentAlgorithm<Vertex,Edge,IVertexListGraph<Vertex,Edge>> componentAlgorithm = null;
+        private IConnectedComponentAlgorithm<TVertex,TEdge,IVertexListGraph<TVertex,TEdge>> componentAlgorithm = null;
 
         private IMutableBidirectionalGraph<
-            Graph,
-            CondensatedEdge<Vertex, Edge, Graph>
+            TGraph,
+            CondensatedEdge<TVertex, TEdge, TGraph>
             > condensatedGraph;
 
-        public CondensationGraphAlgorithm(IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph)
+        public CondensationGraphAlgorithm(IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
             :base(visitedGraph)
         {}
 
         public IMutableBidirectionalGraph<
-            Graph,
-            CondensatedEdge<Vertex, Edge,Graph>
+            TGraph,
+            CondensatedEdge<TVertex, TEdge,TGraph>
             > CondensatedGraph
         {
             get { return this.condensatedGraph; }
@@ -43,21 +39,21 @@ namespace QuickGraph.Algorithms.Condensation
         {
             // create condensated graph
             this.condensatedGraph = new BidirectionalGraph<
-                Graph,
-                CondensatedEdge<Vertex, Edge,Graph>
+                TGraph,
+                CondensatedEdge<TVertex, TEdge,TGraph>
                 >(false);
             if (this.VisitedGraph.VertexCount == 0)
                 return;
 
             // compute strongly connected components
-            Dictionary<Vertex,int> components = new Dictionary<Vertex,int>(this.VisitedGraph.VertexCount);
+            Dictionary<TVertex,int> components = new Dictionary<TVertex,int>(this.VisitedGraph.VertexCount);
             int componentCount;
             lock (this.SyncRoot)
             {
                 if (this.StronglyConnected)
-                    this.componentAlgorithm = new StronglyConnectedComponentsAlgorithm<Vertex, Edge>(this.VisitedGraph, components);
+                    this.componentAlgorithm = new StronglyConnectedComponentsAlgorithm<TVertex, TEdge>(this.VisitedGraph, components);
                 else
-                    this.componentAlgorithm = new WeaklyConnectedComponentsAlgorithm<Vertex, Edge>(this.VisitedGraph, components);
+                    this.componentAlgorithm = new WeaklyConnectedComponentsAlgorithm<TVertex, TEdge>(this.VisitedGraph, components);
             }
             this.componentAlgorithm.Compute();
             componentCount = this.componentAlgorithm.ComponentCount;
@@ -69,19 +65,19 @@ namespace QuickGraph.Algorithms.Condensation
                 return;
 
             // create list vertices
-            Dictionary<int, Graph> condensatedVertices = new Dictionary<int, Graph>(componentCount);
+            Dictionary<int, TGraph> condensatedVertices = new Dictionary<int, TGraph>(componentCount);
             for (int i = 0; i < componentCount; ++i)
             {
                 if (this.IsAborting)
                     return;
 
-                Graph v = new Graph();
+                TGraph v = new TGraph();
                 condensatedVertices.Add(i, v);
                 this.condensatedGraph.AddVertex(v);
             }
 
             // addingvertices
-            foreach (Vertex v in this.VisitedGraph.Vertices)
+            foreach (TVertex v in this.VisitedGraph.Vertices)
             {
                 condensatedVertices[components[v]].AddVertex(v);
             }
@@ -89,10 +85,10 @@ namespace QuickGraph.Algorithms.Condensation
                 return;
 
             // condensated edges
-            Dictionary<EdgeKey, CondensatedEdge<Vertex,Edge,Graph>> condensatedEdges = new Dictionary<EdgeKey,CondensatedEdge<Vertex,Edge,Graph>>(componentCount);
+            Dictionary<EdgeKey, CondensatedEdge<TVertex,TEdge,TGraph>> condensatedEdges = new Dictionary<EdgeKey,CondensatedEdge<TVertex,TEdge,TGraph>>(componentCount);
 
             // iterate over edges and condensate graph
-            foreach (Edge edge in this.VisitedGraph.Edges)
+            foreach (TEdge edge in this.VisitedGraph.Edges)
             {
                 if (this.IsAborting)
                     return;
@@ -102,7 +98,7 @@ namespace QuickGraph.Algorithms.Condensation
                 int targetID = components[edge.Target];
 
                 // get vertices
-                Graph sources = condensatedVertices[sourceID];
+                TGraph sources = condensatedVertices[sourceID];
                 if (sourceID == targetID)
                 {
                     sources.AddEdge(edge);
@@ -110,14 +106,14 @@ namespace QuickGraph.Algorithms.Condensation
                 }
 
                 //
-                Graph targets = condensatedVertices[targetID];
+                TGraph targets = condensatedVertices[targetID];
 
                 // at last add edge
                 EdgeKey edgeKey = new EdgeKey(sourceID, targetID);
-                CondensatedEdge<Vertex,Edge,Graph> condensatedEdge;
+                CondensatedEdge<TVertex,TEdge,TGraph> condensatedEdge;
                 if (!condensatedEdges.TryGetValue(edgeKey, out condensatedEdge))
                 {
-                    condensatedEdge = new CondensatedEdge<Vertex, Edge,Graph>(sources, targets);
+                    condensatedEdge = new CondensatedEdge<TVertex, TEdge,TGraph>(sources, targets);
                     condensatedEdges.Add(edgeKey, condensatedEdge);
                     this.condensatedGraph.AddEdge(condensatedEdge);
                 }

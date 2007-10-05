@@ -7,25 +7,25 @@ using QuickGraph.Collections;
 namespace QuickGraph.Algorithms.ShortestPath
 {
     [Serializable]
-    public abstract class ShortestPathAlgorithmBase<Vertex, Edge, Graph> :
-        RootedAlgorithmBase<Vertex,Graph>
-        where Edge : IEdge<Vertex>
+    public abstract class ShortestPathAlgorithmBase<TVertex, TEdge, TGraph> :
+        RootedAlgorithmBase<TVertex,TGraph>
+        where TEdge : IEdge<TVertex>
     {
-        private readonly IDictionary<Vertex, GraphColor> vertexColors;
-        private readonly IDictionary<Vertex, double> distances;
-        private readonly IDictionary<Edge, double> weights;
+        private readonly IDictionary<TVertex, GraphColor> vertexColors;
+        private readonly IDictionary<TVertex, double> distances;
+        private readonly IDictionary<TEdge, double> weights;
         private readonly IDistanceRelaxer distanceRelaxer;
 
         protected ShortestPathAlgorithmBase(
-            Graph visitedGraph,
-            IDictionary<Edge, double> weights
+            TGraph visitedGraph,
+            IDictionary<TEdge, double> weights
             )
             :this(visitedGraph, weights, new ShortestDistanceRelaxer())
         {}
 
         protected ShortestPathAlgorithmBase(
-            Graph visitedGraph,
-            IDictionary<Edge, double> weights,
+            TGraph visitedGraph,
+            IDictionary<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
             :base(visitedGraph)
@@ -35,36 +35,36 @@ namespace QuickGraph.Algorithms.ShortestPath
             if (distanceRelaxer == null)
                 throw new ArgumentNullException("distanceRelaxer");
 
-            this.vertexColors = new Dictionary<Vertex, GraphColor>();
-            this.distances = new Dictionary<Vertex, double>();
+            this.vertexColors = new Dictionary<TVertex, GraphColor>();
+            this.distances = new Dictionary<TVertex, double>();
             this.weights = weights;
             this.distanceRelaxer = distanceRelaxer;
         }
 
-        public static Dictionary<Edge, double> UnaryWeightsFromEdgeList(
-            IEdgeListGraph<Vertex, Edge> graph)
+        public static Dictionary<TEdge, double> UnaryWeightsFromEdgeList(
+            IEdgeListGraph<TVertex, TEdge> graph)
         {
             if (graph == null)
                 throw new ArgumentNullException("graph");
-            Dictionary<Edge, double> weights = new Dictionary<Edge, double>();
-            foreach (Edge e in graph.Edges)
+            Dictionary<TEdge, double> weights = new Dictionary<TEdge, double>();
+            foreach (TEdge e in graph.Edges)
                 weights.Add(e, 1);
             return weights;
         }
 
-        public static Dictionary<Edge, double> UnaryWeightsFromVertexList(
-            IVertexListGraph<Vertex, Edge> graph)
+        public static Dictionary<TEdge, double> UnaryWeightsFromVertexList(
+            IVertexListGraph<TVertex, TEdge> graph)
         {
             if (graph == null)
                 throw new ArgumentNullException("graph");
-            Dictionary<Edge, double> weights = new Dictionary<Edge, double>();
-            foreach (Vertex v in graph.Vertices)
-                foreach (Edge e in graph.OutEdges(v))
+            Dictionary<TEdge, double> weights = new Dictionary<TEdge, double>();
+            foreach (TVertex v in graph.Vertices)
+                foreach (TEdge e in graph.OutEdges(v))
                     weights.Add(e, 1);
             return weights;
         }
 
-        public IDictionary<Vertex, GraphColor> VertexColors
+        public IDictionary<TVertex, GraphColor> VertexColors
         {
             get
             {
@@ -72,7 +72,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        public IDictionary<Vertex, double> Distances
+        public IDictionary<TVertex, double> Distances
         {
             get
             {
@@ -80,7 +80,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        public IDictionary<Edge, double> Weights
+        public IDictionary<TEdge, double> Weights
         {
             get { return this.weights; }
         }
