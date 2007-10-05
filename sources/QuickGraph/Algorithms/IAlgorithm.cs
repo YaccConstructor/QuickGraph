@@ -2,9 +2,9 @@
 
 namespace QuickGraph.Algorithms
 {
-    public interface IAlgorithm<Graph>
+    public interface IAlgorithm<TGraph>
     {
-        Graph VisitedGraph { get;}
+        TGraph VisitedGraph { get;}
 
         object SyncRoot { get;}
         ComputationState State { get;}

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QuickGraph.Algorithms
 {
-    public delegate void AlgorithmEventHandler<Graph>(
-        IAlgorithm<Graph> sender,
+    public delegate void AlgorithmEventHandler<TGraph>(
+        IAlgorithm<TGraph> sender,
         EventArgs e);
 }

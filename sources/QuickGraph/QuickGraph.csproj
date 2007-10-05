@@ -175,7 +175,6 @@
     <Compile Include="IVertexAndEdgeSet.cs" />
     <Compile Include="IVertexSet.cs" />
     <Compile Include="IView.cs" />
-    <Compile Include="MarkedEdge.cs" />
     <Compile Include="NotStronglyConnectedGraphException.cs" />
     <Compile Include="ParallelEdgeNotAllowedException.cs" />
     <Compile Include="Petri\AllwaysTrueConditionExpression.cs" />

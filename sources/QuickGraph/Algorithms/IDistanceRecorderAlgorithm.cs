@@ -2,11 +2,11 @@
 
 namespace QuickGraph.Algorithms
 {
-    public interface IDistanceRecorderAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public interface IDistanceRecorderAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        event VertexEventHandler<Vertex> InitializeVertex;
-        event VertexEventHandler<Vertex> DiscoverVertex;
-        event EdgeEventHandler<Vertex, Edge> TreeEdge;
+        event VertexEventHandler<TVertex> InitializeVertex;
+        event VertexEventHandler<TVertex> DiscoverVertex;
+        event EdgeEventHandler<TVertex, TEdge> TreeEdge;
     }
 }

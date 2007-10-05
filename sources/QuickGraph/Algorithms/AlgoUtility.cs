@@ -9,189 +9,189 @@ namespace QuickGraph.Algorithms
     [Serializable]
     public static class AlgoUtility
     {
-        public static IDictionary<Edge, double> ConstantCapacities<Vertex, Edge>(IEdgeListGraph<Vertex, Edge> g, double value)
-            where Edge : IEdge<Vertex>
+        public static IDictionary<TEdge, double> ConstantCapacities<TVertex, TEdge>(IEdgeListGraph<TVertex, TEdge> g, double value)
+            where TEdge : IEdge<TVertex>
         {
-            Dictionary<Edge, double> capacities = new Dictionary<Edge, double>(g.EdgeCount);
-            foreach (Edge e in g.Edges)
+            Dictionary<TEdge, double> capacities = new Dictionary<TEdge, double>(g.EdgeCount);
+            foreach (TEdge e in g.Edges)
                 capacities.Add(e, value);
             return capacities;
         }
 
-        public static IEnumerable<Vertex> Sinks<Vertex, Edge>(
-            IVertexListGraph<Vertex, Edge> visitedGraph) 
-            where Edge : IEdge<Vertex>
+        public static IEnumerable<TVertex> Sinks<TVertex, TEdge>(
+            IVertexListGraph<TVertex, TEdge> visitedGraph) 
+            where TEdge : IEdge<TVertex>
         {
-            foreach (Vertex v in visitedGraph.Vertices)
+            foreach (TVertex v in visitedGraph.Vertices)
             {
                 if (visitedGraph.IsOutEdgesEmpty(v))
                     yield return v;
             }
         }
 
-        public static IEnumerable<Vertex> Roots<Vertex, Edge>(
-            IBidirectionalGraph<Vertex, Edge> visitedGraph)
-            where Edge : IEdge<Vertex>
+        public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
         {
-            foreach (Vertex v in visitedGraph.Vertices)
+            foreach (TVertex v in visitedGraph.Vertices)
                 if (visitedGraph.IsInEdgesEmpty(v))
                     yield return v;
         }
 
-        public static IEnumerable<Vertex> IsolatedVertices<Vertex, Edge>(
-            IBidirectionalGraph<Vertex, Edge> visitedGraph)
-            where Edge : IEdge<Vertex>
+        public static IEnumerable<TVertex> IsolatedVertices<TVertex, TEdge>(
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
         {
-            foreach (Vertex v in visitedGraph.Vertices)
+            foreach (TVertex v in visitedGraph.Vertices)
             {
                 if (visitedGraph.Degree(v) == 0)
                     yield return v;
             }
         }
 
-        public static IEnumerable<Vertex> Roots<Vertex,Edge>(
-            IVertexListGraph<Vertex,Edge> visitedGraph)
-            where Edge : IEdge<Vertex>
+        public static IEnumerable<TVertex> Roots<TVertex,TEdge>(
+            IVertexListGraph<TVertex,TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
         {
-            DepthFirstSearchAlgorithm<Vertex, Edge> dfs = new DepthFirstSearchAlgorithm<Vertex, Edge>(visitedGraph);
-            VertexPredecessorRecorderObserver<Vertex, Edge> vis = new VertexPredecessorRecorderObserver<Vertex, Edge>();
+            DepthFirstSearchAlgorithm<TVertex, TEdge> dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
+            VertexPredecessorRecorderObserver<TVertex, TEdge> vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
             vis.Attach(dfs);
 
-            foreach (KeyValuePair<Vertex, Edge> predecessor in vis.VertexPredecessors)
+            foreach (KeyValuePair<TVertex, TEdge> predecessor in vis.VertexPredecessors)
             {
-                if (predecessor.Value.Equals(default(Edge)))
+                if (predecessor.Value.Equals(default(TEdge)))
                     yield return predecessor.Key;
             }
         }
 
-        public static ICollection<Vertex> TopologicalSort<Vertex, Edge>(
-            IUndirectedGraph<Vertex, Edge> visitedGraph)
-            where Edge : IEdge<Vertex>
+        public static ICollection<TVertex> TopologicalSort<TVertex, TEdge>(
+            IUndirectedGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
         {
-            List<Vertex> vertices = new List<Vertex>(visitedGraph.VertexCount);
+            List<TVertex> vertices = new List<TVertex>(visitedGraph.VertexCount);
             TopologicalSort(visitedGraph, vertices);
             return vertices;
         }
 
-        public static void TopologicalSort<Vertex, Edge>(
-            IUndirectedGraph<Vertex, Edge> visitedGraph,
-            IList<Vertex> vertices
+        public static void TopologicalSort<TVertex, TEdge>(
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
+            IList<TVertex> vertices
             )
-            where Edge : IEdge<Vertex>
+            where TEdge : IEdge<TVertex>
         {
-            UndirectedTopologicalSortAlgorithm<Vertex, Edge> topo
-                = new UndirectedTopologicalSortAlgorithm<Vertex, Edge>(visitedGraph);
+            UndirectedTopologicalSortAlgorithm<TVertex, TEdge> topo
+                = new UndirectedTopologicalSortAlgorithm<TVertex, TEdge>(visitedGraph);
             topo.Compute(vertices);
         }
 
-        public static ICollection<Vertex> TopologicalSort<Vertex, Edge>(
-            IVertexListGraph<Vertex, Edge> visitedGraph)
-            where Edge : IEdge<Vertex>
+        public static ICollection<TVertex> TopologicalSort<TVertex, TEdge>(
+            IVertexListGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
         {
-            List<Vertex> vertices = new List<Vertex>(visitedGraph.VertexCount);
+            List<TVertex> vertices = new List<TVertex>(visitedGraph.VertexCount);
             TopologicalSort(visitedGraph, vertices);
             return vertices;
         }
 
-        public static void TopologicalSort<Vertex, Edge>(
-            IVertexListGraph<Vertex, Edge> visitedGraph,
-            IList<Vertex> vertices)
-            where Edge : IEdge<Vertex>
+        public static void TopologicalSort<TVertex, TEdge>(
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            IList<TVertex> vertices)
+            where TEdge : IEdge<TVertex>
         {
-            TopologicalSortAlgorithm<Vertex, Edge> topo = new TopologicalSortAlgorithm<Vertex, Edge>(visitedGraph);
+            TopologicalSortAlgorithm<TVertex, TEdge> topo = new TopologicalSortAlgorithm<TVertex, TEdge>(visitedGraph);
             topo.Compute(vertices);
         }
 
-        public static ICollection<Vertex> SourceFirstTopologicalSort<Vertex, Edge>(
-            IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph)
-            where Edge : IEdge<Vertex>
+        public static ICollection<TVertex> SourceFirstTopologicalSort<TVertex, TEdge>(
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
         {
-            List<Vertex> vertices = new List<Vertex>(visitedGraph.VertexCount);
+            List<TVertex> vertices = new List<TVertex>(visitedGraph.VertexCount);
             SourceFirstTopologicalSort(visitedGraph, vertices);
             return vertices;
         }
 
-        public static void SourceFirstTopologicalSort<Vertex, Edge>(
-            IVertexAndEdgeListGraph<Vertex, Edge> visitedGraph,
-            IList<Vertex> vertices)
-            where Edge : IEdge<Vertex>
+        public static void SourceFirstTopologicalSort<TVertex, TEdge>(
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            IList<TVertex> vertices)
+            where TEdge : IEdge<TVertex>
         {
-            SourceFirstTopologicalSortAlgorithm<Vertex, Edge> topo = new SourceFirstTopologicalSortAlgorithm<Vertex, Edge>(visitedGraph);
+            SourceFirstTopologicalSortAlgorithm<TVertex, TEdge> topo = new SourceFirstTopologicalSortAlgorithm<TVertex, TEdge>(visitedGraph);
             topo.Compute(vertices);
         }
 
-        public static int ConnectedComponents<Vertex,Edge>(
-            IUndirectedGraph<Vertex,Edge> g,
-            Vertex startVertex,
-            IDictionary<Vertex,int> components)
-            where Edge : IEdge<Vertex>
+        public static int ConnectedComponents<TVertex,TEdge>(
+            IUndirectedGraph<TVertex,TEdge> g,
+            TVertex startVertex,
+            IDictionary<TVertex,int> components)
+            where TEdge : IEdge<TVertex>
         {
-            ConnectedComponentsAlgorithm<Vertex,Edge> conn =
-                new ConnectedComponentsAlgorithm<Vertex,Edge>(g, components);
+            ConnectedComponentsAlgorithm<TVertex,TEdge> conn =
+                new ConnectedComponentsAlgorithm<TVertex,TEdge>(g, components);
             conn.Compute(startVertex);
             return conn.ComponentCount;
         }
 
-        public static int WeaklyConnectedComponents<Vertex, Edge>(
-            IVertexListGraph<Vertex, Edge> g,
-            IDictionary<Vertex, int> components)
-            where Edge : IEdge<Vertex>
+        public static int WeaklyConnectedComponents<TVertex, TEdge>(
+            IVertexListGraph<TVertex, TEdge> g,
+            IDictionary<TVertex, int> components)
+            where TEdge : IEdge<TVertex>
         {
-            WeaklyConnectedComponentsAlgorithm<Vertex, Edge> conn =
-                new WeaklyConnectedComponentsAlgorithm<Vertex, Edge>(g, components);
+            WeaklyConnectedComponentsAlgorithm<TVertex, TEdge> conn =
+                new WeaklyConnectedComponentsAlgorithm<TVertex, TEdge>(g, components);
             conn.Compute();
             return conn.ComponentCount;
         }
 
-        public static int StronglyConnectedComponents<Vertex, Edge>(
-            IVertexListGraph<Vertex, Edge> g,
-            IDictionary<Vertex, int> components)
-            where Edge : IEdge<Vertex>
+        public static int StronglyConnectedComponents<TVertex, TEdge>(
+            IVertexListGraph<TVertex, TEdge> g,
+            IDictionary<TVertex, int> components)
+            where TEdge : IEdge<TVertex>
         {
-            StronglyConnectedComponentsAlgorithm<Vertex, Edge> conn =
-                new StronglyConnectedComponentsAlgorithm<Vertex, Edge>(g, components);
+            StronglyConnectedComponentsAlgorithm<TVertex, TEdge> conn =
+                new StronglyConnectedComponentsAlgorithm<TVertex, TEdge>(g, components);
             conn.Compute();
             return conn.ComponentCount;
         }
 
-        public static void Clone<Vertex,Edge>(
-            IVertexAndEdgeListGraph<Vertex, Edge> g,
-            IMutableVertexAndEdgeListGraph<Vertex, Edge> clone)
-            where Vertex : ICloneable
-            where Edge : ICloneableEdge<Vertex>
+        public static void Clone<TVertex,TEdge>(
+            IVertexAndEdgeListGraph<TVertex, TEdge> g,
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> clone)
+            where TVertex : ICloneable
+            where TEdge : ICloneableEdge<TVertex>
         {
             if (g == null)
                 throw new ArgumentNullException("g");
             if (clone == null)
                 throw new ArgumentNullException("clone");
 
-            Dictionary<Vertex, Vertex> vertexClones = new Dictionary<Vertex, Vertex>();
+            Dictionary<TVertex, TVertex> vertexClones = new Dictionary<TVertex, TVertex>();
 
-            foreach (Vertex v in g.Vertices)
+            foreach (TVertex v in g.Vertices)
             {
-                Vertex vc = (Vertex)v.Clone();
+                TVertex vc = (TVertex)v.Clone();
                 clone.AddVertex(vc);
                 vertexClones.Add(v, vc);
             }
 
-            foreach (Edge edge in g.Edges)
+            foreach (TEdge edge in g.Edges)
             {
-                Edge ec = (Edge)edge.Clone(
+                TEdge ec = (TEdge)edge.Clone(
                     vertexClones[edge.Source],
                     vertexClones[edge.Target]);
                 clone.AddEdge(ec);
             }
         }
 
-        public static IMutableBidirectionalGraph<Graph,CondensatedEdge<Vertex, Edge,Graph>> Condensate<Vertex, Edge, Graph>(
-            IVertexAndEdgeListGraph<Vertex,Edge> g)
-            where Edge : IEdge<Vertex>
-            where Graph : IMutableVertexAndEdgeListGraph<Vertex,Edge>, new()
+        public static IMutableBidirectionalGraph<TGraph,CondensatedEdge<TVertex, TEdge,TGraph>> Condensate<TVertex, TEdge, TGraph>(
+            IVertexAndEdgeListGraph<TVertex,TEdge> g)
+            where TEdge : IEdge<TVertex>
+            where TGraph : IMutableVertexAndEdgeListGraph<TVertex,TEdge>, new()
         {
             if (g == null)
                 throw new ArgumentNullException("g");
 
-            CondensationGraphAlgorithm<Vertex, Edge, Graph> condensator = new CondensationGraphAlgorithm<Vertex, Edge, Graph>(g);
+            CondensationGraphAlgorithm<TVertex, TEdge, TGraph> condensator = new CondensationGraphAlgorithm<TVertex, TEdge, TGraph>(g);
             condensator.Compute();
             return condensator.CondensatedGraph;
         }
@@ -202,26 +202,26 @@ namespace QuickGraph.Algorithms
         /// <param name="g">graph to visit</param>
         /// <returns>colleciton of odd vertices</returns>
         /// <exception cref="ArgumentNullException">g is a null reference</exception>
-        public static List<Vertex> OddVertices<Vertex,Edge>(IVertexAndEdgeListGraph<Vertex,Edge> g)
-            where Edge : IEdge<Vertex>
+        public static List<TVertex> OddVertices<TVertex,TEdge>(IVertexAndEdgeListGraph<TVertex,TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
             if (g == null)
                 throw new ArgumentNullException("g");
 
-            Dictionary<Vertex,int> counts = new Dictionary<Vertex,int>(g.VertexCount);
-            foreach (Vertex v in g.Vertices)
+            Dictionary<TVertex,int> counts = new Dictionary<TVertex,int>(g.VertexCount);
+            foreach (TVertex v in g.Vertices)
             {
                 counts.Add(v,0);
             }
 
-            foreach (Edge e in g.Edges)
+            foreach (TEdge e in g.Edges)
             {
                 ++counts[e.Source];
                 --counts[e.Target];
             }
 
-            List<Vertex> odds = new List<Vertex>();
-            foreach (KeyValuePair<Vertex,int> de in counts)
+            List<TVertex> odds = new List<TVertex>();
+            foreach (KeyValuePair<TVertex,int> de in counts)
             {
                 if (de.Value % 2 != 0)
                     odds.Add(de.Key);
@@ -230,8 +230,8 @@ namespace QuickGraph.Algorithms
             return odds;
         }
 
-        public static bool IsDirectedAcyclicGraph<Vertex, Edge>(IVertexListGraph<Vertex, Edge> g)
-            where Edge : IEdge<Vertex>
+        public static bool IsDirectedAcyclicGraph<TVertex, TEdge>(IVertexListGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
             if (g == null)
                 throw new ArgumentNullException("g");
@@ -243,20 +243,20 @@ namespace QuickGraph.Algorithms
         {
             private bool isDag = true;
 
-            public bool IsDag<Vertex,Edge>(IVertexListGraph<Vertex, Edge> g)
-                where Edge : IEdge<Vertex>
+            public bool IsDag<TVertex,TEdge>(IVertexListGraph<TVertex, TEdge> g)
+                where TEdge : IEdge<TVertex>
             {
-                DepthFirstSearchAlgorithm<Vertex, Edge> dfs = new DepthFirstSearchAlgorithm<Vertex, Edge>(g);
+                DepthFirstSearchAlgorithm<TVertex, TEdge> dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(g);
                 try
                 {
-                    dfs.BackEdge += new EdgeEventHandler<Vertex, Edge>(dfs_BackEdge);
+                    dfs.BackEdge += new EdgeEventHandler<TVertex, TEdge>(dfs_BackEdge);
                     isDag = true;
                     dfs.Compute();
                     return isDag;
                 }
                 finally
                 {
-                    dfs.BackEdge -= new EdgeEventHandler<Vertex, Edge>(dfs_BackEdge);
+                    dfs.BackEdge -= new EdgeEventHandler<TVertex, TEdge>(dfs_BackEdge);
                 }
             }
 

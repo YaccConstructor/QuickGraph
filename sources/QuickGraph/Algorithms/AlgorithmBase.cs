@@ -2,22 +2,22 @@
 
 namespace QuickGraph.Algorithms
 {
-    public abstract class AlgorithmBase<Graph> :
-        IAlgorithm<Graph>
+    public abstract class AlgorithmBase<TGraph> :
+        IAlgorithm<TGraph>
     {
-        private Graph visitedGraph;
+        private TGraph visitedGraph;
         private volatile object syncRoot = new object();
         private int cancelling = 0;
         private volatile ComputationState state = ComputationState.NotRunning;
 
-        public AlgorithmBase(Graph visitedGraph)
+        public AlgorithmBase(TGraph visitedGraph)
         {
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");
             this.visitedGraph = visitedGraph;
         }
 
-        public Graph VisitedGraph
+        public TGraph VisitedGraph
         {
             get { return this.visitedGraph; }
         }

@@ -7,30 +7,30 @@ using QuickGraph.Algorithms.Observers;
 namespace QuickGraph.Algorithms
 {
     [Serializable]
-    public sealed class EulerianTrailAlgorithm<Vertex, Edge> :
-        RootedAlgorithmBase<Vertex,IMutableVertexAndEdgeListGraph<Vertex, Edge>>,
-        ITreeBuilderAlgorithm<Vertex,Edge>
-        where Edge : IEdge<Vertex>
+    public sealed class EulerianTrailAlgorithm<TVertex, TEdge> :
+        RootedAlgorithmBase<TVertex,IMutableVertexAndEdgeListGraph<TVertex, TEdge>>,
+        ITreeBuilderAlgorithm<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        private List<Edge> circuit;
-        private List<Edge> temporaryCircuit;
-        private Vertex currentVertex;
-        private List<Edge> temporaryEdges;
+        private List<TEdge> circuit;
+        private List<TEdge> temporaryCircuit;
+        private TVertex currentVertex;
+        private List<TEdge> temporaryEdges;
 
         /// <summary>
         /// Construct an eulerian trail builder
         /// </summary>
         /// <param name="g"></param>
-        public EulerianTrailAlgorithm(IMutableVertexAndEdgeListGraph<Vertex, Edge> visitedGraph)
+        public EulerianTrailAlgorithm(IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
             :base(visitedGraph)
         {
-            this.circuit = new List<Edge>();
-            this.temporaryCircuit = new List<Edge>();
-            this.currentVertex = default(Vertex);
-            this.temporaryEdges = new List<Edge>();
+            this.circuit = new List<TEdge>();
+            this.temporaryCircuit = new List<TEdge>();
+            this.currentVertex = default(TVertex);
+            this.temporaryEdges = new List<TEdge>();
         }
 
-        public List<Edge> Circuit
+        public List<TEdge> Circuit
         {
             get
             {
@@ -38,56 +38,56 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        private bool NotInCircuit(Edge edge)
+        private bool NotInCircuit(TEdge edge)
         {
             return !this.circuit.Contains(edge) 
                 && !this.temporaryCircuit.Contains(edge);
         }
 
-        private IEnumerable<Edge> SelectOutEdgesNotInCircuit(Vertex v)
+        private IEnumerable<TEdge> SelectOutEdgesNotInCircuit(TVertex v)
         {
-            foreach (Edge edge in VisitedGraph.OutEdges(v))
+            foreach (TEdge edge in VisitedGraph.OutEdges(v))
                 if (this.NotInCircuit(edge))
                     yield return edge;
         }
 
-        private Edge SelectSingleOutEdgeNotInCircuit(Vertex v)
+        private TEdge SelectSingleOutEdgeNotInCircuit(TVertex v)
         {
-            IEnumerable<Edge> en = this.SelectOutEdgesNotInCircuit(v);
-            IEnumerator<Edge> eor = en.GetEnumerator();
+            IEnumerable<TEdge> en = this.SelectOutEdgesNotInCircuit(v);
+            IEnumerator<TEdge> eor = en.GetEnumerator();
             if (!eor.MoveNext())
-                return default(Edge);
+                return default(TEdge);
             else
                 return eor.Current;
         }
 
-        public event EdgeEventHandler<Vertex,Edge> TreeEdge;
-        private void OnTreeEdge(Edge e)
+        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
+        private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+                TreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        public event EdgeEventHandler<Vertex,Edge> CircuitEdge;
-        private void OnCircuitEdge(Edge e)
+        public event EdgeEventHandler<TVertex,TEdge> CircuitEdge;
+        private void OnCircuitEdge(TEdge e)
         {
             if (CircuitEdge != null)
-                CircuitEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+                CircuitEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        public event EdgeEventHandler<Vertex,Edge> VisitEdge;
-        private void OnVisitEdge(Edge e)
+        public event EdgeEventHandler<TVertex,TEdge> VisitEdge;
+        private void OnVisitEdge(TEdge e)
         {
             if (VisitEdge != null)
-                VisitEdge(this, new EdgeEventArgs<Vertex,Edge>(e));
+                VisitEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        private bool Search(Vertex u)
+        private bool Search(TVertex u)
         {
-            foreach (Edge e in SelectOutEdgesNotInCircuit(u))
+            foreach (TEdge e in SelectOutEdgesNotInCircuit(u))
             {
                 OnTreeEdge(e);
-                Vertex v = e.Target;
+                TVertex v = e.Target;
                 // add edge to temporary path
                 this.temporaryCircuit.Add(e);
                 // e.Target should be equal to CurrentVertex.
@@ -114,9 +114,9 @@ namespace QuickGraph.Algorithms
         private bool Visit()
         {
             // find a vertex that needs to be visited
-            foreach (Edge e in Circuit)
+            foreach (TEdge e in Circuit)
             {
-                Edge fe = SelectSingleOutEdgeNotInCircuit(e.Source);
+                TEdge fe = SelectSingleOutEdgeNotInCircuit(e.Source);
                 if (fe != null)
                 {
                     OnVisitEdge(fe);
@@ -135,7 +135,7 @@ namespace QuickGraph.Algorithms
         /// </summary>
         /// <param name="g"></param>
         /// <returns>number of eulerian trails</returns>
-        public static int ComputeEulerianPathCount(IVertexAndEdgeListGraph<Vertex,Edge> g)
+        public static int ComputeEulerianPathCount(IVertexAndEdgeListGraph<TVertex,TEdge> g)
         {
             if (g == null)
                 throw new ArgumentNullException("g");
@@ -158,13 +158,13 @@ namespace QuickGraph.Algorithms
         /// <returns>true if all the graph edges are in the circuit</returns>
         private bool CircuitAugmentation()
         {
-            List<Edge> newC = new List<Edge>(this.circuit.Count + this.temporaryCircuit.Count);
+            List<TEdge> newC = new List<TEdge>(this.circuit.Count + this.temporaryCircuit.Count);
             int i, j;
 
             // follow C until w is found
             for (i = 0; i < Circuit.Count; ++i)
             {
-                Edge e = Circuit[i];
+                TEdge e = Circuit[i];
                 if (e.Source.Equals(currentVertex))
                     break;
                 newC.Add(e);
@@ -173,7 +173,7 @@ namespace QuickGraph.Algorithms
             // follow D until w is found again
             for (j = 0; j < this.temporaryCircuit.Count; ++j)
             {
-                Edge e = this.temporaryCircuit[j];
+                TEdge e = this.temporaryCircuit[j];
                 newC.Add(e);
                 OnCircuitEdge(e);
                 if (e.Target.Equals(this.currentVertex))
@@ -184,7 +184,7 @@ namespace QuickGraph.Algorithms
             // continue C
             for (; i < Circuit.Count; ++i)
             {
-                Edge e = this.Circuit[i];
+                TEdge e = this.Circuit[i];
                 newC.Add(e);
             }
 
@@ -203,7 +203,7 @@ namespace QuickGraph.Algorithms
             if (this.VisitedGraph.VertexCount == 0)
                 return;
             if (this.RootVertex == null)
-                this.RootVertex = TraversalHelper.GetFirstVertex<Vertex, Edge>(this.VisitedGraph);
+                this.RootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
 
             this.currentVertex = this.RootVertex;
             // start search
@@ -225,34 +225,34 @@ namespace QuickGraph.Algorithms
         /// </summary>
         /// <param name="g"></param>
         /// <returns></returns>
-        public List<Edge> AddTemporaryEdges(IEdgeFactory<Vertex,Edge> edgeFactory)
+        public List<TEdge> AddTemporaryEdges(IEdgeFactory<TVertex,TEdge> edgeFactory)
         {
             // first gather odd edges.
-            List<Vertex> oddVertices = AlgoUtility.OddVertices(this.VisitedGraph);
+            List<TVertex> oddVertices = AlgoUtility.OddVertices(this.VisitedGraph);
 
             // check that there are an even number of them
             if (oddVertices.Count % 2 != 0)
                 throw new Exception("number of odd vertices in not even!");
 
             // add temporary edges to create even edges:
-            this.temporaryEdges = new List<Edge>();
+            this.temporaryEdges = new List<TEdge>();
 
             bool found, foundbe, foundadjacent;
             while (oddVertices.Count > 0)
             {
-                Vertex u = oddVertices[0];
+                TVertex u = oddVertices[0];
                 // find adjacent odd vertex.
                 found = false;
                 foundadjacent = false;
-                foreach (Edge e in this.VisitedGraph.OutEdges(u))
+                foreach (TEdge e in this.VisitedGraph.OutEdges(u))
                 {
-                    Vertex v = e.Target;
+                    TVertex v = e.Target;
                     if (!v.Equals(u) && oddVertices.Contains(v))
                     {
                         foundadjacent = true;
                         // check that v does not have an out-edge towards u
                         foundbe = false;
-                        foreach (Edge be in this.VisitedGraph.OutEdges(v))
+                        foreach (TEdge be in this.VisitedGraph.OutEdges(v))
                         {
                             if (be.Target.Equals(u))
                             {
@@ -263,7 +263,7 @@ namespace QuickGraph.Algorithms
                         if (foundbe)
                             continue;
                         // add temporary edge
-                        Edge tempEdge = edgeFactory.CreateEdge(v, u);
+                        TEdge tempEdge = edgeFactory.CreateEdge(v, u);
                         if (!this.VisitedGraph.AddEdge(tempEdge))
                             throw new InvalidOperationException();
                         // add to collection
@@ -282,8 +282,8 @@ namespace QuickGraph.Algorithms
                     // pick another vertex
                     if (oddVertices.Count < 2)
                         throw new Exception("Eulerian trail failure");
-                    Vertex v = oddVertices[1];
-                    Edge tempEdge = edgeFactory.CreateEdge(u, v);
+                    TVertex v = oddVertices[1];
+                    TEdge tempEdge = edgeFactory.CreateEdge(u, v);
                     if (!this.VisitedGraph.AddEdge(tempEdge))
                         throw new InvalidOperationException();
                     // add to collection
@@ -312,7 +312,7 @@ namespace QuickGraph.Algorithms
         public void RemoveTemporaryEdges()
         {
             // remove from graph
-            foreach (Edge e in temporaryEdges)
+            foreach (TEdge e in temporaryEdges)
                 this.VisitedGraph.RemoveEdge(e);
             this.temporaryEdges.Clear();
         }
@@ -325,12 +325,12 @@ namespace QuickGraph.Algorithms
         /// of trails spans the entire set of edges.
         /// </remarks>
         /// <returns>Eulerian trail set</returns>
-        public ICollection<ICollection<Edge>> Trails()
+        public ICollection<ICollection<TEdge>> Trails()
         {
-            List<ICollection<Edge>> trails = new List<ICollection<Edge>>();
+            List<ICollection<TEdge>> trails = new List<ICollection<TEdge>>();
 
-            List<Edge> trail = new List<Edge>();
-            foreach (Edge e in this.Circuit)
+            List<TEdge> trail = new List<TEdge>();
+            foreach (TEdge e in this.Circuit)
             {
                 if (this.temporaryEdges.Contains(e))
                 {
@@ -338,7 +338,7 @@ namespace QuickGraph.Algorithms
                     if (trail.Count != 0)
                         trails.Add(trail);
                     // start new trail
-                    trail = new List<Edge>();
+                    trail = new List<TEdge>();
                 }
                 else
                     trail.Add(e);
@@ -378,7 +378,7 @@ namespace QuickGraph.Algorithms
         /// <returns>eulerian trail set, all starting at s</returns>
         /// <exception cref="ArgumentNullException">s is a null reference.</exception>
         /// <exception cref="Exception">Eulerian trail not computed yet.</exception>
-        public ICollection<ICollection<Edge>> Trails(Vertex s)
+        public ICollection<ICollection<TEdge>> Trails(TVertex s)
         {
             if (s == null)
                 throw new ArgumentNullException("s");
@@ -389,7 +389,7 @@ namespace QuickGraph.Algorithms
             int i = 0;
             for (i = 0; i < this.Circuit.Count; ++i)
             {
-                Edge e = this.Circuit[i];
+                TEdge e = this.Circuit[i];
                 if (this.temporaryEdges.Contains(e))
                     continue;
                 if (e.Source.Equals(s))
@@ -399,12 +399,12 @@ namespace QuickGraph.Algorithms
                 throw new Exception("Did not find vertex in eulerian trail?");
 
             // create collections
-            List<ICollection<Edge>> trails = new List<ICollection<Edge>>();
-            List<Edge> trail = new List<Edge>();
-            BreadthFirstSearchAlgorithm<Vertex,Edge> bfs =
-                new BreadthFirstSearchAlgorithm<Vertex,Edge>(VisitedGraph);
-            VertexPredecessorRecorderObserver<Vertex,Edge> vis = 
-                new VertexPredecessorRecorderObserver<Vertex,Edge>();
+            List<ICollection<TEdge>> trails = new List<ICollection<TEdge>>();
+            List<TEdge> trail = new List<TEdge>();
+            BreadthFirstSearchAlgorithm<TVertex,TEdge> bfs =
+                new BreadthFirstSearchAlgorithm<TVertex,TEdge>(VisitedGraph);
+            VertexPredecessorRecorderObserver<TVertex,TEdge> vis = 
+                new VertexPredecessorRecorderObserver<TVertex,TEdge>();
             vis.Attach(bfs);
             bfs.Compute(s);
 
@@ -412,7 +412,7 @@ namespace QuickGraph.Algorithms
             int start = i;
             for (; i < this.Circuit.Count; ++i)
             {
-                Edge e = this.Circuit[i];
+                TEdge e = this.Circuit[i];
                 if (this.temporaryEdges.Contains(e))
                 {
                     // store previous trail and start new one.
@@ -430,7 +430,7 @@ namespace QuickGraph.Algorithms
             // starting again on the circuit
             for (i = 0; i < start; ++i)
             {
-                Edge e = this.Circuit[i];
+                TEdge e = this.Circuit[i];
                 if (this.temporaryEdges.Contains(e))
                 {
                     // store previous trail and start new one.
