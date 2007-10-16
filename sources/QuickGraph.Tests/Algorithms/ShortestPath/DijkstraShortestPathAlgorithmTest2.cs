@@ -9,7 +9,7 @@ namespace QuickGraph.Algorithms.ShortestPath
     [TestFixture, PexClass]
     public partial class DijkstraShortestPathAlgorithmTest2
     {
-        [PexTest]
+        [PexMethod]
         public void Compute([PexAssumeIsNotNull]IVertexAndEdgeListGraph<string,Edge<string>> g)
         {
             List<string> vertices = new List<string>(g.Vertices);

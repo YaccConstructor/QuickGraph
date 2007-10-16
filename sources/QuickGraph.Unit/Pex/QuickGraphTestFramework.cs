@@ -67,11 +67,6 @@ namespace QuickGraph.Unit.Pex
             get { return Metadata<QuickGraph.Unit.ExpectedExceptionAttribute>.SerializableName;}
         }
 
-        public override TypeName RollbackAttribute
-        {
-            get { return Metadata<QuickGraph.Unit.RollbackAttribute>.SerializableName; }
-        }
-
         protected override string IgnoreMessageProperty
         {
             get { return "Message"; }

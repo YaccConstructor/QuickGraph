@@ -9,7 +9,7 @@ namespace QuickGraph.Tests
     [TestFixture, PexClass]
     public partial class DegreeTest
     {
-        [PexTest]
+        [PexMethod]
         public void DegreeSumEqualsTwiceEdgeCount([PexAssumeIsNotNull] IBidirectionalGraph<string, Edge<string>> graph)
         {
             int edgeCount = graph.EdgeCount;
@@ -20,7 +20,7 @@ namespace QuickGraph.Tests
             Assert.AreEqual(edgeCount * 2, degCount);
         }
 
-        [PexTest]
+        [PexMethod]
         public void InDegreeSumEqualsEdgeCount([PexAssumeIsNotNull] IBidirectionalGraph<string, Edge<string>> graph)
         {
             int edgeCount = graph.EdgeCount;
@@ -31,7 +31,7 @@ namespace QuickGraph.Tests
             Assert.AreEqual(edgeCount, degCount);
         }
 
-        [PexTest]
+        [PexMethod]
         public void OutDegreeSumEqualsEdgeCount([PexAssumeIsNotNull] IBidirectionalGraph<string, Edge<string>> graph)
         {
             int edgeCount = graph.EdgeCount;

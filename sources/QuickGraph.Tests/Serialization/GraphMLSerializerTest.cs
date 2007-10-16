@@ -10,13 +10,13 @@ namespace QuickGraph.Serialization
     [TestFixture, PexClass]
     public partial class GraphMLSerializerTest
     {
-        [Test, PexTest]
+        [Test, PexMethod]
         public void RoundTrip()
         {
             RoundTripGraph(new AdjacencyGraphFactory().SimpleIdentifiable());
         }
 
-        [PexTest]
+        [PexMethod]
         public void RoundTripGraph([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<NamedVertex, NamedEdge> g)
         {
             GraphMLSerializer<NamedVertex, NamedEdge> serializer = new GraphMLSerializer<NamedVertex, NamedEdge>();

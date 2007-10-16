@@ -15,7 +15,7 @@ namespace QuickGraph.Algorithms
             this.Sort(g);
         }
 
-        [PexTest]
+        [PexMethod]
         public void Sort([PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             SourceFirstTopologicalSortAlgorithm<string, Edge<string>> topo = new SourceFirstTopologicalSortAlgorithm<string, Edge<string>>(g);

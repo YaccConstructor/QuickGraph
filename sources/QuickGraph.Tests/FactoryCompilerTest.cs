@@ -21,7 +21,7 @@ namespace QuickGraph
             }
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void CreateVertexFactory()
         {
             MethodInfo boo = typeof(Foo).GetMethod("Boo");
@@ -32,7 +32,7 @@ namespace QuickGraph
             Assert.IsNotNull(foo);
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void CreateVertexFactoryTwice()
         {
             IVertexFactory<object> factory = FactoryCompiler.GetVertexFactory<object>();
@@ -43,7 +43,7 @@ namespace QuickGraph
             Assert.IsNotNull(factory2.CreateVertex());
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void CreateEdgeFactory()
         {
             IEdgeFactory<Foo,Edge<Foo>> factory = FactoryCompiler.GetEdgeFactory<Foo,Edge<Foo>>();
@@ -57,14 +57,14 @@ namespace QuickGraph
             Assert.IsNotNull(edge.Target);
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void CreateEdgeFactoryTwice()
         {
             CreateEdgeFactory();
             CreateEdgeFactory();
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void CreateDifferentFactories()
         {
             FactoryCompiler.GetEdgeFactory<int, Edge<int>>();

@@ -344,6 +344,17 @@ namespace QuickGraph
             return true;
         }
 
+        public virtual bool AddVerticesAndEdge(TEdge e)
+        {
+            GraphContracts.AssumeNotNull(e, "e");
+            if (!this.ContainsVertex(e.Source))
+                this.AddVertex(e.Source);
+            if (!this.ContainsVertex(e.Target))
+                this.AddVertex(e.Target);
+
+            return this.AddEdge(e);
+        }
+
         public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
         protected virtual void OnEdgeAdded(EdgeEventArgs<TVertex, TEdge> args)
         {

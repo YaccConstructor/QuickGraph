@@ -7,7 +7,7 @@ namespace QuickGraph.Algorithms
     [TestFixture, PexClass]
     public partial class TopologicalSortAlgorithmTest
     {
-        [PexTest]
+        [PexMethod]
         public void SortCyclic(
             [PexAssumeIsNotNull]IVertexListGraph<string,Edge<string>> g)
         {

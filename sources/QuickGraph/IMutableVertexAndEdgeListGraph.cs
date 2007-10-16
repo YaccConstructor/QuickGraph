@@ -7,5 +7,7 @@ namespace QuickGraph
         IMutableEdgeListGraph<TVertex,TEdge>,
         IVertexAndEdgeListGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
-    {}
+    {
+        bool AddVerticesAndEdge(TEdge e);
+    }
 }

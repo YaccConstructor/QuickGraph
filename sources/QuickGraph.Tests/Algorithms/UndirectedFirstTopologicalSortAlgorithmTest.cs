@@ -9,7 +9,7 @@ namespace QuickGraph.Algorithms
     [TypeFactory(typeof(UndirectedGraphFactory))]
     public partial class UndirectedFirstTopologicalSortAlgorithmTest
     {
-        [Test, PexTest]
+        [Test, PexMethod]
         public void Compute([PexAssumeIsNotNull]IUndirectedGraph<string, Edge<string>> g)
         {
             UndirectedFirstTopologicalSortAlgorithm<string, Edge<string>> topo =

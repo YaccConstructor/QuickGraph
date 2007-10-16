@@ -8,7 +8,7 @@ namespace QuickGraph.Algorithms
     [TestFixture, PexClass]
     public partial class StronglyConnectedComponentAlgorithmTest
     {
-        [Test, PexTest]
+        [Test, PexMethod]
         public void EmptyGraph()
         {
             IVertexListGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>(true);
@@ -18,7 +18,7 @@ namespace QuickGraph.Algorithms
             checkStrong(strong);
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void OneVertex()
         {
             AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>(true);
@@ -30,7 +30,7 @@ namespace QuickGraph.Algorithms
             checkStrong(strong);
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void TwoVertex()
         {
             AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>(true);
@@ -43,7 +43,7 @@ namespace QuickGraph.Algorithms
             checkStrong(strong);
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void TwoVertexOnEdge()
         {
             AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>(true);
@@ -58,7 +58,7 @@ namespace QuickGraph.Algorithms
         }
 
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void TwoVertexCycle()
         {
             AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>(true);
@@ -73,7 +73,7 @@ namespace QuickGraph.Algorithms
             checkStrong(strong);
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void Loop()
         {
             IVertexListGraph<string,Edge<string>> g = new AdjacencyGraphFactory().Loop();
@@ -84,7 +84,7 @@ namespace QuickGraph.Algorithms
             checkStrong(strong);
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void Simple()
         {
             IVertexListGraph<string, Edge<string>> g = new AdjacencyGraphFactory().Simple();
@@ -94,7 +94,7 @@ namespace QuickGraph.Algorithms
             checkStrong(strong);
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void FileDependency()
         {
             IVertexListGraph<string, Edge<string>> g = new AdjacencyGraphFactory().FileDependency();
@@ -104,7 +104,7 @@ namespace QuickGraph.Algorithms
             checkStrong(strong);
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void RegularLattice()
         {
             IVertexListGraph<string, Edge<string>> g = new AdjacencyGraphFactory().RegularLattice10x10();

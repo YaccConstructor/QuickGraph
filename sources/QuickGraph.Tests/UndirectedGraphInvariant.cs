@@ -8,7 +8,7 @@ namespace QuickGraph
     [TestFixture, PexClass]
     public partial class UndirectedGraphTest<T,E> where E : IEdge<T>
     {
-        [PexTest]
+        [PexMethod]
         public static void IsAdjacentEdgesEmpty([PexTarget]IUndirectedGraph<T, E> g)
         {
             foreach (T v in g.Vertices)

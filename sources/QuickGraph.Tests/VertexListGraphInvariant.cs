@@ -8,7 +8,7 @@ namespace QuickGraph
     public static class VertexListGraphTest<T, E>
         where E : IEdge<T>
     {
-        [PexTest]
+        [PexMethod]
         public static void Iteration([PexTarget]IVertexListGraph<T,E> g)
         {
             int i = 0;

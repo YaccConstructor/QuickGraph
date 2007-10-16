@@ -9,7 +9,7 @@ namespace QuickGraph.Algorithms.ShortestPath
     [TestFixture, PexClass]
     public partial class DagShortestPathAlgorithmTest
     {
-        [PexTest]
+        [PexMethod]
         public void Compute(IVertexListGraph<string, Edge<string>> g)
         {
             // is this a dag ?
@@ -35,7 +35,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        [PexTest]
+        [PexMethod]
         public void ComputeCriticalPath(IVertexListGraph<string, Edge<string>> g)
         {
             // is this a dag ?

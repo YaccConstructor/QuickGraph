@@ -308,6 +308,17 @@ namespace QuickGraph
             return vertices.Count;
         }
 
+        public virtual bool AddVerticesAndEdge(TEdge e)
+        {
+            GraphContracts.AssumeNotNull(e, "e");
+            if (!this.ContainsVertex(e.Source))
+                this.AddVertex(e.Source);
+            if (!this.ContainsVertex(e.Target))
+                this.AddVertex(e.Target);
+
+            return this.AddEdge(e);
+        }
+
         public virtual bool AddEdge(TEdge e)
         {
             GraphContracts.AssumeInVertexSet<TVertex, TEdge>(this, e, "e");

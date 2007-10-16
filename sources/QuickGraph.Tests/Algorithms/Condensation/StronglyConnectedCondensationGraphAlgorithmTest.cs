@@ -16,7 +16,7 @@ namespace QuickGraph.Algorithms.Condensation
     public partial class StronglyConnectedCondensationGraphAlgorithmTest
     {
         private CondensationGraphAlgorithm<string, Edge<string>,AdjacencyGraph<string,Edge<string>>> algo;
-        [Test, PexTest]
+        [Test, PexMethod]
         public void CondensateAndCheckVertexCount(
             [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
@@ -25,7 +25,7 @@ namespace QuickGraph.Algorithms.Condensation
             CheckVertexCount(g);
         }
 
-        [Test, PexTest]
+        [Test, PexMethod]
         public void CondensateAndCheckEdgeCount(
             [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
@@ -33,7 +33,7 @@ namespace QuickGraph.Algorithms.Condensation
             algo.Compute();
             CheckEdgeCount(g);
         }
-        [Test, PexTest]
+        [Test, PexMethod]
         public void CondensateAndCheckComponentCount(
             [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
@@ -41,7 +41,7 @@ namespace QuickGraph.Algorithms.Condensation
             algo.Compute();
             CheckComponentCount(g);
         }
-        [Test, PexTest]
+        [Test, PexMethod]
         public void CondensateAndCheckDAG(
             [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
