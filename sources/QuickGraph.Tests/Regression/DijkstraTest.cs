@@ -104,21 +104,26 @@ namespace QuickGraph.Tests.Regression {
             // We want to use Dijkstra on this graph
             DijkstraShortestPathAlgorithm<string, Edge<string>> dijkstra = new DijkstraShortestPathAlgorithm<string, Edge<string>>(graph, edgeCost);
 
-            // attach a distance observer to give us the shortest path distances
-            VertexDistanceRecorderObserver<string, Edge<string>> distObserver = new VertexDistanceRecorderObserver<string, Edge<string>>();
             // Attach a Vertex Predecessor Recorder Observer to give us the paths
             VertexPredecessorRecorderObserver<string, Edge<string>> predecessorObserver = new VertexPredecessorRecorderObserver<string, Edge<string>>();
-            using (ObserverUtility.Guard<IDistanceRecorderAlgorithm<string, Edge<string>>>(dijkstra, distObserver))
             using (ObserverUtility.Guard<IVertexPredecessorRecorderAlgorithm<string, Edge<string>>>(dijkstra, predecessorObserver)) 
             {
                 // Run the algorithm with A set to be the source
                 dijkstra.Compute("A");
 
-                foreach (KeyValuePair<string, int> kvp in distObserver.Distances)
-                    Console.WriteLine("Distance from A to node {0} is {1}", kvp.Key, kvp.Value);
-
                 foreach (KeyValuePair<string, Edge<string>> kvp in predecessorObserver.VertexPredecessors)
                     Console.WriteLine("If you want to get to {0} you have to enter through the in edge {1}", kvp.Key, kvp.Value);
+
+                foreach (string v in graph.Vertices) {
+                    double distance = 0;
+                    string vertex = v;
+                    Edge<string> predecessor;
+                    while (predecessorObserver.VertexPredecessors.TryGetValue(vertex, out predecessor)) {
+                        distance += edgeCost[predecessor];
+                        vertex = predecessor.Source;
+                    }
+                    Console.WriteLine("A -> {0}: {1}", v, distance);
+                }
             }
         }
     }
