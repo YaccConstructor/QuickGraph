@@ -115,13 +115,10 @@ namespace QuickGraph.Tests.Regression {
                 Console.WriteLine("If you want to get to {0} you have to enter through the in edge {1}", kvp.Key, kvp.Value);
 
             foreach (string v in graph.Vertices) {
-                double distance = 0;
-                string vertex = v;
-                Edge<string> predecessor;
-                while (predecessorObserver.VertexPredecessors.TryGetValue(vertex, out predecessor)) {
-                    distance += edgeCost[predecessor];
-                    vertex = predecessor.Source;
-                }
+                double distance = AlgoUtility.ComputePredecessorCost(
+                    predecessorObserver.VertexPredecessors,
+                    edgeCost,
+                    v);
                 Console.WriteLine("A -> {0}: {1}", v, distance);
             }
 

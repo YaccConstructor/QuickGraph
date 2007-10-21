@@ -266,5 +266,29 @@ namespace QuickGraph.Algorithms
                 isDag = false;
             }
         }
+
+        public static double ComputePredecessorCost<TVertex, TEdge>(
+            IDictionary<TVertex, TEdge> predecessors,         
+            IDictionary<TEdge, double> edgeCosts,
+            TVertex target
+            ) 
+            where TEdge : IEdge<TVertex>
+        {
+            if (predecessors == null)
+                throw new ArgumentNullException("predecessors");
+            if (edgeCosts == null)
+                throw new ArgumentNullException("edgeCosts");
+
+            double cost = 0;
+            TVertex current = target;
+            TEdge edge;
+
+            while (predecessors.TryGetValue(current, out edge)) {
+                cost += edgeCosts[edge];
+                current = edge.Source;
+            }
+
+            return cost;
+        }
     }
 }
