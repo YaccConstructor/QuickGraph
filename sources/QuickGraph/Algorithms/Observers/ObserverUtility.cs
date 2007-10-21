@@ -3,10 +3,10 @@
 namespace QuickGraph.Algorithms.Observers
 {
     [Serializable]
-    public static class ObserverUtility
+    public static class ObserverScope
     {
         public static IDisposable
-            Guard<TAlgorithm>(TAlgorithm algorithm, IObserver<TAlgorithm> observer)
+            Create<TAlgorithm>(TAlgorithm algorithm, IObserver<TAlgorithm> observer)
         {
             return new ObserverGuardian<TAlgorithm>(algorithm, observer);
         }
