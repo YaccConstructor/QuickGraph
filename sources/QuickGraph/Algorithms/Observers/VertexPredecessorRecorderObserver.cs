@@ -13,7 +13,7 @@ namespace QuickGraph.Algorithms.Observers
     ///     />
     [Serializable]
     public sealed class VertexPredecessorRecorderObserver<TVertex, TEdge> :
-        IObserver<TVertex,TEdge,IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>>
+        IObserver<IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private readonly IDictionary<TVertex, TEdge> vertexPredecessors;

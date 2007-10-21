@@ -13,7 +13,7 @@ namespace QuickGraph.Algorithms.Observers
     ///     />
     [Serializable]
     public sealed class VertexRecorderObserver<TVertex, TEdge> :
-        IObserver<TVertex, TEdge, IVertexTimeStamperAlgorithm<TVertex, TEdge>>
+        IObserver<IVertexTimeStamperAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private IList<TVertex> vertices;

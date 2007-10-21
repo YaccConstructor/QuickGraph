@@ -13,7 +13,7 @@ namespace QuickGraph.Algorithms.Observers
     ///     />
     [Serializable]
     public sealed class EdgeRecorderObserver<TVertex, TEdge> :
-        IObserver<TVertex,TEdge,ITreeBuilderAlgorithm<TVertex, TEdge>>
+        IObserver<ITreeBuilderAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private IList<TEdge> edges;
