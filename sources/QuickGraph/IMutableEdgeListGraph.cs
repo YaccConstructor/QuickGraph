@@ -11,6 +11,8 @@ namespace QuickGraph
         bool AddEdge(TEdge edge);
         event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
 
+        void AddEdgeRange(IEnumerable<TEdge> edges);
+
         bool RemoveEdge(TEdge edge);
         event EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
 

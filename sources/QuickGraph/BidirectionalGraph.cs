@@ -344,6 +344,13 @@ namespace QuickGraph
             return true;
         }
 
+        public void AddEdgeRange(IEnumerable<TEdge> edges)
+        {
+            GraphContracts.AssumeNotNull(edges, "edges");
+            foreach (TEdge edge in edges)
+                this.AddEdge(edge);
+        }
+
         public virtual bool AddVerticesAndEdge(TEdge e)
         {
             GraphContracts.AssumeNotNull(e, "e");

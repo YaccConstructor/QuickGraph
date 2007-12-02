@@ -73,11 +73,19 @@ namespace QuickGraph
 
         public bool AddEdge(TEdge edge)
         {
+            GraphContracts.AssumeNotNull(edge, "edge");
             if(this.ContainsEdge(edge))
                 return false;
             this.edges.Add(edge, edge);
             this.OnEdgeAdded(new EdgeEventArgs<TVertex,TEdge>(edge));
             return true;
+        }
+
+        public void AddEdgeRange(IEnumerable<TEdge> edges)
+        {
+            GraphContracts.AssumeNotNull(edges, "edges");
+            foreach (TEdge edge in edges)
+                this.AddEdge(edge);
         }
 
         public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;

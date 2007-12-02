@@ -165,6 +165,13 @@ namespace QuickGraph
             return true;
         }
 
+        public void AddEdgeRange(IEnumerable<TEdge> edges)
+        {
+            GraphContracts.AssumeNotNull(edges, "edges");
+            foreach (TEdge edge in edges)
+                this.AddEdge(edge);
+        }
+
         public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
         protected virtual void OnEdgeAdded(EdgeEventArgs<TVertex, TEdge> args)
         {

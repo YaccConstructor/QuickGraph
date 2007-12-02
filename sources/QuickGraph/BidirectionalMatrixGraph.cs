@@ -307,12 +307,20 @@ namespace QuickGraph
 
         public bool AddEdge(TEdge edge)
         {
+            GraphContracts.AssumeNotNull(edge, "edge");
             if (this.edges[edge.Source, edge.Target]!=null)
                 throw new ParallelEdgeNotAllowedException();
             this.edges[edge.Source,edge.Target] = edge;
             this.edgeCount++;
             this.OnEdgeAdded(new EdgeEventArgs<int, TEdge>(edge));
             return true;
+        }
+
+        public void AddEdgeRange(IEnumerable<TEdge> edges)
+        {
+            GraphContracts.AssumeNotNull(edges, "edges");
+            foreach (TEdge edge in edges)
+                this.AddEdge(edge);
         }
 
         public event EdgeEventHandler<int, TEdge> EdgeAdded;
