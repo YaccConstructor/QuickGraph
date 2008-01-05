@@ -8,7 +8,7 @@
         IComparer<TVertex>
         where TDistance : IComparable
     {
-        IDictionary<TVertex,TDistance> distances;
+        readonly IDictionary<TVertex,TDistance> distances;
 
         public DistanceComparer(IDictionary<TVertex, TDistance> distances)
         {
