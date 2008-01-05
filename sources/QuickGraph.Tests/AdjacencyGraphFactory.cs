@@ -3,61 +3,51 @@ using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
 using QuickGraph;
 
+#if PEX
 [assembly: PexUseTypesFromFactory(typeof(AdjacencyGraphFactory))]
 //[assembly: PexExplorableFromConstructor(typeof(AdjacencyGraph<string, Edge<string>>), typeof(bool))]
 [assembly: PexExplorableFromFactory(typeof(AdjacencyGraph<int, Edge<int>>), typeof(AdjacencyGraphFactory))]
-
-namespace QuickGraph
-{
-    public class NamedVertex : IdentifiableVertex
-    {
+#endif
+namespace QuickGraph {
+    public class NamedVertex : IdentifiableVertex {
         private string name;
         public NamedVertex(string id)
-            : base(id)
-        { }
+            : base(id) { }
 
         [System.Xml.Serialization.XmlAttribute]
-        public string Name
-        {
+        public string Name {
             get { return this.name; }
             set { this.name = value; }
         }
 
-        public sealed class Factory : IIdentifiableVertexFactory<NamedVertex>
-        {
-            public NamedVertex CreateVertex(string id)
-            {
+        public sealed class Factory : IIdentifiableVertexFactory<NamedVertex> {
+            public NamedVertex CreateVertex(string id) {
                 return new NamedVertex(id);
             }
         }
     }
 
-    public class NamedEdge : IdentifiableEdge<NamedVertex>
-    {
+    public class NamedEdge : IdentifiableEdge<NamedVertex> {
         private string name;
         public NamedEdge(string id, NamedVertex source, NamedVertex target)
-            : base(id, source, target)
-        { }
+            : base(id, source, target) { }
 
         [System.Xml.Serialization.XmlAttribute]
-        public string Name
-        {
+        public string Name {
             get { return this.name; }
             set { this.name = value; }
         }
 
-        public sealed class Factory : IIdentifiableEdgeFactory<NamedVertex,NamedEdge>
-        {
-            public NamedEdge CreateEdge(string id, NamedVertex source, NamedVertex target)
-            {
+        public sealed class Factory : IIdentifiableEdgeFactory<NamedVertex, NamedEdge> {
+            public NamedEdge CreateEdge(string id, NamedVertex source, NamedVertex target) {
                 return new NamedEdge(id, source, target);
             }
         }
     }
 
-
     public class AdjacencyGraphFactory
     {
+#if PEX
         [PexFactory(typeof(AdjacencyGraph<int, Edge<int>>))]
         public static AdjacencyGraph<int, Edge<int>> OracleFactory()
         {
@@ -78,7 +68,7 @@ namespace QuickGraph
 
             return g;
         }
-
+#endif
         private static AdjacencyGraph<String, Edge<String>> CreateGraph()
         {
             return new AdjacencyGraph<String, Edge<String>>(false);

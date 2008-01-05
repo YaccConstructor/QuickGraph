@@ -3,9 +3,10 @@ using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
 using QuickGraph;
 
+#if PEX
 [assembly: PexUseTypesFromFactory(typeof(BidirectionalGraphFactory))]
 [assembly: PexExplorableFromConstructor(typeof(BidirectionalGraph<string, Edge<string>>), typeof(bool))]
-
+#endif
 namespace QuickGraph
 {
     public class BidirectionalGraphFactory

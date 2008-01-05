@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+#if PEX
 using Microsoft.Pex.Framework;
 using Microsoft.Pex.TestFrameworks;
 
@@ -15,3 +16,4 @@ using Microsoft.Pex.TestFrameworks;
     typeof(ArgumentException), 
     AcceptExceptionSubtypes = true, 
     UserAssemblies = "QuickGraph")]
+#endif

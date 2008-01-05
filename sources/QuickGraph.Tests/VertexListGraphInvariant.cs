@@ -8,6 +8,7 @@ namespace QuickGraph
     public static class VertexListGraphTest<T, E>
         where E : IEdge<T>
     {
+#if PEX
         [PexMethod]
         public static void Iteration([PexTarget]IVertexListGraph<T,E> g)
         {
@@ -16,5 +17,6 @@ namespace QuickGraph
                 ++i;
             Assert.AreEqual(g.VertexCount, i);
         }
+#endif
     }
 }
