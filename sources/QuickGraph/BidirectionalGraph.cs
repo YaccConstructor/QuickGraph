@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace QuickGraph
 {
@@ -558,12 +559,14 @@ namespace QuickGraph
 
         [Serializable]
         private sealed class VertexEdgeDictionary 
-            : Dictionary<TVertex, EdgeList>, ICloneable
+            : Dictionary<TVertex, EdgeList>, ICloneable, ISerializable
         {
             public VertexEdgeDictionary() { }
             public VertexEdgeDictionary(int capacity)
                 : base(capacity)
             { }
+
+			public VertexEdgeDictionary(SerializationInfo info, StreamingContext context):base(info,context) { }
 
             public VertexEdgeDictionary Clone()
             {
