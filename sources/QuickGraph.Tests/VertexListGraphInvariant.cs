@@ -8,15 +8,13 @@ namespace QuickGraph
     public static class VertexListGraphTest<T, E>
         where E : IEdge<T>
     {
-#if PEX
         [PexMethod]
         public static void Iteration([PexAssumeUnderTest]IVertexListGraph<T,E> g)
         {
             int i = 0;
-            foreach (T v in PexSymbolic.DropEnumeration(g.Vertices))
+            foreach (T v in PexSymbolicValue.IgnoreEnumeration(g.Vertices))
                 ++i;
             Assert.AreEqual(g.VertexCount, i);
         }
-#endif
     }
 }
