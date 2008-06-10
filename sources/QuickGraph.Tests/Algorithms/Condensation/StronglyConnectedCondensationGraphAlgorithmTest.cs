@@ -18,7 +18,7 @@ namespace QuickGraph.Algorithms.Condensation
         private CondensationGraphAlgorithm<string, Edge<string>,AdjacencyGraph<string,Edge<string>>> algo;
         [Test, PexMethod]
         public void CondensateAndCheckVertexCount(
-            [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
+            [PexAssumeNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             this.algo = new CondensationGraphAlgorithm<string, Edge<string>, AdjacencyGraph<string, Edge<string>>>(g);
             algo.Compute();
@@ -27,7 +27,7 @@ namespace QuickGraph.Algorithms.Condensation
 
         [Test, PexMethod]
         public void CondensateAndCheckEdgeCount(
-            [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
+            [PexAssumeNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             this.algo = new CondensationGraphAlgorithm<string, Edge<string>, AdjacencyGraph<string, Edge<string>>>(g);
             algo.Compute();
@@ -35,7 +35,7 @@ namespace QuickGraph.Algorithms.Condensation
         }
         [Test, PexMethod]
         public void CondensateAndCheckComponentCount(
-            [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
+            [PexAssumeNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             this.algo = new CondensationGraphAlgorithm<string, Edge<string>, AdjacencyGraph<string, Edge<string>>>(g);
             algo.Compute();
@@ -43,7 +43,7 @@ namespace QuickGraph.Algorithms.Condensation
         }
         [Test, PexMethod]
         public void CondensateAndCheckDAG(
-            [PexAssumeIsNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
+            [PexAssumeNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             this.algo = new CondensationGraphAlgorithm<string, Edge<string>, AdjacencyGraph<string, Edge<string>>>(g);
             algo.Compute();

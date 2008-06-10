@@ -9,19 +9,19 @@ namespace QuickGraph.Algorithms
     public partial class DoubleDenseMatrixTest
     {
         [PexMethod]
-        public void ToString([PexAssumeIsNotNull]DoubleDenseMatrix matrix)
+        public void ToString([PexAssumeNotNull]DoubleDenseMatrix matrix)
         {
             Console.WriteLine(matrix);
         }
 
         [PexMethod]
-        public void WriteMatrix([PexAssumeIsNotNull]DoubleDenseMatrix matrix)
+        public void WriteMatrix([PexAssumeNotNull]DoubleDenseMatrix matrix)
         {
             matrix.WriteMatrix(Console.Out);
         }
 
         [PexMethod]
-        public void SelfSimilarity([PexAssumeIsNotNull]DoubleDenseMatrix matrix)
+        public void SelfSimilarity([PexAssumeNotNull]DoubleDenseMatrix matrix)
         {
             Console.WriteLine("Matrix");
             matrix.WriteMatrix(Console.Out);

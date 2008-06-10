@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -37,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Pex.Framework, Version=0.5.30516.0, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -81,7 +82,6 @@
     <Compile Include="EdgeListGraphFactory.cs" />
     <Compile Include="EdgeListGraphInvariant.cs" />
     <Compile Include="FactoryCompilerTest.cs" />
-    <Compile Include="FakePexAttributes.cs" />
     <Compile Include="GraphConsoleSerializer.cs" />
     <Compile Include="GraphFactory.cs" />
     <Compile Include="Heap\HeapTest.cs" />

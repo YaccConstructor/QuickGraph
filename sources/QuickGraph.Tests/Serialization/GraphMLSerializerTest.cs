@@ -17,7 +17,7 @@ namespace QuickGraph.Serialization
         }
 
         [PexMethod]
-        public void RoundTripGraph([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<NamedVertex, NamedEdge> g)
+        public void RoundTripGraph([PexAssumeNotNull]IMutableVertexAndEdgeListGraph<NamedVertex, NamedEdge> g)
         {
             GraphMLSerializer<NamedVertex, NamedEdge> serializer = new GraphMLSerializer<NamedVertex, NamedEdge>();
             AdjacencyGraph<NamedVertex, NamedEdge> gd = new AdjacencyGraph<NamedVertex, NamedEdge>();

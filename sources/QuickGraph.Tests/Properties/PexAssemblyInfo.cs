@@ -1,19 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-#if PEX
 using Microsoft.Pex.Framework;
-using Microsoft.Pex.TestFrameworks;
+using Microsoft.Pex.Framework.Instrumentation;
+using Microsoft.Pex.Framework.Settings;
+using Microsoft.Pex.Framework.Focus;
+using Microsoft.Pex.Framework.Validation;
 
-[assembly: PexTestFramework(typeof(QuickGraph.Unit.Pex.QuickGraphTestFramework))]
 [assembly: PexAssemblyUnderTest(typeof(QuickGraph.GraphColor))]
 [assembly: PexAssemblySettings(
     TestFramework = "QuickGraph")]
-[assembly: PexFocusOnAssembly("QuickGraph")]
-[assembly: PexInstrumentAssembly("QuickGraph")]
-[assembly: PexUseAssembly("QuickGraph")]
-[assembly: PexAllowedException(
-    typeof(ArgumentException), 
-    AcceptExceptionSubtypes = true, 
-    UserAssemblies = "QuickGraph")]
-#endif
+[assembly: PexAllowedExceptionFromAssembly(
+    typeof(ArgumentException),
+    "QuickGraph",
+    AcceptExceptionSubtypes = true)]

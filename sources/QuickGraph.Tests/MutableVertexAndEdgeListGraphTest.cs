@@ -4,11 +4,11 @@ using Microsoft.Pex.Framework;
 
 namespace QuickGraph
 {
-    [TestFixture, PexClass(MaxBranchHits = 2, MaxRuns = 50)]
+    [TestFixture, PexClass(MaxRuns = 50)]
     public partial class MutableVertexAndEdgeListGraphTest
     {
         [PexMethod]
-        public void AddVertexOnly([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g, string v)
+        public void AddVertexOnly([PexAssumeNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g, string v)
         {
             int vertexCount = g.VertexCount;
             g.AddVertex(v);
@@ -18,7 +18,7 @@ namespace QuickGraph
         }
 
         [PexMethod]
-        public void AddAndRemoveVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<int, Edge<int>> g, int v)
+        public void AddAndRemoveVertex([PexAssumeNotNull]IMutableVertexAndEdgeListGraph<int, Edge<int>> g, int v)
         {
             int vertexCount = g.VertexCount;
             g.AddVertex(v);
@@ -31,7 +31,7 @@ namespace QuickGraph
         }
 
         [PexMethod]
-        public void AddVertexAddEdgesAndRemoveTargetVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g, string v1, string v2)
+        public void AddVertexAddEdgesAndRemoveTargetVertex([PexAssumeNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g, string v1, string v2)
         {
             int vertexCount = g.VertexCount;
             int edgeCount = g.EdgeCount;
@@ -54,7 +54,7 @@ namespace QuickGraph
         }
 
         [PexMethod]
-        public void AddVertexAddEdgesAndRemoveSourceVertex([PexAssumeIsNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g, string v1, string v2)
+        public void AddVertexAddEdgesAndRemoveSourceVertex([PexAssumeNotNull]IMutableVertexAndEdgeListGraph<string, Edge<string>> g, string v1, string v2)
         {
             int vertexCount = g.VertexCount;
             int edgeCount = g.EdgeCount;

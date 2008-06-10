@@ -4,11 +4,6 @@ using QuickGraph.Unit;
 using QuickGraph;
 using Microsoft.Pex.Framework;
 
-#if PEX
-[assembly: PexExplorableFromConstructor(
-    typeof(BidirectionalMatrixGraph<Edge<int>>),
-    typeof(int))]
-#endif
 namespace QuickGraph
 {
     public class BidirectionalMatrixGraphFactory

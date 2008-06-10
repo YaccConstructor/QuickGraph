@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9FF2B839-743F-4A15-9D33-F11253BF6AE1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -42,6 +42,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ExtendedReflection, Version=0.5.30516.0, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Pex.Framework, Version=0.5.30516.0, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
@@ -55,6 +57,8 @@
     <Compile Include="..\version.cs">
       <Link>Properties\version.cs</Link>
     </Compile>
+    <Compile Include="Pex\QuickGraphPackageAttribute.cs" />
+    <Compile Include="Pex\QuickGraphTestFramework.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AssemblySetUpAndTearDownAttribute.cs" />
     <Compile Include="AssemblySetUpAttribute.cs" />

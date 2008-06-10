@@ -9,7 +9,7 @@ namespace QuickGraph.Algorithms
     {
         [PexMethod]
         public void SortCyclic(
-            [PexAssumeIsNotNull]IVertexListGraph<string,Edge<string>> g)
+            [PexAssumeNotNull]IVertexListGraph<string,Edge<string>> g)
         {
             TopologicalSortAlgorithm<string, Edge<string>> topo = new TopologicalSortAlgorithm<string, Edge<string>>(g);
             topo.Compute();

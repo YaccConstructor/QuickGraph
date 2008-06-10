@@ -4,10 +4,6 @@ using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
 using QuickGraph;
 
-#if PEX
-[assembly: PexExplorableFromConstructor(typeof(EdgeListGraph<string, Edge<string>>), typeof(bool), typeof(bool))]
-#endif
-
 namespace QuickGraph
 {
     public class EdgeListGraphFactory

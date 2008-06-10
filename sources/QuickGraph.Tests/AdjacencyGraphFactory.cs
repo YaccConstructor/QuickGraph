@@ -3,11 +3,6 @@ using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
 using QuickGraph;
 
-#if PEX
-[assembly: PexUseTypesFromFactory(typeof(AdjacencyGraphFactory))]
-//[assembly: PexExplorableFromConstructor(typeof(AdjacencyGraph<string, Edge<string>>), typeof(bool))]
-[assembly: PexExplorableFromFactory(typeof(AdjacencyGraph<int, Edge<int>>), typeof(AdjacencyGraphFactory))]
-#endif
 namespace QuickGraph {
     public class NamedVertex : IdentifiableVertex {
         private string name;
@@ -47,34 +42,11 @@ namespace QuickGraph {
 
     public class AdjacencyGraphFactory
     {
-#if PEX
-        [PexFactory(typeof(AdjacencyGraph<int, Edge<int>>))]
-        public static AdjacencyGraph<int, Edge<int>> OracleFactory()
-        {
-            int vertexCount = PexOracle.DefaultSession.Choose<int>("vertexcount");
-            int edgeCount = PexOracle.DefaultSession.Choose<int>("edgeCount");
-
-            AdjacencyGraph<int, Edge<int>> g = new AdjacencyGraph<int, Edge<int>>();
-            // add vertices
-            for (int i = 0; i < vertexCount; ++i)
-                g.AddVertex(i);
-            // add edges
-            for (int i = 0; i < edgeCount; ++i)
-            {
-                int source = PexOracle.DefaultSession.ChooseFromRange("source" + i.ToString(), 0, vertexCount);
-                int target = PexOracle.DefaultSession.ChooseFromRange("target" + i.ToString(), 0, vertexCount);
-                g.AddEdge(new Edge<int>(source, target));
-            }
-
-            return g;
-        }
-#endif
         private static AdjacencyGraph<String, Edge<String>> CreateGraph()
         {
             return new AdjacencyGraph<String, Edge<String>>(false);
         }
 
-        [PexFactory(typeof(Type))]
         public static Type CreateType()
         {
             return typeof(AdjacencyGraph<int, Edge<int>>);

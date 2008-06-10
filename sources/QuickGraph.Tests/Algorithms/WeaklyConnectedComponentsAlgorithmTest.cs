@@ -9,7 +9,7 @@ namespace QuickGraph.Algorithms
     public partial class WeaklyConnectedComponentsAlgorithmTest
     {
         [PexMethod]
-        public void Compute([PexAssumeIsNotNull]IVertexListGraph<string, Edge<string>> g)
+        public void Compute([PexAssumeNotNull]IVertexListGraph<string, Edge<string>> g)
         {
             GraphConsoleSerializer.DisplayGraph(g);
 

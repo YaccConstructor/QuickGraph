@@ -10,7 +10,7 @@ namespace QuickGraph.Algorithms
     public partial class UndirectedFirstTopologicalSortAlgorithmTest
     {
         [Test, PexMethod]
-        public void Compute([PexAssumeIsNotNull]IUndirectedGraph<string, Edge<string>> g)
+        public void Compute([PexAssumeNotNull]IUndirectedGraph<string, Edge<string>> g)
         {
             UndirectedFirstTopologicalSortAlgorithm<string, Edge<string>> topo =
                 new UndirectedFirstTopologicalSortAlgorithm<string, Edge<string>>(g);

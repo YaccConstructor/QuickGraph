@@ -10,7 +10,7 @@ namespace QuickGraph.Algorithms.ShortestPath
     public partial class DijkstraShortestPathAlgorithmTest2
     {
         [PexMethod]
-        public void Compute([PexAssumeIsNotNull]IVertexAndEdgeListGraph<string,Edge<string>> g)
+        public void Compute([PexAssumeNotNull]IVertexAndEdgeListGraph<string,Edge<string>> g)
         {
             List<string> vertices = new List<string>(g.Vertices);
             foreach (string root in vertices)

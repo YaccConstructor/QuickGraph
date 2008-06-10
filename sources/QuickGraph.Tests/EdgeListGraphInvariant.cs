@@ -8,7 +8,7 @@ namespace QuickGraph
     public static class EdgeListGraphTest<T, E> where E : IEdge<T>
     {
         [PexMethod]
-        public static void Iteration([PexTarget]IEdgeListGraph<T, E> g)
+        public static void Iteration([PexAssumeUnderTest]IEdgeListGraph<T, E> g)
         {
             int n = g.EdgeCount;
             int i = 0;
@@ -17,7 +17,7 @@ namespace QuickGraph
         }
 
         [PexMethod]
-        public static void Count([PexTarget]IEdgeListGraph<T, E> g)
+        public static void Count([PexAssumeUnderTest]IEdgeListGraph<T, E> g)
         {
             int n = g.EdgeCount;
             if (n == 0)

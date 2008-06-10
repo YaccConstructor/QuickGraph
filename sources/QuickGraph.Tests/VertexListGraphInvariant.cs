@@ -10,7 +10,7 @@ namespace QuickGraph
     {
 #if PEX
         [PexMethod]
-        public static void Iteration([PexTarget]IVertexListGraph<T,E> g)
+        public static void Iteration([PexAssumeUnderTest]IVertexListGraph<T,E> g)
         {
             int i = 0;
             foreach (T v in PexSymbolic.DropEnumeration(g.Vertices))
