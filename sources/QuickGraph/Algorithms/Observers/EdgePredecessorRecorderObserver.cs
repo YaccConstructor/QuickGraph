@@ -55,12 +55,18 @@ namespace QuickGraph.Algorithms.Observers
 
         public void Attach(IEdgePredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
+            if (algorithm == null)
+                throw new ArgumentNullException("algorithm");
+
             algorithm.DiscoverTreeEdge +=new EdgeEdgeEventHandler<TVertex,TEdge>(this.DiscoverTreeEdge);
             algorithm.FinishEdge +=new EdgeEventHandler<TVertex,TEdge>(this.FinishEdge);
         }
 
         public void Detach(IEdgePredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
+            if (algorithm == null)
+                throw new ArgumentNullException("algorithm");
+
             algorithm.DiscoverTreeEdge -= new EdgeEdgeEventHandler<TVertex, TEdge>(this.DiscoverTreeEdge);
             algorithm.FinishEdge -= new EdgeEventHandler<TVertex, TEdge>(this.FinishEdge);
         }
