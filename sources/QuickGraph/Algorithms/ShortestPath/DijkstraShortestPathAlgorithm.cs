@@ -59,7 +59,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 EdgeNotRelaxed(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        private void InternalTreeEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
+        private void InternalExamineEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
         {
             bool decreased = Relax(args.Edge);
             if (decreased)
@@ -123,7 +123,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 
-                bfs.TreeEdge += new EdgeEventHandler<TVertex,TEdge>(this.InternalTreeEdge);
+                bfs.ExamineEdge += new EdgeEventHandler<TVertex,TEdge>(this.InternalExamineEdge);
                 bfs.GrayTarget += new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
 
                 bfs.Visit(s);
@@ -139,7 +139,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                     bfs.ExamineVertex -= this.ExamineVertex;
                     bfs.FinishVertex -= this.FinishVertex;
 
-                    bfs.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
+                    bfs.ExamineEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalExamineEdge);
                     bfs.GrayTarget -= new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
                 }
             }
@@ -151,9 +151,10 @@ namespace QuickGraph.Algorithms.ShortestPath
             double dv = this.Distances[e.Target];
             double we = this.Weights[e];
 
-            if (Compare(Combine(du, we), dv))
+            var duwe = Combine(du, we);
+            if (Compare(duwe, dv))
             {
-                this.Distances[e.Target] = Combine(du, we);
+                this.Distances[e.Target] = duwe;
                 return true;
             }
             else

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -37,7 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Pex.Framework, Version=0.5.30516.0, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Pex.Framework, Version=0.5.30516.0, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -57,7 +59,6 @@
     <Compile Include="Algorithms\Layout\BreasdthFirstSearchRandomLayoutAlgorithmTest.cs" />
     <Compile Include="Algorithms\Layout\GdiGraphLayoutRendererTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTest.cs" />
-    <Compile Include="Algorithms\MaximumFlow\MaximumFlowAlgorithmTest.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\PrimMinimumSpanningTreeAlgorithmTest.cs" />
     <Compile Include="Algorithms\RandomWalks\CyclePoppingRandomTreeAlgorithmTest.cs" />
     <Compile Include="Algorithms\RandomWalks\EdgeChainFactory.cs" />
