@@ -108,7 +108,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         public void ComputeNoInit(TVertex s)
         {
             this.vertexQueue = new PriorithizedVertexBuffer<TVertex,double>(this.Distances);
-            BreadthFirstSearchAlgorithm<TVertex,TEdge> bfs = new BreadthFirstSearchAlgorithm<TVertex,TEdge>(
+            var bfs = new BreadthFirstSearchAlgorithm<TVertex,TEdge>(
                 this.VisitedGraph,
                 this.vertexQueue,
                 VertexColors
