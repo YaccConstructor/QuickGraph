@@ -27,9 +27,9 @@ namespace QuickGraph
 
         public IEnumerable<TEdge> AdjacentEdges(TVertex v)
         {
-            foreach (TEdge e in this.VisitedGraph.OutEdges(v))
+            foreach (var e in this.VisitedGraph.OutEdges(v))
                 yield return e;
-            foreach (TEdge e in this.VisitedGraph.InEdges(v))
+            foreach (var e in this.VisitedGraph.InEdges(v))
             {
                 // we skip selfedges here since
                 // we already did those in the outedge run

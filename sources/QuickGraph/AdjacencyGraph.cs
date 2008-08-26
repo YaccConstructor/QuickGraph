@@ -142,7 +142,7 @@ namespace QuickGraph
             get
             {
                 foreach (EdgeList edges in this.vertexEdges.Values)
-                    foreach (TEdge edge in edges)
+                    foreach (var edge in edges)
                         yield return edge;
             }
         }
@@ -151,7 +151,7 @@ namespace QuickGraph
         {
             GraphContracts.AssumeInVertexSet(this, source, "source");
             GraphContracts.AssumeInVertexSet(this, target, "target");
-            foreach (TEdge outEdge in this.OutEdges(source))
+            foreach (var outEdge in this.OutEdges(source))
                 if (outEdge.Target.Equals(target))
                     return true;
             return false;
@@ -175,7 +175,7 @@ namespace QuickGraph
             if (this.vertexEdges.TryGetValue(source, out edgeList) &&
                 edgeList.Count > 0)
             {
-                foreach (TEdge e in edgeList)
+                foreach (var e in edgeList)
                 {
                     if (e.Target.Equals(target))
                     {
@@ -200,7 +200,7 @@ namespace QuickGraph
             if (this.vertexEdges.TryGetValue(source, out outEdges))
             {
                 List<TEdge> list = new List<TEdge>(outEdges.Count);
-                foreach (TEdge edge in outEdges)
+                foreach (var edge in outEdges)
                     if (edge.Target.Equals(target))
                         list.Add(edge);
 
@@ -227,7 +227,7 @@ namespace QuickGraph
         public virtual void AddVertexRange(IEnumerable<TVertex> vertices)
         {
             GraphContracts.AssumeNotNull(vertices, "vertices");
-            foreach (TVertex v in vertices)
+            foreach (var v in vertices)
                 this.AddVertex(v);
         }
 
@@ -249,7 +249,7 @@ namespace QuickGraph
                 EdgeList edges = this.vertexEdges[v];
                 if (this.EdgeRemoved != null) // lazily notify
                 {
-                    foreach (TEdge edge in edges)
+                    foreach (var edge in edges)
                         this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
                 }
                 this.edgeCount -= edges.Count;
@@ -258,18 +258,18 @@ namespace QuickGraph
 
             // iterage over edges and remove each edge touching the vertex
             EdgeList edgeToRemove = new EdgeList();
-            foreach (KeyValuePair<TVertex,EdgeList> kv in this.vertexEdges)
+            foreach (var kv in this.vertexEdges)
             {
                 if (kv.Key.Equals(v)) continue; // we've already 
                 // collect edge to remove
-                foreach(TEdge edge in kv.Value)
+                foreach(var edge in kv.Value)
                 {
                     if (edge.Target.Equals(v))
                         edgeToRemove.Add(edge);
                 }
 
                 // remove edges
-                foreach (TEdge edge in edgeToRemove)
+                foreach (var edge in edgeToRemove)
                 {
                     kv.Value.Remove(edge);
                     this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
@@ -298,11 +298,11 @@ namespace QuickGraph
         {
             GraphContracts.AssumeNotNull(predicate, "predicate");
             VertexList vertices = new VertexList();
-            foreach (TVertex v in this.Vertices)
+            foreach (var v in this.Vertices)
                 if (predicate(v))
                     vertices.Add(v);
 
-            foreach (TVertex v in vertices)
+            foreach (var v in vertices)
                 this.RemoveVertex(v);
 
             return vertices.Count;
@@ -338,14 +338,14 @@ namespace QuickGraph
         public void AddEdgeRange(IEnumerable<TEdge> edges)
         {
             GraphContracts.AssumeNotNull(edges, "edges");
-            foreach (TEdge edge in edges)
+            foreach (var edge in edges)
                 this.AddEdge(edge);
         }
 
         public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
         protected virtual void OnEdgeAdded(EdgeEventArgs<TVertex, TEdge> args)
         {
-            EdgeEventHandler<TVertex, TEdge> eh = this.EdgeAdded;
+            var eh = this.EdgeAdded;
             if (eh != null)
                 eh(this, args);
         }
@@ -376,12 +376,12 @@ namespace QuickGraph
         {
             GraphContracts.AssumeNotNull(predicate, "predicate");
 
-            EdgeList edges = new EdgeList();
-            foreach (TEdge edge in this.Edges)
+            var edges = new EdgeList();
+            foreach (var edge in this.Edges)
                 if (predicate(edge))
                     edges.Add(edge);
 
-            foreach (TEdge edge in edges)
+            foreach (var edge in edges)
                 this.RemoveEdge(edge);
 
             GraphContracts.Assert(this.edgeCount >= 0);
@@ -392,11 +392,11 @@ namespace QuickGraph
         {
             GraphContracts.AssumeInVertexSet(this, v, "v");
 
-            EdgeList edges = this.vertexEdges[v];
+            var edges = this.vertexEdges[v];
             int count = edges.Count;
             if (this.EdgeRemoved != null) // call only if someone is listening
             {
-                foreach (TEdge edge in edges)
+                foreach (var edge in edges)
                     this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
             }
             edges.Clear();
@@ -409,14 +409,13 @@ namespace QuickGraph
             GraphContracts.AssumeInVertexSet(this, v, "v");
             GraphContracts.AssumeNotNull(predicate, "predicate");
 
-            EdgeList edges = this.vertexEdges[v];
-            EdgeList edgeToRemove = new EdgeList(edges.Count);
-            foreach (TEdge edge in edges)
-            {
+            var edges = this.vertexEdges[v];
+            var edgeToRemove = new EdgeList(edges.Count);
+            foreach (var edge in edges)
                 if (predicate(edge))
                     edgeToRemove.Add(edge);
-            }
-            foreach (TEdge edge in edgeToRemove)
+
+            foreach (var edge in edgeToRemove)
             {
                 edges.Remove(edge);
                 this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));

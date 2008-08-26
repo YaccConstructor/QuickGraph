@@ -97,7 +97,7 @@ namespace QuickGraph.Algorithms.Layout
             this.PreRender();
 
             // paint vertices
-            foreach (TVertex v in this.Algorithm.VisitedGraph.Vertices)
+            foreach (var v in this.Algorithm.VisitedGraph.Vertices)
             {
                     // get position
                     PointF position = vertexPositions[v];
@@ -105,12 +105,12 @@ namespace QuickGraph.Algorithms.Layout
                     DrawVertex(v,position);
             }
 
-            foreach (TVertex v in this.Algorithm.VisitedGraph.Vertices)
+            foreach (var v in this.Algorithm.VisitedGraph.Vertices)
             {
                 // get position
                 PointF source = vertexPositions[v];
                 // paint vertex
-                foreach (TEdge edge in this.Algorithm.VisitedGraph.OutEdges(v))
+                foreach (var edge in this.Algorithm.VisitedGraph.OutEdges(v))
                 {
                     PointF target = vertexPositions[edge.Target];
                     // draw edge

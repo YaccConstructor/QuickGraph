@@ -46,7 +46,7 @@ namespace QuickGraph.Algorithms.Condensation
             // adding vertices to the new graph
             // and pusing filtered vertices in queue
             Queue<TVertex> filteredVertices = new Queue<TVertex>();
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 this.CondensatedGraph.AddVertex(v);
                 if (!this.VertexPredicate(v))
@@ -54,7 +54,7 @@ namespace QuickGraph.Algorithms.Condensation
             }
 
             // adding all edges
-            foreach (TEdge edge in this.VisitedGraph.Edges)
+            foreach (var edge in this.VisitedGraph.Edges)
             {
                 MergedEdge<TVertex, TEdge> mergedEdge = new MergedEdge<TVertex, TEdge>(edge.Source, edge.Target);
                 mergedEdge.Edges.Add(edge);

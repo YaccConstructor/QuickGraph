@@ -87,7 +87,7 @@ namespace QuickGraph.Algorithms
                 this.OnAddVertex(v);
 
                 // update the count of it's adjacent vertices
-                foreach (TEdge e in this.VisitedGraph.AdjacentEdges(v))
+                foreach (var e in this.VisitedGraph.AdjacentEdges(v))
                 {
                     if (e.Source.Equals(e.Target))
                         continue;
@@ -102,7 +102,7 @@ namespace QuickGraph.Algorithms
 
         private void InitializeInDegrees()
         {
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 this.degrees.Add(v, this.VisitedGraph.AdjacentDegree(v));
                 this.heap.Push(v);

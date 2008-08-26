@@ -83,7 +83,7 @@ namespace QuickGraph
             if (this.OriginalGraph.TryGetEdges(target, source, out oedges))
             {
                 List<ReversedEdge<TVertex, TEdge>> list = new List<ReversedEdge<TVertex, TEdge>>();
-                foreach (TEdge oedge in oedges)
+                foreach (var oedge in oedges)
                     list.Add(new ReversedEdge<TVertex, TEdge>(oedge));
                 edges = list;
                 return true;

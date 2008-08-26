@@ -14,7 +14,7 @@ namespace QuickGraph.Algorithms.Layout
 
         protected override void InternalCompute()
         {
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 if (this.IsAborting)
                     break;

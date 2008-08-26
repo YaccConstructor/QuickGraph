@@ -190,7 +190,7 @@ namespace QuickGraph.Algorithms.Search
             OnStartVertex(this.RootVertex);
 
             // process each out edge of v
-            foreach (TEdge e in this.VisitedGraph.OutEdges(this.RootVertex))
+            foreach (var e in this.VisitedGraph.OutEdges(this.RootVertex))
             {
                 if (this.IsAborting)
                     return;
@@ -223,7 +223,7 @@ namespace QuickGraph.Algorithms.Search
             OnTreeEdge(se);
 
             // iterate over out-edges
-            foreach (TEdge e in this.VisitedGraph.OutEdges(se.Target))
+            foreach (var e in this.VisitedGraph.OutEdges(se.Target))
             {
                 if (this.IsAborting)
                     return;

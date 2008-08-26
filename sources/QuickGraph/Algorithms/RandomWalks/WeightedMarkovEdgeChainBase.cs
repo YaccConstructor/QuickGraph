@@ -25,7 +25,7 @@ namespace QuickGraph.Algorithms.RandomWalks
         protected double GetOutWeight(IImplicitGraph<TVertex, TEdge> g, TVertex u)
         {
             double outWeight = 0;
-            foreach (TEdge e in g.OutEdges(u))
+            foreach (var e in g.OutEdges(u))
             {
                 outWeight += this.weights[e];
             }
@@ -36,7 +36,7 @@ namespace QuickGraph.Algorithms.RandomWalks
         {
             double pos = 0;
             double nextPos = 0;
-            foreach (TEdge e in g.OutEdges(u))
+            foreach (var e in g.OutEdges(u))
             {
                 nextPos = pos + this.weights[e];
                 if (position >= pos && position <= nextPos)

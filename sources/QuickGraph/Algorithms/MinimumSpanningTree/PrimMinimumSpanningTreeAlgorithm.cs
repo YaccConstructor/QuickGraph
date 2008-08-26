@@ -84,7 +84,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
                     if (this.IsAborting)
                         return;
                     TVertex u = queue.Pop();
-                    foreach (TEdge edge in this.VisitedGraph.AdjacentEdges(u))
+                    foreach (var edge in this.VisitedGraph.AdjacentEdges(u))
                     {
                         if (this.IsAborting)
                             return;
@@ -112,7 +112,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         {
             this.minimumWeights = new Dictionary<TVertex, double>(this.VisitedGraph.VertexCount);
             this.queue = new PriorithizedVertexBuffer<TVertex, double>(this.minimumWeights);
-            foreach (TVertex u in this.VisitedGraph.Vertices)
+            foreach (var u in this.VisitedGraph.Vertices)
             {
                 this.minimumWeights.Add(u, double.MaxValue);
                 this.queue.Add(u);

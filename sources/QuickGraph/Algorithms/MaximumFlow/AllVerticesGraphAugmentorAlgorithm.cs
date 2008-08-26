@@ -25,7 +25,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
         protected override void AugmentGraph()
         {
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 if (this.IsAborting)
                     return;

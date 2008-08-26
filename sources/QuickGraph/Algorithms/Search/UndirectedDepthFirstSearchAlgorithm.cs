@@ -129,7 +129,7 @@ namespace QuickGraph.Algorithms.Search
             }
 
             // process each vertex 
-            foreach (TVertex u in VisitedGraph.Vertices)
+            foreach (var u in VisitedGraph.Vertices)
             {
                 if (this.IsAborting)
                     return;
@@ -143,7 +143,7 @@ namespace QuickGraph.Algorithms.Search
 
         public void Initialize()
         {
-            foreach (TVertex u in VisitedGraph.Vertices)
+            foreach (var u in VisitedGraph.Vertices)
             {
                 if (this.IsAborting)
                     return;
@@ -165,7 +165,7 @@ namespace QuickGraph.Algorithms.Search
             OnDiscoverVertex(u);
 
             TVertex v = default(TVertex);
-            foreach (TEdge e in VisitedGraph.AdjacentEdges(u))
+            foreach (var e in VisitedGraph.AdjacentEdges(u))
             {
                 if (this.IsAborting)
                     return;

@@ -127,7 +127,7 @@ namespace QuickGraph.Algorithms.Search
         public void Initialize()
         {
             // initialize vertex u
-            foreach (TVertex v in VisitedGraph.Vertices)
+            foreach (var v in VisitedGraph.Vertices)
             {
                 if (this.IsAborting)
                     return;
@@ -145,7 +145,7 @@ namespace QuickGraph.Algorithms.Search
             if (this.RootVertex == null)
             {
                 this.RootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
-                foreach (TVertex v in this.VisitedGraph.Vertices)
+                foreach (var v in this.VisitedGraph.Vertices)
                 {
                     if (this.VertexColors[v] == GraphColor.White)
                     {
@@ -177,7 +177,7 @@ namespace QuickGraph.Algorithms.Search
                 TVertex u = this.vertexQueue.Pop();
 
                 OnExamineVertex(u);
-                foreach (TEdge e in VisitedGraph.OutEdges(u))
+                foreach (var e in VisitedGraph.OutEdges(u))
                 {
                     TVertex v = e.Target;
                     OnExamineEdge(e);

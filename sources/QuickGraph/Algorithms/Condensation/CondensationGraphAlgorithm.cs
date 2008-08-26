@@ -77,7 +77,7 @@ namespace QuickGraph.Algorithms.Condensation
             }
 
             // addingvertices
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 condensatedVertices[components[v]].AddVertex(v);
             }
@@ -88,7 +88,7 @@ namespace QuickGraph.Algorithms.Condensation
             Dictionary<EdgeKey, CondensatedEdge<TVertex,TEdge,TGraph>> condensatedEdges = new Dictionary<EdgeKey,CondensatedEdge<TVertex,TEdge,TGraph>>(componentCount);
 
             // iterate over edges and condensate graph
-            foreach (TEdge edge in this.VisitedGraph.Edges)
+            foreach (var edge in this.VisitedGraph.Edges)
             {
                 if (this.IsAborting)
                     return;

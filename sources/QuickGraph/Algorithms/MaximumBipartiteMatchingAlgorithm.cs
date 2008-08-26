@@ -94,7 +94,7 @@ namespace QuickGraph.Algorithms
                     return;
 
 
-                foreach (TEdge edge in this.VisitedGraph.Edges)
+                foreach (var edge in this.VisitedGraph.Edges)
                 {
                     if (this.IsAborting)
                         return;

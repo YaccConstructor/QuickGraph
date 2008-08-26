@@ -319,7 +319,7 @@ namespace QuickGraph
         public void AddEdgeRange(IEnumerable<TEdge> edges)
         {
             GraphContracts.AssumeNotNull(edges, "edges");
-            foreach (TEdge edge in edges)
+            foreach (var edge in edges)
                 this.AddEdge(edge);
         }
 

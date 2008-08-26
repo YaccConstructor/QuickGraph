@@ -200,7 +200,7 @@ namespace QuickGraph.Algorithms.Search
             VertexColors[u] = GraphColor.Gray;
             OnDiscoverVertex(u);
 
-            foreach (TEdge e in VisitedGraph.OutEdges(u))
+            foreach (var e in VisitedGraph.OutEdges(u))
             {
                 if (this.IsAborting)
                     return;

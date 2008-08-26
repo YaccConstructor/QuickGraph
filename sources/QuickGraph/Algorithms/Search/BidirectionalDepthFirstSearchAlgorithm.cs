@@ -129,7 +129,7 @@ namespace QuickGraph.Algorithms.Search
             }
 
             // process each vertex 
-            foreach (TVertex u in VisitedGraph.Vertices)
+            foreach (var u in VisitedGraph.Vertices)
             {
                 if (this.IsAborting)
                     return;
@@ -143,7 +143,7 @@ namespace QuickGraph.Algorithms.Search
 
         public void Initialize()
         {
-            foreach (TVertex u in VisitedGraph.Vertices)
+            foreach (var u in VisitedGraph.Vertices)
             {
                 VertexColors[u] = GraphColor.White;
                 OnInitializeVertex(u);
@@ -163,7 +163,7 @@ namespace QuickGraph.Algorithms.Search
             OnDiscoverVertex(u);
 
             TVertex v = default(TVertex);
-            foreach (TEdge e in VisitedGraph.OutEdges(u))
+            foreach (var e in VisitedGraph.OutEdges(u))
             {
                 if (this.IsAborting)
                     return;
@@ -171,7 +171,7 @@ namespace QuickGraph.Algorithms.Search
                 v = e.Target;
                 ProcessEdge(depth, v, e);
             }
-            foreach (TEdge e in VisitedGraph.InEdges(u))
+            foreach (var e in VisitedGraph.InEdges(u))
             {
                 if (this.IsAborting)
                     return;

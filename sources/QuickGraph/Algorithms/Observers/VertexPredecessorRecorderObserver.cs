@@ -76,7 +76,7 @@ namespace QuickGraph.Algorithms.Observers
         {
             if (this.RecordEndPath)
             {
-                foreach (TEdge edge in this.VertexPredecessors.Values)
+                foreach (var edge in this.VertexPredecessors.Values)
                 {
                     if (edge.Source.Equals(e.Vertex))
                         return;
@@ -103,7 +103,7 @@ namespace QuickGraph.Algorithms.Observers
         public IList<IList<TEdge>> AllPaths()
         {
             List<IList<TEdge>> es = new List<IList<TEdge>>();
-            foreach (TVertex v in this.EndPathVertices)
+            foreach (var v in this.EndPathVertices)
                 es.Add(Path(v));
 
             return es;

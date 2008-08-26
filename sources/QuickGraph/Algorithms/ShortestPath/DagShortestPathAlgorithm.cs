@@ -103,7 +103,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             // init color, distance
             var initialDistance = this.DistanceRelaxer.InitialDistance;
-            foreach (TVertex u in VisitedGraph.Vertices)
+            foreach (var u in VisitedGraph.Vertices)
             {
                 this.VertexColors.Add(u, GraphColor.White);
                 this.Distances.Add(u, initialDistance);
@@ -124,10 +124,10 @@ namespace QuickGraph.Algorithms.ShortestPath
             ICollection<TVertex> orderedVertices = AlgoUtility.TopologicalSort<TVertex, TEdge>(this.VisitedGraph);
 
             OnDiscoverVertex(s);
-            foreach (TVertex v in orderedVertices)
+            foreach (var v in orderedVertices)
             {
                 OnExamineVertex(v);
-                foreach (TEdge e in VisitedGraph.OutEdges(v))
+                foreach (var e in VisitedGraph.OutEdges(v))
                 {
                     OnDiscoverVertex(e.Target);
                     bool decreased = Relax(e);

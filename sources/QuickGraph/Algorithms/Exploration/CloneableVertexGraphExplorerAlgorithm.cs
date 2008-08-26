@@ -140,7 +140,7 @@ namespace QuickGraph.Algorithms.Exploration
             if (!transitionFactory.IsValid(current))
                 return;
 
-            foreach (TEdge transition in transitionFactory.Apply(current))
+            foreach (var transition in transitionFactory.Apply(current))
             {
                 if (    
                     !this.AddVertexPredicate(transition.Target)

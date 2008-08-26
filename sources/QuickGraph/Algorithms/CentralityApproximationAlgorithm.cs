@@ -54,7 +54,7 @@ namespace QuickGraph.Algorithms
         private void Initialize()
         {
             this.centralities.Clear();
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
                 this.centralities.Add(v, 0);
         }
 
@@ -70,12 +70,12 @@ namespace QuickGraph.Algorithms
                 TVertex v = RandomGraphFactory.GetVertex<TVertex, TEdge>(this.VisitedGraph, this.Rand);
                 this.dijkstra.Compute(v);
 
-                foreach (TVertex u in this.VisitedGraph.Vertices)
+                foreach (var u in this.VisitedGraph.Vertices)
                     this.centralities[u] += n * this.dijkstra.Distances[u] / (this.MaxIterationCount * (n - 1));
             }
 
             // update
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
                 this.centralities[v] = 1.0/this.centralities[v];
         }
     }

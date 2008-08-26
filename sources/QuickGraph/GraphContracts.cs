@@ -29,6 +29,13 @@ namespace QuickGraph
         }
 
         [Conditional("DEBUG")]
+        public static void Assume(bool value, string message)
+        {
+            if (!value)
+                throw new ArgumentException(message);
+        }
+
+        [Conditional("DEBUG")]
         public static void AssumeInVertexSet<TVertex>(
             IVertexSet<TVertex> g, 
             TVertex v,

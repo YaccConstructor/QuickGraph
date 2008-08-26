@@ -137,7 +137,7 @@ namespace QuickGraph.Algorithms.Search
                 OnStartVertex(this.RootVertex);
 
                 // process each out edge of v
-                foreach (TEdge e in VisitedGraph.OutEdges(this.RootVertex))
+                foreach (var e in VisitedGraph.OutEdges(this.RootVertex))
                 {
                     if (this.IsAborting)
                         return;
@@ -150,7 +150,7 @@ namespace QuickGraph.Algorithms.Search
             }
 
             // process the rest of the graph edges
-            foreach (TEdge e in VisitedGraph.Edges)
+            foreach (var e in VisitedGraph.Edges)
             {
                 if (this.IsAborting)
                     return;
@@ -165,7 +165,7 @@ namespace QuickGraph.Algorithms.Search
         public void Initialize()
         {
             // put all vertex to white
-            foreach (TEdge e in VisitedGraph.Edges)
+            foreach (var e in VisitedGraph.Edges)
             {
                 if (this.IsAborting)
                     return;
@@ -187,7 +187,7 @@ namespace QuickGraph.Algorithms.Search
             OnTreeEdge(se);
 
             // iterate over out-edges
-            foreach (TEdge e in VisitedGraph.OutEdges(se.Target))
+            foreach (var e in VisitedGraph.OutEdges(se.Target))
             {
                 // check edge is not explored yet,
                 // if not, explore it.

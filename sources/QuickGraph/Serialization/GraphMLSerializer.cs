@@ -677,7 +677,7 @@ namespace QuickGraph.Serialization
             
             private void WriteVertices()
             {
-                foreach (TVertex v in this.VisitedGraph.Vertices)
+                foreach (var v in this.VisitedGraph.Vertices)
                 {
                     this.Writer.WriteStartElement("node");
                     this.Writer.WriteAttributeString("id", v.ID);
@@ -688,7 +688,7 @@ namespace QuickGraph.Serialization
             
             private void WriteEdges()
             {
-                foreach (TEdge e in this.VisitedGraph.Edges)
+                foreach (var e in this.VisitedGraph.Edges)
                 {
                     this.Writer.WriteStartElement("edge");
                     this.Writer.WriteAttributeString("id", e.ID);

@@ -79,7 +79,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.VertexColors.Clear();
             this.Distances.Clear();
             // init color, distance
-            foreach (TVertex u in VisitedGraph.Vertices)
+            foreach (var u in VisitedGraph.Vertices)
             {
                 this.VertexColors.Add(u, GraphColor.White);
                 this.Distances.Add(u, double.MaxValue);

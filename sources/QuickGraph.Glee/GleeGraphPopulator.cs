@@ -41,14 +41,14 @@ namespace QuickGraph.Glee
         {
             this.gleeGraph = new Microsoft.Glee.Drawing.Graph("");
 
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 Node node = this.AddNode(v);
                 node.UserData = v;
                 this.OnNodeAdded(new GleeVertexEventArgs<TVertex>(v, node));
             }
 
-            foreach (TEdge e in this.VisitedGraph.Edges)
+            foreach (var e in this.VisitedGraph.Edges)
             {
                 Microsoft.Glee.Drawing.Edge edge = this.AddEdge(e);
                 edge.UserData = e;

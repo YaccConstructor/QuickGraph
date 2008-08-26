@@ -26,7 +26,7 @@ namespace QuickGraph.Graphviz
         {
             StringWriter sw = new StringWriter();
             sw.WriteLine("{0}-{1}", e.Vertex.VertexCount, e.Vertex.EdgeCount);
-            foreach (TVertex v in e.Vertex.Vertices)
+            foreach (var v in e.Vertex.Vertices)
                 sw.WriteLine("  {0}", v);
             foreach(TEdge edge in e.Vertex.Edges)
                 sw.WriteLine("  {0}", edge);
@@ -37,7 +37,7 @@ namespace QuickGraph.Graphviz
         {
             StringWriter sw = new StringWriter();
             sw.WriteLine("{0}", e.Edge.Edges.Count);
-            foreach (TEdge edge in e.Edge.Edges)
+            foreach (var edge in e.Edge.Edges)
                 sw.WriteLine("  {0}", edge);
             e.EdgeFormatter.Label.Value = this.Graphviz.Escape(sw.ToString());
         }

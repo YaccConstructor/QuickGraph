@@ -180,7 +180,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             this.foundNegativeCycle = false;
             // init color, distance
-            foreach (TVertex u in VisitedGraph.Vertices)
+            foreach (var u in VisitedGraph.Vertices)
             {
                 VertexColors[u] = GraphColor.White;
                 Distances[u] = double.PositiveInfinity;
@@ -204,7 +204,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             for (int k = 0; k < N; ++k)
             {
                 bool atLeastOneTreeEdge = false;
-                foreach (TEdge e in this.VisitedGraph.Edges)
+                foreach (var e in this.VisitedGraph.Edges)
                 {
                     OnExamineEdge(e);
 
@@ -220,7 +220,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                     break;
             }
 
-            foreach (TEdge e in VisitedGraph.Edges)
+            foreach (var e in VisitedGraph.Edges)
             {
                 if (
                     Compare(

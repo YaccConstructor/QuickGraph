@@ -90,7 +90,7 @@ namespace QuickGraph.Algorithms.Observers
         {
             IList<ICollection<TEdge>> es = new List<ICollection<TEdge>>();
 
-            foreach (TEdge e in EndPathEdges)
+            foreach (var e in EndPathEdges)
                 es.Add(Path(e));
 
             return es;
@@ -148,7 +148,7 @@ namespace QuickGraph.Algorithms.Observers
 
         private void FinishEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
         {
-            foreach (TEdge edge in this.EdgePredecessors.Values)
+            foreach (var edge in this.EdgePredecessors.Values)
                 if (edge.Equals(args.Edge))
                     return;
 

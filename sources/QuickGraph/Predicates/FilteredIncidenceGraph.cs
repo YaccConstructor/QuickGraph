@@ -25,7 +25,7 @@ namespace QuickGraph.Predicates
             if (!this.VertexPredicate(target))
                 return false;
 
-            foreach (TEdge edge in this.BaseGraph.OutEdges(source))
+            foreach (var edge in this.BaseGraph.OutEdges(source))
                 if (edge.Target.Equals(target) && this.EdgePredicate(edge))
                     return true;
             return false;
@@ -41,7 +41,7 @@ namespace QuickGraph.Predicates
                 this.VertexPredicate(target) &&
                 this.BaseGraph.TryGetEdges(source, target, out unfilteredEdges))
             {
-                foreach (TEdge ufe in unfilteredEdges)
+                foreach (var ufe in unfilteredEdges)
                     if (this.EdgePredicate(ufe))
                     {
                         edge = ufe;
@@ -67,7 +67,7 @@ namespace QuickGraph.Predicates
             if (this.BaseGraph.TryGetEdges(source, target, out unfilteredEdges))
             {
                 List<TEdge> filtered = new List<TEdge>();
-                foreach (TEdge edge in unfilteredEdges)
+                foreach (var edge in unfilteredEdges)
                     if (this.EdgePredicate(edge))
                         filtered.Add(edge);
                 edges = filtered;

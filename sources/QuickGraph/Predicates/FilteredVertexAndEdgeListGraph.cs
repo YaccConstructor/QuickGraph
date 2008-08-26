@@ -31,7 +31,7 @@ namespace QuickGraph.Predicates
             get
             {
                 int count = 0;
-                foreach (TEdge edge in this.BaseGraph.Edges)
+                foreach (var edge in this.BaseGraph.Edges)
                 {
                     if (
                            this.VertexPredicate(edge.Source)
@@ -60,7 +60,7 @@ namespace QuickGraph.Predicates
 
         public bool ContainsEdge(TEdge edge)
         {
-            foreach (TEdge e in this.Edges)
+            foreach (var e in this.Edges)
                 if (Comparison<TEdge>.Equals(edge, e))
                     return true;
             return false;

@@ -23,7 +23,7 @@ namespace QuickGraph.Predicates
         {
             if (this.VertexPredicate(v))
             {
-                foreach (TEdge edge in this.BaseGraph.AdjacentEdges(v))
+                foreach (var edge in this.BaseGraph.AdjacentEdges(v))
                 {
                     if (TestEdge(edge))
                         yield return edge;
@@ -34,14 +34,14 @@ namespace QuickGraph.Predicates
         public int AdjacentDegree(TVertex v)
         {
             int count = 0;
-            foreach (TEdge edge in this.AdjacentEdges(v))
+            foreach (var edge in this.AdjacentEdges(v))
                 count++;
             return count;
         }
 
         public bool IsAdjacentEdgesEmpty(TVertex v)
         {
-            foreach (TEdge edge in this.AdjacentEdges(v))
+            foreach (var edge in this.AdjacentEdges(v))
                 return false;
             return true;
         }
@@ -51,7 +51,7 @@ namespace QuickGraph.Predicates
             if (this.VertexPredicate(v))
             {
                 int count = 0;
-                foreach (TEdge edge in this.AdjacentEdges(v))
+                foreach (var edge in this.AdjacentEdges(v))
                 {
                     if (count == index)
                         return edge;
@@ -71,7 +71,7 @@ namespace QuickGraph.Predicates
             if (!this.BaseGraph.ContainsEdge(source, target))
                 return false;
             // we need to find the edge
-            foreach (TEdge edge in this.Edges)
+            foreach (var edge in this.Edges)
             {
                 if (edge.Source.Equals(source) && edge.Target.Equals(target)
                     && this.EdgePredicate(edge))
@@ -85,7 +85,7 @@ namespace QuickGraph.Predicates
         {
             get 
             {
-                foreach (TEdge edge in this.Edges)
+                foreach (var edge in this.Edges)
                     return false;
                 return true;
             }
@@ -96,7 +96,7 @@ namespace QuickGraph.Predicates
             get 
             {
                 int count = 0;
-                foreach (TEdge edge in this.Edges)
+                foreach (var edge in this.Edges)
                     count++;
                 return count;
             }
@@ -106,7 +106,7 @@ namespace QuickGraph.Predicates
         {
             get 
             {
-                foreach (TEdge edge in this.BaseGraph.Edges)
+                foreach (var edge in this.BaseGraph.Edges)
                     if (this.TestEdge(edge))
                         yield return edge;
             }
@@ -123,7 +123,7 @@ namespace QuickGraph.Predicates
         {
             get 
             {
-                foreach (TVertex vertex in this.Vertices)
+                foreach (var vertex in this.Vertices)
                     return false;
                 return true;
             }
@@ -134,7 +134,7 @@ namespace QuickGraph.Predicates
             get 
             {
                 int count = 0;
-                foreach (TVertex vertex in this.Vertices)
+                foreach (var vertex in this.Vertices)
                     count++;
                 return count;
             }
@@ -144,7 +144,7 @@ namespace QuickGraph.Predicates
         {
             get 
             {
-                foreach (TVertex vertex in this.BaseGraph.Vertices)
+                foreach (var vertex in this.BaseGraph.Vertices)
                     if (this.VertexPredicate(vertex))
                         yield return vertex;
             }

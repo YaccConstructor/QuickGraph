@@ -46,7 +46,7 @@ namespace QuickGraph.Algorithms
 
         private IEnumerable<TEdge> SelectOutEdgesNotInCircuit(TVertex v)
         {
-            foreach (TEdge edge in VisitedGraph.OutEdges(v))
+            foreach (var edge in VisitedGraph.OutEdges(v))
                 if (this.NotInCircuit(edge))
                     yield return edge;
         }
@@ -84,7 +84,7 @@ namespace QuickGraph.Algorithms
 
         private bool Search(TVertex u)
         {
-            foreach (TEdge e in SelectOutEdgesNotInCircuit(u))
+            foreach (var e in SelectOutEdgesNotInCircuit(u))
             {
                 OnTreeEdge(e);
                 TVertex v = e.Target;
@@ -114,7 +114,7 @@ namespace QuickGraph.Algorithms
         private bool Visit()
         {
             // find a vertex that needs to be visited
-            foreach (TEdge e in Circuit)
+            foreach (var e in Circuit)
             {
                 TEdge fe = SelectSingleOutEdgeNotInCircuit(e.Source);
                 if (fe != null)
@@ -244,7 +244,7 @@ namespace QuickGraph.Algorithms
                 // find adjacent odd vertex.
                 found = false;
                 foundadjacent = false;
-                foreach (TEdge e in this.VisitedGraph.OutEdges(u))
+                foreach (var e in this.VisitedGraph.OutEdges(u))
                 {
                     TVertex v = e.Target;
                     if (!v.Equals(u) && oddVertices.Contains(v))
@@ -252,7 +252,7 @@ namespace QuickGraph.Algorithms
                         foundadjacent = true;
                         // check that v does not have an out-edge towards u
                         foundbe = false;
-                        foreach (TEdge be in this.VisitedGraph.OutEdges(v))
+                        foreach (var be in this.VisitedGraph.OutEdges(v))
                         {
                             if (be.Target.Equals(u))
                             {
@@ -312,7 +312,7 @@ namespace QuickGraph.Algorithms
         public void RemoveTemporaryEdges()
         {
             // remove from graph
-            foreach (TEdge e in temporaryEdges)
+            foreach (var e in temporaryEdges)
                 this.VisitedGraph.RemoveEdge(e);
             this.temporaryEdges.Clear();
         }
@@ -330,7 +330,7 @@ namespace QuickGraph.Algorithms
             List<ICollection<TEdge>> trails = new List<ICollection<TEdge>>();
 
             List<TEdge> trail = new List<TEdge>();
-            foreach (TEdge e in this.Circuit)
+            foreach (var e in this.Circuit)
             {
                 if (this.temporaryEdges.Contains(e))
                 {

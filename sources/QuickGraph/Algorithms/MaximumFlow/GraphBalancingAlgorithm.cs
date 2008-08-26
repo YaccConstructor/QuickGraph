@@ -71,11 +71,11 @@ namespace QuickGraph.Algorithms.MaximumFlow
             this.sink = sink;
 
             // setting capacities = u(e) = +infty
-            foreach (TEdge edge in this.VisitedGraph.Edges)
+            foreach (var edge in this.VisitedGraph.Edges)
                 this.capacities.Add(edge, double.MaxValue);
 
             // setting preflow = l(e) = 1
-            foreach (TEdge edge in this.VisitedGraph.Edges)
+            foreach (var edge in this.VisitedGraph.Edges)
                 this.preFlow.Add(edge, 1);
         }
 
@@ -110,7 +110,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             this.capacities = capacities;
 
             // setting preflow = l(e) = 1
-            foreach (TEdge edge in this.VisitedGraph.Edges)
+            foreach (var edge in this.VisitedGraph.Edges)
                 this.preFlow.Add(edge, 1);
         }
 
@@ -252,12 +252,12 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public int GetBalancingIndex(TVertex v)
         {
             int bi = 0;
-            foreach (TEdge edge in this.VisitedGraph.OutEdges(v))
+            foreach (var edge in this.VisitedGraph.OutEdges(v))
             {
                 int pf = this.preFlow[edge];
                 bi += pf;
             }
-            foreach (TEdge edge in this.VisitedGraph.InEdges(v))
+            foreach (var edge in this.VisitedGraph.InEdges(v))
             {
                 int pf = this.preFlow[edge];
                 bi -= pf;
@@ -295,7 +295,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
             // step 2
             // for each surplus vertex v, add (source -> v)
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 if (v.Equals(this.balancingSource))
                     continue;
@@ -342,13 +342,13 @@ namespace QuickGraph.Algorithms.MaximumFlow
         {
             if (!this.Balanced)
                 throw new InvalidOperationException("Graph is not balanced");
-            foreach (TEdge edge in this.surplusEdges)
+            foreach (var edge in this.surplusEdges)
             {
                 this.VisitedGraph.RemoveEdge(edge);
                 this.capacities.Remove(edge);
                 this.preFlow.Remove(edge);
             }
-            foreach (TEdge edge in this.deficientEdges)
+            foreach (var edge in this.deficientEdges)
             {
                 this.VisitedGraph.RemoveEdge(edge);
                 this.capacities.Remove(edge);

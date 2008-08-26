@@ -21,7 +21,7 @@ namespace QuickGraph.Predicates
         {
             get 
             {
-                foreach (TVertex v in this.Vertices)
+                foreach (var v in this.Vertices)
                         return false;
                 return true;
             }
@@ -32,7 +32,7 @@ namespace QuickGraph.Predicates
             get 
             {
                 int count = 0;
-                foreach (TVertex v in this.Vertices)
+                foreach (var v in this.Vertices)
                         count++;
                 return count;
             }
@@ -42,7 +42,7 @@ namespace QuickGraph.Predicates
         {
             get 
             {
-                foreach (TVertex v in this.BaseGraph.Vertices)
+                foreach (var v in this.BaseGraph.Vertices)
                     if (this.VertexPredicate(v))
                         yield return v;
             }

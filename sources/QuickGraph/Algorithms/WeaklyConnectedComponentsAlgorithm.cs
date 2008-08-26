@@ -59,7 +59,7 @@ namespace QuickGraph.Algorithms
             this.dfs.Compute();
 
             // updating component numbers
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 int component = this.Components[v];
                 int equivalent = this.componentEquivalences[component];

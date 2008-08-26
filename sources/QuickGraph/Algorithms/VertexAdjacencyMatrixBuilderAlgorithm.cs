@@ -33,19 +33,19 @@ namespace QuickGraph.Algorithms
             this.vertexIndices = new Dictionary<TVertex, int>(this.VisitedGraph.VertexCount);
 
             int index = 0;
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 if (this.IsAborting)
                     return;
                 this.vertexIndices.Add(v, index++);
             }
 
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 if (this.IsAborting)
                     return;
                 int source = this.VertexIndices[v];
-                foreach (TEdge edge in this.VisitedGraph.OutEdges(v))
+                foreach (var edge in this.VisitedGraph.OutEdges(v))
                 {
                     int target = this.VertexIndices[edge.Target];
 

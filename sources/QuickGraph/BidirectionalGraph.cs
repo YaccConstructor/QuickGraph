@@ -167,7 +167,7 @@ namespace QuickGraph
             get
             {
                 foreach (EdgeList edges in this.vertexOutEdges.Values)
-                    foreach (TEdge edge in edges)
+                    foreach (var edge in edges)
                         yield return edge;
             }
         }
@@ -176,7 +176,7 @@ namespace QuickGraph
         {
             GraphContracts.AssumeInVertexSet(this, source, "source");
             GraphContracts.AssumeInVertexSet(this, target, "target");
-            foreach (TEdge outEdge in this.OutEdges(source))
+            foreach (var outEdge in this.OutEdges(source))
                 if (outEdge.Target.Equals(target))
                     return true;
             return false;
@@ -194,7 +194,7 @@ namespace QuickGraph
             if (this.vertexOutEdges.TryGetValue(source, out edgeList) &&
                 edgeList.Count > 0)
             {
-                foreach (TEdge e in edgeList)
+                foreach (var e in edgeList)
                 {
                     if (e.Target.Equals(target))
                     {
@@ -219,7 +219,7 @@ namespace QuickGraph
             if (this.vertexOutEdges.TryGetValue(source, out edgeList))
             {
                 List<TEdge> list = new List<TEdge>(edgeList.Count);
-                foreach (TEdge edge in edgeList)
+                foreach (var edge in edgeList)
                     if (edge.Target.Equals(target))
                         list.Add(edge);
                 edges = list;
@@ -258,7 +258,7 @@ namespace QuickGraph
         public virtual void AddVertexRange(IEnumerable<TVertex> vertices)
         {
             GraphContracts.AssumeNotNull(vertices, "vertices");
-            foreach (TVertex v in vertices)
+            foreach (var v in vertices)
                 this.AddVertex(v);
         }
 
@@ -278,12 +278,12 @@ namespace QuickGraph
 
             // collect edges to remove
             EdgeList edgesToRemove = new EdgeList();
-            foreach (TEdge outEdge in this.OutEdges(v))
+            foreach (var outEdge in this.OutEdges(v))
             {
                 this.vertexInEdges[outEdge.Target].Remove(outEdge);
                 edgesToRemove.Add(outEdge);
             }
-            foreach (TEdge inEdge in this.InEdges(v))
+            foreach (var inEdge in this.InEdges(v))
             {
                 // might already have been removed
                 if(this.vertexOutEdges[inEdge.Source].Remove(inEdge))
@@ -319,11 +319,11 @@ namespace QuickGraph
             GraphContracts.AssumeNotNull(predicate, "predicate");
 
             VertexList vertices = new VertexList();
-            foreach (TVertex v in this.Vertices)
+            foreach (var v in this.Vertices)
                 if (predicate(v))
                     vertices.Add(v);
 
-            foreach (TVertex v in vertices)
+            foreach (var v in vertices)
                 this.RemoveVertex(v);
             return vertices.Count;
         }
@@ -348,7 +348,7 @@ namespace QuickGraph
         public void AddEdgeRange(IEnumerable<TEdge> edges)
         {
             GraphContracts.AssumeNotNull(edges, "edges");
-            foreach (TEdge edge in edges)
+            foreach (var edge in edges)
                 this.AddEdge(edge);
         }
 
@@ -401,11 +401,11 @@ namespace QuickGraph
         {
             GraphContracts.AssumeNotNull(predicate, "predicate");
             EdgeList edges = new EdgeList();
-            foreach (TEdge edge in this.Edges)
+            foreach (var edge in this.Edges)
                 if (predicate(edge))
                     edges.Add(edge);
 
-            foreach (TEdge edge in edges)
+            foreach (var edge in edges)
                 this.RemoveEdge(edge);
             return edges.Count;
         }
@@ -415,10 +415,10 @@ namespace QuickGraph
             GraphContracts.AssumeInVertexSet(this, v, "v");
             GraphContracts.AssumeNotNull(predicate, "predicate");
             EdgeList edges = new EdgeList();
-            foreach (TEdge edge in this.OutEdges(v))
+            foreach (var edge in this.OutEdges(v))
                 if (predicate(edge))
                     edges.Add(edge);
-            foreach (TEdge edge in edges)
+            foreach (var edge in edges)
                 this.RemoveEdge(edge);
             return edges.Count;
         }
@@ -428,10 +428,10 @@ namespace QuickGraph
             GraphContracts.AssumeInVertexSet(this, v, "v");
             GraphContracts.AssumeNotNull(predicate, "predicate");
             EdgeList edges = new EdgeList();
-            foreach (TEdge edge in this.InEdges(v))
+            foreach (var edge in this.InEdges(v))
                 if (predicate(edge))
                     edges.Add(edge);
-            foreach (TEdge edge in edges)
+            foreach (var edge in edges)
                 this.RemoveEdge(edge);
             return edges.Count;
         }
@@ -441,7 +441,7 @@ namespace QuickGraph
             GraphContracts.AssumeInVertexSet(this, v, "v");
 
             EdgeList outEdges = this.vertexOutEdges[v];
-            foreach (TEdge edge in outEdges)
+            foreach (var edge in outEdges)
             {
                 this.vertexInEdges[edge.Target].Remove(edge);
                 this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
@@ -457,7 +457,7 @@ namespace QuickGraph
             GraphContracts.AssumeInVertexSet(this, v, "v");
 
             EdgeList inEdges = this.vertexInEdges[v];
-            foreach (TEdge edge in inEdges)
+            foreach (var edge in inEdges)
             {
                 this.vertexOutEdges[edge.Source].Remove(edge);
                 this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
@@ -496,12 +496,12 @@ namespace QuickGraph
             this.RemoveVertex(v);
 
             // add edges from each source to each target
-            foreach (TEdge source in inedges)
+            foreach (var source in inedges)
             {
                 //is it a self edge
                 if (source.Source.Equals(v))
                     continue;
-                foreach (TEdge target in outedges)
+                foreach (var target in outedges)
                 {
                     if (v.Equals(target.Target))
                         continue;
@@ -518,12 +518,12 @@ namespace QuickGraph
 
             // storing vertices to merge
             VertexList mergeVertices = new VertexList(this.VertexCount / 4);
-            foreach (TVertex v in this.Vertices)
+            foreach (var v in this.Vertices)
                 if (vertexPredicate(v))
                     mergeVertices.Add(v);
 
             // applying merge recursively
-            foreach (TVertex v in mergeVertices)
+            foreach (var v in mergeVertices)
                 MergeVertex(v, edgeFactory);
         }
 

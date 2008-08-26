@@ -59,7 +59,7 @@ namespace QuickGraph.Algorithms.Exploration
                 if (!transitionFactory.IsValid(v))
                     continue;
 
-                foreach (TEdge edge in transitionFactory.Apply(v))
+                foreach (var edge in transitionFactory.Apply(v))
                 {
                     if (this.SuccessorVertexPredicate(edge.Target) &&
                         this.SuccessorEdgePredicate(edge))
@@ -71,7 +71,7 @@ namespace QuickGraph.Algorithms.Exploration
         public TEdge OutEdge(TVertex v, int index)
         {
             int i = 0;
-            foreach (TEdge e in this.OutEdges(v))
+            foreach (var e in this.OutEdges(v))
                 if (i++ == index)
                     return e;
             throw new ArgumentOutOfRangeException("index");

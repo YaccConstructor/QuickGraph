@@ -47,7 +47,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             if (graph == null)
                 throw new ArgumentNullException("graph");
             Dictionary<TEdge, double> weights = new Dictionary<TEdge, double>();
-            foreach (TEdge e in graph.Edges)
+            foreach (var e in graph.Edges)
                 weights.Add(e, 1);
             return weights;
         }
@@ -58,8 +58,8 @@ namespace QuickGraph.Algorithms.ShortestPath
             if (graph == null)
                 throw new ArgumentNullException("graph");
             Dictionary<TEdge, double> weights = new Dictionary<TEdge, double>();
-            foreach (TVertex v in graph.Vertices)
-                foreach (TEdge e in graph.OutEdges(v))
+            foreach (var v in graph.Vertices)
+                foreach (var e in graph.OutEdges(v))
                     weights.Add(e, 1);
             return weights;
         }

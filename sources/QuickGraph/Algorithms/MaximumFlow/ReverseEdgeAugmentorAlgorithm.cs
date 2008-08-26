@@ -76,7 +76,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 throw new InvalidOperationException("Graph already augmented");
             // step 1, find edges that need reversing
             IList<TEdge> notReversedEdges = new List<TEdge>();
-            foreach (TEdge edge in this.VisitedGraph.Edges)
+            foreach (var edge in this.VisitedGraph.Edges)
             {
                 // if reversed already found, continue
                 if (this.reversedEdges.ContainsKey(edge))
@@ -98,7 +98,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
 
             // step 2, go over each not reversed edge, add reverse
-            foreach (TEdge edge in notReversedEdges)
+            foreach (var edge in notReversedEdges)
             {
                 if (this.reversedEdges.ContainsKey(edge))
                     continue;
@@ -129,7 +129,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             if (!this.Augmented)
                 throw new InvalidOperationException("Graph is not yet augmented");
 
-            foreach (TEdge edge in this.augmentedEgdes)
+            foreach (var edge in this.augmentedEgdes)
                 this.VisitedGraph.RemoveEdge(edge);
 
             this.augmentedEgdes.Clear();
@@ -140,7 +140,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
         private TEdge FindReversedEdge(TEdge edge)
         {
-            foreach (TEdge redge in this.VisitedGraph.OutEdges(edge.Target))
+            foreach (var redge in this.VisitedGraph.OutEdges(edge.Target))
                 if (redge.Target.Equals(edge.Source))
                     return redge;
             return default(TEdge);

@@ -26,7 +26,7 @@ namespace QuickGraph.Predicates
         public int InDegree(TVertex v)
         {
             int count = 0;
-            foreach (TEdge edge in this.InEdges(v))
+            foreach (var edge in this.InEdges(v))
                 if (TestEdge(edge))
                     count++;
             return count;
@@ -34,7 +34,7 @@ namespace QuickGraph.Predicates
 
         public IEnumerable<TEdge> InEdges(TVertex v)
         {
-            foreach (TEdge edge in this.InEdges(v))
+            foreach (var edge in this.InEdges(v))
                 if (TestEdge(edge))
                     yield return edge;
         }
@@ -48,7 +48,7 @@ namespace QuickGraph.Predicates
         {
             get
             {
-                foreach (TEdge edge in this.BaseGraph.Edges)
+                foreach (var edge in this.BaseGraph.Edges)
                     if (TestEdge(edge))
                         return false;
                 return true;
@@ -60,7 +60,7 @@ namespace QuickGraph.Predicates
             get
             {
                 int count = 0;
-                foreach (TEdge edge in this.BaseGraph.Edges)
+                foreach (var edge in this.BaseGraph.Edges)
                     if (TestEdge(edge))
                         count++;
                 return count;
@@ -71,7 +71,7 @@ namespace QuickGraph.Predicates
         {
             get
             {
-                foreach (TEdge edge in this.BaseGraph.Edges)
+                foreach (var edge in this.BaseGraph.Edges)
                     if (TestEdge(edge))
                         yield return edge;
             }

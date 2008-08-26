@@ -106,7 +106,7 @@ namespace QuickGraph.Algorithms.RandomWalks
         {
             this.successors.Clear();
             this.vertexColors.Clear();
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 this.vertexColors.Add(v,GraphColor.White);
                 OnInitializeVertex(v);
@@ -178,7 +178,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             SetInTree(this.RootVertex);
 
             TVertex u;
-            foreach (TVertex i in this.VisitedGraph.Vertices)
+            foreach (var i in this.VisitedGraph.Vertices)
             {
                 u = i;
 
@@ -216,7 +216,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             int numRoots = 0;
 
             TVertex u;
-            foreach (TVertex i in this.VisitedGraph.Vertices)
+            foreach (var i in this.VisitedGraph.Vertices)
             {
                 u = i;
 

@@ -184,10 +184,10 @@ namespace QuickGraph.Graphviz
 
             // initialize vertex map
             IDictionary<TVertex,GraphColor> colors = new Dictionary<TVertex,GraphColor>();
-            foreach (TVertex v in VisitedGraph.Vertices)
+            foreach (var v in VisitedGraph.Vertices)
                 colors[v] = GraphColor.White;
             IDictionary<TEdge, GraphColor> edgeColors = new Dictionary<TEdge, GraphColor>();
-            foreach (TEdge e in VisitedGraph.Edges)
+            foreach (var e in VisitedGraph.Edges)
                 edgeColors[e] = GraphColor.White;
 
             WriteVertices(colors, VisitedGraph.Vertices);
@@ -202,7 +202,7 @@ namespace QuickGraph.Graphviz
             IDictionary<TVertex,GraphColor> colors,
             IEnumerable<TVertex> vertices)
         {
-            foreach (TVertex v in vertices)
+            foreach (var v in vertices)
             {
                 if (colors[v] == GraphColor.White)
                 {
@@ -216,7 +216,7 @@ namespace QuickGraph.Graphviz
             IDictionary<TEdge,GraphColor> edgeColors,
             IEnumerable<TEdge> edges)
         {
-            foreach (TEdge e in edges)
+            foreach (var e in edges)
             {
                 if (edgeColors[e] != GraphColor.White)
                     continue;

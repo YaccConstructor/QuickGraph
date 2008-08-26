@@ -67,7 +67,7 @@ namespace QuickGraph.Algorithms.Ranking
         public void InitializeRanks()
         {
             this.ranks.Clear();
-            foreach (TVertex v in this.VisitedGraph.Vertices)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 this.ranks.Add(v, 0);
             }
@@ -134,7 +134,7 @@ namespace QuickGraph.Algorithms.Ranking
                     double rank = de.Value;
                     // compute ARi
                     double r = 0;
-                    foreach (TEdge e in fg.InEdges(v))
+                    foreach (var e in fg.InEdges(v))
                     {
                         r += this.ranks[e.Source] / fg.OutDegree(e.Source);
                     }

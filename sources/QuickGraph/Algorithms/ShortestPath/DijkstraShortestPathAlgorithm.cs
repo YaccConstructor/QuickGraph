@@ -88,7 +88,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.Distances.Clear();
             // init color, distance
             var initialDistance = this.DistanceRelaxer.InitialDistance;
-            foreach (TVertex u in VisitedGraph.Vertices)
+            foreach (var u in VisitedGraph.Vertices)
             {
                 this.VertexColors.Add(u, GraphColor.White);
                 this.Distances.Add(u, initialDistance);

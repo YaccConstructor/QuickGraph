@@ -24,7 +24,7 @@ namespace QuickGraph.Graphviz
         {
             StringWriter sw = new StringWriter();
             sw.WriteLine("{0}", e.Edge.Edges.Count);
-            foreach (TEdge edge in e.Edge.Edges)
+            foreach (var edge in e.Edge.Edges)
                 sw.WriteLine("  {0}", edge);
             e.EdgeFormatter.Label.Value = this.Graphviz.Escape(sw.ToString());
         }

@@ -29,7 +29,7 @@ namespace QuickGraph.Algorithms
                 throw new ArgumentException("vertices is empty");
 
             int i = rnd.Next(count);
-            foreach (TVertex v in vertices)
+            foreach (var v in vertices)
             {
                 if (i == 0)
                     return v;
@@ -52,7 +52,7 @@ namespace QuickGraph.Algorithms
                 throw new ArgumentException("g is empty");
 
             int i = rnd.Next(g.EdgeCount);
-            foreach (TEdge e in g.Edges)
+            foreach (var e in g.Edges)
             {
                 if (i == 0)
                     return e;
@@ -75,7 +75,7 @@ namespace QuickGraph.Algorithms
                 throw new ArgumentException("edges is empty");
 
             int i = rnd.Next(count);
-            foreach (TEdge e in edges)
+            foreach (var e in edges)
             {
                 if (i == 0)
                     return e;

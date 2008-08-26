@@ -26,7 +26,7 @@ namespace QuickGraph.Predicates
         public int OutDegree(TVertex v)
         {
             int count =0;
-            foreach (TEdge edge in this.BaseGraph.OutEdges(v))
+            foreach (var edge in this.BaseGraph.OutEdges(v))
                 if (this.TestEdge(edge))
                     count++;
             return count;
@@ -34,7 +34,7 @@ namespace QuickGraph.Predicates
 
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
-            foreach (TEdge edge in this.BaseGraph.OutEdges(v))
+            foreach (var edge in this.BaseGraph.OutEdges(v))
                 if (this.TestEdge(edge))
                     yield return edge;
         }
