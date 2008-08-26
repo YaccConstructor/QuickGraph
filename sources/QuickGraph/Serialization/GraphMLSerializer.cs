@@ -373,12 +373,10 @@ namespace QuickGraph.Serialization
 
         public void Serialize(TextWriter writer, IVertexAndEdgeSet<TVertex,TEdge> visitedGraph)
         {
-            if (writer == null)
-                throw new ArgumentNullException("writer");
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
+            GraphContracts.AssumeNotNull(writer, "writer");
+            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
 
-            using (XmlTextWriter xwriter = new XmlTextWriter(writer))
+            using (var xwriter = new XmlTextWriter(writer))
             {
                 xwriter.Formatting = Formatting.Indented;
                 Serialize(xwriter, visitedGraph);
@@ -394,7 +392,7 @@ namespace QuickGraph.Serialization
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");
 
-            using (XmlTextWriter xwriter = new XmlTextWriter(stream, encoding))
+            using (var xwriter = new XmlTextWriter(stream, encoding))
             {
                 xwriter.Formatting = Formatting.Indented;
                 Serialize(xwriter, visitedGraph);
@@ -408,7 +406,7 @@ namespace QuickGraph.Serialization
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");
 
-            WriterWorker worker = new WriterWorker(this, writer, visitedGraph);
+            var worker = new WriterWorker(this, writer, visitedGraph);
             worker.Serialize();
         }
 
@@ -436,7 +434,7 @@ namespace QuickGraph.Serialization
             worker.Deserialize();
         }
 
-        private sealed class ReaderWorker
+        class ReaderWorker
         {
             private GraphMLSerializer<TVertex, TEdge> serializer;
             private XmlReader reader;
