@@ -87,10 +87,11 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.VertexColors.Clear();
             this.Distances.Clear();
             // init color, distance
+            var initialDistance = this.DistanceRelaxer.InitialDistance;
             foreach (TVertex u in VisitedGraph.Vertices)
             {
                 this.VertexColors.Add(u, GraphColor.White);
-                this.Distances.Add(u, double.MaxValue);
+                this.Distances.Add(u, initialDistance);
             }
         }
         

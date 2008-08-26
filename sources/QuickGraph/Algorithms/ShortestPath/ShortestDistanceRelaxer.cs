@@ -8,7 +8,7 @@ namespace QuickGraph.Algorithms.ShortestPath
     {
         public double InitialDistance
         {
-            get { return 0.0; }
+            get { return double.MaxValue; }
         }
 
         public bool Compare(double a, double b)

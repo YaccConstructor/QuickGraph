@@ -102,10 +102,11 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.Distances.Clear();
 
             // init color, distance
+            var initialDistance = this.DistanceRelaxer.InitialDistance;
             foreach (TVertex u in VisitedGraph.Vertices)
             {
-                this.VertexColors[u] = GraphColor.White;
-                this.Distances[u] = double.MaxValue;
+                this.VertexColors.Add(u, GraphColor.White);
+                this.Distances.Add(u, initialDistance);
                 this.OnInitializeVertex(u);
             }
         }
@@ -113,9 +114,8 @@ namespace QuickGraph.Algorithms.ShortestPath
         protected override void  InternalCompute()
         {
             this.Initialize();
-            double initialDistance = this.DistanceRelaxer.InitialDistance;
             VertexColors[this.RootVertex] = GraphColor.Gray;
-            Distances[this.RootVertex] = initialDistance;
+            Distances[this.RootVertex] = 0;
             ComputeNoInit(this.RootVertex);
         }
 

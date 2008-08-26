@@ -35,14 +35,32 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
+        [Test]
+        public void Simple()
+        {
+            AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>();
+            GraphFactory.Simple(g);
+            this.Compute(g);
+            this.ComputeCriticalPath(g);
+        }
+
+        [Test]
+        public void FileDependency()
+        {
+            AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>();
+            GraphFactory.FileDependency(g);
+            this.Compute(g);
+            this.ComputeCriticalPath(g);
+        }
+
         [PexMethod]
         public void ComputeCriticalPath(IVertexListGraph<string, Edge<string>> g)
         {
             // is this a dag ?
             bool isDag = AlgoUtility.IsDirectedAcyclicGraph(g);
 
-            IDistanceRelaxer relaxer = new CriticalDistanceRelaxer();
-            List<string> vertices = new List<string>(g.Vertices);
+            var relaxer = new CriticalDistanceRelaxer();
+            var vertices = new List<string>(g.Vertices);
             foreach (string root in vertices)
             {
                 if (isDag)
@@ -52,6 +70,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                     try
                     {
                         Search(g, root, relaxer);
+                        Assert.Fail("should have found the acyclic graph");
                     }
                     catch (NonAcyclicGraphException)
                     {
