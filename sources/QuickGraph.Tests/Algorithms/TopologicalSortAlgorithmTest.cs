@@ -5,6 +5,7 @@ using Microsoft.Pex.Framework;
 namespace QuickGraph.Algorithms
 {
     [TestFixture, PexClass]
+    [CurrentFixture]
     public partial class TopologicalSortAlgorithmTest
     {
         [PexMethod]
@@ -13,6 +14,17 @@ namespace QuickGraph.Algorithms
         {
             TopologicalSortAlgorithm<string, Edge<string>> topo = new TopologicalSortAlgorithm<string, Edge<string>>(g);
             topo.Compute();
+        }
+
+        [Test]
+        public void OneTwo()
+        {
+            var graph = new AdjacencyGraph<int, Edge<int>>();
+            graph.AddVertex(1);
+            graph.AddVertex(2);
+            graph.AddEdge(new Edge<int>(1, 2));
+            var t = new TopologicalSortAlgorithm<int, Edge<int>>(graph);
+            t.Compute();
         }
     }
 }

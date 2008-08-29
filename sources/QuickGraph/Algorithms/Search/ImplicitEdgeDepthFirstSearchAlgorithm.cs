@@ -180,17 +180,18 @@ namespace QuickGraph.Algorithms.Search
 
         protected override void  InternalCompute()
         {
-            if (this.RootVertex == null)
+            TVertex rootVertex;
+            if (!this.TryGetRootVertex(out rootVertex))
                 throw new RootVertexNotSpecifiedException();
 
             // initialize algorithm
             this.Initialize();
 
             // start whith him:
-            OnStartVertex(this.RootVertex);
+            OnStartVertex(rootVertex);
 
             // process each out edge of v
-            foreach (var e in this.VisitedGraph.OutEdges(this.RootVertex))
+            foreach (var e in this.VisitedGraph.OutEdges(rootVertex))
             {
                 if (this.IsAborting)
                     return;

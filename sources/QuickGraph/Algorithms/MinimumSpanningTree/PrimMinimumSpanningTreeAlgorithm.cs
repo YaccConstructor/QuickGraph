@@ -68,16 +68,17 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         {
             if (this.VisitedGraph.VertexCount == 0)
                 return;
-            if (this.RootVertex == null)
-                this.RootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
+            TVertex rootVertex;
+            if (!this.TryGetRootVertex(out rootVertex))
+                rootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
 
             this.Initialize();
 
             try
             {
-                this.minimumWeights[this.RootVertex] = 0;
-                this.queue.Update(this.RootVertex);
-                this.OnStartVertex(this.RootVertex);
+                this.minimumWeights[rootVertex] = 0;
+                this.queue.Update(rootVertex);
+                this.OnStartVertex(rootVertex);
 
                 while (queue.Count != 0)
                 {

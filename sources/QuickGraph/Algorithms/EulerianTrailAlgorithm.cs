@@ -202,10 +202,12 @@ namespace QuickGraph.Algorithms
         {
             if (this.VisitedGraph.VertexCount == 0)
                 return;
-            if (this.RootVertex == null)
-                this.RootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
 
-            this.currentVertex = this.RootVertex;
+            TVertex rootVertex;
+            if (!this.TryGetRootVertex(out rootVertex))
+                rootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
+
+            this.currentVertex = rootVertex;
             // start search
             Search(this.currentVertex);
             if (CircuitAugmentation())

@@ -122,10 +122,11 @@ namespace QuickGraph.Algorithms.Search
             Initialize();
 
             // if there is a starting vertex, start whith him:
-            if (this.RootVertex != null)
+            TVertex rootVertex;
+            if (this.TryGetRootVertex(out rootVertex))
             {
-                OnStartVertex(this.RootVertex);
-                Visit(this.RootVertex, 0);
+                OnStartVertex(rootVertex);
+                Visit(rootVertex, 0);
             }
 
             // process each vertex 

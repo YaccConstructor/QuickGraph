@@ -7,21 +7,42 @@ namespace QuickGraph.Algorithms
         AlgorithmBase<TGraph>
     {
         private TVertex rootVertex;
+        private bool hasRootVertex;
 
         public RootedAlgorithmBase(TGraph visitedGraph)
             :base(visitedGraph)
         {}
 
-        public TVertex RootVertex
+        public bool TryGetRootVertex(out TVertex rootVertex)
         {
-            get { return this.rootVertex; }
-            set 
+            if (this.hasRootVertex)
             {
-                bool changed = !Comparison<TVertex>.Equals(this.rootVertex, value);
-                this.rootVertex = value;
-                if (changed)
-                    this.OnRooVertexChanged(EventArgs.Empty);
+                rootVertex = this.rootVertex;
+                return true;
             }
+            else
+            {
+                rootVertex = default(TVertex);
+                return false;
+            }
+        }
+
+        public void SetRootVertex(TVertex rootVertex)
+        {
+            GraphContracts.AssumeNotNull(rootVertex, "rootVertex");
+            // GraphContracts.AssumeInVertexSet(this.VisitedGraph, rootVertex, "rootVertex");
+
+            bool changed = !Comparison<TVertex>.Equals(this.rootVertex, rootVertex);
+            this.rootVertex = rootVertex;
+            if (changed)
+                this.OnRooVertexChanged(EventArgs.Empty);
+            this.hasRootVertex = true;
+        }
+
+        public void ClearRootVertex()
+        {
+            this.rootVertex = default(TVertex);
+            this.hasRootVertex = false;
         }
 
         public event EventHandler RootVertexChanged;
@@ -33,9 +54,10 @@ namespace QuickGraph.Algorithms
 
         public void Compute(TVertex rootVertex)
         {
-            if (rootVertex == null)
-                throw new ArgumentNullException("rootVertex");
-            this.RootVertex = rootVertex;
+            GraphContracts.AssumeNotNull(rootVertex, "rootVertex");
+            // GraphContracts.AssumeInVertexSet(this.VisitedGraph, rootVertex, "rootVertex");
+
+            this.SetRootVertex(rootVertex);
             this.Compute();
         }
     }

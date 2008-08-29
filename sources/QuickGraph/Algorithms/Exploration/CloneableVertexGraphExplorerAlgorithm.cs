@@ -96,16 +96,17 @@ namespace QuickGraph.Algorithms.Exploration
 
         protected override void  InternalCompute()
         {
-            if (this.RootVertex == null)
+            TVertex rootVertex;
+            if (!this.TryGetRootVertex(out rootVertex))
                 throw new InvalidOperationException("RootVertex is not specified");
 
             this.VisitedGraph.Clear();
             this.unexploredVertices.Clear();
             this.finishedSuccessfully = false;
 
-            if (!this.AddVertexPredicate(this.RootVertex))
+            if (!this.AddVertexPredicate(rootVertex))
                 throw new ArgumentException("StartVertex does not satisfy AddVertexPredicate");
-            this.OnDiscoverVertex(this.RootVertex);
+            this.OnDiscoverVertex(rootVertex);
 
             while (unexploredVertices.Count > 0)
             {

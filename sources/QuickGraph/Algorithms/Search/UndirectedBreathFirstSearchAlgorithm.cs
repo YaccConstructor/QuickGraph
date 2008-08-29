@@ -139,13 +139,12 @@ namespace QuickGraph.Algorithms.Search
 
         protected override void InternalCompute()
         {
-            if (this.RootVertex == null)
-                this.RootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
-
             this.Initialize();
-            if (this.RootVertex == null)
+
+            TVertex rootVertex;
+            if (!this.TryGetRootVertex(out rootVertex))
             {
-                this.RootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
+                rootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
                 foreach (var v in this.VisitedGraph.Vertices)
                 {
                     if (this.VertexColors[v] == GraphColor.White)
@@ -157,8 +156,8 @@ namespace QuickGraph.Algorithms.Search
             }
             else
             {
-                this.OnStartVertex(this.RootVertex);
-                this.Visit(this.RootVertex);
+                this.OnStartVertex(rootVertex);
+                this.Visit(rootVertex);
             }
         }
 

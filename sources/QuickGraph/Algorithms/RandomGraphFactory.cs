@@ -41,7 +41,7 @@ namespace QuickGraph.Algorithms
             throw new InvalidOperationException("Could not find vertex");
         }
 
-        public static TEdge GetEdge<TVertex,TEdge>(IEdgeListGraph<TVertex,TEdge> g, Random rnd)
+        public static TEdge GetEdge<TVertex, TEdge>(IEdgeSet<TVertex, TEdge> g, Random rnd)
             where TEdge : IEdge<TVertex>
         {
             if (g == null)

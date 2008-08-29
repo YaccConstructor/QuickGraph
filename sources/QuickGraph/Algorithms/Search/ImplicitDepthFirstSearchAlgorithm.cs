@@ -178,11 +178,12 @@ namespace QuickGraph.Algorithms.Search
 
         protected override void InternalCompute()
         {
-            if (this.RootVertex == null)
+            TVertex rootVertex;
+            if (!this.TryGetRootVertex(out rootVertex))
                 throw new RootVertexNotSpecifiedException();
 
             this.Initialize();
-            this.Visit(this.RootVertex, 0);
+            this.Visit(rootVertex, 0);
         }
 
         private void Initialize()

@@ -42,7 +42,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         }
 
         public static Dictionary<TEdge, double> UnaryWeightsFromEdgeList(
-            IEdgeListGraph<TVertex, TEdge> graph)
+            IEdgeSet<TVertex, TEdge> graph)
         {
             if (graph == null)
                 throw new ArgumentNullException("graph");
@@ -57,7 +57,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             if (graph == null)
                 throw new ArgumentNullException("graph");
-            Dictionary<TEdge, double> weights = new Dictionary<TEdge, double>();
+            var weights = new Dictionary<TEdge, double>(graph.VertexCount * 2);
             foreach (var v in graph.Vertices)
                 foreach (var e in graph.OutEdges(v))
                     weights.Add(e, 1);

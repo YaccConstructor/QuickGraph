@@ -132,12 +132,13 @@ namespace QuickGraph.Algorithms.Search
                 return;
 
             // start whith him:
-            if (this.RootVertex != null)
+            TVertex rootVertex;
+            if (this.TryGetRootVertex(out rootVertex))
             {
-                OnStartVertex(this.RootVertex);
+                OnStartVertex(rootVertex);
 
                 // process each out edge of v
-                foreach (var e in VisitedGraph.OutEdges(this.RootVertex))
+                foreach (var e in VisitedGraph.OutEdges(rootVertex))
                 {
                     if (this.IsAborting)
                         return;

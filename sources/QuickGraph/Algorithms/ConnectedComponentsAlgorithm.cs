@@ -64,9 +64,10 @@ namespace QuickGraph.Algorithms
 
             if (this.VisitedGraph.VertexCount != 0)
             {
-                if (this.RootVertex == null)
-                    this.RootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
-                dfs.Compute(this.RootVertex);
+                TVertex rootVertex;
+                if (!this.TryGetRootVertex(out rootVertex))
+                    rootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
+                dfs.Compute(rootVertex);
             }
 
             ++this.componentCount;

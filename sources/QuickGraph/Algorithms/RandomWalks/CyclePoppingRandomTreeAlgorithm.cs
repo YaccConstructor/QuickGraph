@@ -162,20 +162,21 @@ namespace QuickGraph.Algorithms.RandomWalks
         {
             if (root == null)
                 throw new ArgumentNullException("root");
-            this.RootVertex = root;
+            this.SetRootVertex(root);
             this.Compute();
         }
         
         protected override void  InternalCompute()
         {
-            if (this.RootVertex == null)
+            TVertex rootVertex;
+            if (!this.TryGetRootVertex(out rootVertex))
                 throw new InvalidOperationException("RootVertex not specified");
             // initialize vertices to white
             Initialize();
 
             // process root
-            ClearTree(this.RootVertex);
-            SetInTree(this.RootVertex);
+            ClearTree(rootVertex);
+            SetInTree(rootVertex);
 
             TVertex u;
             foreach (var i in this.VisitedGraph.Vertices)

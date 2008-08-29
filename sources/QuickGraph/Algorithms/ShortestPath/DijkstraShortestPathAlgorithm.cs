@@ -97,13 +97,14 @@ namespace QuickGraph.Algorithms.ShortestPath
         
         protected override void  InternalCompute()
         {
-            if (this.RootVertex == null)
+            TVertex rootVertex;
+            if (!this.TryGetRootVertex(out rootVertex))
                 throw new InvalidOperationException("RootVertex not initialized");
 
             this.Initialize();
-            this.VertexColors[this.RootVertex] = GraphColor.Gray;
-            this.Distances[this.RootVertex] = 0;
-            ComputeNoInit(this.RootVertex);
+            this.VertexColors[rootVertex] = GraphColor.Gray;
+            this.Distances[rootVertex] = 0;
+            ComputeNoInit(rootVertex);
         }
 
         public void ComputeNoInit(TVertex s)
