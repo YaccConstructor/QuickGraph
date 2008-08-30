@@ -100,8 +100,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 VertexPredecessorRecorderObserver<TVertex,TEdge> vis = new VertexPredecessorRecorderObserver<TVertex,TEdge>(
                     Predecessors
 					);
-				VertexBuffer<TVertex> Q = new VertexBuffer<TVertex>();
-				BreadthFirstSearchAlgorithm<TVertex,TEdge> bfs = new BreadthFirstSearchAlgorithm<TVertex,TEdge>(
+				var Q = new QuickGraph.Collections.Queue<TVertex>();
+				var bfs = new BreadthFirstSearchAlgorithm<TVertex,TEdge>(
 					ResidualGraph,
 					Q,
 					VertexColors

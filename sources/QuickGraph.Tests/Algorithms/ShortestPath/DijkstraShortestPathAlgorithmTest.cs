@@ -9,6 +9,25 @@ using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
+    [TypeFixture(typeof(IVertexAndEdgeListGraph<string, Edge<string>>))]
+    [TypeFactory(typeof(AdjacencyGraphFactory))]
+    public class DijkstraShortestPathExamplesTest
+    {
+        [Test]
+        public void Compute(IVertexAndEdgeListGraph<string, Edge<string>> g)
+        {
+            if (g.VertexCount == 0) return;
+
+            var rnd = new Random();
+            var distances = new Dictionary<Edge<string>, double>();
+            foreach(var edge in g.Edges)
+                distances.Add(edge, rnd.Next(100));
+            var bfs = new DijkstraShortestPathAlgorithm<string, Edge<string>>(g, distances);
+
+            bfs.Compute(TraversalHelper.GetFirstVertex(g));
+        }
+    }
+
     [TestFixture, CurrentFixture]
     public class DijkstraShortestPathTest
     {

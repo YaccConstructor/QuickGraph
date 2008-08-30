@@ -23,7 +23,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         IDistanceRecorderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private PriorithizedVertexBuffer<TVertex,double> vertexQueue;
+        private PriorityQueue<TVertex,double> vertexQueue;
 
         public DijkstraShortestPathAlgorithm(
             IVertexListGraph<TVertex, TEdge> visitedGraph,
@@ -109,7 +109,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public void ComputeNoInit(TVertex s)
         {
-            this.vertexQueue = new PriorithizedVertexBuffer<TVertex,double>(this.Distances);
+            this.vertexQueue = new PriorityQueue<TVertex,double>(this.Distances);
             var bfs = new BreadthFirstSearchAlgorithm<TVertex,TEdge>(
                 this.VisitedGraph,
                 this.vertexQueue,

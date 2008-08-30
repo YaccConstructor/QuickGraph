@@ -23,15 +23,15 @@ namespace QuickGraph.Algorithms.Search
         where TEdge : IEdge<TVertex>
     {
         private IDictionary<TVertex, GraphColor> vertexColors;
-        private VertexBuffer<TVertex> vertexQueue;
+        private IQueue<TVertex> vertexQueue;
 
         public BreadthFirstSearchAlgorithm(IVertexListGraph<TVertex,TEdge> g)
-            :this(g, new VertexBuffer<TVertex>(), new Dictionary<TVertex, GraphColor>())
+            : this(g, new QuickGraph.Collections.Queue<TVertex>(), new Dictionary<TVertex, GraphColor>())
         {}
 
         public BreadthFirstSearchAlgorithm(
             IVertexListGraph<TVertex, TEdge> visitedGraph,
-            VertexBuffer<TVertex> vertexQueue,
+            IQueue<TVertex> vertexQueue,
             IDictionary<TVertex, GraphColor> vertexColors
             )
             :base(visitedGraph)
@@ -170,12 +170,12 @@ namespace QuickGraph.Algorithms.Search
             this.VertexColors[s] = GraphColor.Gray;
             OnDiscoverVertex(s);
 
-            this.vertexQueue.Push(s);
+            this.vertexQueue.Enqueue(s);
             while (this.vertexQueue.Count != 0)
             {
                 if (this.IsAborting)
                     return;
-                TVertex u = this.vertexQueue.Pop();
+                TVertex u = this.vertexQueue.Dequeue();
 
                 OnExamineVertex(u);
                 foreach (var e in VisitedGraph.OutEdges(u))
@@ -189,7 +189,7 @@ namespace QuickGraph.Algorithms.Search
                         OnTreeEdge(e);
                         VertexColors[v] = GraphColor.Gray;
                         OnDiscoverVertex(v);
-                        this.vertexQueue.Push(v);
+                        this.vertexQueue.Enqueue(v);
                     }
                     else
                     {

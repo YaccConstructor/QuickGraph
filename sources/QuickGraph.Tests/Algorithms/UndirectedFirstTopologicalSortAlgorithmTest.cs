@@ -9,10 +9,11 @@ namespace QuickGraph.Algorithms
     [TypeFactory(typeof(UndirectedGraphFactory))]
     public partial class UndirectedFirstTopologicalSortAlgorithmTest
     {
+
         [Test, PexMethod]
         public void Compute([PexAssumeNotNull]IUndirectedGraph<string, Edge<string>> g)
         {
-            UndirectedFirstTopologicalSortAlgorithm<string, Edge<string>> topo =
+            var topo =
                 new UndirectedFirstTopologicalSortAlgorithm<string, Edge<string>>(g);
             topo.AllowCyclicGraph = true;
             topo.Compute();

@@ -11,7 +11,7 @@ namespace QuickGraph.Algorithms
         where TEdge : IEdge<TVertex>
     {
         private IDictionary<TVertex, int> degrees = new Dictionary<TVertex, int>();
-        private PriorithizedVertexBuffer<TVertex, int> heap;
+        private PriorityQueue<TVertex, int> heap;
         private IList<TVertex> sortedVertices = new List<TVertex>();
         private bool allowCyclicGraph = false;
 
@@ -20,7 +20,7 @@ namespace QuickGraph.Algorithms
             )
             : base(visitedGraph)
         {
-            this.heap = new PriorithizedVertexBuffer<TVertex, int>(this.degrees);
+            this.heap = new PriorityQueue<TVertex, int>(this.degrees);
         }
 
         public ICollection<TVertex> SortedVertices
@@ -31,7 +31,7 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        public PriorithizedVertexBuffer<TVertex, int> Heap
+        public PriorityQueue<TVertex, int> Heap
         {
             get
             {
@@ -76,10 +76,9 @@ namespace QuickGraph.Algorithms
 
             while (this.heap.Count != 0)
             {
-                if (this.IsAborting)
-                    return;
+                if (this.IsAborting) return;
 
-                TVertex v = this.heap.Pop();
+                TVertex v = this.heap.Dequeue();
                 if (this.degrees[v] != 0 && !this.AllowCyclicGraph)
                     throw new NonAcyclicGraphException();
 
@@ -95,7 +94,8 @@ namespace QuickGraph.Algorithms
                     this.degrees[e.Target]--;
                     if (this.degrees[e.Target] < 0 && !this.AllowCyclicGraph)
                         throw new InvalidOperationException("Degree is negative, and cannot be");
-                    this.heap.Update(e.Target);
+                    if (this.heap.Contains(e.Target))
+                        this.heap.Update(e.Target);
                 }
             }
         }
@@ -105,10 +105,8 @@ namespace QuickGraph.Algorithms
             foreach (var v in this.VisitedGraph.Vertices)
             {
                 this.degrees.Add(v, this.VisitedGraph.AdjacentDegree(v));
-                this.heap.Push(v);
+                this.heap.Enqueue(v);
             }
-
-            this.heap.Sort();
         }
     }
 }

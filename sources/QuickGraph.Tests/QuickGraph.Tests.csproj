@@ -69,6 +69,7 @@
     <Compile Include="Algorithms\Search\BidirectionalDepthFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\BreadthFirstSearchAlgirthmTest.cs" />
     <Compile Include="Algorithms\Search\DepthFirstSearchAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Search\SearchingExamplesTest.cs" />
     <Compile Include="Algorithms\Search\UndirectedBreathFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\ShortestPath\DagShortestPathAlgorithmTest.cs" />
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest.cs" />
@@ -81,6 +82,55 @@
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="BidirectionalGraphFactory.cs" />
     <Compile Include="BidirectionalMatrixGraphFactory.cs" />
+    <Compile Include="Collections\BinaryHeapTest.cs" />
+    <Compile Include="Collections\BinaryHeapTPriorityTValueEnumeratorTest.CurrentAfterMoveNextFinished.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueEnumeratorTest.CurrentBeforeMoveNext.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueEnumeratorTest.InsertAndCurrentAndModify.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueEnumeratorTest.InsertAndMoveNextAndModify.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueEnumeratorTest.InsertAndResetAndModify.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueEnumeratorTest.InsertManyAndDoubleForEach.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueEnumeratorTest.InsertManyAndEnumerateUntyped.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueEnumeratorTest.InsertManyAndMoveNextAndReset.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Constructor.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Insert.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndEnumerate.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndIndexOf.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndMinimum.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndRemoveAt.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndRemoveAtAll.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndRemoveMinimum.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="DegreeTest.cs" />
     <Compile Include="EdgeListGraphFactory.cs" />
     <Compile Include="EdgeListGraphInvariant.cs" />

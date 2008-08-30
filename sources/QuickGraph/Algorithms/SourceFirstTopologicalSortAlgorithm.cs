@@ -11,7 +11,7 @@ namespace QuickGraph.Algorithms
         where TEdge : IEdge<TVertex>
     {
         private IDictionary<TVertex, int> inDegrees = new Dictionary<TVertex, int>();
-        private PriorithizedVertexBuffer<TVertex,int> heap;
+        private PriorityQueue<TVertex,int> heap;
         private IList<TVertex> sortedVertices = new List<TVertex>();
 
         public SourceFirstTopologicalSortAlgorithm(
@@ -19,7 +19,7 @@ namespace QuickGraph.Algorithms
             )
             :base(visitedGraph)
         {
-            this.heap = new PriorithizedVertexBuffer<TVertex,int>(this.inDegrees);
+            this.heap = new PriorityQueue<TVertex,int>(this.inDegrees);
         }
 
         public ICollection<TVertex> SortedVertices
@@ -30,7 +30,7 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        public PriorithizedVertexBuffer<TVertex,int> Heap
+        public PriorityQueue<TVertex,int> Heap
         {
             get
             {
@@ -70,7 +70,7 @@ namespace QuickGraph.Algorithms
             {
                 if (this.IsAborting)
                     return;
-                TVertex v = this.heap.Pop();
+                TVertex v = this.heap.Dequeue();
                 if (this.inDegrees[v] != 0)
                     throw new NonAcyclicGraphException();
 
@@ -96,7 +96,7 @@ namespace QuickGraph.Algorithms
             foreach (var v in this.VisitedGraph.Vertices)
             {
                 this.inDegrees.Add(v, 0);
-                this.heap.Push(v);
+                this.heap.Enqueue(v);
             }
 
             foreach (var e in this.VisitedGraph.Edges)
@@ -105,8 +105,6 @@ namespace QuickGraph.Algorithms
                     continue;
                 this.inDegrees[e.Target]++;
             }
-
-            this.heap.Sort();
         }
     }
 }
