@@ -2,4 +2,4 @@
 // Generated at Tuesday, May 16, 2006 10:38:05 PM
 
 using System.Reflection;
-[assembly: AssemblyVersion("2.0.30830.00")]
+[assembly: AssemblyVersion("2.0.30831.00")]
