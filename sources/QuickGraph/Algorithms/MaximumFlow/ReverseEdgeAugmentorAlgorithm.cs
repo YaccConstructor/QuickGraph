@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -14,9 +15,15 @@ namespace QuickGraph.Algorithms.MaximumFlow
         private bool augmented = false;
 
         public ReversedEdgeAugmentorAlgorithm(
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            IEdgeFactory<TVertex, TEdge> edgeFactory)
+            : this(null, visitedGraph, edgeFactory)
+        { }
+
+        public ReversedEdgeAugmentorAlgorithm(
+            IAlgorithmComponent host,
             IMutableVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph,
-            IEdgeFactory<TVertex,TEdge> edgeFactory
-            )
+            IEdgeFactory<TVertex,TEdge> edgeFactory)
         {
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");

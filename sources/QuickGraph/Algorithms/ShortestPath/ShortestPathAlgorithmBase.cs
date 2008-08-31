@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Collections;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
@@ -17,18 +18,20 @@ namespace QuickGraph.Algorithms.ShortestPath
         private readonly IDistanceRelaxer distanceRelaxer;
 
         protected ShortestPathAlgorithmBase(
+            IAlgorithmComponent host,
             TGraph visitedGraph,
             IDictionary<TEdge, double> weights
             )
-            :this(visitedGraph, weights, new ShortestDistanceRelaxer())
+            :this(host, visitedGraph, weights, new ShortestDistanceRelaxer())
         {}
 
         protected ShortestPathAlgorithmBase(
+            IAlgorithmComponent host,
             TGraph visitedGraph,
             IDictionary<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
-            :base(visitedGraph)
+            :base(host, visitedGraph)
         {
             if (weights == null)
                 throw new ArgumentNullException("weights");

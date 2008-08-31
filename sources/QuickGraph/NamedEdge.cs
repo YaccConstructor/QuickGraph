@@ -5,7 +5,7 @@ namespace QuickGraph
     [Serializable]
     public class NamedEdge<TVertex> : Edge<TVertex>
     {
-        private string name;
+        private readonly string name;
         public NamedEdge(TVertex source, TVertex target, string name)
             :base(source,target)
         {

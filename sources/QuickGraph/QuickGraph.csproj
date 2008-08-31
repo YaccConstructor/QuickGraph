@@ -64,6 +64,8 @@
     <Compile Include="Algorithms\Condensation\CondensatedEdge.cs" />
     <Compile Include="Algorithms\Condensation\MergedEdge.cs" />
     <Compile Include="Algorithms\ConnectedComponentsAlgorithm.cs" />
+    <Compile Include="Algorithms\Services\IAlgorithmComponent.cs" />
+    <Compile Include="Algorithms\Services\IAlgorithmServices.cs" />
     <Compile Include="Algorithms\IComputation.cs" />
     <Compile Include="Algorithms\Matrix\DoubleDenseMatrix.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithm.cs" />
@@ -129,6 +131,8 @@
     </Compile>
     <Compile Include="Algorithms\Search\UndirectedBreathFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Search\UndirectedDepthFirstSearchAlgorithm.cs" />
+    <Compile Include="Algorithms\Services\ICancelManager.cs" />
+    <Compile Include="Algorithms\Services\IService.cs" />
     <Compile Include="Algorithms\ShortestPath\BellmanFordShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\ShortestPath\CriticalDistanceRelaxer.cs" />
     <Compile Include="Algorithms\ShortestPath\DagShortestPathAlgorithm.cs">
@@ -154,6 +158,7 @@
     <Compile Include="Collections\IQueue.cs" />
     <Compile Include="EdgeNotFoundException.cs" />
     <Compile Include="GraphContracts.cs" />
+    <Compile Include="HashCodeHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BidirectionalGraph.cs" />
     <Compile Include="BidirectionalMatrixGraph.cs" />

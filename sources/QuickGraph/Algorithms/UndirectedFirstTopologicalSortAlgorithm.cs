@@ -73,10 +73,11 @@ namespace QuickGraph.Algorithms
         protected override void InternalCompute()
         {
             this.InitializeInDegrees();
+            var cancelManager = this.Services.CancelManager;
 
             while (this.heap.Count != 0)
             {
-                if (this.IsAborting) return;
+                if (cancelManager.IsCancelling) return;
 
                 TVertex v = this.heap.Dequeue();
                 if (this.degrees[v] != 0 && !this.AllowCyclicGraph)

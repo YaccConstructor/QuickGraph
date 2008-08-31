@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using QuickGraph.Collections;
 using QuickGraph.Algorithms.Observers;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -34,7 +35,16 @@ namespace QuickGraph.Algorithms.Search
             IQueue<TVertex> vertexQueue,
             IDictionary<TVertex, GraphColor> vertexColors
             )
-            : base(visitedGraph)
+            : this(null, visitedGraph, vertexQueue, vertexColors)
+        { }
+
+        public UndirectedBreadthFirstSearchAlgorithm(
+            IAlgorithmComponent host,
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
+            IQueue<TVertex> vertexQueue,
+            IDictionary<TVertex, GraphColor> vertexColors
+            )
+            : base(host, visitedGraph)
         {
             if (vertexQueue == null)
                 throw new ArgumentNullException("vertexQueue");
@@ -128,9 +138,10 @@ namespace QuickGraph.Algorithms.Search
         public void Initialize()
         {
             // initialize vertex u
+            var cancelManager = this.Services.CancelManager;
             foreach (var v in VisitedGraph.Vertices)
             {
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
                 VertexColors[v] = GraphColor.White;
                 OnInitializeVertex(v);
@@ -163,8 +174,7 @@ namespace QuickGraph.Algorithms.Search
 
         public void Visit(TVertex s)
         {
-            if (this.IsAborting)
-                return;
+            var cancelManager = this.Services.CancelManager;
 
             this.VertexColors[s] = GraphColor.Gray;
             OnDiscoverVertex(s);
@@ -172,8 +182,7 @@ namespace QuickGraph.Algorithms.Search
             this.vertexQueue.Enqueue(s);
             while (this.vertexQueue.Count != 0)
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) return;
                 TVertex u = this.vertexQueue.Dequeue();
 
                 OnExamineVertex(u);

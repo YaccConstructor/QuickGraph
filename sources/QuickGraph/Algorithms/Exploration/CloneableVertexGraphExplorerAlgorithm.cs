@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using QuickGraph.Predicates;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.Exploration
 {
@@ -25,7 +26,14 @@ namespace QuickGraph.Algorithms.Exploration
         public CloneableVertexGraphExplorerAlgorithm(
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph
             )
-            :base(visitedGraph)
+            : this(null, visitedGraph)
+        { }
+
+        public CloneableVertexGraphExplorerAlgorithm(
+            IAlgorithmComponent host,
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph
+            )
+            :base(host, visitedGraph)
         {}
 
         public IList<ITransitionFactory<TVertex, TEdge>> TransitionFactories

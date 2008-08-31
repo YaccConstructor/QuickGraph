@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -23,8 +24,15 @@ namespace QuickGraph.Algorithms.Search
         private int maxDepth = int.MaxValue;
         private IDictionary<TEdge,GraphColor> edgeColors = new Dictionary<TEdge,GraphColor>();
 
-        public ImplicitEdgeDepthFirstSearchAlgorithm(IIncidenceGraph<TVertex,TEdge> visitedGraph)
-            :base(visitedGraph)
+        public ImplicitEdgeDepthFirstSearchAlgorithm(IIncidenceGraph<TVertex, TEdge> visitedGraph)
+            : this(null, visitedGraph)
+        { }
+
+        public ImplicitEdgeDepthFirstSearchAlgorithm(
+            IAlgorithmComponent host,
+            IIncidenceGraph<TVertex,TEdge> visitedGraph
+            )
+            :base(host, visitedGraph)
         {}
 
         /// <summary>
@@ -190,11 +198,12 @@ namespace QuickGraph.Algorithms.Search
             // start whith him:
             OnStartVertex(rootVertex);
 
+            var cancelManager = this.Services.CancelManager;
             // process each out edge of v
             foreach (var e in this.VisitedGraph.OutEdges(rootVertex))
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) return;
+
                 if (!this.EdgeColors.ContainsKey(e))
                 {
                     OnStartEdge(e);
@@ -211,11 +220,8 @@ namespace QuickGraph.Algorithms.Search
         /// <exception cref="ArgumentNullException">se cannot be null</exception>
         private void Visit(TEdge se, int depth)
         {
+            GraphContracts.AssumeNotNull(se, "se");
             if (depth > this.maxDepth)
-                return;
-            if (se == null)
-                throw new ArgumentNullException("se");
-            if (this.IsAborting)
                 return;
 
             // mark edge as gray
@@ -223,11 +229,12 @@ namespace QuickGraph.Algorithms.Search
             // add edge to the search tree
             OnTreeEdge(se);
 
+            var cancelManager = this.Services.CancelManager;
             // iterate over out-edges
             foreach (var e in this.VisitedGraph.OutEdges(se.Target))
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) return;
+
                 // check edge is not explored yet,
                 // if not, explore it.
                 if (!this.EdgeColors.ContainsKey(e))

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
@@ -16,19 +17,26 @@ namespace QuickGraph.Algorithms.RandomWalks
         private IDictionary<TVertex, TEdge> successors = new Dictionary<TVertex, TEdge>();
         private Random rnd = new Random((int)DateTime.Now.Ticks);
 
-        public CyclePoppingRandomTreeAlgorithm(IVertexListGraph<TVertex,TEdge> visitedGraph)
-            :base(visitedGraph)
-        {}
+        public CyclePoppingRandomTreeAlgorithm(
+            IVertexListGraph<TVertex, TEdge> visitedGraph)
+            : this(visitedGraph, new NormalizedMarkovEdgeChain<TVertex, TEdge>())
+        { }
 
         public CyclePoppingRandomTreeAlgorithm(
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            IMarkovEdgeChain<TVertex, TEdge> edgeChain)
+            : this(null, visitedGraph, edgeChain)
+        { }
+
+        public CyclePoppingRandomTreeAlgorithm(
+            IAlgorithmComponent host,
             IVertexListGraph<TVertex,TEdge> visitedGraph,
             IMarkovEdgeChain<TVertex,TEdge> edgeChain
             )
-            :base(visitedGraph)
+            :base(host, visitedGraph)
         {
             if (edgeChain == null)
                 throw new ArgumentNullException("edgeChain");
-
             this.edgeChain = edgeChain;
         }
 

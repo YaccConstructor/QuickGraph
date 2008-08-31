@@ -26,7 +26,7 @@ namespace QuickGraph
             get { return this.tag; }
             set 
             {
-                if (!Comparison<TTag>.Equals(this.tag, value))
+                if (!object.Equals(this.tag, value))
                 {
                     this.tag = value;
                     this.OnTagChanged(EventArgs.Empty);

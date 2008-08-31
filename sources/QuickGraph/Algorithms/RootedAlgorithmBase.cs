@@ -1,4 +1,5 @@
 ﻿using System;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms
 {
@@ -9,8 +10,10 @@ namespace QuickGraph.Algorithms
         private TVertex rootVertex;
         private bool hasRootVertex;
 
-        public RootedAlgorithmBase(TGraph visitedGraph)
-            :base(visitedGraph)
+        protected RootedAlgorithmBase(
+            IAlgorithmComponent host,
+            TGraph visitedGraph)
+            :base(host, visitedGraph)
         {}
 
         public bool TryGetRootVertex(out TVertex rootVertex)

@@ -64,12 +64,13 @@ namespace QuickGraph.Algorithms
 
         protected override void InternalCompute()
         {
+            var cancelManager = this.Services.CancelManager;
             this.InitializeInDegrees();
 
             while (this.heap.Count != 0)
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) break;
+
                 TVertex v = this.heap.Dequeue();
                 if (this.inDegrees[v] != 0)
                     throw new NonAcyclicGraphException();

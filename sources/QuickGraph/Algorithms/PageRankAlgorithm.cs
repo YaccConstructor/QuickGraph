@@ -104,7 +104,9 @@ namespace QuickGraph.Algorithms.Ranking
 */
         protected override void InternalCompute()
         {
-            IDictionary<TVertex,double> tempRanks = new Dictionary<TVertex,double>();
+            var cancelManager = this.Services.CancelManager;
+            IDictionary<TVertex, double> tempRanks = new Dictionary<TVertex, double>();
+
             // create filtered graph
             FilteredBidirectionalGraph<
                 TVertex,
@@ -120,14 +122,14 @@ namespace QuickGraph.Algorithms.Ranking
             double error = 0;
             do
             {
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
                   
                 // compute page ranks
                 error = 0;
                 foreach (KeyValuePair<TVertex,double> de in this.Ranks)
                 {
-                    if (this.IsAborting)
+                    if (cancelManager.IsCancelling)
                         return;
 
                     TVertex v = de.Key;
@@ -147,7 +149,7 @@ namespace QuickGraph.Algorithms.Ranking
                 }
 
                 // swap ranks
-                IDictionary<TVertex,double> temp = ranks;
+                var temp = ranks;
                 ranks = tempRanks;
                 tempRanks = temp;
 

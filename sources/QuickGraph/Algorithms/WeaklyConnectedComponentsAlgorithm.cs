@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms
 {
@@ -17,18 +18,21 @@ namespace QuickGraph.Algorithms
         private int componentCount = 0;
         private int currentComponent = 0;
 
-        public WeaklyConnectedComponentsAlgorithm(
-            IVertexListGraph<TVertex, TEdge> visitedGraph
-            )
-            : this(visitedGraph, new Dictionary<TVertex, int>()
-            )
+        public WeaklyConnectedComponentsAlgorithm(IVertexListGraph<TVertex, TEdge> visitedGraph)
+            : this(visitedGraph, new Dictionary<TVertex, int>())
         { }
 
         public WeaklyConnectedComponentsAlgorithm(
             IVertexListGraph<TVertex, TEdge> visitedGraph,
-            IDictionary<TVertex,int> components
-            )
-            :base(visitedGraph)
+            IDictionary<TVertex, int> components)
+            : this(null, visitedGraph, components)
+        { }
+
+        public WeaklyConnectedComponentsAlgorithm(
+            IAlgorithmComponent host,
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TVertex, int> components)
+            : base(host, visitedGraph)
         {
             if (components == null)
                 throw new ArgumentNullException("components");

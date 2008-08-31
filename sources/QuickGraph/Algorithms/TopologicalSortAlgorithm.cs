@@ -11,7 +11,6 @@ namespace QuickGraph.Algorithms
         where TEdge : IEdge<TVertex>
     {
         private IList<TVertex> vertices = new List<TVertex>();
-        private DepthFirstSearchAlgorithm<TVertex,TEdge> dfs;
         private bool allowCyclicGraph = false;
 
         public TopologicalSortAlgorithm(IVertexListGraph<TVertex,TEdge> g)
@@ -27,9 +26,6 @@ namespace QuickGraph.Algorithms
                 throw new ArgumentNullException("vertices");
 
             this.vertices = vertices;
-            this.dfs = new DepthFirstSearchAlgorithm<TVertex,TEdge>(VisitedGraph);
-            this.dfs.BackEdge += new EdgeEventHandler<TVertex,TEdge>(this.BackEdge);
-            this.dfs.FinishVertex += new VertexEventHandler<TVertex>(this.FinishVertex);
         }
 
         public IList<TVertex> SortedVertices
@@ -58,13 +54,27 @@ namespace QuickGraph.Algorithms
 
         protected override void InternalCompute()
         {
-            this.dfs.Compute();
-        }
+            DepthFirstSearchAlgorithm<TVertex, TEdge> dfs = null;
+            try
+            {
+                dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(
+                    this, 
+                    this.VisitedGraph,
+                    new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount)
+                    );
+                dfs.BackEdge += new EdgeEventHandler<TVertex, TEdge>(this.BackEdge);
+                dfs.FinishVertex += new VertexEventHandler<TVertex>(this.FinishVertex);
 
-        public override void Abort()
-        {
-            this.dfs.Abort();
-            base.Abort();
+                dfs.Compute();
+            }
+            finally
+            {
+                if (dfs != null)
+                {
+                    dfs.BackEdge -= new EdgeEventHandler<TVertex, TEdge>(this.BackEdge);
+                    dfs.FinishVertex -= new VertexEventHandler<TVertex>(this.FinishVertex);
+                }
+            }
         }
 
         public void Compute(IList<TVertex> vertices)

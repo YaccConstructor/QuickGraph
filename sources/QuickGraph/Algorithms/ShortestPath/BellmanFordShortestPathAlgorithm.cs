@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
@@ -39,19 +40,21 @@ namespace QuickGraph.Algorithms.ShortestPath
             : this(visitedGraph, weights, new ShortestDistanceRelaxer())
         { }
 
-        /// <summary>
-        /// Builds a new Bellman Ford searcher.
-        /// </summary>
-        /// <param name="g">The graph</param>
-        /// <param name="weights">Edge weights</param>
-        /// <exception cref="ArgumentNullException">Any argument is null</exception>
-        /// <remarks>This algorithm uses the <seealso cref="BreadthFirstSearchAlgorithm"/>.</remarks>
         public BellmanFordShortestPathAlgorithm(
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TEdge, double> weights,
+            IDistanceRelaxer distanceRelaxer
+            )
+            : this(null, visitedGraph, weights, distanceRelaxer)
+        { }
+
+        public BellmanFordShortestPathAlgorithm(
+            IAlgorithmComponent host,
             IVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph,
             IDictionary<TEdge,double> weights,
             IDistanceRelaxer distanceRelaxer
             )
-            :base(visitedGraph, weights, distanceRelaxer)
+            :base(host, visitedGraph, weights, distanceRelaxer)
         {
             this.predecessors = new Dictionary<TVertex,TVertex>();
         }

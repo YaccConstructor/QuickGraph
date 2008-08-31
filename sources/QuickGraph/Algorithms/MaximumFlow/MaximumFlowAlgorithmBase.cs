@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -21,12 +22,13 @@ namespace QuickGraph.Algorithms.MaximumFlow
         private TVertex sink;
         private double maxFlow = 0;
 
-        public MaximumFlowAlgorithm(
+        protected MaximumFlowAlgorithm(
+            IAlgorithmComponent host,
             IVertexListGraph<TVertex,TEdge> visitedGraph,
             IDictionary<TEdge, double> capacities,
             IDictionary<TEdge,TEdge> reversedEdges
             )
-            :base(visitedGraph)
+            :base(host, visitedGraph)
         {
             if (capacities == null)
                 throw new ArgumentNullException("capacities");

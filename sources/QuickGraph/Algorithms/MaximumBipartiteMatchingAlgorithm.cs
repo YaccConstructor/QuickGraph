@@ -55,49 +55,52 @@ namespace QuickGraph.Algorithms
 
         protected override void InternalCompute()
         {
+            var cancelManager = this.Services.CancelManager;
             this.matchedEdges.Clear();
             AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge> augmentor=null;
             ReversedEdgeAugmentorAlgorithm<TVertex,TEdge> reverser=null;
             try
             {
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
 
                 //augmenting graph
                 augmentor = new AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge>(
+                    this,
                     this.VisitedGraph,
                     this.VertexFactory,
                     this.EdgeFactory);
                 augmentor.Compute();
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
 
 
                 // adding reverse edges
                 reverser = new ReversedEdgeAugmentorAlgorithm<TVertex,TEdge>(
+                    this,
                     this.VisitedGraph,
                     this.EdgeFactory
                     );
                 reverser.AddReversedEdges();
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
 
 
                 // compute maxflow
-                EdmondsKarpMaximumFlowAlgorithm<TVertex, TEdge> flow = new EdmondsKarpMaximumFlowAlgorithm<TVertex, TEdge>(
+                var flow = new EdmondsKarpMaximumFlowAlgorithm<TVertex, TEdge>(
+                    this,
                     this.VisitedGraph,
                     AlgoUtility.ConstantCapacities(this.VisitedGraph, 1),
                     reverser.ReversedEdges
                     );
                 flow.Compute(augmentor.SuperSource, augmentor.SuperSink);
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
 
 
                 foreach (var edge in this.VisitedGraph.Edges)
                 {
-                    if (this.IsAborting)
-                        return;
+                    if (cancelManager.IsCancelling) return;
 
                     if (flow.ResidualCapacities[edge] == 0)
                         this.matchedEdges.Add(edge);

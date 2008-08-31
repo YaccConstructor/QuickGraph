@@ -29,21 +29,22 @@ namespace QuickGraph.Algorithms
 
         protected override void InternalCompute()
         {
+            var cancelManager = this.Services.CancelManager;
             this.matrix = new DoubleDenseMatrix(this.VisitedGraph.VertexCount, this.VisitedGraph.VertexCount);
             this.vertexIndices = new Dictionary<TVertex, int>(this.VisitedGraph.VertexCount);
 
             int index = 0;
             foreach (var v in this.VisitedGraph.Vertices)
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) break;
+
                 this.vertexIndices.Add(v, index++);
             }
 
             foreach (var v in this.VisitedGraph.Vertices)
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) break;
+
                 int source = this.VertexIndices[v];
                 foreach (var edge in this.VisitedGraph.OutEdges(v))
                 {

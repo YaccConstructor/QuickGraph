@@ -10,7 +10,6 @@ namespace QuickGraph.Algorithms.Condensation
         where TGraph : IMutableVertexAndEdgeListGraph<TVertex, TEdge>, new()
     {
         private bool stronglyConnected = true;
-        private IConnectedComponentAlgorithm<TVertex,TEdge,IVertexListGraph<TVertex,TEdge>> componentAlgorithm = null;
 
         private IMutableBidirectionalGraph<
             TGraph,
@@ -40,36 +39,23 @@ namespace QuickGraph.Algorithms.Condensation
             // create condensated graph
             this.condensatedGraph = new BidirectionalGraph<
                 TGraph,
-                CondensatedEdge<TVertex, TEdge,TGraph>
+                CondensatedEdge<TVertex, TEdge, TGraph>
                 >(false);
             if (this.VisitedGraph.VertexCount == 0)
                 return;
 
             // compute strongly connected components
-            Dictionary<TVertex,int> components = new Dictionary<TVertex,int>(this.VisitedGraph.VertexCount);
-            int componentCount;
-            lock (this.SyncRoot)
-            {
-                if (this.StronglyConnected)
-                    this.componentAlgorithm = new StronglyConnectedComponentsAlgorithm<TVertex, TEdge>(this.VisitedGraph, components);
-                else
-                    this.componentAlgorithm = new WeaklyConnectedComponentsAlgorithm<TVertex, TEdge>(this.VisitedGraph, components);
-            }
-            this.componentAlgorithm.Compute();
-            componentCount = this.componentAlgorithm.ComponentCount;
-            lock (SyncRoot)
-            {
-                this.componentAlgorithm = null;
-            }
-            if (this.IsAborting)
-                return;
+            var components = new Dictionary<TVertex, int>(this.VisitedGraph.VertexCount);
+            int componentCount = ComputeComponentCount(components);
+
+            var cancelManager = this.Services.CancelManager;
+            if (cancelManager.IsCancelling) return;
 
             // create list vertices
-            Dictionary<int, TGraph> condensatedVertices = new Dictionary<int, TGraph>(componentCount);
+            var condensatedVertices = new Dictionary<int, TGraph>(componentCount);
             for (int i = 0; i < componentCount; ++i)
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) return;
 
                 TGraph v = new TGraph();
                 condensatedVertices.Add(i, v);
@@ -81,17 +67,15 @@ namespace QuickGraph.Algorithms.Condensation
             {
                 condensatedVertices[components[v]].AddVertex(v);
             }
-            if (this.IsAborting)
-                return;
+            if (cancelManager.IsCancelling) return;
 
             // condensated edges
-            Dictionary<EdgeKey, CondensatedEdge<TVertex,TEdge,TGraph>> condensatedEdges = new Dictionary<EdgeKey,CondensatedEdge<TVertex,TEdge,TGraph>>(componentCount);
+            var condensatedEdges = new Dictionary<EdgeKey, CondensatedEdge<TVertex, TEdge, TGraph>>(componentCount);
 
             // iterate over edges and condensate graph
             foreach (var edge in this.VisitedGraph.Edges)
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) return;
 
                 // get component ids
                 int sourceID = components[edge.Source];
@@ -109,11 +93,11 @@ namespace QuickGraph.Algorithms.Condensation
                 TGraph targets = condensatedVertices[targetID];
 
                 // at last add edge
-                EdgeKey edgeKey = new EdgeKey(sourceID, targetID);
-                CondensatedEdge<TVertex,TEdge,TGraph> condensatedEdge;
+                var edgeKey = new EdgeKey(sourceID, targetID);
+                CondensatedEdge<TVertex, TEdge, TGraph> condensatedEdge;
                 if (!condensatedEdges.TryGetValue(edgeKey, out condensatedEdge))
                 {
-                    condensatedEdge = new CondensatedEdge<TVertex, TEdge,TGraph>(sources, targets);
+                    condensatedEdge = new CondensatedEdge<TVertex, TEdge, TGraph>(sources, targets);
                     condensatedEdges.Add(edgeKey, condensatedEdge);
                     this.condensatedGraph.AddEdge(condensatedEdge);
                 }
@@ -121,17 +105,24 @@ namespace QuickGraph.Algorithms.Condensation
             }
         }
 
-        public override void Abort()
+        private int ComputeComponentCount(Dictionary<TVertex, int> components)
         {
-            if (this.componentAlgorithm != null)
-            {
-                this.componentAlgorithm.Abort();
-                this.componentAlgorithm = null;
-            }
-            base.Abort();
+            IConnectedComponentAlgorithm<TVertex, TEdge, IVertexListGraph<TVertex, TEdge>> componentAlgorithm;
+            if (this.StronglyConnected)
+                componentAlgorithm = new StronglyConnectedComponentsAlgorithm<TVertex, TEdge>(
+                    this,
+                    this.VisitedGraph,
+                    components);
+            else
+                componentAlgorithm = new WeaklyConnectedComponentsAlgorithm<TVertex, TEdge>(
+                    this,
+                    this.VisitedGraph,
+                    components);
+            componentAlgorithm.Compute();
+            return componentAlgorithm.ComponentCount;
         }
 
-        private struct EdgeKey : IComparable<EdgeKey>
+        private struct EdgeKey : IEquatable<EdgeKey>
         {
             int SourceID;
             int TargetID;
@@ -142,17 +133,16 @@ namespace QuickGraph.Algorithms.Condensation
                 TargetID = targetID;
             }
 
-            public int CompareTo(EdgeKey other)
-            {
-                int compare = SourceID.CompareTo(other.SourceID);
-                if (compare != 0)
-                    return compare;
-                return TargetID.CompareTo(other.TargetID);                
-            }
-
             public bool Equals(EdgeKey other)
             {
-                return SourceID == other.SourceID && TargetID == other.TargetID;
+                return 
+                    SourceID == other.SourceID 
+                    && TargetID == other.TargetID;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCodeHelper.Combine(this.SourceID, this.TargetID);
             }
         }
     }

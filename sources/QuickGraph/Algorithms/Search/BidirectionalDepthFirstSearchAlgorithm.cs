@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -32,7 +33,15 @@ namespace QuickGraph.Algorithms.Search
             IBidirectionalGraph<TVertex, TEdge> visitedGraph,
             IDictionary<TVertex, GraphColor> colors
             )
-            : base(visitedGraph)
+            : this(null, visitedGraph, colors)
+        { }
+
+        public BidirectionalDepthFirstSearchAlgorithm(
+            IAlgorithmComponent host,
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TVertex, GraphColor> colors
+            )
+            : base(host, visitedGraph)
         {
             if (colors == null)
                 throw new ArgumentNullException("VertexColors");
@@ -130,10 +139,10 @@ namespace QuickGraph.Algorithms.Search
             }
 
             // process each vertex 
+            var cancelManager = this.Services.CancelManager;
             foreach (var u in VisitedGraph.Vertices)
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) return;
                 if (VertexColors[u] == GraphColor.White)
                 {
                     OnStartVertex(u);
@@ -153,29 +162,28 @@ namespace QuickGraph.Algorithms.Search
 
         public void Visit(TVertex u, int depth)
         {
+            GraphContracts.AssumeNotNull(u, "u");
             if (depth > this.maxDepth)
-                return;
-            if (u == null)
-                throw new ArgumentNullException("u");
-            if (this.IsAborting)
                 return;
 
             VertexColors[u] = GraphColor.Gray;
             OnDiscoverVertex(u);
 
+            var cancelManager = this.Services.CancelManager;
             TVertex v = default(TVertex);
             foreach (var e in VisitedGraph.OutEdges(u))
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) return;
+
                 OnExamineEdge(e);
                 v = e.Target;
                 ProcessEdge(depth, v, e);
             }
+
             foreach (var e in VisitedGraph.InEdges(u))
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) return;
+
                 OnExamineEdge(e);
                 v = e.Source;
                 ProcessEdge(depth, v, e);

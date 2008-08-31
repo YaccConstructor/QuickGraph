@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Collections;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
@@ -28,7 +29,16 @@ namespace QuickGraph.Algorithms.ShortestPath
             IDictionary<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
-            : base(visitedGraph, weights, distanceRelaxer)
+            : this(null, visitedGraph, weights, distanceRelaxer)
+        { }
+
+        public UndirectedDijkstraShortestPathAlgorithm(
+            IAlgorithmComponent host,
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TEdge, double> weights,
+            IDistanceRelaxer distanceRelaxer
+            )
+            : base(host, visitedGraph, weights, distanceRelaxer)
         { }
 
         public event VertexEventHandler<TVertex> InitializeVertex;
@@ -101,14 +111,17 @@ namespace QuickGraph.Algorithms.ShortestPath
         public void ComputeNoInit(TVertex s)
         {
             this.vertexQueue = new PriorityQueue<TVertex, double>(this.Distances);
-            UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge> bfs = new UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge>(
-                this.VisitedGraph,
-                this.vertexQueue,
-                VertexColors
-                );
+            UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge> bfs = null;
 
             try
             {
+                bfs = new UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge>(
+                    this,
+                    this.VisitedGraph,
+                    this.vertexQueue,
+                    VertexColors
+                    );
+
                 bfs.InitializeVertex += this.InitializeVertex;
                 bfs.DiscoverVertex += this.DiscoverVertex;
                 bfs.StartVertex += this.StartVertex;

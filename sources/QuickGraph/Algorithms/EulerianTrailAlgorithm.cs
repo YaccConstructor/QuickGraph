@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms
 {
@@ -17,12 +18,19 @@ namespace QuickGraph.Algorithms
         private TVertex currentVertex;
         private List<TEdge> temporaryEdges;
 
+        public EulerianTrailAlgorithm(
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
+            : this(null, visitedGraph)
+        { }
+
         /// <summary>
         /// Construct an eulerian trail builder
         /// </summary>
         /// <param name="g"></param>
-        public EulerianTrailAlgorithm(IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
-            :base(visitedGraph)
+        public EulerianTrailAlgorithm(
+            IAlgorithmComponent host,
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
+            :base(host, visitedGraph)
         {
             this.circuit = new List<TEdge>();
             this.temporaryCircuit = new List<TEdge>();

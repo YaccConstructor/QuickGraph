@@ -1,25 +1,49 @@
 ﻿using System;
+using QuickGraph.Algorithms.Services;
+using System.Collections.Generic;
 
 namespace QuickGraph.Algorithms
 {
     public abstract class AlgorithmBase<TGraph> :
-        IAlgorithm<TGraph>
+        IAlgorithm<TGraph>,
+        IAlgorithmComponent
     {
-        private TGraph visitedGraph;
+        private readonly TGraph visitedGraph;
+        private readonly AlgorithmServices services;
         private volatile object syncRoot = new object();
-        private int cancelling = 0;
         private volatile ComputationState state = ComputationState.NotRunning;
 
-        public AlgorithmBase(TGraph visitedGraph)
+        /// <summary>
+        /// Creates a new algorithm with an (optional) host.
+        /// </summary>
+        /// <param name="host">if null, host is set to the this reference</param>
+        /// <param name="visitedGraph"></param>
+        protected AlgorithmBase(IAlgorithmComponent host, TGraph visitedGraph)
+        {
+            if (host == null)
+                host = this;
+            if (visitedGraph == null)
+                throw new ArgumentNullException("visitedGraph");
+            this.visitedGraph = visitedGraph;
+            this.services = new AlgorithmServices(host);
+        }
+
+        protected AlgorithmBase(TGraph visitedGraph)
         {
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");
             this.visitedGraph = visitedGraph;
+            this.services = new AlgorithmServices(this);
         }
 
         public TGraph VisitedGraph
         {
             get { return this.visitedGraph; }
+        }
+
+        public IAlgorithmServices Services
+        {
+            get { return this.services; }
         }
 
         public Object SyncRoot
@@ -38,11 +62,6 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        protected bool IsAborting
-        {
-            get { return this.cancelling>0; }
-        }
-
         public void Compute()
         {
             this.BeginComputation();
@@ -52,7 +71,7 @@ namespace QuickGraph.Algorithms
 
         protected abstract void InternalCompute();
 
-        public virtual void Abort()
+        public void Abort()
         {
             bool raise = false;
             lock (this.syncRoot)
@@ -60,7 +79,7 @@ namespace QuickGraph.Algorithms
                 if (this.state == ComputationState.Running)
                 {
                     this.state = ComputationState.PendingAbortion;
-                    System.Threading.Interlocked.Increment(ref this.cancelling);
+                    this.Services.CancelManager.Cancel();
                     raise = true;
                 }
             }
@@ -108,7 +127,7 @@ namespace QuickGraph.Algorithms
                     throw new InvalidOperationException();
 
                 this.state = ComputationState.Running;
-                this.cancelling = 0;
+                this.Services.CancelManager.ResetCancel();
                 this.OnStarted(EventArgs.Empty);
                 this.OnStateChanged(EventArgs.Empty);
             }
@@ -131,8 +150,52 @@ namespace QuickGraph.Algorithms
                     default:
                         throw new InvalidOperationException();
                 }
-                this.cancelling = 0;
+                this.Services.CancelManager.ResetCancel();
                 this.OnStateChanged(EventArgs.Empty);
+            }
+        }
+
+        public T GetService<T>()
+            where T : IService
+        {
+            T service;
+            if (!this.TryGetService<T>(out service))
+                throw new InvalidOperationException("service not found");
+            return service;
+        }
+
+        public bool TryGetService<T>(out T service)
+            where T : IService
+        {
+            object serviceObject;
+            if (this.TryGetService(typeof(T), out serviceObject))
+            {
+                service = (T)serviceObject;
+                return true;
+            }
+
+            service = default(T);
+            return false;
+        }
+
+        Dictionary<Type, object> _services;
+        protected virtual bool TryGetService(Type serviceType, out object service)
+        {
+            GraphContracts.AssumeNotNull(serviceType, "serviceType");
+            lock (this.SyncRoot)
+            {
+                if (this._services == null)
+                    this._services = new Dictionary<Type, object>();
+                if (!this._services.TryGetValue(serviceType, out service))
+                {
+                    if (serviceType == typeof(ICancelManager))
+                        this._services[serviceType] = service = new CancelManager();
+                    else
+                        this._services[serviceType] = service = null;
+                }
+
+                return service != null;
+
             }
         }
     }

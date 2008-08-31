@@ -1,4 +1,5 @@
 ﻿using System;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms
 {

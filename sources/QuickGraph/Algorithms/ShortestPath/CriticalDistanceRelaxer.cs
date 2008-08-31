@@ -4,7 +4,8 @@ using System.Text;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
-    public sealed class CriticalDistanceRelaxer : IDistanceRelaxer
+    public sealed class CriticalDistanceRelaxer : 
+        IDistanceRelaxer
     {
         public double InitialDistance
         {

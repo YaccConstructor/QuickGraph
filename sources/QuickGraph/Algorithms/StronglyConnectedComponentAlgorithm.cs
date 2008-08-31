@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using QuickGraph.Algorithms.Search;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms
 {
@@ -17,7 +18,6 @@ namespace QuickGraph.Algorithms
 		private Stack<TVertex> stack;
 		int componentCount;
 		int dfsTime;
-        private DepthFirstSearchAlgorithm<TVertex, TEdge> dfs;
 
         public StronglyConnectedComponentsAlgorithm(
             IVertexListGraph<TVertex,TEdge> g)
@@ -25,9 +25,16 @@ namespace QuickGraph.Algorithms
 		{}
 
         public StronglyConnectedComponentsAlgorithm(
+            IVertexListGraph<TVertex, TEdge> g,
+            IDictionary<TVertex, int> components)
+            : this(null, g, components)
+        { }
+
+        public StronglyConnectedComponentsAlgorithm(
+            IAlgorithmComponent host,
             IVertexListGraph<TVertex,TEdge> g,
 			IDictionary<TVertex,int> components)
-            :base(g)
+            :base(host, g)
 		{
 			if (components==null)
 				throw new ArgumentNullException("components");
@@ -38,9 +45,6 @@ namespace QuickGraph.Algorithms
             this.stack = new Stack<TVertex>();
 			this.componentCount = 0;
 			this.dfsTime = 0;
-            this.dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(VisitedGraph);
-            this.dfs.DiscoverVertex += new VertexEventHandler<TVertex>(this.DiscoverVertex);
-            this.dfs.FinishVertex += new VertexEventHandler<TVertex>(this.FinishVertex);
         }
 
 		public IDictionary<TVertex,int> Components
@@ -120,12 +124,6 @@ namespace QuickGraph.Algorithms
 				return v;
 		}
 
-        public override void Abort()
-        {
-            this.dfs.Abort();
-            base.Abort();
-        }
-
 		protected override void InternalCompute()
 		{
 			this.Components.Clear();
@@ -134,7 +132,27 @@ namespace QuickGraph.Algorithms
 			componentCount = 0;
 			dfsTime = 0;
 
-			dfs.Compute();
+            DepthFirstSearchAlgorithm<TVertex, TEdge> dfs = null;
+            try
+            {
+                dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(
+                    this, 
+                    VisitedGraph,
+                    new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount)
+                    );
+                dfs.DiscoverVertex += new VertexEventHandler<TVertex>(this.DiscoverVertex);
+                dfs.FinishVertex += new VertexEventHandler<TVertex>(this.FinishVertex);
+
+                dfs.Compute();
+            }
+            finally
+            {
+                if (dfs != null)
+                {
+                    dfs.DiscoverVertex -= new VertexEventHandler<TVertex>(this.DiscoverVertex);
+                    dfs.FinishVertex -= new VertexEventHandler<TVertex>(this.FinishVertex);
+                }
+            }
 		}
     }
 }

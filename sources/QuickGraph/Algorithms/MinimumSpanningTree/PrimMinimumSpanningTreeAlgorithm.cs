@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using QuickGraph.Collections;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.MinimumSpanningTree
 {
@@ -28,8 +29,18 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
             IDictionary<TEdge, double> edgeWeights
             )
-            :base(visitedGraph)
+            : this(null, visitedGraph, edgeWeights)
+        {}
+
+        public PrimMinimumSpanningTreeAlgorithm(
+            IAlgorithmComponent host,
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TEdge, double> edgeWeights
+            )
+            :base(host, visitedGraph)
         {
+            if (edgeWeights == null)
+                throw new ArgumentNullException("edgeWeights");
             this.edgeWeights = edgeWeights;
         }
 
@@ -68,6 +79,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         {
             if (this.VisitedGraph.VertexCount == 0)
                 return;
+            var cancelManager = this.Services.CancelManager;
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
                 rootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
@@ -82,12 +94,12 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
 
                 while (queue.Count != 0)
                 {
-                    if (this.IsAborting)
+                    if (cancelManager.IsCancelling)
                         return;
                     TVertex u = queue.Dequeue();
                     foreach (var edge in this.VisitedGraph.AdjacentEdges(u))
                     {
-                        if (this.IsAborting)
+                        if (cancelManager.IsCancelling)
                             return;
                         double edgeWeight = this.EdgeWeights[edge];
                         if (

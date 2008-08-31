@@ -1,4 +1,5 @@
 ﻿using System;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -6,9 +7,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
         GraphAugmentorAlgorithmBase<TVertex, TEdge, IMutableBidirectionalGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        public MultiSourceSinkGraphAugmentorAlgorithm(
-            IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph
-            )
+        public MultiSourceSinkGraphAugmentorAlgorithm(IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph)
             : this(visitedGraph,
                 FactoryCompiler.GetVertexFactory<TVertex>(),
                 FactoryCompiler.GetEdgeFactory<TVertex, TEdge>()
@@ -18,17 +17,24 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public MultiSourceSinkGraphAugmentorAlgorithm(
             IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph,
             IVertexFactory<TVertex> vertexFactory,
-            IEdgeFactory<TVertex,TEdge> edgeFactory
-            )
-            :base(visitedGraph,vertexFactory,edgeFactory)
+            IEdgeFactory<TVertex,TEdge> edgeFactory)
+            :this(null, visitedGraph, vertexFactory, edgeFactory)
+        {}
+
+        public MultiSourceSinkGraphAugmentorAlgorithm(
+            IAlgorithmComponent host,
+            IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph,
+            IVertexFactory<TVertex> vertexFactory,
+            IEdgeFactory<TVertex,TEdge> edgeFactory)
+            :base(host, visitedGraph,vertexFactory,edgeFactory)
         {}
 
         protected override void AugmentGraph()
         {
+            var cancelManager = this.Services.CancelManager;
             foreach (var v in this.VisitedGraph.Vertices)
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) break;
 
                 // is source
                 if (this.VisitedGraph.IsInEdgesEmpty(v))

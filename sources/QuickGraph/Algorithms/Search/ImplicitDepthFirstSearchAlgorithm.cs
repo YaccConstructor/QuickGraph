@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.Search
 {   
@@ -21,8 +22,15 @@ namespace QuickGraph.Algorithms.Search
         private int maxDepth = int.MaxValue;
         private IDictionary<TVertex, GraphColor> vertexColors = new Dictionary<TVertex, GraphColor>();
 
-        public ImplicitDepthFirstSearchAlgorithm(IIncidenceGraph<TVertex,TEdge> visitedGraph)
-            :base(visitedGraph)
+        public ImplicitDepthFirstSearchAlgorithm(
+            IIncidenceGraph<TVertex, TEdge> visitedGraph)
+            : this(null, visitedGraph)
+        { }
+
+        public ImplicitDepthFirstSearchAlgorithm(
+            IAlgorithmComponent host,
+            IIncidenceGraph<TVertex,TEdge> visitedGraph)
+            :base(host, visitedGraph)
         {}
 
         /// <summary>
@@ -195,16 +203,15 @@ namespace QuickGraph.Algorithms.Search
         {
             if (depth > this.MaxDepth)
                 return;
-            if (this.IsAborting)
-                return;
 
             VertexColors[u] = GraphColor.Gray;
             OnDiscoverVertex(u);
 
+            var cancelManager = this.Services.CancelManager;
             foreach (var e in VisitedGraph.OutEdges(u))
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) return;
+
                 OnExamineEdge(e);
                 TVertex v = e.Target;
 

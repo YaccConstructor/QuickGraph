@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -29,15 +30,22 @@ namespace QuickGraph.Algorithms.Search
             :this(g, new Dictionary<TVertex, GraphColor>())
         {}
 
-		public DepthFirstSearchAlgorithm(
+        public DepthFirstSearchAlgorithm(
             IVertexListGraph<TVertex, TEdge> visitedGraph,
             IDictionary<TVertex, GraphColor> colors
             )
-            :base(visitedGraph)
+            : this(null, visitedGraph, colors)
+        { }
+
+		public DepthFirstSearchAlgorithm(
+            IAlgorithmComponent host,
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TVertex, GraphColor> colors
+            )
+            :base(host, visitedGraph)
 		{
 			if (colors == null)
 				throw new ArgumentNullException("VertexColors");
-
 			this.colors = colors;
 		}
 
@@ -138,10 +146,11 @@ namespace QuickGraph.Algorithms.Search
                 Visit(rootVertex, 0);
             }
 
-			// process each vertex 
+            var cancelManager = this.Services.CancelManager;
+            // process each vertex 
 			foreach(TVertex u in VisitedGraph.Vertices)
 			{
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
                 if (VertexColors[u] == GraphColor.White)
                 {
@@ -180,21 +189,21 @@ namespace QuickGraph.Algorithms.Search
             this.VertexColors[root] = GraphColor.Gray;
             OnDiscoverVertex(root);
 
+            var cancelManager = this.Services.CancelManager;
             todo.Push(new SearchFrame(root, this.VisitedGraph.OutEdges(root).GetEnumerator()));
             while (todo.Count > 0)
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) return;
 
-                SearchFrame frame = todo.Pop();
+                var frame = todo.Pop();
+                var u = frame.Vertex;
 
-                TVertex u = frame.Vertex;
-                IEnumerator<TEdge> edges = frame.Edges;
+                var edges = frame.Edges;
                 while(edges.MoveNext())
                 {
                     TEdge e = edges.Current;
-                    if (this.IsAborting)
-                        return;
+                    if (cancelManager.IsCancelling) return;
+
                     this.OnExamineEdge(e);
                     TVertex v = e.Target;
                     GraphColor c = this.VertexColors[v];

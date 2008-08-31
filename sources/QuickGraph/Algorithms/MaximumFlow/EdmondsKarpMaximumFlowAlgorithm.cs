@@ -4,6 +4,7 @@ using QuickGraph.Collections;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Predicates;
 using QuickGraph.Algorithms.Search;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -19,12 +20,21 @@ namespace QuickGraph.Algorithms.MaximumFlow
         : MaximumFlowAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
+        public EdmondsKarpMaximumFlowAlgorithm(
+            IVertexListGraph<TVertex, TEdge> g,
+            IDictionary<TEdge, double> capacities,
+            IDictionary<TEdge, TEdge> reversedEdges
+            )
+            : this(null, g, capacities, reversedEdges)
+        { }
+
 		public EdmondsKarpMaximumFlowAlgorithm(
+            IAlgorithmComponent host,
 			IVertexListGraph<TVertex,TEdge> g,
 			IDictionary<TEdge,double> capacities,
 			IDictionary<TEdge,TEdge> reversedEdges
 			)
-			: base(g,capacities,reversedEdges)
+			: base(host, g,capacities,reversedEdges)
 		{}
 	
 		private IVertexListGraph<TVertex,TEdge> ResidualGraph

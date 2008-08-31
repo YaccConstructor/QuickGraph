@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
@@ -32,11 +33,20 @@ namespace QuickGraph.Algorithms.ShortestPath
         { }
 
         public DagShortestPathAlgorithm(
-            IVertexListGraph<TVertex,TEdge> g,
+            IVertexListGraph<TVertex, TEdge> g,
+            IDictionary<TEdge, double> weights,
+            IDistanceRelaxer distanceRelaxer
+            )
+            : this(null, g, weights, distanceRelaxer)
+        { }
+
+        public DagShortestPathAlgorithm(
+            IAlgorithmComponent host,
+            IVertexListGraph<TVertex, TEdge> g,
             IDictionary<TEdge,double> weights,
             IDistanceRelaxer distanceRelaxer
             )
-            :base(g,weights, distanceRelaxer)
+            :base(host, g,weights, distanceRelaxer)
         {}
 
         public event VertexEventHandler<TVertex> InitializeVertex;

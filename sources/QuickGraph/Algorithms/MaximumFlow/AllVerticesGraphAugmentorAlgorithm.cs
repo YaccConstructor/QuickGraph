@@ -1,4 +1,5 @@
 ﻿using System;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -18,17 +19,26 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public AllVerticesGraphAugmentorAlgorithm(
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
             IVertexFactory<TVertex> vertexFactory,
+            IEdgeFactory<TVertex, TEdge> edgeFactory
+            )
+            : this(null, visitedGraph, vertexFactory, edgeFactory)
+        { }
+
+        public AllVerticesGraphAugmentorAlgorithm(
+            IAlgorithmComponent host,
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            IVertexFactory<TVertex> vertexFactory,
             IEdgeFactory<TVertex,TEdge> edgeFactory
             )
-            :base(visitedGraph,vertexFactory,edgeFactory)
+            :base(host, visitedGraph,vertexFactory,edgeFactory)
         {}
 
         protected override void AugmentGraph()
         {
+            var cancelManager = this.Services.CancelManager;
             foreach (var v in this.VisitedGraph.Vertices)
             {
-                if (this.IsAborting)
-                    return;
+                if (cancelManager.IsCancelling) break;
 
                 this.AddAugmentedEdge(this.SuperSource, v);
                 this.AddAugmentedEdge(v, this.SuperSink);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -16,12 +17,13 @@ namespace QuickGraph.Algorithms.MaximumFlow
         private TVertex superSource = default(TVertex);
         private TVertex superSink = default(TVertex);
 
-        public GraphAugmentorAlgorithmBase(
+        protected GraphAugmentorAlgorithmBase(
+            IAlgorithmComponent host,
             TGraph visitedGraph,
             IVertexFactory<TVertex> vertexFactory,
             IEdgeFactory<TVertex,TEdge> edgeFactory
             )
-            :base(visitedGraph)
+            :base(host, visitedGraph)
         {
             if (vertexFactory == null)
                 throw new ArgumentNullException("vertexFactory");

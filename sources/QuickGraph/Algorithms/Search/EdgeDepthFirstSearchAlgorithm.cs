@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -34,7 +35,15 @@ namespace QuickGraph.Algorithms.Search
             IEdgeListAndIncidenceGraph<TVertex, TEdge> visitedGraph,
             IDictionary<TEdge, GraphColor> colors
             )
-            :base(visitedGraph)
+            :this(null, visitedGraph, colors)
+        {}
+
+        public EdgeDepthFirstSearchAlgorithm(
+            IAlgorithmComponent host,
+            IEdgeListAndIncidenceGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TEdge, GraphColor> colors
+            )
+            :base(host, visitedGraph)
         {
             if (colors == null)
                 throw new ArgumentNullException("VertexColors");
@@ -128,7 +137,8 @@ namespace QuickGraph.Algorithms.Search
         protected override void  InternalCompute()
         {
             Initialize();
-            if (this.IsAborting)
+            var cancelManager = this.Services.CancelManager;
+            if (cancelManager.IsCancelling)
                 return;
 
             // start whith him:
@@ -140,7 +150,7 @@ namespace QuickGraph.Algorithms.Search
                 // process each out edge of v
                 foreach (var e in VisitedGraph.OutEdges(rootVertex))
                 {
-                    if (this.IsAborting)
+                    if (cancelManager.IsCancelling)
                         return;
                     if (EdgeColors[e] == GraphColor.White)
                     {
@@ -153,7 +163,7 @@ namespace QuickGraph.Algorithms.Search
             // process the rest of the graph edges
             foreach (var e in VisitedGraph.Edges)
             {
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
                 if (EdgeColors[e] == GraphColor.White)
                 {
@@ -166,9 +176,10 @@ namespace QuickGraph.Algorithms.Search
         public void Initialize()
         {
             // put all vertex to white
+            var cancelManager = this.Services.CancelManager;
             foreach (var e in VisitedGraph.Edges)
             {
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
                 EdgeColors[e] = GraphColor.White;
                 OnInitializeEdge(e);
@@ -179,8 +190,7 @@ namespace QuickGraph.Algorithms.Search
         {
             if (depth > this.maxDepth)
                 return;
-            if (this.IsAborting)
-                return;
+            var cancelManager = this.Services.CancelManager;
 
             // mark edge as gray
             EdgeColors[se] = GraphColor.Gray;
@@ -190,6 +200,8 @@ namespace QuickGraph.Algorithms.Search
             // iterate over out-edges
             foreach (var e in VisitedGraph.OutEdges(se.Target))
             {
+                if (cancelManager.IsCancelling) return;
+
                 // check edge is not explored yet,
                 // if not, explore it.
                 if (EdgeColors[e] == GraphColor.White)

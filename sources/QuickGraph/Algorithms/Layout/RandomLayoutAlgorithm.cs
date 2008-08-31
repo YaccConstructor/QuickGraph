@@ -14,10 +14,10 @@ namespace QuickGraph.Algorithms.Layout
 
         protected override void InternalCompute()
         {
+            var cancelManager = this.Services.CancelManager;
             foreach (var v in this.VisitedGraph.Vertices)
             {
-                if (this.IsAborting)
-                    break;
+                if (cancelManager.IsCancelling) break;
 
                 float x = this.BoundingBox.Left+ (float)this.Rnd.NextDouble() * this.BoundingBox.Width;
                 float y = this.BoundingBox.Top + (float)this.Rnd.NextDouble() * this.BoundingBox.Height;

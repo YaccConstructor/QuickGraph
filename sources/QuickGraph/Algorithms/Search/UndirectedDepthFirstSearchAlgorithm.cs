@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -32,7 +33,15 @@ namespace QuickGraph.Algorithms.Search
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
             IDictionary<TVertex, GraphColor> colors
             )
-            :base(visitedGraph)
+            :this(null, visitedGraph, colors)
+        {}
+
+        public UndirectedDepthFirstSearchAlgorithm(
+            IAlgorithmComponent host,
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
+            IDictionary<TVertex, GraphColor> colors
+            )
+            :base(host, visitedGraph)
         {
             if (colors == null)
                 throw new ArgumentNullException("VertexColors");
@@ -129,10 +138,11 @@ namespace QuickGraph.Algorithms.Search
                 Visit(rootVertex, 0);
             }
 
+            var cancelManager = this.Services.CancelManager;
             // process each vertex 
             foreach (var u in VisitedGraph.Vertices)
             {
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
                 if (VertexColors[u] == GraphColor.White)
                 {
@@ -144,9 +154,10 @@ namespace QuickGraph.Algorithms.Search
 
         public void Initialize()
         {
+            var cancelManager = this.Services.CancelManager;
             foreach (var u in VisitedGraph.Vertices)
             {
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
                 VertexColors[u] = GraphColor.White;
                 OnInitializeVertex(u);
@@ -159,7 +170,9 @@ namespace QuickGraph.Algorithms.Search
                 return;
             if (u == null)
                 throw new ArgumentNullException("u");
-            if (this.IsAborting)
+
+            var cancelManager = this.Services.CancelManager;
+            if (cancelManager.IsCancelling)
                 return;
 
             VertexColors[u] = GraphColor.Gray;
@@ -168,7 +181,7 @@ namespace QuickGraph.Algorithms.Search
             TVertex v = default(TVertex);
             foreach (var e in VisitedGraph.AdjacentEdges(u))
             {
-                if (this.IsAborting)
+                if (cancelManager.IsCancelling)
                     return;
 
                 OnExamineEdge(e);
