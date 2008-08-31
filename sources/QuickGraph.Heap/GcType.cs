@@ -85,33 +85,21 @@ namespace QuickGraph.Heap
         public GcTypeCollection SortSize()
         {
             GcTypeCollection clone = new GcTypeCollection(this);
-            clone.Sort(
-                delegate(GcType left, GcType right)
-                {
-                    return -left.Size.CompareTo(right.Size);
-                });
+            clone.Sort((left, right) => -left.Size.CompareTo(right.Size));
             return clone;
         }
 
         public GcTypeCollection SortCount()
         {
             GcTypeCollection clone = new GcTypeCollection(this);
-            clone.Sort(
-                delegate(GcType left, GcType right)
-                {
-                    return -left.Count.CompareTo(right.Count);
-                });
+            clone.Sort((left, right) => -left.Count.CompareTo(right.Count));
             return clone;
         }
 
         public GcTypeCollection SortGen()
         {
             GcTypeCollection clone = new GcTypeCollection(this);
-            clone.Sort(
-                delegate(GcType left, GcType right)
-                {
-                    return left.Gen.CompareTo(right.Gen);
-                });
+            clone.Sort((left, right) => left.Gen.CompareTo(right.Gen));
             return clone;
         }
 
@@ -121,6 +109,7 @@ namespace QuickGraph.Heap
             foreach (GcType type in this)
                 if (type.Size >= size)
                     clone.Add(type);
+            clone.TrimExcess();
             return clone;
         }
     }

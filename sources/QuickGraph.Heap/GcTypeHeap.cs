@@ -286,41 +286,38 @@ namespace QuickGraph.Heap
             if (String.IsNullOrEmpty(typeNames))
                 throw new ArgumentNullException("typeNames");
 
-            IFilter filter = FilterHelper.ToFilter(typeNames);
+            var filter = FilterHelper.ToFilter(typeNames);
             Console.WriteLine("filtering nodes not connected to type matching '{0}'", filter);
-            Dictionary<GcType, GraphColor> colors = new Dictionary<GcType, GraphColor>(this.graph.VertexCount);
-            foreach (GcType type in this.graph.Vertices)
+            var colors = new Dictionary<GcType, GraphColor>(this.graph.VertexCount);
+            foreach (var type in this.graph.Vertices)
                 colors.Add(type, GraphColor.White);
 
-            ReversedBidirectionalGraph<GcType, GcTypeEdge> rgraph = new ReversedBidirectionalGraph<GcType, GcTypeEdge>(graph);
-            foreach (GcType type in this.graph.Vertices)
+            var rgraph = new ReversedBidirectionalGraph<GcType, GcTypeEdge>(graph);
+            foreach (var type in this.graph.Vertices)
             {
                 if (filter.Match(type.Name))
                 {
                     { // parents
-                        DepthFirstSearchAlgorithm<GcType, ReversedEdge<GcType, GcTypeEdge>> dfs =
+                        var dfs =
                             new DepthFirstSearchAlgorithm<GcType, ReversedEdge<GcType, GcTypeEdge>>(rgraph, colors);
                         dfs.Visit(type, -1);
                     }
                     { // children
-                        DepthFirstSearchAlgorithm<GcType, GcTypeEdge> dfs = new DepthFirstSearchAlgorithm<GcType, GcTypeEdge>(graph, colors);
+                        var dfs = new DepthFirstSearchAlgorithm<GcType, GcTypeEdge>(graph, colors);
                         dfs.Visit(type, -1);
                     }
                 }
             }
             // remove all white vertices
-            this.graph.RemoveVertexIf(delegate(GcType t)
-            {
-                return colors[t] == GraphColor.White;
-            });
+            this.graph.RemoveVertexIf(t => colors[t] == GraphColor.White);
             Console.WriteLine("resulting {0} types, {1} edges", graph.VertexCount, graph.EdgeCount);
             return this;
         }
 
         public GcTypeHeap Merge(int minimumSize)
         {
-            BidirectionalGraph<GcType, MergedEdge<GcType, GcTypeEdge>> merged = new BidirectionalGraph<GcType,MergedEdge<GcType,GcTypeEdge>>(false, this.graph.VertexCount);
-            EdgeMergeCondensationGraphAlgorithm<GcType, GcTypeEdge> merger = new EdgeMergeCondensationGraphAlgorithm<GcType, GcTypeEdge>(
+            var merged = new BidirectionalGraph<GcType,MergedEdge<GcType,GcTypeEdge>>(false, this.graph.VertexCount);
+            var merger = new EdgeMergeCondensationGraphAlgorithm<GcType, GcTypeEdge>(
                 this.graph,
                 merged,
                 delegate(GcType type)
@@ -328,12 +325,12 @@ namespace QuickGraph.Heap
                     return type.Size >= minimumSize;
                 });
             merger.Compute();
-            BidirectionalGraph<GcType, GcTypeEdge> clone = new BidirectionalGraph<GcType, GcTypeEdge>(
+            var clone = new BidirectionalGraph<GcType, GcTypeEdge>(
                 false,
                 merged.VertexCount);
-            foreach (GcType type in merged.Vertices)
+            foreach (var type in merged.Vertices)
                 clone.AddVertex(type);
-            foreach (MergedEdge<GcType, GcTypeEdge> medge in merged.Edges)
+            foreach (var medge in merged.Edges)
             {
                 GcTypeEdge edge = new GcTypeEdge(medge.Source, medge.Target);
                 foreach (GcTypeEdge e in medge.Edges)

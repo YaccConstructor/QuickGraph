@@ -8,14 +8,14 @@ namespace QuickGraph.Heap
 {
     internal sealed class GcTypeGraphReader : GcHeapXmlReader
     {
-        private readonly BidirectionalGraph<GcType, GcTypeEdge> graph = new BidirectionalGraph<GcType, GcTypeEdge>();
+        readonly BidirectionalGraph<GcType, GcTypeEdge> graph = new BidirectionalGraph<GcType, GcTypeEdge>();
         // id -> type
-        private readonly Dictionary<int, GcType> types = new Dictionary<int, GcType>();
+        readonly Dictionary<int, GcType> types = new Dictionary<int, GcType>();
         // adress -> root
-        private readonly Dictionary<int, GcRoot> roots = new Dictionary<int,GcRoot>();
+        readonly Dictionary<int, GcRoot> roots = new Dictionary<int,GcRoot>();
         // adress -> type
-        private readonly Dictionary<int, GcType> objectTypes = new Dictionary<int, GcType>();
-        private readonly List<GcMember> unresolvedMembers = new List<GcMember>();
+        readonly Dictionary<int, GcType> objectTypes = new Dictionary<int, GcType>();
+        readonly List<GcMember> unresolvedMembers = new List<GcMember>();
 
         public GcTypeGraphReader()
         {}
