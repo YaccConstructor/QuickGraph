@@ -77,13 +77,6 @@
     <Compile Include="Algorithms\IConnectedComponentAlgorithm.cs" />
     <Compile Include="Algorithms\IEndPathEdgeRecorderAlgorithm.cs" />
     <Compile Include="Algorithms\ITreeBuilderAlgorithm.cs" />
-    <Compile Include="Algorithms\Layout\BreadthFirstSearchRandomLayoutAlgorithm.cs" />
-    <Compile Include="Algorithms\Layout\ForceDirectedLayoutAlgorithm.cs" />
-    <Compile Include="Algorithms\Layout\GdiGraphLayoutRenderer.cs" />
-    <Compile Include="Algorithms\Layout\GraphLayoutRendererBase.cs" />
-    <Compile Include="Algorithms\Layout\LayoutAlgorithmBase.cs" />
-    <Compile Include="Algorithms\Layout\RandomLayoutAlgorithm.cs" />
-    <Compile Include="Algorithms\Layout\RandomLayoutAlgorithmBase.cs" />
     <Compile Include="Algorithms\Matrix\DenseFloatMatrix.cs" />
     <Compile Include="Algorithms\matrixsizemistmatchexception.cs" />
     <Compile Include="Algorithms\MaximumBipartiteMatchingAlgorithm.cs" />

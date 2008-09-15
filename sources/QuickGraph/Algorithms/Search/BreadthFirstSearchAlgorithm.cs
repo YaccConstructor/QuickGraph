@@ -147,7 +147,7 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
-        protected override void  InternalCompute()
+        protected override void InternalCompute()
         {
             if (this.VisitedGraph.VertexCount == 0)
                 return;
@@ -157,31 +157,37 @@ namespace QuickGraph.Algorithms.Search
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
             {
-                foreach (var v in this.VisitedGraph.Vertices)
-                {
-                    if (this.VertexColors[v] == GraphColor.White)
-                    {
-                        this.OnStartVertex(v);
-                        this.Visit(v);
-                    }
-                }
+                // enqueue roots
+                foreach (var root in AlgoUtility.Roots(this.VisitedGraph))
+                    this.EnqueueRoot(root);
             }
-            else
+            else // enqueue select root only
             {
-                this.OnStartVertex(rootVertex);
                 this.Visit(rootVertex);
             }
+            this.FlushVisitQueue();
         }
 
         public void Visit(TVertex s)
         {
-            var cancelManager = this.Services.CancelManager;
-            if (cancelManager.IsCancelling) return;
+            this.EnqueueRoot(s);
+            this.FlushVisitQueue();
+        }
+
+        private void EnqueueRoot(TVertex s)
+        {
+            this.OnStartVertex(s);
 
             this.VertexColors[s] = GraphColor.Gray;
-            OnDiscoverVertex(s);
 
+            OnDiscoverVertex(s);
             this.vertexQueue.Enqueue(s);
+        }
+
+        private void FlushVisitQueue()
+        {
+            var cancelManager = this.Services.CancelManager;
+
             while (this.vertexQueue.Count != 0)
             {
                 if (cancelManager.IsCancelling) return;

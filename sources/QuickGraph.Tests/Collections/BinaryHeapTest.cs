@@ -116,10 +116,10 @@ namespace QuickGraph.Collections
         {
             foreach (var kv in kvs)
                 target.Add(kv.Key, kv.Value);
-            var call = PexOracle.Call(this);
+            var call = PexChoose.FromCall(this);
             for (int i = target.Count - 1; i > -1; ++i)
             {
-                target.RemoveAt(call.ChooseFromRange(i.ToString(), 0, target.Count - 1));
+                target.RemoveAt(call.ValueFromRange(i.ToString(), 0, target.Count - 1));
                 AssertInvariant<TPriority, TValue>(target);
             }
         }
