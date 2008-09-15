@@ -8,7 +8,8 @@ namespace QuickGraph
         where TEdge : IEdge<TVertex>
     {
         private readonly bool allowParallelEdges = true;
-        private readonly Dictionary<TVertex, IList<TEdge> > adjacentEdges = new Dictionary<TVertex, IList<TEdge>>();
+        private readonly Dictionary<TVertex, List<TEdge>> adjacentEdges = 
+            new Dictionary<TVertex, List<TEdge>>();
         private int edgeCount = 0;
 
         public UndirectedGraph()
@@ -94,6 +95,11 @@ namespace QuickGraph
         #endregion
 
         #region IMutableGraph<Vertex,Edge> Members
+        public void TrimEdgeExcess()
+        {
+            foreach (var edges in this.adjacentEdges.Values)
+                edges.TrimExcess();
+        }
 
         public void Clear()
         {

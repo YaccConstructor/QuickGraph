@@ -11,5 +11,7 @@ namespace QuickGraph
             TVertex v,
             EdgePredicate<TVertex, TEdge> predicate);
         void ClearOutEdges(TVertex v);
+
+        void TrimEdgeExcess();
     }
 }
