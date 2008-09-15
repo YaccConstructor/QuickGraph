@@ -155,40 +155,44 @@ namespace QuickGraph.Algorithms.Search
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
             {
-                rootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
-                foreach (var v in this.VisitedGraph.Vertices)
-                {
-                    if (this.VertexColors[v] == GraphColor.White)
-                    {
-                        this.OnStartVertex(v);
-                        this.Visit(v);
-                    }
-                }
+                // enqueue all roots
+                foreach (var root in AlgoUtility.Roots(this.VisitedGraph))
+                    this.EnqueueRoot(root);
             }
             else
-            {
-                this.OnStartVertex(rootVertex);
-                this.Visit(rootVertex);
-            }
+                this.EnqueueRoot(rootVertex);
+
+            this.FlushVisitQueue();
         }
 
         public void Visit(TVertex s)
         {
-            var cancelManager = this.Services.CancelManager;
+            this.EnqueueRoot(s);
+            this.FlushVisitQueue();
+        }
 
+        private void EnqueueRoot(TVertex s)
+        {
+            this.OnStartVertex(s);
             this.VertexColors[s] = GraphColor.Gray;
             OnDiscoverVertex(s);
-
             this.vertexQueue.Enqueue(s);
+        }
+
+        private void FlushVisitQueue()
+        {
+            var cancelManager = this.Services.CancelManager;
+
             while (this.vertexQueue.Count != 0)
             {
                 if (cancelManager.IsCancelling) return;
+
                 TVertex u = this.vertexQueue.Dequeue();
 
                 OnExamineVertex(u);
                 foreach (var e in VisitedGraph.AdjacentEdges(u))
                 {
-                    TVertex v = (e.Source.Equals(u)) ? e.Target : e.Source; 
+                    TVertex v = (e.Source.Equals(u)) ? e.Target : e.Source;
                     OnExamineEdge(e);
 
                     GraphColor vColor = VertexColors[v];

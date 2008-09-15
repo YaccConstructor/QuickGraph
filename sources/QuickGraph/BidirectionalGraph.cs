@@ -19,8 +19,10 @@ namespace QuickGraph
     {
         private readonly bool isDirected = true;
         private readonly bool allowParallelEdges;
-        private readonly VertexEdgeDictionary vertexOutEdges = new VertexEdgeDictionary();
-        private readonly VertexEdgeDictionary vertexInEdges = new VertexEdgeDictionary();
+        private readonly VertexEdgeDictionary vertexOutEdges 
+            = new VertexEdgeDictionary();
+        private readonly VertexEdgeDictionary vertexInEdges 
+            = new VertexEdgeDictionary();
         private int edgeCount = 0;
         private int edgeCapacity = -1;
 
@@ -35,7 +37,7 @@ namespace QuickGraph
         public BidirectionalGraph(bool allowParallelEdges, int vertexCapacity)
         {
             this.allowParallelEdges = allowParallelEdges;
-            if (vertexCapacity > 0)
+            if (vertexCapacity > -1)
             {
                 this.vertexInEdges = new VertexEdgeDictionary(vertexCapacity);
                 this.vertexOutEdges = new VertexEdgeDictionary(vertexCapacity);

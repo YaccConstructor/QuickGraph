@@ -225,7 +225,8 @@ namespace QuickGraph
         public bool ContainsEdge(TEdge edge)
         {
             TEdge e = this.edges[edge.Source, edge.Target];
-            return e!=null && e.Equals(edge);
+            return e!=null && 
+                e.Equals(edge);
         }
 
         #endregion

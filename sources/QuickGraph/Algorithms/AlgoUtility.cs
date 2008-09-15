@@ -6,7 +6,6 @@ using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Algorithms
 {
-    [Serializable]
     public static class AlgoUtility
     {
         public static IDictionary<TEdge, double> ConstantCapacities<TVertex, TEdge>(
@@ -52,6 +51,23 @@ namespace QuickGraph.Algorithms
             foreach (var v in visitedGraph.Vertices)
                 if (visitedGraph.Degree(v) == 0)
                     yield return v;
+        }
+
+        public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
+            IUndirectedGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
+        {
+            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+
+            var dfs = new UndirectedDepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
+            var vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            vis.Attach(dfs);
+
+            foreach (var predecessor in vis.VertexPredecessors)
+            {
+                if (predecessor.Value.Equals(default(TEdge)))
+                    yield return predecessor.Key;
+            }
         }
 
         public static IEnumerable<TVertex> Roots<TVertex,TEdge>(

@@ -32,7 +32,7 @@ namespace QuickGraph
         public AdjacencyGraph(bool allowParallelEdges, int capacity)
         {
             this.allowParallelEdges = allowParallelEdges;
-            if (capacity > 0)
+            if (capacity > -1)
                 this.vertexEdges = new VertexEdgeDictionary(capacity);
             else
                 this.vertexEdges = new VertexEdgeDictionary();
