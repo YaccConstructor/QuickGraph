@@ -31,7 +31,8 @@ namespace QuickGraph.Serialization
     /// Hyperedge, nodes, nested graphs not supported.
     /// </para>
     /// </remarks>
-    public sealed class GraphMLSerializer<TVertex,TEdge> : SerializerBase<TVertex,TEdge>
+    public sealed class GraphMLSerializer<TVertex,TEdge> 
+        : SerializerBase<TVertex,TEdge>
         where TVertex : IIdentifiable
         where TEdge : IIdentifiable, IEdge<TVertex>
     {
