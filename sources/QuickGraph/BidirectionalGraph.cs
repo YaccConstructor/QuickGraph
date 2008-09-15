@@ -478,6 +478,14 @@ namespace QuickGraph
             ClearInEdges(v);
         }
 
+        public void TrimEdgeExcess()
+        {
+            foreach (var edges in this.vertexInEdges.Values)
+                edges.TrimExcess();
+            foreach (var edges in this.vertexOutEdges.Values)
+                edges.TrimExcess();
+        }
+
         public void Clear()
         {
             this.vertexOutEdges.Clear();

@@ -426,6 +426,12 @@ namespace QuickGraph
             return edgeToRemove.Count;
         }
 
+        public void TrimEdgeExcess()
+        {
+            foreach (var edges in this.vertexEdges.Values)
+                edges.TrimExcess();
+        }
+
         public void Clear()
         {
             this.vertexEdges.Clear();
