@@ -62,5 +62,10 @@ namespace QuickGraph.Collections
         {
             return this.heap.Minimum().Value;
         }
+
+        public TVertex[] ToArray()
+        {
+            return this.heap.ToValueArray();
+        }
     }
 }

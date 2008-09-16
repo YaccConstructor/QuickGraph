@@ -52,6 +52,7 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Threading, Version=1.0.3058.34407, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +69,7 @@
     <Compile Include="Algorithms\Condensation\CondensatedEdge.cs" />
     <Compile Include="Algorithms\Condensation\MergedEdge.cs" />
     <Compile Include="Algorithms\ConnectedComponentsAlgorithm.cs" />
+    <Compile Include="Algorithms\Search\ParralelBreadthFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmComponent.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmServices.cs" />
     <Compile Include="Algorithms\IComputation.cs" />

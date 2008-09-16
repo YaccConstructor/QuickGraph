@@ -12,5 +12,7 @@ namespace QuickGraph.Collections
         void Enqueue(T value);
         T Dequeue();
         T Peek();
+
+        T[] ToArray();
     }
 }

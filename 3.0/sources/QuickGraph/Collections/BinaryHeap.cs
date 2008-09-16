@@ -87,6 +87,11 @@ namespace QuickGraph.Collections
             }
         }
 
+        public TValue[] ToValueArray()
+        {
+            return Array.ConvertAll(this.items, kv => kv.Value);
+        }
+
         private void ResizeArray()
         {
             if (this.count == this.items.Length)
