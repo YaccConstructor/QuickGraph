@@ -75,6 +75,11 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
+        public GraphColor GetVertexColor(TVertex vertex)
+        {
+            return this.vertexColors[vertex];
+        }
+
         public IDictionary<TVertex, double> Distances
         {
             get

@@ -66,6 +66,7 @@
     <Compile Include="Algorithms\RandomWalks\RandomWalkAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\BidirectionalDepthFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\BreadthFirstSearchAlgirthmTest.cs" />
+    <Compile Include="Algorithms\Search\ParallelBreadthFirstSearchAlgirthmTest.cs" />
     <Compile Include="Algorithms\Search\DepthFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\SearchingExamplesTest.cs" />
     <Compile Include="Algorithms\Search\UndirectedBreathFirstSearchAlgorithmTest.cs" />

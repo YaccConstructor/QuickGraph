@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     [Serializable]
-    public class Queue<T> : 
+    public sealed class Queue<T> : 
         System.Collections.Generic.Queue<T>,
         IQueue<T>
     {

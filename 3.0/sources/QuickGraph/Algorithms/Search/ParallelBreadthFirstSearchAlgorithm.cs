@@ -20,22 +20,31 @@ namespace QuickGraph.Algorithms.Search
     ///     href="http://www.cc.gatech.edu/~bader/papers/MultithreadedBFS-ICPP2006.pdf"
     ///     />
     [Serializable]
-    public sealed class ParralelBreadthFirstSearchAlgorithm<TVertex, TEdge> :
+    public sealed class ParallelBreadthFirstSearchAlgorithm<TVertex, TEdge> :
         RootedAlgorithmBase<TVertex, IVertexListGraph<TVertex, TEdge>>,
         IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>,
         IDistanceRecorderAlgorithm<TVertex,TEdge>,
-        IVertexColorizerAlgorithm<TVertex,TEdge>,
+        IVertexColorizerAlgorithm<TVertex, TEdge>,
         ITreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private IDictionary<TVertex, GraphColor> vertexColors;
-        private IQueue<TVertex> vertexQueue;
+        private readonly IDictionary<TVertex, GraphColor> vertexColors;
+        private readonly IQueue<TVertex> vertexQueue;
 
-        public ParralelBreadthFirstSearchAlgorithm(IVertexListGraph<TVertex,TEdge> g)
-            : this(g, new QuickGraph.Collections.Queue<TVertex>(), new Dictionary<TVertex, GraphColor>())
+        private IDictionary<TVertex, int> vertexIndices;
+        private int[] vertexIndexedColors;
+
+        public ParallelBreadthFirstSearchAlgorithm(IVertexListGraph<TVertex,TEdge> g)
+            : this(g, new QuickGraph.Collections.ConcurrentQueue<TVertex>(), new Dictionary<TVertex, GraphColor>())
         {}
 
-        public ParralelBreadthFirstSearchAlgorithm(
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visitedGraph"></param>
+        /// <param name="vertexQueue">thread-safe queue</param>
+        /// <param name="vertexColors"></param>
+        public ParallelBreadthFirstSearchAlgorithm(
             IVertexListGraph<TVertex, TEdge> visitedGraph,
             IQueue<TVertex> vertexQueue,
             IDictionary<TVertex, GraphColor> vertexColors
@@ -43,7 +52,7 @@ namespace QuickGraph.Algorithms.Search
             : this(null, visitedGraph, vertexQueue, vertexColors)
         { }
 
-        public ParralelBreadthFirstSearchAlgorithm(
+        public ParallelBreadthFirstSearchAlgorithm(
             IAlgorithmComponent host,
             IVertexListGraph<TVertex, TEdge> visitedGraph,
             IQueue<TVertex> vertexQueue,
@@ -60,25 +69,23 @@ namespace QuickGraph.Algorithms.Search
             this.vertexQueue = vertexQueue;
         }
 
-        public IDictionary<TVertex,GraphColor> VertexColors
+        public GraphColor GetVertexColor(TVertex vertex)
         {
-            get
-            {
-                return vertexColors;
-            }
+            return (GraphColor)this.vertexIndexedColors[this.vertexIndices[vertex]];
         }
 
         public event VertexEventHandler<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
         {
-            if (InitializeVertex != null)
-                InitializeVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.InitializeVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event VertexEventHandler<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
-            VertexEventHandler<TVertex> eh = this.StartVertex;
+            var eh = this.StartVertex;
             if (eh!=null)
                 eh(this, new VertexEventArgs<TVertex>(v));
         }
@@ -86,69 +93,94 @@ namespace QuickGraph.Algorithms.Search
         public event VertexEventHandler<TVertex> ExamineVertex;
         private void OnExamineVertex(TVertex v)
         {
-            if (ExamineVertex != null)
-                ExamineVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.ExamineVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event VertexEventHandler<TVertex> DiscoverVertex;
         private void OnDiscoverVertex(TVertex v)
         {
-            if (DiscoverVertex != null)
-                DiscoverVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.DiscoverVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event EdgeEventHandler<TVertex,TEdge> ExamineEdge;
         private void OnExamineEdge(TEdge e)
         {
-            if (ExamineEdge != null)
-                ExamineEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.ExamineEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
-            if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         public event EdgeEventHandler<TVertex,TEdge> NonTreeEdge;
         private void OnNonTreeEdge(TEdge e)
         {
-            if (NonTreeEdge != null)
-                NonTreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.NonTreeEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         public event EdgeEventHandler<TVertex,TEdge> GrayTarget;
         private void OnGrayTarget(TEdge e)
         {
-            if (GrayTarget != null)
-                GrayTarget(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.GrayTarget;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         public event EdgeEventHandler<TVertex,TEdge> BlackTarget;
         private void OnBlackTarget(TEdge e)
         {
-            if (BlackTarget != null)
-                BlackTarget(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.BlackTarget;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         public event VertexEventHandler<TVertex> FinishVertex;
         private void OnFinishVertex(TVertex v)
         {
-            if (FinishVertex != null)
-                FinishVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.FinishVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public void Initialize()
         {
             var cancelManager = this.Services.CancelManager;
+
+            // initialize indices and colors
+            var vertexCount = this.VisitedGraph.VertexCount;
+            this.vertexIndices = new Dictionary<TVertex, int>(vertexCount);
+            this.vertexIndexedColors = new int[vertexCount];
+            int i = 0;
+            foreach(var vertex in this.VisitedGraph.Vertices)
+            {
+                this.vertexIndices.Add(vertex, i);
+                // White = 0, so implicitely set by the runtime
+                // this.vertexIndexedColors[i] = (int)GraphColor.White;
+                i++;
+            }
+
             // initialize vertex u
             Parallel.ForEach(this.VisitedGraph.Vertices, delegate(TVertex v)
             {
                 if (cancelManager.IsCancelling) return;
-                VertexColors[v] = GraphColor.White;
+
                 OnInitializeVertex(v);
             });
+
+            // make sure queue is empty
+            GraphContracts.Assert(this.vertexQueue.Count == 0);
         }
 
         protected override void InternalCompute()
@@ -167,7 +199,7 @@ namespace QuickGraph.Algorithms.Search
             }
             else // enqueue select root only
             {
-                this.Visit(rootVertex);
+                this.EnqueueRoot(rootVertex);
             }
             this.FlushVisitQueue();
         }
@@ -182,7 +214,9 @@ namespace QuickGraph.Algorithms.Search
         {
             this.OnStartVertex(s);
 
-            this.VertexColors[s] = GraphColor.Gray;
+            Interlocked.Exchange(
+                ref this.vertexIndexedColors[this.vertexIndices[s]], 
+                (int)GraphColor.Gray);
 
             OnDiscoverVertex(s);
             this.vertexQueue.Enqueue(s);
@@ -196,39 +230,44 @@ namespace QuickGraph.Algorithms.Search
             {
                 if (cancelManager.IsCancelling) return;
 
-                var queued = this.vertexQueue.ToArray();
-                Parallel.ForEach(queued, delegate(TVertex u)
+                Parallel.For(0, this.vertexQueue.Count, delegate(int i)
                 {
-                    OnExamineVertex(u);
+                    TVertex u;
+                    u = this.vertexQueue.Dequeue();
+                    this.OnExamineVertex(u);
                     Parallel.ForEach(this.VisitedGraph.OutEdges(u), delegate(TEdge e)
                     {
                         TVertex v = e.Target;
                         OnExamineEdge(e);
 
-                        GraphColor vColor;
-                        lock (this.SyncRoot)
-                            vColor = VertexColors[v];
+                        int vIndex = this.vertexIndices[v];
+                        GraphColor vColor =
+                            (GraphColor)this.vertexIndexedColors[vIndex];
                         if (vColor == GraphColor.White)
                         {
-                            OnTreeEdge(e);
-                            lock (SyncRoot)
-                                VertexColors[v] = GraphColor.Gray;
-                            OnDiscoverVertex(v);
+                            this.OnTreeEdge(e);
+                            Interlocked.Exchange(
+                                ref this.vertexIndexedColors[vIndex], 
+                                (int)GraphColor.Gray);
+                            this.OnDiscoverVertex(v);
                             this.vertexQueue.Enqueue(v);
                         }
                         else
                         {
-                            OnNonTreeEdge(e);
+                            this.OnNonTreeEdge(e);
                             if (vColor == GraphColor.Gray)
-                                OnGrayTarget(e);
+                                this.OnGrayTarget(e);
                             else
-                                OnBlackTarget(e);
+                                this.OnBlackTarget(e);
                         }
                     });
-                    lock (this.SyncRoot)
-                        VertexColors[u] = GraphColor.Black;
 
-                    OnFinishVertex(u);
+                    int uIndex = this.vertexIndices[u];
+                    Interlocked.Exchange(
+                        ref this.vertexIndexedColors[uIndex],
+                        (int)GraphColor.Black);
+
+                    this.OnFinishVertex(u);
                 });
             }
         }

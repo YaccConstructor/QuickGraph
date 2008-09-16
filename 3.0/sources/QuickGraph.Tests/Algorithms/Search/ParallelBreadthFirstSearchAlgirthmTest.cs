@@ -5,30 +5,26 @@ using QuickGraph.Unit;
 namespace QuickGraph.Algorithms.Search
 {
     [TestFixture]
-    public class BreadthFirstAlgorithmSearchTest
+    public class ParallelBreadthFirstAlgorithmSearchTest
     {
         private IDictionary<int, int> parents;
         private IDictionary<int, int> distances;
-        private int currentVertex;
         private int sourceVertex;
         private int currentDistance;
-        private BreadthFirstSearchAlgorithm<int, Edge<int>> algo;
+        private ParallelBreadthFirstSearchAlgorithm<int, Edge<int>> algo;
         private AdjacencyGraph<int, Edge<int>> g;
 
         private void InitializeVertex(Object sender, VertexEventArgs<int> args)
         {
-            Assert.AreEqual(algo.VertexColors[args.Vertex], GraphColor.White);
+            Assert.AreEqual(algo.GetVertexColor(args.Vertex), GraphColor.White);
         }
 
         private void ExamineVertex(Object sender, VertexEventArgs<int> args)
         {
             int u = args.Vertex;
-            currentVertex = u;
             // Ensure that the distances monotonically increase.
-            Assert.IsTrue(
-                   distances[u] == currentDistance
-                || distances[u] == currentDistance + 1
-                );
+            Assert.IsTrue(distances[u] == currentDistance
+                       || distances[u] == currentDistance + 1);
 
             if (distances[u] == currentDistance + 1) // new level
                 ++currentDistance;
@@ -38,20 +34,12 @@ namespace QuickGraph.Algorithms.Search
         {
             int u = args.Vertex;
 
-            Assert.AreEqual(algo.VertexColors[u], GraphColor.Gray);
-            if (u == sourceVertex)
-                currentVertex = sourceVertex;
-            else
+            Assert.AreEqual(algo.GetVertexColor(u), GraphColor.Gray);
+            if (u != sourceVertex)
             {
-                Assert.AreEqual(parents[u], currentVertex);
                 Assert.AreEqual(distances[u], currentDistance + 1);
                 Assert.AreEqual(distances[u], distances[parents[u]] + 1);
             }
-        }
-
-        private void ExamineEdge(Object sender, EdgeEventArgs<int, Edge<int>> args)
-        {
-            Assert.AreEqual(args.Edge.Source, currentVertex);
         }
 
         private void TreeEdge(Object sender, EdgeEventArgs<int, Edge<int>> args)
@@ -59,7 +47,6 @@ namespace QuickGraph.Algorithms.Search
             int u = args.Edge.Source;
             int v = args.Edge.Target;
 
-            Assert.AreEqual(algo.VertexColors[v], GraphColor.White);
             Assert.AreEqual(distances[u], currentDistance);
             parents[v] = u;
             distances[v] = distances[u] + 1;
@@ -69,8 +56,6 @@ namespace QuickGraph.Algorithms.Search
         {
             int u = args.Edge.Source;
             int v = args.Edge.Target;
-
-            Assert.IsFalse(algo.VertexColors[v] == GraphColor.White);
 
             if (algo.VisitedGraph.IsDirected)
             {
@@ -90,20 +75,20 @@ namespace QuickGraph.Algorithms.Search
 
         private void GrayTarget(Object sender, EdgeEventArgs<int, Edge<int>> args)
         {
-            Assert.AreEqual(algo.VertexColors[args.Edge.Target], GraphColor.Gray);
+            Assert.IsFalse(algo.GetVertexColor(args.Edge.Target) == GraphColor.White);
         }
 
         private void BlackTarget(Object sender, EdgeEventArgs<int, Edge<int>> args)
         {
-            Assert.AreEqual(algo.VertexColors[args.Edge.Target], GraphColor.Black);
+            Assert.AreEqual(algo.GetVertexColor(args.Edge.Target), GraphColor.Black);
 
             foreach (Edge<int> e in algo.VisitedGraph.OutEdges(args.Edge.Target))
-                Assert.IsFalse(algo.VertexColors[e.Target] == GraphColor.White);
+                Assert.IsFalse(algo.GetVertexColor(e.Target) == GraphColor.White);
         }
 
         private void FinishVertex(Object sender, VertexEventArgs<int> args)
         {
-            Assert.AreEqual(algo.VertexColors[args.Vertex], GraphColor.Black);
+            Assert.AreEqual(algo.GetVertexColor(args.Vertex), GraphColor.Black);
         }
 
         [SetUp]
@@ -112,7 +97,6 @@ namespace QuickGraph.Algorithms.Search
             this.parents = new Dictionary<int, int>();
             this.distances = new Dictionary<int, int>();
             this.currentDistance = 0;
-            this.currentVertex = 0;
             this.algo = null;
             this.g = null;
         }
@@ -151,12 +135,11 @@ namespace QuickGraph.Algorithms.Search
             foreach (var sv in g.Vertices)
             {
                 this.sourceVertex = sv;
-                algo = new BreadthFirstSearchAlgorithm<int, Edge<int>>(g);
+                algo = new ParallelBreadthFirstSearchAlgorithm<int, Edge<int>>(g);
                 try
                 {
                     algo.InitializeVertex += new VertexEventHandler<int>(this.InitializeVertex);
                     algo.DiscoverVertex += new VertexEventHandler<int>(this.DiscoverVertex);
-                    algo.ExamineEdge += new EdgeEventHandler<int, Edge<int>>(this.ExamineEdge);
                     algo.ExamineVertex += new VertexEventHandler<int>(this.ExamineVertex);
                     algo.TreeEdge += new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
                     algo.NonTreeEdge += new EdgeEventHandler<int, Edge<int>>(this.NonTreeEdge);
@@ -182,7 +165,6 @@ namespace QuickGraph.Algorithms.Search
                 {
                     algo.InitializeVertex -= new VertexEventHandler<int>(this.InitializeVertex);
                     algo.DiscoverVertex -= new VertexEventHandler<int>(this.DiscoverVertex);
-                    algo.ExamineEdge -= new EdgeEventHandler<int, Edge<int>>(this.ExamineEdge);
                     algo.ExamineVertex -= new VertexEventHandler<int>(this.ExamineVertex);
                     algo.TreeEdge -= new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
                     algo.NonTreeEdge -= new EdgeEventHandler<int, Edge<int>>(this.NonTreeEdge);
@@ -198,7 +180,7 @@ namespace QuickGraph.Algorithms.Search
             // All white vertices should be unreachable from the source.
             foreach (int v in g.Vertices)
             {
-                if (algo.VertexColors[v] == GraphColor.White)
+                if (algo.GetVertexColor(v) == GraphColor.White)
                 {
                     //!IsReachable(start,u,g);
                 }

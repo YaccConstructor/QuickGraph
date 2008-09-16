@@ -69,7 +69,7 @@
     <Compile Include="Algorithms\Condensation\CondensatedEdge.cs" />
     <Compile Include="Algorithms\Condensation\MergedEdge.cs" />
     <Compile Include="Algorithms\ConnectedComponentsAlgorithm.cs" />
-    <Compile Include="Algorithms\Search\ParralelBreadthFirstSearchAlgorithm.cs" />
+    <Compile Include="Algorithms\Search\ParallelBreadthFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmComponent.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmServices.cs" />
     <Compile Include="Algorithms\IComputation.cs" />
@@ -154,6 +154,7 @@
     <Compile Include="Algorithms\VertexAdjacencyMatrixBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithm.cs" />
     <Compile Include="Collections\BinaryHeap.cs" />
+    <Compile Include="Collections\ConcurrentQueue.cs" />
     <Compile Include="Collections\IQueue.cs" />
     <Compile Include="EdgeNotFoundException.cs" />
     <Compile Include="GraphContracts.cs" />

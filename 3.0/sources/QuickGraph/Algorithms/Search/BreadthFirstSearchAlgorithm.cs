@@ -63,75 +63,89 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
+        public GraphColor GetVertexColor(TVertex vertex)
+        {
+            return this.vertexColors[vertex];
+        }
+
         public event VertexEventHandler<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
         {
-            if (InitializeVertex != null)
-                InitializeVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.InitializeVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event VertexEventHandler<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
-            VertexEventHandler<TVertex> eh = this.StartVertex;
-            if (eh!=null)
+            var eh = this.StartVertex;
+            if (eh != null)
                 eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event VertexEventHandler<TVertex> ExamineVertex;
         private void OnExamineVertex(TVertex v)
         {
-            if (ExamineVertex != null)
-                ExamineVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.ExamineVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event VertexEventHandler<TVertex> DiscoverVertex;
         private void OnDiscoverVertex(TVertex v)
         {
-            if (DiscoverVertex != null)
-                DiscoverVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.DiscoverVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> ExamineEdge;
+        public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
         private void OnExamineEdge(TEdge e)
         {
-            if (ExamineEdge != null)
-                ExamineEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.ExamineEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
+        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
-            if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> NonTreeEdge;
+        public event EdgeEventHandler<TVertex, TEdge> NonTreeEdge;
         private void OnNonTreeEdge(TEdge e)
         {
-            if (NonTreeEdge != null)
-                NonTreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.NonTreeEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> GrayTarget;
+        public event EdgeEventHandler<TVertex, TEdge> GrayTarget;
         private void OnGrayTarget(TEdge e)
         {
-            if (GrayTarget != null)
-                GrayTarget(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.GrayTarget;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> BlackTarget;
+        public event EdgeEventHandler<TVertex, TEdge> BlackTarget;
         private void OnBlackTarget(TEdge e)
         {
-            if (BlackTarget != null)
-                BlackTarget(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.BlackTarget;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         public event VertexEventHandler<TVertex> FinishVertex;
         private void OnFinishVertex(TVertex v)
         {
-            if (FinishVertex != null)
-                FinishVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.FinishVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public void Initialize()
@@ -163,7 +177,7 @@ namespace QuickGraph.Algorithms.Search
             }
             else // enqueue select root only
             {
-                this.Visit(rootVertex);
+                this.EnqueueRoot(rootVertex);
             }
             this.FlushVisitQueue();
         }

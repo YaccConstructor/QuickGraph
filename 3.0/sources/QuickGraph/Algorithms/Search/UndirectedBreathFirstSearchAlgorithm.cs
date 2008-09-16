@@ -63,6 +63,11 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
+        public GraphColor GetVertexColor(TVertex vertex)
+        {
+            return this.vertexColors[vertex];
+        }
+
         public event VertexEventHandler<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
         {

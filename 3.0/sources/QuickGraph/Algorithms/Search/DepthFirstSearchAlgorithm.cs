@@ -57,6 +57,11 @@ namespace QuickGraph.Algorithms.Search
 			}
 		}
 
+        public GraphColor GetVertexColor(TVertex vertex)
+        {
+            return this.colors[vertex];
+        }
+
 		public int MaxDepth
 		{
 			get

@@ -83,6 +83,11 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
+        public GraphColor GetVertexColor(TVertex vertex)
+        {
+            return this.vertexColors[vertex];
+        }
+
         public TVertex Source
         {
             get { return this.source; }
