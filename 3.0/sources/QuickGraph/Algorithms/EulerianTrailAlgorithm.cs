@@ -151,7 +151,7 @@ namespace QuickGraph.Algorithms
             if (g.EdgeCount < g.VertexCount)
                 return 0;
 
-            int odd = AlgoUtility.OddVertices(g).Count;
+            int odd = g.OddVertices().Count;
             if (odd == 0)
                 return 1;
             else if (odd % 2 != 0)
@@ -238,7 +238,7 @@ namespace QuickGraph.Algorithms
         public List<TEdge> AddTemporaryEdges(IEdgeFactory<TVertex,TEdge> edgeFactory)
         {
             // first gather odd edges.
-            List<TVertex> oddVertices = AlgoUtility.OddVertices(this.VisitedGraph);
+            var oddVertices = this.VisitedGraph.OddVertices();
 
             // check that there are an even number of them
             if (oddVertices.Count % 2 != 0)

@@ -135,7 +135,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public void ComputeNoInit(TVertex s)
         {
-            ICollection<TVertex> orderedVertices = AlgoUtility.TopologicalSort<TVertex, TEdge>(this.VisitedGraph);
+            var orderedVertices = this.VisitedGraph.TopologicalSort<TVertex, TEdge>();
 
             OnDiscoverVertex(s);
             foreach (var v in orderedVertices)

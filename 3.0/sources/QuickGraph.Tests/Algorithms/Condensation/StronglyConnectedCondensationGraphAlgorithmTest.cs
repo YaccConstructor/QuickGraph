@@ -74,7 +74,7 @@ namespace QuickGraph.Algorithms.Condensation
         private void CheckComponentCount(IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             // check number of vertices = number of storngly connected components
-            int components = AlgoUtility.StronglyConnectedComponents<string, Edge<string>>(g, new Dictionary<string, int>());
+            int components = g.StronglyConnectedComponents<string, Edge<string>>(new Dictionary<string, int>());
             Assert.AreEqual(components, algo.CondensatedGraph.VertexCount, "ComponentCount does not match");
         }
 
@@ -83,7 +83,7 @@ namespace QuickGraph.Algorithms.Condensation
             // check it's a dag
             try
             {
-                AlgoUtility.TopologicalSort(this.algo.CondensatedGraph);
+                this.algo.CondensatedGraph.TopologicalSort();
             }
             catch (NonAcyclicGraphException)
             {

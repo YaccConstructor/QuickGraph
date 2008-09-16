@@ -156,7 +156,7 @@ namespace QuickGraph.Algorithms.Search
             if (!this.TryGetRootVertex(out rootVertex))
             {
                 // enqueue all roots
-                foreach (var root in AlgoUtility.Roots(this.VisitedGraph))
+                foreach (var root in this.VisitedGraph.Roots())
                     this.EnqueueRoot(root);
             }
             else

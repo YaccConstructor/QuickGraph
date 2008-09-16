@@ -90,7 +90,7 @@ namespace QuickGraph.Algorithms
                 var flow = new EdmondsKarpMaximumFlowAlgorithm<TVertex, TEdge>(
                     this,
                     this.VisitedGraph,
-                    AlgoUtility.ConstantCapacities(this.VisitedGraph, 1),
+                    this.VisitedGraph.ConstantCapacities(1),
                     reverser.ReversedEdges
                     );
                 flow.Compute(augmentor.SuperSource, augmentor.SuperSink);

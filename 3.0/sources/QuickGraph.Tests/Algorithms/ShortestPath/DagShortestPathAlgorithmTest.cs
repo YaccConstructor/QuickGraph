@@ -13,7 +13,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         public void Compute(IVertexListGraph<string, Edge<string>> g)
         {
             // is this a dag ?
-            bool isDag = AlgoUtility.IsDirectedAcyclicGraph(g);
+            bool isDag = g.IsDirectedAcyclicGraph();
 
             IDistanceRelaxer relaxer = new ShortestDistanceRelaxer();
             List<string> vertices = new List<string>(g.Vertices);
@@ -57,7 +57,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         public void ComputeCriticalPath(IVertexListGraph<string, Edge<string>> g)
         {
             // is this a dag ?
-            bool isDag = AlgoUtility.IsDirectedAcyclicGraph(g);
+            bool isDag = g.IsDirectedAcyclicGraph();
 
             var relaxer = new CriticalDistanceRelaxer();
             var vertices = new List<string>(g.Vertices);

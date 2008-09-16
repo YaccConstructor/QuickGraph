@@ -61,7 +61,7 @@
     <Compile Include="AdjacencyGraph.cs" />
     <Compile Include="Algorithms\AlgorithmBase.cs" />
     <Compile Include="Algorithms\AlgorithmEventHandler.cs" />
-    <Compile Include="Algorithms\AlgoUtility.cs" />
+    <Compile Include="Algorithms\AlgorightmExtensions.cs" />
     <Compile Include="Algorithms\CentralityApproximationAlgorithm.cs" />
     <Compile Include="Algorithms\ComputationState.cs" />
     <Compile Include="Algorithms\Condensation\CondensationGraphAlgorithm.cs" />

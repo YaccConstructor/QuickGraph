@@ -63,7 +63,7 @@ namespace QuickGraph.Algorithms.Condensation
         private void CheckComponentCount(IVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             // check number of vertices = number of storngly connected components
-            int components = AlgoUtility.WeaklyConnectedComponents<string, Edge<string>>(g, new Dictionary<string, int>());
+            int components = g.WeaklyConnectedComponents<string, Edge<string>>(new Dictionary<string, int>());
             Assert.AreEqual(components, algo.CondensatedGraph.VertexCount, "ComponentCount does not match");
         }
     }

@@ -27,7 +27,7 @@ namespace QuickGraph.Collections
     /// </summary>
     [TestFixture]
     [PexClass(typeof(BinaryHeap<,>))]
-    [PexUseGenericArguments(typeof(int), typeof(int))]
+    [PexGenericArguments(typeof(int), typeof(int))]
     public partial class BinaryHeapTPriorityTValueTest
     {
         /// <summary>
@@ -207,7 +207,7 @@ namespace QuickGraph.Collections
 
     [TestFixture]
     [PexClass(typeof(BinaryHeap<,>))]
-    [PexUseGenericArguments(typeof(int), typeof(int))]
+    [PexGenericArguments(typeof(int), typeof(int))]
     public partial class BinaryHeapTPriorityTValueEnumeratorTest
     {
         [PexMethod(MaxRuns = 20)]
