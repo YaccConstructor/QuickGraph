@@ -209,6 +209,7 @@ namespace QuickGraph.Algorithms.Search
         private void FlushVisitQueue()
         {
             var cancelManager = this.Services.CancelManager;
+            var visitedGraph = this.VisitedGraph;
 
             while (this.vertexQueue.Count != 0)
             {
@@ -218,7 +219,7 @@ namespace QuickGraph.Algorithms.Search
                 {
                     TVertex u = this.vertexQueue.Dequeue();
                     this.OnExamineVertex(u);
-                    Parallel.ForEach(this.VisitedGraph.OutEdges(u), delegate(TEdge e)
+                    Parallel.ForEach(visitedGraph.OutEdges(u), delegate(TEdge e)
                     {
                         TVertex v = e.Target;
                         OnExamineEdge(e);
@@ -228,8 +229,7 @@ namespace QuickGraph.Algorithms.Search
                         if ((vColor = (GraphColor)Interlocked.CompareExchange(
                             ref this.vertexIndexedColors[vIndex],
                             (int)GraphColor.Gray,
-                            (int)GraphColor.White)
-                            ) == GraphColor.White)
+                            (int)GraphColor.White)) == GraphColor.White)
                         {
                             this.OnTreeEdge(e);
                             this.OnDiscoverVertex(v);
