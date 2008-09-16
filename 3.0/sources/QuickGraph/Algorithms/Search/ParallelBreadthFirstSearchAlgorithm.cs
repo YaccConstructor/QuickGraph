@@ -215,21 +215,21 @@ namespace QuickGraph.Algorithms.Search
             {
                 if (cancelManager.IsCancelling) return;
 
-                Parallel.For(0, this.vertexQueue.Count, delegate(int i)
+                Parallel.For(0, this.vertexQueue.Count, (i, tlocal) =>
                 {
-                    TVertex u = this.vertexQueue.Dequeue();
+                    var u = this.vertexQueue.Dequeue();
                     this.OnExamineVertex(u);
-                    Parallel.ForEach(visitedGraph.OutEdges(u), delegate(TEdge e)
+                    Parallel.ForEach(visitedGraph.OutEdges(u), e =>
                     {
                         TVertex v = e.Target;
                         OnExamineEdge(e);
 
                         int vIndex = this.vertexIndices[v];
-                        GraphColor vColor;
-                        if ((vColor = (GraphColor)Interlocked.CompareExchange(
+                        var vColor = (GraphColor)Interlocked.CompareExchange(
                             ref this.vertexIndexedColors[vIndex],
                             (int)GraphColor.Gray,
-                            (int)GraphColor.White)) == GraphColor.White)
+                            (int)GraphColor.White);
+                        if (vColor == GraphColor.White)
                         {
                             this.OnTreeEdge(e);
                             this.OnDiscoverVertex(v);
