@@ -9,7 +9,7 @@ namespace QuickGraph.Algorithms
     public static class AlgoUtility
     {
         public static IDictionary<TEdge, double> ConstantCapacities<TVertex, TEdge>(
-            IEdgeSet<TVertex, TEdge> g, double value)
+            this IEdgeSet<TVertex, TEdge> g, double value)
             where TEdge : IEdge<TVertex>
         {
             GraphContracts.AssumeNotNull(g, "g");
