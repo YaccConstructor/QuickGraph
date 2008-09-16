@@ -17,7 +17,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             RandomWalkAlgorithm<string, Edge<string>> walker =
                 new RandomWalkAlgorithm<string, Edge<string>>(eg.Key, eg.Value);
 
-            walker.Generate(TraversalHelper.GetFirstVertex(eg.Key));
+            walker.Generate(TraversalExtensions.GetFirstVertexOrDefault(eg.Key));
         }
 
         [CombinatorialTest]
@@ -31,7 +31,7 @@ namespace QuickGraph.Algorithms.RandomWalks
 
             EdgeRecorderObserver<string, Edge<string>> vis = new EdgeRecorderObserver<string, Edge<string>>();
             vis.Attach(walker);
-            walker.Generate(TraversalHelper.GetFirstVertex(eg.Key));
+            walker.Generate(TraversalExtensions.GetFirstVertexOrDefault(eg.Key));
             vis.Detach(walker);
         }
 

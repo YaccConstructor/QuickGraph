@@ -81,7 +81,7 @@ namespace QuickGraph.Algorithms
                 {
                     TVertex rootVertex;
                     if (!this.TryGetRootVertex(out rootVertex))
-                        rootVertex = TraversalHelper.GetFirstVertex<TVertex, TEdge>(this.VisitedGraph);
+                        rootVertex = TraversalExtensions.GetFirstVertexOrDefault<TVertex, TEdge>(this.VisitedGraph);
                     dfs.Compute(rootVertex);
                 }
 

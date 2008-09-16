@@ -24,7 +24,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 distances.Add(edge, rnd.Next(100));
             var bfs = new DijkstraShortestPathAlgorithm<string, Edge<string>>(g, distances);
 
-            bfs.Compute(TraversalHelper.GetFirstVertex(g));
+            bfs.Compute(TraversalExtensions.GetFirstVertexOrDefault(g));
         }
     }
 

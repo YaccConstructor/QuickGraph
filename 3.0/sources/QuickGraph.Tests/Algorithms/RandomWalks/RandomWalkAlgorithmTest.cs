@@ -20,7 +20,7 @@ namespace QuickGraph.Algorithms.RandomWalks
                 new RandomWalkAlgorithm<String, Edge<string>>(g);
             walker.EdgeChain = new NormalizedMarkovEdgeChain<string, Edge<string>>();
 
-            string root = TraversalHelper.GetFirstVertex(g);
+            string root = TraversalExtensions.GetFirstVertexOrDefault(g);
             walker.Generate(root);
         }
 
@@ -34,7 +34,7 @@ namespace QuickGraph.Algorithms.RandomWalks
                 new RandomWalkAlgorithm<String, Edge<string>>(g);
             walker.EdgeChain = new NormalizedMarkovEdgeChain<string, Edge<string>>();
 
-            string root = TraversalHelper.GetFirstVertex(g);
+            string root = TraversalExtensions.GetFirstVertexOrDefault(g);
 
             EdgeRecorderObserver<string, Edge<string>> vis = new EdgeRecorderObserver<string, Edge<string>>();
             vis.Attach(walker);

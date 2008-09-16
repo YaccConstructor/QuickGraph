@@ -251,7 +251,7 @@
     <Compile Include="Serialization\SerializationHelper.cs" />
     <Compile Include="Serialization\SerializerBase.cs" />
     <Compile Include="TaggedEdge.cs" />
-    <Compile Include="TraversalHelper.cs" />
+    <Compile Include="TraversalExtensions.cs" />
     <Compile Include="UndirectedBidirectionalGraph.cs" />
     <Compile Include="UndirectedGraph.cs" />
     <Compile Include="VertexEventArgs.cs" />

@@ -4,9 +4,10 @@ using System.Text;
 
 namespace QuickGraph
 {
-    public static class TraversalHelper
+    public static class TraversalExtensions
     {
-        public static TVertex GetFirstVertex<TVertex,TEdge>(IVertexListGraph<TVertex, TEdge> g)
+        public static TVertex GetFirstVertexOrDefault<TVertex,TEdge>(
+            this IVertexListGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
             foreach (var v in g.Vertices)
@@ -14,7 +15,8 @@ namespace QuickGraph
             return default(TVertex);
         }
 
-        public static TVertex GetFirstVertex<TVertex, TEdge>(IUndirectedGraph<TVertex, TEdge> g)
+        public static TVertex GetFirstVertexOrDefault<TVertex, TEdge>(
+            this IUndirectedGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
             foreach (var v in g.Vertices)
