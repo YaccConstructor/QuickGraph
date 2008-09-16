@@ -90,6 +90,14 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, new VertexEventArgs<TVertex>(v));
         }
 
+        public event EventHandler NextLevel;
+        private void OnNextLevel()
+        {
+            var eh = this.NextLevel;
+            if (eh != null)
+                eh(this, EventArgs.Empty);
+        }
+
         public event VertexEventHandler<TVertex> ExamineVertex;
         private void OnExamineVertex(TVertex v)
         {
@@ -118,30 +126,6 @@ namespace QuickGraph.Algorithms.Search
         private void OnTreeEdge(TEdge e)
         {
             var eh = this.TreeEdge;
-            if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
-        }
-
-        public event EdgeEventHandler<TVertex,TEdge> NonTreeEdge;
-        private void OnNonTreeEdge(TEdge e)
-        {
-            var eh = this.NonTreeEdge;
-            if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
-        }
-
-        public event EdgeEventHandler<TVertex,TEdge> GrayTarget;
-        private void OnGrayTarget(TEdge e)
-        {
-            var eh = this.GrayTarget;
-            if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
-        }
-
-        public event EdgeEventHandler<TVertex,TEdge> BlackTarget;
-        private void OnBlackTarget(TEdge e)
-        {
-            var eh = this.BlackTarget;
             if (eh != null)
                 eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
@@ -232,8 +216,7 @@ namespace QuickGraph.Algorithms.Search
 
                 Parallel.For(0, this.vertexQueue.Count, delegate(int i)
                 {
-                    TVertex u;
-                    u = this.vertexQueue.Dequeue();
+                    TVertex u = this.vertexQueue.Dequeue();
                     this.OnExamineVertex(u);
                     Parallel.ForEach(this.VisitedGraph.OutEdges(u), delegate(TEdge e)
                     {
@@ -241,34 +224,23 @@ namespace QuickGraph.Algorithms.Search
                         OnExamineEdge(e);
 
                         int vIndex = this.vertexIndices[v];
-                        GraphColor vColor =
-                            (GraphColor)this.vertexIndexedColors[vIndex];
-                        if (vColor == GraphColor.White)
+                        GraphColor vColor;
+                        if ((vColor = (GraphColor)Interlocked.CompareExchange(
+                            ref this.vertexIndexedColors[vIndex],
+                            (int)GraphColor.Gray,
+                            (int)GraphColor.White)
+                            ) == GraphColor.White)
                         {
                             this.OnTreeEdge(e);
-                            Interlocked.Exchange(
-                                ref this.vertexIndexedColors[vIndex], 
-                                (int)GraphColor.Gray);
                             this.OnDiscoverVertex(v);
                             this.vertexQueue.Enqueue(v);
                         }
-                        else
-                        {
-                            this.OnNonTreeEdge(e);
-                            if (vColor == GraphColor.Gray)
-                                this.OnGrayTarget(e);
-                            else
-                                this.OnBlackTarget(e);
-                        }
                     });
-
-                    int uIndex = this.vertexIndices[u];
-                    Interlocked.Exchange(
-                        ref this.vertexIndexedColors[uIndex],
-                        (int)GraphColor.Black);
 
                     this.OnFinishVertex(u);
                 });
+
+                this.OnNextLevel();
             }
         }
     }

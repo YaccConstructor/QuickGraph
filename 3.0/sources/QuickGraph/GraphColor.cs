@@ -5,7 +5,7 @@ namespace QuickGraph
     [Serializable]
     public enum GraphColor
     {
-        White,
+        White = 0,
         Gray,
         Black
     }

@@ -126,6 +126,21 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
+        [Test]
+        public void GraphWithSelfEdgesBig()
+        {
+            Random rnd = new Random();
+            g = new AdjacencyGraph<int, Edge<int>>(true);
+            RandomGraphFactory.Create<int, Edge<int>>(g,
+                new IntVertexFactory(),
+                FactoryCompiler.GetEdgeFactory<int, Edge<int>>(),
+                rnd, 10000, 100000, false);
+
+            var sv = g.GetFirstVertexOrDefault();
+            this.sourceVertex = sv;
+            RunBfs();
+        }
+
         [CombinatorialTest]
         public void GraphWithSelfEdges(
             [UsingLinear(2, 9)] int i,
@@ -143,53 +158,53 @@ namespace QuickGraph.Algorithms.Search
                 FactoryCompiler.GetEdgeFactory<int,Edge<int>>(),
                 rnd, i, j, true);
 
-            RunBfs();
+            foreach (var sv in g.Vertices)
+            {
+                this.sourceVertex = sv;
+                RunBfs();
+            }
         }
 
         private void RunBfs()
         {
-            foreach (var sv in g.Vertices)
+            algo = new BreadthFirstSearchAlgorithm<int, Edge<int>>(g);
+            try
             {
-                this.sourceVertex = sv;
-                algo = new BreadthFirstSearchAlgorithm<int, Edge<int>>(g);
-                try
+                algo.InitializeVertex += new VertexEventHandler<int>(this.InitializeVertex);
+                algo.DiscoverVertex += new VertexEventHandler<int>(this.DiscoverVertex);
+                algo.ExamineEdge += new EdgeEventHandler<int, Edge<int>>(this.ExamineEdge);
+                algo.ExamineVertex += new VertexEventHandler<int>(this.ExamineVertex);
+                algo.TreeEdge += new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
+                algo.NonTreeEdge += new EdgeEventHandler<int, Edge<int>>(this.NonTreeEdge);
+                algo.GrayTarget += new EdgeEventHandler<int, Edge<int>>(this.GrayTarget);
+                algo.BlackTarget += new EdgeEventHandler<int, Edge<int>>(this.BlackTarget);
+                algo.FinishVertex += new VertexEventHandler<int>(this.FinishVertex);
+
+                parents.Clear();
+                distances.Clear();
+                currentDistance = 0;
+
+                foreach (int v in g.Vertices)
                 {
-                    algo.InitializeVertex += new VertexEventHandler<int>(this.InitializeVertex);
-                    algo.DiscoverVertex += new VertexEventHandler<int>(this.DiscoverVertex);
-                    algo.ExamineEdge += new EdgeEventHandler<int, Edge<int>>(this.ExamineEdge);
-                    algo.ExamineVertex += new VertexEventHandler<int>(this.ExamineVertex);
-                    algo.TreeEdge += new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
-                    algo.NonTreeEdge += new EdgeEventHandler<int, Edge<int>>(this.NonTreeEdge);
-                    algo.GrayTarget += new EdgeEventHandler<int, Edge<int>>(this.GrayTarget);
-                    algo.BlackTarget += new EdgeEventHandler<int, Edge<int>>(this.BlackTarget);
-                    algo.FinishVertex += new VertexEventHandler<int>(this.FinishVertex);
-
-                    parents.Clear();
-                    distances.Clear();
-                    currentDistance = 0;
-
-                    foreach (int v in g.Vertices)
-                    {
-                        distances[v] = int.MaxValue;
-                        parents[v] = v;
-                    }
-                    distances[sourceVertex] = 0;
-                    algo.Compute(sourceVertex);
-
-                    CheckBfs();
+                    distances[v] = int.MaxValue;
+                    parents[v] = v;
                 }
-                finally
-                {
-                    algo.InitializeVertex -= new VertexEventHandler<int>(this.InitializeVertex);
-                    algo.DiscoverVertex -= new VertexEventHandler<int>(this.DiscoverVertex);
-                    algo.ExamineEdge -= new EdgeEventHandler<int, Edge<int>>(this.ExamineEdge);
-                    algo.ExamineVertex -= new VertexEventHandler<int>(this.ExamineVertex);
-                    algo.TreeEdge -= new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
-                    algo.NonTreeEdge -= new EdgeEventHandler<int, Edge<int>>(this.NonTreeEdge);
-                    algo.GrayTarget -= new EdgeEventHandler<int, Edge<int>>(this.GrayTarget);
-                    algo.BlackTarget -= new EdgeEventHandler<int, Edge<int>>(this.BlackTarget);
-                    algo.FinishVertex -= new VertexEventHandler<int>(this.FinishVertex);
-                }
+                distances[sourceVertex] = 0;
+                algo.Compute(sourceVertex);
+
+                CheckBfs();
+            }
+            finally
+            {
+                algo.InitializeVertex -= new VertexEventHandler<int>(this.InitializeVertex);
+                algo.DiscoverVertex -= new VertexEventHandler<int>(this.DiscoverVertex);
+                algo.ExamineEdge -= new EdgeEventHandler<int, Edge<int>>(this.ExamineEdge);
+                algo.ExamineVertex -= new VertexEventHandler<int>(this.ExamineVertex);
+                algo.TreeEdge -= new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
+                algo.NonTreeEdge -= new EdgeEventHandler<int, Edge<int>>(this.NonTreeEdge);
+                algo.GrayTarget -= new EdgeEventHandler<int, Edge<int>>(this.GrayTarget);
+                algo.BlackTarget -= new EdgeEventHandler<int, Edge<int>>(this.BlackTarget);
+                algo.FinishVertex -= new VertexEventHandler<int>(this.FinishVertex);
             }
         }
 

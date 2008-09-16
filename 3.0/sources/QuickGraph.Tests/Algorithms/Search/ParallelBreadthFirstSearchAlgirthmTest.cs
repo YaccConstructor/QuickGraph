@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using QuickGraph.Unit;
+using QuickGraph.Operations;
+using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -25,9 +27,6 @@ namespace QuickGraph.Algorithms.Search
             // Ensure that the distances monotonically increase.
             Assert.IsTrue(distances[u] == currentDistance
                        || distances[u] == currentDistance + 1);
-
-            if (distances[u] == currentDistance + 1) // new level
-                ++currentDistance;
         }
 
         private void DiscoverVertex(Object sender, VertexEventArgs<int> args)
@@ -48,47 +47,13 @@ namespace QuickGraph.Algorithms.Search
             int v = args.Edge.Target;
 
             Assert.AreEqual(distances[u], currentDistance);
-            parents[v] = u;
-            distances[v] = distances[u] + 1;
-        }
-
-        private void NonTreeEdge(Object sender, EdgeEventArgs<int, Edge<int>> args)
-        {
-            int u = args.Edge.Source;
-            int v = args.Edge.Target;
-
-            if (algo.VisitedGraph.IsDirected)
-            {
-                // cross or back edge
-                Assert.IsTrue(distances[v] <= distances[u] + 1);
-            }
-            else
-            {
-                // cross edge (or going backwards on a tree edge)
-                Assert.IsTrue(
-                    distances[v] == distances[u]
-                    || distances[v] == distances[u] + 1
-                    || distances[v] == distances[u] - 1
-                    );
-            }
-        }
-
-        private void GrayTarget(Object sender, EdgeEventArgs<int, Edge<int>> args)
-        {
-            Assert.IsFalse(algo.GetVertexColor(args.Edge.Target) == GraphColor.White);
-        }
-
-        private void BlackTarget(Object sender, EdgeEventArgs<int, Edge<int>> args)
-        {
-            Assert.AreEqual(algo.GetVertexColor(args.Edge.Target), GraphColor.Black);
-
-            foreach (Edge<int> e in algo.VisitedGraph.OutEdges(args.Edge.Target))
-                Assert.IsFalse(algo.GetVertexColor(e.Target) == GraphColor.White);
+            this.parents[v] = u;
+            this.distances[v] = distances[u] + 1;
         }
 
         private void FinishVertex(Object sender, VertexEventArgs<int> args)
         {
-            Assert.AreEqual(algo.GetVertexColor(args.Vertex), GraphColor.Black);
+            Assert.AreEqual(algo.GetVertexColor(args.Vertex), GraphColor.Gray);
         }
 
         [SetUp]
@@ -110,10 +75,26 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
-        [CombinatorialTest]
+        [Test]
+        public void GraphWithSelfEdgesBig()
+        {
+            Console.WriteLine("processors: ", TaskManager.Current.Policy.IdealProcessors);
+            Random rnd = new Random();
+            g = new AdjacencyGraph<int, Edge<int>>(true);
+            RandomGraphFactory.Create<int, Edge<int>>(g,
+                new IntVertexFactory(),
+                FactoryCompiler.GetEdgeFactory<int, Edge<int>>(),
+                rnd, 10000, 100000, false);
+
+            var sv = g.GetFirstVertexOrDefault();
+            this.sourceVertex = sv;
+            RunBfs();
+        }
+
+        [CombinatorialTest(CombinationType.PairWize)]
         public void GraphWithSelfEdges(
-            [UsingLinear(2, 9)] int i,
-            [UsingLinear(0, 10)] int j
+            [UsingLinear(2, 5)] int i,
+            [UsingLinear(0, 25)] int j
             )
         {
             if (i == 0 && j == 0)
@@ -127,52 +108,52 @@ namespace QuickGraph.Algorithms.Search
                 FactoryCompiler.GetEdgeFactory<int,Edge<int>>(),
                 rnd, i, j, true);
 
-            RunBfs();
+            foreach (var sv in g.Vertices)
+            {
+                this.sourceVertex = sv;
+                RunBfs();
+            }
         }
 
         private void RunBfs()
         {
-            foreach (var sv in g.Vertices)
+            algo = new ParallelBreadthFirstSearchAlgorithm<int, Edge<int>>(g);
+            try
             {
-                this.sourceVertex = sv;
-                algo = new ParallelBreadthFirstSearchAlgorithm<int, Edge<int>>(g);
-                try
+                algo.InitializeVertex += new VertexEventHandler<int>(this.InitializeVertex);
+                algo.DiscoverVertex += new VertexEventHandler<int>(this.DiscoverVertex);
+                algo.ExamineVertex += new VertexEventHandler<int>(this.ExamineVertex);
+                algo.TreeEdge += new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
+                algo.NextLevel += new EventHandler(algo_NextLevel);
+                algo.FinishVertex += new VertexEventHandler<int>(this.FinishVertex);
+
+                parents.Clear();
+                distances.Clear();
+                currentDistance = 0;
+
+                foreach (int v in g.Vertices)
                 {
-                    algo.InitializeVertex += new VertexEventHandler<int>(this.InitializeVertex);
-                    algo.DiscoverVertex += new VertexEventHandler<int>(this.DiscoverVertex);
-                    algo.ExamineVertex += new VertexEventHandler<int>(this.ExamineVertex);
-                    algo.TreeEdge += new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
-                    algo.NonTreeEdge += new EdgeEventHandler<int, Edge<int>>(this.NonTreeEdge);
-                    algo.GrayTarget += new EdgeEventHandler<int, Edge<int>>(this.GrayTarget);
-                    algo.BlackTarget += new EdgeEventHandler<int, Edge<int>>(this.BlackTarget);
-                    algo.FinishVertex += new VertexEventHandler<int>(this.FinishVertex);
-
-                    parents.Clear();
-                    distances.Clear();
-                    currentDistance = 0;
-
-                    foreach (int v in g.Vertices)
-                    {
-                        distances[v] = int.MaxValue;
-                        parents[v] = v;
-                    }
-                    distances[sourceVertex] = 0;
-                    algo.Compute(sourceVertex);
-
-                    CheckBfs();
+                    distances[v] = int.MaxValue;
+                    parents[v] = v;
                 }
-                finally
-                {
-                    algo.InitializeVertex -= new VertexEventHandler<int>(this.InitializeVertex);
-                    algo.DiscoverVertex -= new VertexEventHandler<int>(this.DiscoverVertex);
-                    algo.ExamineVertex -= new VertexEventHandler<int>(this.ExamineVertex);
-                    algo.TreeEdge -= new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
-                    algo.NonTreeEdge -= new EdgeEventHandler<int, Edge<int>>(this.NonTreeEdge);
-                    algo.GrayTarget -= new EdgeEventHandler<int, Edge<int>>(this.GrayTarget);
-                    algo.BlackTarget -= new EdgeEventHandler<int, Edge<int>>(this.BlackTarget);
-                    algo.FinishVertex -= new VertexEventHandler<int>(this.FinishVertex);
-                }
+                distances[sourceVertex] = 0;
+                algo.Compute(sourceVertex);
+
+                this.CheckBfs();
             }
+            finally
+            {
+                algo.InitializeVertex -= new VertexEventHandler<int>(this.InitializeVertex);
+                algo.DiscoverVertex -= new VertexEventHandler<int>(this.DiscoverVertex);
+                algo.ExamineVertex -= new VertexEventHandler<int>(this.ExamineVertex);
+                algo.TreeEdge -= new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
+                algo.FinishVertex -= new VertexEventHandler<int>(this.FinishVertex);
+            }
+        }
+
+        void algo_NextLevel(object sender, EventArgs e)
+        {
+            this.currentDistance++;
         }
 
         protected void CheckBfs()
@@ -191,7 +172,9 @@ namespace QuickGraph.Algorithms.Search
             foreach (int v in g.Vertices)
             {
                 if (parents[v] != v) // *ui not the root of the bfs tree
+                {
                     Assert.AreEqual(distances[v], distances[parents[v]] + 1);
+                }
             }
         }
     }
