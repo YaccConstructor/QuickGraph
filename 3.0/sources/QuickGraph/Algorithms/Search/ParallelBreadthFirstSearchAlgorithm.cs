@@ -20,13 +20,14 @@ namespace QuickGraph.Algorithms.Search
     ///     href="http://www.cc.gatech.edu/~bader/papers/MultithreadedBFS-ICPP2006.pdf"
     ///     />
     [Serializable]
-    public sealed class ParallelBreadthFirstSearchAlgorithm<TVertex, TEdge> :
-        RootedAlgorithmBase<TVertex, IVertexListGraph<TVertex, TEdge>>,
-        IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>,
-        IDistanceRecorderAlgorithm<TVertex,TEdge>,
-        IVertexColorizerAlgorithm<TVertex, TEdge>,
-        ITreeBuilderAlgorithm<TVertex, TEdge>
+    public sealed class ParallelBreadthFirstSearchAlgorithm<TVertex, TEdge, TLocal> 
+        : RootedAlgorithmBase<TVertex, IVertexListGraph<TVertex, TEdge>>
+//      , IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>
+//        , IDistanceRecorderAlgorithm<TVertex,TEdge>
+        , IVertexColorizerAlgorithm<TVertex, TEdge>
+//        , ITreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
+        where TLocal : new()
     {
         private readonly IDictionary<TVertex, GraphColor> vertexColors;
         private readonly IQueue<TVertex> vertexQueue;
@@ -82,14 +83,20 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public event VertexEventHandler<TVertex> StartVertex;
-        private void OnStartVertex(TVertex v)
+        public event ParallelVertexEventHandler<TVertex, TLocal> StartVertex;
+        private void OnStartVertex(TVertex v, ParallelState<TLocal> local)
         {
             var eh = this.StartVertex;
             if (eh!=null)
-                eh(this, new VertexEventArgs<TVertex>(v));
+                eh(this, new ParallelVertexEventArgs<TVertex,TLocal>(v,local));
         }
 
+        /// <summary>
+        /// Triggered at the end of a level exploration.
+        /// </summary>
+        /// <remarks>
+        /// This event is not concurrent.
+        /// </remarks>
         public event EventHandler NextLevel;
         private void OnNextLevel()
         {
@@ -98,44 +105,44 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, EventArgs.Empty);
         }
 
-        public event VertexEventHandler<TVertex> ExamineVertex;
-        private void OnExamineVertex(TVertex v)
+        public event ParallelVertexEventHandler<TVertex, TLocal> ExamineVertex;
+        private void OnExamineVertex(TVertex v, ParallelState<TLocal> local)
         {
             var eh = this.ExamineVertex;
             if (eh != null)
-                eh(this, new VertexEventArgs<TVertex>(v));
+                eh(this, new ParallelVertexEventArgs<TVertex, TLocal>(v, local));
         }
 
-        public event VertexEventHandler<TVertex> DiscoverVertex;
-        private void OnDiscoverVertex(TVertex v)
+        public event ParallelVertexEventHandler<TVertex, TLocal> DiscoverVertex;
+        private void OnDiscoverVertex(TVertex v, ParallelState<TLocal> local)
         {
             var eh = this.DiscoverVertex;
             if (eh != null)
-                eh(this, new VertexEventArgs<TVertex>(v));
+                eh(this, new ParallelVertexEventArgs<TVertex,TLocal>(v,local));
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> ExamineEdge;
-        private void OnExamineEdge(TEdge e)
+        public event ParallelEdgeEventHandler<TVertex,TEdge, TLocal> ExamineEdge;
+        private void OnExamineEdge(TEdge e, ParallelState<TLocal> local)
         {
             var eh = this.ExamineEdge;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
+                eh(this, new ParallelEdgeEventArgs<TVertex,TEdge,TLocal>(e, local));
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
-        private void OnTreeEdge(TEdge e)
+        public event ParallelEdgeEventHandler<TVertex,TEdge, TLocal> TreeEdge;
+        private void OnTreeEdge(TEdge e, ParallelState<TLocal> local)
         {
             var eh = this.TreeEdge;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
+                eh(this, new ParallelEdgeEventArgs<TVertex,TEdge,TLocal>(e, local));
         }
 
-        public event VertexEventHandler<TVertex> FinishVertex;
-        private void OnFinishVertex(TVertex v)
+        public event ParallelVertexEventHandler<TVertex,TLocal> FinishVertex;
+        private void OnFinishVertex(TVertex v, ParallelState<TLocal> local)
         {
             var eh = this.FinishVertex;
             if (eh != null)
-                eh(this, new VertexEventArgs<TVertex>(v));
+                eh(this, new ParallelVertexEventArgs<TVertex,TLocal>(v, local));
         }
 
         public void Initialize()
@@ -175,72 +182,115 @@ namespace QuickGraph.Algorithms.Search
             this.Initialize();
 
             TVertex rootVertex;
-            if (!this.TryGetRootVertex(out rootVertex))
-            {
-                // enqueue roots
-                foreach (var root in this.VisitedGraph.Roots())
-                    this.EnqueueRoot(root);
-            }
-            else // enqueue select root only
-            {
-                this.EnqueueRoot(rootVertex);
-            }
-            this.FlushVisitQueue();
+            IEnumerable<TVertex> roots;
+            if (this.TryGetRootVertex(out rootVertex))
+                roots = new TVertex[] { rootVertex };
+            else
+                roots = this.VisitedGraph.Roots();
+
+            VisitRoots(roots);
         }
 
         public void Visit(TVertex s)
         {
-            this.EnqueueRoot(s);
+            this.VisitRoots(new TVertex[] { s });
+        }
+
+        private void VisitRoots(IEnumerable<TVertex> roots)
+        {
+            GraphContracts.AssumeNotNull(roots, "roots");
+            // enqueue roots
+            Parallel.ForEach<TVertex, TLocal>(
+                roots,
+                this.CreateLocal,
+                (root, i, local) => this.EnqueueRoot(root, local),
+                this.OnLocalFinalized
+                );
             this.FlushVisitQueue();
         }
 
-        private void EnqueueRoot(TVertex s)
+        private void EnqueueRoot(TVertex s, ParallelState<TLocal> local)
         {
-            this.OnStartVertex(s);
+            this.OnStartVertex(s, local);
 
-            Interlocked.Exchange(
+            var color = (GraphColor)Interlocked.Exchange(
                 ref this.vertexIndexedColors[this.vertexIndices[s]], 
                 (int)GraphColor.Gray);
+            GraphContracts.Assert(color == GraphColor.White);
 
-            OnDiscoverVertex(s);
+            OnDiscoverVertex(s, local);
             this.vertexQueue.Enqueue(s);
+        }
+
+        public event ParallelLocalEventHandler<TLocal> LocalCreated;
+        private TLocal CreateLocal()
+        {
+            var local = new TLocal();
+
+            var eh = this.LocalCreated;
+            if (eh != null)
+                eh(this, new ParallelLocalEventArgs<TLocal>(local));
+
+            return local;
+        }
+
+        public event ParallelLocalEventHandler<TLocal> LocalFinalized;
+        private void OnLocalFinalized(TLocal local)
+        {
+            var eh = this.LocalFinalized;
+            if (eh != null)
+                eh(this, new ParallelLocalEventArgs<TLocal>(local));
         }
 
         private void FlushVisitQueue()
         {
             var cancelManager = this.Services.CancelManager;
-            var visitedGraph = this.VisitedGraph;
 
             while (this.vertexQueue.Count != 0)
             {
                 if (cancelManager.IsCancelling) return;
 
-                Parallel.For(0, this.vertexQueue.Count, (i, tlocal) =>
-                {
-                    var u = this.vertexQueue.Dequeue();
-                    this.OnExamineVertex(u);
-                    Parallel.ForEach(visitedGraph.OutEdges(u), e =>
-                    {
-                        TVertex v = e.Target;
-                        OnExamineEdge(e);
-
-                        int vIndex = this.vertexIndices[v];
-                        var vColor = (GraphColor)Interlocked.CompareExchange(
-                            ref this.vertexIndexedColors[vIndex],
-                            (int)GraphColor.Gray,
-                            (int)GraphColor.White);
-                        if (vColor == GraphColor.White)
-                        {
-                            this.OnTreeEdge(e);
-                            this.OnDiscoverVertex(v);
-                            this.vertexQueue.Enqueue(v);
-                        }
-                    });
-
-                    this.OnFinishVertex(u);
-                });
-
+                Parallel.For<TLocal>(
+                    0,
+                    this.vertexQueue.Count,
+                    this.CreateLocal,
+                    (i, local) => this.VisitLevel(local),
+                    this.OnLocalFinalized
+                    );
                 this.OnNextLevel();
+            }
+        }
+
+        private void VisitLevel(ParallelState<TLocal> local)
+        {
+            var u = this.vertexQueue.Dequeue();
+            this.OnExamineVertex(u, local);
+            
+            Parallel.ForEach<TEdge, TLocal>(
+                this.VisitedGraph.OutEdges(u),
+                this.CreateLocal,
+                (e, i, childLocal) => this.VisitChildren(e, childLocal),
+                this.OnLocalFinalized
+                );
+
+            this.OnFinishVertex(u, local);
+        }
+
+        private void VisitChildren(TEdge e, ParallelState<TLocal> local)
+        {
+            TVertex v = e.Target;
+            OnExamineEdge(e, local);
+
+            int vIndex = this.vertexIndices[v];
+            var vColor = (GraphColor)Interlocked.CompareExchange(
+                ref this.vertexIndexedColors[vIndex],
+                (int)GraphColor.Gray,
+                (int)GraphColor.White);
+            if (vColor == GraphColor.White)
+            {
+                this.OnTreeEdge(e, local);
+                this.OnDiscoverVertex(v, local);
+                this.vertexQueue.Enqueue(v);
             }
         }
     }

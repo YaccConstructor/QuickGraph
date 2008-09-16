@@ -13,7 +13,7 @@ namespace QuickGraph.Algorithms.Search
         private IDictionary<int, int> distances;
         private int sourceVertex;
         private int currentDistance;
-        private ParallelBreadthFirstSearchAlgorithm<int, Edge<int>> algo;
+        private ParallelBreadthFirstSearchAlgorithm<int, Edge<int>, int> algo;
         private AdjacencyGraph<int, Edge<int>> g;
 
         private void InitializeVertex(Object sender, VertexEventArgs<int> args)
@@ -117,15 +117,15 @@ namespace QuickGraph.Algorithms.Search
 
         private void RunBfs()
         {
-            algo = new ParallelBreadthFirstSearchAlgorithm<int, Edge<int>>(g);
+            algo = new ParallelBreadthFirstSearchAlgorithm<int, Edge<int>, int>(g);
             try
             {
                 algo.InitializeVertex += new VertexEventHandler<int>(this.InitializeVertex);
-                algo.DiscoverVertex += new VertexEventHandler<int>(this.DiscoverVertex);
-                algo.ExamineVertex += new VertexEventHandler<int>(this.ExamineVertex);
-                algo.TreeEdge += new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
+                algo.DiscoverVertex += new ParallelVertexEventHandler<int,int>(this.DiscoverVertex);
+                algo.ExamineVertex += new ParallelVertexEventHandler<int, int>(this.ExamineVertex);
+                algo.TreeEdge += new ParallelEdgeEventHandler<int, Edge<int>, int>(this.TreeEdge);
                 algo.NextLevel += new EventHandler(algo_NextLevel);
-                algo.FinishVertex += new VertexEventHandler<int>(this.FinishVertex);
+                algo.FinishVertex += new ParallelVertexEventHandler<int,int>(this.FinishVertex);
 
                 parents.Clear();
                 distances.Clear();
@@ -144,10 +144,10 @@ namespace QuickGraph.Algorithms.Search
             finally
             {
                 algo.InitializeVertex -= new VertexEventHandler<int>(this.InitializeVertex);
-                algo.DiscoverVertex -= new VertexEventHandler<int>(this.DiscoverVertex);
-                algo.ExamineVertex -= new VertexEventHandler<int>(this.ExamineVertex);
-                algo.TreeEdge -= new EdgeEventHandler<int, Edge<int>>(this.TreeEdge);
-                algo.FinishVertex -= new VertexEventHandler<int>(this.FinishVertex);
+                algo.DiscoverVertex -= new ParallelVertexEventHandler<int,int>(this.DiscoverVertex);
+                algo.ExamineVertex -= new ParallelVertexEventHandler<int,int>(this.ExamineVertex);
+                algo.TreeEdge -= new ParallelEdgeEventHandler<int, Edge<int>,int>(this.TreeEdge);
+                algo.FinishVertex -= new ParallelVertexEventHandler<int,int>(this.FinishVertex);
             }
         }
 

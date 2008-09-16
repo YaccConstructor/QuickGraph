@@ -160,6 +160,10 @@
     <Compile Include="GraphContracts.cs" />
     <Compile Include="HashCodeHelper.cs" />
     <Compile Include="IEdgeSet.cs" />
+    <Compile Include="ParallelEdgeEventsArgs.cs" />
+    <Compile Include="ParallelEventArgs.cs" />
+    <Compile Include="ParallelLocalEventArgs.cs" />
+    <Compile Include="ParallelVertexEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BidirectionalGraph.cs" />
     <Compile Include="BidirectionalMatrixGraph.cs" />
