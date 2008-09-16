@@ -116,9 +116,9 @@ namespace QuickGraph.Tests.Regression {
 
             foreach (string v in graph.Vertices) {
                 double distance = 
-                    predecessorObserver
-                    .VertexPredecessors
-                    .ComputePredecessorCost(edgeCost,v);
+                    AlgorithmExtensions.ComputePredecessorCost(
+                        predecessorObserver.VertexPredecessors,
+                        edgeCost,v);
                 Console.WriteLine("A -> {0}: {1}", v, distance);
             }
 

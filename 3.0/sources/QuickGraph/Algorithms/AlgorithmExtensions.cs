@@ -6,8 +6,18 @@ using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Algorithms
 {
-    public static class AlgorightmExtensions
+    public static class AlgorithmExtensions
     {
+        /// <summary>
+        /// Creates a fills a dictionary 
+        /// containing <paramref name="value"/> for
+        /// each edge in the edge set
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="g"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static IDictionary<TEdge, double> ConstantCapacities<TVertex, TEdge>(
             this IEdgeSet<TVertex, TEdge> g, double value)
             where TEdge : IEdge<TVertex>
@@ -20,6 +30,13 @@ namespace QuickGraph.Algorithms
             return capacities;
         }
 
+        /// <summary>
+        /// Gets the list of sink vertices
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <returns></returns>
         public static IEnumerable<TVertex> Sinks<TVertex, TEdge>(
             this IVertexListGraph<TVertex, TEdge> visitedGraph) 
             where TEdge : IEdge<TVertex>
@@ -31,6 +48,13 @@ namespace QuickGraph.Algorithms
                     yield return v;
         }
 
+        /// <summary>
+        /// Gets the list of root vertices
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <returns></returns>
         public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
             this IBidirectionalGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
@@ -42,6 +66,13 @@ namespace QuickGraph.Algorithms
                     yield return v;
         }
 
+        /// <summary>
+        /// Gets the list of isolated vertices (no incoming or outcoming vertices)
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <returns></returns>
         public static IEnumerable<TVertex> IsolatedVertices<TVertex, TEdge>(
             this IBidirectionalGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
@@ -53,6 +84,13 @@ namespace QuickGraph.Algorithms
                     yield return v;
         }
 
+        /// <summary>
+        /// Gets the list of root  vertices
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <returns></returns>
         public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
             this IUndirectedGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
@@ -70,6 +108,13 @@ namespace QuickGraph.Algorithms
             }
         }
 
+        /// <summary>
+        /// Gets the list of roots
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <returns></returns>
         public static IEnumerable<TVertex> Roots<TVertex,TEdge>(
             this IVertexListGraph<TVertex,TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
@@ -87,7 +132,17 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        public static ICollection<TVertex> TopologicalSort<TVertex, TEdge>(
+        /// <summary>
+        /// Creates a topological sort of a undirected
+        /// acyclic graph.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <returns></returns>
+        /// <exception cref="NonAcyclicGraphException">the input graph
+        /// has a cycle</exception>
+        public static IEnumerable<TVertex> TopologicalSort<TVertex, TEdge>(
             this IUndirectedGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
@@ -98,6 +153,17 @@ namespace QuickGraph.Algorithms
             return vertices;
         }
 
+
+        /// <summary>
+        /// Creates a topological sort of a undirected
+        /// acyclic graph.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <returns></returns>
+        /// <exception cref="NonAcyclicGraphException">the input graph
+        /// has a cycle</exception>
         public static void TopologicalSort<TVertex, TEdge>(
             this IUndirectedGraph<TVertex, TEdge> visitedGraph,
             IList<TVertex> vertices
@@ -111,7 +177,17 @@ namespace QuickGraph.Algorithms
             topo.Compute(vertices);
         }
 
-        public static ICollection<TVertex> TopologicalSort<TVertex, TEdge>(
+        /// <summary>
+        /// Creates a topological sort of a directed
+        /// acyclic graph.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <returns></returns>
+        /// <exception cref="NonAcyclicGraphException">the input graph
+        /// has a cycle</exception>
+        public static IEnumerable<TVertex> TopologicalSort<TVertex, TEdge>(
             this IVertexListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
@@ -122,6 +198,16 @@ namespace QuickGraph.Algorithms
             return vertices;
         }
 
+        /// <summary>
+        /// Creates a topological sort of a directed
+        /// acyclic graph.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <returns></returns>
+        /// <exception cref="NonAcyclicGraphException">the input graph
+        /// has a cycle</exception>
         public static void TopologicalSort<TVertex, TEdge>(
             this IVertexListGraph<TVertex, TEdge> visitedGraph,
             IList<TVertex> vertices)
@@ -134,7 +220,7 @@ namespace QuickGraph.Algorithms
             topo.Compute(vertices);
         }
 
-        public static ICollection<TVertex> SourceFirstTopologicalSort<TVertex, TEdge>(
+        public static IEnumerable<TVertex> SourceFirstTopologicalSort<TVertex, TEdge>(
             this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
@@ -157,7 +243,16 @@ namespace QuickGraph.Algorithms
             topo.Compute(vertices);
         }
 
-        public static int ConnectedComponents<TVertex,TEdge>(
+        /// <summary>
+        /// Computes the connected components of a graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="g"></param>
+        /// <param name="startVertex"></param>
+        /// <param name="components"></param>
+        /// <returns>number of components</returns>
+        public static int ConnectedComponents<TVertex, TEdge>(
             this IUndirectedGraph<TVertex,TEdge> g,
             TVertex startVertex,
             IDictionary<TVertex,int> components)
@@ -172,6 +267,14 @@ namespace QuickGraph.Algorithms
             return conn.ComponentCount;
         }
 
+        /// <summary>
+        /// Computes the weakly connected components of a graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="g"></param>
+        /// <param name="components"></param>
+        /// <returns>number of components</returns>
         public static int WeaklyConnectedComponents<TVertex, TEdge>(
             this IVertexListGraph<TVertex, TEdge> g,
             IDictionary<TVertex, int> components)
@@ -185,6 +288,14 @@ namespace QuickGraph.Algorithms
             return conn.ComponentCount;
         }
 
+        /// <summary>
+        /// Computes the strongly connected components of a graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="g"></param>
+        /// <param name="components"></param>
+        /// <returns>number of components</returns>
         public static int StronglyConnectedComponents<TVertex, TEdge>(
             this IVertexListGraph<TVertex, TEdge> g,
             IDictionary<TVertex, int> components)
@@ -198,6 +309,13 @@ namespace QuickGraph.Algorithms
             return conn.ComponentCount;
         }
 
+        /// <summary>
+        /// Clones a graph to another graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="g"></param>
+        /// <param name="clone"></param>
         public static void Clone<TVertex,TEdge>(
             this IVertexAndEdgeListGraph<TVertex, TEdge> g,
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> clone)
@@ -207,8 +325,7 @@ namespace QuickGraph.Algorithms
             GraphContracts.AssumeNotNull(g, "g");
             GraphContracts.AssumeNotNull(clone, "clone");
 
-            var vertexClones = new Dictionary<TVertex, TVertex>();
-
+            var vertexClones = new Dictionary<TVertex, TVertex>(g.VertexCount);
             foreach (var v in g.Vertices)
             {
                 var vc = (TVertex)v.Clone();
@@ -225,7 +342,16 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        public static IMutableBidirectionalGraph<TGraph,CondensatedEdge<TVertex, TEdge,TGraph>> Condensate<TVertex, TEdge, TGraph>(
+        /// <summary>
+        /// Condensates a graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TGraph"></typeparam>
+        /// <param name="g"></param>
+        /// <returns></returns>
+        public static IMutableBidirectionalGraph<TGraph,CondensatedEdge<TVertex, TEdge,TGraph>> 
+            Condensate<TVertex, TEdge, TGraph>(
             this IVertexAndEdgeListGraph<TVertex,TEdge> g)
             where TEdge : IEdge<TVertex>
             where TGraph : IMutableVertexAndEdgeListGraph<TVertex,TEdge>, new()
@@ -271,6 +397,16 @@ namespace QuickGraph.Algorithms
             return odds;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the graph is acyclic
+        /// </summary>
+        /// <remarks>
+        /// Performs a depth first search to look for cycles.
+        /// </remarks>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="g"></param>
+        /// <returns></returns>
         public static bool IsDirectedAcyclicGraph<TVertex, TEdge>(
             this IVertexListGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
@@ -308,8 +444,18 @@ namespace QuickGraph.Algorithms
             }
         }
 
+        /// <summary>
+        /// Given a edge cost map, computes 
+        /// the predecessor cost.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="predecessors"></param>
+        /// <param name="edgeCosts"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static double ComputePredecessorCost<TVertex, TEdge>(
-            this IDictionary<TVertex, TEdge> predecessors,         
+            IDictionary<TVertex, TEdge> predecessors,         
             IDictionary<TEdge, double> edgeCosts,
             TVertex target
             ) 

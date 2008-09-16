@@ -122,10 +122,8 @@ namespace QuickGraph.Algorithms.Matrix
 
         public static DoubleDenseMatrix Add(DoubleDenseMatrix left, DoubleDenseMatrix right)
         {
-            // <preconditions>
             if (left == (DoubleDenseMatrix)null)
                 throw new ArgumentNullException("left");
-            // </preconditions>
             DoubleDenseMatrix m = Create(left);
             return m.Add(right);
         }
@@ -275,7 +273,7 @@ namespace QuickGraph.Algorithms.Matrix
         {
             if (this.RowCount != this.ColumnCount)
                 throw new MatrixSizeMistmatchException();
-            DoubleDenseMatrix m = new DoubleDenseMatrix(this.RowCount,1);
+            var m = new DoubleDenseMatrix(this.RowCount,1);
             for (int i = 0; i < this.RowCount; ++i)
                 m.data[i] = this[i, i];
 
@@ -284,7 +282,7 @@ namespace QuickGraph.Algorithms.Matrix
 
         public DoubleDenseMatrix Transpose()
         {
-            DoubleDenseMatrix m = new DoubleDenseMatrix(this.ColumnCount, this.RowCount);
+            var m = new DoubleDenseMatrix(this.ColumnCount, this.RowCount);
             for (int i = 0; i < this.RowCount; ++i)
                 for (int j = 0; j < this.ColumnCount; ++j)
                     m[j, i] = this[i, j];
