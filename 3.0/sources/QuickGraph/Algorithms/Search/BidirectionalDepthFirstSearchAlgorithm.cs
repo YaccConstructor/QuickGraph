@@ -77,57 +77,65 @@ namespace QuickGraph.Algorithms.Search
         public event VertexEventHandler<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
         {
-            if (InitializeVertex != null)
-                InitializeVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.InitializeVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event VertexEventHandler<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
-            if (StartVertex != null)
-                StartVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.StartVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event VertexEventHandler<TVertex> DiscoverVertex;
         private void OnDiscoverVertex(TVertex v)
         {
-            if (DiscoverVertex != null)
-                DiscoverVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.DiscoverVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
         private void OnExamineEdge(TEdge e)
         {
-            if (ExamineEdge != null)
-                ExamineEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+            var eh = this.ExamineEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
-            if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         public event EdgeEventHandler<TVertex, TEdge> BackEdge;
         private void OnBackEdge(TEdge e)
         {
-            if (BackEdge != null)
-                BackEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+            var eh = this.BackEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         public event EdgeEventHandler<TVertex, TEdge> ForwardOrCrossEdge;
         private void OnForwardOrCrossEdge(TEdge e)
         {
-            if (ForwardOrCrossEdge != null)
-                ForwardOrCrossEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+            var eh = this.ForwardOrCrossEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         public event VertexEventHandler<TVertex> FinishVertex;
         private void OnFinishVertex(TVertex v)
         {
-            if (FinishVertex != null)
-                FinishVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.FinishVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         protected override void InternalCompute()
