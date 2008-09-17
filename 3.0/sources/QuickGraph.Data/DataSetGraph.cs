@@ -10,7 +10,7 @@ namespace QuickGraph.Data
     {
         public DataSet DataSet { get; private set; }
 
-        public DataSetGraph(DataSet dataSet)
+        internal DataSetGraph(DataSet dataSet)
         {
             if (dataSet == null)
                 throw new ArgumentNullException("dataSet");

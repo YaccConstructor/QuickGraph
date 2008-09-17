@@ -5,7 +5,8 @@ using System.Data;
 
 namespace QuickGraph.Data
 {
-    public sealed class DataRelationEdge : IEdge<DataTable>
+    public sealed class DataRelationEdge 
+        : IEdge<DataTable>
     {
         private readonly DataRelation relation;
         public DataRelationEdge(DataRelation relation)
