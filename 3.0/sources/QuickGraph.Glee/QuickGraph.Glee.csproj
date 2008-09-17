@@ -20,6 +20,7 @@
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,6 +55,9 @@
       <HintPath>..\external\Glee\Microsoft.GLEE.GraphViewerGDI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -66,7 +70,7 @@
     <Compile Include="GleeGraphPopulator.cs" />
     <Compile Include="GleeIdentifiableGraphPopulator.cs" />
     <Compile Include="GleeToStringGraphPopulator.cs" />
-    <Compile Include="GleeUtility.cs" />
+    <Compile Include="GleeGraphExtensions.cs" />
     <Compile Include="GleeVertexEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
