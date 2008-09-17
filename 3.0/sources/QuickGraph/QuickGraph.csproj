@@ -158,6 +158,7 @@
     <Compile Include="Collections\IQueue.cs" />
     <Compile Include="EdgeNotFoundException.cs" />
     <Compile Include="GraphContracts.cs" />
+    <Compile Include="GraphExtensions.cs" />
     <Compile Include="HashCodeHelper.cs" />
     <Compile Include="IEdgeSet.cs" />
     <Compile Include="ParallelEdgeEventsArgs.cs" />

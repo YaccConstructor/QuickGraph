@@ -18,6 +18,7 @@
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +44,9 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Threading, Version=1.0.3058.34407, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -131,6 +135,12 @@
     <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndRemoveMinimum.g.cs">
       <DependentUpon>BinaryHeapTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\Store.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Store.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Data\StoreTest.cs" />
     <Compile Include="DegreeTest.cs" />
     <Compile Include="EdgeListGraphFactory.cs" />
     <Compile Include="EdgeListGraphInvariant.cs" />
@@ -183,6 +193,19 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\Store.xsc">
+      <DependentUpon>Store.xsd</DependentUpon>
+    </None>
+    <None Include="Data\Store.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Store.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Data\Store.xss">
+      <DependentUpon>Store.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
