@@ -176,28 +176,16 @@ namespace QuickGraph.Heap
                 return this;
             }
 
-            GleeGraphPopulator<GcType, GcTypeEdge> populator = GleeGraphUtility.Create(this.graph);
-            try
+            var gleeGraph = this.graph.ToGleeGraph(populator_NodeAdded, populator_EdgeAdded);
+            if (viewer == null)
             {
-                populator.NodeAdded += new GleeVertexNodeEventHandler<GcType>(populator_NodeAdded);
-                populator.EdgeAdded += new GleeEdgeEventHandler<GcType, GcTypeEdge>(populator_EdgeAdded);
-                populator.Compute();
-
-                if (viewer == null)
-                {
-                    viewerForm = new Form();
-                    viewer = new GViewer();
-                    viewer.Dock = DockStyle.Fill;
-                    viewerForm.Controls.Add(viewer);
-                }
-                viewer.Graph = populator.GleeGraph;
-                viewerForm.ShowDialog();
+                viewerForm = new Form();
+                viewer = new GViewer();
+                viewer.Dock = DockStyle.Fill;
+                viewerForm.Controls.Add(viewer);
             }
-            finally
-            {
-                populator.NodeAdded -= new GleeVertexNodeEventHandler<GcType>(populator_NodeAdded);
-                populator.EdgeAdded -= new GleeEdgeEventHandler<GcType, GcTypeEdge>(populator_EdgeAdded);
-            }
+            viewer.Graph = gleeGraph;
+            viewerForm.ShowDialog();
 
             return this;
         }

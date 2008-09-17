@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuickGraph.Msagl</RootNamespace>
     <AssemblyName>QuickGraph.Msagl</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -52,6 +52,9 @@
       <HintPath>..\external\MSAGL\Microsoft.Msagl.GraphViewerGDI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -64,7 +67,7 @@
     <Compile Include="MsaglGraphPopulator.cs" />
     <Compile Include="MsaglIdentifiableGraphPopulator.cs" />
     <Compile Include="MsaglToStringGraphPopulator.cs" />
-    <Compile Include="MsaglUtility.cs" />
+    <Compile Include="MsaglGraphExtensions.cs" />
     <Compile Include="MsaglVertexEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
