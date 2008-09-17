@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Glee.GraphViewerGdi;
+using System.Windows.Forms;
 
 namespace QuickGraph.Glee
 {
@@ -89,6 +91,22 @@ namespace QuickGraph.Glee
                 if (edgeAdded != null)
                     populator.EdgeAdded -= edgeAdded;
             }
+        }
+
+        public static void ShowDialog(Microsoft.Glee.Drawing.Graph graph)
+        {
+            if (graph == null)
+                throw new ArgumentNullException("graph");
+
+            var viewerForm = new Form();
+            viewerForm.SuspendLayout();
+            var viewer = new GViewer();
+            viewer.Dock = DockStyle.Fill;
+            viewerForm.Controls.Add(viewer);
+            viewerForm.ResumeLayout();
+
+            viewer.Graph = graph;
+            viewerForm.ShowDialog();
         }
     }
 }
