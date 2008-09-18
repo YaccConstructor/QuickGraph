@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
-    public class UndirectedGraph<TVertex,TEdge> :
+    [Serializable]
+    [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
+    public class UndirectedGraph<TVertex, TEdge> :
         IMutableUndirectedGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {

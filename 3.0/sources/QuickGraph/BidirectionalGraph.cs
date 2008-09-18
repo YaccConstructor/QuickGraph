@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
     [Serializable]
+    [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
     public class BidirectionalGraph<TVertex, TEdge> :
         IVertexAndEdgeListGraph<TVertex, TEdge>,
         IEdgeListAndIncidenceGraph<TVertex, TEdge>,

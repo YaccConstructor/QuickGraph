@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
     [Serializable]
-    public class EdgeListGraph<TVertex,TEdge> :
+    [DebuggerDisplay("EdgeCount = {EdgeCount}")]
+    public class EdgeListGraph<TVertex, TEdge> :
         IEdgeListGraph<TVertex,TEdge>,
         IMutableEdgeListGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>

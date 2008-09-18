@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
     [Serializable]
-    public sealed class UndirectedBidirectionalGraph<TVertex,TEdge> :
+    [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
+    public sealed class UndirectedBidirectionalGraph<TVertex, TEdge> :
         IUndirectedGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {

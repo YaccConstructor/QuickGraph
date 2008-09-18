@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
-    public class ReversedEdge<TVertex,TEdge> : 
+    [DebuggerDisplay("{Source}<-{Target}")]
+    public class ReversedEdge<TVertex, TEdge> : 
         IEdge<TVertex>, 
         IEquatable<ReversedEdge<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>

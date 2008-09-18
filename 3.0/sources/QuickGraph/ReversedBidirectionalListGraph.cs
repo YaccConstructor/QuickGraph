@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
-    public sealed class ReversedBidirectionalGraph<TVertex,TEdge> : 
+    [Serializable]
+    [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
+    public sealed class ReversedBidirectionalGraph<TVertex, TEdge> : 
         IBidirectionalGraph<TVertex,ReversedEdge<TVertex,TEdge>>
         where TEdge : IEdge<TVertex>
     {

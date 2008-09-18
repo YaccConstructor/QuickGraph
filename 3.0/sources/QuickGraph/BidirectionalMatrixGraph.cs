@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
+    [Serializable]
+    [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
     public class BidirectionalMatrixGraph<TEdge> :
         IBidirectionalGraph<int, TEdge>,
         IMutableEdgeListGraph<int, TEdge>
