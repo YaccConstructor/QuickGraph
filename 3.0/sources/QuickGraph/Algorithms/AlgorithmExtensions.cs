@@ -352,7 +352,8 @@ namespace QuickGraph.Algorithms
         /// <returns></returns>
         public static IMutableBidirectionalGraph<TGraph,CondensatedEdge<TVertex, TEdge,TGraph>> 
             Condensate<TVertex, TEdge, TGraph>(
-            this IVertexAndEdgeListGraph<TVertex,TEdge> g)
+            this IVertexAndEdgeListGraph<TVertex,TEdge> g
+            )
             where TEdge : IEdge<TVertex>
             where TGraph : IMutableVertexAndEdgeListGraph<TVertex,TEdge>, new()
         {
@@ -363,6 +364,28 @@ namespace QuickGraph.Algorithms
             condensator.Compute();
             return condensator.CondensatedGraph;
         }
+
+        public static IMutableBidirectionalGraph<TVertex, MergedEdge<TVertex, TEdge>>
+            CondensateEdges<TVertex, TEdge>(
+                this IBidirectionalGraph<TVertex, TEdge> visitedGraph,
+                VertexPredicate<TVertex> vertexPredicate
+                ) where TEdge : IEdge<TVertex>
+        {
+            if (visitedGraph == null)
+                throw new ArgumentNullException("visitedGraph");
+            if (vertexPredicate == null)
+                throw new ArgumentNullException("vertexPredicate");
+
+            var condensated = new BidirectionalGraph<TVertex, MergedEdge<TVertex, TEdge>>();
+            var condensator = new EdgeMergeCondensationGraphAlgorithm<TVertex, TEdge>(
+                visitedGraph,
+                condensated,
+                vertexPredicate);
+            condensator.Compute();
+
+            return condensated;
+        }
+
 
         /// <summary>
         /// Create a collection of odd vertices
