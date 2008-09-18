@@ -224,7 +224,7 @@
     <Compile Include="IBidirectionalGraph.cs" />
     <Compile Include="ICloneableEdge.cs" />
     <Compile Include="IEdge.cs" />
-    <Compile Include="IEdgeFactory.cs" />
+    <Compile Include="EdgeFactory.cs" />
     <Compile Include="IEdgeListAndIncidenceGraph.cs" />
     <Compile Include="IEdgeListGraph.cs" />
     <Compile Include="IGraph.cs" />
