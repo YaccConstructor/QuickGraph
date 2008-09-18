@@ -82,7 +82,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             var cancelManager = this.Services.CancelManager;
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
-                rootVertex = TraversalExtensions.GetFirstVertexOrDefault<TVertex, TEdge>(this.VisitedGraph);
+                rootVertex = this.VisitedGraph.GetFirstVertexOrDefault();
 
             this.Initialize();
 

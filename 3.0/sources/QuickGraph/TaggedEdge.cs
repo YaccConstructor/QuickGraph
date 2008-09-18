@@ -3,7 +3,8 @@
 namespace QuickGraph
 {
 	[Serializable]
-    public class TaggedEdge<TVertex,TTag> : Edge<TVertex>
+    public class TaggedEdge<TVertex,TTag> 
+        : Edge<TVertex>
     {
         private TTag tag;
 

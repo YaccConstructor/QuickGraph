@@ -1,10 +1,15 @@
 using System;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
-    public class IdentifiableEdge<TVertex> : Edge<TVertex>, IIdentifiable
+    [Serializable]
+    [DebuggerDisplay("{ID}:{Source}->{Target}")]
+    public class IdentifiableEdge<TVertex> : 
+        Edge<TVertex>, 
+        IIdentifiable
     {
-        private string id;
+        private readonly string id;
 
         public IdentifiableEdge(string id, TVertex source, TVertex target)
             : base(source, target)

@@ -2,7 +2,7 @@
 
 namespace QuickGraph
 {
-    public struct ReversedEdge<TVertex,TEdge> : 
+    public class ReversedEdge<TVertex,TEdge> : 
         IEdge<TVertex>, 
         IEquatable<ReversedEdge<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>

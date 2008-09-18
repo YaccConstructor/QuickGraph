@@ -213,7 +213,7 @@ namespace QuickGraph.Algorithms
 
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
-                rootVertex = TraversalExtensions.GetFirstVertexOrDefault<TVertex, TEdge>(this.VisitedGraph);
+                rootVertex = this.VisitedGraph.GetFirstVertexOrDefault();
 
             this.currentVertex = rootVertex;
             // start search

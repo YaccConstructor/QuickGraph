@@ -145,6 +145,7 @@
     <Compile Include="EdgeListGraphFactory.cs" />
     <Compile Include="EdgeListGraphInvariant.cs" />
     <Compile Include="GraphConsoleSerializer.cs" />
+    <Compile Include="GraphExtensionsTest.cs" />
     <Compile Include="GraphFactory.cs" />
     <Compile Include="Heap\HeapTest.cs" />
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />

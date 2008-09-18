@@ -1,15 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
-    public class IdentifiableVertex : IIdentifiable
+    [Serializable]
+    [DebuggerDisplay("{ID}")]
+    public class IdentifiableVertex 
+        : IIdentifiable
     {
-        private string id;
+        private readonly string id;
 
         public IdentifiableVertex(string id)
         {
+            GraphContracts.AssumeNotNull(id, "id");
             this.id = id;
         }
 

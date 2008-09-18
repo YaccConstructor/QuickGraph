@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
     [Serializable]
+    [DebuggerDisplay("{Source}->{Target}")]
     public class Edge<TVertex> : IEdge<TVertex>
     {
         private readonly TVertex source;
