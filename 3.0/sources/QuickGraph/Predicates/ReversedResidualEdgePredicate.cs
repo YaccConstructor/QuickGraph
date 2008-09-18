@@ -6,8 +6,8 @@ namespace QuickGraph.Predicates
     public sealed class ReversedResidualEdgePredicate<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private IDictionary<TEdge,double> residualCapacities;
-        private IDictionary<TEdge,TEdge> reversedEdges;
+        private readonly IDictionary<TEdge,double> residualCapacities;
+        private readonly IDictionary<TEdge,TEdge> reversedEdges;
 
         public ReversedResidualEdgePredicate(
             IDictionary<TEdge, double> residualCapacities,

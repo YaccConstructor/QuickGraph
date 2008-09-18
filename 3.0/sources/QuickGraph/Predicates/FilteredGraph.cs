@@ -7,9 +7,9 @@ namespace QuickGraph.Predicates
         where TEdge : IEdge<TVertex>
         where TGraph : IGraph<TVertex,TEdge>
     {
-        private TGraph baseGraph;
-        private EdgePredicate<TVertex,TEdge> edgePredicate;
-        private VertexPredicate<TVertex> vertexPredicate;
+        private readonly TGraph baseGraph;
+        private readonly EdgePredicate<TVertex,TEdge> edgePredicate;
+        private readonly VertexPredicate<TVertex> vertexPredicate;
 
         public FilteredGraph(
             TGraph baseGraph,
@@ -17,12 +17,9 @@ namespace QuickGraph.Predicates
             EdgePredicate<TVertex, TEdge> edgePredicate
             )
         {
-            if (baseGraph == null)
-                throw new ArgumentNullException("baseGraph");
-           if (vertexPredicate == null)
-                throw new ArgumentNullException("vertexPredicate");
-            if (edgePredicate == null)
-                throw new ArgumentNullException("edgePredicate");
+            GraphContracts.AssumeNotNull(baseGraph, "baseGraph");
+            GraphContracts.AssumeNotNull(vertexPredicate, "vertexPredicate");
+            GraphContracts.AssumeNotNull(edgePredicate, "edgePredicate");
             this.baseGraph = baseGraph;
             this.vertexPredicate = vertexPredicate;
             this.edgePredicate = edgePredicate;
