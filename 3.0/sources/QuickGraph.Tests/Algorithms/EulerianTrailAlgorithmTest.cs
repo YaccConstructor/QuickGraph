@@ -28,7 +28,7 @@ namespace QuickGraph.Algorithms
                 return;
 
             EulerianTrailAlgorithm<string, Edge<string>> trail = new EulerianTrailAlgorithm<string, Edge<string>>(g);
-            trail.AddTemporaryEdges(new EdgeFactory<string>());
+            trail.AddTemporaryEdges((s, t) => new Edge<string>(s, t));
             trail.Compute();
             ICollection<ICollection<Edge<string>>> trails = trail.Trails();
             trail.RemoveTemporaryEdges();

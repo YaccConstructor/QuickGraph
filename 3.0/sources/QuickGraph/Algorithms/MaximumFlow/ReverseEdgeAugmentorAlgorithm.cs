@@ -8,22 +8,22 @@ namespace QuickGraph.Algorithms.MaximumFlow
     public sealed class ReversedEdgeAugmentorAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private IMutableVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph;
-        private IEdgeFactory<TVertex, TEdge> edgeFactory;
+        private readonly IMutableVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph;
+        private readonly EdgeFactory<TVertex, TEdge> edgeFactory;
         private IList<TEdge> augmentedEgdes = new List<TEdge>();
         private IDictionary<TEdge,TEdge> reversedEdges = new Dictionary<TEdge,TEdge>();
         private bool augmented = false;
 
         public ReversedEdgeAugmentorAlgorithm(
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
-            IEdgeFactory<TVertex, TEdge> edgeFactory)
+            EdgeFactory<TVertex, TEdge> edgeFactory)
             : this(null, visitedGraph, edgeFactory)
         { }
 
         public ReversedEdgeAugmentorAlgorithm(
             IAlgorithmComponent host,
             IMutableVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph,
-            IEdgeFactory<TVertex,TEdge> edgeFactory)
+            EdgeFactory<TVertex,TEdge> edgeFactory)
         {
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");
@@ -41,7 +41,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IEdgeFactory<TVertex, TEdge> EdgeFactory
+        public EdgeFactory<TVertex, TEdge> EdgeFactory
         {
             get { return this.edgeFactory; }
         }
@@ -119,7 +119,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 }
 
                 // need to create one
-                reversedEdge = this.edgeFactory.CreateEdge(edge.Target, edge.Source);
+                reversedEdge = this.edgeFactory(edge.Target, edge.Source);
                 if (!this.VisitedGraph.AddEdge(reversedEdge))
                     throw new InvalidOperationException("We should not be here");
                 this.augmentedEgdes.Add(reversedEdge);

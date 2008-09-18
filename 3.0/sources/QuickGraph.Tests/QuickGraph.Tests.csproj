@@ -144,7 +144,6 @@
     <Compile Include="DegreeTest.cs" />
     <Compile Include="EdgeListGraphFactory.cs" />
     <Compile Include="EdgeListGraphInvariant.cs" />
-    <Compile Include="FactoryCompilerTest.cs" />
     <Compile Include="GraphConsoleSerializer.cs" />
     <Compile Include="GraphFactory.cs" />
     <Compile Include="Heap\HeapTest.cs" />

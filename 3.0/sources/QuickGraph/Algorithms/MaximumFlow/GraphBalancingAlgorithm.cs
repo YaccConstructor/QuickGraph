@@ -8,8 +8,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
         where TEdge : IEdge<TVertex>
     {
         private IMutableBidirectionalGraph<TVertex,TEdge> visitedGraph;
-        private IVertexFactory<TVertex> vertexFactory;
-        private IEdgeFactory<TVertex,TEdge> edgeFactory;
+        private VertexFactory<TVertex> vertexFactory;
+        private EdgeFactory<TVertex,TEdge> edgeFactory;
 
         private TVertex source;
         private TVertex sink;
@@ -31,22 +31,9 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public GraphBalancerAlgorithm(
             IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph,
             TVertex source,
-            TVertex sink
-            )
-            : this(visitedGraph,
-                source,
-                sink,
-                FactoryCompiler.GetVertexFactory<TVertex>(),
-                FactoryCompiler.GetEdgeFactory<TVertex, TEdge>()
-                )
-        { }
-
-        public GraphBalancerAlgorithm(
-            IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph,
-            TVertex source,
             TVertex sink,
-            IVertexFactory<TVertex> vertexFactory,
-            IEdgeFactory<TVertex,TEdge> edgeFactory
+            VertexFactory<TVertex> vertexFactory,
+            EdgeFactory<TVertex,TEdge> edgeFactory
             )
         {
             if (visitedGraph == null)
@@ -81,8 +68,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
         public GraphBalancerAlgorithm(
             IMutableBidirectionalGraph<TVertex, TEdge> visitedGraph,
-            IVertexFactory<TVertex> vertexFactory,
-            IEdgeFactory<TVertex,TEdge> edgeFactory,
+            VertexFactory<TVertex> vertexFactory,
+            EdgeFactory<TVertex,TEdge> edgeFactory,
             TVertex source,
             TVertex sink,
             IDictionary<TEdge,double> capacities)
@@ -122,12 +109,12 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IVertexFactory<TVertex> VertexFactory
+        public VertexFactory<TVertex> VertexFactory
         {
             get { return this.vertexFactory;}
         }
 
-        public IEdgeFactory<TVertex,TEdge> EdgeFactory
+        public EdgeFactory<TVertex,TEdge> EdgeFactory
         {
             get { return this.edgeFactory;}
         }
@@ -272,22 +259,22 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
             // step 0
             // create new source, new sink
-            this.balancingSource = this.VertexFactory.CreateVertex();
+            this.balancingSource = this.VertexFactory();
             this.visitedGraph.AddVertex(this.balancingSource);
             this.OnBalancingSourceAdded();
 
-            this.balancingSink = this.VertexFactory.CreateVertex();
+            this.balancingSink = this.VertexFactory();
             this.visitedGraph.AddVertex(this.balancingSink);
             this.OnBalancingSinkAdded();
 
             // step 1
-            this.balancingSourceEdge = this.EdgeFactory.CreateEdge(this.BalancingSource, this.Source);
+            this.balancingSourceEdge = this.EdgeFactory(this.BalancingSource, this.Source);
             this.VisitedGraph.AddEdge(this.BalancingSourceEdge);
             this.capacities.Add(this.balancingSourceEdge, double.MaxValue);
             this.preFlow.Add(this.balancingSourceEdge, 0);
             OnEdgeAdded(balancingSourceEdge);
 
-            this.balancingSinkEdge = this.EdgeFactory.CreateEdge(this.Sink, this.BalancingSink);
+            this.balancingSinkEdge = this.EdgeFactory(this.Sink, this.BalancingSink);
             this.VisitedGraph.AddEdge(this.balancingSinkEdge);
             this.capacities.Add(this.balancingSinkEdge, double.MaxValue);
             this.preFlow.Add(this.balancingSinkEdge, 0);
@@ -313,7 +300,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 if (balacingIndex < 0)
                 {
                     // surplus vertex
-                    TEdge edge = this.EdgeFactory.CreateEdge(this.BalancingSource, v);
+                    TEdge edge = this.EdgeFactory(this.BalancingSource, v);
                     this.VisitedGraph.AddEdge(edge);
                     this.surplusEdges.Add(edge);
                     this.surplusVertices.Add(v);
@@ -325,7 +312,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 else
                 {
                     // deficient vertex
-                    TEdge edge = this.EdgeFactory.CreateEdge(v, this.BalancingSink);
+                    TEdge edge = this.EdgeFactory(v, this.BalancingSink);
                     this.deficientEdges.Add(edge);
                     this.deficientVertices.Add(v);
                     this.preFlow.Add(edge, 0);

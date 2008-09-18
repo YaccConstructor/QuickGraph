@@ -89,27 +89,8 @@ namespace QuickGraph.Algorithms
 
         public static void Create<TVertex, TEdge>(
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> g,
-            Random rnd,
-            int vertexCount,
-            int edgeCount,
-            bool selfEdges
-            ) where TEdge : IEdge<TVertex>
-        {
-            Create<TVertex, TEdge>(
-                g,
-                FactoryCompiler.GetVertexFactory<TVertex>(),
-                FactoryCompiler.GetEdgeFactory<TVertex, TEdge>(),
-                rnd,
-                vertexCount,
-                edgeCount,
-                selfEdges
-                );
-        }
-
-        public static void Create<TVertex, TEdge>(
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> g,
-            IVertexFactory<TVertex> vertexFactory,
-            IEdgeFactory<TVertex,TEdge> edgeFactory,
+            VertexFactory<TVertex> vertexFactory,
+            EdgeFactory<TVertex,TEdge> edgeFactory,
             Random rnd,
             int vertexCount,
             int edgeCount,
@@ -127,7 +108,7 @@ namespace QuickGraph.Algorithms
 
 
             for (int i = 0; i < vertexCount; ++i)
-                g.AddVertex( vertexFactory.CreateVertex() );
+                g.AddVertex( vertexFactory() );
 
 
             TVertex a;
@@ -142,7 +123,7 @@ namespace QuickGraph.Algorithms
                 }
                 while (selfEdges == false && a.Equals(b));
 
-                if (g.AddEdge( edgeFactory.CreateEdge(a,b)))
+                if (g.AddEdge( edgeFactory(a,b)))
                       ++j;
             }
         }

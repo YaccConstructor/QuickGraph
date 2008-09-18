@@ -8,18 +8,9 @@ namespace QuickGraph.Algorithms.MaximumFlow
         where TEdge : IEdge<TVertex>
     {
         public AllVerticesGraphAugmentorAlgorithm(
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph
-            )
-            : this(visitedGraph,
-                FactoryCompiler.GetVertexFactory<TVertex>(),
-                FactoryCompiler.GetEdgeFactory<TVertex, TEdge>()
-                )
-        { }
-
-        public AllVerticesGraphAugmentorAlgorithm(
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
-            IVertexFactory<TVertex> vertexFactory,
-            IEdgeFactory<TVertex, TEdge> edgeFactory
+            VertexFactory<TVertex> vertexFactory,
+            EdgeFactory<TVertex, TEdge> edgeFactory
             )
             : this(null, visitedGraph, vertexFactory, edgeFactory)
         { }
@@ -27,8 +18,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public AllVerticesGraphAugmentorAlgorithm(
             IAlgorithmComponent host,
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
-            IVertexFactory<TVertex> vertexFactory,
-            IEdgeFactory<TVertex,TEdge> edgeFactory
+            VertexFactory<TVertex> vertexFactory,
+            EdgeFactory<TVertex,TEdge> edgeFactory
             )
             :base(host, visitedGraph,vertexFactory,edgeFactory)
         {}

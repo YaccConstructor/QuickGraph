@@ -11,8 +11,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
     {
         private bool augmented = false;
         private List<TEdge> augmentedEdges = new List<TEdge>();
-        private IVertexFactory<TVertex> vertexFactory;
-        private IEdgeFactory<TVertex, TEdge> edgeFactory;
+        private readonly VertexFactory<TVertex> vertexFactory;
+        private readonly EdgeFactory<TVertex, TEdge> edgeFactory;
 
         private TVertex superSource = default(TVertex);
         private TVertex superSink = default(TVertex);
@@ -20,8 +20,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
         protected GraphAugmentorAlgorithmBase(
             IAlgorithmComponent host,
             TGraph visitedGraph,
-            IVertexFactory<TVertex> vertexFactory,
-            IEdgeFactory<TVertex,TEdge> edgeFactory
+            VertexFactory<TVertex> vertexFactory,
+            EdgeFactory<TVertex,TEdge> edgeFactory
             )
             :base(host, visitedGraph)
         {
@@ -34,12 +34,12 @@ namespace QuickGraph.Algorithms.MaximumFlow
             this.edgeFactory = edgeFactory;
         }
 
-        public IVertexFactory<TVertex> VertexFactory
+        public VertexFactory<TVertex> VertexFactory
         {
             get { return this.vertexFactory; }
         }
 
-        public IEdgeFactory<TVertex, TEdge> EdgeFactory
+        public EdgeFactory<TVertex, TEdge> EdgeFactory
         {
             get { return this.edgeFactory; }
         }
@@ -91,11 +91,11 @@ namespace QuickGraph.Algorithms.MaximumFlow
             if (this.Augmented)
                 throw new InvalidOperationException("Graph already augmented");
 
-            this.superSource = this.VertexFactory.CreateVertex();
+            this.superSource = this.VertexFactory();
             this.VisitedGraph.AddVertex(this.superSource);
             this.OnSuperSourceAdded(this.SuperSource);
 
-            this.superSink = this.VertexFactory.CreateVertex();
+            this.superSink = this.VertexFactory();
             this.VisitedGraph.AddVertex(this.superSink);
             this.OnSuperSinkAdded(this.SuperSink);
 
@@ -120,7 +120,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
         protected void AddAugmentedEdge(TVertex source, TVertex target)
         {
-            TEdge edge = this.EdgeFactory.CreateEdge(source, target);
+            TEdge edge = this.EdgeFactory(source, target);
             this.augmentedEdges.Add(edge);
             this.VisitedGraph.AddEdge(edge);
             this.OnEdgeAdded(edge);

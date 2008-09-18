@@ -9,23 +9,14 @@ namespace QuickGraph.Algorithms
         AlgorithmBase<IMutableVertexAndEdgeListGraph<TVertex,TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        private IVertexFactory<TVertex> vertexFactory;
-        private IEdgeFactory<TVertex, TEdge> edgeFactory;
+        private readonly VertexFactory<TVertex> vertexFactory;
+        private readonly EdgeFactory<TVertex, TEdge> edgeFactory;
         private IList<TEdge> matchedEdges = new List<TEdge>();
 
         public MaximumBipartiteMatchingAlgorithm(
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph
-            )
-            : this(visitedGraph,
-                FactoryCompiler.GetVertexFactory<TVertex>(),
-                FactoryCompiler.GetEdgeFactory<TVertex, TEdge>()
-                )
-        { }
-
-        public MaximumBipartiteMatchingAlgorithm(
             IMutableVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph,
-            IVertexFactory<TVertex> vertexFactory,
-            IEdgeFactory<TVertex,TEdge> edgeFactory
+            VertexFactory<TVertex> vertexFactory,
+            EdgeFactory<TVertex,TEdge> edgeFactory
             )
             :base(visitedGraph)
         {
@@ -38,12 +29,12 @@ namespace QuickGraph.Algorithms
             this.edgeFactory = edgeFactory;
         }
 
-        public IVertexFactory<TVertex> VertexFactory
+        public VertexFactory<TVertex> VertexFactory
         {
             get { return this.vertexFactory; }
         }
 
-        public IEdgeFactory<TVertex, TEdge> EdgeFactory
+        public EdgeFactory<TVertex, TEdge> EdgeFactory
         {
             get { return this.edgeFactory; }
         }

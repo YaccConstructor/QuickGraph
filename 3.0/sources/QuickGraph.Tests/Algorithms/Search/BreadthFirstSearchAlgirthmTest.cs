@@ -117,23 +117,25 @@ namespace QuickGraph.Algorithms.Search
             this.g = null;
         }
 
-        private class IntVertexFactory : IVertexFactory<int>
+        class IntFactory
         {
-            private int id = 0;
-            public int CreateVertex()
+            int id;
+            public int Next()
             {
-                return id++;
+                return this.id++;
             }
         }
+
 
         [Test]
         public void GraphWithSelfEdgesBig()
         {
             Random rnd = new Random();
             g = new AdjacencyGraph<int, Edge<int>>(true);
+            var next = new IntFactory();
             RandomGraphFactory.Create<int, Edge<int>>(g,
-                new IntVertexFactory(),
-                FactoryCompiler.GetEdgeFactory<int, Edge<int>>(),
+                next.Next,
+                (s, t) => new Edge<int>(s, t),
                 rnd, 5000, 20000, false);
 
             var sv = g.GetFirstVertexOrDefault();
@@ -153,9 +155,10 @@ namespace QuickGraph.Algorithms.Search
             Random rnd = new Random();
 
             g = new AdjacencyGraph<int, Edge<int>>(true);
+            var next = new IntFactory();
             RandomGraphFactory.Create<int, Edge<int>>(g,
-                new IntVertexFactory(),
-                FactoryCompiler.GetEdgeFactory<int,Edge<int>>(),
+                next.Next,
+                (s, t) => new Edge<int>(s, t),
                 rnd, i, j, true);
 
             foreach (var sv in g.Vertices)

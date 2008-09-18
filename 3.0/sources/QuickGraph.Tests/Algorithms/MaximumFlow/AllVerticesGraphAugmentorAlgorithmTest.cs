@@ -14,8 +14,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
         {
             this.augmentor = new AllVerticesGraphAugmentorAlgorithm<string, Edge<string>>(
                 g,
-                new StringVertexFactory(),
-                new EdgeFactory<string>()
+                new StringVertexFactory().CreateVertex,
+                (s,t) => new Edge<string>(s,t)
                 );
         }
 
@@ -83,7 +83,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        private sealed class StringVertexFactory : IVertexFactory<string>
+        private sealed class StringVertexFactory 
         {
             private int id = 0;
 

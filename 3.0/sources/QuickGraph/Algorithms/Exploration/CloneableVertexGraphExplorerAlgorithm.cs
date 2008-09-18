@@ -19,8 +19,8 @@ namespace QuickGraph.Algorithms.Exploration
         private VertexPredicate<TVertex> addVertexPredicate = new AnyVertexPredicate<TVertex>().Test;
         private VertexPredicate<TVertex> exploreVertexPredicate = new AnyVertexPredicate<TVertex>().Test;
         private EdgePredicate<TVertex, TEdge> addEdgePredicate = new AnyEdgePredicate<TVertex, TEdge>().Test;
-        private IPredicate<CloneableVertexGraphExplorerAlgorithm<TVertex, TEdge>> finishedPredicate =
-            new DefaultFinishedPredicate();
+        private Predicate<CloneableVertexGraphExplorerAlgorithm<TVertex, TEdge>> finishedPredicate =
+            new DefaultFinishedPredicate().Test;
         private bool finishedSuccessfully;
 
         public CloneableVertexGraphExplorerAlgorithm(
@@ -59,7 +59,7 @@ namespace QuickGraph.Algorithms.Exploration
             set { this.addEdgePredicate = value; }
         }
 
-        public IPredicate<CloneableVertexGraphExplorerAlgorithm<TVertex, TEdge>> FinishedPredicate
+        public Predicate<CloneableVertexGraphExplorerAlgorithm<TVertex, TEdge>> FinishedPredicate
         {
             get { return this.finishedPredicate; }
             set { this.finishedPredicate = value; }
@@ -119,7 +119,7 @@ namespace QuickGraph.Algorithms.Exploration
             while (unexploredVertices.Count > 0)
             {
                 // are we done yet ?
-                if (!this.FinishedPredicate.Test(this))
+                if (!this.FinishedPredicate(this))
                 {
                     this.finishedSuccessfully = false;
                     return;
@@ -171,8 +171,7 @@ namespace QuickGraph.Algorithms.Exploration
             }
         }
 
-        public sealed class DefaultFinishedPredicate :
-            IPredicate<CloneableVertexGraphExplorerAlgorithm<TVertex, TEdge>>
+        public sealed class DefaultFinishedPredicate
         {
             private int maxVertexCount = 1000;
             private int maxEdgeCount = 1000;

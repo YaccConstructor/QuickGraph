@@ -493,7 +493,7 @@ namespace QuickGraph
             this.edgeCount = 0;
         }
 
-        public void MergeVertex(TVertex v, IEdgeFactory<TVertex, TEdge> edgeFactory)
+        public void MergeVertex(TVertex v, EdgeFactory<TVertex, TEdge> edgeFactory)
         {
             GraphContracts.AssumeInVertexSet(this, v, "v");
             GraphContracts.AssumeNotNull(edgeFactory, "edgeFactory");
@@ -516,12 +516,12 @@ namespace QuickGraph
                     if (v.Equals(target.Target))
                         continue;
                     // we add an new edge
-                    this.AddEdge(edgeFactory.CreateEdge(source.Source, target.Target));
+                    this.AddEdge(edgeFactory(source.Source, target.Target));
                 }
             }
         }
 
-        public void MergeVertexIf(VertexPredicate<TVertex> vertexPredicate, IEdgeFactory<TVertex, TEdge> edgeFactory)
+        public void MergeVertexIf(VertexPredicate<TVertex> vertexPredicate, EdgeFactory<TVertex, TEdge> edgeFactory)
         {
             GraphContracts.AssumeNotNull(vertexPredicate, "vertexPredicate");
             GraphContracts.AssumeNotNull(edgeFactory, "edgeFactory");

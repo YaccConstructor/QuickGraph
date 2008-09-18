@@ -235,7 +235,7 @@ namespace QuickGraph.Algorithms
         /// </summary>
         /// <param name="g"></param>
         /// <returns></returns>
-        public List<TEdge> AddTemporaryEdges(IEdgeFactory<TVertex,TEdge> edgeFactory)
+        public List<TEdge> AddTemporaryEdges(EdgeFactory<TVertex,TEdge> edgeFactory)
         {
             // first gather odd edges.
             var oddVertices = this.VisitedGraph.OddVertices();
@@ -273,7 +273,7 @@ namespace QuickGraph.Algorithms
                         if (foundbe)
                             continue;
                         // add temporary edge
-                        TEdge tempEdge = edgeFactory.CreateEdge(v, u);
+                        TEdge tempEdge = edgeFactory(v, u);
                         if (!this.VisitedGraph.AddEdge(tempEdge))
                             throw new InvalidOperationException();
                         // add to collection
@@ -293,7 +293,7 @@ namespace QuickGraph.Algorithms
                     if (oddVertices.Count < 2)
                         throw new Exception("Eulerian trail failure");
                     TVertex v = oddVertices[1];
-                    TEdge tempEdge = edgeFactory.CreateEdge(u, v);
+                    TEdge tempEdge = edgeFactory(u, v);
                     if (!this.VisitedGraph.AddEdge(tempEdge))
                         throw new InvalidOperationException();
                     // add to collection

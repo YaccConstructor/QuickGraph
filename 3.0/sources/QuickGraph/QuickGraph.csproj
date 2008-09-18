@@ -175,9 +175,7 @@
     <Compile Include="Edge.cs" />
     <Compile Include="EdgeEdgeEventArgs.cs" />
     <Compile Include="EdgeEventArgs.cs" />
-    <Compile Include="EdgeFactory.cs" />
     <Compile Include="EdgeListGraph.cs" />
-    <Compile Include="FactoryCompiler.cs" />
     <Compile Include="IdentifiableEdge.cs" />
     <Compile Include="IdentifiableVertex.cs" />
     <Compile Include="IHierarchy.cs" />
@@ -189,8 +187,6 @@
     <Compile Include="IIndexedImplicitGraph.cs" />
     <Compile Include="IIndexedVertexListGraph.cs" />
     <Compile Include="IMutableUndirectedGraph.cs" />
-    <Compile Include="IntVertexFactory.cs" />
-    <Compile Include="IPredicate.cs" />
     <Compile Include="IUndirectedGraph.cs" />
     <Compile Include="IVertexAndEdgeSet.cs" />
     <Compile Include="IVertexSet.cs" />
@@ -241,7 +237,7 @@
     <Compile Include="IMutableVertexAndEdgeListGraph.cs" />
     <Compile Include="IMutableVertexListGraph.cs" />
     <Compile Include="IVertexAndEdgeListGraph.cs" />
-    <Compile Include="IVertexFactory.cs" />
+    <Compile Include="VertexFactory.cs" />
     <Compile Include="IVertexListGraph.cs" />
     <Compile Include="NamedEdge.cs" />
     <Compile Include="NonAcyclicGraphException.cs" />
