@@ -104,7 +104,6 @@ namespace QuickGraph.Msagl
             viewer.Dock = DockStyle.Fill;
             viewerForm.Controls.Add(viewer);
             viewerForm.ResumeLayout();
-
             viewer.Graph = graph;
             viewerForm.ShowDialog();
         }
