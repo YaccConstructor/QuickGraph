@@ -177,6 +177,10 @@
       <Project>{2DEC7C6E-68DF-47EC-A75E-2C1238986B8E}</Project>
       <Name>QuickGraph.Heap</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QuickGraph.Msagl\QuickGraph.Msagl.csproj">
+      <Project>{7E57B699-79C9-4FDF-89FC-D98BD8DDAFF6}</Project>
+      <Name>QuickGraph.Msagl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuickGraph.Parallels\QuickGraph.Parallels.csproj">
       <Project>{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}</Project>
       <Name>QuickGraph.Parallels</Name>
