@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using QuickGraph.Unit;
 using QuickGraph.Algorithms.Observers;
@@ -17,7 +18,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             RandomWalkAlgorithm<string, Edge<string>> walker =
                 new RandomWalkAlgorithm<string, Edge<string>>(eg.Key, eg.Value);
 
-            walker.Generate(eg.Key.GetFirstVertexOrDefault());
+            walker.Generate(eg.Key.Vertices.FirstOrDefault());
         }
 
         [CombinatorialTest]
@@ -31,7 +32,7 @@ namespace QuickGraph.Algorithms.RandomWalks
 
             EdgeRecorderObserver<string, Edge<string>> vis = new EdgeRecorderObserver<string, Edge<string>>();
             vis.Attach(walker);
-            walker.Generate(eg.Key.GetFirstVertexOrDefault());
+            walker.Generate(eg.Key.Vertices.FirstOrDefault());
             vis.Detach(walker);
         }
 

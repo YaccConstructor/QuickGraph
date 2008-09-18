@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using QuickGraph.Unit;
 
 using QuickGraph.Algorithms.Observers;
@@ -20,7 +21,7 @@ namespace QuickGraph.Algorithms.RandomWalks
                 new RandomWalkAlgorithm<String, Edge<string>>(g);
             walker.EdgeChain = new NormalizedMarkovEdgeChain<string, Edge<string>>();
 
-            string root = g.GetFirstVertexOrDefault();
+            string root = g.Vertices.FirstOrDefault();
             walker.Generate(root);
         }
 
@@ -34,7 +35,7 @@ namespace QuickGraph.Algorithms.RandomWalks
                 new RandomWalkAlgorithm<String, Edge<string>>(g);
             walker.EdgeChain = new NormalizedMarkovEdgeChain<string, Edge<string>>();
 
-            string root = g.GetFirstVertexOrDefault();
+            string root = g.Vertices.FirstOrDefault();
 
             EdgeRecorderObserver<string, Edge<string>> vis = new EdgeRecorderObserver<string, Edge<string>>();
             vis.Attach(walker);

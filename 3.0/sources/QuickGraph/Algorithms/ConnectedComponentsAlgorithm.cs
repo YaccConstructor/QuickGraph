@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Services;
@@ -81,7 +82,7 @@ namespace QuickGraph.Algorithms
                 {
                     TVertex rootVertex;
                     if (!this.TryGetRootVertex(out rootVertex))
-                        rootVertex = this.VisitedGraph.GetFirstVertexOrDefault();
+                        rootVertex = this.VisitedGraph.Vertices.FirstOrDefault();
                     dfs.Compute(rootVertex);
                 }
 

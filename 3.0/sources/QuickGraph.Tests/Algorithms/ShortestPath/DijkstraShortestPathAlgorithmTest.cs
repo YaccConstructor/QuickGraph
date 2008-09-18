@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using QuickGraph.Unit;
@@ -24,7 +25,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 distances.Add(edge, rnd.Next(100));
             var bfs = new DijkstraShortestPathAlgorithm<string, Edge<string>>(g, distances);
 
-            bfs.Compute(g.GetFirstVertexOrDefault());
+            bfs.Compute(g.Vertices.FirstOrDefault());
         }
     }
 

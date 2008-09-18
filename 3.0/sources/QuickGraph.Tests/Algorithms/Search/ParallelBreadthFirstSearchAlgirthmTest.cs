@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using QuickGraph.Unit;
 using QuickGraph.Operations;
@@ -87,7 +88,7 @@ namespace QuickGraph.Algorithms.Search
                 (s,t) => new Edge<int>(s,t),
                 rnd, 5000, 20000, false);
 
-            var sv = g.GetFirstVertexOrDefault();
+            var sv = g.Vertices.FirstOrDefault();
             this.sourceVertex = sv;
             RunBfs();
         }

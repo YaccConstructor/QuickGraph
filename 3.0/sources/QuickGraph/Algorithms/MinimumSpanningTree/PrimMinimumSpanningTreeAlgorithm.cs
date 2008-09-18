@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using QuickGraph.Collections;
@@ -82,7 +83,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             var cancelManager = this.Services.CancelManager;
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
-                rootVertex = this.VisitedGraph.GetFirstVertexOrDefault();
+                rootVertex = this.VisitedGraph.Vertices.FirstOrDefault();
 
             this.Initialize();
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using QuickGraph.Algorithms.Search;
@@ -213,7 +214,7 @@ namespace QuickGraph.Algorithms
 
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
-                rootVertex = this.VisitedGraph.GetFirstVertexOrDefault();
+                rootVertex = this.VisitedGraph.Vertices.FirstOrDefault();
 
             this.currentVertex = rootVertex;
             // start search
