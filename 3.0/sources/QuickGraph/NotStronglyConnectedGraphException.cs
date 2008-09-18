@@ -1,6 +1,9 @@
 ﻿using System;
 namespace QuickGraph
 {
+    /// <summary>
+    /// Exception raised when an algorithm detects a non-strongly connected graph.
+    /// </summary>
     [System.Serializable]
     public class NotStronglyConnectedGraphException : System.ApplicationException
     {

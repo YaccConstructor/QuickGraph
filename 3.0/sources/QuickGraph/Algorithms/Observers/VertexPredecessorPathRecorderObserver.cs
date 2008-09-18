@@ -18,7 +18,6 @@ namespace QuickGraph.Algorithms.Observers
     {
         private readonly IDictionary<TVertex, TEdge> vertexPredecessors;
         private readonly List<TVertex> endPathVertices = new List<TVertex>();
-        private bool recordEndPath = true;
 
         public VertexPredecessorPathRecorderObserver()
             :this(new Dictionary<TVertex,TEdge>())
