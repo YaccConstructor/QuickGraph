@@ -102,11 +102,11 @@ namespace QuickGraph.Tests.Regression {
             edgeCost.Add(j_f, 8);
 
             // We want to use Dijkstra on this graph
-            DijkstraShortestPathAlgorithm<string, Edge<string>> dijkstra = new DijkstraShortestPathAlgorithm<string, Edge<string>>(graph, edgeCost);
+            var dijkstra = new DijkstraShortestPathAlgorithm<string, Edge<string>>(graph, e => edgeCost[e]);
 
             // Attach a Vertex Predecessor Recorder Observer to give us the paths
-            VertexPredecessorRecorderObserver<string, Edge<string>> predecessorObserver = new VertexPredecessorRecorderObserver<string, Edge<string>>();
-            using (ObserverScope.Create<IVertexPredecessorRecorderAlgorithm<string, Edge<string>>>(dijkstra, predecessorObserver)) {
+            var predecessorObserver = new VertexPredecessorRecorderObserver<string, Edge<string>>();
+            using (ObserverScope.Create(dijkstra, predecessorObserver)) {
                 // Run the algorithm with A set to be the source
                 dijkstra.Compute("A");
             }

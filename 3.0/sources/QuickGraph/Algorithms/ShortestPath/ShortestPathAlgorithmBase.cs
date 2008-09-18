@@ -14,21 +14,21 @@ namespace QuickGraph.Algorithms.ShortestPath
     {
         private readonly IDictionary<TVertex, GraphColor> vertexColors;
         private readonly IDictionary<TVertex, double> distances;
-        private readonly IDictionary<TEdge, double> weights;
+        private readonly Func<TEdge, double> weights;
         private readonly IDistanceRelaxer distanceRelaxer;
 
         protected ShortestPathAlgorithmBase(
             IAlgorithmComponent host,
             TGraph visitedGraph,
-            IDictionary<TEdge, double> weights
+            Func<TEdge, double> weights
             )
-            :this(host, visitedGraph, weights, new ShortestDistanceRelaxer())
+            :this(host, visitedGraph, weights, ShortestDistanceRelaxer.Instance)
         {}
 
         protected ShortestPathAlgorithmBase(
             IAlgorithmComponent host,
             TGraph visitedGraph,
-            IDictionary<TEdge, double> weights,
+            Func<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
             :base(host, visitedGraph)
@@ -42,29 +42,6 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.distances = new Dictionary<TVertex, double>();
             this.weights = weights;
             this.distanceRelaxer = distanceRelaxer;
-        }
-
-        public static Dictionary<TEdge, double> UnaryWeightsFromEdgeList(
-            IEdgeSet<TVertex, TEdge> graph)
-        {
-            if (graph == null)
-                throw new ArgumentNullException("graph");
-            Dictionary<TEdge, double> weights = new Dictionary<TEdge, double>();
-            foreach (var e in graph.Edges)
-                weights.Add(e, 1);
-            return weights;
-        }
-
-        public static Dictionary<TEdge, double> UnaryWeightsFromVertexList(
-            IVertexListGraph<TVertex, TEdge> graph)
-        {
-            if (graph == null)
-                throw new ArgumentNullException("graph");
-            var weights = new Dictionary<TEdge, double>(graph.VertexCount * 2);
-            foreach (var v in graph.Vertices)
-                foreach (var e in graph.OutEdges(v))
-                    weights.Add(e, 1);
-            return weights;
         }
 
         public IDictionary<TVertex, GraphColor> VertexColors
@@ -88,7 +65,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        public IDictionary<TEdge, double> Weights
+        public Func<TEdge, double> Weights
         {
             get { return this.weights; }
         }

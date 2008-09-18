@@ -26,7 +26,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public UndirectedDijkstraShortestPathAlgorithm(
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
-            IDictionary<TEdge, double> weights,
+            Func<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
             : this(null, visitedGraph, weights, distanceRelaxer)
@@ -35,7 +35,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         public UndirectedDijkstraShortestPathAlgorithm(
             IAlgorithmComponent host,
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
-            IDictionary<TEdge, double> weights,
+            Func<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
             : base(host, visitedGraph, weights, distanceRelaxer)
@@ -155,7 +155,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             double du = this.Distances[e.Source];
             double dv = this.Distances[e.Target];
-            double we = this.Weights[e];
+            double we = this.Weights(e);
 
             if (Compare(Combine(du, we), dv))
             {

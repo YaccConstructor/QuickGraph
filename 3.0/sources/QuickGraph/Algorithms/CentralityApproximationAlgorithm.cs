@@ -19,7 +19,7 @@ namespace QuickGraph.Algorithms
 
         public CentralityApproximationAlgorithm(
             IVertexListGraph<TVertex, TEdge> visitedGraph,
-            IDictionary<TEdge, double> distances
+            Func<TEdge, double> distances
             )
             :base(visitedGraph)
         {
@@ -28,13 +28,13 @@ namespace QuickGraph.Algorithms
             this.dijkstra = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(
                 this.VisitedGraph,
                 distances,
-                new ShortestDistanceRelaxer()
+                ShortestDistanceRelaxer.Instance
                 );
             this.predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
             this.predecessorRecorder.Attach(this.dijkstra);
         }
 
-        public IDictionary<TEdge, double> Distances
+        public Func<TEdge, double> Distances
         {
             get { return this.dijkstra.Weights; }
         }

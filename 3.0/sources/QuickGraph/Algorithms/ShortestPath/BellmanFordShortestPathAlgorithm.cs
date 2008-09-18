@@ -35,14 +35,14 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public BellmanFordShortestPathAlgorithm(
             IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
-            IDictionary<TEdge, double> weights
+            Func<TEdge, double> weights
             )
-            : this(visitedGraph, weights, new ShortestDistanceRelaxer())
+            : this(visitedGraph, weights, ShortestDistanceRelaxer.Instance)
         { }
 
         public BellmanFordShortestPathAlgorithm(
             IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
-            IDictionary<TEdge, double> weights,
+            Func<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
             : this(null, visitedGraph, weights, distanceRelaxer)
@@ -51,7 +51,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         public BellmanFordShortestPathAlgorithm(
             IAlgorithmComponent host,
             IVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph,
-            IDictionary<TEdge,double> weights,
+            Func<TEdge,double> weights,
             IDistanceRelaxer distanceRelaxer
             )
             :base(host, visitedGraph, weights, distanceRelaxer)
@@ -228,7 +228,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 if (
                     Compare(
                         Combine(
-                            Distances[e.Source], Weights[e]),
+                            Distances[e.Source], Weights(e)),
                             Distances[e.Target]
                         )
                     )
@@ -247,7 +247,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             double du = this.Distances[e.Source];
             double dv = this.Distances[e.Target];
-            double we = this.Weights[e];
+            double we = this.Weights(e);
 
             if (Compare(Combine(du, we), dv))
             {

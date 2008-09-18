@@ -21,10 +21,11 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         private void Search(IVertexAndEdgeListGraph<string,Edge<string>> g, string root)
         {
-            DijkstraShortestPathAlgorithm<string,Edge<string>> algo = new DijkstraShortestPathAlgorithm<string,Edge<string>>(g,
-                DijkstraShortestPathAlgorithm<string,Edge<string>>.UnaryWeightsFromEdgeList(g)
+            var algo = new DijkstraShortestPathAlgorithm<string,Edge<string>>(
+                g,
+                e => 1
                 );
-            VertexPredecessorRecorderObserver<string,Edge<string>> predecessors = new VertexPredecessorRecorderObserver<string,Edge<string>>();
+            var predecessors = new VertexPredecessorRecorderObserver<string,Edge<string>>();
             predecessors.Attach(algo);
             algo.Compute(root);
 

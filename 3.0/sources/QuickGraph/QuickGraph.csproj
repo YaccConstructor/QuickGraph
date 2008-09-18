@@ -52,7 +52,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Threading, Version=1.0.3058.34407, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -69,7 +68,6 @@
     <Compile Include="Algorithms\Condensation\CondensatedEdge.cs" />
     <Compile Include="Algorithms\Condensation\MergedEdge.cs" />
     <Compile Include="Algorithms\ConnectedComponentsAlgorithm.cs" />
-    <Compile Include="Algorithms\Search\ParallelBreadthFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmComponent.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmServices.cs" />
     <Compile Include="Algorithms\IComputation.cs" />
@@ -94,7 +92,6 @@
     <Compile Include="Algorithms\MaximumFlow\GraphAugmentorAlgorithmBase.cs" />
     <Compile Include="Algorithms\MaximumFlow\GraphBalancingAlgorithm.cs" />
     <Compile Include="Algorithms\MaximumFlow\MaximumFlowAlgorithmBase.cs" />
-    <Compile Include="Algorithms\MaximumFlow\MinimumCostMaximumFlowAlgorithm.cs" />
     <Compile Include="Algorithms\MaximumFlow\MultiSourceSinkGraphAugmentorAlgorithm.cs" />
     <Compile Include="Algorithms\MaximumFlow\ReverseEdgeAugmentorAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\PrimMinimumSpanningTreeAlgorithm.cs" />
@@ -154,17 +151,13 @@
     <Compile Include="Algorithms\VertexAdjacencyMatrixBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithm.cs" />
     <Compile Include="Collections\BinaryHeap.cs" />
-    <Compile Include="Collections\ConcurrentQueue.cs" />
     <Compile Include="Collections\IQueue.cs" />
     <Compile Include="EdgeNotFoundException.cs" />
     <Compile Include="GraphContracts.cs" />
     <Compile Include="GraphExtensions.cs" />
     <Compile Include="HashCodeHelper.cs" />
     <Compile Include="IEdgeSet.cs" />
-    <Compile Include="ParallelEdgeEventsArgs.cs" />
-    <Compile Include="ParallelEventArgs.cs" />
-    <Compile Include="ParallelLocalEventArgs.cs" />
-    <Compile Include="ParallelVertexEventArgs.cs" />
+    <Compile Include="ParallelEdgeNotAllowedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BidirectionalGraph.cs" />
     <Compile Include="BidirectionalMatrixGraph.cs" />
@@ -192,7 +185,6 @@
     <Compile Include="IVertexSet.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="NotStronglyConnectedGraphException.cs" />
-    <Compile Include="ParallelEdgeNotAllowedException.cs" />
     <Compile Include="Petri\AllwaysTrueConditionExpression.cs" />
     <Compile Include="Petri\Arc.cs" />
     <Compile Include="Petri\IArc.cs" />

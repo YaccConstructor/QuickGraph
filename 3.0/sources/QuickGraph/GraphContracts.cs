@@ -5,7 +5,10 @@ using System.Diagnostics;
 
 namespace QuickGraph
 {
-    internal static class GraphContracts
+    /// <summary>
+    /// Debug only assertions and assumptions
+    /// </summary>
+    public static class GraphContracts
     {
         [Conditional("DEBUG")]
         public static void Assert(bool value)

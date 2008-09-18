@@ -15,7 +15,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             // is this a dag ?
             bool isDag = g.IsDirectedAcyclicGraph();
 
-            IDistanceRelaxer relaxer = new ShortestDistanceRelaxer();
+            IDistanceRelaxer relaxer = ShortestDistanceRelaxer.Instance;
             List<string> vertices = new List<string>(g.Vertices);
             foreach (string root in vertices)
             {
@@ -59,7 +59,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             // is this a dag ?
             bool isDag = g.IsDirectedAcyclicGraph();
 
-            var relaxer = new CriticalDistanceRelaxer();
+            var relaxer = CriticalDistanceRelaxer.Instance;
             var vertices = new List<string>(g.Vertices);
             foreach (string root in vertices)
             {
@@ -84,15 +84,15 @@ namespace QuickGraph.Algorithms.ShortestPath
             IVertexListGraph<string, Edge<string>> g, 
             string root, IDistanceRelaxer relaxer)
         {
-            DagShortestPathAlgorithm<string, Edge<string>> algo = 
+            var algo = 
                 new DagShortestPathAlgorithm<string, Edge<string>>(
                     g,
-                    DagShortestPathAlgorithm<string, Edge<string>>.UnaryWeightsFromVertexList(g),
+                    e => 1,
                     relaxer
                     );
-            VertexPredecessorRecorderObserver<string, Edge<string>> predecessors = new VertexPredecessorRecorderObserver<string, Edge<string>>();
-            predecessors.Attach(algo);
-            algo.Compute(root);
+            var predecessors = new VertexPredecessorRecorderObserver<string, Edge<string>>();
+            using(ObserverScope.Create(algo, predecessors))
+                algo.Compute(root);
 
             Verify(algo, predecessors);
         }

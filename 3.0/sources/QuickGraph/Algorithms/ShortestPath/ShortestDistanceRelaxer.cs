@@ -4,8 +4,13 @@ using System.Text;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
-    public sealed class ShortestDistanceRelaxer : IDistanceRelaxer
+    public sealed class ShortestDistanceRelaxer 
+        : IDistanceRelaxer
     {
+        private ShortestDistanceRelaxer() { }
+
+        public static readonly ShortestDistanceRelaxer Instance = new ShortestDistanceRelaxer();
+
         public double InitialDistance
         {
             get { return double.MaxValue; }

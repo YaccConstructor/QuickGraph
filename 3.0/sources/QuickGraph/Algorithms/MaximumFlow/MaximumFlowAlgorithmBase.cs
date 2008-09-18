@@ -14,7 +14,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
         where TEdge : IEdge<TVertex>
     {
         private IDictionary<TVertex,TEdge> predecessors;
-        private IDictionary<TEdge,double> capacities;
+        private Func<TEdge,double> capacities;
         private IDictionary<TEdge,double> residualCapacities;
         private IDictionary<TEdge,TEdge> reversedEdges;
         private IDictionary<TVertex,GraphColor> vertexColors;
@@ -25,7 +25,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
         protected MaximumFlowAlgorithm(
             IAlgorithmComponent host,
             IVertexListGraph<TVertex,TEdge> visitedGraph,
-            IDictionary<TEdge, double> capacities,
+            Func<TEdge, double> capacities,
             IDictionary<TEdge,TEdge> reversedEdges
             )
             :base(host, visitedGraph)
@@ -51,7 +51,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IDictionary<TEdge,double> Capacities
+        public Func<TEdge,double> Capacities
         {
             get
             {

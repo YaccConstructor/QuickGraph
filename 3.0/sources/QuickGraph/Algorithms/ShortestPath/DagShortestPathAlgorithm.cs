@@ -27,14 +27,14 @@ namespace QuickGraph.Algorithms.ShortestPath
     {
         public DagShortestPathAlgorithm(
             IVertexListGraph<TVertex, TEdge> g,
-            IDictionary<TEdge, double> weights
+            Func<TEdge, double> weights
             )
-            : this(g, weights, new ShortestDistanceRelaxer())
+            : this(g, weights, ShortestDistanceRelaxer.Instance)
         { }
 
         public DagShortestPathAlgorithm(
             IVertexListGraph<TVertex, TEdge> g,
-            IDictionary<TEdge, double> weights,
+            Func<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
             : this(null, g, weights, distanceRelaxer)
@@ -43,7 +43,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         public DagShortestPathAlgorithm(
             IAlgorithmComponent host,
             IVertexListGraph<TVertex, TEdge> g,
-            IDictionary<TEdge,double> weights,
+            Func<TEdge,double> weights,
             IDistanceRelaxer distanceRelaxer
             )
             :base(host, g,weights, distanceRelaxer)
@@ -158,7 +158,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             double du = this.Distances[e.Source];
             double dv = this.Distances[e.Target];
-            double we = this.Weights[e];
+            double we = this.Weights(e);
 
             if (Compare(Combine(du, we), dv))
             {

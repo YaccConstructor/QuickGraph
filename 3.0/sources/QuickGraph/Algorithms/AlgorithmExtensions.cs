@@ -3,31 +3,35 @@ using System.Collections.Generic;
 using QuickGraph.Algorithms.Condensation;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
+using QuickGraph.Algorithms.ShortestPath;
 
 namespace QuickGraph.Algorithms
 {
     public static class AlgorithmExtensions
     {
-        /// <summary>
-        /// Creates a fills a dictionary 
-        /// containing <paramref name="value"/> for
-        /// each edge in the edge set
-        /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
-        /// <param name="g"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static IDictionary<TEdge, double> ConstantCapacities<TVertex, TEdge>(
-            this IEdgeSet<TVertex, TEdge> g, double value)
+        public static IEnumerable<TEdge> ShortestPath<TVertex, TEdge>(
+            this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> edgeWeight,
+            TVertex source,
+            TVertex target
+            )
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(g, "g");
+            if (visitedGraph == null)
+                throw new ArgumentNullException("visitedGraph");
+            if (edgeWeight == null)
+                throw new ArgumentNullException("edgeWeight");
+            if (source == null)
+                throw new ArgumentNullException("source");
+            if (target == null)
+                throw new ArgumentNullException("target");
 
-            var capacities = new Dictionary<TEdge, double>(g.EdgeCount);
-            foreach (var e in g.Edges)
-                capacities.Add(e, value);
-            return capacities;
+            var algorithm = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeight);
+            var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(algorithm, predecessors))
+                algorithm.Compute(source);
+
+            return predecessors.Path(target);
         }
 
         /// <summary>
