@@ -14,12 +14,6 @@ namespace QuickGraph {
             get { return this.name; }
             set { this.name = value; }
         }
-
-        public sealed class Factory : IIdentifiableVertexFactory<NamedVertex> {
-            public NamedVertex CreateVertex(string id) {
-                return new NamedVertex(id);
-            }
-        }
     }
 
     public class NamedEdge : IdentifiableEdge<NamedVertex> {
@@ -31,12 +25,6 @@ namespace QuickGraph {
         public string Name {
             get { return this.name; }
             set { this.name = value; }
-        }
-
-        public sealed class Factory : IIdentifiableEdgeFactory<NamedVertex, NamedEdge> {
-            public NamedEdge CreateEdge(string id, NamedVertex source, NamedVertex target) {
-                return new NamedEdge(id, source, target);
-            }
         }
     }
 

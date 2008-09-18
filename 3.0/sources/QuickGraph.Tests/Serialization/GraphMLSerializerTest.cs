@@ -19,14 +19,13 @@ namespace QuickGraph.Serialization
         [PexMethod]
         public void RoundTripGraph([PexAssumeNotNull]IMutableVertexAndEdgeListGraph<NamedVertex, NamedEdge> g)
         {
-            GraphMLSerializer<NamedVertex, NamedEdge> serializer = new GraphMLSerializer<NamedVertex, NamedEdge>();
             AdjacencyGraph<NamedVertex, NamedEdge> gd = new AdjacencyGraph<NamedVertex, NamedEdge>();
             string baseLine;
             string output;
 
             using (StringWriter writer = new StringWriter())
             {
-                serializer.Serialize(writer, g);
+                g.SerializeToGraphML(writer);
                 baseLine = writer.ToString();
                 TestConsole.WriteLineBold("Original graph:");
                 Console.WriteLine(writer.ToString());
@@ -34,11 +33,9 @@ namespace QuickGraph.Serialization
 
                 using (XmlTextReader reader = new XmlTextReader(new StringReader(writer.ToString())))
                 {
-                    serializer.Deserialize(
-                        reader,
-                        gd,
-                        new NamedVertex.Factory(),
-                        new NamedEdge.Factory()
+                    gd.DeserializeFromGraphML(reader,
+                        id => new NamedVertex(id),
+                        (id, source, target) => new NamedEdge(id, source, target)
                     );
                 }
             }
@@ -46,7 +43,7 @@ namespace QuickGraph.Serialization
             TestConsole.WriteLineBold("Roundtripped graph:");
             using (StringWriter sw = new StringWriter())
             {
-                serializer.Serialize(sw, gd);
+                gd.SerializeToGraphML(sw);
                 output = sw.ToString();
                 Console.WriteLine(sw.ToString());
             }

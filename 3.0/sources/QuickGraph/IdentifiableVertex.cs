@@ -23,12 +23,4 @@ namespace QuickGraph
             return this.id;
         }
     }
-
-    public sealed class IdentifiableVertexFactory : IIdentifiableVertexFactory<IdentifiableVertex>
-    {
-        public IdentifiableVertex CreateVertex(string id)
-        {
-            return new IdentifiableVertex(id);
-        }
-    }
 }

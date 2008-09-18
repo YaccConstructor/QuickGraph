@@ -84,7 +84,7 @@ namespace QuickGraph.Algorithms.Search
             RandomGraphFactory.Create<int, Edge<int>>(g,
                 new IntVertexFactory(),
                 FactoryCompiler.GetEdgeFactory<int, Edge<int>>(),
-                rnd, 10000, 100000, false);
+                rnd, 5000, 20000, false);
 
             var sv = g.GetFirstVertexOrDefault();
             this.sourceVertex = sv;

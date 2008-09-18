@@ -22,12 +22,4 @@ namespace QuickGraph
             return this.id;
         }
     }
-
-    public sealed class IdentifiableEdgeFactory<TVertex> : IIdentifiableEdgeFactory<TVertex,IdentifiableEdge<TVertex>>
-    {
-        public IdentifiableEdge<TVertex> CreateEdge(string id, TVertex source, TVertex target)
-        {
-            return new IdentifiableEdge<TVertex>(id, source, target);
-        }
-    }
 }

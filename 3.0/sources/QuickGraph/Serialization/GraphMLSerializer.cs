@@ -50,7 +50,7 @@ namespace QuickGraph.Serialization
             XmlReader reader,
             TEdge e);
 
-        private static class DelegateCompiler
+        static class DelegateCompiler
         {
             private static readonly object syncRoot = new object();
             private static WriteVertexAttributesDelegate writeVertexAttributesDelegate;
@@ -414,8 +414,8 @@ namespace QuickGraph.Serialization
         public void Deserialize(
             XmlReader reader,
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
-            IIdentifiableVertexFactory<TVertex> vertexFactory,
-            IIdentifiableEdgeFactory<TVertex, TEdge> edgeFactory)
+            IdentifiableVertexFactory<TVertex> vertexFactory,
+            IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory)
         {
             if (reader == null)
                 throw new ArgumentNullException("reader");
@@ -440,15 +440,15 @@ namespace QuickGraph.Serialization
             private GraphMLSerializer<TVertex, TEdge> serializer;
             private XmlReader reader;
             private IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph;
-            private IIdentifiableVertexFactory<TVertex> vertexFactory;
-            private IIdentifiableEdgeFactory<TVertex, TEdge> edgeFactory;
+            private IdentifiableVertexFactory<TVertex> vertexFactory;
+            private IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory;
 
             public ReaderWorker(
                 GraphMLSerializer<TVertex,TEdge> serializer,
                 XmlReader reader,
                 IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
-                IIdentifiableVertexFactory<TVertex> vertexFactory,
-                IIdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
+                IdentifiableVertexFactory<TVertex> vertexFactory,
+                IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
                 )
             {
                 this.serializer = serializer;
@@ -511,7 +511,7 @@ namespace QuickGraph.Serialization
                             // read id
                             string id = this.ReadAttributeValue("id");
                             // create new vertex
-                            TVertex vertex = vertexFactory.CreateVertex(id);
+                            TVertex vertex = vertexFactory(id);
                             // read data
                             GraphMLSerializer<TVertex, TEdge>.DelegateCompiler.VertexAttributesReader(subReader, vertex);
                             // add to graph
@@ -533,7 +533,7 @@ namespace QuickGraph.Serialization
                             if (!vertices.TryGetValue(targetid, out target))
                                 throw new ArgumentException("Could not find vertex " + targetid);
 
-                            TEdge edge = this.edgeFactory.CreateEdge(id, source, target);
+                            TEdge edge = this.edgeFactory(id, source, target);
 
                             // read data
                             GraphMLSerializer<TVertex, TEdge>.DelegateCompiler.EdgeAttributesReader(subReader, edge);
@@ -553,7 +553,7 @@ namespace QuickGraph.Serialization
             }
         }
 
-        private sealed class WriterWorker
+        class WriterWorker
         {
             private GraphMLSerializer<TVertex, TEdge> serializer;
             private XmlWriter writer;

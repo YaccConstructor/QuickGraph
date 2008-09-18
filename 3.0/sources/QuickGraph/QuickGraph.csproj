@@ -183,8 +183,8 @@
     <Compile Include="IHierarchy.cs" />
     <Compile Include="IHyperEdge.cs" />
     <Compile Include="IIdentifiable.cs" />
-    <Compile Include="IIdentifiableEdgeFactory.cs" />
-    <Compile Include="IIdentifiableVertexFactory.cs" />
+    <Compile Include="IdentifiableEdgeFactory.cs" />
+    <Compile Include="IdentifiableVertexFactory.cs" />
     <Compile Include="IIndexedEnumerable.cs" />
     <Compile Include="IIndexedImplicitGraph.cs" />
     <Compile Include="IIndexedVertexListGraph.cs" />
@@ -255,6 +255,7 @@
     <Compile Include="ReversedEdge.cs" />
     <Compile Include="ReversedBidirectionalListGraph.cs" />
     <Compile Include="RootVertexNotSpecifiedException.cs" />
+    <Compile Include="Serialization\GraphMLExtensions.cs" />
     <Compile Include="Serialization\GraphMLSerializer.cs" />
     <Compile Include="Serialization\SerializationHelper.cs" />
     <Compile Include="Serialization\SerializerBase.cs" />
