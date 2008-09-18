@@ -16,7 +16,7 @@ namespace QuickGraph.Algorithms.Observers
         IObserver<IDistanceRecorderAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        private IDictionary<TVertex, int> distances;
+        private readonly IDictionary<TVertex, int> distances;
 
         public VertexDistanceRecorderObserver()
             :this(new Dictionary<TVertex,int>())
@@ -36,17 +36,13 @@ namespace QuickGraph.Algorithms.Observers
 
         public void Attach(IDistanceRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            if (algorithm == null)
-                throw new ArgumentNullException("algorithm");
-
+            GraphContracts.AssumeNotNull(algorithm, "algorithm");
             algorithm.TreeEdge += new EdgeEventHandler<TVertex, TEdge>(this.TreeEdge);
         }
 
         public void Detach(IDistanceRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            if (algorithm == null)
-                throw new ArgumentNullException("arg");
-
+            GraphContracts.AssumeNotNull(algorithm, "algorithm");
             algorithm.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(this.TreeEdge);
         }
 

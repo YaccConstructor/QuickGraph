@@ -16,7 +16,7 @@ namespace QuickGraph.Algorithms.Observers
         IObserver<IVertexTimeStamperAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        private IList<TVertex> vertices;
+        private readonly IList<TVertex> vertices;
         public VertexRecorderObserver()
             : this(new List<TVertex>())
         { }
@@ -28,7 +28,7 @@ namespace QuickGraph.Algorithms.Observers
             this.vertices = vertices;
         }
 
-        public IList<TVertex> Vertices
+        public IEnumerable<TVertex> Vertices
         {
             get
             {
@@ -38,17 +38,19 @@ namespace QuickGraph.Algorithms.Observers
 
         public void Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
+            GraphContracts.AssumeNotNull(algorithm, "algorithm");
             algorithm.DiscoverVertex += new VertexEventHandler<TVertex>(algorithm_DiscoverVertex);
         }
 
         public void Detach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
+            GraphContracts.AssumeNotNull(algorithm, "algorithm");
             algorithm.DiscoverVertex -= new VertexEventHandler<TVertex>(algorithm_DiscoverVertex);
         }
 
         void algorithm_DiscoverVertex(object sender, VertexEventArgs<TVertex> e)
         {
-            this.Vertices.Add(e.Vertex);
+            this.vertices.Add(e.Vertex);
         }
     }
 }

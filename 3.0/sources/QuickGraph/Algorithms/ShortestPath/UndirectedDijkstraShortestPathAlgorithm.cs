@@ -26,6 +26,12 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public UndirectedDijkstraShortestPathAlgorithm(
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> weights)
+            : this(visitedGraph, weights, ShortestDistanceRelaxer.Instance)
+        { }
+
+        public UndirectedDijkstraShortestPathAlgorithm(
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )

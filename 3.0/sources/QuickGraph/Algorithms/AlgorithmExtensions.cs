@@ -9,31 +9,118 @@ namespace QuickGraph.Algorithms
 {
     public static class AlgorithmExtensions
     {
-        public static IEnumerable<TEdge> ShortestPath<TVertex, TEdge>(
-            this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
-            Func<TEdge, double> edgeWeight,
-            TVertex source,
-            TVertex target
+        public static IEnumerable<TEdge> Path<TVertex, TEdge>(
+            this IDictionary<TVertex, TEdge> predecessors,
+            TVertex v) 
+            where TEdge : IEdge<TVertex>
+        {
+            List<TEdge> path = new List<TEdge>();
+
+            TVertex vc = v;
+            TEdge e;
+            while (predecessors.TryGetValue(vc, out e))
+            {
+                path.Insert(0, e);
+                vc = e.Source;
+            }
+
+            return path;
+        }
+
+        #region shortest paths
+        public static Func<TVertex, IEnumerable<TEdge>> ShortestPathsDijkstra<TVertex, TEdge>(
+            this IUndirectedGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> edgeWeights,
+            TVertex source
             )
             where TEdge : IEdge<TVertex>
         {
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");
-            if (edgeWeight == null)
+            if (edgeWeights == null)
                 throw new ArgumentNullException("edgeWeight");
             if (source == null)
                 throw new ArgumentNullException("source");
-            if (target == null)
-                throw new ArgumentNullException("target");
 
-            var algorithm = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeight);
-            var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algorithm, predecessors))
+            var algorithm = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
+            var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(algorithm, predecessorRecorder))
                 algorithm.Compute(source);
 
-            return predecessors.Path(target);
+            var predecessors = predecessorRecorder.VertexPredecessors;
+            return v => predecessors.Path(v);
         }
 
+        public static Func<TVertex, IEnumerable<TEdge>> ShortestPathsDijkstra<TVertex, TEdge>(
+            this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> edgeWeights,
+            TVertex source
+            )
+            where TEdge : IEdge<TVertex>
+        {
+            if (visitedGraph == null)
+                throw new ArgumentNullException("visitedGraph");
+            if (edgeWeights == null)
+                throw new ArgumentNullException("edgeWeight");
+            if (source == null)
+                throw new ArgumentNullException("source");
+
+            var algorithm = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
+            var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(algorithm, predecessorRecorder))
+                algorithm.Compute(source);
+
+            var predecessors = predecessorRecorder.VertexPredecessors;
+            return v => predecessors.Path(v);
+        }
+
+        public static Func<TVertex, IEnumerable<TEdge>> ShortestPathsBellmanFord<TVertex, TEdge>(
+            this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> edgeWeights,
+            TVertex source
+            )
+            where TEdge : IEdge<TVertex>
+        {
+            if (visitedGraph == null)
+                throw new ArgumentNullException("visitedGraph");
+            if (edgeWeights == null)
+                throw new ArgumentNullException("edgeWeight");
+            if (source == null)
+                throw new ArgumentNullException("source");
+
+            var algorithm = new BellmanFordShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
+            var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(algorithm, predecessorRecorder))
+                algorithm.Compute(source);
+
+            var predecessors = predecessorRecorder.VertexPredecessors;
+            return v => predecessors.Path(v);
+        }
+
+        public static Func<TVertex, IEnumerable<TEdge>> ShortestPathsDag<TVertex, TEdge>(
+            this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> edgeWeights,
+            TVertex source
+            )
+            where TEdge : IEdge<TVertex>
+        {
+            if (visitedGraph == null)
+                throw new ArgumentNullException("visitedGraph");
+            if (edgeWeights == null)
+                throw new ArgumentNullException("edgeWeight");
+            if (source == null)
+                throw new ArgumentNullException("source");
+
+            var algorithm = new DagShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
+            var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(algorithm, predecessorRecorder))
+                algorithm.Compute(source);
+
+            var predecessors = predecessorRecorder.VertexPredecessors;
+            return v => predecessors.Path(v);
+        }
+
+        #endregion
         /// <summary>
         /// Gets the list of sink vertices
         /// </summary>

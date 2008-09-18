@@ -16,8 +16,8 @@ namespace QuickGraph.Algorithms.Observers
         IObserver<IVertexTimeStamperAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        private IDictionary<TVertex, int> discoverTimes;
-        private IDictionary<TVertex, int> finishTimes;
+        private readonly IDictionary<TVertex, int> discoverTimes;
+        private readonly IDictionary<TVertex, int> finishTimes;
         private int currentTime = 0;
 
         public VertexTimeStamperObserver()
@@ -48,12 +48,14 @@ namespace QuickGraph.Algorithms.Observers
 
         public void Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
+            GraphContracts.AssumeNotNull(algorithm, "algorithm");
             algorithm.DiscoverVertex+=new VertexEventHandler<TVertex>(DiscoverVertex);
             algorithm.FinishVertex+=new VertexEventHandler<TVertex>(FinishVertex);
         }
 
         public void Detach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
+            GraphContracts.AssumeNotNull(algorithm, "algorithm");
             algorithm.DiscoverVertex -= new VertexEventHandler<TVertex>(DiscoverVertex);
             algorithm.FinishVertex -= new VertexEventHandler<TVertex>(FinishVertex);
         }

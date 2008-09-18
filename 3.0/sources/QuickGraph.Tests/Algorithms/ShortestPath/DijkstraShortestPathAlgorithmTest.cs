@@ -190,11 +190,9 @@ namespace QuickGraph.Algorithms.ShortestPath
             // Attach a Vertex Predecessor Recorder Observer to give us the paths
             predecessorObserver = new VertexPredecessorRecorderObserver<string, Edge<string>>();
 
-            using (ObserverScope.Create<IVertexPredecessorRecorderAlgorithm<string, Edge<string>>>(algo, predecessorObserver))
-            {
+            using (ObserverScope.Create(algo, predecessorObserver))
                 // Run the algorithm with A set to be the source
                 algo.Compute("A");
-            }
 
             path = new List<string>();
             PopulatePath("E");
