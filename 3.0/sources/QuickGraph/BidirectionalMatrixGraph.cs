@@ -308,6 +308,14 @@ namespace QuickGraph
         #endregion
 
         #region IMutableEdgeListGraph<int,Edge> Members
+        bool IMutableEdgeListGraph<int,TEdge>.AddVerticesAndEdge(TEdge edge)
+        {
+            GraphContracts.AssumeNotNull(edge, "edge");
+            GraphContracts.AssumeInVertexSet(this, edge.Source, "edge.Source");
+            GraphContracts.AssumeInVertexSet(this, edge.Target, "edge.Target");
+
+            return this.AddEdge(edge);
+        }
 
         public bool AddEdge(TEdge edge)
         {

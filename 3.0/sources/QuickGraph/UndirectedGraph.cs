@@ -44,6 +44,14 @@ namespace QuickGraph
             this.adjacentEdges.Add(v, new List<TEdge>());
         }
 
+        private List<TEdge> AddAndReturnEdges(TVertex v)
+        {
+            List<TEdge> edges;
+            if (!this.adjacentEdges.TryGetValue(v, out edges))
+                this.adjacentEdges[v] = edges = new List<TEdge>();
+            return edges;
+        }
+
         public bool RemoveVertex(TVertex v)
         {
             GraphContracts.AssumeNotNull(v, "v");
@@ -155,6 +163,27 @@ namespace QuickGraph
         #endregion
 
         #region IMutableEdgeListGraph<Vertex,Edge> Members
+        public bool AddVerticesAndEdge(TEdge edge)
+        {
+            GraphContracts.AssumeNotNull(edge, "edge");
+
+            var sourceEdges = this.AddAndReturnEdges(edge.Source);
+            var targetEdges = this.AddAndReturnEdges(edge.Target);
+
+            if (!this.AllowParallelEdges)
+            {
+                if (sourceEdges.Contains(edge))
+                    return false;
+            }
+
+            sourceEdges.Add(edge);
+            targetEdges.Add(edge);
+            this.edgeCount++;
+
+            this.OnEdgeAdded(new EdgeEventArgs<TVertex, TEdge>(edge));
+
+            return true;
+        }
 
         public bool AddEdge(TEdge edge)
         {

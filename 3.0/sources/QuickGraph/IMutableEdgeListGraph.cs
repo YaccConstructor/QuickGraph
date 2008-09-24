@@ -8,6 +8,7 @@ namespace QuickGraph
         IEdgeListGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
+        bool AddVerticesAndEdge(TEdge e);
         bool AddEdge(TEdge edge);
         event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
 

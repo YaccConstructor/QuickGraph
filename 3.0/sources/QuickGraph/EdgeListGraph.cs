@@ -73,6 +73,11 @@ namespace QuickGraph
             }
         }
 
+        public bool AddVerticesAndEdge(TEdge edge)
+        {
+            return this.AddEdge(edge);
+        }
+
         public bool AddEdge(TEdge edge)
         {
             GraphContracts.AssumeNotNull(edge, "edge");
