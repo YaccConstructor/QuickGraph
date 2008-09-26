@@ -5,7 +5,8 @@ using QuickGraph;
 
 namespace QuickGraph.Heap
 {
-    public sealed class GcType : IEquatable<GcType>
+    public sealed class GcType 
+        : IEquatable<GcType>
     {
         public readonly int ID;
         public readonly string Name;
@@ -14,7 +15,6 @@ namespace QuickGraph.Heap
         public int Size;
         private int genCount;
         private int genSum;
-
 
         internal GcType(int id, string name)
         {

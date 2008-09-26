@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace QuickGraph.Heap
 {
-    internal struct GcRoot
+    struct GcRoot
     {
         public readonly string Kind;
         public readonly int Address;
@@ -17,7 +17,7 @@ namespace QuickGraph.Heap
         }
     }
 
-    internal struct GcMember
+    struct GcMember
     {
         public readonly GcType Referer;
         public readonly int Address;
@@ -28,7 +28,7 @@ namespace QuickGraph.Heap
         }
     }
 
-    internal abstract class GcHeapXmlReader
+    abstract class GcHeapXmlReader
     {
         public void Read(XmlReader reader)
         {

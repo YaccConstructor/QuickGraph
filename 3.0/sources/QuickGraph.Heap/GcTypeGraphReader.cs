@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using QuickGraph;
 using System.IO;
+using System.Globalization;
 
 namespace QuickGraph.Heap
 {
-    internal sealed class GcTypeGraphReader : GcHeapXmlReader
+    sealed class GcTypeGraphReader 
+        : GcHeapXmlReader
     {
         readonly BidirectionalGraph<GcType, GcTypeEdge> graph = new BidirectionalGraph<GcType, GcTypeEdge>();
         // id -> type
@@ -16,6 +18,11 @@ namespace QuickGraph.Heap
         // adress -> type
         readonly Dictionary<int, GcType> objectTypes = new Dictionary<int, GcType>();
         readonly List<GcMember> unresolvedMembers = new List<GcMember>();
+        // GC heap layout
+        int gen0Start = -1;
+        int gen1Start = -1;
+        int gen2Start = -1;
+        int loStart = -1;
 
         public GcTypeGraphReader()
         {}
@@ -52,6 +59,18 @@ namespace QuickGraph.Heap
                 this.current.Root = this.roots.ContainsKey(address);
 
             this.objectTypes.Add(address, this.current);
+            // updating gen
+            if (gen0Start > -1)
+            {
+                if (address >= gen0Start && address < gen1Start)
+                    this.current.AddObjectGeneration(0);
+                else if (address < gen2Start)
+                    this.current.AddObjectGeneration(1);
+                else if (address < loStart)
+                    this.current.AddObjectGeneration(2);
+                else
+                    this.current.AddObjectGeneration(3);
+            }
         }
 
         protected override void VisitMember(int address)
@@ -95,55 +114,57 @@ namespace QuickGraph.Heap
             this.unresolvedMembers.Clear();
         }
 
-        public void ParseDump(StreamReader reader)
+        public void ParseEEHeap(string content)
         {
-            if (reader == null)
-                throw new ArgumentNullException("reader");
-            while (!reader.EndOfStream)
-                this.ParseDumpLine(reader.ReadLine());
+            /* 0:011> !eeheap -gc
+*********************************************************************
+* Symbols can not be loaded because symbol path is not initialized. *
+*                                                                   *
+* The Symbol Path can be set by:                                    *
+*   using the _NT_SYMBOL_PATH environment variable.                 *
+*   using the -y <symbol_path> argument when starting the debugger. *
+*   using .sympath and .sympath+                                    *
+*********************************************************************
+PDB symbol for mscorwks.dll not loaded
+Number of GC Heaps: 1
+generation 0 starts at 0x01cdc384
+generation 1 starts at 0x01cdc378
+generation 2 starts at 0x01c01000
+ephemeral segment allocation context: none
+ segment    begin allocated     size
+01c00000 01c01000  01e823a8 0x002813a8(2626472)
+Large object heap starts at 0x02c01000
+ segment    begin allocated     size
+02c00000 02c01000  02c07de8 0x00006de8(28136)*/
+            ParseLong(content, "generation 0 starts at 0x", out gen0Start);
+            ParseLong(content, "generation 1 starts at 0x", out gen1Start);
+            ParseLong(content, "generation 2 starts at 0x", out gen2Start);
+            ParseLong(content, "Large object heap starts at 0x", out loStart);
+
+            Console.WriteLine("gen 0: {0:x}", gen0Start);
+            Console.WriteLine("gen 1: {0:x}", gen1Start);
+            Console.WriteLine("gen 2: {0:x}", gen2Start);
+            Console.WriteLine("large objects: {0:x}", loStart);
         }
 
-        private static IEnumerable<string> SplitLine(string line)
+        private static void ParseLong(string content, string prefix, out int value)
         {
-            foreach (string item in line.Split(' '))
+            int index = content.IndexOf(prefix);
+            if (index > -1)
             {
-                string trimmed = item.Trim();
-                if (!String.IsNullOrEmpty(trimmed))
-                    yield return trimmed;
-            }
-        }
-
-        private void ParseDumpLine(string line)
-        {
-            if (line == null)
-                return;
-            string l = line.Trim();
-            if (string.IsNullOrEmpty(l))
-                return;
-
-            // this should contain the address
-            List<string> elements = new List<string>(SplitLine(l));
-            if (!elements[0].ToLowerInvariant().StartsWith("0x"))
-                return;
-            int address;
-            if (!TryParseAddress(elements[0].Substring(2), out address))
-            {
-                Console.WriteLine("failed to parse address {0}", elements[0].Substring(2));
-                return;
+                index = index + prefix.Length;
+                int endIndex = content.IndexOfAny(new char[] {' ', '\n'}, index);
+                if (endIndex > -1)
+                {
+                    var svalue = content.Substring(index, endIndex - index);
+                    Console.WriteLine("{0} -> '{1}'", prefix, svalue);
+                    if (int.TryParse(svalue, System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture, out value))
+                        return;
+                    Console.WriteLine("failed parsing range " + svalue);
+                }
             }
 
-            // element[3] contains the gen
-            int gen;
-            if (!int.TryParse(elements[3], out gen))
-            {
-                Console.WriteLine("failed to parse gen {0}", elements[3]);
-                return;
-            }
-
-            // we can update the object
-            GcType type;
-            if (this.objectTypes.TryGetValue(address, out type))
-                type.AddObjectGeneration(gen);
+            value = -1;
         }
     }
 }

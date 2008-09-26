@@ -29,9 +29,6 @@ namespace QuickGraph.Heap
 
         internal GcTypeHeap(BidirectionalGraph<GcType, GcTypeEdge> graph)
         {
-            if (graph == null)
-                throw new ArgumentNullException("graph");
-
             this.graph = graph;
         }
 
@@ -83,16 +80,29 @@ namespace QuickGraph.Heap
         /// <param name="heapXmlFileName">Name of the heap XML file.</param>
         /// <param name="dumpFileName">Name of the dump file.</param>
         /// <returns></returns>
-        public static GcTypeHeap Load(string heapXmlFileName, string dumpFileName)
+        public static GcTypeHeap Load(string heapXmlFileName, string eeHeapFileName)
         {
             if (String.IsNullOrEmpty(heapXmlFileName))
                 throw new ArgumentNullException("heapXmlFileName");
             if (!File.Exists(heapXmlFileName))
                 throw new FileNotFoundException("could not find heap file", heapXmlFileName);
 
-            Console.WriteLine("loading {0}", heapXmlFileName);
+            int retryCount = 0;
+retry:
+            if (retryCount > 1)
+                throw new Exception("failed to load gcheap");
+            
             GcTypeGraphReader greader = new GcTypeGraphReader();
+            if (!String.IsNullOrEmpty(eeHeapFileName))
+            {
+                Console.WriteLine("loading {0}", eeHeapFileName);
+                if (!File.Exists(eeHeapFileName))
+                    throw new FileNotFoundException("could not find eeheap file", eeHeapFileName);
+                // parse gc heap structure
+                greader.ParseEEHeap(File.ReadAllText(eeHeapFileName));
+            }
 
+            Console.WriteLine("loading {0}", heapXmlFileName);
             try
             {
                 using (XmlReader reader = XmlReader.Create(heapXmlFileName))
@@ -109,20 +119,11 @@ namespace QuickGraph.Heap
                         EscapeXmlAttribute)
                     );
                 // try again
-                greader = new GcTypeGraphReader();
-                using (XmlReader reader = XmlReader.Create(heapXmlFileName))
-                    greader.Read(reader);
+                retryCount++;
+                goto retry;
             }
 
-            if (!String.IsNullOrEmpty(dumpFileName))
-            {
-                if (!File.Exists(dumpFileName))
-                    throw new FileNotFoundException("could not find dump file", dumpFileName);
-                using (StreamReader reader = new StreamReader(File.OpenRead(dumpFileName)))
-                    greader.ParseDump(reader);
-            }
-
-            GcTypeHeap heap = new GcTypeHeap(greader.Graph).RemoveDefault(); ;
+            var heap = new GcTypeHeap(greader.Graph).RemoveDefault(); ;
             Console.WriteLine("heap: {0}", heap);
             return heap;
         }
@@ -210,16 +211,22 @@ namespace QuickGraph.Heap
 
             // root -> other color
             if (args.Vertex.Root)
-                args.Node.Attr.AddStyle(Microsoft.Glee.Drawing.Style.Dashed);
+            {
+                args.Node.Attr.LineWidth = 4;
+                args.Node.Attr.Color = Microsoft.Glee.Drawing.Color.Green;
+                args.Node.Attr.AddStyle(Microsoft.Glee.Drawing.Style.Bold);
+            }
 
             // label
             args.Node.Attr.Label =
-                String.Format("{0}\nc:{1} g:{2:0.0} s:{3}",
+                String.Format("{0}\nc:{1} s:{2}",
                     args.Vertex.Name,
                     args.Vertex.Count,
-                    args.Vertex.Gen,
                     FormatHelper.ToSize(args.Vertex.Size)
                     );
+            var vgen = args.Vertex.Gen;
+            if (vgen > -1)
+                args.Node.Attr.Label += String.Format(" g:{0}", vgen);
         }
         #endregion
 
@@ -304,13 +311,15 @@ namespace QuickGraph.Heap
 
         public GcTypeHeap Merge(int minimumSize)
         {
+            var minimumSizeBytes = minimumSize * 1000;
+            Console.WriteLine("merging type nodes smaller than {0}kb", minimumSize);
             var merged = new BidirectionalGraph<GcType,MergedEdge<GcType,GcTypeEdge>>(false, this.graph.VertexCount);
             var merger = new EdgeMergeCondensationGraphAlgorithm<GcType, GcTypeEdge>(
                 this.graph,
                 merged,
                 delegate(GcType type)
                 {
-                    return type.Size >= minimumSize;
+                    return type.Size >= minimumSizeBytes;
                 });
             merger.Compute();
             var clone = new BidirectionalGraph<GcType, GcTypeEdge>(
