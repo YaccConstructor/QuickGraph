@@ -109,22 +109,6 @@ namespace QuickGraph.Collections
         }
 
         [PexMethod(MaxRuns = 20)]
-        [PexAllowedExceptionFromTypeUnderTest(typeof(ArgumentOutOfRangeException))]
-        public void InsertAndRemoveAtAll<TPriority, TValue>(
-            [PexAssumeUnderTest]BinaryHeap<TPriority, TValue> target,
-            [PexAssumeNotNull] KeyValuePair<TPriority, TValue>[] kvs)
-        {
-            foreach (var kv in kvs)
-                target.Add(kv.Key, kv.Value);
-            var call = PexChoose.FromCall(this);
-            for (int i = target.Count - 1; i > -1; ++i)
-            {
-                target.RemoveAt(call.ValueFromRange(i.ToString(), 0, target.Count - 1));
-                AssertInvariant<TPriority, TValue>(target);
-            }
-        }
-
-        [PexMethod(MaxRuns = 20)]
         public void InsertAndEnumerate<TPriority, TValue>(
             [PexAssumeUnderTest]BinaryHeap<TPriority, TValue> target,
             [PexAssumeNotNull] KeyValuePair<TPriority, TValue>[] kvs)

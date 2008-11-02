@@ -9,18 +9,12 @@ using Microsoft.Pex.Framework;
 namespace QuickGraph.Serialization
 {
     [TestFixture, PexClass]
+    [CurrentFixture]
     public partial class GraphMLSerializerWithArgumentsTest
     {
         public sealed class TestVertex : IIdentifiable
         {
             private string id;
-            private string _string;
-            private int _int;
-            private long _long;
-            private float _float;
-            private double _double;
-            private bool _bool;
-            private object _object;
 
             public TestVertex(
                 string id,
@@ -30,16 +24,16 @@ namespace QuickGraph.Serialization
                 double _double,
                 float _float,
                 bool _bool,
-                object _object)
+                object _object
+                )
             {
                 this.id = id;
-                this._string = _string;
-                this._int = _int;
-                this._long = _long;
-                this._float = _float;
-                this._double = _double;
-                this._bool = _bool;
-                this._object = _object;
+                this.String = _string;
+                this.Int = _int;
+                this.Long = _long;
+                //this.Float = _float;
+                //this.Double = _double;
+                //this.Bool = _bool;
             }
 
             public string ID
@@ -48,47 +42,16 @@ namespace QuickGraph.Serialization
             }
 
             [XmlAttribute("string")]
-            public string String
-            {
-                get { return this._string; }
-            }
+            public string String { get; set; }
             [XmlAttribute("int")]
-            public int Int
-            {
-                get { return this._int; }
-            }
+            public int Int {get;set;}
             [XmlAttribute("long")]
-            public long Long
-            {
-                get { return this._long; }
-            }
-            [XmlAttribute("float")]
-            public float Float
-            {
-                get { return this._float; }
-            }
-            [XmlAttribute("double")]
-            public double Double
-            {
-                get { return this._double; }
-            }
-            [XmlAttribute("object")]
-            public object Object
-            {
-                get { return this._object; }
-            }
+            public long Long {get;set;}
         }
 
         public sealed class TestEdge : Edge<TestVertex>, IIdentifiable
         {
             private string id;
-            private string _string;
-            private int _int;
-            private long _long;
-            private float _float;
-            private double _double;
-            private bool _bool;
-            private object _object;
 
             public TestEdge(
                 TestVertex source,
@@ -104,13 +67,11 @@ namespace QuickGraph.Serialization
                 : base(source, target)
             {
                 this.id = id;
-                this._string = _string;
-                this._int = _int;
-                this._long = _long;
-                this._float = _float;
-                this._double = _double;
-                this._bool = _bool;
-                this._object = _object;
+                this.String = _string;
+                this.Int = _int;
+                this.Long = _long;
+                this.Double = _double;
+                this.Bool = _bool;
             }
 
             public string ID
@@ -118,36 +79,18 @@ namespace QuickGraph.Serialization
                 get { return this.id; }
             }
 
-            [XmlAttribute("string")]
-            public string String
-            {
-                get { return this._string; }
-            }
-            [XmlAttribute("int")]
-            public int Int
-            {
-                get { return this._int; }
-            }
-            [XmlAttribute("long")]
-            public long Long
-            {
-                get { return this._long; }
-            }
-            [XmlAttribute("float")]
-            public float Float
-            {
-                get { return this._float; }
-            }
-            [XmlAttribute("double")]
-            public double Double
-            {
-                get { return this._double; }
-            }
-            [XmlAttribute("object")]
-            public object Object
-            {
-                get { return this._object; }
-            }
+            [XmlAttribute("p_string")]
+            public string String  {get;set;}
+            [XmlAttribute("p_int")]
+            public int Int { get; set; }
+            [XmlAttribute("p_long")]
+            public long Long { get; set; }
+            [XmlAttribute("p_double")]
+            public double Double { get; set; }
+            [XmlAttribute("p_bool")]
+            public bool Bool { get; set; }
+            [XmlAttribute("p_decimal")]
+            public decimal Decimal { get; set; }
         }
 
         public sealed class TestAdjacencyGraph : AdjacencyGraph<TestVertex, TestEdge>

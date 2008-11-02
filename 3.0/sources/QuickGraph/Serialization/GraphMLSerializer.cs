@@ -50,75 +50,20 @@ namespace QuickGraph.Serialization
             XmlReader reader,
             TEdge e);
 
-        static class DelegateCompiler
+        static class ReadDelegateCompiler
         {
-            private static readonly object syncRoot = new object();
-            private static WriteVertexAttributesDelegate writeVertexAttributesDelegate;
-            private static WriteEdgeAttributesDelegate writeEdgeAttributesDelegate;
-            private static ReadVertexAttributesDelegate readVertexAttributesDelegate;
-            private static ReadEdgeAttributesDelegate readEdgeAttributesDelegate;
+            public static readonly ReadVertexAttributesDelegate VertexAttributesReader;
+            public static readonly ReadEdgeAttributesDelegate EdgeAttributesReader;
 
-            public static WriteVertexAttributesDelegate VertexAttributesWriter
+            static ReadDelegateCompiler()
             {
-                get
-                {
-                    lock (syncRoot)
-                    {
-                        if (writeVertexAttributesDelegate == null)
-                            DelegateCompiler.CreateWriteDelegates();
-                        return writeVertexAttributesDelegate;
-                    }
-                }
-            }
-
-            public static WriteEdgeAttributesDelegate EdgeAttributesWriter
-            {
-                get
-                {
-                    lock (syncRoot)
-                    {
-                        if (writeEdgeAttributesDelegate == null)
-                            DelegateCompiler.CreateWriteDelegates();
-                        return writeEdgeAttributesDelegate;
-                    }
-                }
-            }
-
-            public static ReadVertexAttributesDelegate VertexAttributesReader
-            {
-                get
-                {
-                    lock (syncRoot)
-                    {
-                        if (readVertexAttributesDelegate == null)
-                            DelegateCompiler.CreateReadDelegates();
-                        return readVertexAttributesDelegate;
-                    }
-                }
-            }
-
-            public static ReadEdgeAttributesDelegate EdgeAttributesReader
-            {
-                get
-                {
-                    lock (syncRoot)
-                    {
-                        if (readEdgeAttributesDelegate == null)
-                            DelegateCompiler.CreateReadDelegates();
-                        return readEdgeAttributesDelegate;
-                    }
-                }
-            }
-
-            public static void CreateReadDelegates()
-            {
-                readVertexAttributesDelegate =
+                VertexAttributesReader =
                     (ReadVertexAttributesDelegate)CreateReadDelegate(
                     typeof(ReadVertexAttributesDelegate),
                     typeof(TVertex),
                     "id"
                     );
-                readEdgeAttributesDelegate =
+                EdgeAttributesReader =
                     (ReadEdgeAttributesDelegate)CreateReadDelegate(
                     typeof(ReadEdgeAttributesDelegate),
                     typeof(TEdge),
@@ -126,78 +71,233 @@ namespace QuickGraph.Serialization
                     );
             }
 
-            public static void CreateWriteDelegates()
+            static class Metadata
             {
-                writeVertexAttributesDelegate =
+                public static readonly MethodInfo ReadToFollowingMethod =
+                    typeof(XmlReader).GetMethod(
+                        "ReadToFollowing",
+                        BindingFlags.Instance | BindingFlags.Public,
+                        null,
+                        new Type[] { typeof(string) },
+                        null);
+                public static readonly MethodInfo GetAttributeMethod =
+                    typeof(XmlReader).GetMethod(
+                        "GetAttribute",
+                        BindingFlags.Instance | BindingFlags.Public,
+                        null,
+                        new Type[] { typeof(string) },
+                        null);
+                public static readonly MethodInfo StringEqualsMethod =
+                    typeof(string).GetMethod(
+                        "op_Equality",
+                        BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public,
+                        null,
+                        new Type[] { typeof(string), typeof(string) },
+                        null);
+                public static readonly ConstructorInfo ArgumentExceptionCtor =
+                    typeof(ArgumentException).GetConstructor(new Type[] { });
+
+                private static readonly Dictionary<Type, MethodInfo> ReadContentMethods;
+
+                static Metadata()
+                {
+                    ReadContentMethods = new Dictionary<Type, MethodInfo>();
+                    ReadContentMethods.Add(typeof(int), typeof(XmlReader).GetMethod("ReadElementContentAsInt", new Type[] { }));
+                    ReadContentMethods.Add(typeof(double), typeof(XmlReader).GetMethod("ReadElementContentAsDouble", new Type[] { }));
+                    ReadContentMethods.Add(typeof(bool), typeof(XmlReader).GetMethod("ReadElementContentAsBoolean", new Type[] { }));
+                    ReadContentMethods.Add(typeof(DateTime), typeof(XmlReader).GetMethod("ReadElementContentAsDateTime", new Type[] { }));
+                    ReadContentMethods.Add(typeof(Decimal), typeof(XmlReader).GetMethod("ReadElementContentAsDecimal", new Type[] { }));
+                    ReadContentMethods.Add(typeof(long), typeof(XmlReader).GetMethod("ReadElementContentAsLong", new Type[] { }));
+                    ReadContentMethods.Add(typeof(string), typeof(XmlReader).GetMethod("ReadElementContentAsString", new Type[] { }));
+                }
+
+                public static bool TryGetReadContentMethod(Type type, out MethodInfo method)
+                {
+                    GraphContracts.AssumeNotNull(type, "type");
+                    bool result = ReadContentMethods.TryGetValue(type, out method);
+                    GraphContracts.Assert(!result || method != null, type.FullName);
+                    return result;
+                }
+            }
+
+            public static Delegate CreateReadDelegate(
+                Type delegateType,
+                Type elementType,
+                params string[] ignoredAttributes
+                )
+            {
+                GraphContracts.AssumeNotNull(delegateType, "delegateType");
+                GraphContracts.AssumeNotNull(elementType, "elementType");
+
+                var method = new DynamicMethod(
+                    "Read"+elementType.Name,
+                    typeof(void),
+                    new Type[] { typeof(XmlReader), elementType },
+                    elementType.Module
+                    );
+                var gen = method.GetILGenerator();
+
+                LocalBuilder key= gen.DeclareLocal(typeof(string));
+
+                Label start = gen.DefineLabel();
+                Label doWhile = gen.DefineLabel();
+
+                gen.Emit(OpCodes.Br, doWhile);
+                gen.MarkLabel(start);
+                gen.Emit(OpCodes.Ldarg_0);
+                gen.Emit(OpCodes.Ldstr, "key");
+                gen.EmitCall(OpCodes.Callvirt, Metadata.GetAttributeMethod, null);
+                gen.Emit(OpCodes.Stloc_0);
+
+
+                // if (key.Equals("id")) continue;
+                foreach (string ignoredAttribute in ignoredAttributes)
+                {
+                    gen.Emit(OpCodes.Ldloc_0);
+                    gen.Emit(OpCodes.Ldstr, ignoredAttribute);
+                    gen.EmitCall(OpCodes.Call, Metadata.StringEqualsMethod, null);
+                    gen.Emit(OpCodes.Brtrue, doWhile);
+                }
+
+                // we need to create the swicth for each property
+                Label next = gen.DefineLabel();
+                bool first = true;
+                foreach (var kv in SerializationHelper.GetAttributeProperties(elementType))
+                {
+                    if (!first)
+                    {
+                        gen.MarkLabel(next);
+                        next = gen.DefineLabel();
+                    }
+                    first = false;
+
+                    // if (!key.Equals("foo"))
+                    gen.Emit(OpCodes.Ldloc_0);
+                    gen.Emit(OpCodes.Ldstr, kv.Value);
+                    gen.EmitCall(OpCodes.Callvirt, Metadata.StringEqualsMethod,null);
+                    // if false jump to next
+                    gen.Emit(OpCodes.Brfalse, next);
+
+                    // do our stuff
+                    MethodInfo readMethod = null;
+                    if (!Metadata.TryGetReadContentMethod(kv.Key.PropertyType, out readMethod))
+                        throw new ArgumentException(String.Format("Property {0} has a non-supported type",kv.Key.Name));
+
+                    // do we have a set method ?
+                    var setMethod = kv.Key.GetSetMethod();
+                    if (setMethod==null)
+                        throw new ArgumentException(String.Format("Property {0}.{1} has not set method", kv.Key.DeclaringType, kv.Key.Name));
+                    // reader.ReadXXX
+                    gen.Emit(OpCodes.Ldarg_1);
+                    gen.Emit(OpCodes.Ldarg_0);
+                    gen.EmitCall(OpCodes.Callvirt, readMethod, null);
+                    gen.EmitCall(OpCodes.Callvirt, setMethod, null);
+
+                    // jump to do while
+                    gen.Emit(OpCodes.Br, doWhile);
+                }
+
+                // we don't know this parameter.. we throw
+                gen.MarkLabel(next);
+                gen.Emit(OpCodes.Newobj, Metadata.ArgumentExceptionCtor);
+                gen.Emit(OpCodes.Throw);
+
+                gen.MarkLabel(doWhile);
+                gen.Emit(OpCodes.Ldarg_0);
+                gen.Emit(OpCodes.Ldstr, "data");
+                gen.EmitCall(OpCodes.Callvirt, Metadata.ReadToFollowingMethod,null);
+                gen.Emit(OpCodes.Brtrue, start);
+
+                gen.Emit(OpCodes.Ret);
+
+                //let's bake the method
+                return method.CreateDelegate(delegateType);
+            }
+        }
+
+        static class WriteDelegateCompiler
+        {
+            public static readonly WriteVertexAttributesDelegate VertexAttributesWriter;
+            public static readonly WriteEdgeAttributesDelegate EdgeAttributesWriter;
+
+            static WriteDelegateCompiler()
+            {
+                VertexAttributesWriter =
                     (WriteVertexAttributesDelegate)CreateWriteDelegate(
                         typeof(TVertex),
                         typeof(WriteVertexAttributesDelegate));
-                writeEdgeAttributesDelegate =
+                EdgeAttributesWriter =
                     (WriteEdgeAttributesDelegate)CreateWriteDelegate(
                         typeof(TEdge),
                         typeof(WriteEdgeAttributesDelegate)
                         );
             }
 
-            public static Delegate CreateWriteDelegate(Type nodeType, Type delegateType)
+            static class Metadata
             {
-                DynamicMethod method = new DynamicMethod(
-                    "Write"+delegateType.Name + nodeType.Name,
-                    typeof(void),
-                    new Type[] { typeof(XmlWriter), nodeType },
-                    nodeType.Module
-                    );
-                ILGenerator gen = method.GetILGenerator();
-
-                MethodInfo writeStartElement =
+                public static readonly MethodInfo WriteStartElementMethod =
                     typeof(XmlWriter).GetMethod(
                         "WriteStartElement",
                         BindingFlags.Instance | BindingFlags.Public,
                         null,
                         new Type[] { typeof(string) },
                         null);
-                MethodInfo writeEndElement =
+                public static readonly MethodInfo WriteEndElementMethod =
                     typeof(XmlWriter).GetMethod(
                         "WriteEndElement",
                         BindingFlags.Instance | BindingFlags.Public,
                         null,
                         new Type[] { },
                         null);
-                MethodInfo writeString =
+                public static readonly MethodInfo WriteStringMethod =
                     typeof(XmlWriter).GetMethod(
                         "WriteString",
                         BindingFlags.Instance | BindingFlags.Public,
                         null,
                         new Type[] { typeof(string) },
                         null);
-                MethodInfo writeAttributeString =
+                public static readonly MethodInfo WriteAttributeStringMethod =
                     typeof(XmlWriter).GetMethod(
                         "WriteAttributeString",
                         BindingFlags.Instance | BindingFlags.Public,
                         null,
                         new Type[] { typeof(string), typeof(string) },
                         null);
-                MethodInfo toString = typeof(object).GetMethod(
+                public static readonly MethodInfo ToStringMethod = typeof(object).GetMethod(
                             "ToString",
                             BindingFlags.Public | BindingFlags.Instance,
                             null,
                             new Type[] { },
                             null);
+            }
 
-                foreach (KeyValuePair<PropertyInfo, string> kv in SerializationHelper.GetAttributeProperties(nodeType))
+            public static Delegate CreateWriteDelegate(Type nodeType, Type delegateType)
+            {
+                GraphContracts.AssumeNotNull(nodeType, "nodeType");
+                GraphContracts.AssumeNotNull(delegateType, "delegateType");
+
+                var method = new DynamicMethod(
+                    "Write" + delegateType.Name + nodeType.Name,
+                    typeof(void),
+                    new Type[] { typeof(XmlWriter), nodeType },
+                    nodeType.Module
+                    );
+                var gen = method.GetILGenerator();
+
+                foreach (var kv in SerializationHelper.GetAttributeProperties(nodeType))
                 {
                     // for each property of the type,
                     // write it to the xmlwriter (we need to take care of value types, etc...)
                     // writer.WriteStartElement("data")
                     gen.Emit(OpCodes.Ldarg_0);
                     gen.Emit(OpCodes.Ldstr, "data");
-                    gen.EmitCall(OpCodes.Callvirt, writeStartElement, null);
+                    gen.EmitCall(OpCodes.Callvirt, Metadata.WriteStartElementMethod, null);
 
                     // writer.WriteAttributeString("key", name);
                     gen.Emit(OpCodes.Ldarg_0);
                     gen.Emit(OpCodes.Ldstr, "key");
                     gen.Emit(OpCodes.Ldstr, kv.Value);
-                    gen.EmitCall(OpCodes.Callvirt, writeAttributeString, null);
+                    gen.EmitCall(OpCodes.Callvirt, Metadata.WriteAttributeStringMethod, null);
 
 
                     // writer.WriteString(v.xxx);
@@ -224,145 +324,17 @@ namespace QuickGraph.Serialization
                         if (propertyType.IsValueType)
                             gen.Emit(OpCodes.Box, propertyType);
                         gen.Emit(
-                            (toString.IsVirtual) ? OpCodes.Callvirt : OpCodes.Call,
-                            toString);
+                            (Metadata.ToStringMethod.IsVirtual) ? OpCodes.Callvirt : OpCodes.Call,
+                            Metadata.ToStringMethod);
                     }
 
                     // we now have two string on the stack...
-                    gen.EmitCall(OpCodes.Callvirt, writeString, null);
+                    gen.EmitCall(OpCodes.Callvirt, Metadata.WriteStringMethod, null);
 
                     // writer.WriteEndElement()
                     gen.Emit(OpCodes.Ldarg_0);
-                    gen.EmitCall(OpCodes.Callvirt, writeEndElement, null);
+                    gen.EmitCall(OpCodes.Callvirt, Metadata.WriteEndElementMethod, null);
                 }
-
-                gen.Emit(OpCodes.Ret);
-
-                //let's bake the method
-                return method.CreateDelegate(delegateType);
-            }
-
-            public static Delegate CreateReadDelegate(
-                Type delegateType,
-                Type elementType,
-                params string[] ignoredAttributes
-                )
-            {
-                DynamicMethod method = new DynamicMethod(
-                    "Read"+elementType.Name,
-                    typeof(void),
-                    new Type[] { typeof(XmlReader), elementType },
-                    elementType.Module
-                    );
-                ILGenerator gen = method.GetILGenerator();
-
-                MethodInfo readToFollowing =
-                    typeof(XmlReader).GetMethod(
-                        "ReadToFollowing",
-                        BindingFlags.Instance | BindingFlags.Public,
-                        null,
-                        new Type[] { typeof(string) },
-                        null);
-                MethodInfo getAttribute =
-                    typeof(XmlReader).GetMethod(
-                        "GetAttribute",
-                        BindingFlags.Instance | BindingFlags.Public,
-                        null,
-                        new Type[] { typeof(string) },
-                        null);
-                MethodInfo stringEquals =
-                    typeof(string).GetMethod(
-                        "op_Equality",
-                        BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public,
-                        null,
-                        new Type[] { typeof(string), typeof(string) },
-                        null);
-                ConstructorInfo argumentException =
-                    typeof(ArgumentException).GetConstructor(new Type[] { });
-
-
-                // read content as methods
-                Dictionary<Type, MethodInfo> readContentMethods = new Dictionary<Type,MethodInfo>();
-                readContentMethods.Add(typeof(int), typeof(XmlReader).GetMethod("ReadElementContentAsInt", new Type[] { }));
-                readContentMethods.Add(typeof(double), typeof(XmlReader).GetMethod("ReadElementContentAsDouble", new Type[] { }));
-                readContentMethods.Add(typeof(bool), typeof(XmlReader).GetMethod("ReadElementContentAsBoolean", new Type[] { }));
-                readContentMethods.Add(typeof(DateTime), typeof(XmlReader).GetMethod("ReadElementContentAsDateTime", new Type[] { }));
-                readContentMethods.Add(typeof(long), typeof(XmlReader).GetMethod("ReadElementContentAsLong", new Type[] { }));
-                readContentMethods.Add(typeof(string), typeof(XmlReader).GetMethod("ReadElementContentAsString", new Type[] { }));
-
-
-                LocalBuilder key= gen.DeclareLocal(typeof(string));
-
-                Label start = gen.DefineLabel();
-                Label doWhile = gen.DefineLabel();
-
-                gen.Emit(OpCodes.Br_S, doWhile);
-                gen.MarkLabel(start);
-                gen.Emit(OpCodes.Ldarg_0);
-                gen.Emit(OpCodes.Ldstr, "key");
-                gen.EmitCall(OpCodes.Callvirt, getAttribute, null);
-                gen.Emit(OpCodes.Stloc_0);
-
-
-                // if (key.Equals("id")) continue;
-                foreach (string ignoredAttribute in ignoredAttributes)
-                {
-                    gen.Emit(OpCodes.Ldloc_0);
-                    gen.Emit(OpCodes.Ldstr, ignoredAttribute);
-                    gen.EmitCall(OpCodes.Call, stringEquals, null);
-                    gen.Emit(OpCodes.Brtrue_S, doWhile);
-                }
-
-                // we need to create the swicth for each property
-                Label next = gen.DefineLabel();
-                bool first = true;
-                foreach (KeyValuePair<PropertyInfo, string> kv in SerializationHelper.GetAttributeProperties(elementType))
-                {
-                    if (!first)
-                    {
-                        gen.MarkLabel(next);
-                        next = gen.DefineLabel();
-                    }
-                    first = false;
-
-                    // if (!key.Equals("foo"))
-                    gen.Emit(OpCodes.Ldloc_0);
-                    gen.Emit(OpCodes.Ldstr, kv.Value);
-                    gen.EmitCall(OpCodes.Callvirt, stringEquals,null);
-                    // if false jump to next
-                    gen.Emit(OpCodes.Brfalse_S, next);
-
-                    // do our stuff
-                    MethodInfo readMethod = null;
-                    if (!readContentMethods.TryGetValue(kv.Key.PropertyType, out readMethod))
-                        throw new ArgumentException(String.Format("Property {0} has a non-supported type",kv.Key.Name));
-
-                    // do we have a set method ?
-                    MethodInfo setMethod = kv.Key.GetSetMethod();
-                    if (setMethod==null)
-                        throw new ArgumentException(
-                            String.Format("Property {0} is readonly", kv.Key.Name)
-                            );
-                    // reader.ReadXXX
-                    gen.Emit(OpCodes.Ldarg_1);
-                    gen.Emit(OpCodes.Ldarg_0);
-                    gen.EmitCall(OpCodes.Callvirt, readMethod, null);
-                    gen.EmitCall(OpCodes.Callvirt, setMethod, null);
-
-                    // jump to do while
-                    gen.Emit(OpCodes.Br_S, doWhile);
-                }
-
-                // we don't know this parameter.. we throw
-                gen.MarkLabel(next);
-                gen.Emit(OpCodes.Newobj, argumentException);
-                gen.Emit(OpCodes.Throw);
-
-                gen.MarkLabel(doWhile);
-                gen.Emit(OpCodes.Ldarg_0);
-                gen.Emit(OpCodes.Ldstr, "data");
-                gen.EmitCall(OpCodes.Callvirt, readToFollowing,null);
-                gen.Emit(OpCodes.Brtrue_S, start);
 
                 gen.Emit(OpCodes.Ret);
 
@@ -513,7 +485,7 @@ namespace QuickGraph.Serialization
                             // create new vertex
                             TVertex vertex = vertexFactory(id);
                             // read data
-                            GraphMLSerializer<TVertex, TEdge>.DelegateCompiler.VertexAttributesReader(subReader, vertex);
+                            GraphMLSerializer<TVertex, TEdge>.ReadDelegateCompiler.VertexAttributesReader(subReader, vertex);
                             // add to graph
                             this.VisitedGraph.AddVertex(vertex);
                             vertices.Add(vertex.ID, vertex);
@@ -536,7 +508,7 @@ namespace QuickGraph.Serialization
                             TEdge edge = this.edgeFactory(id, source, target);
 
                             // read data
-                            GraphMLSerializer<TVertex, TEdge>.DelegateCompiler.EdgeAttributesReader(subReader, edge);
+                            GraphMLSerializer<TVertex, TEdge>.ReadDelegateCompiler.EdgeAttributesReader(subReader, edge);
 
                             this.VisitedGraph.AddEdge(edge);
                         }
@@ -680,7 +652,7 @@ namespace QuickGraph.Serialization
                 {
                     this.Writer.WriteStartElement("node");
                     this.Writer.WriteAttributeString("id", v.ID);
-                    GraphMLSerializer<TVertex, TEdge>.DelegateCompiler.VertexAttributesWriter(this.Writer, v);
+                    GraphMLSerializer<TVertex, TEdge>.WriteDelegateCompiler.VertexAttributesWriter(this.Writer, v);
                     this.Writer.WriteEndElement();
                 }
             }
@@ -693,7 +665,7 @@ namespace QuickGraph.Serialization
                     this.Writer.WriteAttributeString("id", e.ID);
                     this.Writer.WriteAttributeString("source", e.Source.ID);
                     this.Writer.WriteAttributeString("target", e.Target.ID);
-                    GraphMLSerializer<TVertex, TEdge>.DelegateCompiler.EdgeAttributesWriter(this.Writer, e);
+                    GraphMLSerializer<TVertex, TEdge>.WriteDelegateCompiler.EdgeAttributesWriter(this.Writer, e);
                     this.Writer.WriteEndElement();
                 }
             }

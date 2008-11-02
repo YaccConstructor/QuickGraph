@@ -24,9 +24,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Msagl", "QuickGr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Parallels", "QuickGraph.Parallels\QuickGraph.Parallels.csproj", "{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflector.QuickGraph", "Reflector.QuickGraph\Reflector.QuickGraph.csproj", "{7D06D43B-EE95-4800-874F-9D5330C86D96}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 11
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs03.codeplex.com/
 		SccLocalPath0 = .
@@ -57,6 +59,9 @@ Global
 		SccProjectUniqueName9 = QuickGraph.Parallels\\QuickGraph.Parallels.csproj
 		SccProjectName9 = QuickGraph.Parallels
 		SccLocalPath9 = QuickGraph.Parallels
+		SccProjectUniqueName10 = Reflector.QuickGraph\\Reflector.QuickGraph.csproj
+		SccProjectName10 = Reflector.QuickGraph
+		SccLocalPath10 = Reflector.QuickGraph
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +104,10 @@ Global
 		{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
