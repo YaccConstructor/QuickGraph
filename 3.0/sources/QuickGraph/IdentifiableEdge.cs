@@ -11,9 +11,10 @@ namespace QuickGraph
     {
         private readonly string id;
 
-        public IdentifiableEdge(string id, TVertex source, TVertex target)
+        public IdentifiableEdge(TVertex source, TVertex target, string id)
             : base(source, target)
         {
+            GraphContracts.AssumeNotNull(id, "id");
             this.id = id;
         }
 

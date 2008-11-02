@@ -264,6 +264,7 @@
   <ItemGroup>
     <None Include="quickgraph.snk" />
     <None Include="Diagrams\TraversalInterfaces.cd" />
+    <None Include="Serialization\graphml.xsd" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />

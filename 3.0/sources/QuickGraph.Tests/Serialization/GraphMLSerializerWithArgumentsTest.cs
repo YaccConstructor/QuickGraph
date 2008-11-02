@@ -17,6 +17,12 @@ namespace QuickGraph.Serialization
             private string id;
 
             public TestVertex(
+                string id)
+            {
+                this.id = id;
+            }
+
+            public TestVertex(
                 string id,
                 string _string,
                 int _int,
@@ -25,8 +31,8 @@ namespace QuickGraph.Serialization
                 double _double,
                 bool _bool
                 )
+                :this(id)
             {
-                this.id = id;
                 this.Int = _int;
                 this.Long = _long;
                 this.Bool = _bool;
@@ -61,6 +67,15 @@ namespace QuickGraph.Serialization
             public TestEdge(
                 TestVertex source,
                 TestVertex target,
+                string id)
+                :base(source, target)
+            {
+                this.id = id;
+            }
+
+            public TestEdge(
+                TestVertex source,
+                TestVertex target,
                 string id,
                 string _string,
                 int _int,
@@ -69,9 +84,8 @@ namespace QuickGraph.Serialization
                 double _double,
                 bool _bool
                 )
-                : base(source, target)
+                : this(source, target, id)
             {
-                this.id = id;
                 this.String = _string;
                 this.Int = _int;
                 this.Long = _long;
@@ -125,13 +139,37 @@ namespace QuickGraph.Serialization
         {
             GraphMLSerializer<TestVertex, TestEdge> serializer = new GraphMLSerializer<TestVertex, TestEdge>();
 
-            using (StringWriter writer = new StringWriter())
+            string xml;
+            using (var writer = new StringWriter())
             {
                 serializer.Serialize(writer, g);
-                String xml = writer.ToString();
+                xml = writer.ToString();
                 Console.WriteLine(xml);
                 XmlAssert.IsWellFormedXml(xml);
             }
+
+            TestAdjacencyGraph newg;
+            using (var reader = XmlReader.Create(new StringReader(xml)))
+            {
+                newg = new TestAdjacencyGraph();
+                serializer.Deserialize(
+                    reader,
+                    newg,
+                    id => new TestVertex(id),
+                    (source, target, id) => new TestEdge(source, target, id)
+                    );
+            }
+
+            string newxml;
+            using (var writer = new StringWriter())
+            {
+                serializer.Serialize(writer, newg);
+                newxml = writer.ToString();
+                Console.WriteLine(newxml);
+                XmlAssert.IsWellFormedXml(newxml);
+            }
+
+            Assert.AreEqual(xml, newxml);
         }
 
         [Test]

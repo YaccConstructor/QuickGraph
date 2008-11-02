@@ -18,8 +18,8 @@ namespace QuickGraph {
 
     public class NamedEdge : IdentifiableEdge<NamedVertex> {
         private string name;
-        public NamedEdge(string id, NamedVertex source, NamedVertex target)
-            : base(id, source, target) { }
+        public NamedEdge(NamedVertex source, NamedVertex target, string id)
+            : base(source, target, id) { }
 
         [System.Xml.Serialization.XmlAttribute]
         public string Name {
@@ -124,9 +124,9 @@ namespace QuickGraph {
             foreach(Edge<string> e in g.Edges)
             {
                 NamedEdge edge = new NamedEdge(
-                    count.ToString(),
                     vertices[e.Source],
-                    vertices[e.Target]
+                    vertices[e.Target],
+                    count.ToString()
                     );
                 edge.Name = edge.Source.Name + "->" + edge.Target.Name;
                 cg.AddEdge(edge);

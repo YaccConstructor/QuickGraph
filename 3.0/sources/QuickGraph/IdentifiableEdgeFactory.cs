@@ -4,6 +4,6 @@ using System.Text;
 
 namespace QuickGraph
 {
-    public delegate TEdge IdentifiableEdgeFactory<TVertex, TEdge>(string id, TVertex source, TVertex target)
+    public delegate TEdge IdentifiableEdgeFactory<TVertex, TEdge>(TVertex source, TVertex target, string id)
         where TEdge: IIdentifiable, IEdge<TVertex>;
 }

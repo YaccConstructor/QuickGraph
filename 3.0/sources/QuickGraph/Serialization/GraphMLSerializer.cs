@@ -36,7 +36,7 @@ namespace QuickGraph.Serialization
         where TVertex : IIdentifiable
         where TEdge : IIdentifiable, IEdge<TVertex>
     {
-        #region Attributes
+        #region Compiler
         private delegate void WriteVertexAttributesDelegate(
             XmlWriter writer,
             TVertex v);
@@ -512,7 +512,7 @@ namespace QuickGraph.Serialization
                             if (!vertices.TryGetValue(targetid, out target))
                                 throw new ArgumentException("Could not find vertex " + targetid);
 
-                            TEdge edge = this.edgeFactory(id, source, target);
+                            TEdge edge = this.edgeFactory(source, target, id);
 
                             // read data
                             GraphMLSerializer<TVertex, TEdge>.ReadDelegateCompiler.EdgeAttributesReader(subReader, edge);

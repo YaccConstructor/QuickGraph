@@ -36,7 +36,7 @@ namespace QuickGraph.Serialization
                 {
                     gd.DeserializeFromGraphML(reader,
                         id => new NamedVertex(id),
-                        (id, source, target) => new NamedEdge(id, source, target)
+                        (source, target, id) => new NamedEdge(source, target, id)
                     );
                 }
             }
