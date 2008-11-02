@@ -102,12 +102,11 @@ namespace QuickGraph.Serialization
                 static Metadata()
                 {
                     ReadContentMethods = new Dictionary<Type, MethodInfo>();
-                    ReadContentMethods.Add(typeof(int), typeof(XmlReader).GetMethod("ReadElementContentAsInt", new Type[] { }));
-                    ReadContentMethods.Add(typeof(double), typeof(XmlReader).GetMethod("ReadElementContentAsDouble", new Type[] { }));
                     ReadContentMethods.Add(typeof(bool), typeof(XmlReader).GetMethod("ReadElementContentAsBoolean", new Type[] { }));
-                    ReadContentMethods.Add(typeof(DateTime), typeof(XmlReader).GetMethod("ReadElementContentAsDateTime", new Type[] { }));
-                    ReadContentMethods.Add(typeof(Decimal), typeof(XmlReader).GetMethod("ReadElementContentAsDecimal", new Type[] { }));
+                    ReadContentMethods.Add(typeof(int), typeof(XmlReader).GetMethod("ReadElementContentAsInt", new Type[] { }));
                     ReadContentMethods.Add(typeof(long), typeof(XmlReader).GetMethod("ReadElementContentAsLong", new Type[] { }));
+                    ReadContentMethods.Add(typeof(float), typeof(XmlReader).GetMethod("ReadElementContentAsFloat", new Type[] { }));
+                    ReadContentMethods.Add(typeof(double), typeof(XmlReader).GetMethod("ReadElementContentAsDouble", new Type[] { }));
                     ReadContentMethods.Add(typeof(string), typeof(XmlReader).GetMethod("ReadElementContentAsString", new Type[] { }));
                 }
 
@@ -263,12 +262,38 @@ namespace QuickGraph.Serialization
                         null,
                         new Type[] { typeof(string), typeof(string) },
                         null);
-                public static readonly MethodInfo ToStringMethod = typeof(object).GetMethod(
-                            "ToString",
-                            BindingFlags.Public | BindingFlags.Instance,
-                            null,
-                            new Type[] { },
-                            null);
+                public static readonly MethodInfo WriteStartAttributeMethod =
+                    typeof(XmlWriter).GetMethod(
+                        "WriteStartAttribute",
+                        BindingFlags.Instance | BindingFlags.Public,
+                        null,
+                        new Type[] { typeof(string) },
+                        null);
+                public static readonly MethodInfo WriteEndAttributeMethod =
+                    typeof(XmlWriter).GetMethod(
+                        "WriteEndAttribute",
+                        BindingFlags.Instance | BindingFlags.Public,
+                        null,
+                        new Type[] { },
+                        null);
+                private static readonly Dictionary<Type, MethodInfo> WriteValueMethods = new Dictionary<Type, MethodInfo>();
+
+                static Metadata()
+                {
+                    var writer = typeof(XmlWriter);
+                    WriteValueMethods.Add(typeof(bool), writer.GetMethod("WriteValue", new Type[] { typeof(bool) }));
+                    WriteValueMethods.Add(typeof(int), writer.GetMethod("WriteValue", new Type[] { typeof(int) }));
+                    WriteValueMethods.Add(typeof(long), writer.GetMethod("WriteValue", new Type[] { typeof(long) }));
+                    WriteValueMethods.Add(typeof(float), writer.GetMethod("WriteValue", new Type[] { typeof(float) }));
+                    WriteValueMethods.Add(typeof(double), writer.GetMethod("WriteValue", new Type[] { typeof(double) }));
+                    WriteValueMethods.Add(typeof(string), writer.GetMethod("WriteValue", new Type[] { typeof(string) }));
+                }
+
+                public static bool TryGetWriteValueMethod(Type valueType, out MethodInfo method)
+                {
+                    GraphContracts.AssumeNotNull(valueType, "valueType");
+                    return WriteValueMethods.TryGetValue(valueType, out method);
+                }
             }
 
             public static Delegate CreateWriteDelegate(Type nodeType, Type delegateType)
@@ -286,6 +311,14 @@ namespace QuickGraph.Serialization
 
                 foreach (var kv in SerializationHelper.GetAttributeProperties(nodeType))
                 {
+                    var property = kv.Key;
+                    var getMethod = property.GetGetMethod();
+                    if (getMethod == null)
+                        throw new NotSupportedException(String.Format("Property {0}.{1} has not getter", property.DeclaringType, property.Name));
+                    MethodInfo writeValueMethod;
+                    if (!Metadata.TryGetWriteValueMethod(property.PropertyType, out writeValueMethod))
+                        throw new NotSupportedException(String.Format("Property {0}.{1} type is not supported", property.DeclaringType, property.Name));
+
                     // for each property of the type,
                     // write it to the xmlwriter (we need to take care of value types, etc...)
                     // writer.WriteStartElement("data")
@@ -293,43 +326,17 @@ namespace QuickGraph.Serialization
                     gen.Emit(OpCodes.Ldstr, "data");
                     gen.EmitCall(OpCodes.Callvirt, Metadata.WriteStartElementMethod, null);
 
-                    // writer.WriteAttributeString("key", name);
+                    // writer.WriteStartAttribute("key");
                     gen.Emit(OpCodes.Ldarg_0);
                     gen.Emit(OpCodes.Ldstr, "key");
                     gen.Emit(OpCodes.Ldstr, kv.Value);
                     gen.EmitCall(OpCodes.Callvirt, Metadata.WriteAttributeStringMethod, null);
 
-
-                    // writer.WriteString(v.xxx);
+                    // writer.WriteValue(v.xxx);
                     gen.Emit(OpCodes.Ldarg_0);
-
-                    // we now need to load the vertex and invoke the property
-                    // load vertex
                     gen.Emit(OpCodes.Ldarg_1);
-                    // invoke property
-                    MethodInfo getMethod = kv.Key.GetGetMethod();
-                    gen.EmitCall(
-                        (getMethod.IsVirtual) ? OpCodes.Callvirt : OpCodes.Call,
-                        getMethod,
-                        null);
-
-                    // since XmlWrite takes to string, we need to convert that
-                    // object to a string...
-                    // of course, if it's a string, we don't need to do anything
-                    Type propertyType = kv.Key.PropertyType;
-                    if (propertyType != typeof(string))
-                    {
-                        // if it's a value type, it has to be boxed before 
-                        // invoking ToString
-                        if (propertyType.IsValueType)
-                            gen.Emit(OpCodes.Box, propertyType);
-                        gen.Emit(
-                            (Metadata.ToStringMethod.IsVirtual) ? OpCodes.Callvirt : OpCodes.Call,
-                            Metadata.ToStringMethod);
-                    }
-
-                    // we now have two string on the stack...
-                    gen.EmitCall(OpCodes.Callvirt, Metadata.WriteStringMethod, null);
+                    gen.EmitCall(OpCodes.Callvirt,getMethod,null);
+                    gen.EmitCall(OpCodes.Callvirt, writeValueMethod, null);
 
                     // writer.WriteEndElement()
                     gen.Emit(OpCodes.Ldarg_0);
@@ -629,19 +636,31 @@ namespace QuickGraph.Serialization
                     this.Writer.WriteAttributeString("for", forNode);
                     this.Writer.WriteAttributeString("attr.name", kv.Value);
 
-                    Type propertyType = kv.Key.PropertyType;
-                    if (propertyType == typeof(bool))
-                        this.Writer.WriteAttributeString("attr.type", "boolean");
-                    else if (propertyType == typeof(int))
-                        this.Writer.WriteAttributeString("attr.type", "int");
-                    else if (propertyType == typeof(long))
-                        this.Writer.WriteAttributeString("attr.type", "long");
-                    else if (propertyType == typeof(float))
-                        this.Writer.WriteAttributeString("attr.type", "float");
-                    else if (propertyType == typeof(double))
-                        this.Writer.WriteAttributeString("attr.type", "double");
-                    else
-                        this.Writer.WriteAttributeString("attr.type", "string");
+                    var property = kv.Key;
+                    Type propertyType = property.PropertyType;
+                    switch(Type.GetTypeCode(propertyType))
+                    {
+                        case TypeCode.Boolean:
+                            this.Writer.WriteAttributeString("attr.type", "boolean");
+                            break;
+                        case TypeCode.Int32:
+                            this.Writer.WriteAttributeString("attr.type", "int");
+                            break;
+                        case TypeCode.Int64:
+                            this.Writer.WriteAttributeString("attr.type", "long");
+                            break;
+                        case TypeCode.Single:
+                            this.Writer.WriteAttributeString("attr.type", "float");
+                            break;
+                        case TypeCode.Double:
+                            this.Writer.WriteAttributeString("attr.type", "double");
+                            break;
+                        case TypeCode.String:
+                            this.Writer.WriteAttributeString("attr.type", "string");
+                            break;
+                        default:
+                            throw new NotSupportedException(String.Format("Property type {0}.{1} not supported by the GraphML schema", property.DeclaringType, property.Name));
+                    }
                     this.Writer.WriteEndElement();
                 }
             }

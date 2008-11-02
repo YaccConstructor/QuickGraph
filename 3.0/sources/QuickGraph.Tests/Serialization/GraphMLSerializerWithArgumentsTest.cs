@@ -21,19 +21,18 @@ namespace QuickGraph.Serialization
                 string _string,
                 int _int,
                 long _long,
-                double _double,
                 float _float,
-                bool _bool,
-                object _object
+                double _double,
+                bool _bool
                 )
             {
                 this.id = id;
-                this.String = _string;
                 this.Int = _int;
                 this.Long = _long;
-                //this.Float = _float;
-                //this.Double = _double;
-                //this.Bool = _bool;
+                this.Bool = _bool;
+                this.Float = _float;
+                this.Double = _double;
+                this.String = _string;
             }
 
             public string ID
@@ -41,12 +40,18 @@ namespace QuickGraph.Serialization
                 get { return this.id; }
             }
 
-            [XmlAttribute("string")]
+            [XmlAttribute("v_string")]
             public string String { get; set; }
-            [XmlAttribute("int")]
+            [XmlAttribute("v_int")]
             public int Int {get;set;}
-            [XmlAttribute("long")]
+            [XmlAttribute("v_long")]
             public long Long {get;set;}
+            [XmlAttribute("v_bool")]
+            public bool Bool { get; set; }
+            [XmlAttribute("v_float")]
+            public float Float { get; set; }
+            [XmlAttribute("v_double")]
+            public double Double { get; set; }
         }
 
         public sealed class TestEdge : Edge<TestVertex>, IIdentifiable
@@ -60,16 +65,17 @@ namespace QuickGraph.Serialization
                 string _string,
                 int _int,
                 long _long,
-                double _double,
                 float _float,
-                bool _bool,
-                object _object)
+                double _double,
+                bool _bool
+                )
                 : base(source, target)
             {
                 this.id = id;
                 this.String = _string;
                 this.Int = _int;
                 this.Long = _long;
+                this.Float = _float;
                 this.Double = _double;
                 this.Bool = _bool;
             }
@@ -79,18 +85,18 @@ namespace QuickGraph.Serialization
                 get { return this.id; }
             }
 
-            [XmlAttribute("p_string")]
+            [XmlAttribute("e_string")]
             public string String  {get;set;}
-            [XmlAttribute("p_int")]
+            [XmlAttribute("e_int")]
             public int Int { get; set; }
-            [XmlAttribute("p_long")]
+            [XmlAttribute("e_long")]
             public long Long { get; set; }
-            [XmlAttribute("p_double")]
+            [XmlAttribute("e_double")]
             public double Double { get; set; }
-            [XmlAttribute("p_bool")]
+            [XmlAttribute("e_bool")]
             public bool Bool { get; set; }
-            [XmlAttribute("p_decimal")]
-            public decimal Decimal { get; set; }
+            [XmlAttribute("v_float")]
+            public float Float { get; set; }
         }
 
         public sealed class TestAdjacencyGraph : AdjacencyGraph<TestVertex, TestEdge>
@@ -104,12 +110,11 @@ namespace QuickGraph.Serialization
             TestVertex v = new TestVertex(
                 "v1",
                 "string",
-                1,
-                2,
-                3.0,
-                4.0F,
-                true,
-                new Dummy()
+                10,
+                20,
+                25.0F,
+                30.0,
+                true
                 );
 
             g.AddVertex(v);
@@ -137,23 +142,21 @@ namespace QuickGraph.Serialization
                 TestAdjacencyGraph g = new TestAdjacencyGraph();
                 TestVertex v1 = new TestVertex(
                     "v1",
-                    "string",
-                    1,
-                    2,
-                    3.0,
-                    4.0F,
-                    true,
-                    new Dummy()
+                    "vertex",
+                    10,
+                    20,
+                    25.0F,
+                    30.0,
+                    true
                     );
                 TestVertex v2 = new TestVertex(
                     "v2",
-                    "string2",
-                    5,
-                    6,
-                    7.0,
-                    8.0F,
-                    true,
-                    new Dummy()
+                    "vertex2",
+                    50,
+                    60,
+                    25.0F,
+                    70.0,
+                    false
                     );
 
                 g.AddVertex(v1);
@@ -162,13 +165,12 @@ namespace QuickGraph.Serialization
                 TestEdge edge = new TestEdge(
                     v1,v2,
                     "e1",
-                    "string",
-                    9,
-                    10,
-                    11.0,
-                    12.0F,
-                    true,
-                    new Dummy()
+                    "edge",
+                    90,
+                    100,
+                    25.0F,
+                    110.0,
+                    true
                     );
                 g.AddEdge(edge);
                 VerifySerialization(g);
