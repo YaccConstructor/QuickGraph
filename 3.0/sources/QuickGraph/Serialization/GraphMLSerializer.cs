@@ -223,10 +223,6 @@ namespace QuickGraph.Serialization
                 gen.MarkLabel(doWhile);
                 gen.Emit(OpCodes.Ldarg_0);
                 gen.EmitCall(OpCodes.Call, new Func<XmlReader, bool>(MoveNextData).Method ,null);
-
-//                gen.Emit(OpCodes.Ldstr, "data");
-  //              gen.Emit(OpCodes.Ldstr, GraphMLNamespace);
-    //            gen.EmitCall(OpCodes.Callvirt, Metadata.ReadToFollowingMethod,null);
                 gen.Emit(OpCodes.Brtrue, start);
 
                 gen.Emit(OpCodes.Ret);
@@ -614,7 +610,7 @@ namespace QuickGraph.Serialization
                     );
                 this.Writer.WriteAttributeString("parse.nodes", this.VisitedGraph.VertexCount.ToString());
                 this.Writer.WriteAttributeString("parse.edges", this.VisitedGraph.EdgeCount.ToString());
-                this.Writer.WriteAttributeString("parse.order", "nodefirst");
+                this.Writer.WriteAttributeString("parse.order", "nodesfirst");
                 this.Writer.WriteAttributeString("parse.nodeids", "free");
                 this.Writer.WriteAttributeString("parse.edgeids", "free");
             }

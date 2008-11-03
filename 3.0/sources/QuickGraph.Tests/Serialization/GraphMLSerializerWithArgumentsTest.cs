@@ -191,7 +191,7 @@ namespace QuickGraph.Serialization
             public double Double { get; set; }
             [XmlAttribute("e_bool")]
             public bool Bool { get; set; }
-            [XmlAttribute("v_float")]
+            [XmlAttribute("e_float")]
             public float Float { get; set; }
         }
 
@@ -225,19 +225,19 @@ namespace QuickGraph.Serialization
             using (var writer = new StringWriter())
             {
                 using (var xwriter = XmlWriter.Create(writer))
-                    serializer.Serialize(xwriter, g);
+                    g.SerializeToGraphML(xwriter);
+
                 xml = writer.ToString();
                 Console.WriteLine(xml);
                 XmlAssert.IsWellFormedXml(xml);
             }
 
             TestAdjacencyGraph newg;
-            using (var reader = XmlReader.Create(new StringReader(xml)))
+            using (var reader = new StringReader(xml))
             {
                 newg = new TestAdjacencyGraph();
-                serializer.Deserialize(
+                newg.DeserializeAndValidateFromGraphML(
                     reader,
-                    newg,
                     id => new TestVertex(id),
                     (source, target, id) => new TestEdge(source, target, id)
                     );
