@@ -6,6 +6,7 @@ using System.Text;
 using System.Reflection;
 using System.Xml.Serialization;
 using System.Reflection.Emit;
+using System.Diagnostics;
 
 namespace QuickGraph.Serialization
 {
@@ -36,6 +37,8 @@ namespace QuickGraph.Serialization
         where TVertex : IIdentifiable
         where TEdge : IIdentifiable, IEdge<TVertex>
     {
+        public const string GraphMLNamespace = "http://graphml.graphdrawing.org/xmlns";
+
         #region Compiler
         private delegate void WriteVertexAttributesDelegate(
             XmlWriter writer,
@@ -49,6 +52,15 @@ namespace QuickGraph.Serialization
         private delegate void ReadEdgeAttributesDelegate(
             XmlReader reader,
             TEdge e);
+
+        public static bool MoveNextData(XmlReader reader)
+        {
+            GraphContracts.AssumeNotNull(reader, "reader");
+            return
+                reader.NodeType == XmlNodeType.Element &&
+                reader.Name == "data" &&
+                reader.NamespaceURI == GraphMLNamespace;
+        }
 
         static class ReadDelegateCompiler
         {
@@ -78,7 +90,7 @@ namespace QuickGraph.Serialization
                         "ReadToFollowing",
                         BindingFlags.Instance | BindingFlags.Public,
                         null,
-                        new Type[] { typeof(string) },
+                        new Type[] { typeof(string), typeof(string) },
                         null);
                 public static readonly MethodInfo GetAttributeMethod =
                     typeof(XmlReader).GetMethod(
@@ -87,6 +99,10 @@ namespace QuickGraph.Serialization
                         null,
                         new Type[] { typeof(string) },
                         null);
+                public static readonly PropertyInfo NameProperty =
+                    typeof(XmlReader).GetProperty("Name");
+                public static readonly PropertyInfo NamespaceUriProperty =
+                    typeof(XmlReader).GetProperty("NamespaceUri");
                 public static readonly MethodInfo StringEqualsMethod =
                     typeof(string).GetMethod(
                         "op_Equality",
@@ -95,19 +111,19 @@ namespace QuickGraph.Serialization
                         new Type[] { typeof(string), typeof(string) },
                         null);
                 public static readonly ConstructorInfo ArgumentExceptionCtor =
-                    typeof(ArgumentException).GetConstructor(new Type[] { });
+                    typeof(ArgumentException).GetConstructor(new Type[] { typeof(string) });
 
                 private static readonly Dictionary<Type, MethodInfo> ReadContentMethods;
 
                 static Metadata()
                 {
                     ReadContentMethods = new Dictionary<Type, MethodInfo>();
-                    ReadContentMethods.Add(typeof(bool), typeof(XmlReader).GetMethod("ReadElementContentAsBoolean", new Type[] { }));
-                    ReadContentMethods.Add(typeof(int), typeof(XmlReader).GetMethod("ReadElementContentAsInt", new Type[] { }));
-                    ReadContentMethods.Add(typeof(long), typeof(XmlReader).GetMethod("ReadElementContentAsLong", new Type[] { }));
-                    ReadContentMethods.Add(typeof(float), typeof(XmlReader).GetMethod("ReadElementContentAsFloat", new Type[] { }));
-                    ReadContentMethods.Add(typeof(double), typeof(XmlReader).GetMethod("ReadElementContentAsDouble", new Type[] { }));
-                    ReadContentMethods.Add(typeof(string), typeof(XmlReader).GetMethod("ReadElementContentAsString", new Type[] { }));
+                    ReadContentMethods.Add(typeof(bool), typeof(XmlReader).GetMethod("ReadElementContentAsBoolean", new Type[] { typeof(string), typeof(string) }));
+                    ReadContentMethods.Add(typeof(int), typeof(XmlReader).GetMethod("ReadElementContentAsInt", new Type[] { typeof(string), typeof(string) }));
+                    ReadContentMethods.Add(typeof(long), typeof(XmlReader).GetMethod("ReadElementContentAsLong", new Type[] { typeof(string), typeof(string) }));
+                    ReadContentMethods.Add(typeof(float), typeof(XmlReader).GetMethod("ReadElementContentAsFloat", new Type[] { typeof(string), typeof(string) }));
+                    ReadContentMethods.Add(typeof(double), typeof(XmlReader).GetMethod("ReadElementContentAsDouble", new Type[] { typeof(string), typeof(string) }));
+                    ReadContentMethods.Add(typeof(string), typeof(XmlReader).GetMethod("ReadElementContentAsString", new Type[] { typeof(string), typeof(string) }));
                 }
 
                 public static bool TryGetReadContentMethod(Type type, out MethodInfo method)
@@ -143,13 +159,13 @@ namespace QuickGraph.Serialization
 
                 gen.Emit(OpCodes.Br, doWhile);
                 gen.MarkLabel(start);
+
                 gen.Emit(OpCodes.Ldarg_0);
                 gen.Emit(OpCodes.Ldstr, "key");
                 gen.EmitCall(OpCodes.Callvirt, Metadata.GetAttributeMethod, null);
                 gen.Emit(OpCodes.Stloc_0);
 
-
-                // if (key.Equals("id")) continue;
+                // if (String.Equals(key, "id")) continue;
                 foreach (string ignoredAttribute in ignoredAttributes)
                 {
                     gen.Emit(OpCodes.Ldloc_0);
@@ -173,7 +189,7 @@ namespace QuickGraph.Serialization
                     // if (!key.Equals("foo"))
                     gen.Emit(OpCodes.Ldloc_0);
                     gen.Emit(OpCodes.Ldstr, kv.Value);
-                    gen.EmitCall(OpCodes.Callvirt, Metadata.StringEqualsMethod,null);
+                    gen.EmitCall(OpCodes.Call, Metadata.StringEqualsMethod,null);
                     // if false jump to next
                     gen.Emit(OpCodes.Brfalse, next);
 
@@ -189,6 +205,8 @@ namespace QuickGraph.Serialization
                     // reader.ReadXXX
                     gen.Emit(OpCodes.Ldarg_1);
                     gen.Emit(OpCodes.Ldarg_0);
+                    gen.Emit(OpCodes.Ldstr, "data");
+                    gen.Emit(OpCodes.Ldstr, GraphMLNamespace);
                     gen.EmitCall(OpCodes.Callvirt, readMethod, null);
                     gen.EmitCall(OpCodes.Callvirt, setMethod, null);
 
@@ -198,13 +216,17 @@ namespace QuickGraph.Serialization
 
                 // we don't know this parameter.. we throw
                 gen.MarkLabel(next);
+                gen.Emit(OpCodes.Ldloc_0);
                 gen.Emit(OpCodes.Newobj, Metadata.ArgumentExceptionCtor);
                 gen.Emit(OpCodes.Throw);
 
                 gen.MarkLabel(doWhile);
                 gen.Emit(OpCodes.Ldarg_0);
-                gen.Emit(OpCodes.Ldstr, "data");
-                gen.EmitCall(OpCodes.Callvirt, Metadata.ReadToFollowingMethod,null);
+                gen.EmitCall(OpCodes.Call, new Func<XmlReader, bool>(MoveNextData).Method ,null);
+
+//                gen.Emit(OpCodes.Ldstr, "data");
+  //              gen.Emit(OpCodes.Ldstr, GraphMLNamespace);
+    //            gen.EmitCall(OpCodes.Callvirt, Metadata.ReadToFollowingMethod,null);
                 gen.Emit(OpCodes.Brtrue, start);
 
                 gen.Emit(OpCodes.Ret);
@@ -239,7 +261,7 @@ namespace QuickGraph.Serialization
                         "WriteStartElement",
                         BindingFlags.Instance | BindingFlags.Public,
                         null,
-                        new Type[] { typeof(string) },
+                        new Type[] { typeof(string), typeof(string) },
                         null);
                 public static readonly MethodInfo WriteEndElementMethod =
                     typeof(XmlWriter).GetMethod(
@@ -286,7 +308,7 @@ namespace QuickGraph.Serialization
                     WriteValueMethods.Add(typeof(long), writer.GetMethod("WriteValue", new Type[] { typeof(long) }));
                     WriteValueMethods.Add(typeof(float), writer.GetMethod("WriteValue", new Type[] { typeof(float) }));
                     WriteValueMethods.Add(typeof(double), writer.GetMethod("WriteValue", new Type[] { typeof(double) }));
-                    WriteValueMethods.Add(typeof(string), writer.GetMethod("WriteValue", new Type[] { typeof(string) }));
+                    WriteValueMethods.Add(typeof(string), writer.GetMethod("WriteString", new Type[] { typeof(string) }));
                 }
 
                 public static bool TryGetWriteValueMethod(Type valueType, out MethodInfo method)
@@ -324,6 +346,7 @@ namespace QuickGraph.Serialization
                     // writer.WriteStartElement("data")
                     gen.Emit(OpCodes.Ldarg_0);
                     gen.Emit(OpCodes.Ldstr, "data");
+                    gen.Emit(OpCodes.Ldstr, GraphMLNamespace);
                     gen.EmitCall(OpCodes.Callvirt, Metadata.WriteStartElementMethod, null);
 
                     // writer.WriteStartAttribute("key");
@@ -351,35 +374,10 @@ namespace QuickGraph.Serialization
         }
         #endregion
 
-        public void Serialize(TextWriter writer, IVertexAndEdgeSet<TVertex,TEdge> visitedGraph)
-        {
-            GraphContracts.AssumeNotNull(writer, "writer");
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
-
-            using (var xwriter = new XmlTextWriter(writer))
-            {
-                xwriter.Formatting = Formatting.Indented;
-                Serialize(xwriter, visitedGraph);
-            }
-        }
-
-        public void Serialize(Stream stream, Encoding encoding, IVertexAndEdgeSet<TVertex,TEdge> visitedGraph)
-        {
-            if (stream == null)
-                throw new ArgumentNullException("stream");
-            if (encoding == null)
-                throw new ArgumentNullException("encoding");
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
-
-            using (var xwriter = new XmlTextWriter(stream, encoding))
-            {
-                xwriter.Formatting = Formatting.Indented;
-                Serialize(xwriter, visitedGraph);
-            }
-        }
-
-        public void Serialize(XmlWriter writer, IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+        public void Serialize(
+            XmlWriter writer, 
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph
+            )
         {
             if (writer == null)
                 throw new ArgumentNullException("writer");
@@ -405,7 +403,7 @@ namespace QuickGraph.Serialization
             if (edgeFactory == null)
                 throw new ArgumentNullException("edgeFactory");
 
-            ReaderWorker worker = new ReaderWorker(
+            var worker = new ReaderWorker(
                 this,
                 reader,
                 visitedGraph,
@@ -416,11 +414,11 @@ namespace QuickGraph.Serialization
 
         class ReaderWorker
         {
-            private GraphMLSerializer<TVertex, TEdge> serializer;
-            private XmlReader reader;
-            private IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph;
-            private IdentifiableVertexFactory<TVertex> vertexFactory;
-            private IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory;
+            private readonly GraphMLSerializer<TVertex, TEdge> serializer;
+            private readonly XmlReader reader;
+            private readonly IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph;
+            private readonly IdentifiableVertexFactory<TVertex> vertexFactory;
+            private readonly IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory;
 
             public ReaderWorker(
                 GraphMLSerializer<TVertex,TEdge> serializer,
@@ -430,6 +428,12 @@ namespace QuickGraph.Serialization
                 IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
                 )
             {
+                GraphContracts.AssumeNotNull(serializer, "serializer");
+                GraphContracts.AssumeNotNull(reader, "reader");
+                GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+                GraphContracts.AssumeNotNull(vertexFactory, "vertexFactory");
+                GraphContracts.AssumeNotNull(edgeFactory, "edgeFactory");
+
                 this.serializer = serializer;
                 this.reader = reader;
                 this.visitedGraph = visitedGraph;
@@ -462,64 +466,73 @@ namespace QuickGraph.Serialization
             private void ReadHeader()
             {
                 // read flow until we hit the graphml node
-                 if (!this.Reader.ReadToFollowing("graphml"))
+                 if (!this.Reader.ReadToFollowing("graphml", GraphMLNamespace))
                         throw new ArgumentException("graphml node not found");
             }
 
             private void ReadGraphHeader()
             {
-                if (!this.Reader.ReadToDescendant("graph"))
+                if (!this.Reader.ReadToDescendant("graph", GraphMLNamespace))
                     throw new ArgumentException("graph node not found");
             }
 
             private void ReadElements()
             {
-                this.Reader.ReadStartElement("graph");
+                GraphContracts.Assert(
+                    this.Reader.Name == "graph" &&
+                    this.Reader.NamespaceURI == GraphMLNamespace,
+                    "incorrect reader position");
 
-                Dictionary<string, TVertex> vertices = new Dictionary<string, TVertex>();
+                var vertices = new Dictionary<string, TVertex>();
 
                 // read vertices or edges
                 while (this.Reader.Read())
                 {
-                    if (this.Reader.NodeType == XmlNodeType.Element)
+                    if (this.Reader.NodeType != XmlNodeType.Element)
+                        continue;
+
+                    if (this.Reader.Name == "node" &&
+                        this.Reader.NamespaceURI == GraphMLNamespace)
                     {
-                        if (this.Reader.Name == "node")
-                        {
-                            // get subtree
-                            XmlReader subReader = this.Reader.ReadSubtree();
-                            // read id
-                            string id = this.ReadAttributeValue("id");
-                            // create new vertex
-                            TVertex vertex = vertexFactory(id);
-                            // read data
+                        // get subtree
+                        XmlReader subReader = this.Reader.ReadSubtree();
+                        // read id
+                        string id = this.ReadAttributeValue("id");
+                        // create new vertex
+                        TVertex vertex = vertexFactory(id);
+                        // read data
+                        if (subReader.ReadToFollowing("data", GraphMLNamespace))
                             GraphMLSerializer<TVertex, TEdge>.ReadDelegateCompiler.VertexAttributesReader(subReader, vertex);
-                            // add to graph
-                            this.VisitedGraph.AddVertex(vertex);
-                            vertices.Add(vertex.ID, vertex);
-                        }
-                        else if (this.Reader.Name == "edge")
-                        {
-                            // get subtree
-                            XmlReader subReader = reader.ReadSubtree();
-                            // read id
-                            string id = this.ReadAttributeValue("id");
-                            string sourceid = this.ReadAttributeValue("source");
-                            TVertex source;
-                            if (!vertices.TryGetValue(sourceid, out source))
-                                throw new ArgumentException("Could not find vertex " + sourceid);
-                            string targetid = this.ReadAttributeValue("target");
-                            TVertex target;
-                            if (!vertices.TryGetValue(targetid, out target))
-                                throw new ArgumentException("Could not find vertex " + targetid);
+                        // add to graph
+                        this.VisitedGraph.AddVertex(vertex);
+                        vertices.Add(vertex.ID, vertex);
+                    }
+                    else if (this.Reader.Name == "edge" &&
+                            this.Reader.NamespaceURI == GraphMLNamespace)
+                    {
+                        // get subtree
+                        var subReader = reader.ReadSubtree();
+                        // read id
+                        string id = this.ReadAttributeValue("id");
+                        string sourceid = this.ReadAttributeValue("source");
+                        TVertex source;
+                        if (!vertices.TryGetValue(sourceid, out source))
+                            throw new ArgumentException("Could not find vertex " + sourceid);
+                        string targetid = this.ReadAttributeValue("target");
+                        TVertex target;
+                        if (!vertices.TryGetValue(targetid, out target))
+                            throw new ArgumentException("Could not find vertex " + targetid);
 
-                            TEdge edge = this.edgeFactory(source, target, id);
+                        TEdge edge = this.edgeFactory(source, target, id);
 
-                            // read data
+                        // read data
+                        if (subReader.ReadToFollowing("data", GraphMLNamespace))
                             GraphMLSerializer<TVertex, TEdge>.ReadDelegateCompiler.EdgeAttributesReader(subReader, edge);
 
-                            this.VisitedGraph.AddEdge(edge);
-                        }
+                        this.VisitedGraph.AddEdge(edge);
                     }
+                    else
+                        throw new InvalidOperationException(String.Format("invalid reader position {0}:{1}", this.Reader.NamespaceURI, this.Reader.Name));
                 }
             }
 
@@ -534,15 +547,19 @@ namespace QuickGraph.Serialization
 
         class WriterWorker
         {
-            private GraphMLSerializer<TVertex, TEdge> serializer;
-            private XmlWriter writer;
-            private IVertexAndEdgeSet<TVertex, TEdge> visitedGraph;
+            private readonly GraphMLSerializer<TVertex, TEdge> serializer;
+            private readonly XmlWriter writer;
+            private readonly IVertexAndEdgeSet<TVertex, TEdge> visitedGraph;
 
             public WriterWorker(
                 GraphMLSerializer<TVertex,TEdge> serializer,
                 XmlWriter writer,
                 IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
             {
+                GraphContracts.AssumeNotNull(serializer, "serializer");
+                GraphContracts.AssumeNotNull(writer, "writer");
+                GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+
                 this.serializer = serializer;
                 this.writer = writer;
                 this.visitedGraph = visitedGraph;
@@ -579,10 +596,7 @@ namespace QuickGraph.Serialization
             {
                 if (this.Serializer.EmitDocumentDeclaration)
                     this.Writer.WriteStartDocument();
-                this.Writer.WriteStartElement("graphml");
-                this.Writer.WriteAttributeString("xmlns","http://graphml.graphdrawing.org/xmlns"); 
-                this.Writer.WriteAttributeString("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-                this.Writer.WriteAttributeString("xsi:schemaLocation", "http://graphml.graphdrawing.org/xmlns  http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd");
+                this.Writer.WriteStartElement("", "graphml", GraphMLNamespace);
             }
 
             private void WriteFooter()
@@ -593,7 +607,7 @@ namespace QuickGraph.Serialization
 
             private void WriteGraphHeader()
             {
-                this.Writer.WriteStartElement("graph");
+                this.Writer.WriteStartElement("graph", GraphMLNamespace);
                 this.Writer.WriteAttributeString("id", "G");
                 this.Writer.WriteAttributeString("edgedefault",
                     (this.VisitedGraph.IsDirected) ? "directed" : "undirected"
@@ -628,10 +642,13 @@ namespace QuickGraph.Serialization
 
             private void WriteAttributeDefinitions(string forNode, Type nodeType)
             {
-                foreach (KeyValuePair<PropertyInfo, string> kv in SerializationHelper.GetAttributeProperties(nodeType))
+                GraphContracts.AssumeNotNull(forNode, "forNode");
+                GraphContracts.AssumeNotNull(nodeType, "nodeType");
+
+                foreach (var kv in SerializationHelper.GetAttributeProperties(nodeType))
                 {
                     //<key id="d1" for="edge" attr.name="weight" attr.type="double"/>
-                    this.Writer.WriteStartElement("key");
+                    this.Writer.WriteStartElement("key", GraphMLNamespace);
                     this.Writer.WriteAttributeString("id", kv.Value);
                     this.Writer.WriteAttributeString("for", forNode);
                     this.Writer.WriteAttributeString("attr.name", kv.Value);
@@ -669,7 +686,7 @@ namespace QuickGraph.Serialization
             {
                 foreach (var v in this.VisitedGraph.Vertices)
                 {
-                    this.Writer.WriteStartElement("node");
+                    this.Writer.WriteStartElement("node", GraphMLNamespace);
                     this.Writer.WriteAttributeString("id", v.ID);
                     GraphMLSerializer<TVertex, TEdge>.WriteDelegateCompiler.VertexAttributesWriter(this.Writer, v);
                     this.Writer.WriteEndElement();
@@ -680,7 +697,7 @@ namespace QuickGraph.Serialization
             {
                 foreach (var e in this.VisitedGraph.Edges)
                 {
-                    this.Writer.WriteStartElement("edge");
+                    this.Writer.WriteStartElement("edge", GraphMLNamespace);
                     this.Writer.WriteAttributeString("id", e.ID);
                     this.Writer.WriteAttributeString("source", e.Source.ID);
                     this.Writer.WriteAttributeString("target", e.Target.ID);

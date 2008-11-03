@@ -24,9 +24,10 @@ namespace QuickGraph.Serialization
             string baseLine;
             string output;
 
-            using (StringWriter writer = new StringWriter())
+            using (var writer = new StringWriter())
             {
-                g.SerializeToGraphML(writer);
+                using(var xwriter = XmlWriter.Create(writer))
+                    g.SerializeToGraphML(xwriter);
                 baseLine = writer.ToString();
                 TestConsole.WriteLineBold("Original graph:");
                 Console.WriteLine(writer.ToString());
@@ -42,9 +43,10 @@ namespace QuickGraph.Serialization
             }
 
             TestConsole.WriteLineBold("Roundtripped graph:");
-            using (StringWriter sw = new StringWriter())
+            using (var sw = new StringWriter())
             {
-                gd.SerializeToGraphML(sw);
+                using (var xwriter = XmlWriter.Create(sw))
+                    gd.SerializeToGraphML(xwriter);
                 output = sw.ToString();
                 Console.WriteLine(sw.ToString());
             }

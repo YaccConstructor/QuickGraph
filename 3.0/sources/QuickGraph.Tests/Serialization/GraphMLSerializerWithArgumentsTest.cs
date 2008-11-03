@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml;
 using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
+using System.Reflection;
 
 namespace QuickGraph.Serialization
 {
@@ -46,18 +47,99 @@ namespace QuickGraph.Serialization
                 get { return this.id; }
             }
 
+            string _string;
             [XmlAttribute("v_string")]
-            public string String { get; set; }
+            public string String
+            {
+                get 
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._string; 
+                }
+                set 
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._string = value;
+                }
+            }
+            int _int;
             [XmlAttribute("v_int")]
-            public int Int {get;set;}
+            public int Int
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._int;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._int = value;
+                }
+            }
+            long _long;
             [XmlAttribute("v_long")]
-            public long Long {get;set;}
+            public long Long
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._long;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._long = value;
+                }
+            }
+
+            bool _bool;
             [XmlAttribute("v_bool")]
-            public bool Bool { get; set; }
+            public bool Bool
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._bool;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._bool = value;
+                }
+            }
+
+            float _float;
             [XmlAttribute("v_float")]
-            public float Float { get; set; }
+            public float Float
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._float;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._float = value;
+                }
+            }
+
+            double _double;
             [XmlAttribute("v_double")]
-            public double Double { get; set; }
+            public double Double
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._double;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._double = value;
+                }
+            }
         }
 
         public sealed class TestEdge : Edge<TestVertex>, IIdentifiable
@@ -142,7 +224,8 @@ namespace QuickGraph.Serialization
             string xml;
             using (var writer = new StringWriter())
             {
-                serializer.Serialize(writer, g);
+                using (var xwriter = XmlWriter.Create(writer))
+                    serializer.Serialize(xwriter, g);
                 xml = writer.ToString();
                 Console.WriteLine(xml);
                 XmlAssert.IsWellFormedXml(xml);
@@ -163,7 +246,8 @@ namespace QuickGraph.Serialization
             string newxml;
             using (var writer = new StringWriter())
             {
-                serializer.Serialize(writer, newg);
+                using (var xwriter = XmlWriter.Create(writer))
+                    serializer.Serialize(xwriter, newg);
                 newxml = writer.ToString();
                 Console.WriteLine(newxml);
                 XmlAssert.IsWellFormedXml(newxml);

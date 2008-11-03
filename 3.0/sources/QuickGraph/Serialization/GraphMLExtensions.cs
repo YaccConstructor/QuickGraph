@@ -11,21 +11,6 @@ namespace QuickGraph.Serialization
     {
         public static void SerializeToGraphML<TVertex, TEdge>(
             this IVertexAndEdgeSet<TVertex, TEdge> graph,
-            TextWriter writer)
-            where TVertex : IIdentifiable
-            where TEdge : IIdentifiable, IEdge<TVertex>
-        {
-            if (graph == null)
-                throw new ArgumentNullException("graph");
-            if (writer == null)
-                throw new ArgumentNullException("writer");
-
-            var serializer = new GraphMLSerializer<TVertex, TEdge>();
-            serializer.Serialize(writer, graph);
-        }
-
-        public static void SerializeToGraphML<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> graph,
             XmlWriter writer)
             where TVertex : IIdentifiable
             where TEdge : IIdentifiable, IEdge<TVertex>
