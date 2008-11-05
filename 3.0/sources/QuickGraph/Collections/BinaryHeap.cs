@@ -41,10 +41,8 @@ namespace QuickGraph.Collections
 
         public BinaryHeap(int capacity, Comparison<TPriority> priorityComparison)
         {
-            if (capacity < 0)
-                throw new ArgumentOutOfRangeException("capacity");
-            if (priorityComparison == null)
-                throw new ArgumentNullException("priorityComparison");
+            CodeContract.Requires(capacity >= 0);
+            CodeContract.Requires(priorityComparison != null);
 
             this.items = new KeyValuePair<TPriority, TValue>[capacity];
             this.priorityComparsion = priorityComparison;

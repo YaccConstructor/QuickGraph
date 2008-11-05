@@ -50,7 +50,7 @@ namespace QuickGraph.Collections
         public void Enqueue(TVertex value)
         {
             CodeContract.Requires(value != null);
-            GraphContracts.Assume(this.distances.ContainsKey(value), "this.distances.ContainsKey(value)");
+            CodeContract.Requires(this.distances.ContainsKey(value));
             this.heap.Add(this.distances[value], value);
         }
 

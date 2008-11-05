@@ -352,7 +352,7 @@ namespace QuickGraph.Algorithms
         {
             CodeContract.Requires(g != null);
             CodeContract.Requires(components != null);
-            GraphContracts.Assume(g.ContainsVertex(startVertex), "g.ContainsVertex(startVertex)"); 
+            CodeContract.Requires(g.ContainsVertex(startVertex));
 
             var conn = new ConnectedComponentsAlgorithm<TVertex,TEdge>(g, components);
             conn.Compute(startVertex);

@@ -12,20 +12,12 @@ namespace QuickGraph
     public static class GraphContracts
     {
         [Conditional("DEBUG")]
-        public static void Assume(bool value, string message)
-        {
-            if (!value)
-                throw new ArgumentException(message);
-        }
-
-        [Conditional("DEBUG")]
         public static void AssumeInVertexSet<TVertex>(
             IVertexSet<TVertex> g, 
             TVertex v,
             string parameterName)
         {
             CodeContract.Requires(g != null);
-
             AssumeNotNull(v, parameterName);
             if (!g.ContainsVertex(v))
                 throw new VertexNotFoundException(parameterName);
@@ -59,8 +51,10 @@ namespace QuickGraph
             string parameterName)
             where TEdge : IEdge<TVertex>
         {
-            AssumeNotNull(g, "g");
-            AssumeNotNull(e, parameterName);
+            CodeContract.Requires(g != null);
+            if (e == null)
+                throw new ArgumentNullException(parameterName);
+            CodeContract.EndContractBlock();
             AssumeInVertexSet<TVertex>(g, e.Source, parameterName + ".Source");
             AssumeInVertexSet<TVertex>(g, e.Target, parameterName + ".Target");
         }

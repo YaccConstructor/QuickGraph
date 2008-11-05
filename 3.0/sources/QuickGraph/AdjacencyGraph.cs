@@ -89,24 +89,28 @@ namespace QuickGraph
 
         public bool IsOutEdgesEmpty(TVertex v)
         {
+            CodeContract.Requires(v != null);
             GraphContracts.AssumeInVertexSet(this, v, "v");
             return this.vertexEdges[v].Count == 0;
         }
 
         public int OutDegree(TVertex v)
         {
+            CodeContract.Requires(v != null);
             GraphContracts.AssumeInVertexSet(this, v, "v");
             return this.vertexEdges[v].Count;
         }
 
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
+            CodeContract.Requires(v != null);
             GraphContracts.AssumeInVertexSet(this, v, "v");
             return this.vertexEdges[v];
         }
 
         public TEdge OutEdge(TVertex v, int index)
         {
+            CodeContract.Requires(v != null);
             GraphContracts.AssumeInVertexSet(this, v, "v");
             return this.vertexEdges[v][index];
         }
@@ -156,6 +160,9 @@ namespace QuickGraph
 
         public bool ContainsEdge(TVertex source, TVertex target)
         {
+            CodeContract.Requires(source != null);
+            CodeContract.Requires(target != null);
+
             GraphContracts.AssumeInVertexSet(this, source, "source");
             GraphContracts.AssumeInVertexSet(this, target, "target");
             foreach (var outEdge in this.OutEdges(source))
