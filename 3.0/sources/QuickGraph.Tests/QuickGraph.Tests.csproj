@@ -43,6 +43,7 @@
     <Reference Include="Microsoft.Pex.Framework, Version=0.5.30516.0, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -135,6 +136,7 @@
     <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndRemoveMinimum.g.cs">
       <DependentUpon>BinaryHeapTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Collections\FibonacciHeapTest.cs" />
     <Compile Include="Data\Store.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

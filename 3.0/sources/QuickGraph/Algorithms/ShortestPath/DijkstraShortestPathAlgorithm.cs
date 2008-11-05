@@ -24,7 +24,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         IDistanceRecorderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private PriorityQueue<TVertex,double> vertexQueue;
+        private FibonacciQueue<TVertex,double> vertexQueue;        
 
         public DijkstraShortestPathAlgorithm(
             IVertexListGraph<TVertex, TEdge> visitedGraph,
@@ -108,6 +108,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         protected override void  InternalCompute()
         {
             TVertex rootVertex;
+            
             if (!this.TryGetRootVertex(out rootVertex))
                 throw new InvalidOperationException("RootVertex not initialized");
 
@@ -119,8 +120,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public void ComputeNoInit(TVertex s)
         {
-            this.vertexQueue = new PriorityQueue<TVertex,double>(this.Distances);
-
+            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.Distances);            
             BreadthFirstSearchAlgorithm<TVertex, TEdge> bfs = null;
 
             try
