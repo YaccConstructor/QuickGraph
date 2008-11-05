@@ -18,8 +18,9 @@ namespace QuickGraph
 
         protected virtual void OnTagChanged(EventArgs e)
         {
-            if (this.TagChanged != null)
-                this.TagChanged(this, e);
+            var eh = this.TagChanged;
+            if (eh != null)
+                eh(this, e);
         }
 
         public TTag Tag

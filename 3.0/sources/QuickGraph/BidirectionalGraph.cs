@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using QuickGraph.Contracts;
 
 namespace QuickGraph
 {
@@ -101,55 +102,55 @@ namespace QuickGraph
 
         public bool IsOutEdgesEmpty(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.vertexOutEdges[v].Count == 0;
         }
 
         public int OutDegree(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.vertexOutEdges[v].Count;
         }
 
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.vertexOutEdges[v];
         }
 
         public TEdge OutEdge(TVertex v, int index)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.vertexOutEdges[v][index];
         }
 
         public bool IsInEdgesEmpty(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.vertexInEdges[v].Count == 0;
         }
 
         public int InDegree(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.vertexInEdges[v].Count;
         }
 
         public IEnumerable<TEdge> InEdges(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.vertexInEdges[v];
         }
 
         public TEdge InEdge(TVertex v, int index)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.vertexInEdges[v][index];
         }
 
         public int Degree(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.OutDegree(v) + this.InDegree(v);
         }
 
@@ -178,8 +179,8 @@ namespace QuickGraph
 
         public bool ContainsEdge(TVertex source, TVertex target)
         {
-            GraphContracts.AssumeInVertexSet(this, source, "source");
-            GraphContracts.AssumeInVertexSet(this, target, "target");
+            GraphContract.RequiresInVertexSet(this, source);
+            GraphContract.RequiresInVertexSet(this, target);
             foreach (var outEdge in this.OutEdges(source))
                 if (outEdge.Target.Equals(target))
                     return true;
@@ -191,8 +192,8 @@ namespace QuickGraph
             TVertex target,
             out TEdge edge)
         {
-            GraphContracts.AssumeInVertexSet(this, source, "source");
-            GraphContracts.AssumeInVertexSet(this, target, "target");
+            GraphContract.RequiresInVertexSet(this, source);
+            GraphContract.RequiresInVertexSet(this, target);
 
             EdgeList edgeList;
             if (this.vertexOutEdges.TryGetValue(source, out edgeList) &&
@@ -216,8 +217,8 @@ namespace QuickGraph
             TVertex target,
             out IEnumerable<TEdge> edges)
         {
-            GraphContracts.AssumeInVertexSet(this, source, "source");
-            GraphContracts.AssumeInVertexSet(this, target, "target");
+            GraphContract.RequiresInVertexSet(this, source);
+            GraphContract.RequiresInVertexSet(this, target);
 
             EdgeList edgeList;
             if (this.vertexOutEdges.TryGetValue(source, out edgeList))
@@ -238,13 +239,13 @@ namespace QuickGraph
 
         public bool ContainsEdge(TEdge edge)
         {
-            GraphContracts.AssumeInVertexSet(this, edge, "edge");
+            GraphContract.RequiresInVertexSet(this, edge, "edge");
             return this.vertexOutEdges[edge.Source].Contains(edge);
         }
 
         public virtual void AddVertex(TVertex v)
         {
-            GraphContracts.AssumeNotInVertexSet(this, v, "v");
+            GraphContract.RequiresNotInVertexSet(this, v, "v");
 
             if (this.EdgeCapacity > 0)
             {
@@ -334,7 +335,7 @@ namespace QuickGraph
 
         public virtual bool AddEdge(TEdge e)
         {
-            GraphContracts.AssumeInVertexSet(this, e, "e");
+            GraphContract.RequiresInVertexSet(this, e, "e");
             if (!this.AllowParallelEdges)
             {
                 if (this.ContainsEdge(e.Source, e.Target))
@@ -378,7 +379,7 @@ namespace QuickGraph
 
         public virtual bool RemoveEdge(TEdge e)
         {
-            GraphContracts.AssumeInVertexSet(this, e, "e");
+            GraphContract.RequiresInVertexSet(this, e, "e");
             if (this.vertexOutEdges[e.Source].Remove(e))
             {
                 this.vertexInEdges[e.Target].Remove(e);
@@ -418,7 +419,7 @@ namespace QuickGraph
 
         public int RemoveOutEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             CodeContract.Requires(predicate != null);
 
             var edges = new EdgeList();
@@ -432,7 +433,7 @@ namespace QuickGraph
 
         public int RemoveInEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             CodeContract.Requires(predicate != null);
 
             EdgeList edges = new EdgeList();
@@ -446,7 +447,7 @@ namespace QuickGraph
 
         public void ClearOutEdges(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
 
             EdgeList outEdges = this.vertexOutEdges[v];
             foreach (var edge in outEdges)
@@ -467,7 +468,7 @@ namespace QuickGraph
 
         public void ClearInEdges(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
 
             EdgeList inEdges = this.vertexInEdges[v];
             foreach (var edge in inEdges)
@@ -482,7 +483,7 @@ namespace QuickGraph
 
         public void ClearEdges(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
 
             ClearOutEdges(v);
             ClearInEdges(v);
@@ -505,7 +506,7 @@ namespace QuickGraph
 
         public void MergeVertex(TVertex v, EdgeFactory<TVertex, TEdge> edgeFactory)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             CodeContract.Requires(edgeFactory != null);
 
             // storing edges in local array

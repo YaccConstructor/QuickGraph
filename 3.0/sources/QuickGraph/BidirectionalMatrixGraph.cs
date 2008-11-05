@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using QuickGraph.Contracts;
 
 namespace QuickGraph
 {
@@ -312,8 +313,8 @@ namespace QuickGraph
         bool IMutableEdgeListGraph<int,TEdge>.AddVerticesAndEdge(TEdge edge)
         {
             CodeContract.Requires(edge != null);
-            GraphContracts.AssumeInVertexSet(this, edge.Source, "edge.Source");
-            GraphContracts.AssumeInVertexSet(this, edge.Target, "edge.Target");
+            GraphContract.RequiresInVertexSet(this, edge.Source);
+            GraphContract.RequiresInVertexSet(this, edge.Target);
 
             return this.AddEdge(edge);
         }

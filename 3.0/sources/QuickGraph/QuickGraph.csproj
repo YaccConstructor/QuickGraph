@@ -194,8 +194,8 @@
     <Compile Include="Collections\BinaryHeap.cs" />
     <Compile Include="Collections\IQueue.cs" />
     <Compile Include="Contracts\CEdge.cs" />
-    <Compile Include="EdgeNotFoundException.cs" />
-    <Compile Include="GraphContracts.cs" />
+    <Compile Include="Contracts\EnumerableContract.cs" />
+    <Compile Include="Contracts\GraphContract.cs" />
     <Compile Include="GraphExtensions.cs" />
     <Compile Include="HashCodeHelper.cs" />
     <Compile Include="IEdgeSet.cs" />
@@ -293,8 +293,6 @@
     <Compile Include="UndirectedBidirectionalGraph.cs" />
     <Compile Include="UndirectedGraph.cs" />
     <Compile Include="VertexEventArgs.cs" />
-    <Compile Include="VertexNotConnectedException.cs" />
-    <Compile Include="VertexNotFoundException.cs" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

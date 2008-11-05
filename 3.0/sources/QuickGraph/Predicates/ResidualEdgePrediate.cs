@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Predicates
 {
@@ -26,9 +27,7 @@ namespace QuickGraph.Predicates
 
 		public bool Test(TEdge e)
 		{
-			if (e == null)
-				throw new ArgumentNullException("e");
-
+            CodeContract.Requires(e != null);
 			return 0 < this.residualCapacities[e];
 		}
     }

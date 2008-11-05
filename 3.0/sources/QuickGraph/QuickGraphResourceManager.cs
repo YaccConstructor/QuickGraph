@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.IO;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -20,14 +21,15 @@ namespace QuickGraph
 
         private static Image GetImage(string name)
         {
+            CodeContract.Requires(name != null);
             using (Stream stream = typeof(QuickGraphResourceManager).Assembly.GetManifestResourceStream(String.Format("QuickGraph.{0}.png", name)))
                 return Image.FromStream(stream);
         }
 
         public static void DumpResources(string path)
         {
-            if (String.IsNullOrEmpty(path))
-                throw new ArgumentNullException("path");
+            CodeContract.Requires(path != null);
+
             GetLogo().Save(Path.Combine(path, "quickgraph.png"), System.Drawing.Imaging.ImageFormat.Png);
             GetBanner().Save(Path.Combine(path, "quickgraph.banner.png"), System.Drawing.Imaging.ImageFormat.Png);
         }

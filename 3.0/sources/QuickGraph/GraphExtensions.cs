@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -13,8 +14,8 @@ namespace QuickGraph
             )
             where TEdge : IEdge<TVertex>
         {
-            if (edges == null)
-                throw new ArgumentNullException("edges");
+            CodeContract.Requires(edges != null);
+            EnumerableContract.RequiresElementsNotNull(edges);
 
             var g = new BidirectionalGraph<TVertex, TEdge>(allowParallelEdges);
             foreach (var edge in edges)
@@ -28,6 +29,9 @@ namespace QuickGraph
             )
             where TEdge : IEdge<TVertex>
         {
+            CodeContract.Requires(edges != null);
+            EnumerableContract.RequiresElementsNotNull(edges);
+
             return ToBidirectionalGraph<TVertex, TEdge>(edges, true);
         }
 
@@ -37,8 +41,8 @@ namespace QuickGraph
             )
             where TEdge : IEdge<TVertex>
         {
-            if (edges == null)
-                throw new ArgumentNullException("edges");
+            CodeContract.Requires(edges != null);
+            EnumerableContract.RequiresElementsNotNull(edges);
 
             var g = new AdjacencyGraph<TVertex, TEdge>(allowParallelEdges);
             foreach (var edge in edges)
@@ -52,6 +56,9 @@ namespace QuickGraph
             )
             where TEdge : IEdge<TVertex>
         {
+            CodeContract.Requires(edges != null);
+            EnumerableContract.RequiresElementsNotNull(edges);
+
             return ToAdjacencyGraph<TVertex, TEdge>(edges, true);
         }
 
@@ -62,10 +69,9 @@ namespace QuickGraph
             )
             where TEdge : IEdge<TVertex>
         {
-            if (vertices == null)
-                throw new ArgumentNullException("vertices");
-            if (outEdgesFactory == null)
-                throw new ArgumentNullException("outEdgesFactory");
+            CodeContract.Requires(vertices != null);
+            CodeContract.Requires(outEdgesFactory != null);
+            EnumerableContract.RequiresElementsNotNull(vertices);
 
             var g = new AdjacencyGraph<TVertex, TEdge>(allowParallelEdges);
             g.AddVertexRange(vertices);
@@ -91,10 +97,9 @@ namespace QuickGraph
             ) 
             where TEdge : IEdge<TVertex>
         {
-            if(vertices == null)
-                throw new ArgumentNullException("vertices");
-            if(outEdgesFactory == null)
-                throw new ArgumentNullException("outEdgesFactory");
+            CodeContract.Requires(vertices != null);
+            CodeContract.Requires(outEdgesFactory != null);
+            EnumerableContract.RequiresElementsNotNull(vertices);
 
             var g = new BidirectionalGraph<TVertex, TEdge>(allowParallelEdges);
             g.AddVertexRange(vertices);

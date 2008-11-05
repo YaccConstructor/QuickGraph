@@ -6,11 +6,11 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     //[ContractClassFor(typeof(IEdge<>))]
-    //class CEdge<TVertex> 
+    //sealed class Edge_Contract<TVertex>
     //    : IEdge<TVertex>
     //{
     //    [ContractInvariantMethod]
-    //    protected void ObjectInvariant()
+    //    public void ObjectInvariant()
     //    {
     //        CodeContract.Invariant(this.Source != null);
     //        CodeContract.Invariant(this.Target != null);
@@ -18,12 +18,12 @@ namespace QuickGraph.Contracts
 
     //    public TVertex Source
     //    {
-    //        get { throw new NotImplementedException(); }
+    //        get { return CodeContract.Result<TVertex>(); }
     //    }
 
     //    public TVertex Target
     //    {
-    //        get { throw new NotImplementedException(); }
+    //        get { return CodeContract.Result<TVertex>(); }
     //    }
     //}
 }

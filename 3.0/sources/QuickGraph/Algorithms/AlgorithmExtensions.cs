@@ -5,6 +5,7 @@ using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.ShortestPath;
 using System.Diagnostics.Contracts;
+using QuickGraph.Contracts;
 
 namespace QuickGraph.Algorithms
 {
@@ -352,7 +353,7 @@ namespace QuickGraph.Algorithms
         {
             CodeContract.Requires(g != null);
             CodeContract.Requires(components != null);
-            CodeContract.Requires(g.ContainsVertex(startVertex));
+            GraphContract.RequiresInVertexSet(g, startVertex);
 
             var conn = new ConnectedComponentsAlgorithm<TVertex,TEdge>(g, components);
             conn.Compute(startVertex);

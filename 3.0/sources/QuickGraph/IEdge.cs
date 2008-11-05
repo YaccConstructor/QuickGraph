@@ -7,8 +7,8 @@ namespace QuickGraph
     /// A graph edge
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
+    //[ContractClass(typeof(Edge_Contract<>))]
     public interface IEdge<TVertex>
-    //[ContractClass(typeof(CEdge<>))]
     {
         /// <summary>
         /// Gets the source vertex

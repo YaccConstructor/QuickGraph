@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using QuickGraph.Contracts;
 
 namespace QuickGraph
 {
@@ -41,7 +42,7 @@ namespace QuickGraph
 
         public void AddVertex(TVertex v)
         {
-            GraphContracts.AssumeNotInVertexSet(this, v, "v");
+            GraphContract.RequiresNotInVertexSet(this, v, "v");
             this.adjacentEdges.Add(v, new List<TEdge>());
         }
 
@@ -77,7 +78,7 @@ namespace QuickGraph
         #region IMutableIncidenceGraph<Vertex,Edge> Members
         public int RemoveAdjacentEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             CodeContract.Requires(predicate != null);
 
             IList<TEdge> outEdges = this.adjacentEdges[v];
@@ -92,7 +93,7 @@ namespace QuickGraph
 
         public void ClearAdjacentEdges(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             IList<TEdge> edges = this.adjacentEdges[v];
             this.edgeCount -= edges.Count;
             foreach (var edge in edges)
@@ -188,7 +189,7 @@ namespace QuickGraph
 
         public bool AddEdge(TEdge edge)
         {
-            GraphContracts.AssumeInVertexSet(this, edge, "edge");
+            GraphContract.RequiresInVertexSet(this, edge, "edge");
 
             if (!this.AllowParallelEdges)
             {
@@ -222,7 +223,7 @@ namespace QuickGraph
 
         public bool RemoveEdge(TEdge edge)
         {
-            GraphContracts.AssumeInVertexSet(this, edge, "edge");
+            GraphContract.RequiresInVertexSet(this, edge, "edge");
 
             this.adjacentEdges[edge.Source].Remove(edge);
             if (this.adjacentEdges[edge.Target].Remove(edge))
@@ -303,7 +304,7 @@ namespace QuickGraph
 
         public bool ContainsEdge(TEdge edge)
         {
-            GraphContracts.AssumeInVertexSet(this, edge, "edge");
+            GraphContract.RequiresInVertexSet(this, edge, "edge");
             foreach (var e in this.Edges)
                 if (e.Equals(edge))
                     return true;
@@ -315,19 +316,19 @@ namespace QuickGraph
 
         public IEnumerable<TEdge> AdjacentEdges(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.adjacentEdges[v];
         }
 
         public int AdjacentDegree(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.adjacentEdges[v].Count;
         }
 
         public bool IsAdjacentEdgesEmpty(TVertex v)
         {
-            GraphContracts.AssumeInVertexSet(this, v, "v");
+            GraphContract.RequiresInVertexSet(this, v);
             return this.adjacentEdges[v].Count == 0;
         }
 

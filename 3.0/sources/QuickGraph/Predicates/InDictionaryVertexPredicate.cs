@@ -16,8 +16,11 @@ namespace QuickGraph.Predicates
             this.dictionary = dictionary;
         }
 
+        [Pure]
         public bool Test(TVertex v)
         {
+            CodeContract.Requires(v != null);
+
             return this.dictionary.ContainsKey(v);
         }
     }

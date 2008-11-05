@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -13,8 +14,7 @@ namespace QuickGraph
         private readonly IBidirectionalGraph<TVertex,TEdge> originalGraph;
         public ReversedBidirectionalGraph(IBidirectionalGraph<TVertex,TEdge> originalGraph)
         {
-            if (originalGraph==null)
-                throw new ArgumentNullException("originalGraph");
+            CodeContract.Requires(originalGraph != null);
             this.originalGraph = originalGraph;
         }
 

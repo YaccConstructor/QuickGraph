@@ -20,8 +20,11 @@ namespace QuickGraph.Predicates
             this.visitedGraph = visitedGraph;
         }
 
+        [Pure]
         public bool Test(TVertex v)
         {
+            CodeContract.Requires(v != null);
+
             return this.visitedGraph.IsInEdgesEmpty(v)
                 && this.visitedGraph.IsOutEdgesEmpty(v);
         }
