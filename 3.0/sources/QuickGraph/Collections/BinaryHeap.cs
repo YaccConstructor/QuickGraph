@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Collections;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Collections
 {
@@ -66,8 +67,6 @@ namespace QuickGraph.Collections
 
         public void Add(TPriority priority, TValue value)
         {
-            GraphContracts.Assert(count <= this.items.Length);
-
             this.version++;
             this.ResizeArray();
             this.items[this.count++] = new KeyValuePair<TPriority, TValue>(priority, value);
@@ -190,38 +189,42 @@ namespace QuickGraph.Collections
 
         private bool Less(int i, int j)
         {
-            GraphContracts.Assert(i >= 0 & i < this.count &
-                         j >= 0 & j < this.count &
-                         i != j, String.Format("i: {0}, j: {1}", i, j));
+            CodeContract.Requires(
+                i >= 0 & i < this.count &
+                j >= 0 & j < this.count &
+                i != j);
 
             return this.priorityComparsion(this.items[i].Key, this.items[j].Key) <= 0;
         }
 
         private void Swap(int i, int j)
         {
-            GraphContracts.Assert(i >= 0 & i < this.count &
-                         j >= 0 & j < this.count &
-                         i != j);
+            CodeContract.Requires(
+                i >= 0 && i < this.count &&
+                j >= 0 && j < this.count &&
+                i != j);
 
             var kv = this.items[i];
             this.items[i] = this.items[j];
             this.items[j] = kv;
         }
 
-        [Conditional("DEBUG")]
+        [ContractInvariantMethod]
         public void ObjectInvariant()
         {
-            GraphContracts.Assert(this.items != null);
-            GraphContracts.Assert(
+            CodeContract.Invariant(this.items != null);
+            CodeContract.Invariant(
                 this.count > -1 &
                 this.count <= this.items.Length);
-            for (int index = 0; index < this.count; ++index)
-            {
-                var left = 2 * index + 1;
-                GraphContracts.Assert(left >= count || this.Less(index, left));
-                var right = 2 * index + 2;
-                GraphContracts.Assert(right >= count || this.Less(index, right));
-            }
+            CodeContract.Invariant(
+                CodeContract.ForAll(0, this.count, index =>
+                {
+                    var left = 2 * index + 1;
+                    var right = 2 * index + 2;
+                    return  (left >= count || this.Less(index, left)) &&
+                            (right >= count || this.Less(index, right));
+                })
+            );
         }
 
         #region IEnumerable<KeyValuePair<TKey,TValue>> Members
@@ -256,7 +259,7 @@ namespace QuickGraph.Collections
                         throw new InvalidOperationException();
                     if (this.index < 0 | this.index == this.count)
                         throw new InvalidOperationException();
-                    GraphContracts.Assert(this.index <= this.count);
+                    CodeContract.Assert(this.index <= this.count);
                     return this.items[this.index];
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -208,36 +209,48 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public event VertexEventHandler<TVertex> BalancingSourceAdded;
         private void OnBalancingSourceAdded()
         {
-            if (this.BalancingSourceAdded != null)
-                this.BalancingSourceAdded(this, new VertexEventArgs<TVertex>(source));
+            var eh = this.BalancingSourceAdded;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(source));
         }
         public event VertexEventHandler<TVertex> BalancingSinkAdded;
         private void OnBalancingSinkAdded()
         {
-            if (this.BalancingSinkAdded != null)
-                this.BalancingSinkAdded(this, new VertexEventArgs<TVertex>(this.sink));
+            var eh = this.BalancingSinkAdded;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(this.sink));
         }
         public event EdgeEventHandler<TVertex,TEdge> EdgeAdded;
         private void OnEdgeAdded(TEdge edge)
         {
-            if (this.EdgeAdded != null)
-                this.EdgeAdded(this, new EdgeEventArgs<TVertex,TEdge>(edge));
+            CodeContract.Requires(edge != null);
+
+            var eh = this.EdgeAdded;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(edge));
         }
         public event VertexEventHandler<TVertex> SurplusVertexAdded;
         private void OnSurplusVertexAdded(TVertex vertex)
         {
-            if (this.SurplusVertexAdded != null)
-                this.SurplusVertexAdded(this, new VertexEventArgs<TVertex>(vertex));
+            CodeContract.Requires(vertex != null);
+            var eh = this.SurplusVertexAdded;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(vertex));
         }
         public event VertexEventHandler<TVertex> DeficientVertexAdded;
         private void OnDeficientVertexAdded(TVertex vertex)
         {
-            if (this.DeficientVertexAdded != null)
-                this.DeficientVertexAdded(this, new VertexEventArgs<TVertex>(vertex));
+            CodeContract.Requires(vertex != null);
+
+            var eh = this.DeficientVertexAdded;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(vertex));
         }
 
         public int GetBalancingIndex(TVertex v)
         {
+            CodeContract.Requires(v != null);
+
             int bi = 0;
             foreach (var edge in this.VisitedGraph.OutEdges(v))
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -80,7 +81,8 @@ namespace QuickGraph
 
         public bool AddEdge(TEdge edge)
         {
-            GraphContracts.AssumeNotNull(edge, "edge");
+            CodeContract.Requires(edge != null);
+
             if(this.ContainsEdge(edge))
                 return false;
             this.edges.Add(edge, edge);
@@ -90,7 +92,8 @@ namespace QuickGraph
 
         public void AddEdgeRange(IEnumerable<TEdge> edges)
         {
-            GraphContracts.AssumeNotNull(edges, "edges");
+            CodeContract.Requires(edges != null);
+
             foreach (var edge in edges)
                 this.AddEdge(edge);
         }

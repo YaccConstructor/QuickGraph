@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Predicates
 {
@@ -11,7 +12,7 @@ namespace QuickGraph.Predicates
         public InDictionaryVertexPredicate(
             IDictionary<TVertex,TValue> dictionary)
         {
-            GraphContracts.AssumeNotNull(dictionary, "dictionary");
+            CodeContract.Requires(dictionary != null);
             this.dictionary = dictionary;
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Observers
 {
@@ -43,14 +44,16 @@ namespace QuickGraph.Algorithms.Observers
 
         public void Attach(IVertexPredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            GraphContracts.AssumeNotNull(algorithm, "algorithm");
+            CodeContract.Requires(algorithm != null);
+            
             algorithm.TreeEdge+=new EdgeEventHandler<TVertex,TEdge>(TreeEdge);
             algorithm.FinishVertex+=new VertexEventHandler<TVertex>(FinishVertex);
         }
 
         public void Detach(IVertexPredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            GraphContracts.AssumeNotNull(algorithm, "algorithm");
+            CodeContract.Requires(algorithm != null);
+
             algorithm.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(TreeEdge);
             algorithm.FinishVertex -= new VertexEventHandler<TVertex>(FinishVertex);
         }

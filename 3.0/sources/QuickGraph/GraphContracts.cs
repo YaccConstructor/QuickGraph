@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -10,27 +11,6 @@ namespace QuickGraph
     /// </summary>
     public static class GraphContracts
     {
-        [Conditional("DEBUG")]
-        public static void Assert(bool value)
-        {
-            if (!value)
-                throw new InvalidOperationException();
-        }
-
-        [Conditional("DEBUG")]
-        public static void Assert(bool value, string message)
-        {
-            if (!value)
-                throw new InvalidOperationException(message);
-        }
-
-        [Conditional("DEBUG")]
-        public static void AssumeNotNull<T>(T v, string parameterName)
-        {
-            if (object.Equals(v, null))
-                throw new ArgumentNullException(parameterName);
-        }
-
         [Conditional("DEBUG")]
         public static void Assume(bool value, string message)
         {
@@ -44,10 +24,19 @@ namespace QuickGraph
             TVertex v,
             string parameterName)
         {
-            AssumeNotNull(g, "g");
+            CodeContract.Requires(g != null);
+
             AssumeNotNull(v, parameterName);
             if (!g.ContainsVertex(v))
                 throw new VertexNotFoundException(parameterName);
+        }
+
+        [Conditional("DEBUG")]
+        private static void AssumeNotNull<TVertex>(TVertex v, string parameterName)
+        {
+            if (v == null)
+                throw new ArgumentNullException(parameterName);
+            CodeContract.EndContractBlock();
         }
 
         [Conditional("DEBUG")]
@@ -56,7 +45,8 @@ namespace QuickGraph
             TVertex v,
             string parameterName)
         {
-            AssumeNotNull(g, "g");
+            CodeContract.Requires(g != null);
+
             AssumeNotNull(v, parameterName);
             if (g.ContainsVertex(v))
                 throw new ArgumentException("vertex already in set", parameterName);

@@ -12,7 +12,6 @@ namespace QuickGraph
         readonly ParallelState<TLocal> local;
         public ParallelEventArgs(ParallelState<TLocal> local)
         {
-            GraphContracts.AssumeNotNull(local, "local");
             this.local = local;
         }
 

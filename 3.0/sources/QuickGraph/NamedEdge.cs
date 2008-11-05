@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -9,7 +10,8 @@ namespace QuickGraph
         public NamedEdge(TVertex source, TVertex target, string name)
             :base(source,target)
         {
-            GraphContracts.AssumeNotNull(name, "name");
+            CodeContract.Requires(name != null);
+
             this.name = name;
         }
 

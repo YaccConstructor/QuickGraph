@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
     [Serializable]
     [DebuggerDisplay("{Source}->{Target}")]
-    public class Edge<TVertex> : IEdge<TVertex>
+    public class Edge<TVertex> 
+        : IEdge<TVertex>
     {
         private readonly TVertex source;
         private readonly TVertex target;
 
         public Edge(TVertex source, TVertex target)
         {
-            GraphContracts.AssumeNotNull(source, "source");
-            GraphContracts.AssumeNotNull(target, "target");
+            CodeContract.Requires(source != null);
+            CodeContract.Requires(target != null);
 
             this.source = source;
             this.target = target;

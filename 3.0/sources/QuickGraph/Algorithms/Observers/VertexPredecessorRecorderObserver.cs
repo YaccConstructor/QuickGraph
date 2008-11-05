@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Observers
 {
@@ -25,7 +26,8 @@ namespace QuickGraph.Algorithms.Observers
         public VertexPredecessorRecorderObserver(
             IDictionary<TVertex, TEdge> vertexPredecessors)
         {
-            GraphContracts.AssumeNotNull(vertexPredecessors, "vertexPredecessors");
+            CodeContract.Requires(vertexPredecessors != null);
+
             this.vertexPredecessors = vertexPredecessors;
         }
 
@@ -36,13 +38,13 @@ namespace QuickGraph.Algorithms.Observers
 
         public void Attach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
-            GraphContracts.AssumeNotNull(algorithm, "algorithm");
+            CodeContract.Requires(algorithm != null);
             algorithm.TreeEdge+=new EdgeEventHandler<TVertex,TEdge>(TreeEdge);
         }
 
         public void Detach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
-            GraphContracts.AssumeNotNull(algorithm, "algorithm");
+            CodeContract.Requires(algorithm != null);
             algorithm.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(TreeEdge);
         }
 

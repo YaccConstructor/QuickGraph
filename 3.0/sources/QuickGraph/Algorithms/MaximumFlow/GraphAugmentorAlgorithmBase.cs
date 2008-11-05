@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -67,22 +68,28 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public event VertexEventHandler<TVertex> SuperSourceAdded;
         private void OnSuperSourceAdded(TVertex v)
         {
-            if (this.SuperSourceAdded != null)
-                this.SuperSourceAdded(this, new VertexEventArgs<TVertex>(v));
+            CodeContract.Requires(v != null);
+            var eh = this.SuperSourceAdded;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event VertexEventHandler<TVertex> SuperSinkAdded;
         private void OnSuperSinkAdded(TVertex v)
         {
-            if (this.SuperSinkAdded != null)
-                this.SuperSinkAdded(this, new VertexEventArgs<TVertex>(v));
+            CodeContract.Requires(v != null);
+            var eh = this.SuperSinkAdded;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
         private void OnEdgeAdded(TEdge e)
         {
-            if (this.EdgeAdded != null)
-                this.EdgeAdded(this, new EdgeEventArgs<TVertex, TEdge>(e));
+            CodeContract.Requires(e != null);
+            var eh = this.EdgeAdded;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
 

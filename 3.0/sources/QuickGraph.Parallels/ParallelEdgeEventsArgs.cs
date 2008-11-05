@@ -15,7 +15,6 @@ namespace QuickGraph
         public ParallelEdgeEventArgs(TEdge edge, ParallelState<TLocal> local)
             :base(edge)
         {
-            GraphContracts.AssumeNotNull(local, "local");
             this.local = local;
         }
 

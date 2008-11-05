@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -8,7 +9,7 @@ namespace QuickGraph
         private readonly TVertex vertex;
         public VertexEventArgs(TVertex vertex)
         {
-            GraphContracts.AssumeNotNull(vertex, "vertex");
+            CodeContract.Requires(vertex != null);
             this.vertex = vertex;
         }
 

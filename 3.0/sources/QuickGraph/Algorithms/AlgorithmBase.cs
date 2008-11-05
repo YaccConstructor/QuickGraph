@@ -1,6 +1,7 @@
 ﻿using System;
 using QuickGraph.Algorithms.Services;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
@@ -181,7 +182,7 @@ namespace QuickGraph.Algorithms
         Dictionary<Type, object> _services;
         protected virtual bool TryGetService(Type serviceType, out object service)
         {
-            GraphContracts.AssumeNotNull(serviceType, "serviceType");
+            CodeContract.Requires(serviceType != null);
             lock (this.SyncRoot)
             {
                 if (this._services == null)

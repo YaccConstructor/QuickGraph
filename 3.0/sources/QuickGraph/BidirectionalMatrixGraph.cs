@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -310,7 +311,7 @@ namespace QuickGraph
         #region IMutableEdgeListGraph<int,Edge> Members
         bool IMutableEdgeListGraph<int,TEdge>.AddVerticesAndEdge(TEdge edge)
         {
-            GraphContracts.AssumeNotNull(edge, "edge");
+            CodeContract.Requires(edge != null);
             GraphContracts.AssumeInVertexSet(this, edge.Source, "edge.Source");
             GraphContracts.AssumeInVertexSet(this, edge.Target, "edge.Target");
 
@@ -319,7 +320,8 @@ namespace QuickGraph
 
         public bool AddEdge(TEdge edge)
         {
-            GraphContracts.AssumeNotNull(edge, "edge");
+            CodeContract.Requires(edge != null);
+
             if (this.edges[edge.Source, edge.Target]!=null)
                 throw new ParallelEdgeNotAllowedException();
             this.edges[edge.Source,edge.Target] = edge;
@@ -330,7 +332,7 @@ namespace QuickGraph
 
         public void AddEdgeRange(IEnumerable<TEdge> edges)
         {
-            GraphContracts.AssumeNotNull(edges, "edges");
+            CodeContract.Requires(edges != null);
             foreach (var edge in edges)
                 this.AddEdge(edge);
         }

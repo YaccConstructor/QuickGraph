@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Predicates
 {
@@ -14,7 +15,8 @@ namespace QuickGraph.Predicates
 
         public IsolatedVertexPredicate(IBidirectionalGraph<TVertex,TEdge> visitedGraph)
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+            CodeContract.Requires(visitedGraph!=null);
+
             this.visitedGraph = visitedGraph;
         }
 

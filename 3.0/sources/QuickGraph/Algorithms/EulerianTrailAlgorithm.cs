@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
@@ -55,6 +56,9 @@ namespace QuickGraph.Algorithms
 
         private IEnumerable<TEdge> SelectOutEdgesNotInCircuit(TVertex v)
         {
+            CodeContract.Requires(v != null);
+            CodeContract.Ensures(CodeContract.Result<IEnumerable<TEdge>>() != null);
+
             foreach (var edge in VisitedGraph.OutEdges(v))
                 if (this.NotInCircuit(edge))
                     yield return edge;
@@ -73,26 +77,36 @@ namespace QuickGraph.Algorithms
         public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
-            if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            CodeContract.Requires(e != null);
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         public event EdgeEventHandler<TVertex,TEdge> CircuitEdge;
         private void OnCircuitEdge(TEdge e)
         {
-            if (CircuitEdge != null)
-                CircuitEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            CodeContract.Requires(e != null);
+
+            var eh = this.CircuitEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         public event EdgeEventHandler<TVertex,TEdge> VisitEdge;
         private void OnVisitEdge(TEdge e)
         {
-            if (VisitEdge != null)
-                VisitEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            CodeContract.Requires(e != null);
+
+            var eh = this.VisitEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         private bool Search(TVertex u)
         {
+            CodeContract.Requires(u != null);
+
             foreach (var e in SelectOutEdgesNotInCircuit(u))
             {
                 OnTreeEdge(e);
@@ -171,9 +185,9 @@ namespace QuickGraph.Algorithms
             int i, j;
 
             // follow C until w is found
-            for (i = 0; i < Circuit.Count; ++i)
+            for (i = 0; i < this.Circuit.Count; ++i)
             {
-                TEdge e = Circuit[i];
+                TEdge e = this.Circuit[i];
                 if (e.Source.Equals(currentVertex))
                     break;
                 newC.Add(e);

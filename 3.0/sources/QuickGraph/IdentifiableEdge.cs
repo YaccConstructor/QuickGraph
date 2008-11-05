@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -14,7 +15,7 @@ namespace QuickGraph
         public IdentifiableEdge(TVertex source, TVertex target, string id)
             : base(source, target)
         {
-            GraphContracts.AssumeNotNull(id, "id");
+            CodeContract.Requires(id != null);
             this.id = id;
         }
 

@@ -14,7 +14,6 @@ namespace QuickGraph
         public ParallelVertexEventArgs(TVertex vertex, ParallelState<TLocal> local)
             : base(vertex)
         {
-            GraphContracts.AssumeNotNull(local, "local");
             this.local = local; 
         }
 

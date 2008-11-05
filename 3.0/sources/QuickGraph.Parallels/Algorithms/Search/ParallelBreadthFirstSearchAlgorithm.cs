@@ -6,6 +6,7 @@ using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.Services;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -147,6 +148,9 @@ namespace QuickGraph.Algorithms.Search
 
         public void Initialize()
         {
+            // make sure queue is empty
+            CodeContract.Ensures(this.vertexQueue.Count == 0);
+
             var cancelManager = this.Services.CancelManager;
 
             // initialize indices and colors
@@ -170,8 +174,6 @@ namespace QuickGraph.Algorithms.Search
                 OnInitializeVertex(v);
             });
 
-            // make sure queue is empty
-            GraphContracts.Assert(this.vertexQueue.Count == 0);
         }
 
         protected override void InternalCompute()
@@ -198,7 +200,6 @@ namespace QuickGraph.Algorithms.Search
 
         private void VisitRoots(IEnumerable<TVertex> roots)
         {
-            GraphContracts.AssumeNotNull(roots, "roots");
             // enqueue roots
             Parallel.ForEach<TVertex, TLocal>(
                 roots,
@@ -216,7 +217,7 @@ namespace QuickGraph.Algorithms.Search
             var color = (GraphColor)Interlocked.Exchange(
                 ref this.vertexIndexedColors[this.vertexIndices[s]], 
                 (int)GraphColor.Gray);
-            GraphContracts.Assert(color == GraphColor.White);
+            CodeContract.Assert(color == GraphColor.White);
 
             OnDiscoverVertex(s, local);
             this.vertexQueue.Enqueue(s);

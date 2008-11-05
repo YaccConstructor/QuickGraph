@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -12,7 +13,8 @@ namespace QuickGraph
         private readonly TEdge originalEdge;
         public ReversedEdge(TEdge originalEdge)
         {
-            GraphContracts.AssumeNotNull(originalEdge, "originalEdge");
+            CodeContract.Requires(originalEdge != null);
+
             this.originalEdge = originalEdge;
         }
 

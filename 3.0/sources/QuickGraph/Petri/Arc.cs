@@ -3,8 +3,9 @@ using System;
 namespace QuickGraph.Petri
 {
     [Serializable]
-    internal sealed class Arc<Token> : Edge<IPetriVertex>,
-        IArc<Token>
+    internal sealed class Arc<Token> 
+        : Edge<IPetriVertex>
+        , IArc<Token>
 	{
 		private bool isInputArc;
 		private IPlace<Token> place;

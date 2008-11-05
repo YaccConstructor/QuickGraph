@@ -1,5 +1,6 @@
 ﻿using System;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
@@ -32,8 +33,7 @@ namespace QuickGraph.Algorithms
 
         public void SetRootVertex(TVertex rootVertex)
         {
-            GraphContracts.AssumeNotNull(rootVertex, "rootVertex");
-            // GraphContracts.AssumeInVertexSet(this.VisitedGraph, rootVertex, "rootVertex");
+            CodeContract.Requires(rootVertex != null);
 
             bool changed = !Comparison<TVertex>.Equals(this.rootVertex, rootVertex);
             this.rootVertex = rootVertex;
@@ -57,8 +57,7 @@ namespace QuickGraph.Algorithms
 
         public void Compute(TVertex rootVertex)
         {
-            GraphContracts.AssumeNotNull(rootVertex, "rootVertex");
-            // GraphContracts.AssumeInVertexSet(this.VisitedGraph, rootVertex, "rootVertex");
+            CodeContract.Requires(rootVertex != null);
 
             this.SetRootVertex(rootVertex);
             this.Compute();

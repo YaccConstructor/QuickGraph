@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -175,7 +176,8 @@ namespace QuickGraph.Algorithms.Search
 
         public void Visit(TVertex u, int depth)
         {
-            GraphContracts.AssumeNotNull(u, "u");
+            CodeContract.Requires(u != null);
+
             if (depth > this.maxDepth)
                 return;
 

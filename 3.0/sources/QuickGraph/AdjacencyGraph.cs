@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -82,7 +83,7 @@ namespace QuickGraph
 
         public bool ContainsVertex(TVertex v)
         {
-            GraphContracts.AssumeNotNull(v, "v");
+            CodeContract.Requires(v != null);
             return this.vertexEdges.ContainsKey(v);
         }
 
@@ -129,9 +130,14 @@ namespace QuickGraph
         {
             get 
             {
-                GraphContracts.Assert(this.edgeCount >= 0);
                 return this.edgeCount; 
             }
+        }
+
+        [ContractInvariantMethod]
+        protected void ObjectInvariant()
+        {
+            CodeContract.Invariant(this.edgeCount >= 0);
         }
 
         /// <summary>
@@ -227,7 +233,8 @@ namespace QuickGraph
 
         public virtual void AddVertexRange(IEnumerable<TVertex> vertices)
         {
-            GraphContracts.AssumeNotNull(vertices, "vertices");
+            CodeContract.Requires(vertices != null);
+
             foreach (var v in vertices)
                 this.AddVertex(v);
         }
@@ -242,7 +249,8 @@ namespace QuickGraph
 
         public virtual bool RemoveVertex(TVertex v)
         {
-            GraphContracts.AssumeNotNull(v, "v");
+            CodeContract.Requires(v != null);
+
             if (!this.ContainsVertex(v))
                 return false;
             // remove outedges
@@ -297,7 +305,8 @@ namespace QuickGraph
 
         public int RemoveVertexIf(VertexPredicate<TVertex> predicate)
         {
-            GraphContracts.AssumeNotNull(predicate, "predicate");
+            CodeContract.Requires(predicate != null);
+
             VertexList vertices = new VertexList();
             foreach (var v in this.Vertices)
                 if (predicate(v))
@@ -311,7 +320,8 @@ namespace QuickGraph
 
         public virtual bool AddVerticesAndEdge(TEdge e)
         {
-            GraphContracts.AssumeNotNull(e, "e");
+            CodeContract.Requires(e != null);
+
             if (!this.ContainsVertex(e.Source))
                 this.AddVertex(e.Source);
             if (!this.ContainsVertex(e.Target))
@@ -338,7 +348,8 @@ namespace QuickGraph
 
         public void AddEdgeRange(IEnumerable<TEdge> edges)
         {
-            GraphContracts.AssumeNotNull(edges, "edges");
+            CodeContract.Requires(edges != null);
+
             foreach (var edge in edges)
                 this.AddEdge(edge);
         }
@@ -375,7 +386,7 @@ namespace QuickGraph
 
         public int RemoveEdgeIf(EdgePredicate<TVertex, TEdge> predicate)
         {
-            GraphContracts.AssumeNotNull(predicate, "predicate");
+            CodeContract.Requires(predicate != null);
 
             var edges = new EdgeList();
             foreach (var edge in this.Edges)
@@ -385,12 +396,12 @@ namespace QuickGraph
             foreach (var edge in edges)
                 this.RemoveEdge(edge);
 
-            GraphContracts.Assert(this.edgeCount >= 0);
             return edges.Count;
         }
 
         public void ClearOutEdges(TVertex v)
         {
+            CodeContract.Requires(v != null);
             GraphContracts.AssumeInVertexSet(this, v, "v");
 
             var edges = this.vertexEdges[v];
@@ -402,13 +413,12 @@ namespace QuickGraph
             }
             edges.Clear();
             this.edgeCount -= count;
-            GraphContracts.Assert(this.edgeCount >= 0);
         }
 
         public int RemoveOutEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
         {
             GraphContracts.AssumeInVertexSet(this, v, "v");
-            GraphContracts.AssumeNotNull(predicate, "predicate");
+            CodeContract.Requires(predicate != null);
 
             var edges = this.vertexEdges[v];
             var edgeToRemove = new EdgeList(edges.Count);
@@ -422,7 +432,6 @@ namespace QuickGraph
                 this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
             }
             this.edgeCount -= edgeToRemove.Count;
-            GraphContracts.Assert(this.edgeCount >= 0);
 
             return edgeToRemove.Count;
         }

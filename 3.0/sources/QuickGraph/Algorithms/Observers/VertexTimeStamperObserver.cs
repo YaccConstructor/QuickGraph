@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Observers
 {
@@ -48,14 +49,15 @@ namespace QuickGraph.Algorithms.Observers
 
         public void Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
-            GraphContracts.AssumeNotNull(algorithm, "algorithm");
+            CodeContract.Requires(algorithm != null);
             algorithm.DiscoverVertex+=new VertexEventHandler<TVertex>(DiscoverVertex);
             algorithm.FinishVertex+=new VertexEventHandler<TVertex>(FinishVertex);
         }
 
         public void Detach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
-            GraphContracts.AssumeNotNull(algorithm, "algorithm");
+            CodeContract.Requires(algorithm != null);
+
             algorithm.DiscoverVertex -= new VertexEventHandler<TVertex>(DiscoverVertex);
             algorithm.FinishVertex -= new VertexEventHandler<TVertex>(FinishVertex);
         }

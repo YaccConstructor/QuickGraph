@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Collections
 {
@@ -48,7 +49,7 @@ namespace QuickGraph.Collections
 
         public void Enqueue(TVertex value)
         {
-            GraphContracts.AssumeNotNull(value, "value");
+            CodeContract.Requires(value != null);
             GraphContracts.Assume(this.distances.ContainsKey(value), "this.distances.ContainsKey(value)");
             this.heap.Add(this.distances[value], value);
         }

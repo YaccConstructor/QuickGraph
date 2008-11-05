@@ -4,6 +4,7 @@ using QuickGraph.Algorithms.Condensation;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.ShortestPath;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
@@ -132,7 +133,7 @@ namespace QuickGraph.Algorithms
             this IVertexListGraph<TVertex, TEdge> visitedGraph) 
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+            CodeContract.Requires(visitedGraph != null);
 
             foreach (var v in visitedGraph.Vertices)
                 if (visitedGraph.IsOutEdgesEmpty(v))
@@ -150,7 +151,7 @@ namespace QuickGraph.Algorithms
             this IBidirectionalGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+            CodeContract.Requires(visitedGraph != null);
 
             foreach (var v in visitedGraph.Vertices)
                 if (visitedGraph.IsInEdgesEmpty(v))
@@ -168,7 +169,7 @@ namespace QuickGraph.Algorithms
             this IBidirectionalGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+            CodeContract.Requires(visitedGraph != null);
 
             foreach (var v in visitedGraph.Vertices)
                 if (visitedGraph.Degree(v) == 0)
@@ -186,7 +187,7 @@ namespace QuickGraph.Algorithms
             this IUndirectedGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+            CodeContract.Requires(visitedGraph != null);
 
             var dfs = new UndirectedDepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
             var vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
@@ -210,7 +211,7 @@ namespace QuickGraph.Algorithms
             this IVertexListGraph<TVertex,TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+            CodeContract.Requires(visitedGraph != null);
 
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
             var vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
@@ -237,7 +238,7 @@ namespace QuickGraph.Algorithms
             this IUndirectedGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+            CodeContract.Requires(visitedGraph != null);
 
             var vertices = new List<TVertex>(visitedGraph.VertexCount);
             TopologicalSort(visitedGraph, vertices);
@@ -261,8 +262,8 @@ namespace QuickGraph.Algorithms
             )
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
-            GraphContracts.AssumeNotNull(vertices, "vertices");
+            CodeContract.Requires(visitedGraph != null);
+            CodeContract.Requires(vertices != null);
 
             var topo = new UndirectedTopologicalSortAlgorithm<TVertex, TEdge>(visitedGraph);
             topo.Compute(vertices);
@@ -282,7 +283,7 @@ namespace QuickGraph.Algorithms
             this IVertexListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+            CodeContract.Requires(visitedGraph != null);
 
             var vertices = new List<TVertex>(visitedGraph.VertexCount);
             TopologicalSort(visitedGraph, vertices);
@@ -304,8 +305,8 @@ namespace QuickGraph.Algorithms
             IList<TVertex> vertices)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
-            GraphContracts.AssumeNotNull(vertices, "vertices");
+            CodeContract.Requires(visitedGraph != null);
+            CodeContract.Requires(vertices != null);
 
             var topo = new TopologicalSortAlgorithm<TVertex, TEdge>(visitedGraph);
             topo.Compute(vertices);
@@ -315,7 +316,7 @@ namespace QuickGraph.Algorithms
             this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+            CodeContract.Requires(visitedGraph != null);
 
             var vertices = new List<TVertex>(visitedGraph.VertexCount);
             SourceFirstTopologicalSort(visitedGraph, vertices);
@@ -327,8 +328,8 @@ namespace QuickGraph.Algorithms
             IList<TVertex> vertices)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
-            GraphContracts.AssumeNotNull(vertices, "vertices");
+            CodeContract.Requires(visitedGraph != null);
+            CodeContract.Requires(vertices != null);
 
             var topo = new SourceFirstTopologicalSortAlgorithm<TVertex, TEdge>(visitedGraph);
             topo.Compute(vertices);
@@ -349,9 +350,9 @@ namespace QuickGraph.Algorithms
             IDictionary<TVertex,int> components)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(g, "g");
+            CodeContract.Requires(g != null);
+            CodeContract.Requires(components != null);
             GraphContracts.Assume(g.ContainsVertex(startVertex), "g.ContainsVertex(startVertex)"); 
-            GraphContracts.AssumeNotNull(components, "components");
 
             var conn = new ConnectedComponentsAlgorithm<TVertex,TEdge>(g, components);
             conn.Compute(startVertex);
@@ -371,8 +372,8 @@ namespace QuickGraph.Algorithms
             IDictionary<TVertex, int> components)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(g, "g");
-            GraphContracts.AssumeNotNull(components, "components");
+            CodeContract.Requires(g != null);
+            CodeContract.Requires(components != null);
 
             var conn = new WeaklyConnectedComponentsAlgorithm<TVertex, TEdge>(g, components);
             conn.Compute();
@@ -392,8 +393,8 @@ namespace QuickGraph.Algorithms
             IDictionary<TVertex, int> components)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(g, "g");
-            GraphContracts.AssumeNotNull(components, "components");
+            CodeContract.Requires(g != null);
+            CodeContract.Requires(components != null);
 
             var conn = new StronglyConnectedComponentsAlgorithm<TVertex, TEdge>(g, components);
             conn.Compute();
@@ -413,8 +414,8 @@ namespace QuickGraph.Algorithms
             where TVertex : ICloneable
             where TEdge : ICloneableEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(g, "g");
-            GraphContracts.AssumeNotNull(clone, "clone");
+            CodeContract.Requires(g != null);
+            CodeContract.Requires(clone != null);
 
             var vertexClones = new Dictionary<TVertex, TVertex>(g.VertexCount);
             foreach (var v in g.Vertices)
@@ -525,7 +526,7 @@ namespace QuickGraph.Algorithms
             this IVertexListGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(g, "g");
+            CodeContract.Requires(g != null);
 
             return new DagTester().IsDag(g);
         }
@@ -575,8 +576,8 @@ namespace QuickGraph.Algorithms
             ) 
             where TEdge : IEdge<TVertex>
         {
-            GraphContracts.AssumeNotNull(predecessors, "predecessors");
-            GraphContracts.AssumeNotNull(edgeCosts, "edgeCosts");
+            CodeContract.Requires(predecessors != null);
+            CodeContract.Requires(edgeCosts != null);
 
             double cost = 0;
             TVertex current = target;

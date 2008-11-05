@@ -1,24 +1,21 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
     [Serializable]
-    public sealed class EdgeEdgeEventArgs<TVertex, TEdge> : EventArgs
+    public sealed class EdgeEdgeEventArgs<TVertex, TEdge> 
+        : EdgeEventArgs<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private readonly TEdge edge;
         private readonly TEdge targetEdge;
-        public EdgeEdgeEventArgs(TEdge edge, TEdge targetEdge)
-        {
-            GraphContracts.AssumeNotNull(edge, "edge");
-            GraphContracts.AssumeNotNull(targetEdge, "targetEdge");
-            this.edge = edge;
-            this.targetEdge = targetEdge;
-        }
 
-        public TEdge Edge
+        public EdgeEdgeEventArgs(TEdge edge, TEdge targetEdge)
+            :base(edge)
         {
-            get { return this.edge; }
+            CodeContract.Requires(targetEdge != null);
+
+            this.targetEdge = targetEdge;
         }
 
         public TEdge TargetEdge

@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
     [Serializable]
-    public class EdgeEventArgs<TVertex, TEdge> : EventArgs
+    public class EdgeEventArgs<TVertex, TEdge> 
+        : EventArgs
         where TEdge : IEdge<TVertex>
     {
-        private TEdge edge;
+        private readonly TEdge edge;
         public EdgeEventArgs(TEdge edge)
         {
-            if (edge == null)
-                throw new ArgumentNullException("edge");
+            CodeContract.Requires(edge != null);
+
             this.edge = edge;
         }
 

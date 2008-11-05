@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -54,14 +55,14 @@ namespace QuickGraph
 
         public bool RemoveVertex(TVertex v)
         {
-            GraphContracts.AssumeNotNull(v, "v");
+            CodeContract.Requires(v != null);
             this.ClearAdjacentEdges(v);
             return this.adjacentEdges.Remove(v);
         }
 
         public int RemoveVertexIf(VertexPredicate<TVertex> pred)
         {
-            GraphContracts.AssumeNotNull(pred, "pred");
+            CodeContract.Requires(pred != null);
             List<TVertex> vertices = new List<TVertex>();
             foreach (var v in this.Vertices)
                 if (pred(v))
@@ -77,7 +78,7 @@ namespace QuickGraph
         public int RemoveAdjacentEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
         {
             GraphContracts.AssumeInVertexSet(this, v, "v");
-            GraphContracts.AssumeNotNull(predicate, "predicate");
+            CodeContract.Requires(predicate != null);
 
             IList<TEdge> outEdges = this.adjacentEdges[v];
             List<TEdge> edges = new List<TEdge>(outEdges.Count);
@@ -157,7 +158,7 @@ namespace QuickGraph
 
         public bool ContainsVertex(TVertex vertex)
         {
-            GraphContracts.AssumeNotNull(vertex, "vertex");
+            CodeContract.Requires(vertex != null);
             return this.adjacentEdges.ContainsKey(vertex);
         }
         #endregion
@@ -165,7 +166,7 @@ namespace QuickGraph
         #region IMutableEdgeListGraph<Vertex,Edge> Members
         public bool AddVerticesAndEdge(TEdge edge)
         {
-            GraphContracts.AssumeNotNull(edge, "edge");
+            CodeContract.Requires(edge != null);
 
             var sourceEdges = this.AddAndReturnEdges(edge.Source);
             var targetEdges = this.AddAndReturnEdges(edge.Target);
@@ -205,7 +206,8 @@ namespace QuickGraph
 
         public void AddEdgeRange(IEnumerable<TEdge> edges)
         {
-            GraphContracts.AssumeNotNull(edges, "edges");
+            CodeContract.Requires(edges != null);
+
             foreach (var edge in edges)
                 this.AddEdge(edge);
         }
@@ -244,7 +246,7 @@ namespace QuickGraph
 
         public int RemoveEdgeIf(EdgePredicate<TVertex, TEdge> predicate)
         {
-            GraphContracts.AssumeNotNull(predicate, "predicate");
+            CodeContract.Requires(predicate != null);
 
             List<TEdge> edges = new List<TEdge>();
             foreach (var edge in this.Edges)
@@ -257,7 +259,7 @@ namespace QuickGraph
 
         public int RemoveEdges(IEnumerable<TEdge> edges)
         {
-            GraphContracts.AssumeNotNull(edges, "edges");
+            CodeContract.Requires(edges != null);
 
             int count = 0;
             foreach (var edge in edges)

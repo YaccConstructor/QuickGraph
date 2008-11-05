@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using QuickGraph.Predicates;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Exploration
 {
@@ -78,28 +79,39 @@ namespace QuickGraph.Algorithms.Exploration
         public event VertexEventHandler<TVertex> DiscoverVertex;
         private void OnDiscoverVertex(TVertex v)
         {
+            CodeContract.Requires(v != null);
+
             this.VisitedGraph.AddVertex(v);
             this.unexploredVertices.Enqueue(v);
-            if (this.DiscoverVertex != null)
-                this.DiscoverVertex(this, new VertexEventArgs<TVertex>(v));
+
+            var eh = this.DiscoverVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
         public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
-            if (this.TreeEdge != null)
-                this.TreeEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+            CodeContract.Requires(e != null);
+
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
         public event EdgeEventHandler<TVertex, TEdge> BackEdge;
         private void OnBackEdge(TEdge e)
         {
-            if (this.BackEdge != null)
-                this.BackEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+            CodeContract.Requires(e != null);
+            var eh = this.BackEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
         public event EdgeEventHandler<TVertex, TEdge> EdgeSkipped;
         private void OnEdgeSkipped(TEdge e)
         {
-            if (this.EdgeSkipped != null)
-                this.EdgeSkipped(this, new EdgeEventArgs<TVertex, TEdge>(e));
+            CodeContract.Requires(e != null);
+            var eh = this.EdgeSkipped;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         protected override void  InternalCompute()

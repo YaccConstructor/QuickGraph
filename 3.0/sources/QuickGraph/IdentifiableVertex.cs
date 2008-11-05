@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -14,7 +15,8 @@ namespace QuickGraph
 
         public IdentifiableVertex(string id)
         {
-            GraphContracts.AssumeNotNull(id, "id");
+            CodeContract.Requires(id!=null);
+
             this.id = id;
         }
 

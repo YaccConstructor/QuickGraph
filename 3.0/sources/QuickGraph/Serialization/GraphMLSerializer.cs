@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Xml.Serialization;
 using System.Reflection.Emit;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Serialization
 {
@@ -55,7 +56,7 @@ namespace QuickGraph.Serialization
 
         public static bool MoveNextData(XmlReader reader)
         {
-            GraphContracts.AssumeNotNull(reader, "reader");
+            CodeContract.Requires(reader != null);
             return
                 reader.NodeType == XmlNodeType.Element &&
                 reader.Name == "data" &&
@@ -128,9 +129,10 @@ namespace QuickGraph.Serialization
 
                 public static bool TryGetReadContentMethod(Type type, out MethodInfo method)
                 {
-                    GraphContracts.AssumeNotNull(type, "type");
+                    CodeContract.Requires(type != null);
+
                     bool result = ReadContentMethods.TryGetValue(type, out method);
-                    GraphContracts.Assert(!result || method != null, type.FullName);
+                    CodeContract.Assert(!result || method != null, type.FullName);
                     return result;
                 }
             }
@@ -141,8 +143,8 @@ namespace QuickGraph.Serialization
                 params string[] ignoredAttributes
                 )
             {
-                GraphContracts.AssumeNotNull(delegateType, "delegateType");
-                GraphContracts.AssumeNotNull(elementType, "elementType");
+                CodeContract.Requires(delegateType != null);
+                CodeContract.Requires(elementType != null);
 
                 var method = new DynamicMethod(
                     "Read"+elementType.Name,
@@ -309,15 +311,15 @@ namespace QuickGraph.Serialization
 
                 public static bool TryGetWriteValueMethod(Type valueType, out MethodInfo method)
                 {
-                    GraphContracts.AssumeNotNull(valueType, "valueType");
+                    CodeContract.Requires(valueType != null);
                     return WriteValueMethods.TryGetValue(valueType, out method);
                 }
             }
 
             public static Delegate CreateWriteDelegate(Type nodeType, Type delegateType)
             {
-                GraphContracts.AssumeNotNull(nodeType, "nodeType");
-                GraphContracts.AssumeNotNull(delegateType, "delegateType");
+                CodeContract.Requires(nodeType != null);
+                CodeContract.Requires(delegateType != null);
 
                 var method = new DynamicMethod(
                     "Write" + delegateType.Name + nodeType.Name,
@@ -424,11 +426,11 @@ namespace QuickGraph.Serialization
                 IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
                 )
             {
-                GraphContracts.AssumeNotNull(serializer, "serializer");
-                GraphContracts.AssumeNotNull(reader, "reader");
-                GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
-                GraphContracts.AssumeNotNull(vertexFactory, "vertexFactory");
-                GraphContracts.AssumeNotNull(edgeFactory, "edgeFactory");
+                CodeContract.Requires(serializer != null);
+                CodeContract.Requires(reader != null);
+                CodeContract.Requires(visitedGraph != null);
+                CodeContract.Requires(vertexFactory != null);
+                CodeContract.Requires(edgeFactory != null);
 
                 this.serializer = serializer;
                 this.reader = reader;
@@ -474,7 +476,7 @@ namespace QuickGraph.Serialization
 
             private void ReadElements()
             {
-                GraphContracts.Assert(
+                CodeContract.Requires(
                     this.Reader.Name == "graph" &&
                     this.Reader.NamespaceURI == GraphMLNamespace,
                     "incorrect reader position");
@@ -552,9 +554,9 @@ namespace QuickGraph.Serialization
                 XmlWriter writer,
                 IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
             {
-                GraphContracts.AssumeNotNull(serializer, "serializer");
-                GraphContracts.AssumeNotNull(writer, "writer");
-                GraphContracts.AssumeNotNull(visitedGraph, "visitedGraph");
+                CodeContract.Requires(serializer != null);
+                CodeContract.Requires(writer != null);
+                CodeContract.Requires(visitedGraph != null);
 
                 this.serializer = serializer;
                 this.writer = writer;
@@ -638,8 +640,8 @@ namespace QuickGraph.Serialization
 
             private void WriteAttributeDefinitions(string forNode, Type nodeType)
             {
-                GraphContracts.AssumeNotNull(forNode, "forNode");
-                GraphContracts.AssumeNotNull(nodeType, "nodeType");
+                CodeContract.Requires(forNode != null);
+                CodeContract.Requires(nodeType != null);
 
                 foreach (var kv in SerializationHelper.GetAttributeProperties(nodeType))
                 {
