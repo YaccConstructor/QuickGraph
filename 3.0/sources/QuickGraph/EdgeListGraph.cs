@@ -2,23 +2,21 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using QuickGraph.Collections;
 
 namespace QuickGraph
 {
     [Serializable]
     [DebuggerDisplay("EdgeCount = {EdgeCount}")]
-    public class EdgeListGraph<TVertex, TEdge> :
-        IEdgeListGraph<TVertex,TEdge>,
-        IMutableEdgeListGraph<TVertex,TEdge>
+    public class EdgeListGraph<TVertex, TEdge>
+        : IEdgeListGraph<TVertex,TEdge>
+        , IMutableEdgeListGraph<TVertex,TEdge>
+        , ICloneable
         where TEdge : IEdge<TVertex>
     {
         private readonly bool isDirected = true;
         private readonly bool allowParralelEdges = true;
-        private readonly EdgeEdgeDictionary edges = new EdgeEdgeDictionary();
-
-        [Serializable]
-        public class EdgeEdgeDictionary : Dictionary<TEdge, TEdge>
-        { }
+        private readonly EdgeEdgeDictionary<TVertex, TEdge> edges = new EdgeEdgeDictionary<TVertex, TEdge>();
 
         public EdgeListGraph()
         {}
@@ -141,5 +139,33 @@ namespace QuickGraph
         {
             this.edges.Clear();
         }
+
+        #region ICloneable Members
+        private EdgeListGraph(
+            bool isDirected,
+            bool allowParralelEdges,
+            EdgeEdgeDictionary<TVertex, TEdge> edges)
+        {
+            CodeContract.Requires(edges != null);
+
+            this.isDirected = isDirected;
+            this.allowParralelEdges = allowParralelEdges;
+            this.edges = edges;
+        }
+
+        public EdgeListGraph<TVertex, TEdge> Clone()
+        {
+            return new EdgeListGraph<TVertex, TEdge>(
+                this.isDirected, 
+                this.allowParralelEdges, 
+                this.edges.Clone()
+                );
+        }
+
+        object ICloneable.Clone()
+        {
+            return this.Clone();
+        }
+        #endregion
     }
 }

@@ -204,6 +204,7 @@
     <Compile Include="Algorithms\VertexAdjacencyMatrixBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithm.cs" />
     <Compile Include="Collections\BinaryHeap.cs" />
+    <Compile Include="Collections\EdgeEdgeDictionary.cs" />
     <Compile Include="Collections\EdgeList.cs" />
     <Compile Include="Collections\FibonacciHeap.cs" />
     <Compile Include="Collections\FibonacciQueue.cs" />

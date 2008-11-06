@@ -315,7 +315,7 @@ namespace QuickGraph
         public event VertexEventHandler<TVertex> VertexRemoved;
         protected virtual void OnVertexRemoved(VertexEventArgs<TVertex> args)
         {
-            VertexEventHandler<TVertex> eh = this.VertexRemoved;
+            var eh = this.VertexRemoved;
             if (eh != null)
                 eh(this, args);
         }
@@ -324,7 +324,7 @@ namespace QuickGraph
         {
             CodeContract.Requires(predicate != null);
 
-            VertexList vertices = new VertexList();
+            var vertices = new VertexList<TVertex>();
             foreach (var v in this.Vertices)
                 if (predicate(v))
                     vertices.Add(v);
@@ -541,7 +541,7 @@ namespace QuickGraph
             CodeContract.Requires(edgeFactory != null);
 
             // storing vertices to merge
-            VertexList mergeVertices = new VertexList(this.VertexCount / 4);
+            var mergeVertices = new VertexList<TVertex>(this.VertexCount / 4);
             foreach (var v in this.Vertices)
                 if (vertexPredicate(v))
                     mergeVertices.Add(v);
@@ -549,14 +549,6 @@ namespace QuickGraph
             // applying merge recursively
             foreach (var v in mergeVertices)
                 MergeVertex(v, edgeFactory);
-        }
-
-        [Serializable]
-        private sealed class VertexList : List<TVertex>
-        {
-            public VertexList() { }
-            public VertexList(int capacity)
-                : base(capacity) { }
         }
 
         #region ICloneable Members
