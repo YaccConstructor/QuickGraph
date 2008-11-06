@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using QuickGraph.Contracts;
+using QuickGraph.Collections;
 
 namespace QuickGraph
 {
     [Serializable]
     [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
-    public class UndirectedGraph<TVertex, TEdge> :
-        IMutableUndirectedGraph<TVertex,TEdge>
+    public class UndirectedGraph<TVertex, TEdge> 
+        : IMutableUndirectedGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
         private readonly bool allowParallelEdges = true;
-        private readonly Dictionary<TVertex, List<TEdge>> adjacentEdges = 
-            new Dictionary<TVertex, List<TEdge>>();
+        private readonly VertexEdgeDictionary<TVertex, TEdge> adjacentEdges =
+            new VertexEdgeDictionary<TVertex, TEdge>();
         private int edgeCount = 0;
 
         public UndirectedGraph()
@@ -43,14 +44,14 @@ namespace QuickGraph
         public void AddVertex(TVertex v)
         {
             GraphContract.RequiresNotInVertexSet(this, v, "v");
-            this.adjacentEdges.Add(v, new List<TEdge>());
+            this.adjacentEdges.Add(v, new EdgeList<TVertex, TEdge>());
         }
 
         private List<TEdge> AddAndReturnEdges(TVertex v)
         {
-            List<TEdge> edges;
+            EdgeList<TVertex, TEdge> edges;
             if (!this.adjacentEdges.TryGetValue(v, out edges))
-                this.adjacentEdges[v] = edges = new List<TEdge>();
+                this.adjacentEdges[v] = edges = new EdgeList<TVertex, TEdge>();
             return edges;
         }
 
@@ -78,6 +79,7 @@ namespace QuickGraph
         #region IMutableIncidenceGraph<Vertex,Edge> Members
         public int RemoveAdjacentEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
         {
+            CodeContract.Requires(v != null);
             GraphContract.RequiresInVertexSet(this, v);
             CodeContract.Requires(predicate != null);
 
@@ -91,19 +93,28 @@ namespace QuickGraph
             return edges.Count;
         }
 
+        [ContractInvariantMethod]
+        protected void ObjectInvariant()
+        {
+            CodeContract.Invariant(this.edgeCount >= 0);
+        }
+
         public void ClearAdjacentEdges(TVertex v)
         {
+            CodeContract.Requires(v != null);
             GraphContract.RequiresInVertexSet(this, v);
-            IList<TEdge> edges = this.adjacentEdges[v];
+            CodeContract.Ensures(CodeContract.OldValue(this.edgeCount) == this.edgeCount - this.adjacentEdges[v].Count);
+
+            var edges = this.adjacentEdges[v];
             this.edgeCount -= edges.Count;
             foreach (var edge in edges)
             {
-                if (edge.Source.Equals(v))
-                    this.adjacentEdges[edge.Target].Remove(edge);
-                else
-                    this.adjacentEdges[edge.Source].Remove(edge);
+                EdgeList<TVertex, TEdge> aEdges;
+                if (this.adjacentEdges.TryGetValue(edge.Target, out aEdges))
+                    aEdges.Remove(edge);
+                if (this.adjacentEdges.TryGetValue(edge.Source, out aEdges))
+                    aEdges.Remove(edge);
             }
-            System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
         }
         #endregion
 
@@ -229,7 +240,7 @@ namespace QuickGraph
             if (this.adjacentEdges[edge.Target].Remove(edge))
             {
                 this.edgeCount--;
-                System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
+                CodeContract.Assert(this.edgeCount >= 0);
                 this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
                 return true;
             }

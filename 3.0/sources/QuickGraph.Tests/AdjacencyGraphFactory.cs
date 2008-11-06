@@ -16,13 +16,30 @@ namespace QuickGraph {
         }
     }
 
-    public class NamedEdge : IdentifiableEdge<NamedVertex> {
+    public abstract class NamedEdgeChild 
+        : IdentifiableEdge<NamedVertex> 
+    {
+        private string nameChild;
+        protected NamedEdgeChild(NamedVertex source, NamedVertex target, string id)
+            : base(source, target, id) { }
+
+        [System.Xml.Serialization.XmlAttribute]
+        public string NameChild {
+            get { return this.nameChild; }
+            set { this.nameChild = value; }
+        }
+    }
+
+    public class NamedEdge
+        : NamedEdgeChild
+    {
         private string name;
         public NamedEdge(NamedVertex source, NamedVertex target, string id)
             : base(source, target, id) { }
 
         [System.Xml.Serialization.XmlAttribute]
-        public string Name {
+        public string Name
+        {
             get { return this.name; }
             set { this.name = value; }
         }
@@ -129,6 +146,7 @@ namespace QuickGraph {
                     count.ToString()
                     );
                 edge.Name = edge.Source.Name + "->" + edge.Target.Name;
+                edge.NameChild = edge.Name + "child";
                 cg.AddEdge(edge);
                 count++;
             }

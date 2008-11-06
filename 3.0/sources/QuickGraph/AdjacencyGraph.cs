@@ -298,7 +298,7 @@ namespace QuickGraph
                 edgeToRemove.Clear();
             }
 
-            System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
+            CodeContract.Assert(this.edgeCount >= 0);
             this.vertexEdges.Remove(v);
             this.OnVertexRemoved(new VertexEventArgs<TVertex>(v));
 
@@ -378,7 +378,7 @@ namespace QuickGraph
             if (this.vertexEdges[e.Source].Remove(e))
             {
                 this.edgeCount--;
-                System.Diagnostics.Debug.Assert(this.edgeCount >= 0);
+                CodeContract.Assert(this.edgeCount >= 0);
                 this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(e));
                 return true;
             }

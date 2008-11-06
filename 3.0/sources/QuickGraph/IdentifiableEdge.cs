@@ -6,9 +6,9 @@ namespace QuickGraph
 {
     [Serializable]
     [DebuggerDisplay("{ID}:{Source}->{Target}")]
-    public class IdentifiableEdge<TVertex> : 
-        Edge<TVertex>, 
-        IIdentifiable
+    public class IdentifiableEdge<TVertex> 
+        : Edge<TVertex>
+        , IIdentifiable
     {
         private readonly string id;
 

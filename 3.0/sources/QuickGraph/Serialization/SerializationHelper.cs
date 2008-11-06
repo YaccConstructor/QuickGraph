@@ -15,7 +15,7 @@ namespace QuickGraph.Serialization
                 currentType != typeof(object) &&
                 currentType != typeof(ValueType))
             {
-                foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                foreach (PropertyInfo property in currentType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
                 {
                     // must have a get, and not be an index
                     if (!property.CanRead || property.GetIndexParameters().Length > 0)
@@ -26,7 +26,7 @@ namespace QuickGraph.Serialization
                         yield return new KeyValuePair<PropertyInfo, string>(property, name);
                 }
 
-                currentType = type.BaseType;
+                currentType = currentType.BaseType;
             }
         }
 
