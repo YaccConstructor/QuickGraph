@@ -38,7 +38,7 @@ namespace QuickGraph.Algorithms
             bool changed = !Comparison<TVertex>.Equals(this.rootVertex, rootVertex);
             this.rootVertex = rootVertex;
             if (changed)
-                this.OnRooVertexChanged(EventArgs.Empty);
+                this.OnRootVertexChanged(EventArgs.Empty);
             this.hasRootVertex = true;
         }
 
@@ -49,10 +49,13 @@ namespace QuickGraph.Algorithms
         }
 
         public event EventHandler RootVertexChanged;
-        protected virtual void OnRooVertexChanged(EventArgs e)
+        protected virtual void OnRootVertexChanged(EventArgs e)
         {
-            if (this.RootVertexChanged != null)
-                this.RootVertexChanged(this, e);
+            CodeContract.Requires(e != null);
+
+            var eh = this.RootVertexChanged;
+            if (eh != null)
+                eh(this, e);
         }
 
         public void Compute(TVertex rootVertex)
