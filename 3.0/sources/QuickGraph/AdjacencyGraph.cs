@@ -35,12 +35,18 @@ namespace QuickGraph
         }
 
         public AdjacencyGraph(bool allowParallelEdges, int capacity)
+            :this(allowParallelEdges, capacity, -1)
+        {
+        }
+
+        public AdjacencyGraph(bool allowParallelEdges, int capacity, int edgeCapacity)
         {
             this.allowParallelEdges = allowParallelEdges;
             if (capacity > -1)
                 this.vertexEdges = new VertexEdgeDictionary<TVertex, TEdge>(capacity);
             else
                 this.vertexEdges = new VertexEdgeDictionary<TVertex, TEdge>();
+            this.edgeCapacity = edgeCapacity;
         }
 
         public bool IsDirected
@@ -342,6 +348,7 @@ namespace QuickGraph
 
         public virtual bool AddEdge(TEdge e)
         {
+            CodeContract.Requires(e != null);
             GraphContract.RequiresInVertexSet<TVertex, TEdge>(this, e, "e");
             if (!this.AllowParallelEdges)
             {

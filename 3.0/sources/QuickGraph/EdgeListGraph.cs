@@ -74,6 +74,8 @@ namespace QuickGraph
 
         public bool AddVerticesAndEdge(TEdge edge)
         {
+            CodeContract.Requires(edge != null);
+
             return this.AddEdge(edge);
         }
 

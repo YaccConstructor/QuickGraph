@@ -19,7 +19,7 @@ namespace QuickGraph.Contracts
             CodeContract.Requires(g != null);
             CodeContract.Requires(v != null);
             // todo make requires
-            CodeContract.Assert(g.ContainsVertex(v));
+            CodeContract.Requires(g.ContainsVertex(v));
         }
 
         [Pure, Conditional("CONTRACTS_PRECONDITIONS"), Conditional("CONTRACTS_FULL")]

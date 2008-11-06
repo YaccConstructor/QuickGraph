@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jonathan de Halleux")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Copyright Jonathan de Halleux 2007")]
+[assembly: AssemblyCopyright("Copyright http://www.codeplex.com/quickgraph")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyDelaySign(false)]
@@ -21,4 +21,3 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: System.Runtime.InteropServices.Guid("1F1AD18C-42EE-4b65-852C-59BB24AE04A4")]
-

@@ -12,7 +12,7 @@ namespace QuickGraph.Algorithms.Observers
         }
 
         [Serializable]
-        internal sealed class ObserverGuardian<TAlgorithm> :
+        class ObserverGuardian<TAlgorithm> :
             IDisposable 
         {
             private TAlgorithm algorithm;
