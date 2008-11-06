@@ -240,13 +240,13 @@ namespace QuickGraph
 
         public bool ContainsEdge(TEdge edge)
         {
-            GraphContract.RequiresInVertexSet(this, edge, "edge");
+            GraphContract.RequiresInVertexSet(this, edge);
             return this.vertexOutEdges[edge.Source].Contains(edge);
         }
 
         public virtual void AddVertex(TVertex v)
         {
-            GraphContract.RequiresNotInVertexSet(this, v, "v");
+            GraphContract.RequiresNotInVertexSet(this, v);
 
             if (this.EdgeCapacity > 0)
             {
@@ -336,7 +336,7 @@ namespace QuickGraph
 
         public virtual bool AddEdge(TEdge e)
         {
-            GraphContract.RequiresInVertexSet(this, e, "e");
+            GraphContract.RequiresInVertexSet(this, e);
             if (!this.AllowParallelEdges)
             {
                 if (this.ContainsEdge(e.Source, e.Target))
@@ -380,7 +380,7 @@ namespace QuickGraph
 
         public virtual bool RemoveEdge(TEdge e)
         {
-            GraphContract.RequiresInVertexSet(this, e, "e");
+            GraphContract.RequiresInVertexSet(this, e);
             if (this.vertexOutEdges[e.Source].Remove(e))
             {
                 this.vertexInEdges[e.Target].Remove(e);
