@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Collections
 {
@@ -52,8 +53,8 @@ namespace QuickGraph.Collections
 
         public void Enqueue(TVertex value)
         {
-            GraphContracts.AssumeNotNull(value, "value");
-            GraphContracts.Assume(this.mDistances.ContainsKey(value), "this.distances.ContainsKey(value)");
+            CodeContract.Requires(value != null);
+            CodeContract.Requires(this.mDistances.ContainsKey(value));
             mDistances[value] = mHeap.Enqueue(this.mDistances[value].Priority, value);
         }
 
