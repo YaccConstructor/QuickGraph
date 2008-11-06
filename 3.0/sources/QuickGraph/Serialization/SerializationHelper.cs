@@ -9,15 +9,24 @@ namespace QuickGraph.Serialization
     {
         public static IEnumerable<KeyValuePair<PropertyInfo, string>> GetAttributeProperties(Type type)
         {
-            foreach (PropertyInfo property in type.GetProperties())
+            var currentType = type;
+            while (
+                currentType != null &&
+                currentType != typeof(object) &&
+                currentType != typeof(ValueType))
             {
-                // must have a get, and not be an index
-                if (!property.CanRead || property.GetIndexParameters().Length > 0)
-                    continue;
-                // is it tagged with XmlAttributeAttribute?
-                string name = GetAttributeName(property);
-                if (name != null)
-                    yield return new KeyValuePair<PropertyInfo, string>(property, name);
+                foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                {
+                    // must have a get, and not be an index
+                    if (!property.CanRead || property.GetIndexParameters().Length > 0)
+                        continue;
+                    // is it tagged with XmlAttributeAttribute?
+                    string name = GetAttributeName(property);
+                    if (name != null)
+                        yield return new KeyValuePair<PropertyInfo, string>(property, name);
+                }
+
+                currentType = type.BaseType;
             }
         }
 
