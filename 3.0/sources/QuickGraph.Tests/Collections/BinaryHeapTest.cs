@@ -7,6 +7,7 @@ using Microsoft.Pex.Framework.Wizard;
 using System.Collections;
 using QuickGraph.Unit;
 using Microsoft.Pex.Framework.Factories;
+using QuickGraph.Unit.Exceptions;
 
 namespace QuickGraph.Collections
 {
@@ -51,7 +52,7 @@ namespace QuickGraph.Collections
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(DebugFailureException))]
         public void ConstructorWithNullComparison()
         {
             var target = new BinaryHeap<int, int>(0, null);

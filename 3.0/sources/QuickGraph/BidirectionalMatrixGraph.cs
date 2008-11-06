@@ -8,9 +8,10 @@ namespace QuickGraph
 {
     [Serializable]
     [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
-    public class BidirectionalMatrixGraph<TEdge> :
-        IBidirectionalGraph<int, TEdge>,
-        IMutableEdgeListGraph<int, TEdge>
+    public class BidirectionalMatrixGraph<TEdge> 
+        : IBidirectionalGraph<int, TEdge>
+        , IMutableEdgeListGraph<int, TEdge>
+        , ICloneable
         where TEdge : IEdge<int>
     {
         private readonly int vertexCount;
@@ -373,5 +374,37 @@ namespace QuickGraph
             throw new NotImplementedException();
         }
         #endregion
-}
+
+        #region ICloneable Members
+        private BidirectionalMatrixGraph(
+            int vertexCount,
+            int edgeCount,
+            TEdge[,] edges)
+        {
+            CodeContract.Requires(vertexCount > 0);
+            CodeContract.Requires(edgeCount >= 0);
+            CodeContract.Requires(edges != null);
+            CodeContract.Requires(vertexCount == edges.GetLength(0));
+            CodeContract.Requires(vertexCount == edges.GetLength(1));
+
+            this.vertexCount = vertexCount;
+            this.edgeCount = edgeCount;
+            this.edges = edges;
+        }
+
+        public BidirectionalMatrixGraph<TEdge> Clone()
+        {
+            return new BidirectionalMatrixGraph<TEdge>(
+                this.vertexCount,
+                this.edgeCount,
+                (TEdge[,])this.edges.Clone()
+                );
+        }
+
+        object ICloneable.Clone()
+        {
+            return this.Clone();
+        }
+        #endregion
+    }
 }

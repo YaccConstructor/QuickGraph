@@ -204,9 +204,12 @@
     <Compile Include="Algorithms\VertexAdjacencyMatrixBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithm.cs" />
     <Compile Include="Collections\BinaryHeap.cs" />
+    <Compile Include="Collections\EdgeList.cs" />
     <Compile Include="Collections\FibonacciHeap.cs" />
     <Compile Include="Collections\FibonacciQueue.cs" />
     <Compile Include="Collections\IQueue.cs" />
+    <Compile Include="Collections\VertexEdgeDictionary.cs" />
+    <Compile Include="Collections\VertexList.cs" />
     <Compile Include="Contracts\CEdge.cs" />
     <Compile Include="Contracts\EnumerableContract.cs" />
     <Compile Include="Contracts\GraphContract.cs" />

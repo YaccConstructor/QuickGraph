@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using QuickGraph.Contracts;
+using QuickGraph.Collections;
 
 namespace QuickGraph
 {
@@ -23,10 +24,10 @@ namespace QuickGraph
     {
         private readonly bool isDirected = true;
         private readonly bool allowParallelEdges;
-        private readonly VertexEdgeDictionary vertexOutEdges 
-            = new VertexEdgeDictionary();
-        private readonly VertexEdgeDictionary vertexInEdges 
-            = new VertexEdgeDictionary();
+        private readonly VertexEdgeDictionary<TVertex, TEdge> vertexOutEdges 
+            = new VertexEdgeDictionary<TVertex, TEdge>();
+        private readonly VertexEdgeDictionary<TVertex, TEdge> vertexInEdges 
+            = new VertexEdgeDictionary<TVertex, TEdge>();
         private int edgeCount = 0;
         private int edgeCapacity = -1;
 
@@ -43,13 +44,13 @@ namespace QuickGraph
             this.allowParallelEdges = allowParallelEdges;
             if (vertexCapacity > -1)
             {
-                this.vertexInEdges = new VertexEdgeDictionary(vertexCapacity);
-                this.vertexOutEdges = new VertexEdgeDictionary(vertexCapacity);
+                this.vertexInEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity);
+                this.vertexOutEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity);
             }
             else
             {
-                this.vertexInEdges = new VertexEdgeDictionary();
-                this.vertexOutEdges = new VertexEdgeDictionary();
+                this.vertexInEdges = new VertexEdgeDictionary<TVertex, TEdge>();
+                this.vertexOutEdges = new VertexEdgeDictionary<TVertex, TEdge>();
             }
         }
 
@@ -171,7 +172,7 @@ namespace QuickGraph
         {
             get
             {
-                foreach (EdgeList edges in this.vertexOutEdges.Values)
+                foreach (var edges in this.vertexOutEdges.Values)
                     foreach (var edge in edges)
                         yield return edge;
             }
@@ -195,7 +196,7 @@ namespace QuickGraph
             GraphContract.RequiresInVertexSet(this, source);
             GraphContract.RequiresInVertexSet(this, target);
 
-            EdgeList edgeList;
+            EdgeList<TVertex, TEdge> edgeList;
             if (this.vertexOutEdges.TryGetValue(source, out edgeList) &&
                 edgeList.Count > 0)
             {
@@ -220,7 +221,7 @@ namespace QuickGraph
             GraphContract.RequiresInVertexSet(this, source);
             GraphContract.RequiresInVertexSet(this, target);
 
-            EdgeList edgeList;
+            EdgeList<TVertex, TEdge> edgeList;
             if (this.vertexOutEdges.TryGetValue(source, out edgeList))
             {
                 List<TEdge> list = new List<TEdge>(edgeList.Count);
@@ -249,13 +250,13 @@ namespace QuickGraph
 
             if (this.EdgeCapacity > 0)
             {
-                this.vertexOutEdges.Add(v, new EdgeList(this.EdgeCapacity));
-                this.vertexInEdges.Add(v, new EdgeList(this.EdgeCapacity));
+                this.vertexOutEdges.Add(v, new EdgeList<TVertex, TEdge>(this.EdgeCapacity));
+                this.vertexInEdges.Add(v, new EdgeList<TVertex, TEdge>(this.EdgeCapacity));
             }
             else
             {
-                this.vertexOutEdges.Add(v, new EdgeList());
-                this.vertexInEdges.Add(v, new EdgeList());
+                this.vertexOutEdges.Add(v, new EdgeList<TVertex, TEdge>());
+                this.vertexInEdges.Add(v, new EdgeList<TVertex, TEdge>());
             }
             this.OnVertexAdded(new VertexEventArgs<TVertex>(v));
         }
@@ -283,7 +284,7 @@ namespace QuickGraph
                 return false;
 
             // collect edges to remove
-            EdgeList edgesToRemove = new EdgeList();
+            var edgesToRemove = new EdgeList<TVertex, TEdge>();
             foreach (var outEdge in this.OutEdges(v))
             {
                 this.vertexInEdges[outEdge.Target].Remove(outEdge);
@@ -407,7 +408,7 @@ namespace QuickGraph
         {
             CodeContract.Requires(predicate != null);
 
-            EdgeList edges = new EdgeList();
+            var edges = new EdgeList<TVertex, TEdge>();
             foreach (var edge in this.Edges)
                 if (predicate(edge))
                     edges.Add(edge);
@@ -422,7 +423,7 @@ namespace QuickGraph
             GraphContract.RequiresInVertexSet(this, v);
             CodeContract.Requires(predicate != null);
 
-            var edges = new EdgeList();
+            var edges = new EdgeList<TVertex, TEdge>();
             foreach (var edge in this.OutEdges(v))
                 if (predicate(edge))
                     edges.Add(edge);
@@ -436,7 +437,7 @@ namespace QuickGraph
             GraphContract.RequiresInVertexSet(this, v);
             CodeContract.Requires(predicate != null);
 
-            EdgeList edges = new EdgeList();
+            var edges = new EdgeList<TVertex, TEdge>();
             foreach (var edge in this.InEdges(v))
                 if (predicate(edge))
                     edges.Add(edge);
@@ -447,9 +448,10 @@ namespace QuickGraph
 
         public void ClearOutEdges(TVertex v)
         {
+            CodeContract.Requires(v != null);
             GraphContract.RequiresInVertexSet(this, v);
 
-            EdgeList outEdges = this.vertexOutEdges[v];
+            var outEdges = this.vertexOutEdges[v];
             foreach (var edge in outEdges)
             {
                 this.vertexInEdges[edge.Target].Remove(edge);
@@ -468,9 +470,10 @@ namespace QuickGraph
 
         public void ClearInEdges(TVertex v)
         {
+            CodeContract.Requires(v != null);
             GraphContract.RequiresInVertexSet(this, v);
 
-            EdgeList inEdges = this.vertexInEdges[v];
+            var inEdges = this.vertexInEdges[v];
             foreach (var edge in inEdges)
             {
                 this.vertexOutEdges[edge.Source].Remove(edge);
@@ -510,8 +513,8 @@ namespace QuickGraph
             CodeContract.Requires(edgeFactory != null);
 
             // storing edges in local array
-            EdgeList inedges = this.vertexInEdges[v];
-            EdgeList outedges = this.vertexOutEdges[v];
+            var inedges = this.vertexInEdges[v];
+            var outedges = this.vertexOutEdges[v];
 
             // remove vertex
             this.RemoveVertex(v);
@@ -556,62 +559,19 @@ namespace QuickGraph
                 : base(capacity) { }
         }
 
-        [Serializable]
-        private sealed class EdgeList : List<TEdge>, ICloneable
-        {
-            public EdgeList() { }
-            public EdgeList(int capacity)
-                : base(capacity)
-            { }
-            private EdgeList(EdgeList list)
-                : base(list)
-            { }
-
-            public EdgeList Clone()
-            {
-                return new EdgeList(this);
-            }
-
-            object ICloneable.Clone()
-            {
-                return this.Clone();
-            }
-        }
-
-        [Serializable]
-        private sealed class VertexEdgeDictionary 
-            : Dictionary<TVertex, EdgeList>, ICloneable, ISerializable
-        {
-            public VertexEdgeDictionary() { }
-            public VertexEdgeDictionary(int capacity)
-                : base(capacity)
-            { }
-
-			public VertexEdgeDictionary(SerializationInfo info, StreamingContext context):base(info,context) { }
-
-            public VertexEdgeDictionary Clone()
-            {
-                VertexEdgeDictionary clone = new VertexEdgeDictionary(this.Count);
-                foreach (KeyValuePair<TVertex, EdgeList> kv in this)
-                    clone.Add(kv.Key, kv.Value.Clone());
-                return clone;
-            }
-
-            object ICloneable.Clone()
-            {
-                return this.Clone();
-            }
-        }
-
         #region ICloneable Members
         private BidirectionalGraph(
-            VertexEdgeDictionary vertexInEdges,
-            VertexEdgeDictionary vertexOutEdges,
+            VertexEdgeDictionary<TVertex, TEdge> vertexInEdges,
+            VertexEdgeDictionary<TVertex, TEdge> vertexOutEdges,
             int edgeCount,
             int edgeCapacity,
             bool allowParallelEdges
             )
         {
+            CodeContract.Requires(vertexInEdges != null);
+            CodeContract.Requires(vertexOutEdges != null);
+            CodeContract.Requires(edgeCount >= 0);
+
             this.vertexInEdges = vertexInEdges;
             this.vertexOutEdges = vertexOutEdges;
             this.edgeCount = edgeCount;
