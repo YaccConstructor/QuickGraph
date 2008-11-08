@@ -123,9 +123,6 @@
     <Compile Include="Collections\BinaryHeapTPriorityTValueEnumeratorTest.InsertManyAndMoveNextAndReset.g.cs">
       <DependentUpon>BinaryHeapTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Constructor.g.cs">
-      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Insert.g.cs">
       <DependentUpon>BinaryHeapTest.cs</DependentUpon>
     </Compile>

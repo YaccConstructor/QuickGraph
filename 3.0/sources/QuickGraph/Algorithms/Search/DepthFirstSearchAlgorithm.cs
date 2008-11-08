@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -44,8 +45,7 @@ namespace QuickGraph.Algorithms.Search
             )
             :base(host, visitedGraph)
 		{
-			if (colors == null)
-				throw new ArgumentNullException("VertexColors");
+            CodeContract.Requires(colors != null);
 			this.colors = colors;
 		}
 
@@ -70,9 +70,16 @@ namespace QuickGraph.Algorithms.Search
 			}
 			set
 			{
+                CodeContract.Requires(value > 0);
 				this.maxDepth = value;
 			}
 		}
+
+        [ContractInvariantMethod]
+        void ObjectInvariant()
+        {
+            CodeContract.Invariant(this.MaxDepth > 0);
+        }
 
 		public event VertexEventHandler<TVertex> InitializeVertex;
 		private void OnInitializeVertex(TVertex v)
@@ -148,60 +155,67 @@ namespace QuickGraph.Algorithms.Search
             if (this.TryGetRootVertex(out rootVertex))
 			{
 				OnStartVertex(rootVertex);
-                Visit(rootVertex, 0);
+                Visit(rootVertex);
             }
 
             var cancelManager = this.Services.CancelManager;
             // process each vertex 
-			foreach(TVertex u in VisitedGraph.Vertices)
+			foreach(TVertex u in this.VisitedGraph.Vertices)
 			{
                 if (cancelManager.IsCancelling)
                     return;
-                if (VertexColors[u] == GraphColor.White)
+                if (this.VertexColors[u] == GraphColor.White)
                 {
-					OnStartVertex(u);
-					Visit(u,0);
+					this.OnStartVertex(u);
+					this.Visit(u);
 				}
 			}
 		}
 
 		public void Initialize()
 		{
-			foreach(TVertex u in VisitedGraph.Vertices)
+			foreach(TVertex u in this.VisitedGraph.Vertices)
 			{
-                VertexColors[u] = GraphColor.White;
-                OnInitializeVertex(u);
+                this.VertexColors[u] = GraphColor.White;
+                this.OnInitializeVertex(u);
 			}
 		}
 
-        private struct SearchFrame
+        struct SearchFrame
         {
             public readonly TVertex Vertex;
             public readonly IEnumerator<TEdge> Edges;
-            public SearchFrame(TVertex vertex, IEnumerator<TEdge> edges)
+            public readonly int Depth;
+            public SearchFrame(TVertex vertex, IEnumerator<TEdge> edges, int depth)
             {
+                CodeContract.Requires(vertex != null);
+                CodeContract.Requires(edges != null);
+                CodeContract.Requires(depth >= 0);
                 this.Vertex = vertex;
                 this.Edges = edges;
+                this.Depth = depth;
             }
         }
 
-		public void Visit(TVertex root, int depth)
+		public void Visit(TVertex root)
 		{
-			if ((object)root==null)
-				throw new ArgumentNullException("root");
+            CodeContract.Requires(root != null);
 
             Stack<SearchFrame> todo = new Stack<SearchFrame>();
             this.VertexColors[root] = GraphColor.Gray;
-            OnDiscoverVertex(root);
+            this.OnDiscoverVertex(root);
 
             var cancelManager = this.Services.CancelManager;
-            todo.Push(new SearchFrame(root, this.VisitedGraph.OutEdges(root).GetEnumerator()));
+            todo.Push(new SearchFrame(root, this.VisitedGraph.OutEdges(root).GetEnumerator(), 0));
             while (todo.Count > 0)
             {
                 if (cancelManager.IsCancelling) return;
 
                 var frame = todo.Pop();
+                if (frame.Depth > this.MaxDepth)
+                    continue;
                 var u = frame.Vertex;
+                var depth = frame.Depth;
 
                 var edges = frame.Edges;
                 while(edges.MoveNext())
@@ -216,7 +230,7 @@ namespace QuickGraph.Algorithms.Search
                     {
                         case GraphColor.White:
                             OnTreeEdge(e);
-                            todo.Push(new SearchFrame(u, edges));
+                            todo.Push(new SearchFrame(u, edges, frame.Depth + 1));
                             u = v;
                             edges = this.VisitedGraph.OutEdges(u).GetEnumerator();
                             this.VertexColors[u] = GraphColor.Gray;

@@ -295,11 +295,11 @@ retry:
                     { // parents
                         var dfs =
                             new DepthFirstSearchAlgorithm<GcType, ReversedEdge<GcType, GcTypeEdge>>(rgraph, colors);
-                        dfs.Visit(type, -1);
+                        dfs.Visit(type);
                     }
                     { // children
                         var dfs = new DepthFirstSearchAlgorithm<GcType, GcTypeEdge>(graph, colors);
-                        dfs.Visit(type, -1);
+                        dfs.Visit(type);
                     }
                 }
             }

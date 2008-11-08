@@ -51,13 +51,6 @@ namespace QuickGraph.Collections
             AssertInvariant<int, int>(target);
         }
 
-        [Test]
-        [ExpectedException(typeof(DebugFailureException))]
-        public void ConstructorWithNullComparison()
-        {
-            var target = new BinaryHeap<int, int>(0, null);
-        }
-
         [PexMethod]
         [PexAllowedExceptionFromTypeUnderTest(typeof(ArgumentNullException))]
         [PexAllowedExceptionFromTypeUnderTest(typeof(ArgumentOutOfRangeException))]
