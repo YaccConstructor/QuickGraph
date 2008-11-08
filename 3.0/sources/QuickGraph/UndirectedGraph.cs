@@ -17,6 +17,7 @@ namespace QuickGraph
         private readonly VertexEdgeDictionary<TVertex, TEdge> adjacentEdges =
             new VertexEdgeDictionary<TVertex, TEdge>();
         private int edgeCount = 0;
+        private int edgeCapacity = 4;
 
         public UndirectedGraph()
             :this(true)
@@ -25,6 +26,12 @@ namespace QuickGraph
         public UndirectedGraph(bool allowParallelEdges)
         {
             this.allowParallelEdges = allowParallelEdges;
+        }
+
+        public int EdgeCapacity
+        {
+            get { return this.edgeCapacity; }
+            set { this.edgeCapacity = value; }
         }
     
         #region IGraph<Vertex,Edge> Members
@@ -44,14 +51,20 @@ namespace QuickGraph
         public void AddVertex(TVertex v)
         {
             GraphContract.RequiresNotInVertexSet(this, v);
-            this.adjacentEdges.Add(v, new EdgeList<TVertex, TEdge>());
+            var edges = this.EdgeCapacity < 0 
+                ? new EdgeList<TVertex, TEdge>() 
+                : new EdgeList<TVertex, TEdge>(this.EdgeCapacity);
+            this.adjacentEdges.Add(v, edges);
         }
 
         private List<TEdge> AddAndReturnEdges(TVertex v)
         {
             EdgeList<TVertex, TEdge> edges;
             if (!this.adjacentEdges.TryGetValue(v, out edges))
-                this.adjacentEdges[v] = edges = new EdgeList<TVertex, TEdge>();
+                this.adjacentEdges[v] = edges = this.EdgeCapacity < 0 
+                    ? new EdgeList<TVertex, TEdge>() 
+                    : new EdgeList<TVertex, TEdge>(this.EdgeCapacity);
+
             return edges;
         }
 
@@ -83,8 +96,8 @@ namespace QuickGraph
             GraphContract.RequiresInVertexSet(this, v);
             CodeContract.Requires(predicate != null);
 
-            IList<TEdge> outEdges = this.adjacentEdges[v];
-            List<TEdge> edges = new List<TEdge>(outEdges.Count);
+            var outEdges = this.adjacentEdges[v];
+            var edges = new List<TEdge>(outEdges.Count);
             foreach (var edge in outEdges)
                 if (predicate(edge))
                     edges.Add(edge);
@@ -185,7 +198,7 @@ namespace QuickGraph
 
             if (!this.AllowParallelEdges)
             {
-                if (sourceEdges.Contains(edge))
+                if (ContainsEdge(sourceEdges, edge))
                     return false;
             }
 
@@ -202,13 +215,16 @@ namespace QuickGraph
         {
             GraphContract.RequiresInVertexSet(this, edge);
 
+            var sourceEdges = this.adjacentEdges[edge.Source];
             if (!this.AllowParallelEdges)
             {
-                if (this.adjacentEdges[edge.Source].Contains(edge))
+                if (ContainsEdge(sourceEdges, edge))
                     return false;
             }
-            this.adjacentEdges[edge.Source].Add(edge);
-            this.adjacentEdges[edge.Target].Add(edge);
+            var targetEdges = this.adjacentEdges[edge.Target];
+
+            sourceEdges.Add(edge);
+            targetEdges.Add(edge);
             this.edgeCount++;
 
             this.OnEdgeAdded(new EdgeEventArgs<TVertex, TEdge>(edge));
@@ -298,8 +314,8 @@ namespace QuickGraph
         {
             get 
             {
-                Dictionary<TEdge, GraphColor> edgeColors = new Dictionary<TEdge, GraphColor>(this.EdgeCount);
-                foreach (IList<TEdge> edges in this.adjacentEdges.Values)
+                var edgeColors = new Dictionary<TEdge, GraphColor>(this.EdgeCount);
+                foreach (var edges in this.adjacentEdges.Values)
                 {
                     foreach(TEdge edge in edges)
                     {
@@ -316,8 +332,18 @@ namespace QuickGraph
         public bool ContainsEdge(TEdge edge)
         {
             GraphContract.RequiresInVertexSet(this, edge);
-            foreach (var e in this.Edges)
-                if (e.Equals(edge))
+            var edges = this.Edges;
+            return ContainsEdge(edges, edge);
+        }
+
+        private static bool ContainsEdge(IEnumerable<TEdge> edges, TEdge edge)
+        {
+            CodeContract.Requires(edges != null);
+            CodeContract.Requires(edge != null);
+
+            foreach (var e in edges)
+                if (e.Source.Equals(edge.Source) && e.Target.Equals(edge.Target) ||
+                    e.Target.Equals(edge.Source) && e.Source.Equals(edge.Target))
                     return true;
             return false;
         }
