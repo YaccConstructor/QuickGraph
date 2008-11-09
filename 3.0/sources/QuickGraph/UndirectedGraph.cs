@@ -149,7 +149,11 @@ namespace QuickGraph
 
         public bool ContainsEdge(TVertex source, TVertex target)
         {
-            foreach(TEdge edge in this.AdjacentEdges(source))
+            CodeContract.Requires(source != null);
+            CodeContract.Requires(target != null);
+            GraphContract.RequiresInVertexSet(this, source);
+
+            foreach(var edge in this.AdjacentEdges(source))
             {
                 if (edge.Source.Equals(source) && edge.Target.Equals(target))
                     return true;

@@ -170,19 +170,6 @@
     <Compile Include="Algorithms\Exploration\CloneableVertexGraphExplorerAlgorithmDefaultFinishedPredicateTVertexTEdgeTest.cs" />
     <Compile Include="Algorithms\Exploration\CloneableVertexGraphExplorerAlgorithmTVertexTEdgeTest.cs" />
     <Compile Include="Algorithms\Exploration\TransitionFactoryImplicitGraphTVertexTEdgeTest.cs" />
-    <Compile Include="Algorithms\MatrixSizeMistmatchExceptionTest.Constructor.g.cs">
-      <DependentUpon>MatrixSizeMistmatchExceptionTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Algorithms\MatrixSizeMistmatchExceptionTest.Constructor01.g.cs">
-      <DependentUpon>MatrixSizeMistmatchExceptionTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Algorithms\MatrixSizeMistmatchExceptionTest.Constructor02.g.cs">
-      <DependentUpon>MatrixSizeMistmatchExceptionTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Algorithms\MatrixSizeMistmatchExceptionTest.Constructor03.g.cs">
-      <DependentUpon>MatrixSizeMistmatchExceptionTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Algorithms\MatrixSizeMistmatchExceptionTest.cs" />
     <Compile Include="Algorithms\MaximumBipartiteMatchingAlgorithmTVertexTEdgeTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTVertexTEdgeTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\EdmondsKarpMaximumFlowAlgorithmTVertexTEdgeTest.cs" />
@@ -238,7 +225,6 @@
     <Compile Include="Algorithms\TopologicalSortAlgorithmTVertexTEdgeTest.cs" />
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTVertexTEdgeTest.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTVertexTEdgeTest.cs" />
-    <Compile Include="Algorithms\VertexAdjacencyMatrixBuilderAlgorithmTVertexTEdgeTest.cs" />
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithmTVertexTEdgeTest.cs" />
     <Compile Include="BidirectionalGraphTVertexTEdgeTest.AddEdge.g.cs">
       <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>

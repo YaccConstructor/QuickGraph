@@ -72,8 +72,6 @@
     <Compile Include="Algorithms\CentralityApproximationAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\WeaklyConnectedCondensationGraphTest.cs" />
-    <Compile Include="Algorithms\DoubleDenseMatrixFactory.cs" />
-    <Compile Include="Algorithms\DoubleDenseMatrixTest.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTest.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\PrimMinimumSpanningTreeAlgorithmTest.cs" />
