@@ -1,17 +1,17 @@
 ﻿using System;
 using QuickGraph.Graphviz.Dot;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Graphviz
 {
     public sealed class FormatVertexEventArgs<V> : VertexEventArgs<V>
     {
-        private GraphvizVertex vertexFormatter;
+        private readonly GraphvizVertex vertexFormatter;
 
         public FormatVertexEventArgs(GraphvizVertex vertexFormatter, V v)
 			: base(v)
         {
-            if (vertexFormatter == null)
-                throw new ArgumentNullException("vertexFormatter");
+            CodeContract.Requires(vertexFormatter != null);
             this.vertexFormatter = vertexFormatter;
         }
 

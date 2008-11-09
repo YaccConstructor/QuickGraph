@@ -1,18 +1,18 @@
 ﻿using System;
 using QuickGraph.Graphviz.Dot;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Graphviz
 {
     public sealed class FormatEdgeEventArgs<V,E> : EdgeEventArgs<V,E>
         where E : IEdge<V>
     {
-        private GraphvizEdge edgeFormatter;
+        private readonly GraphvizEdge edgeFormatter;
 
         public FormatEdgeEventArgs(GraphvizEdge edgeFormatter, E e)
 			: base(e)
         {
-            if (edgeFormatter == null)
-                throw new ArgumentNullException("edgeFormatter");
+            CodeContract.Requires(edgeFormatter != null);
             this.edgeFormatter = edgeFormatter;
         }
 

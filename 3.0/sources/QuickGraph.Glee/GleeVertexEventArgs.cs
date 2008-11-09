@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Glee.Drawing;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Glee
 {
@@ -10,6 +11,7 @@ namespace QuickGraph.Glee
         public GleeVertexEventArgs(TVertex vertex, Node node)
             : base(vertex)
         {
+            CodeContract.Requires(node != null);
             this.node = node;
         }
 

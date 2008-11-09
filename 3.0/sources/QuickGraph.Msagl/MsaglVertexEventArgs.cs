@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Msagl.Drawing;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Msagl
 {
@@ -10,6 +11,8 @@ namespace QuickGraph.Msagl
         public MsaglVertexEventArgs(TVertex vertex, Node node)
             : base(vertex)
         {
+            CodeContract.Requires(node != null);
+
             this.node = node;
         }
 

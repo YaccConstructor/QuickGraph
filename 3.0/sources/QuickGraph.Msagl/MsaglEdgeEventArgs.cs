@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Msagl
 {
@@ -16,6 +17,8 @@ namespace QuickGraph.Msagl
         public MsaglEdgeEventArgs(TEdge edge, Microsoft.Msagl.Drawing.Edge gedge)
             :base(edge)
         {
+            CodeContract.Requires(gedge != null);
+
             this.gedge = gedge;
         }
     }
