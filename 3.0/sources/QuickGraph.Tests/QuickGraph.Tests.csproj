@@ -157,7 +157,6 @@
     <Compile Include="GraphConsoleSerializer.cs" />
     <Compile Include="GraphExtensionsTest.cs" />
     <Compile Include="GraphFactory.cs" />
-    <Compile Include="Heap\HeapTest.cs" />
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />
     <Compile Include="Properties\PexAssemblyInfo.cs" />
     <Compile Include="Program.cs" />
@@ -183,10 +182,6 @@
       <Project>{595D6322-637A-4A36-97F1-D53F3F9ECEA7}</Project>
       <Name>QuickGraph.Graphviz</Name>
     </ProjectReference>
-    <ProjectReference Include="..\QuickGraph.Heap\QuickGraph.Heap.csproj">
-      <Project>{2DEC7C6E-68DF-47EC-A75E-2C1238986B8E}</Project>
-      <Name>QuickGraph.Heap</Name>
-    </ProjectReference>
     <ProjectReference Include="..\QuickGraph.Msagl\QuickGraph.Msagl.csproj">
       <Project>{7E57B699-79C9-4FDF-89FC-D98BD8DDAFF6}</Project>
       <Name>QuickGraph.Msagl</Name>
@@ -203,11 +198,6 @@
       <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
       <Name>QuickGraph</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Heap\gcheap.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
