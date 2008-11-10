@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Collections
 {
@@ -58,97 +59,101 @@ namespace QuickGraph.Collections
         }
     }
 
-    internal class FibonacciHeapLinkedList<TPriority, TValue> : IEnumerable<FibonacciHeapCell<TPriority, TValue>>
+    internal class FibonacciHeapLinkedList<TPriority, TValue> 
+        : IEnumerable<FibonacciHeapCell<TPriority, TValue>>
     {
-        FibonacciHeapCell<TPriority, TValue> mFirst;
-        FibonacciHeapCell<TPriority, TValue> mLast;
+        FibonacciHeapCell<TPriority, TValue> first;
+        FibonacciHeapCell<TPriority, TValue> last;
 
         public FibonacciHeapCell<TPriority, TValue> First
         {
             get
             {
-                return mFirst;
+                return first;
             }
         }
 
         internal FibonacciHeapLinkedList()
         {
-            mFirst = null;
-            mLast = null; 
+            first = null;
+            last = null; 
         }
-        internal void MergeLists(FibonacciHeapLinkedList<TPriority, TValue> List)
+
+        internal void MergeLists(FibonacciHeapLinkedList<TPriority, TValue> list)
         {
-            if (List.First != null)
+            CodeContract.Requires(list != null);
+
+            if (list.First != null)
             {
-                if (mLast != null)
+                if (last != null)
                 {
-                    mLast.Next = List.mFirst;
+                    last.Next = list.first;
                 }
-                List.mFirst.Previous = mLast;
-                mLast = List.mLast;
-                if (mFirst == null)
+                list.first.Previous = last;
+                last = list.last;
+                if (first == null)
                 {
-                    mFirst = List.mFirst;
+                    first = list.first;
                 }
             }
         }
 
-        internal void AddLast(FibonacciHeapCell<TPriority, TValue> Node)
+        internal void AddLast(FibonacciHeapCell<TPriority, TValue> node)
         {
-            if (mLast != null)
+            CodeContract.Requires(node != null);
+
+            if (this.last != null)
             {
-                mLast.Next = Node;
+                this.last.Next = node;
             }
-            Node.Previous = mLast;
-            mLast = Node;
-            if (mFirst == null)
+            node.Previous = this.last;
+            this.last = node;
+            if (this.first == null)
             {
-                mFirst = Node;
+                this.first = node;
             }
         }
 
-        internal void Remove(FibonacciHeapCell<TPriority, TValue> Node)
+        internal void Remove(FibonacciHeapCell<TPriority, TValue> node)
         {
-            if (Node.Previous != null)
+            CodeContract.Requires(node != null);
+
+            if (node.Previous != null)
             {
-                Node.Previous.Next = Node.Next;
+                node.Previous.Next = node.Next;
             }
-            else if (mFirst == Node)
+            else if (first == node)
             {
-                mFirst = Node.Next;
+                this.first = node.Next;
             }
 
-            if (Node.Next != null)
+            if (node.Next != null)
             {
-                Node.Next.Previous = Node.Previous;
+                node.Next.Previous = node.Previous;
             }
-            else if (mLast == Node)
+            else if (last == node)
             {
-                mLast = Node.Previous;
+                this.last = node.Previous;
             }
 
-            Node.Next = null;
-            Node.Previous = null;
+            node.Next = null;
+            node.Previous = null;
         }
 
         #region IEnumerable<FibonacciHeapNode<T,K>> Members
 
         public IEnumerator<FibonacciHeapCell<TPriority, TValue>> GetEnumerator()
         {
-            var current = mFirst;
+            var current = this.first;
             while (current != null)
             {
                 yield return current;
                 current = current.Next;
             }
-            yield break;
         }
-
         #endregion
 
-
         #region IEnumerable Members
-
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
@@ -177,7 +182,10 @@ namespace QuickGraph.Collections
         internal FibonacciHeapCell<TPriority, TValue> Next { get; set; }
         internal FibonacciHeapCell<TPriority, TValue> Previous { get; set; }
     }
-    public class FibonacciHeap<TPriority, TValue> : IEnumerable<FibonacciHeapCell<TPriority, TValue>>
+
+    [DebuggerDisplay("Count = {Count}")]
+    public class FibonacciHeap<TPriority, TValue> 
+        : IEnumerable<FibonacciHeapCell<TPriority, TValue>>
     {
         public FibonacciHeap()
             : this(HeapDirection.Increasing, Comparer<TPriority>.Default.Compare)
@@ -189,23 +197,23 @@ namespace QuickGraph.Collections
         
         public FibonacciHeap(HeapDirection Direction, Comparison<TPriority> priorityComparison)            
         {
-            mNodes = new FibonacciHeapLinkedList<TPriority, TValue>();
-            mDegreeToNode = new Dictionary<int, FibonacciHeapCell<TPriority, TValue>>();
+            nodes = new FibonacciHeapLinkedList<TPriority, TValue>();
+            degreeToNode = new Dictionary<int, FibonacciHeapCell<TPriority, TValue>>();
             DirectionMultiplier = (short)(Direction == HeapDirection.Increasing ? 1 : -1);
-            this.mDirection = Direction;
+            this.direction = Direction;
             this.priorityComparsion = priorityComparison;
-            mCount = 0;
+            count = 0;
         }
-        FibonacciHeapLinkedList<TPriority, TValue> mNodes;
-        FibonacciHeapCell<TPriority, TValue> mNext;
+        FibonacciHeapLinkedList<TPriority, TValue> nodes;
+        FibonacciHeapCell<TPriority, TValue> next;
         private short DirectionMultiplier;  //Used to control the direction of the heap, set to 1 if the Heap is increasing, -1 if it's decreasing
                                           //We use the approach to avoid unnessecary branches
-        private Dictionary<int, FibonacciHeapCell<TPriority, TValue>> mDegreeToNode;
+        private Dictionary<int, FibonacciHeapCell<TPriority, TValue>> degreeToNode;
         private readonly Comparison<TPriority> priorityComparsion;
-        private readonly HeapDirection mDirection;
-        public HeapDirection Direction { get { return mDirection; } }
-        private int mCount;
-        public int Count { get { return mCount; } }
+        private readonly HeapDirection direction;
+        public HeapDirection Direction { get { return direction; } }
+        private int count;
+        public int Count { get { return count; } }
         //Draws the current heap in a string.  Marked Nodes have a * Next to them
 
         public string DrawHeap()
@@ -213,7 +221,7 @@ namespace QuickGraph.Collections
             var lines = new List<string>();
             var lineNum = 0;
             var columnPosition = 0;
-            var stack = mNodes.Select(x => new { Node = x, Level = 0 }).Reverse().ToStack();
+            var stack = nodes.Select(x => new { Node = x, Level = 0 }).Reverse().ToStack();
             while (stack.Count > 0)
             {
                 var currentcell = stack.Pop();
@@ -252,45 +260,55 @@ namespace QuickGraph.Collections
                     Parent = null,
                     Removed = false
                 };
+
             //We don't do any book keeping or maintenance of the heap on Enqueue,
             //We just add this node to the end of the list of Heaps, updating the Next if required
-            mNodes.AddLast(newNode);
-            if (mNext == null || (priorityComparsion(newNode.Priority, mNext.Priority) * DirectionMultiplier) < 0)
+            this.nodes.AddLast(newNode);
+            if (next == null || 
+                (this.priorityComparsion(newNode.Priority, next.Priority) * DirectionMultiplier) < 0)
             {
-                mNext = newNode;
+                next = newNode;
             }
-            mCount++;
+            count++;
             return newNode;            
         }
 
-        public void Delete(FibonacciHeapCell<TPriority, TValue> Node)
+        public void Delete(FibonacciHeapCell<TPriority, TValue> node)
         {
-            ChangeKeyInternal(Node, default(TPriority), true);
+            CodeContract.Requires(node != null);
+
+            ChangeKeyInternal(node, default(TPriority), true);
             Dequeue();            
         }
 
-        public void ChangeKey(FibonacciHeapCell<TPriority, TValue> Node, TPriority NewKey)
+        public void ChangeKey(FibonacciHeapCell<TPriority, TValue> node, TPriority newKey)
         {            
-            ChangeKeyInternal(Node, NewKey, false);            
+            CodeContract.Requires(node != null);
+
+            ChangeKeyInternal(node, newKey, false);            
         }
 
-        private void ChangeKeyInternal(FibonacciHeapCell<TPriority, TValue> Node, TPriority NewKey, bool deletingNode)
+        private void ChangeKeyInternal(
+            FibonacciHeapCell<TPriority, TValue> node, 
+            TPriority NewKey, bool deletingNode)
         {
-            var delta = Math.Sign(priorityComparsion(Node.Priority, NewKey));
+            CodeContract.Requires(node != null);
+
+            var delta = Math.Sign(this.priorityComparsion(node.Priority, NewKey));
             if (delta == 0)
                 return;
-            if (delta == DirectionMultiplier || deletingNode)
+            if (delta == this.DirectionMultiplier || deletingNode)
             {
                 //New value is in the same direciton as the heap
-                Node.Priority = NewKey;
-                var parentNode = Node.Parent;
-                if (parentNode != null && ((priorityComparsion(NewKey, Node.Parent.Priority) * DirectionMultiplier) < 0 || deletingNode))
+                node.Priority = NewKey;
+                var parentNode = node.Parent;
+                if (parentNode != null && ((priorityComparsion(NewKey, node.Parent.Priority) * DirectionMultiplier) < 0 || deletingNode))
                 {
-                    Node.Marked = false;
-                    parentNode.Children.Remove(Node);
+                    node.Marked = false;
+                    parentNode.Children.Remove(node);
                     UpdateNodesDegree(parentNode);
-                    Node.Parent = null;
-                    mNodes.AddLast(Node);
+                    node.Parent = null;
+                    nodes.AddLast(node);
                     //This loop is the cascading cut, we continue to cut
                     //ancestors of the node reduced until we hit a root 
                     //or we found an unmarked ancestor
@@ -299,7 +317,7 @@ namespace QuickGraph.Collections
                         parentNode.Parent.Children.Remove(parentNode);
                         UpdateNodesDegree(parentNode);
                         parentNode.Marked = false;
-                        mNodes.AddLast(parentNode);
+                        nodes.AddLast(parentNode);
                         var currentParent = parentNode;
                         parentNode = parentNode.Parent;
                         currentParent.Parent = null;
@@ -312,26 +330,26 @@ namespace QuickGraph.Collections
                     }
                 }
                 //Update next
-                if (deletingNode || (priorityComparsion(NewKey, mNext.Priority) * DirectionMultiplier) < 0)
+                if (deletingNode || (priorityComparsion(NewKey, next.Priority) * DirectionMultiplier) < 0)
                 {
-                    mNext = Node;
+                    next = node;
                 }
             }
             else
             {
                 //New value is in opposite direction of Heap, cut all children violating heap condition
-                Node.Priority = NewKey;
-                var query = Node.Children.Where(x => (priorityComparsion(Node.Priority, x.Priority) * DirectionMultiplier) > 0);
+                node.Priority = NewKey;
+                var query = node.Children.Where(x => (priorityComparsion(node.Priority, x.Priority) * DirectionMultiplier) > 0);
                 if (query != null)
                 {
                     foreach (var child in query.ToList())
                     {
-                        Node.Marked = true;
-                        Node.Children.Remove(child);
+                        node.Marked = true;
+                        node.Children.Remove(child);
                         child.Parent = null;
                         child.Marked = false;
-                        mNodes.AddLast(child);
-                        UpdateNodesDegree(Node);
+                        nodes.AddLast(child);
+                        UpdateNodesDegree(node);
                     }
                 }
                 UpdateNext();
@@ -343,16 +361,22 @@ namespace QuickGraph.Collections
         /// parents if nessecary
         /// </summary>
         /// <param name="parentNode"></param>
-        private void UpdateNodesDegree(FibonacciHeapCell<TPriority, TValue> parentNode)
+        private void UpdateNodesDegree(
+            FibonacciHeapCell<TPriority, TValue> parentNode)
         {
+            CodeContract.Requires(parentNode != null);
+
             var oldDegree = parentNode.Degree;
-            parentNode.Degree = parentNode.Children.First != null ? parentNode.Children.Max(x => x.Degree) + 1 : 1;
+            parentNode.Degree = 
+                parentNode.Children.First != null 
+                ? parentNode.Children.Max(x => x.Degree) + 1 
+                : 1;
             FibonacciHeapCell<TPriority, TValue> degreeMapValue;
             if (oldDegree != parentNode.Degree)
             {
-                if (mDegreeToNode.TryGetValue(oldDegree, out degreeMapValue) && degreeMapValue == parentNode)
+                if (degreeToNode.TryGetValue(oldDegree, out degreeMapValue) && degreeMapValue == parentNode)
                 {
-                    mDegreeToNode.Remove(oldDegree);
+                    degreeToNode.Remove(oldDegree);
                 }
                 else if (parentNode.Parent != null)
                 {
@@ -363,28 +387,27 @@ namespace QuickGraph.Collections
 
         public void Dequeue()
         {
-            mNodes.Remove(mNext);
-            mNext.Next = null;
-            mNext.Parent = null;
-            mNext.Previous = null;
-            mNext.Removed = true;
+            this.nodes.Remove(next);
+            next.Next = null;
+            next.Parent = null;
+            next.Previous = null;
+            next.Removed = true;
             FibonacciHeapCell<TPriority, TValue> currentDegreeNode;
-            if (mDegreeToNode.TryGetValue(mNext.Degree, out currentDegreeNode))
+            if (degreeToNode.TryGetValue(next.Degree, out currentDegreeNode))
             {
-                if (currentDegreeNode == mNext)
+                if (currentDegreeNode == next)
                 {
-                    mDegreeToNode.Remove(mNext.Degree);
+                    degreeToNode.Remove(next.Degree);
                 }
             }
-            foreach (var child in mNext.Children)
+            foreach (var child in next.Children)
             {
                 child.Parent = null;
             }
-            mNodes.MergeLists(mNext.Children);
-            mNext.Children = null;
-            mCount--;
-            UpdateNext();
-
+            nodes.MergeLists(next.Children);
+            next.Children = null;
+            count--;
+            this.UpdateNext();
         }
 
         /// <summary>
@@ -394,14 +417,14 @@ namespace QuickGraph.Collections
         /// </summary>
         private void UpdateNext()
         {
-            CompressHeap();
-            var node = mNodes.First;
-            mNext = mNodes.First;
+            this.CompressHeap();
+            var node = this.nodes.First;
+            next = this.nodes.First;
             while (node != null)
             {
-                if ((priorityComparsion(node.Priority, mNext.Priority) * DirectionMultiplier) < 0)
+                if ((this.priorityComparsion(node.Priority, next.Priority) * DirectionMultiplier) < 0)
                 {
-                    mNext = node;
+                    next = node;
                 }
                 node = node.Next;
             }
@@ -409,21 +432,21 @@ namespace QuickGraph.Collections
 
         private void CompressHeap()
         {
-            var node = mNodes.First;
+            var node = this.nodes.First;
             FibonacciHeapCell<TPriority, TValue> currentDegreeNode;
             while (node != null)
             {
                 var nextNode = node.Next;
-                while (mDegreeToNode.TryGetValue(node.Degree, out currentDegreeNode) && currentDegreeNode != node)
+                while (degreeToNode.TryGetValue(node.Degree, out currentDegreeNode) && currentDegreeNode != node)
                 {
-                    mDegreeToNode.Remove(node.Degree);
-                    if ((priorityComparsion(currentDegreeNode.Priority, node.Priority) * DirectionMultiplier) <= 0)
+                    degreeToNode.Remove(node.Degree);
+                    if ((this.priorityComparsion(currentDegreeNode.Priority, node.Priority) * DirectionMultiplier) <= 0)
                     {
                         if (node == nextNode)
                         {
                             nextNode = node.Next;
                         }
-                        ReduceNodes(currentDegreeNode, node);
+                        this.ReduceNodes(currentDegreeNode, node);
                         node = currentDegreeNode;
                     }
                     else
@@ -432,10 +455,10 @@ namespace QuickGraph.Collections
                         {
                             nextNode = currentDegreeNode.Next;
                         }
-                        ReduceNodes(node, currentDegreeNode);
+                        this.ReduceNodes(node, currentDegreeNode);
                     }
                 }
-                mDegreeToNode[node.Degree] = node;
+                degreeToNode[node.Degree] = node;
                 node = nextNode;
             }
         }
@@ -445,9 +468,14 @@ namespace QuickGraph.Collections
         /// </summary>
         /// <param name="parentNode"></param>
         /// <param name="childNode"></param>
-        private void ReduceNodes(FibonacciHeapCell<TPriority, TValue> parentNode, FibonacciHeapCell<TPriority, TValue> childNode)
+        private void ReduceNodes(
+            FibonacciHeapCell<TPriority, TValue> parentNode, 
+            FibonacciHeapCell<TPriority, TValue> childNode)
         {
-            mNodes.Remove(childNode);
+            CodeContract.Requires(parentNode != null);
+            CodeContract.Requires(childNode != null);
+
+            this.nodes.Remove(childNode);
             parentNode.Children.AddLast(childNode);
             childNode.Parent = parentNode;
             childNode.Marked = false;
@@ -461,42 +489,44 @@ namespace QuickGraph.Collections
         {
             get
             {
-                return mNodes.First == null;
+                return nodes.First == null;
             }
         }
         public FibonacciHeapCell<TPriority, TValue> Top
         {
             get
             {
-                return mNext;
+                return this.next;
             }
         }
 
-        public void Merge(FibonacciHeap<TPriority, TValue> Other)
-        {            
-            if (Other.Direction != this.Direction)
+        public void Merge(FibonacciHeap<TPriority, TValue> other)
+        {      
+            CodeContract.Requires(other != null);
+
+            if (other.Direction != this.Direction)
             {
                 throw new Exception("Error: Heaps must go in the same direction when merging");
             }
-            mNodes.MergeLists(Other.mNodes);
-            if ((priorityComparsion(Other.Top.Priority, mNext.Priority) * DirectionMultiplier) < 0)
+            nodes.MergeLists(other.nodes);
+            if ((priorityComparsion(other.Top.Priority, next.Priority) * DirectionMultiplier) < 0)
             {
-                mNext = Other.mNext;
+                next = other.next;
             }
-            mCount += Other.Count;
+            count += other.Count;
         }
 
         public IEnumerator<FibonacciHeapCell<TPriority, TValue>> GetEnumerator()
         {
             var tempHeap = new FibonacciHeap<TPriority, TValue>(this.Direction, this.priorityComparsion);
-            var NodeStack = new Stack<FibonacciHeapCell<TPriority, TValue>>();
-            mNodes.ForEach(x => NodeStack.Push(x));
-            while (NodeStack.Count > 0)
+            var nodeStack = new Stack<FibonacciHeapCell<TPriority, TValue>>();
+            nodes.ForEach(x => nodeStack.Push(x));
+            while (nodeStack.Count > 0)
             {
-                var topNode = NodeStack.Peek();
+                var topNode = nodeStack.Peek();
                 tempHeap.Enqueue(topNode.Priority, topNode.Value);
-                NodeStack.Pop();
-                topNode.Children.ForEach(x => NodeStack.Push(x));
+                nodeStack.Pop();
+                topNode.Children.ForEach(x => nodeStack.Push(x));
             }
             while (!tempHeap.IsEmpty)
             {
@@ -514,12 +544,10 @@ namespace QuickGraph.Collections
         }
 
         #region IEnumerable Members
-
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
-
         #endregion
     }
 }

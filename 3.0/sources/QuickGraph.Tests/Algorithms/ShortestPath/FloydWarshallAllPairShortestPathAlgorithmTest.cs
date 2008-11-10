@@ -9,6 +9,7 @@ using QuickGraph.Collections;
 namespace QuickGraph.Tests.Algorithms.ShortestPath
 {
     [TestFixture, CurrentFixture]
+    [Ignore("not finished yet")]
     public class BoostFloydWarshallTest
     {
         [Test]
