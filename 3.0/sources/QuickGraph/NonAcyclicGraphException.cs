@@ -3,7 +3,8 @@
 namespace QuickGraph
 {
     [Serializable]
-    public class NonAcyclicGraphException : ApplicationException
+    public class NonAcyclicGraphException 
+        : ApplicationException
     {
         public NonAcyclicGraphException() { }
         public NonAcyclicGraphException(string message) : base( message ) { }

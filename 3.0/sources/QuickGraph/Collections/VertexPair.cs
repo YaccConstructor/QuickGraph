@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics.Contracts;
+using System.Diagnostics;
 
 namespace QuickGraph.Collections
 {
@@ -11,11 +12,21 @@ namespace QuickGraph.Collections
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
     [Serializable]
+    [DebuggerDisplay("{Source} -> {Target}")]
     public struct VertexPair<TVertex>
         : IEquatable<VertexPair<TVertex>>
     {
         public readonly TVertex Source;
         public readonly TVertex Target;
+
+        public static VertexPair<TVertex> FromEdge<TEdge>(TEdge edge)
+            where TEdge : IEdge<TVertex>
+        {
+            CodeContract.Requires(edge != null);
+
+            return new VertexPair<TVertex>(edge.Source, edge.Target);
+        }
+
         public VertexPair(TVertex source, TVertex target)
         {
             CodeContract.Requires(source != null);
