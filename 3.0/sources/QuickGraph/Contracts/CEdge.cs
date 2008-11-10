@@ -12,16 +12,17 @@ namespace QuickGraph.Contracts
     //    [ContractInvariantMethod]
     //    public void ObjectInvariant()
     //    {
-    //        CodeContract.Invariant(this.Source != null);
-    //        CodeContract.Invariant(this.Target != null);
+    //        IEdge<TVertex> me = this;
+    //        CodeContract.Invariant(me.Source != null);
+    //        CodeContract.Invariant(me.Target != null);
     //    }
 
-    //    public TVertex Source
+    //    TVertex IEdge<TVertex>.Source
     //    {
     //        get { return CodeContract.Result<TVertex>(); }
     //    }
 
-    //    public TVertex Target
+    //    TVertex IEdge<TVertex>.Target
     //    {
     //        get { return CodeContract.Result<TVertex>(); }
     //    }
