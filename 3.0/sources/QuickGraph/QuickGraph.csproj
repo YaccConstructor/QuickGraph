@@ -204,6 +204,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithm.cs" />
+    <Compile Include="Algorithms\ShortestPath\FloydWarshallAllShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\ShortestPath\IDistanceRelaxer.cs" />
     <Compile Include="Algorithms\ShortestPath\ShortestDistanceRelaxer.cs" />
     <Compile Include="Algorithms\ShortestPath\ShortestPathAlgorithmBase.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Collections\IQueue.cs" />
     <Compile Include="Collections\VertexEdgeDictionary.cs" />
     <Compile Include="Collections\VertexList.cs" />
+    <Compile Include="Collections\VertexPair.cs" />
     <Compile Include="Contracts\CEdge.cs" />
     <Compile Include="Contracts\EnumerableContract.cs" />
     <Compile Include="Contracts\GraphContract.cs" />

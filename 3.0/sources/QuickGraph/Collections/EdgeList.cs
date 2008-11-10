@@ -18,7 +18,7 @@ namespace QuickGraph.Collections
             : base(capacity)
         { }
 
-        private EdgeList(EdgeList<TVertex, TEdge> list)
+        public EdgeList(EdgeList<TVertex, TEdge> list)
             : base(list)
         {}
 

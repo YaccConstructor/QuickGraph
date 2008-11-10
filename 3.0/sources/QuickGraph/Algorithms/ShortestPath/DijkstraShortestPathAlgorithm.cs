@@ -62,6 +62,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             if (TreeEdge != null)
                 TreeEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
+
         public event EdgeEventHandler<TVertex,TEdge> EdgeNotRelaxed;
         private void OnEdgeNotRelaxed(TEdge e)
         {
