@@ -250,7 +250,103 @@
     <Compile Include="BidirectionalGraphTVertexTEdgeTest.ClearEdges.g.cs">
       <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.ClearInEdges.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.ClearOutEdges.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.Clone.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.Constructor.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.Constructor01.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.Constructor02.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.ContainsEdge.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.ContainsEdge01.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.ContainsVertex.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="BidirectionalGraphTVertexTEdgeTest.cs" />
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.Degree.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.EdgeCapacityGetSet.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.EdgeCountGet.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.EdgesGet.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.EdgeTypeGet.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.InDegree.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.InEdges.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.IsDirectedGet.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.IsEdgesEmptyGet.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.IsInEdgesEmpty.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.IsOutEdgesEmpty.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.IsVerticesEmptyGet.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.OutDegree.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.OutEdge.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.OutEdges.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.RemoveEdge.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.RemoveVertex.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.TrimEdgeExcess.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.TryGetEdge.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.TryGetEdges.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.VertexCountGet.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.VertexTypeGet.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BidirectionalGraphTVertexTEdgeTest.VerticesGet.g.cs">
+      <DependentUpon>BidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="BidirectionalMatrixGraphTEdgeTest.AddEdge.g.cs">
       <DependentUpon>BidirectionalMatrixGraphTEdgeTest.cs</DependentUpon>
     </Compile>
@@ -299,7 +395,13 @@
       <DependentUpon>VertexListTVertexTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Collections\VertexListTVertexTest.cs" />
+    <Compile Include="EdgeEdgeEventArgsTVertexTEdgeTest.Constructor.g.cs">
+      <DependentUpon>EdgeEdgeEventArgsTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="EdgeEdgeEventArgsTVertexTEdgeTest.cs" />
+    <Compile Include="EdgeEdgeEventArgsTVertexTEdgeTest.TargetEdgeGet.g.cs">
+      <DependentUpon>EdgeEdgeEventArgsTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="EdgeEventArgsTVertexTEdgeTest.Constructor.g.cs">
       <DependentUpon>EdgeEventArgsTVertexTEdgeTest.cs</DependentUpon>
     </Compile>
@@ -371,7 +473,9 @@
       <DependentUpon>EnumerableContractTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Factories\AdjacencyGraphFactory.cs" />
+    <Compile Include="Factories\BidirectionalGraphFactory.cs" />
     <Compile Include="Factories\EdgeFactory.cs" />
+    <Compile Include="Factories\EdgeListGraphFactory.cs" />
     <Compile Include="GraphExtensionsTest.cs" />
     <Compile Include="GraphExtensionsTest.ToAdjacencyGraph.g.cs">
       <DependentUpon>GraphExtensionsTest.cs</DependentUpon>
@@ -487,8 +591,104 @@
     <Compile Include="QuickGraphResourceManagerTest.GetLogo.g.cs">
       <DependentUpon>QuickGraphResourceManagerTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.AllowParallelEdgesGet.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.Constructor.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.ContainsEdge.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.ContainsEdge01.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.ContainsVertex.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.cs" />
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.Degree.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.EdgeCountGet.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.EdgesGet.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.InDegree.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.InEdge.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.InEdges.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.IsDirectedGet.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.IsEdgesEmptyGet.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.IsInEdgesEmpty.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.IsOutEdgesEmpty.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.IsVerticesEmptyGet.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.OriginalGraphGet.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.OutDegree.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.OutEdge.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.OutEdges.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.TryGetEdge.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.TryGetEdges.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.VertexCountGet.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedBidirectionalGraphTVertexTEdgeTest.VerticesGet.g.cs">
+      <DependentUpon>ReversedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedEdgeTVertexTEdgeTest.Constructor.g.cs">
+      <DependentUpon>ReversedEdgeTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReversedEdgeTVertexTEdgeTest.cs" />
+    <Compile Include="ReversedEdgeTVertexTEdgeTest.Equals.g.cs">
+      <DependentUpon>ReversedEdgeTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedEdgeTVertexTEdgeTest.Equals01.g.cs">
+      <DependentUpon>ReversedEdgeTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedEdgeTVertexTEdgeTest.GetHashCode.g.cs">
+      <DependentUpon>ReversedEdgeTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedEdgeTVertexTEdgeTest.OriginalEdgeGet.g.cs">
+      <DependentUpon>ReversedEdgeTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedEdgeTVertexTEdgeTest.SourceGet.g.cs">
+      <DependentUpon>ReversedEdgeTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedEdgeTVertexTEdgeTest.TargetGet.g.cs">
+      <DependentUpon>ReversedEdgeTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReversedEdgeTVertexTEdgeTest.ToString.g.cs">
+      <DependentUpon>ReversedEdgeTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="RootVertexNotSpecifiedExceptionTest.Constructor.g.cs">
       <DependentUpon>RootVertexNotSpecifiedExceptionTest.cs</DependentUpon>
     </Compile>
@@ -502,6 +702,9 @@
     <Compile Include="Serialization\GraphMLExtensionsTest.cs" />
     <Compile Include="Serialization\GraphMLSerializerTVertexTEdgeTest.cs" />
     <Compile Include="Serialization\SerializationExtensionsTest.cs" />
+    <Compile Include="Serialization\SerializationExtensionsTest.SerializeToBinary.g.cs">
+      <DependentUpon>SerializationExtensionsTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Serialization\SerializerBaseTVertexTEdgeTest.cs" />
     <Compile Include="TaggedEdgeTVertexTTagTest.Constructor.g.cs">
       <DependentUpon>TaggedEdgeTVertexTTagTest.cs</DependentUpon>
@@ -510,8 +713,92 @@
     <Compile Include="TaggedEdgeTVertexTTagTest.TagGetSet.g.cs">
       <DependentUpon>TaggedEdgeTVertexTTagTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="UndirectedBidirectionalGraphTVertexTEdgeTest.Constructor.g.cs">
+      <DependentUpon>UndirectedBidirectionalGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="UndirectedBidirectionalGraphTVertexTEdgeTest.cs" />
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.AddEdge.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.AddEdgeRange.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.AddVertex.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.AddVerticesAndEdge.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.AdjacentDegree.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.AdjacentEdge.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.AdjacentEdges.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.AllowParallelEdgesGet.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.Clear.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.ClearAdjacentEdges.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.Constructor.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.Constructor01.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.ContainsEdge.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.ContainsEdge01.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.ContainsVertex.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="UndirectedGraphTVertexTEdgeTest.cs" />
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.EdgeCountGet.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.EdgesGet.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.IsAdjacentEdgesEmpty.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.IsDirectedGet.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.IsEdgesEmptyGet.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.IsVerticesEmptyGet.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.RemoveEdge.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.RemoveEdges.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.RemoveVertex.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.TrimEdgeExcess.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.VertexCountGet.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UndirectedGraphTVertexTEdgeTest.VerticesGet.g.cs">
+      <DependentUpon>UndirectedGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="VertexEventArgsTVertexTest.Constructor.g.cs">
       <DependentUpon>VertexEventArgsTVertexTest.cs</DependentUpon>
     </Compile>
