@@ -155,10 +155,8 @@ namespace QuickGraph
 
             foreach(var edge in this.AdjacentEdges(source))
             {
-                if (edge.Source.Equals(source) && edge.Target.Equals(target))
-                    return true;
-
-                if (edge.Target.Equals(source) && edge.Source.Equals(target))
+                if ((edge.Source.Equals(source) && edge.Target.Equals(target)) ||
+                    (edge.Target.Equals(source) && edge.Source.Equals(target)))
                     return true;
             }
             return false;

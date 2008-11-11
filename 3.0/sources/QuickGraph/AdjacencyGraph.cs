@@ -250,6 +250,7 @@ namespace QuickGraph
         public virtual void AddVertexRange(IEnumerable<TVertex> vertices)
         {
             CodeContract.Requires(vertices != null);
+            CodeContract.Requires(CodeContract.ForAll(vertices, v => v != null));
 
             foreach (var v in vertices)
                 this.AddVertex(v);
@@ -258,6 +259,7 @@ namespace QuickGraph
         public event VertexEventHandler<TVertex> VertexAdded;
         protected virtual void OnVertexAdded(VertexEventArgs<TVertex> args)
         {
+            CodeContract.Requires(args != null);
             VertexEventHandler<TVertex> eh = this.VertexAdded;
             if (eh != null)
                 eh(this, args);
@@ -314,6 +316,8 @@ namespace QuickGraph
         public event VertexEventHandler<TVertex> VertexRemoved;
         protected virtual void OnVertexRemoved(VertexEventArgs<TVertex> args)
         {
+            CodeContract.Requires(args != null);
+
             VertexEventHandler<TVertex> eh = this.VertexRemoved;
             if (eh != null)
                 eh(this, args);
