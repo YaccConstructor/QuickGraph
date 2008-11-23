@@ -7,7 +7,9 @@ namespace QuickGraph
     /// A graph edge
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
-    //[ContractClass(typeof(Edge_Contract<>))]
+#if CONTRACTS_FULL
+    [ContractClass(typeof(IEdgeContract<>))]
+#endif
     public interface IEdge<TVertex>
     {
         /// <summary>

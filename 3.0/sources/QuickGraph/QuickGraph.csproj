@@ -228,9 +228,10 @@
     <Compile Include="Collections\VertexEdgeDictionary.cs" />
     <Compile Include="Collections\VertexList.cs" />
     <Compile Include="Collections\VertexPair.cs" />
-    <Compile Include="Contracts\CEdge.cs" />
+    <Compile Include="Contracts\IEdgeContract.cs" />
     <Compile Include="Contracts\EnumerableContract.cs" />
     <Compile Include="Contracts\GraphContract.cs" />
+    <Compile Include="Contracts\IVertexSetContract.cs" />
     <Compile Include="GraphAssert.cs" />
     <Compile Include="GraphExtensions.cs" />
     <Compile Include="HashCodeHelper.cs" />

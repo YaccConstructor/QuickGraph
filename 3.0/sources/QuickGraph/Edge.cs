@@ -23,16 +23,19 @@ namespace QuickGraph
 
         public static Type VertexType
         {
+            [Pure]
             get { return typeof(TVertex); }
         }
 
         public TVertex Source
         {
+            [Pure]
             get { return this.source; }
         }
 
         public TVertex Target
         {
+            [Pure]
             get { return this.target; }
         }
 
