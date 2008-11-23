@@ -164,6 +164,7 @@
     <Compile Include="ReversedBidirectionalGraphTest.cs" />
     <Compile Include="Serialization\GraphMLSerializerTest.cs" />
     <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest.cs" />
+    <Compile Include="Serialization\SystemSerializationTest.cs" />
     <Compile Include="UndirectedGraphFactory.cs" />
     <Compile Include="UndirectedGraphInvariant.cs" />
     <Compile Include="VertexListGraphInvariant.cs" />

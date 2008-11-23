@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public interface IIncidenceGraph<TVertex,TEdge> : IImplicitGraph<TVertex,TEdge>
+    public interface IIncidenceGraph<TVertex,TEdge> 
+        : IImplicitGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
         bool ContainsEdge(TVertex source, TVertex target);
