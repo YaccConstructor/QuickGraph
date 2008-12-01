@@ -36,6 +36,7 @@ namespace QuickGraph.Unit.Monitoring
             this.monitors.Add(this.unhandledExceptionMonitor);
             this.monitors.Add(this.threadExceptionMonitor);
             this.monitors.Add(this.debugMonitor);
+            this.monitors.Add(new ContractMonitor());
             this.monitors.Add(new EnvironmentMonitor());
             this.monitors.Add(new ThreadMonitor());
         }

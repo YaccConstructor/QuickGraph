@@ -50,7 +50,6 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
                     }
                     Console.WriteLine();
                 }
-
             {
                 double distance;
                 Assert.IsTrue(fw.TryGetDistance('A', 'A', out distance));

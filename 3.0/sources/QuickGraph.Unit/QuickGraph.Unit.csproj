@@ -55,6 +55,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ExtendedReflection, Version=0.5.30516.0, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -74,6 +75,7 @@
     <Compile Include="..\version.cs">
       <Link>Properties\version.cs</Link>
     </Compile>
+    <Compile Include="Monitoring\ContractMonitor.cs" />
     <Compile Include="Pex\QuickGraphPackageAttribute.cs" />
     <Compile Include="Pex\QuickGraphTestFramework.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

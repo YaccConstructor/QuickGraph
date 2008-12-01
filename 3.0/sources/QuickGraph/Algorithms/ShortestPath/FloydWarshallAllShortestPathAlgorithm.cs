@@ -38,6 +38,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             public bool TryGetEdge(out TEdge edge)
             {
+
                 edge = this._edge;
                 return this.edgeStored;
             }
@@ -164,7 +165,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                         if (data.TryGetPredecessor(out intermediate))
                         {
 #if DEBUG
-                            Contract.Assert(!set.Add(intermediate), intermediate.ToString() + " already in path");
+                            Contract.Assert(!set.Add(intermediate));
 #endif
                             todo.Push(new VertexPair<TVertex>(intermediate, current.Target));
                             todo.Push(new VertexPair<TVertex>(current.Source, intermediate));
