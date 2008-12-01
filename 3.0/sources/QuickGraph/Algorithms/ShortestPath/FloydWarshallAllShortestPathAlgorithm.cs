@@ -25,7 +25,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         struct VertexData
         {
-            public readonly double Cost;
+            public readonly double Distance;
             readonly TVertex _predecessor;
             readonly TEdge _edge;
             readonly bool edgeStored;
@@ -42,21 +42,21 @@ namespace QuickGraph.Algorithms.ShortestPath
                 return this.edgeStored;
             }
 
-            public VertexData(double cost, TEdge edge)
+            public VertexData(double distance, TEdge edge)
             {
                 Contract.Requires(edge != null);
 
-                this.Cost = cost;
+                this.Distance = distance;
                 this._predecessor = default(TVertex);
                 this._edge = edge;
                 this.edgeStored = true;
             }
 
-            public VertexData(double cost, TVertex predecessor)
+            public VertexData(double distance, TVertex predecessor)
             {
                 Contract.Requires(predecessor != null);
 
-                this.Cost = cost;
+                this.Distance = distance;
                 this._predecessor = predecessor;
                 this._edge = default(TEdge);
                 this.edgeStored = false;
@@ -65,9 +65,9 @@ namespace QuickGraph.Algorithms.ShortestPath
             public override string ToString()
             {
                 if (this.edgeStored)
-                    return String.Format("e:{0}-{1}", this.Cost, this._edge);
+                    return String.Format("e:{0}-{1}", this.Distance, this._edge);
                 else
-                    return String.Format("p:{0}-{1}", this.Cost, this._predecessor);
+                    return String.Format("p:{0}-{1}", this.Distance, this._predecessor);
             }
         }
 
@@ -108,6 +108,24 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
         }
 
+        public bool TryGetDistance(TVertex source, TVertex target, out double cost)
+        {
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
+
+            VertexData value;
+            if (this.data.TryGetValue(new VertexPair<TVertex>(source, target), out value))
+            {
+                cost = value.Distance;
+                return true;
+            }
+            else
+            {
+                cost = -1;
+                return false;
+            }
+        }
+
         public bool TryGetPath(
             TVertex source,
             TVertex target,
@@ -146,8 +164,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                         if (data.TryGetPredecessor(out intermediate))
                         {
 #if DEBUG
-                            if (!set.Add(intermediate))
-                                throw new Exception(intermediate.ToString() + " already in path");
+                            Contract.Assert(!set.Add(intermediate), intermediate.ToString() + " already in path");
 #endif
                             todo.Push(new VertexPair<TVertex>(intermediate, current.Target));
                             todo.Push(new VertexPair<TVertex>(current.Source, intermediate));
@@ -192,7 +209,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 VertexData value;
                 if (!data.TryGetValue(ij, out value))
                     data[ij] = new VertexData(cost, edge);
-                else if (cost < value.Cost)
+                else if (cost < value.Distance)
                     data[ij] = new VertexData(cost, edge);
             }
             if (cancelManager.IsCancelling) return;
@@ -219,12 +236,12 @@ namespace QuickGraph.Algorithms.ShortestPath
                             VertexData pathkj;
                             if (data.TryGetValue(kj, out pathkj))
                             {
-                                double combined = this.distanceRelaxer.Combine(pathik.Cost, pathkj.Cost);
+                                double combined = this.distanceRelaxer.Combine(pathik.Distance, pathkj.Distance);
                                 var ij = new VertexPair<TVertex>(vi, vj);
                                 VertexData pathij;
                                 if (data.TryGetValue(ij, out pathij))
                                 {
-                                    if (this.distanceRelaxer.Compare(combined, pathij.Cost))
+                                    if (this.distanceRelaxer.Compare(combined, pathij.Distance))
                                         data[ij] = new VertexData(combined, vk);
                                 }
                                 else
@@ -240,7 +257,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 var ii = new VertexPair<TVertex>(vi, vi);
                 VertexData value;
                 if (data.TryGetValue(ii, out value) &&
-                    value.Cost < 0)
+                    value.Distance < 0)
                     throw new NegativeCycleGraphException();
             }
         }

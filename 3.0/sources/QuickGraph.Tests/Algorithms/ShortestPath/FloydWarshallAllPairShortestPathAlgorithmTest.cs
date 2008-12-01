@@ -33,7 +33,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
 
             fw.Compute();
             fw.Dump(Console.Out);
-            foreach(var i in vertices)
+            foreach (var i in vertices)
                 foreach (var j in vertices)
                 {
                     Console.Write("{0} -> {1}:", i, j);
@@ -50,11 +50,24 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
                     }
                     Console.WriteLine();
                 }
-            //Assert.AreEqual(0, dijkstra.Distances['A']);
-            //Assert.AreEqual(6, dijkstra.Distances['B']);
-            //Assert.AreEqual(1, dijkstra.Distances['C']);
-            //Assert.AreEqual(4, dijkstra.Distances['D']);
-            //Assert.AreEqual(5, dijkstra.Distances['E']);
+
+            {
+                double distance;
+                Assert.IsTrue(fw.TryGetDistance('A', 'A', out distance));
+                Assert.AreEqual(0, distance);
+
+                Assert.IsTrue(fw.TryGetDistance('A', 'B', out distance));
+                Assert.AreEqual(6, distance);
+
+                Assert.IsTrue(fw.TryGetDistance('A', 'C', out distance));
+                Assert.AreEqual(1, distance);
+
+                Assert.IsTrue(fw.TryGetDistance('A', 'D', out distance));
+                Assert.AreEqual(4, distance);
+
+                Assert.IsTrue(fw.TryGetDistance('A', 'E', out distance));
+                Assert.AreEqual(5, distance);
+            }
         }
 
         private static void AddEdge(
