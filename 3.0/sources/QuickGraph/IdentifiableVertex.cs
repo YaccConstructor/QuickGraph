@@ -15,7 +15,7 @@ namespace QuickGraph
 
         public IdentifiableVertex(string id)
         {
-            CodeContract.Requires(id!=null);
+            Contract.Requires(id!=null);
 
             this.id = id;
         }

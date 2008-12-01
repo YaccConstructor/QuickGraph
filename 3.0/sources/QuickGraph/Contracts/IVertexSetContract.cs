@@ -14,15 +14,15 @@ namespace QuickGraph.Contracts
         [ContractInvariantMethod]
         void ObjectInvariant()
         {
-            CodeContract.Invariant((this.VertexCount == 0) == this.IsVerticesEmpty);
-            CodeContract.Invariant(this.VertexCount >= 0);
+            Contract.Invariant((this.VertexCount == 0) == this.IsVerticesEmpty);
+            Contract.Invariant(this.VertexCount >= 0);
         }
 
         public bool IsVerticesEmpty
         {
             get 
             {
-                return CodeContract.Result<bool>();
+                return Contract.Result<bool>();
             }
         }
 
@@ -30,7 +30,7 @@ namespace QuickGraph.Contracts
         {
             get
             {
-                return CodeContract.Result<int>();
+                return Contract.Result<int>();
             }
         }
 
@@ -38,21 +38,21 @@ namespace QuickGraph.Contracts
         {
             get 
             {
-                CodeContract.Ensures(CodeContract.Result<IEnumerable<TVertex>>() != null);
+                Contract.Ensures(Contract.Result<IEnumerable<TVertex>>() != null);
 
-                return CodeContract.Result<IEnumerable<TVertex>>();
+                return Contract.Result<IEnumerable<TVertex>>();
             }
         }
 
         public bool ContainsVertex(TVertex vertex)
         {
-            CodeContract.Requires(vertex != null);
-            CodeContract.Ensures(
-                CodeContract.Result<bool>()
-                == CodeContract.Exists(this.Vertices, v => v.Equals(vertex))
+            Contract.Requires(vertex != null);
+            Contract.Ensures(
+                Contract.Result<bool>()
+                == Contract.Exists(this.Vertices, v => v.Equals(vertex))
                 );
 
-            return CodeContract.Result<bool>();
+            return Contract.Result<bool>();
         }
     }
 #endif

@@ -53,8 +53,8 @@ namespace QuickGraph.Collections
 
         public void Enqueue(TVertex value)
         {
-            CodeContract.Requires(value != null);
-            CodeContract.Requires(this.mDistances.ContainsKey(value));
+            Contract.Requires(value != null);
+            Contract.Requires(this.mDistances.ContainsKey(value));
             mDistances[value] = mHeap.Enqueue(this.mDistances[value].Priority, value);
         }
 

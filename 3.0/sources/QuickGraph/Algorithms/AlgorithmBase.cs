@@ -182,7 +182,7 @@ namespace QuickGraph.Algorithms
         Dictionary<Type, object> _services;
         protected virtual bool TryGetService(Type serviceType, out object service)
         {
-            CodeContract.Requires(serviceType != null);
+            Contract.Requires(serviceType != null);
             lock (this.SyncRoot)
             {
                 if (this._services == null)

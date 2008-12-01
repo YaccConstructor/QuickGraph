@@ -41,8 +41,8 @@ namespace QuickGraph.Collections
 
         public BinaryHeap(int capacity, Comparison<TPriority> priorityComparison)
         {
-            CodeContract.Requires(capacity >= 0);
-            CodeContract.Requires(priorityComparison != null);
+            Contract.Requires(capacity >= 0);
+            Contract.Requires(priorityComparison != null);
 
             this.items = new KeyValuePair<TPriority, TValue>[capacity];
             this.priorityComparsion = priorityComparison;
@@ -187,7 +187,7 @@ namespace QuickGraph.Collections
 
         private bool Less(int i, int j)
         {
-            CodeContract.Requires(
+            Contract.Requires(
                 i >= 0 & i < this.count &
                 j >= 0 & j < this.count &
                 i != j);
@@ -197,7 +197,7 @@ namespace QuickGraph.Collections
 
         private void Swap(int i, int j)
         {
-            CodeContract.Requires(
+            Contract.Requires(
                 i >= 0 && i < this.count &&
                 j >= 0 && j < this.count &&
                 i != j);
@@ -210,12 +210,12 @@ namespace QuickGraph.Collections
         [ContractInvariantMethod]
         public void ObjectInvariant()
         {
-            CodeContract.Invariant(this.items != null);
-            CodeContract.Invariant(
+            Contract.Invariant(this.items != null);
+            Contract.Invariant(
                 this.count > -1 &
                 this.count <= this.items.Length);
-            CodeContract.Invariant(
-                CodeContract.ForAll(0, this.count, index =>
+            Contract.Invariant(
+                Contract.ForAll(0, this.count, index =>
                 {
                     var left = 2 * index + 1;
                     var right = 2 * index + 2;
@@ -257,7 +257,7 @@ namespace QuickGraph.Collections
                         throw new InvalidOperationException();
                     if (this.index < 0 | this.index == this.count)
                         throw new InvalidOperationException();
-                    CodeContract.Assert(this.index <= this.count);
+                    Contract.Assert(this.index <= this.count);
                     return this.items[this.index];
                 }
             }

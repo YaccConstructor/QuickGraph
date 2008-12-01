@@ -149,7 +149,7 @@ namespace QuickGraph.Algorithms.Search
         public void Initialize()
         {
             // make sure queue is empty
-            CodeContract.Ensures(this.vertexQueue.Count == 0);
+            Contract.Ensures(this.vertexQueue.Count == 0);
 
             var cancelManager = this.Services.CancelManager;
 
@@ -217,7 +217,7 @@ namespace QuickGraph.Algorithms.Search
             var color = (GraphColor)Interlocked.Exchange(
                 ref this.vertexIndexedColors[this.vertexIndices[s]], 
                 (int)GraphColor.Gray);
-            CodeContract.Assert(color == GraphColor.White);
+            Contract.Assert(color == GraphColor.White);
 
             OnDiscoverVertex(s, local);
             this.vertexQueue.Enqueue(s);

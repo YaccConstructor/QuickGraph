@@ -56,8 +56,8 @@ namespace QuickGraph.Algorithms
 
         private IEnumerable<TEdge> SelectOutEdgesNotInCircuit(TVertex v)
         {
-            CodeContract.Requires(v != null);
-            CodeContract.Ensures(CodeContract.Result<IEnumerable<TEdge>>() != null);
+            Contract.Requires(v != null);
+            Contract.Ensures(Contract.Result<IEnumerable<TEdge>>() != null);
 
             foreach (var edge in VisitedGraph.OutEdges(v))
                 if (this.NotInCircuit(edge))
@@ -77,7 +77,7 @@ namespace QuickGraph.Algorithms
         public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
-            CodeContract.Requires(e != null);
+            Contract.Requires(e != null);
             var eh = this.TreeEdge;
             if (eh != null)
                 eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
@@ -86,7 +86,7 @@ namespace QuickGraph.Algorithms
         public event EdgeEventHandler<TVertex,TEdge> CircuitEdge;
         private void OnCircuitEdge(TEdge e)
         {
-            CodeContract.Requires(e != null);
+            Contract.Requires(e != null);
 
             var eh = this.CircuitEdge;
             if (eh != null)
@@ -96,7 +96,7 @@ namespace QuickGraph.Algorithms
         public event EdgeEventHandler<TVertex,TEdge> VisitEdge;
         private void OnVisitEdge(TEdge e)
         {
-            CodeContract.Requires(e != null);
+            Contract.Requires(e != null);
 
             var eh = this.VisitEdge;
             if (eh != null)
@@ -105,7 +105,7 @@ namespace QuickGraph.Algorithms
 
         private bool Search(TVertex u)
         {
-            CodeContract.Requires(u != null);
+            Contract.Requires(u != null);
 
             foreach (var e in SelectOutEdgesNotInCircuit(u))
             {

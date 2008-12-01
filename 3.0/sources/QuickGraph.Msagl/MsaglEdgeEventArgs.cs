@@ -17,7 +17,7 @@ namespace QuickGraph.Msagl
         public MsaglEdgeEventArgs(TEdge edge, Microsoft.Msagl.Drawing.Edge gedge)
             :base(edge)
         {
-            CodeContract.Requires(gedge != null);
+            Contract.Requires(gedge != null);
 
             this.gedge = gedge;
         }

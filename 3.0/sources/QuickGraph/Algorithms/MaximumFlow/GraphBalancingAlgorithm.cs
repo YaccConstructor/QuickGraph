@@ -223,7 +223,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public event EdgeEventHandler<TVertex,TEdge> EdgeAdded;
         private void OnEdgeAdded(TEdge edge)
         {
-            CodeContract.Requires(edge != null);
+            Contract.Requires(edge != null);
 
             var eh = this.EdgeAdded;
             if (eh != null)
@@ -232,7 +232,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public event VertexEventHandler<TVertex> SurplusVertexAdded;
         private void OnSurplusVertexAdded(TVertex vertex)
         {
-            CodeContract.Requires(vertex != null);
+            Contract.Requires(vertex != null);
             var eh = this.SurplusVertexAdded;
             if (eh != null)
                 eh(this, new VertexEventArgs<TVertex>(vertex));
@@ -240,7 +240,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public event VertexEventHandler<TVertex> DeficientVertexAdded;
         private void OnDeficientVertexAdded(TVertex vertex)
         {
-            CodeContract.Requires(vertex != null);
+            Contract.Requires(vertex != null);
 
             var eh = this.DeficientVertexAdded;
             if (eh != null)
@@ -249,7 +249,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
         public int GetBalancingIndex(TVertex v)
         {
-            CodeContract.Requires(v != null);
+            Contract.Requires(v != null);
 
             int bi = 0;
             foreach (var edge in this.VisitedGraph.OutEdges(v))

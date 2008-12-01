@@ -176,7 +176,7 @@ namespace QuickGraph.Algorithms.Search
 
         public void Visit(TVertex u, int depth)
         {
-            CodeContract.Requires(u != null);
+            Contract.Requires(u != null);
 
             if (depth > this.maxDepth)
                 return;

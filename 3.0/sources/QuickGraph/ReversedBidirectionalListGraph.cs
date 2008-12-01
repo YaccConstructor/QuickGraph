@@ -14,7 +14,7 @@ namespace QuickGraph
         private readonly IBidirectionalGraph<TVertex,TEdge> originalGraph;
         public ReversedBidirectionalGraph(IBidirectionalGraph<TVertex,TEdge> originalGraph)
         {
-            CodeContract.Requires(originalGraph != null);
+            Contract.Requires(originalGraph != null);
             this.originalGraph = originalGraph;
         }
 

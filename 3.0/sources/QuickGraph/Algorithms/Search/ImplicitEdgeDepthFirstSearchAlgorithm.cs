@@ -221,8 +221,8 @@ namespace QuickGraph.Algorithms.Search
         /// <exception cref="ArgumentNullException">se cannot be null</exception>
         private void Visit(TEdge se, int depth)
         {            
-            CodeContract.Requires(se != null);
-            CodeContract.Requires(depth >= 0);
+            Contract.Requires(se != null);
+            Contract.Requires(depth >= 0);
 
             if (depth > this.maxDepth)
                 return;

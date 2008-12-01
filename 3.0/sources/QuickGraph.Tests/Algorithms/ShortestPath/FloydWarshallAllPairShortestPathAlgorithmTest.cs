@@ -9,7 +9,6 @@ using QuickGraph.Collections;
 namespace QuickGraph.Tests.Algorithms.ShortestPath
 {
     [TestFixture, CurrentFixture]
-    [Ignore("not finished yet")]
     public class BoostFloydWarshallTest
     {
         [Test]
@@ -33,12 +32,13 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             var fw = new FloydWarshallAllShortestPathAlgorithm<char, Edge<char>>(g, e => distances[e]);
 
             fw.Compute();
+            fw.Dump(Console.Out);
             foreach(var i in vertices)
                 foreach (var j in vertices)
                 {
                     Console.Write("{0} -> {1}:", i, j);
                     IEnumerable<Edge<char>> path;
-                    if (fw.TryGetShortestPath(i, j, out path))
+                    if (fw.TryGetPath(i, j, out path))
                     {
                         double cost = 0;
                         foreach (var edge in path)

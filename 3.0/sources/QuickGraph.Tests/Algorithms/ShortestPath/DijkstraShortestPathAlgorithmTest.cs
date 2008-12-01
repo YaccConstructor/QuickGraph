@@ -29,7 +29,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         }
     }
 
-    [TestFixture, CurrentFixture]
+    [TestFixture]
     public class DijkstraShortestPathTest
     {
         [Test]
@@ -142,7 +142,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         }
     }
 
-    [TestFixture, CurrentFixture]
+    [TestFixture]
     public class DijkstraAlgoTest
     {
         AdjacencyGraph<string, Edge<string>> graph;
@@ -212,7 +212,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         }
     }
 
-    [TestFixture, CurrentFixture]
+    [TestFixture]
     public class BoostDijkstraTest
     {
         [Test]

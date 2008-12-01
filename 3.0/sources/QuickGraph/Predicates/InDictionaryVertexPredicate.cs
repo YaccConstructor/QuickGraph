@@ -12,14 +12,14 @@ namespace QuickGraph.Predicates
         public InDictionaryVertexPredicate(
             IDictionary<TVertex,TValue> dictionary)
         {
-            CodeContract.Requires(dictionary != null);
+            Contract.Requires(dictionary != null);
             this.dictionary = dictionary;
         }
 
         [Pure]
         public bool Test(TVertex v)
         {
-            CodeContract.Requires(v != null);
+            Contract.Requires(v != null);
 
             return this.dictionary.ContainsKey(v);
         }

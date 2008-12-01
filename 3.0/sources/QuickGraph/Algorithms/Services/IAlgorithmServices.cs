@@ -20,7 +20,7 @@ namespace QuickGraph.Algorithms.Services
 
         public AlgorithmServices(IAlgorithmComponent host)
         {
-            CodeContract.Requires(host != null);
+            Contract.Requires(host != null);
 
             this.host = host;
         }

@@ -8,7 +8,6 @@ using Microsoft.Pex.Framework;
 namespace QuickGraph.Serialization
 {
     [TestFixture, PexClass]
-    [CurrentFixture]
     public partial class GraphMLSerializerTest
     {
         [Test, PexMethod]

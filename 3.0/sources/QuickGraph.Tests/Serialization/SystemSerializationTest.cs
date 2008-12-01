@@ -9,7 +9,6 @@ using System.IO;
 namespace QuickGraph.Tests.Serialization
 {
     [TestFixture]
-    [CurrentFixture]
     public class SystemSerializationTest
     {
         [Test]

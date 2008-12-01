@@ -10,7 +10,7 @@ namespace QuickGraph
         public NamedEdge(TVertex source, TVertex target, string name)
             :base(source,target)
         {
-            CodeContract.Requires(name != null);
+            Contract.Requires(name != null);
 
             this.name = name;
         }

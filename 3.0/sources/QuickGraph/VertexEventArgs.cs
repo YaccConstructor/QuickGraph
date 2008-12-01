@@ -9,7 +9,7 @@ namespace QuickGraph
         private readonly TVertex vertex;
         public VertexEventArgs(TVertex vertex)
         {
-            CodeContract.Requires(vertex != null);
+            Contract.Requires(vertex != null);
             this.vertex = vertex;
         }
 

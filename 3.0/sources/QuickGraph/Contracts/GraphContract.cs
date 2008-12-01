@@ -16,10 +16,10 @@ namespace QuickGraph.Contracts
             IVertexSet<TVertex> g, 
             TVertex v)
         {
-            CodeContract.Requires(g != null);
-            CodeContract.Requires(v != null);
+            Contract.Requires(g != null);
+            Contract.Requires(v != null);
             // todo make requires
-            CodeContract.Requires(g.ContainsVertex(v));
+            Contract.Requires(g.ContainsVertex(v));
         }
 
         [Pure, Conditional("CONTRACTS_PRECONDITIONS"), Conditional("CONTRACTS_FULL")]
@@ -27,10 +27,10 @@ namespace QuickGraph.Contracts
             IVertexSet<TVertex> g,
             TVertex v)
         {
-            CodeContract.Requires(g != null);
-            CodeContract.Requires(v != null);
+            Contract.Requires(g != null);
+            Contract.Requires(v != null);
             // todo make requires
-            CodeContract.Requires(!g.ContainsVertex(v));
+            Contract.Requires(!g.ContainsVertex(v));
         }
 
         [Pure, Conditional("CONTRACTS_PRECONDITIONS"), Conditional("CONTRACTS_FULL")]
@@ -39,8 +39,8 @@ namespace QuickGraph.Contracts
             TEdge e)
             where TEdge : IEdge<TVertex>
         {
-            CodeContract.Requires(g != null);
-            CodeContract.Requires(e != null);
+            Contract.Requires(g != null);
+            Contract.Requires(e != null);
 
             RequiresInVertexSet<TVertex>(g, e.Source);
             RequiresInVertexSet<TVertex>(g, e.Target);
@@ -52,10 +52,10 @@ namespace QuickGraph.Contracts
             TEdge e)
             where TEdge : IEdge<TVertex>
         {
-            CodeContract.Requires(g != null);
-            CodeContract.Requires(e != null);
+            Contract.Requires(g != null);
+            Contract.Requires(e != null);
             RequiresInVertexSet(g, e);
-            CodeContract.Requires(g.ContainsEdge(e));
+            Contract.Requires(g.ContainsEdge(e));
         }
 
     }

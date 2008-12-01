@@ -22,15 +22,15 @@ namespace QuickGraph.Collections
         public static VertexPair<TVertex> FromEdge<TEdge>(TEdge edge)
             where TEdge : IEdge<TVertex>
         {
-            CodeContract.Requires(edge != null);
+            Contract.Requires(edge != null);
 
             return new VertexPair<TVertex>(edge.Source, edge.Target);
         }
 
         public VertexPair(TVertex source, TVertex target)
         {
-            CodeContract.Requires(source != null);
-            CodeContract.Requires(target != null);
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
 
             this.Source = source;
             this.Target = target;
@@ -56,6 +56,11 @@ namespace QuickGraph.Collections
             return
                 obj is VertexPair<TVertex> &&
                 base.Equals((VertexPair<TVertex>)obj);
+        }
+
+        public override string ToString()
+        {
+            return this.Source.ToString() + " -> " + this.Target.ToString();
         }
     }
 }

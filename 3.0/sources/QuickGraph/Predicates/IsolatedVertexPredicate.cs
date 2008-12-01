@@ -15,7 +15,7 @@ namespace QuickGraph.Predicates
 
         public IsolatedVertexPredicate(IBidirectionalGraph<TVertex,TEdge> visitedGraph)
         {
-            CodeContract.Requires(visitedGraph!=null);
+            Contract.Requires(visitedGraph!=null);
 
             this.visitedGraph = visitedGraph;
         }
@@ -23,7 +23,7 @@ namespace QuickGraph.Predicates
         [Pure]
         public bool Test(TVertex v)
         {
-            CodeContract.Requires(v != null);
+            Contract.Requires(v != null);
 
             return this.visitedGraph.IsInEdgesEmpty(v)
                 && this.visitedGraph.IsOutEdgesEmpty(v);

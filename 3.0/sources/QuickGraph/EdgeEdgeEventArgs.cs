@@ -13,7 +13,7 @@ namespace QuickGraph
         public EdgeEdgeEventArgs(TEdge edge, TEdge targetEdge)
             :base(edge)
         {
-            CodeContract.Requires(targetEdge != null);
+            Contract.Requires(targetEdge != null);
 
             this.targetEdge = targetEdge;
         }

@@ -11,7 +11,7 @@ namespace QuickGraph.Msagl
         public MsaglVertexEventArgs(TVertex vertex, Node node)
             : base(vertex)
         {
-            CodeContract.Requires(node != null);
+            Contract.Requires(node != null);
 
             this.node = node;
         }

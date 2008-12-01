@@ -313,7 +313,7 @@ namespace QuickGraph
         #region IMutableEdgeListGraph<int,Edge> Members
         bool IMutableEdgeListGraph<int,TEdge>.AddVerticesAndEdge(TEdge edge)
         {
-            CodeContract.Requires(edge != null);
+            Contract.Requires(edge != null);
             GraphContract.RequiresInVertexSet(this, edge.Source);
             GraphContract.RequiresInVertexSet(this, edge.Target);
 
@@ -322,7 +322,7 @@ namespace QuickGraph
 
         public bool AddEdge(TEdge edge)
         {
-            CodeContract.Requires(edge != null);
+            Contract.Requires(edge != null);
 
             if (this.edges[edge.Source, edge.Target]!=null)
                 throw new ParallelEdgeNotAllowedException();
@@ -334,7 +334,7 @@ namespace QuickGraph
 
         public void AddEdgeRange(IEnumerable<TEdge> edges)
         {
-            CodeContract.Requires(edges != null);
+            Contract.Requires(edges != null);
             foreach (var edge in edges)
                 this.AddEdge(edge);
         }
@@ -381,11 +381,11 @@ namespace QuickGraph
             int edgeCount,
             TEdge[,] edges)
         {
-            CodeContract.Requires(vertexCount > 0);
-            CodeContract.Requires(edgeCount >= 0);
-            CodeContract.Requires(edges != null);
-            CodeContract.Requires(vertexCount == edges.GetLength(0));
-            CodeContract.Requires(vertexCount == edges.GetLength(1));
+            Contract.Requires(vertexCount > 0);
+            Contract.Requires(edgeCount >= 0);
+            Contract.Requires(edges != null);
+            Contract.Requires(vertexCount == edges.GetLength(0));
+            Contract.Requires(vertexCount == edges.GetLength(1));
 
             this.vertexCount = vertexCount;
             this.edgeCount = edgeCount;

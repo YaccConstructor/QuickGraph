@@ -15,7 +15,7 @@ namespace QuickGraph
         public IdentifiableEdge(TVertex source, TVertex target, string id)
             : base(source, target)
         {
-            CodeContract.Requires(id != null);
+            Contract.Requires(id != null);
             this.id = id;
         }
 

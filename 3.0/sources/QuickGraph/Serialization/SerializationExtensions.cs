@@ -15,9 +15,9 @@ namespace QuickGraph.Serialization
             Stream stream)
             where TEdge : IEdge<TVertex>
         {            
-            CodeContract.Requires(graph != null);
-            CodeContract.Requires(stream != null);
-            CodeContract.Requires(stream.CanWrite);
+            Contract.Requires(graph != null);
+            Contract.Requires(stream != null);
+            Contract.Requires(stream.CanWrite);
 
             var formatter = new BinaryFormatter();
             formatter.Serialize(stream, graph);
@@ -27,8 +27,8 @@ namespace QuickGraph.Serialization
             where TGraph : IGraph<TVertex, TEdge>
             where TEdge : IEdge<TVertex>
         {
-            CodeContract.Requires(stream != null);
-            CodeContract.Requires(stream.CanRead);
+            Contract.Requires(stream != null);
+            Contract.Requires(stream.CanRead);
 
             var formatter = new BinaryFormatter();
             var result = formatter.Deserialize(stream);

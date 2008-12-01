@@ -11,7 +11,7 @@ namespace QuickGraph.Graphviz
         public FormatVertexEventArgs(GraphvizVertex vertexFormatter, V v)
 			: base(v)
         {
-            CodeContract.Requires(vertexFormatter != null);
+            Contract.Requires(vertexFormatter != null);
             this.vertexFormatter = vertexFormatter;
         }
 

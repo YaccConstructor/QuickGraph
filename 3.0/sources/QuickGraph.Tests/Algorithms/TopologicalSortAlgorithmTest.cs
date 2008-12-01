@@ -5,7 +5,6 @@ using Microsoft.Pex.Framework;
 namespace QuickGraph.Algorithms
 {
     [TestFixture, PexClass]
-    [CurrentFixture]
     public partial class TopologicalSortAlgorithmTest
     {
         [PexMethod]

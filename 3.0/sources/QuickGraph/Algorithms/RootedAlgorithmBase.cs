@@ -33,7 +33,7 @@ namespace QuickGraph.Algorithms
 
         public void SetRootVertex(TVertex rootVertex)
         {
-            CodeContract.Requires(rootVertex != null);
+            Contract.Requires(rootVertex != null);
 
             bool changed = !Comparison<TVertex>.Equals(this.rootVertex, rootVertex);
             this.rootVertex = rootVertex;
@@ -51,7 +51,7 @@ namespace QuickGraph.Algorithms
         public event EventHandler RootVertexChanged;
         protected virtual void OnRootVertexChanged(EventArgs e)
         {
-            CodeContract.Requires(e != null);
+            Contract.Requires(e != null);
 
             var eh = this.RootVertexChanged;
             if (eh != null)
@@ -60,7 +60,7 @@ namespace QuickGraph.Algorithms
 
         public void Compute(TVertex rootVertex)
         {
-            CodeContract.Requires(rootVertex != null);
+            Contract.Requires(rootVertex != null);
 
             this.SetRootVertex(rootVertex);
             this.Compute();

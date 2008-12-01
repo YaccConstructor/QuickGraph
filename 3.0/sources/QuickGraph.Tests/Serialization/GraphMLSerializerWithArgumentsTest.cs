@@ -10,7 +10,6 @@ using System.Reflection;
 namespace QuickGraph.Serialization
 {
     [TestFixture, PexClass]
-    [CurrentFixture]
     public partial class GraphMLSerializerWithArgumentsTest
     {
         public sealed class TestVertex : IIdentifiable

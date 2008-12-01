@@ -37,13 +37,13 @@ namespace QuickGraph.Algorithms.Observers
 
         public void Attach(IDistanceRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            CodeContract.Requires(algorithm != null);
+            Contract.Requires(algorithm != null);
             algorithm.TreeEdge += new EdgeEventHandler<TVertex, TEdge>(this.TreeEdge);
         }
 
         public void Detach(IDistanceRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            CodeContract.Requires(algorithm != null);
+            Contract.Requires(algorithm != null);
             algorithm.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(this.TreeEdge);
         }
 

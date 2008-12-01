@@ -12,8 +12,8 @@ namespace QuickGraph
         [Pure, Conditional("CONTRACTS_PRECONDITIONS"), Conditional("CONTRACTS_FULL")]
         public static void RequiresElementsNotNull<T>(IEnumerable<T> elements)
         {
-            CodeContract.Requires(elements != null);
-            CodeContract.Requires(CodeContract.ForAll(elements, e => e != null));
+            Contract.Requires(elements != null);
+            Contract.Requires(Contract.ForAll(elements, e => e != null));
         }
     }
 }

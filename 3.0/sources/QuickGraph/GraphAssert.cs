@@ -13,10 +13,10 @@ namespace QuickGraph
             this IVertexSet<TVertex> left,
             IVertexSet<TVertex> right)
         {
-            CodeContract.Requires(left != null);
-            CodeContract.Requires(right != null);
+            Contract.Requires(left != null);
+            Contract.Requires(right != null);
 
-            CodeContract.Assert(left.VertexCount == right.VertexCount);
+            Contract.Assert(left.VertexCount == right.VertexCount);
         }
 
         public static void EdgeCountEqual<TVertex, TEdge>(
@@ -24,10 +24,10 @@ namespace QuickGraph
             IVertexAndEdgeSet<TVertex, TEdge> right)
             where TEdge : IEdge<TVertex>
         {
-            CodeContract.Requires(left != null);
-            CodeContract.Requires(right != null);
+            Contract.Requires(left != null);
+            Contract.Requires(right != null);
 
-            CodeContract.Assert(left.EdgeCount == right.EdgeCount);
+            Contract.Assert(left.EdgeCount == right.EdgeCount);
         }
     }
 }

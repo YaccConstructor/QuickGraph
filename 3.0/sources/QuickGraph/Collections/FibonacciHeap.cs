@@ -81,7 +81,7 @@ namespace QuickGraph.Collections
 
         internal void MergeLists(FibonacciHeapLinkedList<TPriority, TValue> list)
         {
-            CodeContract.Requires(list != null);
+            Contract.Requires(list != null);
 
             if (list.First != null)
             {
@@ -100,7 +100,7 @@ namespace QuickGraph.Collections
 
         internal void AddLast(FibonacciHeapCell<TPriority, TValue> node)
         {
-            CodeContract.Requires(node != null);
+            Contract.Requires(node != null);
 
             if (this.last != null)
             {
@@ -116,7 +116,7 @@ namespace QuickGraph.Collections
 
         internal void Remove(FibonacciHeapCell<TPriority, TValue> node)
         {
-            CodeContract.Requires(node != null);
+            Contract.Requires(node != null);
 
             if (node.Previous != null)
             {
@@ -275,7 +275,7 @@ namespace QuickGraph.Collections
 
         public void Delete(FibonacciHeapCell<TPriority, TValue> node)
         {
-            CodeContract.Requires(node != null);
+            Contract.Requires(node != null);
 
             ChangeKeyInternal(node, default(TPriority), true);
             Dequeue();            
@@ -283,7 +283,7 @@ namespace QuickGraph.Collections
 
         public void ChangeKey(FibonacciHeapCell<TPriority, TValue> node, TPriority newKey)
         {            
-            CodeContract.Requires(node != null);
+            Contract.Requires(node != null);
 
             ChangeKeyInternal(node, newKey, false);            
         }
@@ -292,7 +292,7 @@ namespace QuickGraph.Collections
             FibonacciHeapCell<TPriority, TValue> node, 
             TPriority NewKey, bool deletingNode)
         {
-            CodeContract.Requires(node != null);
+            Contract.Requires(node != null);
 
             var delta = Math.Sign(this.priorityComparsion(node.Priority, NewKey));
             if (delta == 0)
@@ -364,7 +364,7 @@ namespace QuickGraph.Collections
         private void UpdateNodesDegree(
             FibonacciHeapCell<TPriority, TValue> parentNode)
         {
-            CodeContract.Requires(parentNode != null);
+            Contract.Requires(parentNode != null);
 
             var oldDegree = parentNode.Degree;
             parentNode.Degree = 
@@ -472,8 +472,8 @@ namespace QuickGraph.Collections
             FibonacciHeapCell<TPriority, TValue> parentNode, 
             FibonacciHeapCell<TPriority, TValue> childNode)
         {
-            CodeContract.Requires(parentNode != null);
-            CodeContract.Requires(childNode != null);
+            Contract.Requires(parentNode != null);
+            Contract.Requires(childNode != null);
 
             this.nodes.Remove(childNode);
             parentNode.Children.AddLast(childNode);
@@ -502,7 +502,7 @@ namespace QuickGraph.Collections
 
         public void Merge(FibonacciHeap<TPriority, TValue> other)
         {      
-            CodeContract.Requires(other != null);
+            Contract.Requires(other != null);
 
             if (other.Direction != this.Direction)
             {

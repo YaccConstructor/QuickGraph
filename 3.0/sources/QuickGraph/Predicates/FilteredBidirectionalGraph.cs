@@ -21,14 +21,14 @@ namespace QuickGraph.Predicates
 
         public bool IsInEdgesEmpty(TVertex v)
         {
-            CodeContract.Requires(v != null);
+            Contract.Requires(v != null);
 
             return this.InDegree(v) == 0;
         }
 
         public int InDegree(TVertex v)
         {
-            CodeContract.Requires(v != null);
+            Contract.Requires(v != null);
 
             int count = 0;
             foreach (var edge in this.InEdges(v))

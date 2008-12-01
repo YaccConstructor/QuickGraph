@@ -45,7 +45,7 @@ namespace QuickGraph.Algorithms.Search
             )
             :base(host, visitedGraph)
 		{
-            CodeContract.Requires(colors != null);
+            Contract.Requires(colors != null);
 			this.colors = colors;
 		}
 
@@ -70,7 +70,7 @@ namespace QuickGraph.Algorithms.Search
 			}
 			set
 			{
-                CodeContract.Requires(value > 0);
+                Contract.Requires(value > 0);
 				this.maxDepth = value;
 			}
 		}
@@ -78,7 +78,7 @@ namespace QuickGraph.Algorithms.Search
         [ContractInvariantMethod]
         void ObjectInvariant()
         {
-            CodeContract.Invariant(this.MaxDepth > 0);
+            Contract.Invariant(this.MaxDepth > 0);
         }
 
 		public event VertexEventHandler<TVertex> InitializeVertex;
@@ -188,9 +188,9 @@ namespace QuickGraph.Algorithms.Search
             public readonly int Depth;
             public SearchFrame(TVertex vertex, IEnumerator<TEdge> edges, int depth)
             {
-                CodeContract.Requires(vertex != null);
-                CodeContract.Requires(edges != null);
-                CodeContract.Requires(depth >= 0);
+                Contract.Requires(vertex != null);
+                Contract.Requires(edges != null);
+                Contract.Requires(depth >= 0);
                 this.Vertex = vertex;
                 this.Edges = edges;
                 this.Depth = depth;
@@ -199,7 +199,7 @@ namespace QuickGraph.Algorithms.Search
 
 		public void Visit(TVertex root)
 		{
-            CodeContract.Requires(root != null);
+            Contract.Requires(root != null);
 
             Stack<SearchFrame> todo = new Stack<SearchFrame>();
             this.VertexColors[root] = GraphColor.Gray;

@@ -12,7 +12,7 @@ namespace QuickGraph.Graphviz
         public FormatEdgeEventArgs(GraphvizEdge edgeFormatter, E e)
 			: base(e)
         {
-            CodeContract.Requires(edgeFormatter != null);
+            Contract.Requires(edgeFormatter != null);
             this.edgeFormatter = edgeFormatter;
         }
 

@@ -74,14 +74,14 @@ namespace QuickGraph
 
         public bool AddVerticesAndEdge(TEdge edge)
         {
-            CodeContract.Requires(edge != null);
+            Contract.Requires(edge != null);
 
             return this.AddEdge(edge);
         }
 
         public bool AddEdge(TEdge edge)
         {
-            CodeContract.Requires(edge != null);
+            Contract.Requires(edge != null);
 
             if(this.ContainsEdge(edge))
                 return false;
@@ -92,7 +92,7 @@ namespace QuickGraph
 
         public void AddEdgeRange(IEnumerable<TEdge> edges)
         {
-            CodeContract.Requires(edges != null);
+            Contract.Requires(edges != null);
 
             foreach (var edge in edges)
                 this.AddEdge(edge);
@@ -148,7 +148,7 @@ namespace QuickGraph
             bool allowParralelEdges,
             EdgeEdgeDictionary<TVertex, TEdge> edges)
         {
-            CodeContract.Requires(edges != null);
+            Contract.Requires(edges != null);
 
             this.isDirected = isDirected;
             this.allowParralelEdges = allowParralelEdges;

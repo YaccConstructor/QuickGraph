@@ -97,7 +97,7 @@ namespace QuickGraph
 
         public bool ContainsVertex(TVertex v)
         {
-            CodeContract.Requires(v != null);
+            Contract.Requires(v != null);
             return this.vertexOutEdges.ContainsKey(v);
         }
 
@@ -263,7 +263,7 @@ namespace QuickGraph
 
         public virtual void AddVertexRange(IEnumerable<TVertex> vertices)
         {
-            CodeContract.Requires(vertices != null);
+            Contract.Requires(vertices != null);
             foreach (var v in vertices)
                 this.AddVertex(v);
         }
@@ -278,7 +278,7 @@ namespace QuickGraph
 
         public virtual bool RemoveVertex(TVertex v)
         {
-            CodeContract.Requires(v != null);
+            Contract.Requires(v != null);
 
             if (!this.ContainsVertex(v))
                 return false;
@@ -322,7 +322,7 @@ namespace QuickGraph
 
         public int RemoveVertexIf(VertexPredicate<TVertex> predicate)
         {
-            CodeContract.Requires(predicate != null);
+            Contract.Requires(predicate != null);
 
             var vertices = new VertexList<TVertex>();
             foreach (var v in this.Vertices)
@@ -353,14 +353,14 @@ namespace QuickGraph
 
         public void AddEdgeRange(IEnumerable<TEdge> edges)
         {
-            CodeContract.Requires(edges != null);
+            Contract.Requires(edges != null);
             foreach (var edge in edges)
                 this.AddEdge(edge);
         }
 
         public virtual bool AddVerticesAndEdge(TEdge e)
         {
-            CodeContract.Requires(e != null);
+            Contract.Requires(e != null);
 
             if (!this.ContainsVertex(e.Source))
                 this.AddVertex(e.Source);
@@ -385,7 +385,7 @@ namespace QuickGraph
             {
                 this.vertexInEdges[e.Target].Remove(e);
                 this.edgeCount--;
-                CodeContract.Assert(this.edgeCount >= 0);
+                Contract.Assert(this.edgeCount >= 0);
 
                 this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(e));
                 return true;
@@ -406,7 +406,7 @@ namespace QuickGraph
 
         public int RemoveEdgeIf(EdgePredicate<TVertex, TEdge> predicate)
         {
-            CodeContract.Requires(predicate != null);
+            Contract.Requires(predicate != null);
 
             var edges = new EdgeList<TVertex, TEdge>();
             foreach (var edge in this.Edges)
@@ -421,7 +421,7 @@ namespace QuickGraph
         public int RemoveOutEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
         {
             GraphContract.RequiresInVertexSet(this, v);
-            CodeContract.Requires(predicate != null);
+            Contract.Requires(predicate != null);
 
             var edges = new EdgeList<TVertex, TEdge>();
             foreach (var edge in this.OutEdges(v))
@@ -435,7 +435,7 @@ namespace QuickGraph
         public int RemoveInEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
         {
             GraphContract.RequiresInVertexSet(this, v);
-            CodeContract.Requires(predicate != null);
+            Contract.Requires(predicate != null);
 
             var edges = new EdgeList<TVertex, TEdge>();
             foreach (var edge in this.InEdges(v))
@@ -448,7 +448,7 @@ namespace QuickGraph
 
         public void ClearOutEdges(TVertex v)
         {
-            CodeContract.Requires(v != null);
+            Contract.Requires(v != null);
             GraphContract.RequiresInVertexSet(this, v);
 
             var outEdges = this.vertexOutEdges[v];
@@ -465,12 +465,12 @@ namespace QuickGraph
         [ContractInvariantMethod]
         protected void ObjectInvariant()
         {
-            CodeContract.Invariant(this.edgeCount >= 0);            
+            Contract.Invariant(this.edgeCount >= 0);            
         }
 
         public void ClearInEdges(TVertex v)
         {
-            CodeContract.Requires(v != null);
+            Contract.Requires(v != null);
             GraphContract.RequiresInVertexSet(this, v);
 
             var inEdges = this.vertexInEdges[v];
@@ -510,7 +510,7 @@ namespace QuickGraph
         public void MergeVertex(TVertex v, EdgeFactory<TVertex, TEdge> edgeFactory)
         {
             GraphContract.RequiresInVertexSet(this, v);
-            CodeContract.Requires(edgeFactory != null);
+            Contract.Requires(edgeFactory != null);
 
             // storing edges in local array
             var inedges = this.vertexInEdges[v];
@@ -537,8 +537,8 @@ namespace QuickGraph
 
         public void MergeVertexIf(VertexPredicate<TVertex> vertexPredicate, EdgeFactory<TVertex, TEdge> edgeFactory)
         {
-            CodeContract.Requires(vertexPredicate != null);
-            CodeContract.Requires(edgeFactory != null);
+            Contract.Requires(vertexPredicate != null);
+            Contract.Requires(edgeFactory != null);
 
             // storing vertices to merge
             var mergeVertices = new VertexList<TVertex>(this.VertexCount / 4);
@@ -560,9 +560,9 @@ namespace QuickGraph
             bool allowParallelEdges
             )
         {
-            CodeContract.Requires(vertexInEdges != null);
-            CodeContract.Requires(vertexOutEdges != null);
-            CodeContract.Requires(edgeCount >= 0);
+            Contract.Requires(vertexInEdges != null);
+            Contract.Requires(vertexOutEdges != null);
+            Contract.Requires(edgeCount >= 0);
 
             this.vertexInEdges = vertexInEdges;
             this.vertexOutEdges = vertexOutEdges;

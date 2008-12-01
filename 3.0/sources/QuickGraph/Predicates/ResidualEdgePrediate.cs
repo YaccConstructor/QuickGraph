@@ -27,7 +27,7 @@ namespace QuickGraph.Predicates
 
 		public bool Test(TEdge e)
 		{
-            CodeContract.Requires(e != null);
+            Contract.Requires(e != null);
 			return 0 < this.residualCapacities[e];
 		}
     }

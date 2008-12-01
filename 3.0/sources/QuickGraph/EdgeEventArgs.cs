@@ -11,7 +11,7 @@ namespace QuickGraph
         private readonly TEdge edge;
         public EdgeEventArgs(TEdge edge)
         {
-            CodeContract.Requires(edge != null);
+            Contract.Requires(edge != null);
 
             this.edge = edge;
         }

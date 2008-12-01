@@ -18,9 +18,9 @@ namespace QuickGraph.Predicates
             EdgePredicate<TVertex, TEdge> edgePredicate
             )
         {
-            CodeContract.Requires(baseGraph != null);
-            CodeContract.Requires(vertexPredicate != null);
-            CodeContract.Requires(edgePredicate != null);
+            Contract.Requires(baseGraph != null);
+            Contract.Requires(vertexPredicate != null);
+            Contract.Requires(edgePredicate != null);
 
             this.baseGraph = baseGraph;
             this.vertexPredicate = vertexPredicate;

@@ -14,8 +14,8 @@ namespace QuickGraph
 
         public Edge(TVertex source, TVertex target)
         {
-            CodeContract.Requires(source != null);
-            CodeContract.Requires(target != null);
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
 
             this.source = source;
             this.target = target;

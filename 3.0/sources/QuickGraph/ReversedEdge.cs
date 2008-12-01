@@ -13,7 +13,7 @@ namespace QuickGraph
         private readonly TEdge originalEdge;
         public ReversedEdge(TEdge originalEdge)
         {
-            CodeContract.Requires(originalEdge != null);
+            Contract.Requires(originalEdge != null);
 
             this.originalEdge = originalEdge;
         }

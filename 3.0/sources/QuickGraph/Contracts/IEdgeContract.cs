@@ -14,18 +14,18 @@ namespace QuickGraph.Contracts
         public void ObjectInvariant()
         {
             IEdge<TVertex> me = this;
-            CodeContract.Invariant(me.Source != null);
-            CodeContract.Invariant(me.Target != null);
+            Contract.Invariant(me.Source != null);
+            Contract.Invariant(me.Target != null);
         }
 
         TVertex IEdge<TVertex>.Source
         {
-            get { return CodeContract.Result<TVertex>(); }
+            get { return Contract.Result<TVertex>(); }
         }
 
         TVertex IEdge<TVertex>.Target
         {
-            get { return CodeContract.Result<TVertex>(); }
+            get { return Contract.Result<TVertex>(); }
         }
     }
 #endif
