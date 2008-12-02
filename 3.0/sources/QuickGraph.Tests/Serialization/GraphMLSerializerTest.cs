@@ -7,9 +7,22 @@ using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Serialization
 {
+    public static class GraphMLFilesHelper
+    {
+        public static string[] GetFileNames()
+        {
+            return Directory.GetFiles(".", "*.graphml");
+        }
+    }
+
     [TestFixture, PexClass]
     public partial class GraphMLSerializerTest
     {
+        [Test]
+        public void NorthDataSet()
+        {
+        }
+
         [Test, PexMethod]
         public void RoundTrip()
         {
