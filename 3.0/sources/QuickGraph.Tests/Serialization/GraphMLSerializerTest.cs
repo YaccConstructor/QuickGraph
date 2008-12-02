@@ -4,6 +4,7 @@ using System.IO;
 using System.Xml;
 using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
+using System.Xml.XPath;
 
 namespace QuickGraph.Serialization
 {
@@ -16,7 +17,6 @@ namespace QuickGraph.Serialization
     }
 
     [TestFixture, PexClass]
-    [CurrentFixture]
     public partial class GraphMLSerializerIntegrationTest
     {
         [Test]
@@ -34,7 +34,37 @@ namespace QuickGraph.Serialization
                         (source, target, id) => new IdentifiableEdge<IdentifiableVertex>(source, target, id)
                         );
                 }
-                Console.WriteLine(": {0} vertices, {1} edges", g.VertexCount, g.EdgeCount);
+                Console.Write(": {0} vertices, {1} edges", g.VertexCount, g.EdgeCount);
+
+                var vertices = new Dictionary<string, IdentifiableVertex>();
+                foreach(var v in g.Vertices)
+                    vertices.Add(v.ID, v);
+
+                // check all nodes are loaded
+                var settings = new XmlReaderSettings();
+                settings.XmlResolver = new GraphMLXmlResolver();
+                settings.ProhibitDtd = false;
+                settings.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.None;
+                using(var xreader = XmlReader.Create(graphmlFile, settings))
+                {
+                    var doc = new XPathDocument(xreader);
+                    foreach (XPathNavigator node in doc.CreateNavigator().Select("/graphml/graph/node"))
+                    {
+                        string id = node.GetAttribute("id", "");
+                        Assert.IsTrue(vertices.ContainsKey(id));
+                    }
+                    Console.Write(", vertices ok");
+
+                    // check all edges are loaded
+                    foreach (XPathNavigator node in doc.CreateNavigator().Select("/graphml/graph/edge"))
+                    {
+                        string source = node.GetAttribute("source", "");
+                        string target = node.GetAttribute("target", "");
+                        Assert.IsTrue(g.ContainsEdge(vertices[source], vertices[target]));
+                    }
+                    Console.Write(", edges ok");
+                }
+                Console.WriteLine();
             }
         }
     }
