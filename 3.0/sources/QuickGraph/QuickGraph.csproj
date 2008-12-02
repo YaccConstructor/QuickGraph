@@ -308,6 +308,7 @@
     <Compile Include="IMutableVertexAndEdgeListGraph.cs" />
     <Compile Include="IMutableVertexListGraph.cs" />
     <Compile Include="IVertexAndEdgeListGraph.cs" />
+    <Compile Include="Serialization\GraphMLXmlResolver.cs" />
     <Compile Include="Serialization\SerializationExtensions.cs" />
     <Compile Include="VertexFactory.cs" />
     <Compile Include="IVertexListGraph.cs" />
@@ -340,6 +341,7 @@
   <ItemGroup>
     <None Include="quickgraph.snk" />
     <None Include="Diagrams\TraversalInterfaces.cd" />
+    <EmbeddedResource Include="Serialization\graphml.dtd" />
     <EmbeddedResource Include="Serialization\graphml.xsd" />
   </ItemGroup>
   <ItemGroup>

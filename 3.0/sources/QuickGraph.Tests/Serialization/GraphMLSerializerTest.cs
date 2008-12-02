@@ -17,19 +17,16 @@ namespace QuickGraph.Serialization
 
     [TestFixture, PexClass]
     [CurrentFixture]
-    public partial class GraphMLSerializerTest
+    public partial class GraphMLSerializerIntegrationTest
     {
         [Test]
-        [Ignore("need to handle DTD")]
         public void DeserializeFromGraphMLNorth()
         {
             foreach (var graphmlFile in GraphMLFilesHelper.GetFileNames())
             {
                 Console.Write(graphmlFile);
                 var g = new AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
-                var settings = new XmlReaderSettings();
-                settings.ProhibitDtd = false;
-                using (var reader = XmlReader.Create(graphmlFile, settings))
+                using (var reader = new StreamReader(graphmlFile))
                 {
                     g.DeserializeFromGraphML(
                         reader,
@@ -40,7 +37,11 @@ namespace QuickGraph.Serialization
                 Console.WriteLine(": {0} vertices, {1} edges", g.VertexCount, g.EdgeCount);
             }
         }
+    }
 
+    [TestFixture, PexClass]
+    public partial class GraphMLSerializerTest
+    {
         [Test, PexMethod]
         public void RoundTrip()
         {
