@@ -3,7 +3,7 @@
 namespace QuickGraph
 {
     /// <summary>
-    /// A directed graph where vertices and edges can be enumerated efficiently
+    /// A directed graph where vertices and edges can be enumerated efficiently.
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>

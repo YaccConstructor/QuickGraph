@@ -7,6 +7,12 @@ using QuickGraph.Collections;
 
 namespace QuickGraph
 {
+    /// <summary>
+    /// A directed graph data structure efficient for sparse
+    /// graph representation where out-edge need to be enumerated only.
+    /// </summary>
+    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TEdge"></typeparam>
     [Serializable]
     [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
     public class AdjacencyGraph<TVertex,TEdge> 

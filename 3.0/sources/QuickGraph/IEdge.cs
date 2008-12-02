@@ -4,9 +4,9 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph
 {
     /// <summary>
-    /// A graph edge
+    /// A directed edge
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TVertex">The vertex type</typeparam>
 #if CONTRACTS_FULL
     [ContractClass(typeof(IEdgeContract<>))]
 #endif
