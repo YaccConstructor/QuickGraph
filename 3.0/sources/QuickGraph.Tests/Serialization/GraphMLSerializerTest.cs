@@ -11,16 +11,34 @@ namespace QuickGraph.Serialization
     {
         public static string[] GetFileNames()
         {
-            return Directory.GetFiles(".", "*.graphml");
+            return Directory.GetFiles("GraphML", "*.graphml");
         }
     }
 
     [TestFixture, PexClass]
+    [CurrentFixture]
     public partial class GraphMLSerializerTest
     {
         [Test]
-        public void NorthDataSet()
+        [Ignore("need to handle DTD")]
+        public void DeserializeFromGraphMLNorth()
         {
+            foreach (var graphmlFile in GraphMLFilesHelper.GetFileNames())
+            {
+                Console.Write(graphmlFile);
+                var g = new AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+                var settings = new XmlReaderSettings();
+                settings.ProhibitDtd = false;
+                using (var reader = XmlReader.Create(graphmlFile, settings))
+                {
+                    g.DeserializeFromGraphML(
+                        reader,
+                        id => new IdentifiableVertex(id),
+                        (source, target, id) => new IdentifiableEdge<IdentifiableVertex>(source, target, id)
+                        );
+                }
+                Console.WriteLine(": {0} vertices, {1} edges", g.VertexCount, g.EdgeCount);
+            }
         }
 
         [Test, PexMethod]
