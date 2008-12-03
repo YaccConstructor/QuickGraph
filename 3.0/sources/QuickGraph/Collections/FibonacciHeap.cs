@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
@@ -216,12 +215,26 @@ namespace QuickGraph.Collections
         public int Count { get { return count; } }
         //Draws the current heap in a string.  Marked Nodes have a * Next to them
 
+        struct NodeLevel
+        {
+            public readonly FibonacciHeapCell<TPriority, TValue> Node;
+            public readonly int Level;
+            public NodeLevel(FibonacciHeapCell<TPriority, TValue> node, int level)
+            {
+                this.Node = node;
+                this.Level = level;
+            }
+        }
+
         public string DrawHeap()
         {
             var lines = new List<string>();
             var lineNum = 0;
             var columnPosition = 0;
-            var stack = nodes.Select(x => new { Node = x, Level = 0 }).Reverse().ToStack();
+            var list = new List<NodeLevel>();
+            foreach (var node in nodes) list.Add(new NodeLevel(node, 0));
+            list.Reverse();
+            var stack = new Stack<NodeLevel>(list);
             while (stack.Count > 0)
             {
                 var currentcell = stack.Pop();
@@ -234,7 +247,9 @@ namespace QuickGraph.Collections
                 currentLine += nodeString;
                 if (currentcell.Node.Children != null && currentcell.Node.Children.First != null)
                 {
-                    currentcell.Node.Children.Reverse().ForEach(x => stack.Push(new { Node = x, Level = currentcell.Level + 1 }));
+                    var children = new List<FibonacciHeapCell<TPriority, TValue>>(currentcell.Node.Children);
+                    children.Reverse();
+                    children.ForEach(x => stack.Push(new NodeLevel(x, currentcell.Level + 1)));
                 }
                 else
                 {
@@ -242,7 +257,7 @@ namespace QuickGraph.Collections
                 }
                 lines[lineNum] = currentLine;
             }
-            return lines.Aggregate("", (a, b) => a + "\r\n" + b);
+            return String.Join(Environment.NewLine, lines.ToArray());
         }
 
         public FibonacciHeapCell<TPriority, TValue> Enqueue(TPriority Priority, TValue Value)
@@ -339,21 +354,47 @@ namespace QuickGraph.Collections
             {
                 //New value is in opposite direction of Heap, cut all children violating heap condition
                 node.Priority = NewKey;
-                var query = node.Children.Where(x => (priorityComparsion(node.Priority, x.Priority) * DirectionMultiplier) > 0);
-                if (query != null)
+                if (node.Children != null)
                 {
-                    foreach (var child in query.ToList())
+                    List<FibonacciHeapCell<TPriority, TValue>> toupdate = null;
+                    foreach (var child in node.Children)
                     {
-                        node.Marked = true;
-                        node.Children.Remove(child);
-                        child.Parent = null;
-                        child.Marked = false;
-                        nodes.AddLast(child);
-                        UpdateNodesDegree(node);
+                        if ((priorityComparsion(node.Priority, child.Priority) * DirectionMultiplier) > 0)
+                        {
+                            if (toupdate == null)
+                                toupdate = new List<FibonacciHeapCell<TPriority, TValue>>();
+                            toupdate.Add(child);
+                        }
                     }
+
+                    if (toupdate != null)
+                        foreach (var child in toupdate)
+                        {
+                            node.Marked = true;
+                            node.Children.Remove(child);
+                            child.Parent = null;
+                            child.Marked = false;
+                            nodes.AddLast(child);
+                            UpdateNodesDegree(node);
+                        }
                 }
                 UpdateNext();
             }
+        }
+
+        static int Max<T>(IEnumerable<T> values, Converter<T, int> converter)
+        {
+            Contract.Requires(values != null);
+            Contract.Requires(converter != null);
+
+            int max = int.MinValue;
+            foreach (var value in values)
+            {
+                int v = converter(value);
+                if (max < v)
+                    max = v;
+            }
+            return max;
         }
 
         /// <summary>
@@ -368,8 +409,8 @@ namespace QuickGraph.Collections
 
             var oldDegree = parentNode.Degree;
             parentNode.Degree = 
-                parentNode.Children.First != null 
-                ? parentNode.Children.Max(x => x.Degree) + 1 
+                parentNode.Children.First != null
+                ? Max(parentNode.Children, x => x.Degree) + 1 
                 : 1;
             FibonacciHeapCell<TPriority, TValue> degreeMapValue;
             if (oldDegree != parentNode.Degree)

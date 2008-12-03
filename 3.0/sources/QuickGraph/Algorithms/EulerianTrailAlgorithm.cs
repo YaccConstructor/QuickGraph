@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 
 using QuickGraph.Algorithms.Search;
@@ -228,7 +227,14 @@ namespace QuickGraph.Algorithms
 
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
-                rootVertex = this.VisitedGraph.Vertices.FirstOrDefault();
+            {
+                // pick first vertex
+                foreach (var v in this.VisitedGraph.Vertices)
+                {
+                    rootVertex = v;
+                    break;
+                }
+            }
 
             this.currentVertex = rootVertex;
             // start search
@@ -449,7 +455,7 @@ namespace QuickGraph.Algorithms
                     IEnumerable<TEdge> path;
                     if (!vis.TryGetPath(e.Target, out path))
                         throw new InvalidOperationException();
-                    trail = path.ToList();
+                    trail = new List<TEdge>(path);
                 }
                 else
                     trail.Add(e);
@@ -470,7 +476,7 @@ namespace QuickGraph.Algorithms
                     IEnumerable<TEdge> path;
                     if (!vis.TryGetPath(e.Target, out path))
                         throw new InvalidOperationException();
-                    trail = path.ToList();
+                    trail = new List<TEdge>(path);
                 }
                 else
                     trail.Add(e);

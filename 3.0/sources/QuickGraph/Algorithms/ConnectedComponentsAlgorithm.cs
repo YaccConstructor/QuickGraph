@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
@@ -32,8 +32,7 @@ namespace QuickGraph.Algorithms
             IDictionary<TVertex, int> components)
             :base(host, visitedGraph)
         {
-            if (components == null)
-                throw new ArgumentNullException("components");
+            Contract.Requires(components != null);
 
             this.components = components;
         }
@@ -82,7 +81,13 @@ namespace QuickGraph.Algorithms
                 {
                     TVertex rootVertex;
                     if (!this.TryGetRootVertex(out rootVertex))
-                        rootVertex = this.VisitedGraph.Vertices.FirstOrDefault();
+                    {
+                        foreach (var v in this.VisitedGraph.Vertices)
+                        {
+                            rootVertex = v;
+                            break;
+                        }
+                    }
                     dfs.Compute(rootVertex);
                 }
 

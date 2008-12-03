@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Collections;
 using System.Diagnostics.Contracts;
@@ -25,7 +24,9 @@ namespace QuickGraph.Collections
             Contract.Requires(distanceComparison != null);
 
             this.distances = distances;
-            this.mDistances = this.distances.Select(x => new FibonacciHeapCell<TDistance, TVertex> { Priority = x.Value, Value = x.Key, Removed = true }).ToDictionary(x => x.Value);
+            this.mDistances = new Dictionary<TVertex, FibonacciHeapCell<TDistance, TVertex>>(this.distances.Count);
+            foreach(var x in this.distances)
+                this.mDistances.Add(x.Key, new FibonacciHeapCell<TDistance, TVertex> { Priority = x.Value, Value = x.Key, Removed = true });
             this.heap = new FibonacciHeap<TDistance, TVertex>(HeapDirection.Increasing, distanceComparison);            
 		}
         private readonly FibonacciHeap<TDistance, TVertex> heap;
@@ -81,7 +82,11 @@ namespace QuickGraph.Collections
         [Pure]
         public TVertex[] ToArray()
         {
-            return this.heap.Select(x => x.Value).ToArray();
+            TVertex[] result = new TVertex[this.heap.Count];
+            int i = 0;
+            foreach (var entry in this.heap)
+                result[i++] = entry.Value;
+            return result;
         }
         #endregion
     }

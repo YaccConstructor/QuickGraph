@@ -11,7 +11,7 @@ using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Tests.Collections
 {
-    [TestFixture]
+    [TestFixture, CurrentFixture]
     public class FibonacciHeapTests
     {
         public FibonacciHeapTests()
@@ -47,7 +47,7 @@ namespace QuickGraph.Tests.Collections
                 }
                 if (lastValue > value.Priority)
                 {
-                    Assert.Fail("Heap condition has been violated");
+                    Assert.Fail("Heap condition has been violated: {0} > {1}", lastValue, value.Priority);
                 }
                 lastValue = value.Priority;
                 count--;
@@ -286,7 +286,7 @@ namespace QuickGraph.Tests.Collections
                 }
                 if (lastValue > value.Priority)
                 {
-                    Assert.Fail("Heap condition has been violated");
+                    Assert.Fail("Heap condition has been violated: {0} > {1}", lastValue, value.Priority);
                 }
                 lastValue = value.Priority;
                 count--;

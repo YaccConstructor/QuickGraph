@@ -26,7 +26,7 @@ namespace QuickGraph
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edges != null);
-            EnumerableContract.RequiresElementsNotNull(edges);
+            Contract.Requires(EnumerableContract.ElementsNotNull(edges));
 
             var g = new BidirectionalGraph<TVertex, TEdge>(allowParallelEdges);
             foreach (var edge in edges)
@@ -48,7 +48,7 @@ namespace QuickGraph
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edges != null);
-            EnumerableContract.RequiresElementsNotNull(edges);
+            Contract.Requires(EnumerableContract.ElementsNotNull(edges));
 
             return ToBidirectionalGraph<TVertex, TEdge>(edges, true);
         }
@@ -68,7 +68,7 @@ namespace QuickGraph
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edges != null);
-            EnumerableContract.RequiresElementsNotNull(edges);
+            Contract.Requires(EnumerableContract.ElementsNotNull(edges));
 
             var g = new AdjacencyGraph<TVertex, TEdge>(allowParallelEdges);
             foreach (var edge in edges)
@@ -90,7 +90,7 @@ namespace QuickGraph
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edges != null);
-            EnumerableContract.RequiresElementsNotNull(edges);
+            Contract.Requires(EnumerableContract.ElementsNotNull(edges));
 
             return ToAdjacencyGraph<TVertex, TEdge>(edges, true);
         }
@@ -114,7 +114,7 @@ namespace QuickGraph
         {
             Contract.Requires(vertices != null);
             Contract.Requires(outEdgesFactory != null);
-            EnumerableContract.RequiresElementsNotNull(vertices);
+            Contract.Requires(EnumerableContract.ElementsNotNull(vertices));
 
             var g = new AdjacencyGraph<TVertex, TEdge>(allowParallelEdges);
             g.AddVertexRange(vertices);
@@ -161,7 +161,7 @@ namespace QuickGraph
         {
             Contract.Requires(vertices != null);
             Contract.Requires(outEdgesFactory != null);
-            EnumerableContract.RequiresElementsNotNull(vertices);
+            Contract.Requires(EnumerableContract.ElementsNotNull(vertices));
 
             var g = new BidirectionalGraph<TVertex, TEdge>(allowParallelEdges);
             g.AddVertexRange(vertices);

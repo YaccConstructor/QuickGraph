@@ -86,7 +86,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
         }
     }
 
-    [TestFixture, CurrentFixture]
+    [TestFixture]
     public class FloydDijkstraCompareTest
     {
         [Test]
