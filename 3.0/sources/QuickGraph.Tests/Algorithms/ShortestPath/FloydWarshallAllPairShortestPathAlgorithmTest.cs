@@ -7,6 +7,9 @@ using QuickGraph.Algorithms.ShortestPath;
 using QuickGraph.Collections;
 using QuickGraph.Algorithms;
 using QuickGraph.Serialization;
+using QuickGraph.Msagl;
+using Microsoft.Msagl.Drawing;
+using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Tests.Algorithms.ShortestPath
 {
@@ -112,6 +115,19 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             Compare(g, distances);
         }
 
+        static Color ToColor(GraphColor color)
+        {
+            switch (color)
+            {
+                case GraphColor.Gray:
+                    return Color.Gray;
+                case GraphColor.Black:
+                    return Color.Black;
+                default:
+                    return Color.White;
+            }
+        }
+
         void Compare<TVertex, TEdge>(AdjacencyGraph<TVertex, TEdge> g, Func<TEdge, double> distances)
             where TEdge : IEdge<TVertex>
         {
@@ -122,7 +138,24 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
 //            foreach (var source in g.Vertices)
             var source = vertices[0];
             {
-                var dijkstraPaths = g.ShortestPathsDijkstra(distances, source);
+                var dijkstra = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(g, distances);
+                //dijkstra.ExamineEdge += (sender, e) =>
+                //{
+                //    MsaglGraphExtensions.ShowMsaglGraph(g,
+                //        (s, ne) =>
+                //        {
+                //            ne.Node.Attr.FillColor = ToColor(dijkstra.VertexColors[ne.Vertex]);
+                //        },
+                //        (s, ne) =>
+                //        {
+                //            if (ne.Edge.Equals(e.Edge)) ne.GEdge.Attr.Color = Color.Red;
+                //        });
+                //};
+                var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+                using (ObserverScope.Create(dijkstra, predecessors))
+                    dijkstra.Compute(source);
+
+                TryFunc<TVertex, IEnumerable<TEdge>> dijkstraPaths = predecessors.TryGetPath;
                 var target = vertices[20];
               //  foreach(var target in g.Vertices)
                 {

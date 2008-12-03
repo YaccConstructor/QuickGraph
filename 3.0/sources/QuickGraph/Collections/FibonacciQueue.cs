@@ -64,13 +64,16 @@ namespace QuickGraph.Collections
         public TVertex Dequeue()
         {
             var result = heap.Top;
+            Contract.Assert(result != null);
             heap.Dequeue();            
             return result.Value;
         }
 
         public TVertex Peek()
         {
-            return heap.Top.Value;
+            Contract.Assert(this.heap.Top != null);
+
+            return this.heap.Top.Value;
         }
 
         [Pure]
@@ -78,7 +81,6 @@ namespace QuickGraph.Collections
         {
             return this.heap.Select(x => x.Value).ToArray();
         }
-
         #endregion
     }
 }

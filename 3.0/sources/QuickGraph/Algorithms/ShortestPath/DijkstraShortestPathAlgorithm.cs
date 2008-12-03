@@ -56,7 +56,6 @@ namespace QuickGraph.Algorithms.ShortestPath
         public event VertexEventHandler<TVertex> ExamineVertex;
         public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
         public event VertexEventHandler<TVertex> FinishVertex;
-
         public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
@@ -73,11 +72,13 @@ namespace QuickGraph.Algorithms.ShortestPath
                 eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
-        private void InternalExamineEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
+        private void InternalTreeEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
         {
             bool decreased = this.Relax(args.Edge);
             if (decreased)
+            {
                 this.OnTreeEdge(args.Edge);
+            }
             else
                 this.OnEdgeNotRelaxed(args.Edge);
         }
@@ -140,10 +141,20 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.DiscoverVertex += this.DiscoverVertex;
                 bfs.StartVertex += this.StartVertex;
                 bfs.ExamineEdge += this.ExamineEdge;
+#if DEBUG
+                bfs.ExamineEdge += (sender, e) => {
+                    if (this.vertexQueue.Count == 0) return;
+                    var top = this.vertexQueue.Peek();
+                    var vertices = this.vertexQueue.ToArray();
+                    for (int i = 1; i < vertices.Length; ++i)
+                        if (this.Distances[top] > this.Distances[vertices[i]])
+                            Contract.Assert(false);
+                };
+#endif
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 
-                bfs.ExamineEdge += new EdgeEventHandler<TVertex,TEdge>(this.InternalExamineEdge);
+                bfs.TreeEdge += new EdgeEventHandler<TVertex,TEdge>(this.InternalTreeEdge);
                 bfs.GrayTarget += new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
 
                 bfs.Visit(s);
@@ -159,7 +170,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                     bfs.ExamineVertex -= this.ExamineVertex;
                     bfs.FinishVertex -= this.FinishVertex;
 
-                    bfs.ExamineEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalExamineEdge);
+                    bfs.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
                     bfs.GrayTarget -= new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
                 }
             }

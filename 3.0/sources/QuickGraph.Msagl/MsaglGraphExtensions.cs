@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using Microsoft.Msagl.GraphViewerGdi;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Msagl
 {
@@ -33,14 +34,21 @@ namespace QuickGraph.Msagl
         }
 
         public static Microsoft.Msagl.Drawing.Graph ToMsaglGraph<TVertex, TEdge>(
+            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
+        {
+            return ToMsaglGraph<TVertex,TEdge>(visitedGraph, null, null);
+        }
+
+
+        public static Microsoft.Msagl.Drawing.Graph ToMsaglGraph<TVertex, TEdge>(
             this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             MsaglVertexNodeEventHandler<TVertex> nodeAdded,
             MsaglEdgeEventHandler<TVertex, TEdge> edgeAdded
             )
             where TEdge : IEdge<TVertex>
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
+            Contract.Requires(visitedGraph != null);
 
             var populator = visitedGraph.CreateMsaglPopulator();
             try
@@ -91,6 +99,23 @@ namespace QuickGraph.Msagl
                 if (edgeAdded != null)
                     populator.EdgeAdded -= edgeAdded;
             }
+        }
+
+        public static void ShowMsaglGraph<TVertex, TEdge>(
+            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
+        {
+            ShowDialog(ToMsaglGraph(visitedGraph));
+        }
+
+        public static void ShowMsaglGraph<TVertex, TEdge>(
+            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            MsaglVertexNodeEventHandler<TVertex> nodeAdded,
+            MsaglEdgeEventHandler<TVertex, TEdge> edgeAdded
+            )
+            where TEdge : IEdge<TVertex>
+        {
+            ShowDialog(ToMsaglGraph(visitedGraph, nodeAdded, edgeAdded));
         }
 
         public static void ShowDialog(Microsoft.Msagl.Drawing.Graph graph)
