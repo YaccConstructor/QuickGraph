@@ -6,6 +6,7 @@ using QuickGraph.Unit;
 using QuickGraph.Algorithms.ShortestPath;
 using QuickGraph.Collections;
 using QuickGraph.Algorithms;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Tests.Algorithms.ShortestPath
 {
@@ -84,24 +85,51 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
         }
     }
 
-    [TestFixture]
+    [TestFixture, CurrentFixture]
     public class FloydDijkstraCompareTest
     {
+        //[Test]
+        //public void Boost()
+        //{
+        //    var distances = new Dictionary<Edge<char>, double>();
+        //    var g = BoostFloydWarshallTest.CreateGraph(distances);
+        //    this.Compare(g, e => distances[e]);
+        //}
+
+        //[Test]
+        //public void GraphML()
+        //{
+        //    Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
+        //    foreach (var g in GraphMLFilesHelper.GetGraphs())
+        //        this.Compare(g, distances);
+        //}
+
         [Test]
-        public void Boost()
+        public void G23103GraphML()
         {
-            var distances = new Dictionary<Edge<char>, double>();
-            var g = BoostFloydWarshallTest.CreateGraph(distances);
+            Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
+            var g = GraphMLFilesHelper.LoadGraph(@"GraphML\g.23.103.graphml");
+            Compare(g, distances);
+        }
+
+        void Compare<TVertex, TEdge>(AdjacencyGraph<TVertex, TEdge> g, Func<TEdge, double> distances)
+            where TEdge : IEdge<TVertex>
+        {
             // compute all paths
-            var fw = new FloydWarshallAllShortestPathAlgorithm<char, Edge<char>>(g, e => distances[e]);
+            var fw = new FloydWarshallAllShortestPathAlgorithm<TVertex, TEdge>(g, distances);
             fw.Compute();
-            foreach (var source in g.Vertices)
+            var vertices = g.Vertices.ToArray();
+//            foreach (var source in g.Vertices)
+            var source = vertices[0];
             {
-                var dijkstraPaths = g.ShortestPathsDijkstra(e => distances[e], source);
-                foreach(var target in g.Vertices)
+                var dijkstraPaths = g.ShortestPathsDijkstra(distances, source);
+                var target = vertices[20];
+              //  foreach(var target in g.Vertices)
                 {
-                    IEnumerable<Edge<char>> fwpath;
-                    IEnumerable<Edge<char>> dijpath;
+                   // if (source.Equals(target)) continue;
+
+                    IEnumerable<TEdge> fwpath;
+                    IEnumerable<TEdge> dijpath;
                     bool pathExists;
                     Assert.AreEqual(
                         pathExists = fw.TryGetPath(source, target, out fwpath),
@@ -109,16 +137,50 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
 
                     if (pathExists)
                     {
-                        var fwedges = new List<Edge<char>>(fwpath);
-                        var dijedges = new List<Edge<char>>(dijpath);
+                        var fwedges = fwpath.ToArray();
+                        CheckPath<TVertex, TEdge>(source, target, fwedges);
 
-                        // check path are the same
-                        Assert.AreEqual(dijedges.Count, fwedges.Count);
-                        for (int i = 0; i < dijedges.Count; ++i)
-                            Assert.AreEqual(dijedges[i], fwedges[i]);
+                        var dijedges = dijpath.ToArray();
+                        CheckPath<TVertex, TEdge>(source, target, dijedges);
+
+                        // all distances are usually 1 in this test, so it should at least
+                        // be the same number
+                        if (dijedges.Length != fwedges.Length)
+                        {
+                            DumpPaths<TVertex, TEdge>(source, target, fwedges, dijedges);
+                            Assert.Fail("path do not have the same length");
+                        }
+
+                        // check path length are the same
+                        var fwlength = fwedges.Sum(distances);
+                        var dijlength = dijedges.Sum(distances);
+                        if (fwlength != dijlength)
+                        {
+                            DumpPaths<TVertex, TEdge>(source, target, fwedges, dijedges);
+                            Assert.Fail("path do not have the same length");
+                        }
                     }
                 }
             }
+        }
+
+        private static void CheckPath<TVertex, TEdge>(TVertex source, TVertex target, TEdge[] fwedges) where TEdge : IEdge<TVertex>
+        {
+            Assert.IsTrue(fwedges[0].Source.Equals(source));
+            for (int i = 0; i < fwedges.Length - 1; ++i)
+                Assert.AreEqual(fwedges[i].Target, fwedges[i + 1].Source);
+            Assert.IsTrue(fwedges[fwedges.Length - 1].Target.Equals(target));
+        }
+
+        private static void DumpPaths<TVertex, TEdge>(TVertex source, TVertex target, TEdge[] fwedges, TEdge[] dijedges) where TEdge : IEdge<TVertex>
+        {
+            Console.WriteLine("path: {0}->{1}", source, target);
+            Console.WriteLine("dijkstra:");
+            for (int j = 0; j < dijedges.Length; ++j)
+                Console.WriteLine("\t{0}", dijedges[j]);
+            Console.WriteLine("floyd:");
+            for (int j = 0; j < fwedges.Length; ++j)
+                Console.WriteLine("\t{0}", fwedges[j]);
         }
     }
 

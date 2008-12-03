@@ -207,36 +207,31 @@ namespace QuickGraph.Algorithms.Search
                 if (cancelManager.IsCancelling) return;
 
                 var u = this.vertexQueue.Dequeue();
-                OnExamineVertex(u);
-                foreach (var e in VisitedGraph.OutEdges(u))
+                this.OnExamineVertex(u);
+                foreach (var e in this.VisitedGraph.OutEdges(u))
                 {
                     TVertex v = e.Target;
-                    OnExamineEdge(e);
+                    this.OnExamineEdge(e);
 
-                    GraphColor vColor = VertexColors[v];
+                    var vColor = this.VertexColors[v];
                     if (vColor == GraphColor.White)
                     {
-                        OnTreeEdge(e);
-                        VertexColors[v] = GraphColor.Gray;
-                        OnDiscoverVertex(v);
+                        this.OnTreeEdge(e);
+                        this.VertexColors[v] = GraphColor.Gray;
+                        this.OnDiscoverVertex(v);
                         this.vertexQueue.Enqueue(v);
                     }
                     else
                     {
-                        OnNonTreeEdge(e);
+                        this.OnNonTreeEdge(e);
                         if (vColor == GraphColor.Gray)
-                        {
-                            OnGrayTarget(e);
-                        }
+                            this.OnGrayTarget(e);
                         else
-                        {
-                            OnBlackTarget(e);
-                        }
+                            this.OnBlackTarget(e);
                     }
                 }
-                VertexColors[u] = GraphColor.Black;
-
-                OnFinishVertex(u);
+                this.VertexColors[u] = GraphColor.Black;
+                this.OnFinishVertex(u);
             }
         }
     }

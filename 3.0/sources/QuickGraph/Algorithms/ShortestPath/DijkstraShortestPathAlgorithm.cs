@@ -60,15 +60,17 @@ namespace QuickGraph.Algorithms.ShortestPath
         public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
-            if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         public event EdgeEventHandler<TVertex,TEdge> EdgeNotRelaxed;
         private void OnEdgeNotRelaxed(TEdge e)
         {
-            if (EdgeNotRelaxed != null)
-                EdgeNotRelaxed(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.EdgeNotRelaxed;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         private void InternalExamineEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
@@ -96,6 +98,8 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         protected override void Initialize()
         {
+            base.Initialize();
+
             this.VertexColors.Clear();
             // init color, distance
             var initialDistance = this.DistanceRelaxer.InitialDistance;

@@ -19,17 +19,24 @@ namespace QuickGraph.Serialization
         {
             foreach (var graphmlFile in GraphMLFilesHelper.GetFileNames())
             {
-                var g = new AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
-                using (var reader = new StreamReader(graphmlFile))
-                {
-                    g.DeserializeFromGraphML(
-                        reader,
-                        id => new IdentifiableVertex(id),
-                        (source, target, id) => new IdentifiableEdge<IdentifiableVertex>(source, target, id)
-                        );
-                }
+                var g = LoadGraph(graphmlFile);
                 yield return g;
             }
+        }
+
+        public static AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> LoadGraph(string graphmlFile)
+        {
+            Console.WriteLine(graphmlFile);
+            var g = new AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+            using (var reader = new StreamReader(graphmlFile))
+            {
+                g.DeserializeFromGraphML(
+                    reader,
+                    id => new IdentifiableVertex(id),
+                    (source, target, id) => new IdentifiableEdge<IdentifiableVertex>(source, target, id)
+                    );
+            }
+            return g;
         }
     }
 

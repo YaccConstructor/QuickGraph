@@ -137,8 +137,8 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             if (source.Equals(target))
             {
-                path = new TEdge[0];
-                return true;
+                path = null;
+                return false;
             }
 
 #if DEBUG

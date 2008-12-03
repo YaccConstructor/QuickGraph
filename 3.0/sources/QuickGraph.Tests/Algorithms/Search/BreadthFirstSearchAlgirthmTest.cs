@@ -215,7 +215,7 @@ namespace QuickGraph.Algorithms.Search
         protected void CheckBfs()
         {
             // All white vertices should be unreachable from the source.
-            foreach (int v in g.Vertices)
+            foreach (var v in g.Vertices)
             {
                 if (algo.VertexColors[v] == GraphColor.White)
                 {
@@ -225,7 +225,7 @@ namespace QuickGraph.Algorithms.Search
 
             // The shortest path to a child should be one longer than
             // shortest path to the parent.
-            foreach (int v in g.Vertices)
+            foreach (var v in g.Vertices)
             {
                 if (parents[v] != v) // *ui not the root of the bfs tree
                     Assert.AreEqual(distances[v], distances[parents[v]] + 1);
