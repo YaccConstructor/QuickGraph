@@ -11,31 +11,33 @@ namespace QuickGraph.Contracts
     sealed class IVertexSetContract<TVertex>
         : IVertexSet<TVertex>
     {
-        [ContractInvariantMethod]
-        void ObjectInvariant()
+        bool IVertexSet<TVertex>.IsVerticesEmpty
         {
-            Contract.Invariant((this.VertexCount == 0) == this.IsVerticesEmpty);
-            Contract.Invariant(this.VertexCount >= 0);
-        }
-
-        public bool IsVerticesEmpty
-        {
+            [Pure]
             get 
             {
+                IVertexSet<TVertex> ithis = this;
+                Contract.Ensures(Contract.Result<bool>() == (ithis.VertexCount == 0));
+
                 return Contract.Result<bool>();
             }
         }
 
-        public int VertexCount
+        int IVertexSet<TVertex>.VertexCount
         {
+            [Pure]
             get
             {
+                IVertexSet<TVertex> ithis = this;
+                Contract.Ensures(Contract.Result<int>() == Enumerable.Count(ithis.Vertices));
+
                 return Contract.Result<int>();
             }
         }
 
-        public IEnumerable<TVertex> Vertices
+        IEnumerable<TVertex> IVertexSet<TVertex>.Vertices
         {
+            [Pure]
             get 
             {
                 Contract.Ensures(Contract.Result<IEnumerable<TVertex>>() != null);
@@ -44,13 +46,12 @@ namespace QuickGraph.Contracts
             }
         }
 
-        public bool ContainsVertex(TVertex vertex)
+        [Pure]
+        bool IVertexSet<TVertex>.ContainsVertex(TVertex vertex)
         {
+            IVertexSet<TVertex> ithis = this;
             Contract.Requires(vertex != null);
-            Contract.Ensures(
-                Contract.Result<bool>()
-                == Contract.Exists(this.Vertices, v => v.Equals(vertex))
-                );
+            Contract.Ensures(Contract.Result<bool>() == Contract.Exists(ithis.Vertices, v => v.Equals(vertex)));
 
             return Contract.Result<bool>();
         }
