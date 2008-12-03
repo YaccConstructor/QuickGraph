@@ -45,12 +45,14 @@ namespace QuickGraph.Collections
             Contract.Requires(value != null);
 
             FibonacciHeapCell<TDistance, TVertex> result;
-            return (mDistances.TryGetValue(value, out result) && result.Removed == false);
+            return 
+                this.mDistances.TryGetValue(value, out result) && 
+                !result.Removed;
         }
 
         public void Update(TVertex v)
         {
-            heap.ChangeKey(mDistances[v], distances[v]);
+            this.heap.ChangeKey(this.mDistances[v], this.distances[v]);
         }
 
         public void Enqueue(TVertex value)
@@ -58,7 +60,7 @@ namespace QuickGraph.Collections
             Contract.Requires(value != null);
             Contract.Requires(this.mDistances.ContainsKey(value));
 
-            this.mDistances[value] = heap.Enqueue(this.mDistances[value].Priority, value);
+            this.mDistances[value] = heap.Enqueue(this.distances[value], value);
         }
 
         public TVertex Dequeue()

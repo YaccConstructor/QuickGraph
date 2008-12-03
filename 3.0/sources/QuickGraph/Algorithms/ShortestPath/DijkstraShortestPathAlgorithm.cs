@@ -78,6 +78,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             if (decreased)
             {
                 this.OnTreeEdge(args.Edge);
+                this.AssertHeap();
             }
             else
                 this.OnEdgeNotRelaxed(args.Edge);
@@ -89,6 +90,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             if (decreased)
             {
                 this.vertexQueue.Update(args.Edge.Target);
+                this.AssertHeap();
                 this.OnTreeEdge(args.Edge);
             }
             else
@@ -123,6 +125,16 @@ namespace QuickGraph.Algorithms.ShortestPath
             ComputeNoInit(rootVertex);
         }
 
+        private void AssertHeap()
+        {
+            if (this.vertexQueue.Count == 0) return;
+            var top = this.vertexQueue.Peek();
+            var vertices = this.vertexQueue.ToArray();
+            for (int i = 1; i < vertices.Length; ++i)
+                if (this.Distances[top] > this.Distances[vertices[i]])
+                    Contract.Assert(false);
+        }
+
         public void ComputeNoInit(TVertex s)
         {
             this.vertexQueue = new FibonacciQueue<TVertex, double>(this.Distances);            
@@ -142,14 +154,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.StartVertex += this.StartVertex;
                 bfs.ExamineEdge += this.ExamineEdge;
 #if DEBUG
-                bfs.ExamineEdge += (sender, e) => {
-                    if (this.vertexQueue.Count == 0) return;
-                    var top = this.vertexQueue.Peek();
-                    var vertices = this.vertexQueue.ToArray();
-                    for (int i = 1; i < vertices.Length; ++i)
-                        if (this.Distances[top] > this.Distances[vertices[i]])
-                            Contract.Assert(false);
-                };
+                bfs.ExamineEdge += (sender, e) => this.AssertHeap();
 #endif
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;

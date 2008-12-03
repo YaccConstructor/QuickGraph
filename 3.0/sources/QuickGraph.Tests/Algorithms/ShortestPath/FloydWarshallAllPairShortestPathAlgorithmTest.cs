@@ -7,8 +7,6 @@ using QuickGraph.Algorithms.ShortestPath;
 using QuickGraph.Collections;
 using QuickGraph.Algorithms;
 using QuickGraph.Serialization;
-using QuickGraph.Msagl;
-using Microsoft.Msagl.Drawing;
 using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Tests.Algorithms.ShortestPath
@@ -91,21 +89,21 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
     [TestFixture, CurrentFixture]
     public class FloydDijkstraCompareTest
     {
-        //[Test]
-        //public void Boost()
-        //{
-        //    var distances = new Dictionary<Edge<char>, double>();
-        //    var g = BoostFloydWarshallTest.CreateGraph(distances);
-        //    this.Compare(g, e => distances[e]);
-        //}
+        [Test]
+        public void Boost()
+        {
+            var distances = new Dictionary<Edge<char>, double>();
+            var g = BoostFloydWarshallTest.CreateGraph(distances);
+            this.Compare(g, e => distances[e]);
+        }
 
-        //[Test]
-        //public void GraphML()
-        //{
-        //    Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
-        //    foreach (var g in GraphMLFilesHelper.GetGraphs())
-        //        this.Compare(g, distances);
-        //}
+        [Test]
+        public void GraphML()
+        {
+            Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
+            foreach (var g in GraphMLFilesHelper.GetGraphs())
+                this.Compare(g, distances);
+        }
 
         [Test]
         public void G23103GraphML()
@@ -115,18 +113,18 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             Compare(g, distances);
         }
 
-        static Color ToColor(GraphColor color)
-        {
-            switch (color)
-            {
-                case GraphColor.Gray:
-                    return Color.Gray;
-                case GraphColor.Black:
-                    return Color.Black;
-                default:
-                    return Color.White;
-            }
-        }
+        //static Color ToColor(GraphColor color)
+        //{
+        //    switch (color)
+        //    {
+        //        case GraphColor.Gray:
+        //            return Color.Gray;
+        //        case GraphColor.Black:
+        //            return Color.Black;
+        //        default:
+        //            return Color.White;
+        //    }
+        //}
 
         void Compare<TVertex, TEdge>(AdjacencyGraph<TVertex, TEdge> g, Func<TEdge, double> distances)
             where TEdge : IEdge<TVertex>
@@ -135,8 +133,8 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             var fw = new FloydWarshallAllShortestPathAlgorithm<TVertex, TEdge>(g, distances);
             fw.Compute();
             var vertices = g.Vertices.ToArray();
-//            foreach (var source in g.Vertices)
-            var source = vertices[0];
+            foreach (var source in g.Vertices)
+            //var source = vertices[0];
             {
                 var dijkstra = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(g, distances);
                 //dijkstra.ExamineEdge += (sender, e) =>
@@ -156,10 +154,10 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
                     dijkstra.Compute(source);
 
                 TryFunc<TVertex, IEnumerable<TEdge>> dijkstraPaths = predecessors.TryGetPath;
-                var target = vertices[20];
-              //  foreach(var target in g.Vertices)
+                //var target = vertices[20];
+                foreach(var target in g.Vertices)
                 {
-                   // if (source.Equals(target)) continue;
+                    if (source.Equals(target)) continue;
 
                     IEnumerable<TEdge> fwpath;
                     IEnumerable<TEdge> dijpath;
