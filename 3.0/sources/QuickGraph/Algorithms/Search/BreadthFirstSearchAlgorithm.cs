@@ -148,8 +148,10 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
+
             var cancelManager = this.Services.CancelManager;
             // initialize vertex u
             foreach (var v in VisitedGraph.Vertices)
@@ -165,8 +167,6 @@ namespace QuickGraph.Algorithms.Search
         {
             if (this.VisitedGraph.VertexCount == 0)
                 return;
-
-            this.Initialize();
 
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))

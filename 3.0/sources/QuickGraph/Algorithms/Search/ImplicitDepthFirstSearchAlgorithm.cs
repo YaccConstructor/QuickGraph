@@ -194,8 +194,10 @@ namespace QuickGraph.Algorithms.Search
             this.Visit(rootVertex, 0);
         }
 
-        private void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
+
             this.VertexColors.Clear();
         }
 

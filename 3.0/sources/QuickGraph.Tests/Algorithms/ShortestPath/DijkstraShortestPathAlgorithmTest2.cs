@@ -42,9 +42,11 @@ namespace QuickGraph.Algorithms.ShortestPath
                     continue;
                 if (predecessor.Source == v)
                     continue;
-                Assert.AreEqual(
-                    algo.Distances[v], algo.Distances[predecessor.Source] + 1
-                    );
+                double vd, vp;
+                bool found;
+                Assert.AreEqual(found = algo.TryGetDistance(v, out vd), algo.TryGetDistance(predecessor.Source, out vp));
+                if (found)
+                    Assert.AreEqual(vd, vp+1);
             }
         }
     }

@@ -14,6 +14,23 @@ namespace QuickGraph.Serialization
         {
             return Directory.GetFiles("GraphML", "*.graphml");
         }
+
+        public static IEnumerable<AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetGraphs()
+        {
+            foreach (var graphmlFile in GraphMLFilesHelper.GetFileNames())
+            {
+                var g = new AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+                using (var reader = new StreamReader(graphmlFile))
+                {
+                    g.DeserializeFromGraphML(
+                        reader,
+                        id => new IdentifiableVertex(id),
+                        (source, target, id) => new IdentifiableEdge<IdentifiableVertex>(source, target, id)
+                        );
+                }
+                yield return g;
+            }
+        }
     }
 
     [TestFixture, PexClass]

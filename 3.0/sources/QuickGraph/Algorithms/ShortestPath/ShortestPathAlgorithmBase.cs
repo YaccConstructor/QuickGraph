@@ -4,6 +4,7 @@ using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Collections;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
@@ -13,7 +14,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         where TEdge : IEdge<TVertex>
     {
         private readonly IDictionary<TVertex, GraphColor> vertexColors;
-        private readonly IDictionary<TVertex, double> distances;
+        private readonly Dictionary<TVertex, double> distances;
         private readonly Func<TEdge, double> weights;
         private readonly IDistanceRelaxer distanceRelaxer;
 
@@ -33,10 +34,8 @@ namespace QuickGraph.Algorithms.ShortestPath
             )
             :base(host, visitedGraph)
         {
-            if (weights == null)
-                throw new ArgumentNullException("weights");
-            if (distanceRelaxer == null)
-                throw new ArgumentNullException("distanceRelaxer");
+            Contract.Requires(weights != null);
+            Contract.Requires(distanceRelaxer != null);
 
             this.vertexColors = new Dictionary<TVertex, GraphColor>();
             this.distances = new Dictionary<TVertex, double>();
@@ -57,12 +56,15 @@ namespace QuickGraph.Algorithms.ShortestPath
             return this.vertexColors[vertex];
         }
 
+        public bool TryGetDistance(TVertex vertex, out double distance)
+        {
+            Contract.Requires(vertex != null);
+            return this.distances.TryGetValue(vertex, out distance);
+        }
+
         public IDictionary<TVertex, double> Distances
         {
-            get
-            {
-                return this.distances;
-            }
+            get { return this.distances; }
         }
 
         public Func<TEdge, double> Weights
@@ -75,14 +77,21 @@ namespace QuickGraph.Algorithms.ShortestPath
             get { return this.distanceRelaxer; }
         }
 
-        protected bool Compare(double a, double b)
+        protected bool Relax(TEdge e)
         {
-            return this.distanceRelaxer.Compare(a, b);
-        }
+            double du = this.distances[e.Source];
+            double dv = this.distances[e.Target];
+            double we = this.Weights(e);
 
-        protected double Combine(double distance, double weight)
-        {
-            return this.distanceRelaxer.Combine(distance, weight);
+            var relaxer = this.DistanceRelaxer;
+            var duwe = relaxer.Combine(du, we);
+            if (relaxer.Compare(duwe, dv))
+            {
+                this.distances[e.Target] = duwe;
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

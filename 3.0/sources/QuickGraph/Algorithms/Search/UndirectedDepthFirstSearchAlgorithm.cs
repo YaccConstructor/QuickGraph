@@ -157,8 +157,10 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
-        public void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
+
             var cancelManager = this.Services.CancelManager;
             foreach (var u in VisitedGraph.Vertices)
             {

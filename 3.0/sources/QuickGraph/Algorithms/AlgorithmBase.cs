@@ -66,9 +66,13 @@ namespace QuickGraph.Algorithms
         public void Compute()
         {
             this.BeginComputation();
+            this.Initialize();
             this.InternalCompute();
             this.EndComputation();
         }
+
+        protected virtual void Initialize()
+        { }
 
         protected abstract void InternalCompute();
 

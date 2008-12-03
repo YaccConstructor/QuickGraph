@@ -51,8 +51,9 @@ namespace QuickGraph.Algorithms
             set { this.maxIterationCount = value; }
         }
 
-        private void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
             this.centralities.Clear();
             foreach (var v in this.VisitedGraph.Vertices)
                 this.centralities.Add(v, 0);
@@ -71,11 +72,15 @@ namespace QuickGraph.Algorithms
                 this.dijkstra.Compute(v);
 
                 foreach (var u in this.VisitedGraph.Vertices)
-                    this.centralities[u] += n * this.dijkstra.Distances[u] / (this.MaxIterationCount * (n - 1));
+                {
+                    double d;
+                    if (this.dijkstra.TryGetDistance(u, out d))
+                        this.centralities[u] += n * d / (this.MaxIterationCount * (n - 1));
+                }
             }
 
             // update
-            foreach (var v in this.VisitedGraph.Vertices)
+            foreach (var v in this.centralities.Keys)
                 this.centralities[v] = 1.0/this.centralities[v];
         }
     }

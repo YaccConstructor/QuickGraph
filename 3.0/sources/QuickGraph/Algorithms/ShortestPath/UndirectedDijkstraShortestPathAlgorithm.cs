@@ -90,16 +90,13 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        public void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
             this.VertexColors.Clear();
-            this.Distances.Clear();
             // init color, distance
             foreach (var u in VisitedGraph.Vertices)
-            {
                 this.VertexColors.Add(u, GraphColor.White);
-                this.Distances.Add(u, double.MaxValue);
-            }
         }
 
         protected override void InternalCompute()
@@ -108,9 +105,9 @@ namespace QuickGraph.Algorithms.ShortestPath
             if (!this.TryGetRootVertex(out rootVertex))
                 throw new InvalidOperationException("RootVertex not initialized");
 
-            this.Initialize();
             this.VertexColors[rootVertex] = GraphColor.Gray;
             this.Distances[rootVertex] = 0;
+
             ComputeNoInit(rootVertex);
         }
 
@@ -155,21 +152,6 @@ namespace QuickGraph.Algorithms.ShortestPath
                     bfs.GrayTarget -= new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
                 }
             }
-        }
-
-        private bool Relax(TEdge e)
-        {
-            double du = this.Distances[e.Source];
-            double dv = this.Distances[e.Target];
-            double we = this.Weights(e);
-
-            if (Compare(Combine(du, we), dv))
-            {
-                this.Distances[e.Target] = Combine(du, we);
-                return true;
-            }
-            else
-                return false;
         }
     }
 }

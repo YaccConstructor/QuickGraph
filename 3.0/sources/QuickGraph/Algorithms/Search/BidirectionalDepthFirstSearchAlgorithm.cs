@@ -165,8 +165,11 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
-        public void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
+
+            this.VertexColors.Clear();
             foreach (var u in VisitedGraph.Vertices)
             {
                 VertexColors[u] = GraphColor.White;

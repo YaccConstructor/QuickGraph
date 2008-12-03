@@ -106,7 +106,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 FinishVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
-        public void Initialize()
+        protected override void Initialize()
         {
             this.VertexColors.Clear();
             this.Distances.Clear();
@@ -127,7 +127,6 @@ namespace QuickGraph.Algorithms.ShortestPath
             if (!this.TryGetRootVertex(out rootVertex))
                 throw new InvalidOperationException("RootVertex not initialized");
 
-            this.Initialize();
             VertexColors[rootVertex] = GraphColor.Gray;
             Distances[rootVertex] = 0;
             ComputeNoInit(rootVertex);
@@ -152,21 +151,6 @@ namespace QuickGraph.Algorithms.ShortestPath
                 }
                 OnFinishVertex(v);
             }
-        }
-
-        private bool Relax(TEdge e)
-        {
-            double du = this.Distances[e.Source];
-            double dv = this.Distances[e.Target];
-            double we = this.Weights(e);
-
-            if (Compare(Combine(du, we), dv))
-            {
-                Distances[e.Target] = Combine(du, we);
-                return true;
-            }
-            else
-                return false;
         }
     }
 }

@@ -173,8 +173,10 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
-        public void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
+
             // put all vertex to white
             var cancelManager = this.Services.CancelManager;
             foreach (var e in VisitedGraph.Edges)

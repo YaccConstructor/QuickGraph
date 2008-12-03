@@ -8,14 +8,12 @@ using QuickGraph.Collections;
 
 namespace QuickGraph.Tests.Algorithms.ShortestPath
 {
-    [TestFixture, CurrentFixture]
+    [TestFixture]
     public class BoostFloydWarshallTest
     {
-        [Test]
-        public void Compute()
+        public static AdjacencyGraph<char, Edge<char>> CreateGraph(Dictionary<Edge<char>, double> distances)
         {
             var g = new AdjacencyGraph<char, Edge<char>>();
-            var distances = new Dictionary<Edge<char>, double>();
 
             var vertices = "ABCDE";
             g.AddVertexRange(vertices);
@@ -29,12 +27,19 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             AddEdge(g, distances, 'E', 'A', 1);
             AddEdge(g, distances, 'E', 'B', 1);
 
-            var fw = new FloydWarshallAllShortestPathAlgorithm<char, Edge<char>>(g, e => distances[e]);
+            return g;
+        }
 
+        [Test]
+        public void Compute()
+        {
+            var distances = new Dictionary<Edge<char>, double>();
+            var g = CreateGraph(distances);
+            var fw = new FloydWarshallAllShortestPathAlgorithm<char, Edge<char>>(g, e => distances[e]);
             fw.Compute();
             fw.Dump(Console.Out);
-            foreach (var i in vertices)
-                foreach (var j in vertices)
+            foreach (var i in g.Vertices)
+                foreach (var j in g.Vertices)
                 {
                     Console.Write("{0} -> {1}:", i, j);
                     IEnumerable<Edge<char>> path;
@@ -75,6 +80,26 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             char source, char target, double weight)
         {
             var ac = new Edge<char>(source, target); distances[ac] = weight; g.AddEdge(ac);
+        }
+    }
+
+    [TestFixture]
+    public class FloydDijkstraCompareTest
+    {
+        [Test]
+        public void Boost()
+        {
+            var distances = new Dictionary<Edge<char>, double>();
+            var g = BoostFloydWarshallTest.CreateGraph(distances);
+            // compute all paths
+            var fw = new FloydWarshallAllShortestPathAlgorithm<char, Edge<char>>(g, e => distances[e]);
+            fw.Compute();
+            foreach (var source in g.Vertices)
+            {
+                var dijkstra = new DijkstraShortestPathAlgorithm<char, Edge<char>>(g, e => distances[e]);
+                dijkstra.Compute(source);
+
+            }
         }
     }
 

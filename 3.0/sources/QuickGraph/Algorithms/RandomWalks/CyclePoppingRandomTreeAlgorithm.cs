@@ -110,8 +110,10 @@ namespace QuickGraph.Algorithms.RandomWalks
                 this.ClearTreeVertex(this, new VertexEventArgs<TVertex>(v));
         }
 
-        private void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
+
             this.successors.Clear();
             this.vertexColors.Clear();
             foreach (var v in this.VisitedGraph.Vertices)
@@ -179,8 +181,6 @@ namespace QuickGraph.Algorithms.RandomWalks
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
                 throw new InvalidOperationException("RootVertex not specified");
-            // initialize vertices to white
-            Initialize();
 
             // process root
             ClearTree(rootVertex);

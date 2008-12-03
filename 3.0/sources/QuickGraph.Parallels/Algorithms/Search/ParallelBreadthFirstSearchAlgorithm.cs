@@ -146,8 +146,10 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, new ParallelVertexEventArgs<TVertex,TLocal>(v, local));
         }
 
-        public void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
+
             // make sure queue is empty
             Contract.Ensures(this.vertexQueue.Count == 0);
 
@@ -180,8 +182,6 @@ namespace QuickGraph.Algorithms.Search
         {
             if (this.VisitedGraph.VertexCount == 0)
                 return;
-
-            this.Initialize();
 
             TVertex rootVertex;
             IEnumerable<TVertex> roots;

@@ -172,9 +172,12 @@ namespace QuickGraph.Algorithms.Search
 			}
 		}
 
-		public void Initialize()
-		{
-			foreach(TVertex u in this.VisitedGraph.Vertices)
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            this.VertexColors.Clear();
+            foreach (var u in this.VisitedGraph.Vertices)
 			{
                 this.VertexColors[u] = GraphColor.White;
                 this.OnInitializeVertex(u);

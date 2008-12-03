@@ -185,10 +185,13 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        private void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
+
             this.foundNegativeCycle = false;
             // init color, distance
+            this.VertexColors.Clear();
             foreach (var u in VisitedGraph.Vertices)
             {
                 this.VertexColors[u] = GraphColor.White;
@@ -206,8 +209,6 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// <returns>true if successful, false if there was a negative cycle.</returns>
         protected override void InternalCompute()
         {
-            this.Initialize();
-
             // getting the number of 
             int N = this.VisitedGraph.VertexCount;
             for (int k = 0; k < N; ++k)
@@ -229,11 +230,11 @@ namespace QuickGraph.Algorithms.ShortestPath
                     break;
             }
 
+            var relaxer = this.DistanceRelaxer;
             foreach (var e in this.VisitedGraph.Edges)
             {
-                if (
-                    Compare(
-                        Combine(
+                if (relaxer.Compare(
+                        relaxer.Combine(
                             this.Distances[e.Source], Weights(e)),
                             this.Distances[e.Target]
                         )
@@ -247,21 +248,6 @@ namespace QuickGraph.Algorithms.ShortestPath
                     this.OnEdgeNotMinimized(e);
             }
             this.foundNegativeCycle = false;
-        }
-
-        private bool Relax(TEdge e)
-        {
-            double du = this.Distances[e.Source];
-            double dv = this.Distances[e.Target];
-            double we = this.Weights(e);
-
-            if (Compare(Combine(du, we), dv))
-            {
-                this.Distances[e.Target] = Combine(du, we);
-                return true;
-            }
-            else
-                return false;
         }
     }
 }

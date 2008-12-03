@@ -122,8 +122,10 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             }
         }
 
-        private void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
+
             this.minimumWeights = new Dictionary<TVertex, double>(this.VisitedGraph.VertexCount);
             this.queue = new PriorityQueue<TVertex, double>(this.minimumWeights);
             foreach (var u in this.VisitedGraph.Vertices)

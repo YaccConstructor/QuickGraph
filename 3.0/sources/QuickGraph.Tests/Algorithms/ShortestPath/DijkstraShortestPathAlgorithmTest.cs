@@ -33,23 +33,6 @@ namespace QuickGraph.Algorithms.ShortestPath
     public class DijkstraShortestPathTest
     {
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void CreateAlgorithmWithNullGraph()
-        {
-            DijkstraShortestPathAlgorithm<int,Edge<int>> dij = new
-                DijkstraShortestPathAlgorithm<int, Edge<int>>(null, null);
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void CreateAlgorithmWithNullWeights()
-        {
-            AdjacencyGraph<int, Edge<int>> g = new AdjacencyGraph<int, Edge<int>>(true);
-            DijkstraShortestPathAlgorithm<int, Edge<int>> dij =
-                new DijkstraShortestPathAlgorithm<int, Edge<int>>(g, null);
-        }
-
-        [Test]
         public void RunOnLineGraph()
         {
             AdjacencyGraph<int, Edge<int>> g = new AdjacencyGraph<int, Edge<int>>(true);

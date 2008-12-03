@@ -263,8 +263,10 @@ namespace QuickGraph.Algorithms.Search
         /// <summary>
         /// Initializes the algorithm before computation.
         /// </summary>
-        private void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
+
             this.EdgeColors.Clear();
         }
    }
