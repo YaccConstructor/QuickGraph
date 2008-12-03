@@ -446,7 +446,10 @@ namespace QuickGraph.Algorithms
                     // start new trail
                     // take the shortest path from the start vertex to
                     // the target vertex
-                    trail = vis.Path(e.Target);
+                    IEnumerable<TEdge> path;
+                    if (!vis.TryGetPath(e.Target, out path))
+                        throw new InvalidOperationException();
+                    trail = path.ToList();
                 }
                 else
                     trail.Add(e);
@@ -464,7 +467,10 @@ namespace QuickGraph.Algorithms
                     // start new trail
                     // take the shortest path from the start vertex to
                     // the target vertex
-                    trail = vis.Path(e.Target);
+                    IEnumerable<TEdge> path;
+                    if (!vis.TryGetPath(e.Target, out path))
+                        throw new InvalidOperationException();
+                    trail = path.ToList();
                 }
                 else
                     trail.Add(e);

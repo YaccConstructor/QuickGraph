@@ -310,6 +310,7 @@
     <Compile Include="IVertexAndEdgeListGraph.cs" />
     <Compile Include="Serialization\GraphMLXmlResolver.cs" />
     <Compile Include="Serialization\SerializationExtensions.cs" />
+    <Compile Include="TryFuncDelegates.cs" />
     <Compile Include="VertexFactory.cs" />
     <Compile Include="IVertexListGraph.cs" />
     <Compile Include="NamedEdge.cs" />

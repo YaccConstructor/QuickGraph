@@ -53,9 +53,9 @@ namespace QuickGraph.Algorithms.Observers
             this.vertexPredecessors[e.Edge.Target] = e.Edge;
         }
 
-        public List<TEdge> Path(TVertex vertex)
+        public bool TryGetPath(TVertex vertex, out IEnumerable<TEdge> path)
         {
-            return new List<TEdge>(this.VertexPredecessors.Path(vertex));
+            return this.VertexPredecessors.TryGetPath(vertex, out path);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using QuickGraph.Unit;
 using QuickGraph.Algorithms.ShortestPath;
 using QuickGraph.Collections;
+using QuickGraph.Algorithms;
 
 namespace QuickGraph.Tests.Algorithms.ShortestPath
 {
@@ -96,9 +97,27 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             fw.Compute();
             foreach (var source in g.Vertices)
             {
-                var dijkstra = new DijkstraShortestPathAlgorithm<char, Edge<char>>(g, e => distances[e]);
-                dijkstra.Compute(source);
+                var dijkstraPaths = g.ShortestPathsDijkstra(e => distances[e], source);
+                foreach(var target in g.Vertices)
+                {
+                    IEnumerable<Edge<char>> fwpath;
+                    IEnumerable<Edge<char>> dijpath;
+                    bool pathExists;
+                    Assert.AreEqual(
+                        pathExists = fw.TryGetPath(source, target, out fwpath),
+                        dijkstraPaths(target, out dijpath));
 
+                    if (pathExists)
+                    {
+                        var fwedges = new List<Edge<char>>(fwpath);
+                        var dijedges = new List<Edge<char>>(dijpath);
+
+                        // check path are the same
+                        Assert.AreEqual(dijedges.Count, fwedges.Count);
+                        for (int i = 0; i < dijedges.Count; ++i)
+                            Assert.AreEqual(dijedges[i], fwedges[i]);
+                    }
+                }
             }
         }
     }

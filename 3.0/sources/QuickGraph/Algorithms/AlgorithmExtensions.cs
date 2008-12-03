@@ -11,38 +11,49 @@ namespace QuickGraph.Algorithms
 {
     public static class AlgorithmExtensions
     {
-        public static IEnumerable<TEdge> Path<TVertex, TEdge>(
+        public static bool TryGetPath<TVertex, TEdge>(
             this IDictionary<TVertex, TEdge> predecessors,
-            TVertex v) 
+            TVertex v,
+            out IEnumerable<TEdge> result)
             where TEdge : IEdge<TVertex>
         {
-            List<TEdge> path = new List<TEdge>();
+            Contract.Requires(predecessors != null);
+            Contract.Requires(v != null);
+
+            var path = new List<TEdge>();
 
             TVertex vc = v;
             TEdge e;
             while (predecessors.TryGetValue(vc, out e))
             {
-                path.Insert(0, e);
+                path.Add(e);
                 vc = e.Source;
             }
 
-            return path;
+            if (path.Count > 0)
+            {
+                path.Reverse();
+                result = path.ToArray();
+                return true;
+            }
+            else
+            {
+                result = null;
+                return false;
+            }
         }
 
         #region shortest paths
-        public static Func<TVertex, IEnumerable<TEdge>> ShortestPathsDijkstra<TVertex, TEdge>(
+        public static TryFunc<TVertex, IEnumerable<TEdge>> ShortestPathsDijkstra<TVertex, TEdge>(
             this IUndirectedGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights,
             TVertex source
             )
             where TEdge : IEdge<TVertex>
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
-            if (edgeWeights == null)
-                throw new ArgumentNullException("edgeWeight");
-            if (source == null)
-                throw new ArgumentNullException("source");
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(edgeWeights != null);
+            Contract.Requires(source != null);
 
             var algorithm = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
@@ -50,22 +61,19 @@ namespace QuickGraph.Algorithms
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
-            return v => predecessors.Path(v);
+            return predecessors.TryGetPath;
         }
 
-        public static Func<TVertex, IEnumerable<TEdge>> ShortestPathsDijkstra<TVertex, TEdge>(
+        public static TryFunc<TVertex, IEnumerable<TEdge>> ShortestPathsDijkstra<TVertex, TEdge>(
             this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights,
             TVertex source
             )
             where TEdge : IEdge<TVertex>
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
-            if (edgeWeights == null)
-                throw new ArgumentNullException("edgeWeight");
-            if (source == null)
-                throw new ArgumentNullException("source");
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(edgeWeights != null);
+            Contract.Requires(source != null);
 
             var algorithm = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
@@ -73,10 +81,10 @@ namespace QuickGraph.Algorithms
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
-            return v => predecessors.Path(v);
+            return predecessors.TryGetPath;
         }
 
-        public static Func<TVertex, IEnumerable<TEdge>> ShortestPathsBellmanFord<TVertex, TEdge>(
+        public static TryFunc<TVertex, IEnumerable<TEdge>> ShortestPathsBellmanFord<TVertex, TEdge>(
             this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights,
             TVertex source
@@ -96,10 +104,10 @@ namespace QuickGraph.Algorithms
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
-            return v => predecessors.Path(v);
+            return predecessors.TryGetPath;
         }
 
-        public static Func<TVertex, IEnumerable<TEdge>> ShortestPathsDag<TVertex, TEdge>(
+        public static TryFunc<TVertex, IEnumerable<TEdge>> ShortestPathsDag<TVertex, TEdge>(
             this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights,
             TVertex source
@@ -119,7 +127,7 @@ namespace QuickGraph.Algorithms
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
-            return v => predecessors.Path(v);
+            return predecessors.TryGetPath;
         }
 
         #endregion

@@ -67,11 +67,14 @@ namespace QuickGraph.Algorithms.ShortestPath
             using(ObserverScope.Create(dij, vis))
                 dij.Compute(1);
 
-            IList<Edge<int>> col = vis.Path(2);
+            IEnumerable<Edge<int>> path;
+            Assert.IsTrue(vis.TryGetPath(2, out path));
+            var col = path.ToList();
             Assert.AreEqual(1, col.Count);
             Assert.AreEqual(e12, col[0]);
 
-            col = vis.Path(3);
+            Assert.IsTrue(vis.TryGetPath(3, out path));
+            col = path.ToList();
             Assert.AreEqual(2, col.Count);
             Assert.AreEqual(e12, col[0]);
             Assert.AreEqual(e23, col[1]);
@@ -115,11 +118,14 @@ namespace QuickGraph.Algorithms.ShortestPath
             using(ObserverScope.Create(dij, vis))
                 dij.Compute(1);
 
-            IList<Edge<int>> col = vis.Path(2);
+            IEnumerable<Edge<int>> path;
+            Assert.IsTrue(vis.TryGetPath(2, out path));
+            var col = path.ToList();
             Assert.AreEqual(1, col.Count);
             Assert.AreEqual(e12, col[0]);
 
-            col = vis.Path(3);
+            Assert.IsTrue(vis.TryGetPath(3, out path));
+            col = path.ToList();
             Assert.AreEqual(1, col.Count);
             Assert.AreEqual(e13, col[0]);
         }
