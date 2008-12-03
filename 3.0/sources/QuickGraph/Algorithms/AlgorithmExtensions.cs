@@ -361,7 +361,7 @@ namespace QuickGraph.Algorithms
         {
             Contract.Requires(g != null);
             Contract.Requires(components != null);
-            GraphContract.RequiresInVertexSet(g, startVertex);
+            Contract.Requires(GraphContract.InVertexSet(g, startVertex));
 
             var conn = new ConnectedComponentsAlgorithm<TVertex,TEdge>(g, components);
             conn.Compute(startVertex);

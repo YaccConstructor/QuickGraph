@@ -11,30 +11,42 @@ namespace QuickGraph.Contracts
     /// </summary>
     public static class GraphContract
     {
-        [Pure, Conditional("CONTRACTS_PRECONDITIONS"), Conditional("CONTRACTS_FULL")]
-        public static void RequiresInVertexSet<TVertex>(
+        [Pure]
+        public static bool VertexCountEqual<TVertex>(
+            this IVertexSet<TVertex> left,
+            IVertexSet<TVertex> right)
+        {
+            Contract.Requires(left != null);
+            Contract.Requires(right != null);
+
+            return left.VertexCount == right.VertexCount;
+        }
+
+        [Pure]
+        public static bool EdgeCountEqual<TVertex, TEdge>(
+            this IVertexAndEdgeSet<TVertex, TEdge> left,
+            IVertexAndEdgeSet<TVertex, TEdge> right)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(left != null);
+            Contract.Requires(right != null);
+
+            return left.EdgeCount == right.EdgeCount;
+        }
+
+        [Pure]
+        public static bool InVertexSet<TVertex>(
             IVertexSet<TVertex> g, 
             TVertex v)
         {
             Contract.Requires(g != null);
             Contract.Requires(v != null);
             // todo make requires
-            Contract.Requires(g.ContainsVertex(v));
+            return g.ContainsVertex(v);
         }
 
-        [Pure, Conditional("CONTRACTS_PRECONDITIONS"), Conditional("CONTRACTS_FULL")]
-        public static void RequiresNotInVertexSet<TVertex>(
-            IVertexSet<TVertex> g,
-            TVertex v)
-        {
-            Contract.Requires(g != null);
-            Contract.Requires(v != null);
-            // todo make requires
-            Contract.Requires(!g.ContainsVertex(v));
-        }
-
-        [Pure, Conditional("CONTRACTS_PRECONDITIONS"), Conditional("CONTRACTS_FULL")]
-        public static void RequiresInVertexSet<TVertex, TEdge>(
+        [Pure]
+        public static bool InVertexSet<TVertex, TEdge>(
             IVertexAndEdgeSet<TVertex, TEdge> g,
             TEdge e)
             where TEdge : IEdge<TVertex>
@@ -42,21 +54,21 @@ namespace QuickGraph.Contracts
             Contract.Requires(g != null);
             Contract.Requires(e != null);
 
-            RequiresInVertexSet<TVertex>(g, e.Source);
-            RequiresInVertexSet<TVertex>(g, e.Target);
+            return InVertexSet<TVertex>(g, e.Source)
+                && InVertexSet<TVertex>(g, e.Target);
         }
 
-        [Pure, Conditional("CONTRACTS_PRECONDITIONS"), Conditional("CONTRACTS_FULL")]
-        public static void RequiresInEdgeSet<TVertex, TEdge>(
+        [Pure]
+        public static bool InEdgeSet<TVertex, TEdge>(
             IVertexAndEdgeSet<TVertex, TEdge> g,
             TEdge e)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(g != null);
             Contract.Requires(e != null);
-            RequiresInVertexSet(g, e);
-            Contract.Requires(g.ContainsEdge(e));
-        }
 
+            return InVertexSet(g, e)
+                && g.ContainsEdge(e);
+        }
     }
 }

@@ -314,8 +314,8 @@ namespace QuickGraph
         bool IMutableEdgeListGraph<int,TEdge>.AddVerticesAndEdge(TEdge edge)
         {
             Contract.Requires(edge != null);
-            GraphContract.RequiresInVertexSet(this, edge.Source);
-            GraphContract.RequiresInVertexSet(this, edge.Target);
+            Contract.Requires(GraphContract.InVertexSet(this, edge.Source));
+            Contract.Requires(GraphContract.InVertexSet(this, edge.Target));
 
             return this.AddEdge(edge);
         }

@@ -75,24 +75,24 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         private void InternalExamineEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
         {
-            bool decreased = Relax(args.Edge);
+            bool decreased = this.Relax(args.Edge);
             if (decreased)
-                OnTreeEdge(args.Edge);
+                this.OnTreeEdge(args.Edge);
             else
-                OnEdgeNotRelaxed(args.Edge);
+                this.OnEdgeNotRelaxed(args.Edge);
         }
 
         private void InternalGrayTarget(Object sender, EdgeEventArgs<TVertex, TEdge> args)
         {
-            bool decreased = Relax(args.Edge);
+            bool decreased = this.Relax(args.Edge);
             if (decreased)
             {
                 this.vertexQueue.Update(args.Edge.Target);
-                OnTreeEdge(args.Edge);
+                this.OnTreeEdge(args.Edge);
             }
             else
             {
-                OnEdgeNotRelaxed(args.Edge);
+                this.OnEdgeNotRelaxed(args.Edge);
             }
         }
 

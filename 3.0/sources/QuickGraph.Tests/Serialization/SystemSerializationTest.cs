@@ -5,6 +5,7 @@ using System.Text;
 using QuickGraph.Unit;
 using QuickGraph.Serialization;
 using System.IO;
+using QuickGraph.Contracts;
 
 namespace QuickGraph.Tests.Serialization
 {
@@ -71,8 +72,8 @@ namespace QuickGraph.Tests.Serialization
             IVertexAndEdgeSet<int, Edge<int>> result)
         {
             // check equal
-            GraphAssert.VertexCountEqual(g, result);
-            GraphAssert.EdgeCountEqual(g, result);
+            Assert.IsTrue(GraphContract.VertexCountEqual(g, result));
+            Assert.IsTrue(GraphContract.EdgeCountEqual(g, result));
             foreach (var v in g.Vertices)
                 Assert.IsTrue(result.ContainsVertex(v));
             //foreach (var e in g.Edges)
