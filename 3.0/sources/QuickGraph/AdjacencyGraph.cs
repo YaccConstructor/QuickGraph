@@ -57,45 +57,54 @@ namespace QuickGraph
 
         public bool IsDirected
         {
+            [Pure]
             get { return this.isDirected; }
         }
 
         public bool AllowParallelEdges
         {
+            [Pure]
             get { return this.allowParallelEdges; }
         }
 
         public int EdgeCapacity
         {
+            [Pure]
             get { return this.edgeCapacity; }
             set { this.edgeCapacity = value; }
         }
 
         public static Type VertexType
         {
+            [Pure]
             get { return typeof(TVertex); }
         }
 
         public static Type EdgeType
         {
+            [Pure]
             get { return typeof(TEdge); }
         }
 
         public bool IsVerticesEmpty
         {
+            [Pure]
             get { return this.vertexEdges.Count == 0; }
         }
 
         public int VertexCount
         {
+            [Pure]
             get { return this.vertexEdges.Count; }
         }
 
         public IEnumerable<TVertex> Vertices
         {
+            [Pure]
             get { return this.vertexEdges.Keys; }
         }
 
+        [Pure]
         public bool ContainsVertex(TVertex v)
         {
             Contract.Requires(v != null);
@@ -103,6 +112,7 @@ namespace QuickGraph
             return this.vertexEdges.ContainsKey(v);
         }
 
+        [Pure]
         public bool IsOutEdgesEmpty(TVertex v)
         {
             Contract.Requires(v != null);
@@ -111,6 +121,7 @@ namespace QuickGraph
             return this.vertexEdges[v].Count == 0;
         }
 
+        [Pure]
         public int OutDegree(TVertex v)
         {
             Contract.Requires(v != null);
@@ -119,6 +130,7 @@ namespace QuickGraph
             return this.vertexEdges[v].Count;
         }
 
+        [Pure]
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
             Contract.Requires(v != null);
@@ -127,6 +139,7 @@ namespace QuickGraph
             return this.vertexEdges[v];
         }
 
+        [Pure]
         public TEdge OutEdge(TVertex v, int index)
         {
             Contract.Requires(v != null);
@@ -232,6 +245,7 @@ namespace QuickGraph
             return false;
         }
 
+        [Pure]
         public bool TryGetEdges(
             TVertex source,
             TVertex target,
@@ -283,6 +297,7 @@ namespace QuickGraph
         protected virtual void OnVertexAdded(VertexEventArgs<TVertex> args)
         {
             Contract.Requires(args != null);
+
             VertexEventHandler<TVertex> eh = this.VertexAdded;
             if (eh != null)
                 eh(this, args);
@@ -376,7 +391,8 @@ namespace QuickGraph
         public virtual bool AddEdge(TEdge e)
         {
             Contract.Requires(e != null);
-            Contract.Requires(GraphContract.InVertexSet<TVertex, TEdge>(this, e));
+            Contract.Requires(GraphContract.InVertexSet(this, e));
+
             if (!this.AllowParallelEdges)
             {
                 if (this.ContainsEdge(e.Source, e.Target))
@@ -393,6 +409,7 @@ namespace QuickGraph
         public void AddEdgeRange(IEnumerable<TEdge> edges)
         {
             Contract.Requires(edges != null);
+            Contract.Requires(Contract.ForAll(edges, e => e != null && GraphContract.InVertexSet(this, e)));
 
             foreach (var edge in edges)
                 this.AddEdge(edge);
@@ -408,7 +425,9 @@ namespace QuickGraph
 
         public virtual bool RemoveEdge(TEdge e)
         {
+            Contract.Requires(e != null);
             Contract.Requires(GraphContract.InVertexSet(this, e));
+
             if (this.vertexEdges[e.Source].Remove(e))
             {
                 this.edgeCount--;
@@ -461,6 +480,7 @@ namespace QuickGraph
 
         public int RemoveOutEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
         {
+            Contract.Requires(v != null);
             Contract.Requires(GraphContract.InVertexSet(this, v));
             Contract.Requires(predicate != null);
 
@@ -509,6 +529,7 @@ namespace QuickGraph
             this.allowParallelEdges = allowParallelEdges;
         }
 
+        [Pure]
         public AdjacencyGraph<TVertex, TEdge> Clone()
         {
             return new AdjacencyGraph<TVertex, TEdge>(
@@ -519,6 +540,7 @@ namespace QuickGraph
                 );
         }
         
+        [Pure]
         object ICloneable.Clone()
         {
             return this.Clone();

@@ -56,112 +56,151 @@ namespace QuickGraph
 
         public static Type VertexType
         {
+            [Pure]
             get { return typeof(TVertex); }
         }
 
         public static Type EdgeType
         {
+            [Pure]
             get { return typeof(TEdge); }
         }
 
         public int EdgeCapacity
         {
+            [Pure]
             get { return this.edgeCapacity; }
             set { this.edgeCapacity = value; }
         }
 
         public bool IsDirected
         {
+            [Pure]
             get { return this.isDirected; }
         }
 
         public bool AllowParallelEdges
         {
+            [Pure]
             get { return this.allowParallelEdges; }
         }
 
         public bool IsVerticesEmpty
         {
+            [Pure]
             get { return this.vertexOutEdges.Count == 0; }
         }
 
         public int VertexCount
         {
+            [Pure]
             get { return this.vertexOutEdges.Count; }
         }
 
         public IEnumerable<TVertex> Vertices
         {
+            [Pure]
             get { return this.vertexOutEdges.Keys; }
         }
 
+        [Pure]
         public bool ContainsVertex(TVertex v)
         {
             Contract.Requires(v != null);
             return this.vertexOutEdges.ContainsKey(v);
         }
 
+        [Pure]
         public bool IsOutEdgesEmpty(TVertex v)
         {
+            Contract.Requires(v != null);
             Contract.Requires(GraphContract.InVertexSet(this, v));
+            
             return this.vertexOutEdges[v].Count == 0;
         }
 
+        [Pure]
         public int OutDegree(TVertex v)
         {
+            Contract.Requires(v != null);
             Contract.Requires(GraphContract.InVertexSet(this, v));
+
             return this.vertexOutEdges[v].Count;
         }
 
+        [Pure]
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
+            Contract.Requires(v != null);
             Contract.Requires(GraphContract.InVertexSet(this, v));
+
             return this.vertexOutEdges[v];
         }
 
+        [Pure]
         public TEdge OutEdge(TVertex v, int index)
         {
+            Contract.Requires(v != null);
             Contract.Requires(GraphContract.InVertexSet(this, v));
+
             return this.vertexOutEdges[v][index];
         }
 
+        [Pure]
         public bool IsInEdgesEmpty(TVertex v)
         {
+            Contract.Requires(v != null);
             Contract.Requires(GraphContract.InVertexSet(this, v));
+
             return this.vertexInEdges[v].Count == 0;
         }
 
+        [Pure]
         public int InDegree(TVertex v)
         {
+            Contract.Requires(v != null);
             Contract.Requires(GraphContract.InVertexSet(this, v));
+
             return this.vertexInEdges[v].Count;
         }
 
+        [Pure]
         public IEnumerable<TEdge> InEdges(TVertex v)
         {
+            Contract.Requires(v != null);
             Contract.Requires(GraphContract.InVertexSet(this, v));
+
             return this.vertexInEdges[v];
         }
 
+        [Pure]
         public TEdge InEdge(TVertex v, int index)
         {
+            Contract.Requires(v != null);
             Contract.Requires(GraphContract.InVertexSet(this, v));
+            Contract.Requires(index >= 0 && index < this.InDegree(v));
+
             return this.vertexInEdges[v][index];
         }
 
+        [Pure]
         public int Degree(TVertex v)
         {
+            Contract.Requires(v != null);
             Contract.Requires(GraphContract.InVertexSet(this, v));
+
             return this.OutDegree(v) + this.InDegree(v);
         }
 
         public bool IsEdgesEmpty
         {
+            [Pure]
             get { return this.edgeCount == 0; }
         }
 
         public int EdgeCount
         {
+            [Pure]
             get 
             {
                 return this.edgeCount; 
@@ -170,6 +209,7 @@ namespace QuickGraph
 
         public IEnumerable<TEdge> Edges
         {
+            [Pure]
             get
             {
                 foreach (var edges in this.vertexOutEdges.Values)
@@ -178,21 +218,28 @@ namespace QuickGraph
             }
         }
 
+        [Pure]
         public bool ContainsEdge(TVertex source, TVertex target)
         {
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
             Contract.Requires(GraphContract.InVertexSet(this, source));
             Contract.Requires(GraphContract.InVertexSet(this, target));
+
             foreach (var outEdge in this.OutEdges(source))
                 if (outEdge.Target.Equals(target))
                     return true;
             return false;
         }
 
+        [Pure]
         public bool TryGetEdge(
             TVertex source,
             TVertex target,
             out TEdge edge)
         {
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
             Contract.Requires(GraphContract.InVertexSet(this, source));
             Contract.Requires(GraphContract.InVertexSet(this, target));
 
@@ -213,11 +260,14 @@ namespace QuickGraph
             return false;
         }
 
+        [Pure]
         public bool TryGetEdges(
             TVertex source,
             TVertex target,
             out IEnumerable<TEdge> edges)
         {
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
             Contract.Requires(GraphContract.InVertexSet(this, source));
             Contract.Requires(GraphContract.InVertexSet(this, target));
 
@@ -238,14 +288,18 @@ namespace QuickGraph
             }
         }
 
+        [Pure]
         public bool ContainsEdge(TEdge edge)
         {
+            Contract.Requires(edge != null);
             Contract.Requires(GraphContract.InVertexSet(this, edge));
+
             return this.vertexOutEdges[edge.Source].Contains(edge);
         }
 
         public virtual void AddVertex(TVertex v)
         {
+            Contract.Requires(v != null);
             Contract.Requires(!GraphContract.InVertexSet(this, v));
 
             if (this.EdgeCapacity > 0)

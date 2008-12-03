@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Collections
 {
-    internal sealed class FibonacciQueue<TVertex, TDistance> :
+    public sealed class FibonacciQueue<TVertex, TDistance> :
         IQueue<TVertex>
     {
         public FibonacciQueue(
@@ -21,58 +21,62 @@ namespace QuickGraph.Collections
             Comparison<TDistance> distanceComparison
             )
 		{
-			if (distances == null)
-				throw new ArgumentNullException("distances");
-            if (distanceComparison == null)
-                throw new ArgumentNullException("distanceComparison");
+            Contract.Requires(distances != null);
+            Contract.Requires(distanceComparison != null);
 
-            mDistances = distances.Select(x => new FibonacciHeapCell<TDistance, TVertex> { Priority = x.Value, Value = x.Key, Removed = true  }).ToDictionary(x => x.Value);
-            mHeap = new FibonacciHeap<TDistance, TVertex>(HeapDirection.Increasing, distanceComparison);            
             this.distances = distances;
+            this.mDistances = this.distances.Select(x => new FibonacciHeapCell<TDistance, TVertex> { Priority = x.Value, Value = x.Key, Removed = true }).ToDictionary(x => x.Value);
+            this.heap = new FibonacciHeap<TDistance, TVertex>(HeapDirection.Increasing, distanceComparison);            
 		}
-        private FibonacciHeap<TDistance, TVertex> mHeap;
-        private Dictionary<TVertex, FibonacciHeapCell<TDistance, TVertex>> mDistances;        
-        private IDictionary<TVertex, TDistance> distances;
+        private readonly FibonacciHeap<TDistance, TVertex> heap;
+        private readonly Dictionary<TVertex, FibonacciHeapCell<TDistance, TVertex>> mDistances;        
+        private readonly IDictionary<TVertex, TDistance> distances;
         #region IQueue<TVertex> Members
 
         public int Count
         {
-            get { return mHeap.Count; }
+            [Pure]
+            get { return this.heap.Count; }
         }
 
+        [Pure]
         public bool Contains(TVertex value)
         {
+            Contract.Requires(value != null);
+
             FibonacciHeapCell<TDistance, TVertex> result;
             return (mDistances.TryGetValue(value, out result) && result.Removed == false);
         }
 
         public void Update(TVertex v)
         {
-            mHeap.ChangeKey(mDistances[v], distances[v]);
+            heap.ChangeKey(mDistances[v], distances[v]);
         }
 
         public void Enqueue(TVertex value)
         {
             Contract.Requires(value != null);
             Contract.Requires(this.mDistances.ContainsKey(value));
-            mDistances[value] = mHeap.Enqueue(this.mDistances[value].Priority, value);
+
+            this.mDistances[value] = heap.Enqueue(this.mDistances[value].Priority, value);
         }
 
         public TVertex Dequeue()
         {
-            var result = mHeap.Top;
-            mHeap.Dequeue();            
+            var result = heap.Top;
+            heap.Dequeue();            
             return result.Value;
         }
 
         public TVertex Peek()
         {
-            return mHeap.Top.Value;
+            return heap.Top.Value;
         }
 
+        [Pure]
         public TVertex[] ToArray()
         {
-            return this.mHeap.Select(x => x.Value).ToArray();
+            return this.heap.Select(x => x.Value).ToArray();
         }
 
         #endregion
