@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using QuickGraph.Unit;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -232,4 +233,192 @@ namespace QuickGraph.Algorithms.Search
             }
         }
     }
+
+    [TestFixture]
+    public class BreadthFirstAlgorithmSearchGraphMLTest
+    {
+        private IDictionary<IdentifiableVertex, IdentifiableVertex> parents;
+        private IDictionary<IdentifiableVertex, int> distances;
+        private IdentifiableVertex currentVertex;
+        private IdentifiableVertex sourceVertex;
+        private int currentDistance;
+        private BreadthFirstSearchAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> algo;
+        private AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> g;
+
+        private void InitializeVertex(Object sender, VertexEventArgs<IdentifiableVertex> args)
+        {
+            Assert.AreEqual(algo.VertexColors[args.Vertex], GraphColor.White);
+        }
+
+        private void ExamineVertex(Object sender, VertexEventArgs<IdentifiableVertex> args)
+        {
+            var u = args.Vertex;
+            currentVertex = u;
+            // Ensure that the distances monotonically increase.
+            Assert.IsTrue(
+                   distances[u] == currentDistance
+                || distances[u] == currentDistance + 1
+                );
+
+            if (distances[u] == currentDistance + 1) // new level
+                ++currentDistance;
+        }
+
+        private void DiscoverVertex(Object sender, VertexEventArgs<IdentifiableVertex> args)
+        {
+            var u = args.Vertex;
+
+            Assert.AreEqual(algo.VertexColors[u], GraphColor.Gray);
+            if (u.Equals(sourceVertex))
+                currentVertex = sourceVertex;
+            else
+            {
+                Assert.AreEqual(parents[u], currentVertex);
+                Assert.AreEqual(distances[u], currentDistance + 1);
+                Assert.AreEqual(distances[u], distances[parents[u]] + 1);
+            }
+        }
+
+        private void ExamineEdge(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
+        {
+            Assert.AreEqual(args.Edge.Source, currentVertex);
+        }
+
+        private void TreeEdge(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
+        {
+            var u = args.Edge.Source;
+            var v = args.Edge.Target;
+
+            Assert.AreEqual(algo.VertexColors[v], GraphColor.White);
+            Assert.AreEqual(distances[u], currentDistance);
+            parents[v] = u;
+            distances[v] = distances[u] + 1;
+        }
+
+        private void NonTreeEdge(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
+        {
+            var u = args.Edge.Source;
+            var v = args.Edge.Target;
+
+            Assert.IsFalse(algo.VertexColors[v] == GraphColor.White);
+
+            if (algo.VisitedGraph.IsDirected)
+            {
+                // cross or back edge
+                Assert.IsTrue(distances[v] <= distances[u] + 1);
+            }
+            else
+            {
+                // cross edge (or going backwards on a tree edge)
+                Assert.IsTrue(
+                    distances[v] == distances[u]
+                    || distances[v] == distances[u] + 1
+                    || distances[v] == distances[u] - 1
+                    );
+            }
+        }
+
+        private void GrayTarget(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
+        {
+            Assert.AreEqual(algo.VertexColors[args.Edge.Target], GraphColor.Gray);
+        }
+
+        private void BlackTarget(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
+        {
+            Assert.AreEqual(algo.VertexColors[args.Edge.Target], GraphColor.Black);
+
+            foreach (var e in algo.VisitedGraph.OutEdges(args.Edge.Target))
+                Assert.IsFalse(algo.VertexColors[e.Target] == GraphColor.White);
+        }
+
+        private void FinishVertex(Object sender, VertexEventArgs<IdentifiableVertex> args)
+        {
+            Assert.AreEqual(algo.VertexColors[args.Vertex], GraphColor.Black);
+        }
+
+        private void Init()
+        {
+            this.parents = new Dictionary<IdentifiableVertex, IdentifiableVertex>();
+            this.distances = new Dictionary<IdentifiableVertex, int>();
+            this.currentDistance = 0;
+            this.currentVertex = null;
+            this.algo = null;
+            this.g = null;
+        }
+
+        [Test]
+        public void AllGraphML()
+        {
+            foreach (var g in GraphMLFilesHelper.GetGraphs())
+                foreach (var source in g.Vertices)
+                    RunBfs(g, source);
+        }
+
+        private void RunBfs(
+            AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> g,
+            IdentifiableVertex source)
+        {
+            this.Init();
+
+            this.g = g;
+            this.sourceVertex = source;
+
+            this.algo = new BreadthFirstSearchAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(g);
+            try
+            {
+                algo.InitializeVertex += new VertexEventHandler<IdentifiableVertex>(this.InitializeVertex);
+                algo.DiscoverVertex += new VertexEventHandler<IdentifiableVertex>(this.DiscoverVertex);
+                algo.ExamineEdge += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.ExamineEdge);
+                algo.ExamineVertex += new VertexEventHandler<IdentifiableVertex>(this.ExamineVertex);
+                algo.TreeEdge += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.TreeEdge);
+                algo.NonTreeEdge += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.NonTreeEdge);
+                algo.GrayTarget += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.GrayTarget);
+                algo.BlackTarget += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.BlackTarget);
+                algo.FinishVertex += new VertexEventHandler<IdentifiableVertex>(this.FinishVertex);
+
+                foreach (var v in g.Vertices)
+                {
+                    distances[v] = int.MaxValue;
+                    parents[v] = v;
+                }
+                distances[sourceVertex] = 0;
+                algo.Compute(sourceVertex);
+
+                CheckBfs();
+            }
+            finally
+            {
+                algo.InitializeVertex -= new VertexEventHandler<IdentifiableVertex>(this.InitializeVertex);
+                algo.DiscoverVertex -= new VertexEventHandler<IdentifiableVertex>(this.DiscoverVertex);
+                algo.ExamineEdge -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.ExamineEdge);
+                algo.ExamineVertex -= new VertexEventHandler<IdentifiableVertex>(this.ExamineVertex);
+                algo.TreeEdge -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.TreeEdge);
+                algo.NonTreeEdge -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.NonTreeEdge);
+                algo.GrayTarget -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.GrayTarget);
+                algo.BlackTarget -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.BlackTarget);
+                algo.FinishVertex -= new VertexEventHandler<IdentifiableVertex>(this.FinishVertex);
+            }
+        }
+
+        protected void CheckBfs()
+        {
+            // All white vertices should be unreachable from the source.
+            foreach (var v in g.Vertices)
+            {
+                if (algo.VertexColors[v] == GraphColor.White)
+                {
+                    //!IsReachable(start,u,g);
+                }
+            }
+
+            // The shortest path to a child should be one longer than
+            // shortest path to the parent.
+            foreach (var v in g.Vertices)
+            {
+                if (parents[v] != v) // *ui not the root of the bfs tree
+                    Assert.AreEqual(distances[v], distances[parents[v]] + 1);
+            }
+        }
+    }
+
 }
