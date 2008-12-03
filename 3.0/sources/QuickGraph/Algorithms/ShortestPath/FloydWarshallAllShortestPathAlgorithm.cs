@@ -165,7 +165,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                         if (data.TryGetPredecessor(out intermediate))
                         {
 #if DEBUG
-                            Contract.Assert(!set.Add(intermediate));
+                            Contract.Assert(set.Add(intermediate));
 #endif
                             todo.Push(new VertexPair<TVertex>(intermediate, current.Target));
                             todo.Push(new VertexPair<TVertex>(current.Source, intermediate));
