@@ -18,22 +18,12 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public bool Compare(double a, double b)
         {
-#if DEBUG
-            checked 
-            {
-                return a < b;
-            }
-#endif
+            return a < b;
         }
 
         public double Combine(double distance, double weight)
         {
-#if DEBUG
-            checked 
-            {
-                return distance + weight;
-            }
-#endif
+            return distance + weight;
         }
     }
 }
