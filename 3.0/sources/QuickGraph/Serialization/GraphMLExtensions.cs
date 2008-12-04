@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml;
@@ -12,7 +11,10 @@ namespace QuickGraph.Serialization
     public static class GraphMLExtensions
     {
         public static void SerializeToGraphML<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> graph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> graph,
             XmlWriter writer)
             where TVertex : IIdentifiable
             where TEdge : IIdentifiable, IEdge<TVertex>
@@ -25,7 +27,10 @@ namespace QuickGraph.Serialization
         }
 
         public static void DeserializeFromGraphML<TVertex, TEdge>(
-            this IMutableVertexAndEdgeListGraph<TVertex, TEdge> graph,
+#if !NET20
+            this 
+#endif
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> graph,
             TextReader reader,
             IdentifiableVertexFactory<TVertex> vertexFactory,
             IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
@@ -44,11 +49,14 @@ namespace QuickGraph.Serialization
             settings.ValidationFlags = XmlSchemaValidationFlags.None;
 
             using(var xreader = XmlReader.Create(reader, settings))
-                graph.DeserializeFromGraphML<TVertex, TEdge>(xreader, vertexFactory, edgeFactory);
+                DeserializeFromGraphML<TVertex, TEdge>(graph, xreader, vertexFactory, edgeFactory);
         }
 
         public static void DeserializeFromGraphML<TVertex, TEdge>(
-            this IMutableVertexAndEdgeListGraph<TVertex, TEdge> graph,
+#if !NET20
+            this 
+#endif
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> graph,
             XmlReader reader,
             IdentifiableVertexFactory<TVertex> vertexFactory,
             IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
@@ -66,7 +74,10 @@ namespace QuickGraph.Serialization
         }
 
         public static void DeserializeAndValidateFromGraphML<TVertex, TEdge>(
-            this IMutableVertexAndEdgeListGraph<TVertex, TEdge> graph,
+#if !NET20
+            this 
+#endif
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> graph,
             TextReader reader,
             IdentifiableVertexFactory<TVertex> vertexFactory,
             IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory

@@ -188,7 +188,7 @@ namespace QuickGraph.Algorithms.Search
             if (this.TryGetRootVertex(out rootVertex))
                 roots = new TVertex[] { rootVertex };
             else
-                roots = this.VisitedGraph.Roots();
+                roots = AlgorithmExtensions.Roots(this.VisitedGraph);
 
             VisitRoots(roots);
         }

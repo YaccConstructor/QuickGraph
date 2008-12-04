@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -11,7 +10,10 @@ namespace QuickGraph.Serialization
     public static class SerializationExtensions
     {
         public static void SerializeToBinary<TVertex, TEdge>(
-            this IGraph<TVertex, TEdge> graph,
+#if !NET20
+            this 
+#endif
+            IGraph<TVertex, TEdge> graph,
             Stream stream)
             where TEdge : IEdge<TVertex>
         {            
@@ -23,7 +25,11 @@ namespace QuickGraph.Serialization
             formatter.Serialize(stream, graph);
         }
 
-        public static TGraph DeserializeFromBinary<TVertex, TEdge, TGraph>(this Stream stream)
+        public static TGraph DeserializeFromBinary<TVertex, TEdge, TGraph>(
+#if !NET20
+            this 
+#endif
+            Stream stream)
             where TGraph : IGraph<TVertex, TEdge>
             where TEdge : IEdge<TVertex>
         {

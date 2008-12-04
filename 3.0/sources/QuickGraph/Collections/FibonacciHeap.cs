@@ -29,7 +29,7 @@ namespace QuickGraph.Collections
         /// <typeparam name="T">Type contained in List</typeparam>
         /// <param name="collection">List to enumerate over</param>
         /// <param name="action">Lambda Function to be performed on all elements in List</param>
-        internal static void ForEach<T>(this IList<T> collection, Action<T> action)
+        internal static void ForEach<T>(IList<T> collection, Action<T> action)
         {
             for (int i = 0; i < collection.Count; i++)
             {
@@ -42,7 +42,7 @@ namespace QuickGraph.Collections
         /// <typeparam name="T">Type contained in List</typeparam>
         /// <param name="collection">List to enumerate over</param>
         /// <param name="action">Lambda Function to be performed on all elements in List</param>
-        public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action)
+        public static void ForEach<T>(IEnumerable<T> collection, Action<T> action)
         {
             foreach (T item in collection)
             {
@@ -50,10 +50,10 @@ namespace QuickGraph.Collections
             }
         }
 
-        public static Stack<T> ToStack<T>(this IEnumerable<T> Collection)
+        public static Stack<T> ToStack<T>(IEnumerable<T> collection)
         {
             Stack<T> newStack = new Stack<T>();
-            Collection.ForEach(x => newStack.Push(x));
+            ForEach(collection, x => newStack.Push(x));
             return newStack;
         }
     }
@@ -561,13 +561,13 @@ namespace QuickGraph.Collections
         {
             var tempHeap = new FibonacciHeap<TPriority, TValue>(this.Direction, this.priorityComparsion);
             var nodeStack = new Stack<FibonacciHeapCell<TPriority, TValue>>();
-            nodes.ForEach(x => nodeStack.Push(x));
+            LambdaHelpers.ForEach(nodes, x => nodeStack.Push(x));
             while (nodeStack.Count > 0)
             {
                 var topNode = nodeStack.Peek();
                 tempHeap.Enqueue(topNode.Priority, topNode.Value);
                 nodeStack.Pop();
-                topNode.Children.ForEach(x => nodeStack.Push(x));
+                LambdaHelpers.ForEach(topNode.Children, x => nodeStack.Push(x));
             }
             while (!tempHeap.IsEmpty)
             {

@@ -172,7 +172,7 @@ namespace QuickGraph.Algorithms.Search
             if (!this.TryGetRootVertex(out rootVertex))
             {
                 // enqueue roots
-                foreach (var root in this.VisitedGraph.Roots())
+                foreach (var root in AlgorithmExtensions.Roots(this.VisitedGraph))
                     this.EnqueueRoot(root);
             }
             else // enqueue select root only

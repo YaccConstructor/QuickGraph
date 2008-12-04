@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Diagnostics.Contracts;
 
@@ -20,7 +19,10 @@ namespace QuickGraph
         /// <param name="allowParallelEdges">if set to <c>true</c>, the graph allows parallel edges.</param>
         /// <returns></returns>
         public static BidirectionalGraph<TVertex, TEdge> ToBidirectionalGraph<TVertex, TEdge>(
-            this IEnumerable<TEdge> edges,
+#if !NET20
+            this 
+#endif
+            IEnumerable<TEdge> edges,
             bool allowParallelEdges
             )
             where TEdge : IEdge<TVertex>
@@ -43,7 +45,10 @@ namespace QuickGraph
         /// <param name="edges">The edges.</param>
         /// <returns></returns>
         public static BidirectionalGraph<TVertex, TEdge> ToBidirectionalGraph<TVertex, TEdge>(
-            this IEnumerable<TEdge> edges
+#if !NET20
+            this 
+#endif
+            IEnumerable<TEdge> edges
             )
             where TEdge : IEdge<TVertex>
         {
@@ -62,7 +67,10 @@ namespace QuickGraph
         /// <param name="allowParallelEdges">if set to <c>true</c>, the graph allows parallel edges.</param>
         /// <returns></returns>
         public static AdjacencyGraph<TVertex, TEdge> ToAdjacencyGraph<TVertex, TEdge>(
-            this IEnumerable<TEdge> edges,
+#if !NET20
+            this 
+#endif
+            IEnumerable<TEdge> edges,
             bool allowParallelEdges
             )
             where TEdge : IEdge<TVertex>
@@ -85,7 +93,10 @@ namespace QuickGraph
         /// <param name="edges">The edges.</param>
         /// <returns></returns>
         public static AdjacencyGraph<TVertex, TEdge> ToAdjacencyGraph<TVertex, TEdge>(
-            this IEnumerable<TEdge> edges
+#if !NET20
+            this 
+#endif
+            IEnumerable<TEdge> edges
             )
             where TEdge : IEdge<TVertex>
         {
@@ -106,7 +117,10 @@ namespace QuickGraph
         /// <param name="allowParallelEdges">if set to <c>true</c>, the graph allows parallel edges.</param>
         /// <returns></returns>
         public static AdjacencyGraph<TVertex, TEdge> ToAdjacencyGraph<TVertex, TEdge>(
-            this IEnumerable<TVertex> vertices,
+#if !NET20
+            this 
+#endif
+            IEnumerable<TVertex> vertices,
             Func<TVertex, IEnumerable<TEdge>> outEdgesFactory,
             bool allowParallelEdges
             )
@@ -134,7 +148,10 @@ namespace QuickGraph
         /// <param name="outEdgesFactory">The out edges factory.</param>
         /// <returns></returns>
         public static AdjacencyGraph<TVertex, TEdge> ToAdjacencyGraph<TVertex, TEdge>(
-            this IEnumerable<TVertex> vertices,
+#if !NET20
+            this 
+#endif
+            IEnumerable<TVertex> vertices,
             Func<TVertex, IEnumerable<TEdge>> outEdgesFactory
             )
             where TEdge : IEdge<TVertex>
@@ -153,7 +170,10 @@ namespace QuickGraph
         /// <param name="allowParallelEdges">if set to <c>true</c>, the graph allows parallel edges.</param>
         /// <returns></returns>
         public static BidirectionalGraph<TVertex, TEdge> ToBidirectionalGraph<TVertex, TEdge>(
-            this IEnumerable<TVertex> vertices,
+#if !NET20
+            this 
+#endif
+            IEnumerable<TVertex> vertices,
             Func<TVertex, IEnumerable<TEdge>> outEdgesFactory,
             bool allowParallelEdges
             ) 
@@ -181,7 +201,10 @@ namespace QuickGraph
         /// <param name="outEdgesFactory">The out edges factory.</param>
         /// <returns></returns>
         public static BidirectionalGraph<TVertex, TEdge> ToBidirectionalGraph<TVertex, TEdge>(
-            this IEnumerable<TVertex> vertices,
+#if !NET20
+            this 
+#endif
+            IEnumerable<TVertex> vertices,
             Func<TVertex, IEnumerable<TEdge>> outEdgesFactory
             )
             where TEdge : IEdge<TVertex>

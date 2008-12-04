@@ -79,7 +79,7 @@ namespace QuickGraph.Algorithms.Observers
             foreach (var v in this.EndPathVertices)
             {
                 IEnumerable<TEdge> path;
-                if (this.vertexPredecessors.TryGetPath(v, out path))
+                if (AlgorithmExtensions.TryGetPath(this.vertexPredecessors, v, out path))
                     es.Add(path);
             }
             return es;

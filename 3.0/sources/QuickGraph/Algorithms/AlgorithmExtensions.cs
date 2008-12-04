@@ -12,7 +12,10 @@ namespace QuickGraph.Algorithms
     public static class AlgorithmExtensions
     {
         public static bool TryGetPath<TVertex, TEdge>(
-            this IDictionary<TVertex, TEdge> predecessors,
+#if !NET20
+            this 
+#endif
+            IDictionary<TVertex, TEdge> predecessors,
             TVertex v,
             out IEnumerable<TEdge> result)
             where TEdge : IEdge<TVertex>
@@ -45,7 +48,10 @@ namespace QuickGraph.Algorithms
 
         #region shortest paths
         public static TryFunc<TVertex, IEnumerable<TEdge>> ShortestPathsDijkstra<TVertex, TEdge>(
-            this IUndirectedGraph<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights,
             TVertex source
             )
@@ -61,11 +67,17 @@ namespace QuickGraph.Algorithms
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
-            return predecessors.TryGetPath;
+            return delegate(TVertex v, out IEnumerable<TEdge> edges)
+            {
+                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+            };
         }
 
         public static TryFunc<TVertex, IEnumerable<TEdge>> ShortestPathsDijkstra<TVertex, TEdge>(
-            this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights,
             TVertex source
             )
@@ -81,22 +93,25 @@ namespace QuickGraph.Algorithms
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
-            return predecessors.TryGetPath;
+            return delegate(TVertex v, out IEnumerable<TEdge> edges)
+            {
+                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+            };
         }
 
         public static TryFunc<TVertex, IEnumerable<TEdge>> ShortestPathsBellmanFord<TVertex, TEdge>(
-            this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights,
             TVertex source
             )
             where TEdge : IEdge<TVertex>
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
-            if (edgeWeights == null)
-                throw new ArgumentNullException("edgeWeight");
-            if (source == null)
-                throw new ArgumentNullException("source");
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(edgeWeights != null);
+            Contract.Requires(source != null);
 
             var algorithm = new BellmanFordShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
@@ -104,22 +119,25 @@ namespace QuickGraph.Algorithms
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
-            return predecessors.TryGetPath;
+            return delegate(TVertex v, out IEnumerable<TEdge> edges)
+            {
+                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+            };
         }
 
         public static TryFunc<TVertex, IEnumerable<TEdge>> ShortestPathsDag<TVertex, TEdge>(
-            this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights,
             TVertex source
             )
             where TEdge : IEdge<TVertex>
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
-            if (edgeWeights == null)
-                throw new ArgumentNullException("edgeWeight");
-            if (source == null)
-                throw new ArgumentNullException("source");
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(edgeWeights != null);
+            Contract.Requires(source != null);
 
             var algorithm = new DagShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
@@ -127,7 +145,10 @@ namespace QuickGraph.Algorithms
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
-            return predecessors.TryGetPath;
+            return delegate(TVertex v, out IEnumerable<TEdge> edges)
+            {
+                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+            };
         }
 
         #endregion
@@ -139,7 +160,10 @@ namespace QuickGraph.Algorithms
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         public static IEnumerable<TVertex> Sinks<TVertex, TEdge>(
-            this IVertexListGraph<TVertex, TEdge> visitedGraph) 
+#if !NET20
+            this 
+#endif
+            IVertexListGraph<TVertex, TEdge> visitedGraph) 
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
@@ -157,7 +181,10 @@ namespace QuickGraph.Algorithms
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
-            this IBidirectionalGraph<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
@@ -175,7 +202,10 @@ namespace QuickGraph.Algorithms
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         public static IEnumerable<TVertex> IsolatedVertices<TVertex, TEdge>(
-            this IBidirectionalGraph<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
@@ -193,7 +223,10 @@ namespace QuickGraph.Algorithms
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
-            this IUndirectedGraph<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IUndirectedGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
@@ -217,7 +250,10 @@ namespace QuickGraph.Algorithms
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         public static IEnumerable<TVertex> Roots<TVertex,TEdge>(
-            this IVertexListGraph<TVertex,TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IVertexListGraph<TVertex,TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
@@ -244,7 +280,10 @@ namespace QuickGraph.Algorithms
         /// <exception cref="NonAcyclicGraphException">the input graph
         /// has a cycle</exception>
         public static IEnumerable<TVertex> TopologicalSort<TVertex, TEdge>(
-            this IUndirectedGraph<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IUndirectedGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
@@ -266,7 +305,10 @@ namespace QuickGraph.Algorithms
         /// <exception cref="NonAcyclicGraphException">the input graph
         /// has a cycle</exception>
         public static void TopologicalSort<TVertex, TEdge>(
-            this IUndirectedGraph<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
             IList<TVertex> vertices
             )
             where TEdge : IEdge<TVertex>
@@ -289,7 +331,10 @@ namespace QuickGraph.Algorithms
         /// <exception cref="NonAcyclicGraphException">the input graph
         /// has a cycle</exception>
         public static IEnumerable<TVertex> TopologicalSort<TVertex, TEdge>(
-            this IVertexListGraph<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IVertexListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
@@ -310,7 +355,10 @@ namespace QuickGraph.Algorithms
         /// <exception cref="NonAcyclicGraphException">the input graph
         /// has a cycle</exception>
         public static void TopologicalSort<TVertex, TEdge>(
-            this IVertexListGraph<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
             IList<TVertex> vertices)
             where TEdge : IEdge<TVertex>
         {
@@ -322,7 +370,10 @@ namespace QuickGraph.Algorithms
         }
 
         public static IEnumerable<TVertex> SourceFirstTopologicalSort<TVertex, TEdge>(
-            this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
@@ -333,7 +384,10 @@ namespace QuickGraph.Algorithms
         }
 
         public static void SourceFirstTopologicalSort<TVertex, TEdge>(
-            this IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
             IList<TVertex> vertices)
             where TEdge : IEdge<TVertex>
         {
@@ -354,7 +408,10 @@ namespace QuickGraph.Algorithms
         /// <param name="components"></param>
         /// <returns>number of components</returns>
         public static int ConnectedComponents<TVertex, TEdge>(
-            this IUndirectedGraph<TVertex,TEdge> g,
+#if !NET20
+            this 
+#endif
+            IUndirectedGraph<TVertex, TEdge> g,
             TVertex startVertex,
             IDictionary<TVertex,int> components)
             where TEdge : IEdge<TVertex>
@@ -377,7 +434,10 @@ namespace QuickGraph.Algorithms
         /// <param name="components"></param>
         /// <returns>number of components</returns>
         public static int WeaklyConnectedComponents<TVertex, TEdge>(
-            this IVertexListGraph<TVertex, TEdge> g,
+#if !NET20
+            this 
+#endif
+            IVertexListGraph<TVertex, TEdge> g,
             IDictionary<TVertex, int> components)
             where TEdge : IEdge<TVertex>
         {
@@ -398,7 +458,10 @@ namespace QuickGraph.Algorithms
         /// <param name="components"></param>
         /// <returns>number of components</returns>
         public static int StronglyConnectedComponents<TVertex, TEdge>(
-            this IVertexListGraph<TVertex, TEdge> g,
+#if !NET20
+            this 
+#endif
+            IVertexListGraph<TVertex, TEdge> g,
             IDictionary<TVertex, int> components)
             where TEdge : IEdge<TVertex>
         {
@@ -418,7 +481,10 @@ namespace QuickGraph.Algorithms
         /// <param name="g"></param>
         /// <param name="clone"></param>
         public static void Clone<TVertex,TEdge>(
-            this IVertexAndEdgeListGraph<TVertex, TEdge> g,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> g,
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> clone)
             where TVertex : ICloneable
             where TEdge : ICloneableEdge<TVertex>
@@ -453,7 +519,10 @@ namespace QuickGraph.Algorithms
         /// <returns></returns>
         public static IMutableBidirectionalGraph<TGraph,CondensatedEdge<TVertex, TEdge,TGraph>> 
             Condensate<TVertex, TEdge, TGraph>(
-            this IVertexAndEdgeListGraph<TVertex,TEdge> g
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeListGraph<TVertex,TEdge> g
             )
             where TEdge : IEdge<TVertex>
             where TGraph : IMutableVertexAndEdgeListGraph<TVertex,TEdge>, new()
@@ -468,9 +537,12 @@ namespace QuickGraph.Algorithms
 
         public static IMutableBidirectionalGraph<TVertex, MergedEdge<TVertex, TEdge>>
             CondensateEdges<TVertex, TEdge>(
-                this IBidirectionalGraph<TVertex, TEdge> visitedGraph,
-                VertexPredicate<TVertex> vertexPredicate
-                ) where TEdge : IEdge<TVertex>
+#if !NET20
+            this 
+#endif
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph,
+            VertexPredicate<TVertex> vertexPredicate
+            ) where TEdge : IEdge<TVertex>
         {
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");
@@ -495,7 +567,10 @@ namespace QuickGraph.Algorithms
         /// <returns>colleciton of odd vertices</returns>
         /// <exception cref="ArgumentNullException">g is a null reference</exception>
         public static List<TVertex> OddVertices<TVertex,TEdge>(
-            this IVertexAndEdgeListGraph<TVertex,TEdge> g)
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
             if (g == null)
@@ -532,7 +607,10 @@ namespace QuickGraph.Algorithms
         /// <param name="g"></param>
         /// <returns></returns>
         public static bool IsDirectedAcyclicGraph<TVertex, TEdge>(
-            this IVertexListGraph<TVertex, TEdge> g)
+#if !NET20
+            this 
+#endif
+            IVertexListGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(g != null);

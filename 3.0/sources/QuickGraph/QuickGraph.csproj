@@ -117,7 +117,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release20|AnyCPU' ">
     <OutputPath>bin\Release20\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET20</DefineConstants>
     <Optimize>true</Optimize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -128,7 +128,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL" />
     <Reference Include="System" />
-    <Reference Include="System.Core">
+    <Reference Include="System.Core" Condition="'$(Configuration)' != 'Release20'">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
@@ -243,6 +243,7 @@
     <Compile Include="Contracts\GraphContract.cs" />
     <Compile Include="Contracts\IEdgeSetContract.cs" />
     <Compile Include="Contracts\IVertexSetContract.cs" />
+    <Compile Include="FuncDelegates.cs" />
     <Compile Include="GraphExtensions.cs" />
     <Compile Include="HashCodeHelper.cs" />
     <Compile Include="IEdgeSet.cs" />

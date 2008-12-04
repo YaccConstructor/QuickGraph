@@ -55,7 +55,7 @@ namespace QuickGraph.Algorithms.Observers
 
         public bool TryGetPath(TVertex vertex, out IEnumerable<TEdge> path)
         {
-            return this.VertexPredecessors.TryGetPath(vertex, out path);
+            return AlgorithmExtensions.TryGetPath(this.VertexPredecessors, vertex, out path);
         }
     }
 }
