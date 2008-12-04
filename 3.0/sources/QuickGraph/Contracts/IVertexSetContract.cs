@@ -1,11 +1,12 @@
-﻿using System;
+﻿#if CONTRACTS_FULL
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Contracts
 {
-#if CONTRACTS_FULL
     [ContractClassFor(typeof(IEdge<>))]
     sealed class IVertexSetContract<TVertex>
         : IVertexSet<TVertex>
@@ -55,5 +56,5 @@ namespace QuickGraph.Contracts
             return Contract.Result<bool>();
         }
     }
-#endif
 }
+#endif
