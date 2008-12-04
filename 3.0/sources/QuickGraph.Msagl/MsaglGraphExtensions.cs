@@ -10,7 +10,10 @@ namespace QuickGraph.Msagl
     public static class MsaglGraphExtensions
     {
         public static MsaglGraphPopulator<TVertex, TEdge> CreateMsaglPopulator<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             IFormatProvider formatProvider,
             string format)
             where TEdge : IEdge<TVertex>
@@ -19,14 +22,20 @@ namespace QuickGraph.Msagl
         }
 
         public static MsaglGraphPopulator<TVertex, TEdge> CreateMsaglPopulator<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             return new MsaglDefaultGraphPopulator<TVertex, TEdge>(visitedGraph);
         }
 
         public static MsaglGraphPopulator<TVertex, TEdge> CreateIdentifiableMsaglPopulator<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
             where TVertex : IIdentifiable
             where TEdge : IEdge<TVertex>
         {
@@ -34,7 +43,10 @@ namespace QuickGraph.Msagl
         }
 
         public static Microsoft.Msagl.Drawing.Graph ToMsaglGraph<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             return ToMsaglGraph<TVertex,TEdge>(visitedGraph, null, null);
@@ -42,7 +54,10 @@ namespace QuickGraph.Msagl
 
 
         public static Microsoft.Msagl.Drawing.Graph ToMsaglGraph<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             MsaglVertexNodeEventHandler<TVertex> nodeAdded,
             MsaglEdgeEventHandler<TVertex, TEdge> edgeAdded
             )
@@ -50,7 +65,7 @@ namespace QuickGraph.Msagl
         {
             Contract.Requires(visitedGraph != null);
 
-            var populator = visitedGraph.CreateMsaglPopulator();
+            var populator = CreateMsaglPopulator(visitedGraph);
             try
             {
                 if (nodeAdded != null)
@@ -71,17 +86,19 @@ namespace QuickGraph.Msagl
         }
 
         public static Microsoft.Msagl.Drawing.Graph ToIdentifiableMsaglGraph<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             MsaglVertexNodeEventHandler<TVertex> nodeAdded,
             MsaglEdgeEventHandler<TVertex, TEdge> edgeAdded
             )
             where TVertex : IIdentifiable
             where TEdge : IEdge<TVertex>
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
+            Contract.Requires(visitedGraph != null);
 
-            var populator = visitedGraph.CreateIdentifiableMsaglPopulator();
+            var populator = CreateIdentifiableMsaglPopulator(visitedGraph);
             try
             {
                 if (nodeAdded != null)
@@ -102,14 +119,20 @@ namespace QuickGraph.Msagl
         }
 
         public static void ShowMsaglGraph<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             ShowDialog(ToMsaglGraph(visitedGraph));
         }
 
         public static void ShowMsaglGraph<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             MsaglVertexNodeEventHandler<TVertex> nodeAdded,
             MsaglEdgeEventHandler<TVertex, TEdge> edgeAdded
             )

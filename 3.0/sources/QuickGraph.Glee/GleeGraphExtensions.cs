@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Glee.GraphViewerGdi;
 using System.Windows.Forms;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Glee
 {
     public static class GleeGraphExtensions
     {
         public static GleeGraphPopulator<TVertex, TEdge> CreateGleePopulator<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             IFormatProvider formatProvider,
             string format)
             where TEdge : IEdge<TVertex>
@@ -18,14 +22,20 @@ namespace QuickGraph.Glee
         }
 
         public static GleeGraphPopulator<TVertex, TEdge> CreateGleePopulator<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             return new GleeDefaultGraphPopulator<TVertex, TEdge>(visitedGraph);
         }
 
         public static GleeGraphPopulator<TVertex, TEdge> CreateIdentifiableGleePopulator<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
             where TVertex : IIdentifiable
             where TEdge : IEdge<TVertex>
         {
@@ -33,7 +43,10 @@ namespace QuickGraph.Glee
         }
 
         public static Microsoft.Glee.Drawing.Graph ToGleeGraph<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             GleeVertexNodeEventHandler<TVertex> nodeAdded,
             GleeEdgeEventHandler<TVertex, TEdge> edgeAdded
             )
@@ -42,7 +55,7 @@ namespace QuickGraph.Glee
             if (visitedGraph == null)
                 throw new ArgumentNullException("visitedGraph");
 
-            var populator = visitedGraph.CreateGleePopulator();
+            var populator = CreateGleePopulator(visitedGraph);
             try
             {
                 if (nodeAdded != null)
@@ -63,17 +76,19 @@ namespace QuickGraph.Glee
         }
 
         public static Microsoft.Glee.Drawing.Graph ToIdentifiableGleeGraph<TVertex, TEdge>(
-            this IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+#if !NET20
+            this 
+#endif
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             GleeVertexNodeEventHandler<TVertex> nodeAdded,
             GleeEdgeEventHandler<TVertex, TEdge> edgeAdded
             )
             where TVertex : IIdentifiable
             where TEdge : IEdge<TVertex>
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
+            Contract.Requires(visitedGraph != null);
 
-            var populator = visitedGraph.CreateIdentifiableGleePopulator();
+            var populator = CreateIdentifiableGleePopulator(visitedGraph);
             try
             {
                 if (nodeAdded != null)

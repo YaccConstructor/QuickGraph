@@ -109,7 +109,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release20|AnyCPU' ">
     <OutputPath>bin\Release20\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET20</DefineConstants>
     <DocumentationFile>bin\Release\QuickGraph.Msagl.XML</DocumentationFile>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -134,7 +134,7 @@
       <HintPath>..\external\MSAGL\Microsoft.Msagl.GraphViewerGDI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core">
+    <Reference Include="System.Core" Condition="'$(Configuration)' != 'Release20'">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
