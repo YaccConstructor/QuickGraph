@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 
 using QuickGraph.Predicates;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Exploration
 {
@@ -66,6 +67,14 @@ namespace QuickGraph.Algorithms.Exploration
                         yield return edge;
                 }
             }
+        }
+
+        public bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
+        {
+            Contract.Requires(v != null);
+
+            edges = this.OutEdges(v);
+            return true;
         }
 
         public TEdge OutEdge(TVertex v, int index)

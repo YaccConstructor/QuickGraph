@@ -163,6 +163,7 @@ namespace QuickGraph
 
         #region IImplicitGraph<int,Edge> Members
 
+        [Pure]
         public bool IsOutEdgesEmpty(int v)
         {
             for (int j = 0; j < this.vertexCount; ++j)
@@ -171,6 +172,7 @@ namespace QuickGraph
             return true;
         }
 
+        [Pure]
         public int OutDegree(int v)
         {
             int count = 0;
@@ -180,6 +182,7 @@ namespace QuickGraph
             return count;
         }
 
+        [Pure]
         public IEnumerable<TEdge> OutEdges(int v)
         {
             for (int j = 0; j < this.vertexCount; ++j)
@@ -190,6 +193,19 @@ namespace QuickGraph
             }
         }
 
+        [Pure]
+        public bool TryGetOutEdges(int v, out IEnumerable<TEdge> edges)
+        {
+            if (v > -1 && v < this.vertexCount)
+            {
+                edges = this.OutEdges(v);
+                return true;
+            }
+            edges = null;
+            return false;
+        }
+
+        [Pure]
         public TEdge OutEdge(int v, int index)
         {
             int count = 0;

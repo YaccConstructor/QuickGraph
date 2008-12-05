@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Predicates
 {
@@ -34,9 +35,25 @@ namespace QuickGraph.Predicates
 
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
+            Contract.Requires(v != null);
+
             foreach (var edge in this.BaseGraph.OutEdges(v))
                 if (this.TestEdge(edge))
                     yield return edge;
+        }
+
+        public bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
+        {
+            Contract.Requires(v != null);
+            IEnumerable<TEdge> baseEdges;
+            if (!this.BaseGraph.TryGetOutEdges(v, out baseEdges))
+            {
+                edges = null;
+                return false;
+            }
+
+            edges = this.OutEdges(v);
+            return true;
         }
 
         public TEdge OutEdge(TVertex v, int index)

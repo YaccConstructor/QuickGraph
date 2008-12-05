@@ -138,6 +138,23 @@ namespace QuickGraph
                 yield return new ReversedEdge<TVertex,TEdge>(edge);
         }
 
+        [Pure]
+        public bool TryGetOutEdges(TVertex v, out IEnumerable<ReversedEdge<TVertex, TEdge>> edges)
+        {
+            Contract.Requires(v != null);
+
+            if (this.ContainsVertex(v))
+            {
+                edges = this.OutEdges(v);
+                return true;
+            }
+            else
+            {
+                edges = null;
+                return false;
+            }
+        }
+
         public ReversedEdge<TVertex,TEdge> OutEdge(TVertex v, int index)
         {
             TEdge edge = this.OriginalGraph.InEdge(v, index);

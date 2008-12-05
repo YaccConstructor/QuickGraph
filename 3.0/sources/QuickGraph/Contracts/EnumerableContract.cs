@@ -11,8 +11,8 @@ namespace QuickGraph
         [Pure]
         public static bool ElementsNotNull<T>(IEnumerable<T> elements)
         {
-#if DEBUG
             Contract.Requires(elements != null);
+#if DEBUG
 
             return Contract.ForAll(elements, e => e != null);
 #else

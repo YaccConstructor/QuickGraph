@@ -20,6 +20,7 @@ namespace QuickGraph
         /// 	<c>true</c> if <paramref name="v"/> has no out-edges; otherwise, <c>false</c>.
         /// </returns>
         bool IsOutEdgesEmpty(TVertex v);
+
         /// <summary>
         /// Gets the count of out-edges of <paramref name="v"/>
         /// </summary>
@@ -33,6 +34,14 @@ namespace QuickGraph
         /// <param name="v">The vertex.</param>
         /// <returns>An enumeration of the out-edges of <paramref name="v"/>.</returns>
         IEnumerable<TEdge> OutEdges(TVertex v);
+
+        /// <summary>
+        /// Tries to get the out-edges of <paramref name="v"/>
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="edges"></param>
+        /// <returns></returns>
+        bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges);
 
         /// <summary>
         /// Gets the out-edge of <paramref name="v"/> at position <paramref name="index"/>.
