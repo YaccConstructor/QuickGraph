@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.Search
 {
+#if PARALLEL
     [TestFixture]
     public class ParallelBreadthFirstAlgorithmSearchTest
     {
@@ -181,4 +182,5 @@ namespace QuickGraph.Algorithms.Search
             }
         }
     }
+#endif
 }

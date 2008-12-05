@@ -20,8 +20,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Data", "QuickGra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Msagl", "QuickGraph.Msagl\QuickGraph.Msagl.csproj", "{7E57B699-79C9-4FDF-89FC-D98BD8DDAFF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Parallels", "QuickGraph.Parallels\QuickGraph.Parallels.csproj", "{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflector.QuickGraph", "Reflector.QuickGraph\Reflector.QuickGraph.csproj", "{7D06D43B-EE95-4800-874F-9D5330C86D96}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph1.Tests", "QuickGraph1.Tests\QuickGraph1.Tests.csproj", "{F1E9E4D5-7719-495A-93C3-F28B42242E37}"
@@ -34,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 11
+		SccNumberOfProjects = 10
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs03.codeplex.com/
 		SccLocalPath0 = .
@@ -59,15 +57,12 @@ Global
 		SccProjectUniqueName7 = QuickGraph.Msagl\\QuickGraph.Msagl.csproj
 		SccProjectName7 = QuickGraph.Msagl
 		SccLocalPath7 = QuickGraph.Msagl
-		SccProjectUniqueName8 = QuickGraph.Parallels\\QuickGraph.Parallels.csproj
-		SccProjectName8 = QuickGraph.Parallels
-		SccLocalPath8 = QuickGraph.Parallels
-		SccProjectUniqueName9 = Reflector.QuickGraph\\Reflector.QuickGraph.csproj
-		SccProjectName9 = Reflector.QuickGraph
-		SccLocalPath9 = Reflector.QuickGraph
-		SccProjectUniqueName10 = QuickGraph1.Tests\\QuickGraph1.Tests.csproj
-		SccProjectName10 = QuickGraph1.Tests
-		SccLocalPath10 = QuickGraph1.Tests
+		SccProjectUniqueName8 = Reflector.QuickGraph\\Reflector.QuickGraph.csproj
+		SccProjectName8 = Reflector.QuickGraph
+		SccLocalPath8 = Reflector.QuickGraph
+		SccProjectUniqueName9 = QuickGraph1.Tests\\QuickGraph1.Tests.csproj
+		SccProjectName9 = QuickGraph1.Tests
+		SccLocalPath9 = QuickGraph1.Tests
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = QuickGraph.vsmdi
@@ -133,14 +128,6 @@ Global
 		{7E57B699-79C9-4FDF-89FC-D98BD8DDAFF6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E57B699-79C9-4FDF-89FC-D98BD8DDAFF6}.Release20|Any CPU.ActiveCfg = Release20|Any CPU
 		{7E57B699-79C9-4FDF-89FC-D98BD8DDAFF6}.Release20|Any CPU.Build.0 = Release20|Any CPU
-		{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}.DebugContracts|Any CPU.ActiveCfg = DebugContracts|Any CPU
-		{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}.DebugContracts|Any CPU.Build.0 = DebugContracts|Any CPU
-		{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}.Release20|Any CPU.ActiveCfg = Release20|Any CPU
-		{FBA880E7-4E2F-4CDC-84C7-01CA9AF58F39}.Release20|Any CPU.Build.0 = Release20|Any CPU
 		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D06D43B-EE95-4800-874F-9D5330C86D96}.DebugContracts|Any CPU.ActiveCfg = DebugContracts|Any CPU
