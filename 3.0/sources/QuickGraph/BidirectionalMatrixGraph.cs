@@ -108,6 +108,18 @@ namespace QuickGraph
             }
         }
 
+        [Pure]
+        public bool TryGetInEdges(int v, out IEnumerable<TEdge> edges)
+        {
+            if (v > -1 && v < this.vertexCount)
+            {
+                edges = this.InEdges(v);
+                return true;
+            }
+            edges = null;
+            return false;
+        }
+
         public TEdge InEdge(int v, int index)
         {
             int count = 0;

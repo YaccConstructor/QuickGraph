@@ -44,6 +44,23 @@ namespace QuickGraph.Predicates
                     yield return edge;
         }
 
+        [Pure]
+        public bool TryGetInEdges(TVertex v, out IEnumerable<TEdge> edges)
+        {
+            Contract.Requires(v != null);
+
+            if (this.ContainsVertex(v))
+            {
+                edges = this.InEdges(v);
+                return true;
+            }
+            else
+            {
+                edges = null;
+                return false;
+            }
+        }
+
         public int Degree(TVertex v)
         {
             return this.OutDegree(v) + this.InDegree(v);

@@ -138,6 +138,22 @@ namespace QuickGraph
         }
 
         [Pure]
+        public bool TryGetInEdges(TVertex v, out IEnumerable<TEdge> edges)
+        {
+            Contract.Requires(v != null);
+
+            EdgeList<TVertex, TEdge> list;
+            if (this.vertexInEdges.TryGetValue(v, out list))
+            {
+                edges = list;
+                return true;
+            }
+
+            edges = null;
+            return false;
+        }
+
+        [Pure]
         public bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
             Contract.Requires(v != null);
@@ -152,7 +168,6 @@ namespace QuickGraph
             edges = null;
             return false;
         }
-
 
         [Pure]
         public TEdge OutEdge(TVertex v, int index)

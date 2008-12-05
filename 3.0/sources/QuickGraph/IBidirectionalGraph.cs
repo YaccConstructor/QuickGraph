@@ -37,6 +37,14 @@ namespace QuickGraph
         IEnumerable<TEdge> InEdges(TVertex v);
 
         /// <summary>
+        /// Tries to get the in-edges of <paramref name="v"/>
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="edges"></param>
+        /// <returns></returns>
+        bool TryGetInEdges(TVertex v, out IEnumerable<TEdge> edges);
+
+        /// <summary>
         /// Gets the in-edge at location <paramref name="index"/>.
         /// </summary>
         /// <param name="v">The vertex.</param>

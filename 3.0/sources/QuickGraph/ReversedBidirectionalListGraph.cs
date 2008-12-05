@@ -139,6 +139,23 @@ namespace QuickGraph
         }
 
         [Pure]
+        public bool TryGetInEdges(TVertex v, out IEnumerable<ReversedEdge<TVertex, TEdge>> edges)
+        {
+            Contract.Requires(v != null);
+
+            if (this.ContainsVertex(v))
+            {
+                edges = this.InEdges(v);
+                return true;
+            }
+            else
+            {
+                edges = null;
+                return false;
+            }
+        }
+
+        [Pure]
         public bool TryGetOutEdges(TVertex v, out IEnumerable<ReversedEdge<TVertex, TEdge>> edges)
         {
             Contract.Requires(v != null);
