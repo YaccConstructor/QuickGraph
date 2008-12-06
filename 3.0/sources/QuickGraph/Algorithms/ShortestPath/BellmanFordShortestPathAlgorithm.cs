@@ -25,9 +25,9 @@ namespace QuickGraph.Algorithms.ShortestPath
     /// <reference-ref
     ///     idref="shi03datastructures"
     ///     />
-    public sealed class BellmanFordShortestPathAlgorithm<TVertex, TEdge> :
-        ShortestPathAlgorithmBase<TVertex,TEdge,IVertexAndEdgeListGraph<TVertex,TEdge>>,
-        ITreeBuilderAlgorithm<TVertex, TEdge>
+    public sealed class BellmanFordShortestPathAlgorithm<TVertex, TEdge> 
+        : ShortestPathAlgorithmBase<TVertex,TEdge, IVertexAndEdgeListGraph<TVertex,TEdge>>
+        , ITreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private readonly Dictionary<TVertex,TVertex> predecessors;
@@ -93,25 +93,6 @@ namespace QuickGraph.Algorithms.ShortestPath
         private void OnExamineEdge(TEdge e)
         {
             var eh = this.ExamineEdge;
-            if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
-        }
-
-        /// <summary>
-        /// Invoked when the distance label for the target vertex is decreased. 
-        /// The edge that participated in the last relaxation for vertex v is 
-        /// an edge in the shortest paths tree.
-        /// </summary>
-        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
-
-
-        /// <summary>
-        /// Raises the <see cref="TreeEdge"/> event.
-        /// </summary>
-        /// <param name="e">edge that raised the event</param>
-        private void OnTreeEdge(TEdge e)
-        {
-            var eh = this.TreeEdge;
             if (eh != null)
                 eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
@@ -198,6 +179,16 @@ namespace QuickGraph.Algorithms.ShortestPath
                 this.Distances[u] = double.PositiveInfinity;
                 this.OnInitializeVertex(u);
             }
+
+            TVertex root;
+            if (!this.TryGetRootVertex(out root))
+                foreach (var v in this.VisitedGraph.Vertices)
+                {
+                    root = v;
+                    break;
+                }
+
+            this.Distances[root] = 0;
         }
 
         /// <summary>

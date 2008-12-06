@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuickGraph.Contracts;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
-    public interface IIncidenceGraph<TVertex,TEdge> 
+#if CONTRACTS_FULL
+    [ContractClass(typeof(IIncidenceGraphContract<,>))]
+#endif
+    public interface IIncidenceGraph<TVertex, TEdge> 
         : IImplicitGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {

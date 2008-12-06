@@ -9,8 +9,9 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Algorithms.ShortestPath
 {
     [Serializable]
-    public abstract class ShortestPathAlgorithmBase<TVertex, TEdge, TGraph> :
-        RootedAlgorithmBase<TVertex,TGraph>
+    public abstract class ShortestPathAlgorithmBase<TVertex, TEdge, TGraph>
+        : RootedAlgorithmBase<TVertex,TGraph>
+        , ITreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private readonly IDictionary<TVertex, GraphColor> vertexColors;
@@ -75,6 +76,25 @@ namespace QuickGraph.Algorithms.ShortestPath
         public IDistanceRelaxer DistanceRelaxer
         {
             get { return this.distanceRelaxer; }
+        }
+
+        /// <summary>
+        /// Invoked when the distance label for the target vertex is decreased. 
+        /// The edge that participated in the last relaxation for vertex v is 
+        /// an edge in the shortest paths tree.
+        /// </summary>
+        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
+
+
+        /// <summary>
+        /// Raises the <see cref="TreeEdge"/> event.
+        /// </summary>
+        /// <param name="e">edge that raised the event</param>
+        protected virtual void OnTreeEdge(TEdge e)
+        {
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         protected bool Relax(TEdge e)

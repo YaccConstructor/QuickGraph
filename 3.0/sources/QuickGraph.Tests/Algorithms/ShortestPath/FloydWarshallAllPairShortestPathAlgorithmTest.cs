@@ -86,7 +86,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
         }
     }
 
-    [TestFixture]
+    [TestFixture, CurrentFixture]
     public class FloydDijkstraCompareTest
     {
         [Test]
@@ -94,39 +94,40 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
         {
             var distances = new Dictionary<Edge<char>, double>();
             var g = BoostFloydWarshallTest.CreateGraph(distances);
-            this.Compare(g, e => distances[e]);
+            this.Compare(g, e => distances[e],
+                (G, d) => new DijkstraShortestPathAlgorithm<char, Edge<char>>(G, d)
+                );
         }
 
         [Test]
-        public void GraphML()
+        public void FloydVsBellmannGraphML()
         {
             Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
             foreach (var g in GraphMLFilesHelper.GetGraphs())
-                this.Compare(g, distances);
+                this.Compare<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>, IVertexAndEdgeListGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>>(
+                    g,
+                    distances,
+                    (G, d) => new BellmanFordShortestPathAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(G, d)
+                    );
         }
 
         [Test]
-        public void G23103GraphML()
+        public void FloydVsDijkstraGraphML()
         {
             Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
-            var g = GraphMLFilesHelper.LoadGraph(@"GraphML\g.23.103.graphml");
-            Compare(g, distances);
+            foreach (var g in GraphMLFilesHelper.GetGraphs())
+                this.Compare<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>, IVertexListGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>>(
+                    g, 
+                    distances,
+                    (G, d) => new DijkstraShortestPathAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(G, d)
+                    );
         }
 
-        //static Color ToColor(GraphColor color)
-        //{
-        //    switch (color)
-        //    {
-        //        case GraphColor.Gray:
-        //            return Color.Gray;
-        //        case GraphColor.Black:
-        //            return Color.Black;
-        //        default:
-        //            return Color.White;
-        //    }
-        //}
-
-        void Compare<TVertex, TEdge>(AdjacencyGraph<TVertex, TEdge> g, Func<TEdge, double> distances)
+        void Compare<TVertex, TEdge, TGraph>(
+            AdjacencyGraph<TVertex, TEdge> g, 
+            Func<TEdge, double> distances,
+            Func<AdjacencyGraph<TVertex, TEdge>, Func<TEdge, double>, ShortestPathAlgorithmBase<TVertex, TEdge, TGraph>> shortestPathAlgorithmFactory
+            )
             where TEdge : IEdge<TVertex>
         {
             // compute all paths
@@ -134,27 +135,13 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             fw.Compute();
             var vertices = g.Vertices.ToArray();
             foreach (var source in g.Vertices)
-            //var source = vertices[0];
             {
-                var dijkstra = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(g, distances);
-                //dijkstra.ExamineEdge += (sender, e) =>
-                //{
-                //    MsaglGraphExtensions.ShowMsaglGraph(g,
-                //        (s, ne) =>
-                //        {
-                //            ne.Node.Attr.FillColor = ToColor(dijkstra.VertexColors[ne.Vertex]);
-                //        },
-                //        (s, ne) =>
-                //        {
-                //            if (ne.Edge.Equals(e.Edge)) ne.GEdge.Attr.Color = Color.Red;
-                //        });
-                //};
+                var dijkstra = shortestPathAlgorithmFactory(g, distances); // new DijkstraShortestPathAlgorithm<TVertex, TEdge>(g, distances);
                 var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-                using (ObserverScope.Create(dijkstra, predecessors))
+                using (ObserverScope.Create<ITreeBuilderAlgorithm<TVertex, TEdge>>(dijkstra, predecessors))
                     dijkstra.Compute(source);
 
                 TryFunc<TVertex, IEnumerable<TEdge>> dijkstraPaths = predecessors.TryGetPath;
-                //var target = vertices[20];
                 foreach(var target in g.Vertices)
                 {
                     if (source.Equals(target)) continue;

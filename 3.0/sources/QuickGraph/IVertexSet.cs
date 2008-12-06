@@ -22,16 +22,19 @@ namespace QuickGraph
         /// 	<c>true</c> if the vertex set is empty; otherwise, <c>false</c>.
         /// </value>
         bool IsVerticesEmpty { get;}
+
         /// <summary>
         /// Gets the vertex count.
         /// </summary>
         /// <value>The vertex count.</value>
         int VertexCount { get;}
+
         /// <summary>
         /// Gets the vertices.
         /// </summary>
         /// <value>The vertices.</value>
         IEnumerable<TVertex> Vertices { get;}
+
         /// <summary>
         /// Determines whether the specified vertex contains vertex.
         /// </summary>
