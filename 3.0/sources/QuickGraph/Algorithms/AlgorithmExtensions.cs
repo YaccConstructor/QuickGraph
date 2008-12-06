@@ -6,11 +6,100 @@ using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.ShortestPath;
 using System.Diagnostics.Contracts;
 using QuickGraph.Contracts;
+using QuickGraph.Algorithms.RandomWalks;
 
 namespace QuickGraph.Algorithms
 {
     public static class AlgorithmExtensions
     {
+        public static TryFunc<TVertex, IEnumerable<TEdge>> TreeBreadthFirstSearch<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            TVertex root)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(root != null);
+            Contract.Requires(visitedGraph.ContainsVertex(root));
+
+            var algo = new BreadthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
+            var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(algo, predecessorRecorder))
+                algo.Compute(root);
+
+            var predecessors = predecessorRecorder.VertexPredecessors;
+            return delegate(TVertex v, out IEnumerable<TEdge> edges)
+            {
+                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+            };
+        }
+
+        public static TryFunc<TVertex, IEnumerable<TEdge>> TreeDepthFirstSearch<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            TVertex root)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(root != null);
+            Contract.Requires(visitedGraph.ContainsVertex(root));
+
+            var algo = new DepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
+            var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(algo, predecessorRecorder))
+                algo.Compute(root);
+
+            var predecessors = predecessorRecorder.VertexPredecessors;
+            return delegate(TVertex v, out IEnumerable<TEdge> edges)
+            {
+                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+            };
+        }
+
+        public static TryFunc<TVertex, IEnumerable<TEdge>> TreeCyclePoppingRandom<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            TVertex root)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(root != null);
+            Contract.Requires(visitedGraph.ContainsVertex(root));
+
+            return TreeCyclePoppingRandom(visitedGraph, root, new NormalizedMarkovEdgeChain<TVertex, TEdge>());
+        }
+
+        public static TryFunc<TVertex, IEnumerable<TEdge>> TreeCyclePoppingRandom<TVertex, TEdge>(
+#if !NET20
+            this 
+#endif
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            TVertex root,
+            IMarkovEdgeChain<TVertex, TEdge> edgeChain)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(root != null);
+            Contract.Requires(visitedGraph.ContainsVertex(root));
+
+            var algo = new CyclePoppingRandomTreeAlgorithm<TVertex, TEdge>(visitedGraph, edgeChain);
+            var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using(ObserverScope.Create(algo, predecessorRecorder))
+                algo.Compute(root);
+
+            var predecessors = predecessorRecorder.VertexPredecessors;
+            return delegate(TVertex v, out IEnumerable<TEdge> edges)
+            {
+                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+            };
+        }
+
         public static bool TryGetPath<TVertex, TEdge>(
 #if !NET20
             this 

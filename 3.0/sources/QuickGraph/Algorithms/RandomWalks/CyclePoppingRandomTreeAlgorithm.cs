@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
@@ -8,9 +9,11 @@ namespace QuickGraph.Algorithms.RandomWalks
     /// Wilson-Propp Cycle-Popping Algorithm for Random Tree Generation.
     /// </summary>
     [Serializable]
-    public sealed class CyclePoppingRandomTreeAlgorithm<TVertex, TEdge> :
-        RootedAlgorithmBase<TVertex,IVertexListGraph<TVertex,TEdge>>
-        where TEdge : IEdge<TVertex>
+    public sealed class CyclePoppingRandomTreeAlgorithm<TVertex, TEdge> 
+        : RootedAlgorithmBase<TVertex,IVertexListGraph<TVertex,TEdge>>
+        , IVertexColorizerAlgorithm<TVertex, TEdge>
+        , ITreeBuilderAlgorithm<TVertex,TEdge>
+    where TEdge : IEdge<TVertex>
     {
         private IDictionary<TVertex, GraphColor> vertexColors = new Dictionary<TVertex, GraphColor>();
         private IMarkovEdgeChain<TVertex,TEdge> edgeChain = new NormalizedMarkovEdgeChain<TVertex,TEdge>();
@@ -46,6 +49,13 @@ namespace QuickGraph.Algorithms.RandomWalks
             {
                 return this.vertexColors;
             }
+        }
+
+        public GraphColor GetVertexColor(TVertex v)
+        {
+            Contract.Requires(v != null);
+
+            return this.vertexColors[v];
         }
 
         public IMarkovEdgeChain<TVertex,TEdge> EdgeChain
@@ -85,29 +95,33 @@ namespace QuickGraph.Algorithms.RandomWalks
         public event VertexEventHandler<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
         {
-            if (this.InitializeVertex != null)
-                this.InitializeVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.InitializeVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event VertexEventHandler<TVertex> FinishVertex;
         private void OnFinishVertex(TVertex v)
         {
-            if (this.FinishVertex != null)
-                this.FinishVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.FinishVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
-            if (this.TreeEdge != null)
-                this.TreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
 
         public event VertexEventHandler<TVertex> ClearTreeVertex;
         private void OnClearTreeVertex(TVertex v)
         {
-            if (this.ClearTreeVertex != null)
-                this.ClearTreeVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.ClearTreeVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         protected override void Initialize()
