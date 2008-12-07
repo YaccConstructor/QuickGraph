@@ -133,7 +133,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             base.Initialize();
 
             this.minimumWeights = new Dictionary<TVertex, double>(this.VisitedGraph.VertexCount);
-            this.queue = new BinaryQueue<TVertex, double>(this.minimumWeights);
+            this.queue = new BinaryQueue<TVertex, double>(e => this.minimumWeights[e]);
             foreach (var u in this.VisitedGraph.Vertices)
             {
                 this.minimumWeights.Add(u, double.MaxValue);

@@ -19,7 +19,7 @@ namespace QuickGraph.Algorithms
             )
             :base(visitedGraph)
         {
-            this.heap = new BinaryQueue<TVertex,int>(this.inDegrees);
+            this.heap = new BinaryQueue<TVertex,int>(e => this.inDegrees[e]);
         }
 
         public ICollection<TVertex> SortedVertices

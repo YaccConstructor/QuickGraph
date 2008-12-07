@@ -107,7 +107,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public void ComputeNoInit(TVertex s)
         {
-            this.vertexQueue = new BinaryQueue<TVertex, double>(this.Distances);
+            this.vertexQueue = new BinaryQueue<TVertex, double>(e => this.Distances[e]);
             UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge> bfs = null;
 
             try

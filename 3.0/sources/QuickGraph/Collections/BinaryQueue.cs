@@ -9,17 +9,17 @@ namespace QuickGraph.Collections
     public sealed class BinaryQueue<TVertex, TDistance> : 
         IQueue<TVertex>
     {
-        private readonly IDictionary<TVertex, TDistance> distances;
+        private readonly Func<TVertex, TDistance> distances;
         private readonly BinaryHeap<TDistance, TVertex> heap;
 
         public BinaryQueue(
-            IDictionary<TVertex, TDistance> distances
+            Func<TVertex, TDistance> distances
             )
             : this(distances, Comparer<TDistance>.Default.Compare)
         { }
 
 		public BinaryQueue(
-            IDictionary<TVertex, TDistance> distances,
+            Func<TVertex, TDistance> distances,
             Comparison<TDistance> distanceComparison
             )
 		{
@@ -32,7 +32,7 @@ namespace QuickGraph.Collections
 
 		public void Update(TVertex v)
 		{
-            this.heap.Update(this.distances[v], v);
+            this.heap.Update(this.distances(v), v);
         }
 
         public int Count
@@ -48,9 +48,8 @@ namespace QuickGraph.Collections
         public void Enqueue(TVertex value)
         {
             Contract.Requires(value != null);
-            Contract.Assert(this.distances.ContainsKey(value));
 
-            this.heap.Add(this.distances[value], value);
+            this.heap.Add(this.distances(value), value);
         }
 
         public TVertex Dequeue()
