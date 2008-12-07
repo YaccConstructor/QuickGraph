@@ -22,8 +22,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Msagl", "QuickGr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflector.QuickGraph", "Reflector.QuickGraph\Reflector.QuickGraph.csproj", "{7D06D43B-EE95-4800-874F-9D5330C86D96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph1.Tests", "QuickGraph1.Tests\QuickGraph1.Tests.csproj", "{F1E9E4D5-7719-495A-93C3-F28B42242E37}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D81E7BA-91B1-473B-B9BB-4DECB1825F66}"
 	ProjectSection(SolutionItems) = preProject
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
@@ -32,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 9
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs03.codeplex.com/
 		SccLocalPath0 = .
@@ -60,9 +58,6 @@ Global
 		SccProjectUniqueName8 = Reflector.QuickGraph\\Reflector.QuickGraph.csproj
 		SccProjectName8 = Reflector.QuickGraph
 		SccLocalPath8 = Reflector.QuickGraph
-		SccProjectUniqueName9 = QuickGraph1.Tests\\QuickGraph1.Tests.csproj
-		SccProjectName9 = QuickGraph1.Tests
-		SccLocalPath9 = QuickGraph1.Tests
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = QuickGraph.vsmdi
@@ -136,13 +131,6 @@ Global
 		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Release20|Any CPU.ActiveCfg = Release20|Any CPU
 		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Release20|Any CPU.Build.0 = Release20|Any CPU
-		{F1E9E4D5-7719-495A-93C3-F28B42242E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1E9E4D5-7719-495A-93C3-F28B42242E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1E9E4D5-7719-495A-93C3-F28B42242E37}.DebugContracts|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1E9E4D5-7719-495A-93C3-F28B42242E37}.DebugContracts|Any CPU.Build.0 = Debug|Any CPU
-		{F1E9E4D5-7719-495A-93C3-F28B42242E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1E9E4D5-7719-495A-93C3-F28B42242E37}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1E9E4D5-7719-495A-93C3-F28B42242E37}.Release20|Any CPU.ActiveCfg = Release20|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
