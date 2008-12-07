@@ -26,7 +26,8 @@ namespace QuickGraph.Algorithms.ShortestPath
     ///     idref="shi03datastructures"
     ///     />
     public sealed class BellmanFordShortestPathAlgorithm<TVertex, TEdge> 
-        : ShortestPathAlgorithmBase<TVertex,TEdge, IVertexAndEdgeListGraph<TVertex,TEdge>>
+        : ShortestPathAlgorithmBase<TVertex,TEdge
+        , IVertexAndEdgeListGraph<TVertex,TEdge>>
         , ITreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {

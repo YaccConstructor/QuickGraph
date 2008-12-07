@@ -1,10 +1,10 @@
-﻿using System;
+﻿#if CONTRACTS_FULL
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Contracts
 {
-#if CONTRACTS_FULL
     [ContractClassFor(typeof(IEdge<>))]
     sealed class IEdgeContract<TVertex>
         : IEdge<TVertex>
@@ -27,5 +27,5 @@ namespace QuickGraph.Contracts
             get { return Contract.Result<TVertex>(); }
         }
     }
-#endif
 }
+#endif
