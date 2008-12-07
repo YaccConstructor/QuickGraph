@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using QuickGraph.Collections;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.MinimumSpanningTree
 {
@@ -15,10 +16,10 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
     ///     idref="shi03datastructures"
     ///     />
     [Serializable]
-    public sealed class PrimMinimumSpanningTreeAlgorithm<TVertex,TEdge> : 
-        RootedAlgorithmBase<TVertex,IUndirectedGraph<TVertex,TEdge>>,
-        ITreeBuilderAlgorithm<TVertex,TEdge>,
-        IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>
+    public sealed class PrimMinimumSpanningTreeAlgorithm<TVertex,TEdge> 
+        : RootedAlgorithmBase<TVertex,IUndirectedGraph<TVertex,TEdge>>
+        , ITreeBuilderAlgorithm<TVertex,TEdge>
+        , IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {        
         private IDictionary<TEdge, double> edgeWeights;
@@ -39,8 +40,8 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             )
             :base(host, visitedGraph)
         {
-            if (edgeWeights == null)
-                throw new ArgumentNullException("edgeWeights");
+            Contract.Requires(edgeWeights != null);
+
             this.edgeWeights = edgeWeights;
         }
 
@@ -53,7 +54,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         public event VertexEventHandler<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
-            VertexEventHandler<TVertex> eh = this.StartVertex;
+            var eh = this.StartVertex;
             if (eh != null)
                 eh(this, new VertexEventArgs<TVertex>(v));
         }
@@ -61,7 +62,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
-            EdgeEventHandler<TVertex, TEdge> eh = this.TreeEdge;
+            var eh = this.TreeEdge;
             if (eh != null)
                 eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
         }
@@ -70,7 +71,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
 
         private void OnFinishVertex(TVertex v)
         {
-            VertexEventHandler<TVertex> eh = this.FinishVertex;
+            var eh = this.FinishVertex;
             if (eh != null)
                 eh(this, new VertexEventArgs<TVertex>(v));
         }

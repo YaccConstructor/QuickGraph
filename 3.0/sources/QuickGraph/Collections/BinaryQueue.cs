@@ -23,10 +23,8 @@ namespace QuickGraph.Collections
             Comparison<TDistance> distanceComparison
             )
 		{
-			if (distances == null)
-				throw new ArgumentNullException("distances");
-            if (distanceComparison == null)
-                throw new ArgumentNullException("distanceComparison");
+            Contract.Requires(distances != null);
+            Contract.Requires(distanceComparison != null);
 
 			this.distances = distances;
             this.heap = new BinaryHeap<TDistance, TVertex>(distanceComparison);
@@ -51,6 +49,7 @@ namespace QuickGraph.Collections
         {
             Contract.Requires(value != null);
             Contract.Assert(this.distances.ContainsKey(value));
+
             this.heap.Add(this.distances[value], value);
         }
 

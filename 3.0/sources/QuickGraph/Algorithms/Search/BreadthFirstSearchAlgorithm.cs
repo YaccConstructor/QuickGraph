@@ -202,7 +202,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var cancelManager = this.Services.CancelManager;
 
-            while (this.vertexQueue.Count != 0)
+            while (this.vertexQueue.Count > 0)
             {
                 if (cancelManager.IsCancelling) return;
 

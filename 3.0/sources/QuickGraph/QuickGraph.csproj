@@ -255,7 +255,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BidirectionalGraph.cs" />
     <Compile Include="BidirectionalMatrixGraph.cs" />
-    <Compile Include="Collections\PriorithizedQueue.cs" />
+    <Compile Include="Collections\BinaryQueue.cs" />
     <Compile Include="Collections\Queue.cs" />
     <Compile Include="CreateEdgeDelegate.cs" />
     <Compile Include="CreateVertexDelegate.cs" />
