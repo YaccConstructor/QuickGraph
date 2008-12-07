@@ -11,7 +11,7 @@ namespace QuickGraph.Algorithms
         where TEdge : IEdge<TVertex>
     {
         private IDictionary<TVertex, int> inDegrees = new Dictionary<TVertex, int>();
-        private PriorityQueue<TVertex,int> heap;
+        private BinaryQueue<TVertex,int> heap;
         private IList<TVertex> sortedVertices = new List<TVertex>();
 
         public SourceFirstTopologicalSortAlgorithm(
@@ -19,7 +19,7 @@ namespace QuickGraph.Algorithms
             )
             :base(visitedGraph)
         {
-            this.heap = new PriorityQueue<TVertex,int>(this.inDegrees);
+            this.heap = new BinaryQueue<TVertex,int>(this.inDegrees);
         }
 
         public ICollection<TVertex> SortedVertices
@@ -30,7 +30,7 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        public PriorityQueue<TVertex,int> Heap
+        public BinaryQueue<TVertex,int> Heap
         {
             get
             {

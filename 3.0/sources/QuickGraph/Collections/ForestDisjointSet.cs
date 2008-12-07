@@ -28,6 +28,13 @@ namespace QuickGraph.Collections
         readonly Dictionary<T, Element> elements;
         int setCount;
 
+        public ForestDisjointSet(int elementCapacity)
+        {
+            Contract.Requires(elementCapacity >= 0);
+            this.elements = new Dictionary<T, Element>(elementCapacity);
+            this.setCount = 0;
+        }
+
         public ForestDisjointSet()
         {
             this.elements = new Dictionary<T, Element>();
@@ -81,6 +88,11 @@ namespace QuickGraph.Collections
             Contract.Requires(this.Contains(value));
 
             return this.Find(this.elements[value]);
+        }
+
+        public bool AreInSameSet(T left, T right)
+        {
+            return this.FindSet(left) == this.FindSet(right);
         }
 
         private Element Find(Element element)

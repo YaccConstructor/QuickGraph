@@ -22,7 +22,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         IDistanceRecorderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private PriorityQueue<TVertex, double> vertexQueue;
+        private BinaryQueue<TVertex, double> vertexQueue;
 
         public UndirectedDijkstraShortestPathAlgorithm(
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
@@ -107,7 +107,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public void ComputeNoInit(TVertex s)
         {
-            this.vertexQueue = new PriorityQueue<TVertex, double>(this.Distances);
+            this.vertexQueue = new BinaryQueue<TVertex, double>(this.Distances);
             UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge> bfs = null;
 
             try

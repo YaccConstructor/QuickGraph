@@ -7,6 +7,7 @@ using QuickGraph.Algorithms.ShortestPath;
 using System.Diagnostics.Contracts;
 using QuickGraph.Contracts;
 using QuickGraph.Algorithms.RandomWalks;
+using QuickGraph.Collections;
 
 namespace QuickGraph.Algorithms
 {
@@ -766,5 +767,24 @@ this
 
             return cost;
         }
+
+        public static IDisjointSet<TVertex> ComputeDisjointSet<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IUndirectedGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+
+            var ds = new ForestDisjointSet<TVertex>(visitedGraph.VertexCount);
+            foreach (var v in visitedGraph.Vertices)
+                ds.MakeSet(v);
+            foreach(var e in visitedGraph.Edges)
+                ds.Union(e.Source, e.Target);
+
+            return ds;
+        }
+
     }
 }

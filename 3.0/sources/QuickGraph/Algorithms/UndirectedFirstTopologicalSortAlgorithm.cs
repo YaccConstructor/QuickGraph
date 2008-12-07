@@ -11,7 +11,7 @@ namespace QuickGraph.Algorithms
         where TEdge : IEdge<TVertex>
     {
         private IDictionary<TVertex, int> degrees = new Dictionary<TVertex, int>();
-        private PriorityQueue<TVertex, int> heap;
+        private BinaryQueue<TVertex, int> heap;
         private IList<TVertex> sortedVertices = new List<TVertex>();
         private bool allowCyclicGraph = false;
 
@@ -20,7 +20,7 @@ namespace QuickGraph.Algorithms
             )
             : base(visitedGraph)
         {
-            this.heap = new PriorityQueue<TVertex, int>(this.degrees);
+            this.heap = new BinaryQueue<TVertex, int>(this.degrees);
         }
 
         public ICollection<TVertex> SortedVertices
@@ -31,7 +31,7 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        public PriorityQueue<TVertex, int> Heap
+        public BinaryQueue<TVertex, int> Heap
         {
             get
             {

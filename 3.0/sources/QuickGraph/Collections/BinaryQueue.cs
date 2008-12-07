@@ -6,19 +6,19 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Collections
 {
     [Serializable]
-    public sealed class PriorityQueue<TVertex, TDistance> : 
+    public sealed class BinaryQueue<TVertex, TDistance> : 
         IQueue<TVertex>
     {
         private readonly IDictionary<TVertex, TDistance> distances;
         private readonly BinaryHeap<TDistance, TVertex> heap;
 
-        public PriorityQueue(
+        public BinaryQueue(
             IDictionary<TVertex, TDistance> distances
             )
             : this(distances, Comparer<TDistance>.Default.Compare)
         { }
 
-		public PriorityQueue(
+		public BinaryQueue(
             IDictionary<TVertex, TDistance> distances,
             Comparison<TDistance> distanceComparison
             )

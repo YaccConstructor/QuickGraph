@@ -22,13 +22,13 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         , IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {        
-        private IDictionary<TEdge, double> edgeWeights;
+        private readonly Func<TEdge, double> edgeWeights;
         private Dictionary<TVertex, double> minimumWeights;
-        private PriorityQueue<TVertex, double> queue;
+        private BinaryQueue<TVertex, double> queue;
 
         public PrimMinimumSpanningTreeAlgorithm(
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
-            IDictionary<TEdge, double> edgeWeights
+            Func<TEdge, double> edgeWeights
             )
             : this(null, visitedGraph, edgeWeights)
         {}
@@ -36,7 +36,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         public PrimMinimumSpanningTreeAlgorithm(
             IAlgorithmComponent host,
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
-            IDictionary<TEdge, double> edgeWeights
+            Func<TEdge, double> edgeWeights
             )
             :base(host, visitedGraph)
         {
@@ -45,7 +45,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             this.edgeWeights = edgeWeights;
         }
 
-        public IDictionary<TEdge, double> EdgeWeights
+        public Func<TEdge, double> EdgeWeights
         {
             get { return this.edgeWeights; }
         }
@@ -108,7 +108,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
                     {
                         if (cancelManager.IsCancelling)
                             return;
-                        double edgeWeight = this.EdgeWeights[edge];
+                        double edgeWeight = this.edgeWeights(edge);
                         if (
                             queue.Contains(edge.Target) &&
                             edgeWeight < this.minimumWeights[edge.Target]
@@ -133,7 +133,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             base.Initialize();
 
             this.minimumWeights = new Dictionary<TVertex, double>(this.VisitedGraph.VertexCount);
-            this.queue = new PriorityQueue<TVertex, double>(this.minimumWeights);
+            this.queue = new BinaryQueue<TVertex, double>(this.minimumWeights);
             foreach (var u in this.VisitedGraph.Vertices)
             {
                 this.minimumWeights.Add(u, double.MaxValue);

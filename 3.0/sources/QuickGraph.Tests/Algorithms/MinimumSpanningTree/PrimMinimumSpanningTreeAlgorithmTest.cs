@@ -15,9 +15,8 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             Dictionary<Edge<string>, double> distances = new Dictionary<Edge<string>,double>();
             foreach(Edge<string> edge in g.Edges)
                 distances.Add(edge, 1);
-            PrimMinimumSpanningTreeAlgorithm<string, Edge<string>> prim = new PrimMinimumSpanningTreeAlgorithm<string, Edge<string>>(g, distances);
-
-            VertexPredecessorRecorderObserver<string, Edge<string>> predecessors = new VertexPredecessorRecorderObserver<string, Edge<string>>();
+            var prim = new PrimMinimumSpanningTreeAlgorithm<string, Edge<string>>(g, e => distances[e]);
+            var predecessors = new VertexPredecessorRecorderObserver<string, Edge<string>>();
             predecessors.Attach(prim);
             prim.Compute();
 
