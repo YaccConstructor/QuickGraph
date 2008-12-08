@@ -40,7 +40,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         [TestMethod]
         public void DagShortestPathAll()
         {
-            foreach(var g in GraphMLFilesHelper.GetGraphs())
+            foreach(var g in TestGraphFactory.GetAdjacencyGraphs())
             {
                 this.Compute(g);
                 this.ComputeCriticalPath(g);

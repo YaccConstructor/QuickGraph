@@ -8,16 +8,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Serialization
 {
-    public static class GraphMLFilesHelper
+    public static class TestGraphFactory
     {
         public static string[] GetFileNames()
         {
-            return Directory.GetFiles("GraphML", "*.graphml");
+            return Directory.GetFiles(".", "*.graphml");
         }
 
         public static IEnumerable<BidirectionalGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetBidirectionalGraphs()
         {
-            foreach (var graphmlFile in GraphMLFilesHelper.GetFileNames())
+            foreach (var graphmlFile in TestGraphFactory.GetFileNames())
             {
                 var g = LoadBidirectionalGraph(graphmlFile);
                 yield return g;
@@ -39,9 +39,9 @@ namespace QuickGraph.Serialization
             return g;
         }
 
-        public static IEnumerable<AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetGraphs()
+        public static IEnumerable<AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetAdjacencyGraphs()
         {
-            foreach (var graphmlFile in GraphMLFilesHelper.GetFileNames())
+            foreach (var graphmlFile in TestGraphFactory.GetFileNames())
             {
                 var g = LoadGraph(graphmlFile);
                 yield return g;
@@ -70,7 +70,7 @@ namespace QuickGraph.Serialization
         [TestMethod]
         public void DeserializeFromGraphMLNorth()
         {
-            foreach (var graphmlFile in GraphMLFilesHelper.GetFileNames())
+            foreach (var graphmlFile in TestGraphFactory.GetFileNames())
             {
                 Console.Write(graphmlFile);
                 var g = new AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();

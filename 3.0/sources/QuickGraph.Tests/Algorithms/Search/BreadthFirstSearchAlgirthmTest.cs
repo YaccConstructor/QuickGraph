@@ -324,7 +324,7 @@ namespace QuickGraph.Algorithms.Search
         [TestMethod]
         public void AllGraphML()
         {
-            foreach (var g in GraphMLFilesHelper.GetGraphs())
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
                 foreach (var source in g.Vertices)
                     RunBfs(g, source);
         }

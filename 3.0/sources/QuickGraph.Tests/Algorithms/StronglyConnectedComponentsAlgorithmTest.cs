@@ -115,7 +115,7 @@ namespace QuickGraph.Algorithms
         [TestMethod]
         public void StronglyConnectedComponentAll()
         {
-            foreach (var g in GraphMLFilesHelper.GetGraphs())
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
                 this.Compute(g);
         }
 

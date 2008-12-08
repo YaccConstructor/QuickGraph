@@ -11,7 +11,7 @@ namespace QuickGraph.Algorithms
         [TestMethod]
         public void TopologicalSortAll()
         {
-            foreach (var g in GraphMLFilesHelper.GetGraphs())
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
                 this.SortCyclic(g);
         }
 

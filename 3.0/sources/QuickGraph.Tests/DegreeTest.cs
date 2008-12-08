@@ -13,7 +13,7 @@ namespace QuickGraph.Tests
         [TestMethod]
         public void DegreeSumEqualsTwiceEdgeCountAll()
         {
-            foreach (var g in GraphMLFilesHelper.GetBidirectionalGraphs())
+            foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
                 this.DegreeSumEqualsTwiceEdgeCount(g);
         }
 
@@ -33,7 +33,7 @@ namespace QuickGraph.Tests
         [TestMethod]
         public void InDegreeSumEqualsEdgeCountAll()
         {
-            foreach (var g in GraphMLFilesHelper.GetBidirectionalGraphs())
+            foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
                 this.InDegreeSumEqualsEdgeCount(g);
         }
 
@@ -53,7 +53,7 @@ namespace QuickGraph.Tests
         [TestMethod]
         public void OutDegreeSumEqualsEdgeCountAll()
         {
-            foreach (var g in GraphMLFilesHelper.GetBidirectionalGraphs())
+            foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
                 this.OutDegreeSumEqualsEdgeCount(g);
         }
 

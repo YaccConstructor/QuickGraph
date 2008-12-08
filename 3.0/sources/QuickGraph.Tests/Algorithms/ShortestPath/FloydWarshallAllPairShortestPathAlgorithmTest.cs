@@ -103,7 +103,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
         public void FloydVsBellmannGraphML()
         {
             Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
-            foreach (var g in GraphMLFilesHelper.GetGraphs())
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
                 this.Compare<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>, IVertexAndEdgeListGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>>(
                     g,
                     distances,
@@ -115,7 +115,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
         public void FloydVsDijkstraGraphML()
         {
             Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
-            foreach (var g in GraphMLFilesHelper.GetGraphs())
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
                 this.Compare<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>, IVertexListGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>>(
                     g, 
                     distances,

@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
-using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph
 {
-    [TestFixture, PexClass]
-    public partial class UndirectedGraphTest<T,E> where E : IEdge<T>
+    [TestClass, PexClass]
+    public partial class UndirectedGraphTest
     {
         [PexMethod]
-        public static void IsAdjacentEdgesEmpty([PexAssumeUnderTest]IUndirectedGraph<T, E> g)
+        public static void IsAdjacentEdgesEmpty<T,E>([PexAssumeUnderTest]IUndirectedGraph<T, E> g)
+            where E : IEdge<T>
         {
             foreach (T v in g.Vertices)
             {

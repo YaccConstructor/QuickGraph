@@ -13,7 +13,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         [TestMethod]
         public void DijkstraAll()
         {
-            foreach (var g in GraphMLFilesHelper.GetGraphs())
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
                 this.Compute(g);
         }
 

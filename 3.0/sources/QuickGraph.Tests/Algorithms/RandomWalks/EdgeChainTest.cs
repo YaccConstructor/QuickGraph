@@ -14,7 +14,7 @@ namespace QuickGraph.Algorithms.RandomWalks
         [TestMethod]
         public void GenerateAll()
         {
-            foreach (var g in GraphMLFilesHelper.GetGraphs())
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
                 this.Generate(g);
         }
 

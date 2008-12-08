@@ -12,10 +12,13 @@ namespace QuickGraph.Algorithms.RandomWalks
         [TestMethod]
         public void All()
         {
-            foreach (var g in GraphMLFilesHelper.GetGraphs())
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
             {
-                var target = new CyclePoppingRandomTreeAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(g);
-                target.Compute();
+                foreach (var v in g.Vertices)
+                {
+                    var target = new CyclePoppingRandomTreeAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(g);
+                    target.Compute(v);
+                }
             }
         }
 

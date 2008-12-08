@@ -1,10 +1,10 @@
 ﻿using System;
-using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph
 {
-    [TestFixture, PexClass(MaxRuns = 50)]
+    [TestClass, PexClass(MaxRuns = 50)]
     public partial class MutableVertexAndEdgeListGraphTest
     {
         [PexMethod]
