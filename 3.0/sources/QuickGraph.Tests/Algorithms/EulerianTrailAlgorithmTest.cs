@@ -1,54 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using QuickGraph.Unit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Pex.Framework;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms
 {
-//    [TypeFixture(typeof(IVertexAndEdgeListGraph<string,Edge<string>>))]
-//    [TypeFactory(typeof(AdjacencyGraphFactory))]
-//    [TypeFactory(typeof(BidirectionalGraphFactory))]
+    [TestClass]
     public class EulerianTrailAlgorithmTest
     {
-        [Test]
-        public void ComputeTrail(IMutableVertexAndEdgeListGraph<string,Edge<string>> g)
+        [TestMethod]
+        public void EulerianTrailAll()
+        {
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+            {
+                int edgeid = 0;
+                this.ComputeTrail(g, (s, t) => new IdentifiableEdge<IdentifiableVertex>(s, t, (edgeid++).ToString()));
+            }
+        }
+
+        [PexMethod]
+        public void ComputeTrail<TVertex,TEdge>(
+            IMutableVertexAndEdgeListGraph<TVertex,TEdge> g,
+            Func<TVertex, TVertex, TEdge> edgeCreator)
+            where TEdge : IEdge<TVertex>
         {
             if (g.VertexCount == 0)
                 return;
 
-            GraphConsoleSerializer.DisplayGraph(g);
-
             int oddCount = 0;
-            foreach (string v in g.Vertices)
+            foreach (var v in g.Vertices)
                 if (g.OutDegree(v) % 2 == 0)
                     oddCount++;
 
-            int circuitCount = EulerianTrailAlgorithm<string,Edge<string>>.ComputeEulerianPathCount(g);
+            int circuitCount = EulerianTrailAlgorithm<TVertex,TEdge>.ComputeEulerianPathCount(g);
             if (circuitCount == 0)
                 return;
 
-            EulerianTrailAlgorithm<string, Edge<string>> trail = new EulerianTrailAlgorithm<string, Edge<string>>(g);
-            trail.AddTemporaryEdges((s, t) => new Edge<string>(s, t));
+            var trail = new EulerianTrailAlgorithm<TVertex,TEdge>(g);
+            trail.AddTemporaryEdges((s, t) => edgeCreator(s, t));
             trail.Compute();
-            ICollection<ICollection<Edge<string>>> trails = trail.Trails();
+            var trails = trail.Trails();
             trail.RemoveTemporaryEdges();
 
-            Console.WriteLine("trails: {0}", trails.Count);
-            int index = 0;
-            foreach (ICollection<Edge<string>> t in trails)
-            {
-                Console.WriteLine("trail {0}", index++);
-                foreach (Edge<string> edge in t)
-                    Console.WriteLine("\t{0}", t);
-            }
+            //Console.WriteLine("trails: {0}", trails.Count);
+            //int index = 0;
+            //foreach (var t in trails)
+            //{
+            //    Console.WriteLine("trail {0}", index++);
+            //    foreach (Edge<string> edge in t)
+            //        Console.WriteLine("\t{0}", t);
+            //}
 
             // lets make sure all the edges are in the trail
-            Dictionary<Edge<string>, GraphColor> edgeColors = new Dictionary<Edge<string>, GraphColor>(g.EdgeCount);
-            foreach (Edge<string> edge in g.Edges)
+            var edgeColors = new Dictionary<TEdge, GraphColor>(g.EdgeCount);
+            foreach (var edge in g.Edges)
                 edgeColors.Add(edge, GraphColor.White);
-            foreach (ICollection<Edge<string>> t in trails)
-                foreach (Edge<string> edge in t)
-                    CollectionAssert.ContainsKey(edgeColors, edge);
+            foreach (var t in trails)
+                foreach (var edge in t)
+                    Assert.IsTrue(edgeColors.ContainsKey(edge));
 
         }
     }

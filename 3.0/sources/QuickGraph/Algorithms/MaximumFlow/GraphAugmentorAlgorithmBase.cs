@@ -5,8 +5,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
-    public abstract class GraphAugmentorAlgorithmBase<TVertex,TEdge,TGraph> :
-        AlgorithmBase<TGraph>
+    public abstract class GraphAugmentorAlgorithmBase<TVertex,TEdge,TGraph> 
+        : AlgorithmBase<TGraph>
+        , IDisposable
         where TEdge : IEdge<TVertex>
         where TGraph : IMutableVertexAndEdgeListGraph<TVertex,TEdge>
     {
@@ -115,12 +116,17 @@ namespace QuickGraph.Algorithms.MaximumFlow
             if (!this.Augmented)
                 return;
 
+            this.augmented = false;
             this.VisitedGraph.RemoveVertex(this.SuperSource);
             this.VisitedGraph.RemoveVertex(this.SuperSink);
             this.superSource = default(TVertex);
             this.superSink = default(TVertex);
             this.augmentedEdges.Clear();
-            this.augmented = false;
+        }
+
+        public void Dispose()
+        {
+            this.Rollback();
         }
 
         protected abstract void AugmentGraph();

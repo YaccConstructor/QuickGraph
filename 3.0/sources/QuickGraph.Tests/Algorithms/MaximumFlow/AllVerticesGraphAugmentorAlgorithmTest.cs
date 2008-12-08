@@ -1,85 +1,74 @@
 ﻿using System;
-using QuickGraph.Unit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Pex.Framework;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
-    [TypeFixture(typeof(IMutableVertexAndEdgeListGraph<string, Edge<string>>))]
-    [TypeFactory(typeof(AdjacencyGraphFactory))]
-    [TypeFactory(typeof(BidirectionalGraphFactory))]
+    [TestClass]
     public class AllVerticesGraphAugmentorAlgorithmTest
     {
-        private AllVerticesGraphAugmentorAlgorithm<string, Edge<string>> augmentor;
-
-        public void SetUp(IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
+        [TestMethod]
+        public void AugmentAll()
         {
-            this.augmentor = new AllVerticesGraphAugmentorAlgorithm<string, Edge<string>>(
-                g,
-                new StringVertexFactory().CreateVertex,
-                (s,t) => new Edge<string>(s,t)
-                );
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+                this.Augment(g);
         }
 
-        [TearDown]
-        public void TearDown()
+        [PexMethod]
+        public void Augment(
+            IMutableVertexAndEdgeListGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> g)
         {
-            if (this.augmentor != null)
-            {
-                this.augmentor.Rollback();
-                this.augmentor = null;
-            }
-        }
-
-        [Test]
-        public void AddSuperSourceAndSink(IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
-        {
-            SetUp(g);
-            int vertexCount = g.VertexCount;
-            this.augmentor.Compute();
-
-            Assert.AreEqual(vertexCount + 2, g.VertexCount);
-            Assert.IsTrue(g.ContainsVertex(this.augmentor.SuperSource));
-            Assert.IsTrue(g.ContainsVertex(this.augmentor.SuperSink));
-        }
-
-        [Test]
-        public void AddAndRemove(IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
-        {
-            SetUp(g);
             int vertexCount = g.VertexCount;
             int edgeCount = g.EdgeCount;
-            this.augmentor.Compute();
-            this.augmentor.Rollback();
+            int vertexId = g.VertexCount+1;
+            int edgeID = g.EdgeCount+1;
+            using (var augmentor = new AllVerticesGraphAugmentorAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(
+                g,
+                () => new IdentifiableVertex((vertexId++).ToString()),
+                (s, t) => new IdentifiableEdge<IdentifiableVertex>(s, t, (edgeID++).ToString())
+                ))
+            {
+                VerifyCount(g, augmentor, vertexCount);
+                VerifySourceConnector(g, augmentor);
+                VerifySinkConnector(g, augmentor);
+            }
             Assert.AreEqual(g.VertexCount, vertexCount);
             Assert.AreEqual(g.EdgeCount, edgeCount);
         }
 
-        [Test]
-        public void AddAndVerifySourceConnected(IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
+        private static void VerifyCount<TVertex,TEdge>(
+            IMutableVertexAndEdgeListGraph<TVertex,TEdge> g, AllVerticesGraphAugmentorAlgorithm<TVertex,TEdge> augmentor, int vertexCount)
+            where TEdge : IEdge<TVertex>
         {
-            SetUp(g);
-            this.augmentor.Compute();
-            foreach (string v in g.Vertices)
+            Assert.AreEqual(vertexCount + 2, g.VertexCount);
+            Assert.IsTrue(g.ContainsVertex(augmentor.SuperSource));
+            Assert.IsTrue(g.ContainsVertex(augmentor.SuperSink));
+        }
+
+        private static void VerifySourceConnector<TVertex, TEdge>(IMutableVertexAndEdgeListGraph<TVertex, TEdge> g, AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge> augmentor)
+            where TEdge : IEdge<TVertex>
+        {
+            foreach (var v in g.Vertices)
             {
-                if (v == this.augmentor.SuperSource)
+                if (v.Equals(augmentor.SuperSource))
                     continue;
-                if (v == this.augmentor.SuperSink)
+                if (v.Equals(augmentor.SuperSink))
                     continue;
-                Assert.IsTrue(g.ContainsEdge(this.augmentor.SuperSource, v));
+                Assert.IsTrue(g.ContainsEdge(augmentor.SuperSource, v));
             }
         }
 
-        [Test]
-        public void AddAndVerifySinkConnected(IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
+        private static void VerifySinkConnector<TVertex, TEdge>(IMutableVertexAndEdgeListGraph<TVertex, TEdge> g, AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge> augmentor)
+            where TEdge : IEdge<TVertex>
         {
-            SetUp(g);
-            this.augmentor.Compute();
-            foreach (string v in g.Vertices)
+            foreach (var v in g.Vertices)
             {
-                if (v == this.augmentor.SuperSink)
+                if (v.Equals(augmentor.SuperSink))
                     continue;
-                if (v == this.augmentor.SuperSink)
+                if (v.Equals(augmentor.SuperSink))
                     continue;
-                Assert.IsTrue(g.ContainsEdge(v, this.augmentor.SuperSink));
+                Assert.IsTrue(g.ContainsEdge(v, augmentor.SuperSink));
             }
         }
 

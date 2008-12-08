@@ -84,7 +84,7 @@ namespace QuickGraph.Algorithms.Search
 		public event VertexEventHandler<TVertex> InitializeVertex;
 		private void OnInitializeVertex(TVertex v)
 		{
-            VertexEventHandler<TVertex> eh = this.InitializeVertex;
+            var eh = this.InitializeVertex;
 			if (eh!=null)
 				eh(this, new VertexEventArgs<TVertex>(v));
 		}

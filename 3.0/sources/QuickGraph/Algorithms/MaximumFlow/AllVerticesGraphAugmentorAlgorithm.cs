@@ -3,8 +3,8 @@ using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
-    public sealed class AllVerticesGraphAugmentorAlgorithm<TVertex,TEdge> :
-        GraphAugmentorAlgorithmBase<TVertex,TEdge,IMutableVertexAndEdgeListGraph<TVertex,TEdge>>
+    public sealed class AllVerticesGraphAugmentorAlgorithm<TVertex,TEdge> 
+        : GraphAugmentorAlgorithmBase<TVertex,TEdge,IMutableVertexAndEdgeListGraph<TVertex,TEdge>>
         where TEdge : IEdge<TVertex>
     {
         public AllVerticesGraphAugmentorAlgorithm(
