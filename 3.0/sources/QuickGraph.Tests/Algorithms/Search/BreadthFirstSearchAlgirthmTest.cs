@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using QuickGraph.Unit;
 using QuickGraph.Serialization;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Algorithms.Search
 {
-    [TestFixture]
+    [TestClass]
     public class BreadthFirstAlgorithmSearchTest
     {
         private IDictionary<int, int> parents;
@@ -108,7 +108,7 @@ namespace QuickGraph.Algorithms.Search
             Assert.AreEqual(algo.VertexColors[args.Vertex], GraphColor.Black);
         }
 
-        [SetUp]
+        [TestInitialize]
         public void Init()
         {
             this.parents = new Dictionary<int, int>();
@@ -129,7 +129,7 @@ namespace QuickGraph.Algorithms.Search
         }
 
 
-        [Test]
+        [TestMethod]
         public void GraphWithSelfEdgesBig()
         {
             Random rnd = new Random();
@@ -143,31 +143,6 @@ namespace QuickGraph.Algorithms.Search
             var sv = g.Vertices.FirstOrDefault();
             this.sourceVertex = sv;
             RunBfs();
-        }
-
-        [CombinatorialTest]
-        public void GraphWithSelfEdges(
-            [UsingLinear(2, 9)] int i,
-            [UsingLinear(0, 10)] int j
-            )
-        {
-            if (i == 0 && j == 0)
-                return;
-
-            Random rnd = new Random();
-
-            g = new AdjacencyGraph<int, Edge<int>>(true);
-            var next = new IntFactory();
-            RandomGraphFactory.Create<int, Edge<int>>(g,
-                next.Next,
-                (s, t) => new Edge<int>(s, t),
-                rnd, i, j, true);
-
-            foreach (var sv in g.Vertices)
-            {
-                this.sourceVertex = sv;
-                RunBfs();
-            }
         }
 
         private void RunBfs()
@@ -234,7 +209,7 @@ namespace QuickGraph.Algorithms.Search
         }
     }
 
-    [TestFixture]
+    [TestClass]
     public class BreadthFirstAlgorithmSearchGraphMLTest
     {
         private IDictionary<IdentifiableVertex, IdentifiableVertex> parents;
@@ -346,7 +321,7 @@ namespace QuickGraph.Algorithms.Search
             this.g = null;
         }
 
-        [Test]
+        [TestMethod]
         public void AllGraphML()
         {
             foreach (var g in GraphMLFilesHelper.GetGraphs())

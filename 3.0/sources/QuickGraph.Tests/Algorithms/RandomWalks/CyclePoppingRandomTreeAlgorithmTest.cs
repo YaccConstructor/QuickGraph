@@ -1,25 +1,35 @@
 ﻿using System;
 using QuickGraph.Unit;
 using QuickGraph.Algorithms.RandomWalks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
-    [TestFixture]
+    [TestClass]
     public class CyclePoppingRandomTreeAlgorithmTest
     {
-        private CyclePoppingRandomTreeAlgorithm<int,Edge<int>> target = null;
+        [TestMethod]
+        public void All()
+        {
+            foreach (var g in GraphMLFilesHelper.GetGraphs())
+            {
+                var target = new CyclePoppingRandomTreeAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(g);
+                target.Compute();
+            }
+        }
 
-        [Test]
+        [TestMethod]
         public void IsolatedVertex()
         {
             AdjacencyGraph<int, Edge<int>> g = new AdjacencyGraph<int, Edge<int>>(true);
             g.AddVertex(0);
 
-            target = new CyclePoppingRandomTreeAlgorithm<int, Edge<int>>(g);
+            var target = new CyclePoppingRandomTreeAlgorithm<int, Edge<int>>(g);
             target.RandomTree();
         }
 
-        [Test]
+        [TestMethod]
         public void RootIsNotAccessible()
         {
             AdjacencyGraph<int, Edge<int>> g = new AdjacencyGraph<int, Edge<int>>(true);
@@ -27,14 +37,14 @@ namespace QuickGraph.Algorithms.RandomWalks
             g.AddVertex(1);
             g.AddEdge(new Edge<int>(0, 1));
 
-            target = new CyclePoppingRandomTreeAlgorithm<int, Edge<int>>(g);
+            var target = new CyclePoppingRandomTreeAlgorithm<int, Edge<int>>(g);
             target.RandomTreeWithRoot(0);
         }
 
-        [Test]
+        [TestMethod]
         public void Loop()
         {
-            CyclePoppingRandomTreeAlgorithm<string, Edge<string>>  target = new CyclePoppingRandomTreeAlgorithm<string, Edge<string>>(new AdjacencyGraphFactory().Loop());
+            var  target = new CyclePoppingRandomTreeAlgorithm<string, Edge<string>>(new AdjacencyGraphFactory().Loop());
             target.RandomTree();
         }
 

@@ -22,7 +22,7 @@ namespace QuickGraph.Algorithms.Search
         private void VerifyDfs()
         {
             // let's make sure
-            foreach (string v in dfs.VisitedGraph.Vertices)
+            foreach (var v in dfs.VisitedGraph.Vertices)
             {
                 Assert.IsTrue(dfs.VertexColors.ContainsKey(v));
                 Assert.AreEqual(dfs.VertexColors[v], GraphColor.Black);

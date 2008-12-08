@@ -80,7 +80,6 @@
       <Link>Properties\version.cs</Link>
     </Compile>
     <Compile Include="AdjacencyGraphFactory.cs" />
-    <Compile Include="Algorithms\CentralityApproximationAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\WeaklyConnectedCondensationGraphTest.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
