@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuickGraph.Unit;
 using QuickGraph.Algorithms;
 using QuickGraph.Serialization;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Tests.Algorithms.ShortestPath
 {
-    [TestFixture, CurrentFixture]
+    [TestClass]
     public class BellmanFordShortestPathTest
     {
-        [Test]
+        [TestMethod]
         public void Sample()
         {
             var testGraph = new AdjacencyGraph<int, Edge<int>>();

@@ -1,38 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-
-using QuickGraph.Unit;
-
 using QuickGraph.Collections;
 using QuickGraph.Predicates;
 using QuickGraph.Algorithms.Observers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
-    [TypeFixture(typeof(IVertexAndEdgeListGraph<string, Edge<string>>))]
-    [TypeFactory(typeof(AdjacencyGraphFactory))]
-    public class DijkstraShortestPathExamplesTest
-    {
-        [Test]
-        public void Compute(IVertexAndEdgeListGraph<string, Edge<string>> g)
-        {
-            if (g.VertexCount == 0) return;
-
-            var rnd = new Random();
-            var distances = new Dictionary<Edge<string>, double>();
-            foreach(var edge in g.Edges)
-                distances.Add(edge, rnd.Next(100));
-            var bfs = new DijkstraShortestPathAlgorithm<string, Edge<string>>(g, e => distances[e]);
-
-            bfs.Compute(g.Vertices.FirstOrDefault());
-        }
-    }
-
-    [TestFixture]
+    [TestClass]
     public class DijkstraShortestPathTest
     {
-        [Test]
+        [TestMethod]
         public void RunOnLineGraph()
         {
             AdjacencyGraph<int, Edge<int>> g = new AdjacencyGraph<int, Edge<int>>(true);
@@ -51,7 +30,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             Assert.AreEqual<double>(2, dij.Distances[3]);
         }
 
-        [Test]
+        [TestMethod]
         public void CheckPredecessorLineGraph()
         {
             AdjacencyGraph<int, Edge<int>> g = new AdjacencyGraph<int, Edge<int>>(true);
@@ -81,7 +60,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         }
 
 
-        [Test]
+        [TestMethod]
         public void RunOnDoubleLineGraph()
         {
             AdjacencyGraph<int, Edge<int>> g = new AdjacencyGraph<int, Edge<int>>(true);
@@ -101,7 +80,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             Assert.AreEqual(1.0, dij.Distances[3]);
         }
 
-        [Test]
+        [TestMethod]
         public void CheckPredecessorDoubleLineGraph()
         {
             AdjacencyGraph<int, Edge<int>> g = new AdjacencyGraph<int, Edge<int>>(true);
@@ -131,7 +110,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         }
     }
 
-    [TestFixture]
+    [TestClass]
     public class DijkstraAlgoTest
     {
         AdjacencyGraph<string, Edge<string>> graph;
@@ -139,7 +118,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         List<string> path;
         VertexPredecessorRecorderObserver<string, Edge<string>> predecessorObserver;
 
-        [Test]
+        [TestMethod]
         public void CreateGraph()
         {
             graph = new AdjacencyGraph<string, Edge<string>>(true);
@@ -201,10 +180,10 @@ namespace QuickGraph.Algorithms.ShortestPath
         }
     }
 
-    [TestFixture]
+    [TestClass]
     public class BoostDijkstraTest
     {
-        [Test]
+        [TestMethod]
         public void Compute()
         {
             var g = new AdjacencyGraph<char, Edge<char>>();

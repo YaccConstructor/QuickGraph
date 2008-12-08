@@ -1,46 +1,57 @@
 using System;
 using System.Collections.Generic;
-using QuickGraph.Unit;
 using QuickGraph.Algorithms.Observers;
 using Microsoft.Pex.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
-    [TestFixture, PexClass]
+    [TestClass, PexClass]
     public partial class DijkstraShortestPathAlgorithmTest2
     {
-        [PexMethod]
-        public void Compute([PexAssumeNotNull]IVertexAndEdgeListGraph<string,Edge<string>> g)
+        [TestMethod]
+        public void DijkstraAll()
         {
-            List<string> vertices = new List<string>(g.Vertices);
-            foreach (string root in vertices)
-            {
-                Search(g, root);
-            }
+            foreach (var g in GraphMLFilesHelper.GetGraphs())
+                this.Compute(g);
         }
 
-        private void Search(IVertexAndEdgeListGraph<string,Edge<string>> g, string root)
+        [PexMethod]
+        public void Compute<TVertex, TEdge>([PexAssumeNotNull]IVertexAndEdgeListGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
-            var algo = new DijkstraShortestPathAlgorithm<string,Edge<string>>(
+            var vertices = new List<TVertex>(g.Vertices);
+            foreach (var root in vertices)
+                Search(g, root);
+        }
+
+        private void Search<TVertex, TEdge>(IVertexAndEdgeListGraph<TVertex, TEdge> g, TVertex root)
+            where TEdge : IEdge<TVertex>
+        {
+            var algo = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(
                 g,
                 e => 1
                 );
-            var predecessors = new VertexPredecessorRecorderObserver<string,Edge<string>>();
+            var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
             predecessors.Attach(algo);
             algo.Compute(root);
 
             Verify(algo, predecessors);
         }
 
-        private static void Verify(DijkstraShortestPathAlgorithm<string, Edge<string>> algo, VertexPredecessorRecorderObserver<string, Edge<string>> predecessors)
+        private static void Verify<TVertex, TEdge>(
+            DijkstraShortestPathAlgorithm<TVertex, TEdge> algo,
+            VertexPredecessorRecorderObserver<TVertex, TEdge> predecessors)
+            where TEdge : IEdge<TVertex>
         {
             // let's verify the result
-            foreach (string v in algo.VisitedGraph.Vertices)
+            foreach (var v in algo.VisitedGraph.Vertices)
             {
-                Edge<string> predecessor;
+                TEdge predecessor;
                 if (!predecessors.VertexPredecessors.TryGetValue(v, out predecessor))
                     continue;
-                if (predecessor.Source == v)
+                if (predecessor.Source.Equals(v))
                     continue;
                 double vd, vp;
                 bool found;

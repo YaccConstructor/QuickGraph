@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using QuickGraph.Unit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Algorithms.Search
 {
-    [TestFixture]
+    [TestClass]
     public class DepthFirstAlgorithmSearchTest
     {
         private Dictionary<string,string> parents;
@@ -70,7 +70,7 @@ namespace QuickGraph.Algorithms.Search
             return false;
         }
 
-        [SetUp]
+        [TestInitialize]
         public void Init()
         {
 
@@ -90,7 +90,7 @@ namespace QuickGraph.Algorithms.Search
             dfs.FinishVertex += new VertexEventHandler<string>(this.FinishVertex);
         }
 
-        [TearDown]
+        [TestCleanup]
         public void TearDown()
         {
             dfs.StartVertex -= new VertexEventHandler<string>(this.StartVertex);
@@ -102,10 +102,10 @@ namespace QuickGraph.Algorithms.Search
             dfs.FinishVertex -= new VertexEventHandler<string>(this.FinishVertex);
         }
 
-        [Test]
+        [TestMethod]
         public void GraphWithSelfEdges()
         {
-            AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>(false);
+            var g = new AdjacencyGraph<string, Edge<string>>(false);
             g.AddVertex("v1");
             g.AddEdge(new Edge<string>("v1","v1"));
 
@@ -118,10 +118,10 @@ namespace QuickGraph.Algorithms.Search
             CheckDfs();
         }
 
-        [Test]
+        [TestMethod]
         public void GraphWithoutSelfEdges()
         {
-            AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraphFactory().FileDependency();
+            var g = new AdjacencyGraphFactory().FileDependency();
 
             foreach (string v in g.Vertices)
                 parents[v] = v;

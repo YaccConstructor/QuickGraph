@@ -1,23 +1,25 @@
 using System;
 using System.Collections.Generic;
-using QuickGraph.Unit;
 using QuickGraph.Algorithms.Observers;
 using Microsoft.Pex.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
-    [TestFixture, PexClass]
+    [TestClass, PexClass]
     public partial class DagShortestPathAlgorithmTest
     {
         [PexMethod]
-        public void Compute(IVertexListGraph<string, Edge<string>> g)
+        public void Compute<TVertex, TEdge>([PexAssumeNotNull]IVertexListGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
             // is this a dag ?
             bool isDag = g.IsDirectedAcyclicGraph();
 
-            IDistanceRelaxer relaxer = ShortestDistanceRelaxer.Instance;
-            List<string> vertices = new List<string>(g.Vertices);
-            foreach (string root in vertices)
+            var relaxer = ShortestDistanceRelaxer.Instance;
+            var vertices = new List<TVertex>(g.Vertices);
+            foreach (var root in vertices)
             {
                 if (isDag)
                     Search(g, root, relaxer);
@@ -35,7 +37,17 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        [Test]
+        [TestMethod]
+        public void DagShortestPathAll()
+        {
+            foreach(var g in GraphMLFilesHelper.GetGraphs())
+            {
+                this.Compute(g);
+                this.ComputeCriticalPath(g);
+            }
+        }
+
+        [TestMethod]
         public void Simple()
         {
             AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>();
@@ -44,7 +56,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.ComputeCriticalPath(g);
         }
 
-        [Test]
+        [TestMethod]
         public void FileDependency()
         {
             AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>();
@@ -54,14 +66,16 @@ namespace QuickGraph.Algorithms.ShortestPath
         }
 
         [PexMethod]
-        public void ComputeCriticalPath(IVertexListGraph<string, Edge<string>> g)
+        public void ComputeCriticalPath<TVertex, TEdge>(
+            IVertexListGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
             // is this a dag ?
             bool isDag = g.IsDirectedAcyclicGraph();
 
             var relaxer = CriticalDistanceRelaxer.Instance;
-            var vertices = new List<string>(g.Vertices);
-            foreach (string root in vertices)
+            var vertices = new List<TVertex>(g.Vertices);
+            foreach (var root in vertices)
             {
                 if (isDag)
                     Search(g, root, relaxer);
@@ -80,32 +94,36 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        private void Search(
-            IVertexListGraph<string, Edge<string>> g, 
-            string root, IDistanceRelaxer relaxer)
+        private void Search<TVertex, TEdge>(
+            IVertexListGraph<TVertex, TEdge> g, 
+            TVertex root, IDistanceRelaxer relaxer)
+            where TEdge : IEdge<TVertex>
         {
-            var algo = 
-                new DagShortestPathAlgorithm<string, Edge<string>>(
+            var algo =
+                new DagShortestPathAlgorithm<TVertex, TEdge>(
                     g,
                     e => 1,
                     relaxer
                     );
-            var predecessors = new VertexPredecessorRecorderObserver<string, Edge<string>>();
+            var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
             using(ObserverScope.Create(algo, predecessors))
                 algo.Compute(root);
 
             Verify(algo, predecessors);
         }
 
-        private static void Verify(DagShortestPathAlgorithm<string, Edge<string>> algo, VertexPredecessorRecorderObserver<string, Edge<string>> predecessors)
+        private static void Verify<TVertex, TEdge>(
+            DagShortestPathAlgorithm<TVertex, TEdge> algo,
+            VertexPredecessorRecorderObserver<TVertex, TEdge> predecessors)
+            where TEdge : IEdge<TVertex>
         {
             // let's verify the result
-            foreach (string v in algo.VisitedGraph.Vertices)
+            foreach (var v in algo.VisitedGraph.Vertices)
             {
-                Edge<string> predecessor;
+                TEdge predecessor;
                 if (!predecessors.VertexPredecessors.TryGetValue(v, out predecessor))
                     continue;
-                if (predecessor.Source == v)
+                if (predecessor.Source.Equals(v))
                     continue;
                 Assert.AreEqual(
                     algo.Distances[v], algo.Distances[predecessor.Source] + 1
