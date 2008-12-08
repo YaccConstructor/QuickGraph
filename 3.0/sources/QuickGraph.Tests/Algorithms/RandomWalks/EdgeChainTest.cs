@@ -1,40 +1,35 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using QuickGraph.Unit;
 using QuickGraph.Algorithms.Observers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Pex.Framework;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
-    [TestFixture]
+    [TestClass]
     public class EdgeChainTest
     {
-        [CombinatorialTest]
-        public void Generate(
-            [UsingFactories(typeof(EdgeChainFactory))] 
-            KeyValuePair<IVertexAndEdgeListGraph<string,Edge<string>>,IEdgeChain<string,Edge<String>>> eg
-            )
+        [TestMethod]
+        public void GenerateAll()
         {
-            RandomWalkAlgorithm<string, Edge<string>> walker =
-                new RandomWalkAlgorithm<string, Edge<string>>(eg.Key, eg.Value);
-
-            walker.Generate(eg.Key.Vertices.FirstOrDefault());
+            foreach (var g in GraphMLFilesHelper.GetGraphs())
+                this.Generate(g);
         }
 
-        [CombinatorialTest]
-        public void GenerateWithVisitor(
-            [UsingFactories(typeof(EdgeChainFactory))] 
-            KeyValuePair<IVertexAndEdgeListGraph<string,Edge<string>>,IEdgeChain<string,Edge<String>>> eg
-            )
+        [PexMethod]
+        public void Generate<TVertex, TEdge>(IVertexListGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
-            RandomWalkAlgorithm<string, Edge<string>> walker =
-                new RandomWalkAlgorithm<string, Edge<string>>(eg.Key, eg.Value);
 
-            EdgeRecorderObserver<string, Edge<string>> vis = new EdgeRecorderObserver<string, Edge<string>>();
-            vis.Attach(walker);
-            walker.Generate(eg.Key.Vertices.FirstOrDefault());
-            vis.Detach(walker);
+            foreach (var v in g.Vertices)
+            {
+                var walker = new RandomWalkAlgorithm<TVertex, TEdge>(g);
+                var vis = new EdgeRecorderObserver<TVertex, TEdge>();
+                using(ObserverScope.Create(walker, vis))
+                    walker.Generate(v);
+            }
         }
-
     }
 }
