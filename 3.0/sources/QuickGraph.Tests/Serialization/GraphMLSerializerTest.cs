@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
 using System.Xml.XPath;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Serialization
 {
@@ -13,6 +13,30 @@ namespace QuickGraph.Serialization
         public static string[] GetFileNames()
         {
             return Directory.GetFiles("GraphML", "*.graphml");
+        }
+
+        public static IEnumerable<BidirectionalGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetBidirectionalGraphs()
+        {
+            foreach (var graphmlFile in GraphMLFilesHelper.GetFileNames())
+            {
+                var g = LoadBidirectionalGraph(graphmlFile);
+                yield return g;
+            }
+        }
+
+        public static BidirectionalGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> LoadBidirectionalGraph(string graphmlFile)
+        {
+            Console.WriteLine(graphmlFile);
+            var g = new BidirectionalGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+            using (var reader = new StreamReader(graphmlFile))
+            {
+                g.DeserializeFromGraphML(
+                    reader,
+                    id => new IdentifiableVertex(id),
+                    (source, target, id) => new IdentifiableEdge<IdentifiableVertex>(source, target, id)
+                    );
+            }
+            return g;
         }
 
         public static IEnumerable<AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetGraphs()
@@ -40,10 +64,10 @@ namespace QuickGraph.Serialization
         }
     }
 
-    [TestFixture, PexClass]
+    [TestClass, PexClass]
     public partial class GraphMLSerializerIntegrationTest
     {
-        [Test]
+        [TestMethod]
         public void DeserializeFromGraphMLNorth()
         {
             foreach (var graphmlFile in GraphMLFilesHelper.GetFileNames())
@@ -93,10 +117,10 @@ namespace QuickGraph.Serialization
         }
     }
 
-    [TestFixture, PexClass]
+    [TestClass, PexClass]
     public partial class GraphMLSerializerTest
     {
-        [Test, PexMethod]
+        [TestMethod]
         public void RoundTrip()
         {
             RoundTripGraph(new AdjacencyGraphFactory().SimpleIdentifiable());
@@ -114,9 +138,9 @@ namespace QuickGraph.Serialization
                 using(var xwriter = XmlWriter.Create(writer))
                     g.SerializeToGraphML(xwriter);
                 baseLine = writer.ToString();
-                TestConsole.WriteLineBold("Original graph:");
+                Console.WriteLine("Original graph:");
                 Console.WriteLine(writer.ToString());
-                TestConsole.WriteLineBold("---");
+                Console.WriteLine("---");
 
                 using (XmlTextReader reader = new XmlTextReader(new StringReader(writer.ToString())))
                 {
@@ -127,7 +151,7 @@ namespace QuickGraph.Serialization
                 }
             }
 
-            TestConsole.WriteLineBold("Roundtripped graph:");
+            Console.WriteLine("Roundtripped graph:");
             using (var sw = new StringWriter())
             {
                 using (var xwriter = XmlWriter.Create(sw))
@@ -138,10 +162,10 @@ namespace QuickGraph.Serialization
 
             Assert.AreEqual(g.VertexCount, gd.VertexCount);
             Assert.AreEqual(g.EdgeCount, gd.EdgeCount);
-            StringAssert.AreEqual(
+            Assert.IsTrue(string.Equals(
                 baseLine,
                 output,
-                StringComparison.InvariantCulture
+                StringComparison.InvariantCulture)
                 );
         }
     }

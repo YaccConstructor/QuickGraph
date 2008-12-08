@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms
 {
-    [TestFixture, PexClass]
+    [TestClass, PexClass]
     public partial class UndirectedTopologicalSortAlgorithmTest
     {
         [PexMethod]

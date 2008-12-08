@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuickGraph.Unit;
 using QuickGraph.Serialization;
 using System.IO;
 using QuickGraph.Contracts;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Tests.Serialization
 {
-    [TestFixture]
+    [TestClass]
     public class SystemSerializationTest
     {
-        [Test]
+        [TestMethod]
         public void AdjacencyList()
         {
             var g = new AdjacencyGraph<int, Edge<int>>();
@@ -25,7 +25,7 @@ namespace QuickGraph.Tests.Serialization
             AssertGraphsEqual(g, result);
         }
 
-        [Test]
+        [TestMethod]
         public void BidirectionalList()
         {
             var g = new BidirectionalGraph<int, Edge<int>>();
@@ -38,7 +38,7 @@ namespace QuickGraph.Tests.Serialization
             AssertGraphsEqual(g, result);
         }
 
-        [Test]
+        [TestMethod]
         public void UndirectedGraph()
         {
             var g = new UndirectedGraph<int, Edge<int>>();

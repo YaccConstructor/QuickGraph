@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Linq;
-using QuickGraph.Unit;
 using QuickGraph.Data;
 using QuickGraph.Algorithms;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Tests.Data
 {
-    [TestFixture]
+    [TestClass]
     public class StoreTest
     {
-        [Test]
+        [TestMethod]
         public void TopologicalSortofTables()
         {
             // typed dataset

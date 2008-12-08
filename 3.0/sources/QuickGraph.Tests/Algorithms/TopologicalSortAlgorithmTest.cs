@@ -1,21 +1,30 @@
 ﻿using System;
-using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms
 {
-    [TestFixture, PexClass]
+    [TestClass, PexClass]
     public partial class TopologicalSortAlgorithmTest
     {
-        [PexMethod]
-        public void SortCyclic(
-            [PexAssumeNotNull]IVertexListGraph<string,Edge<string>> g)
+        [TestMethod]
+        public void TopologicalSortAll()
         {
-            TopologicalSortAlgorithm<string, Edge<string>> topo = new TopologicalSortAlgorithm<string, Edge<string>>(g);
+            foreach (var g in GraphMLFilesHelper.GetGraphs())
+                this.SortCyclic(g);
+        }
+
+        [PexMethod]
+        public void SortCyclic<TVertex,TEdge>(
+            [PexAssumeNotNull]IVertexListGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
+        {
+            var topo = new TopologicalSortAlgorithm<TVertex, TEdge>(g);
             topo.Compute();
         }
 
-        [Test]
+        [TestMethod]
         public void OneTwo()
         {
             var graph = new AdjacencyGraph<int, Edge<int>>();

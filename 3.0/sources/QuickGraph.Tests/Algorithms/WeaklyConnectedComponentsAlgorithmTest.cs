@@ -1,37 +1,42 @@
 using System;
 using System.Collections.Generic;
-using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms
 {
-    [TestFixture, PexClass]
+    [TestClass, PexClass]
     public partial class WeaklyConnectedComponentsAlgorithmTest
     {
+        [TestMethod]
+        public void WeaklyConnectedComponentsAll()
+        {
+            foreach (var g in GraphMLFilesHelper.GetGraphs())
+                this.Compute(g);
+        }
+
         [PexMethod]
-        public void Compute([PexAssumeNotNull]IVertexListGraph<string, Edge<string>> g)
+        public void Compute<TVertex,TEdge>([PexAssumeNotNull]IVertexListGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
             GraphConsoleSerializer.DisplayGraph(g);
 
-            WeaklyConnectedComponentsAlgorithm<string,Edge<string>> dfs = 
-                new WeaklyConnectedComponentsAlgorithm<string,Edge<string>>(g);
+            var dfs = 
+                new WeaklyConnectedComponentsAlgorithm<TVertex,TEdge>(g);
             dfs.Compute();
 
             Console.WriteLine("Weak components: {0}", dfs.ComponentCount);
             Assert.AreEqual(g.VertexCount, dfs.Components.Count);
-            foreach (KeyValuePair<string, int> kv in dfs.Components)
+
+            foreach(var kv in dfs.Components)
             {
-                Console.WriteLine("\t{0}: {1}", kv.Key, kv.Value);
+                Assert.IsTrue(0 <= kv.Value);
+                Assert.IsTrue(kv.Value < dfs.ComponentCount);
             }
 
-            foreach(KeyValuePair<string,int> kv in dfs.Components)
-            {
-                Assert.IsLowerEqual(0, kv.Value);
-                Assert.IsLower(kv.Value, dfs.ComponentCount);
-            }
-
-            foreach(string vertex in g.Vertices)
-                foreach (Edge<string> edge in g.OutEdges(vertex))
+            foreach(var vertex in g.Vertices)
+                foreach (var edge in g.OutEdges(vertex))
                 {
                     Assert.AreEqual(dfs.Components[edge.Source], dfs.Components[edge.Target]);
                 }

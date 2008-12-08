@@ -12,10 +12,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         [Test]
         public void Compute(IUndirectedGraph<string, Edge<string>> g)
         {
-            Dictionary<Edge<string>, double> distances = new Dictionary<Edge<string>,double>();
-            foreach(Edge<string> edge in g.Edges)
-                distances.Add(edge, 1);
-            var prim = new PrimMinimumSpanningTreeAlgorithm<string, Edge<string>>(g, e => distances[e]);
+            var prim = new PrimMinimumSpanningTreeAlgorithm<string, Edge<string>>(g, e => 1);
             var predecessors = new VertexPredecessorRecorderObserver<string, Edge<string>>();
             predecessors.Attach(prim);
             prim.Compute();

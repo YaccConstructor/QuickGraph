@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
-using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
 using System.Reflection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Serialization
 {
-    [TestFixture, PexClass]
+    [TestClass, PexClass]
     public partial class GraphMLSerializerWithArgumentsTest
     {
         public sealed class TestVertex : IIdentifiable
@@ -197,8 +197,7 @@ namespace QuickGraph.Serialization
         public sealed class TestAdjacencyGraph : AdjacencyGraph<TestVertex, TestEdge>
         { }
 
-        [Test]
-        [Repeat(2)]
+        [TestMethod]
         public void WriteVertex()
         {
             TestAdjacencyGraph g = new TestAdjacencyGraph();
@@ -227,8 +226,6 @@ namespace QuickGraph.Serialization
                     g.SerializeToGraphML(xwriter);
 
                 xml = writer.ToString();
-                Console.WriteLine(xml);
-                XmlAssert.IsWellFormedXml(xml);
             }
 
             TestAdjacencyGraph newg;
@@ -248,15 +245,12 @@ namespace QuickGraph.Serialization
                 using (var xwriter = XmlWriter.Create(writer))
                     serializer.Serialize(xwriter, newg);
                 newxml = writer.ToString();
-                Console.WriteLine(newxml);
-                XmlAssert.IsWellFormedXml(newxml);
             }
 
             Assert.AreEqual(xml, newxml);
         }
 
-        [Test]
-        [Repeat(2)]
+        [TestMethod]
         public void WriteEdge()
         {
             {

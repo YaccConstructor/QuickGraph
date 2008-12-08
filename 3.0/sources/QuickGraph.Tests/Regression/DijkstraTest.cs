@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using QuickGraph.Unit;
 using QuickGraph.Algorithms.ShortestPath;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Tests.Regression {
-    [TestFixture]
-    class DijkstraTest {
-        [Test]
-        public void Scenario() {
+    [TestClass]
+    public class DijkstraTest 
+    {
+        [TestMethod]
+        public void Scenario() 
+        {
             AdjacencyGraph<string, Edge<string>> graph = new AdjacencyGraph<string, Edge<string>>(true);
 
             // Add some vertices to the graph
