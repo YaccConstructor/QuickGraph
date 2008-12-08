@@ -1,24 +1,25 @@
 ﻿using System;
-using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Algorithms
 {
-    [TestFixture, PexClass]
+    [TestClass, PexClass]
     public partial class SourceFirstTopologicalSortAlgorithmTest
     {
-        [Test]
+        [TestMethod]
         [ExpectedException(typeof(NonAcyclicGraphException))]
         public void SortCyclic()
         {
-            IVertexAndEdgeListGraph<string, Edge<string>> g = new AdjacencyGraphFactory().Loop();
+            var g = new AdjacencyGraphFactory().Loop();
             this.Sort(g);
         }
 
         [PexMethod]
-        public void Sort([PexAssumeNotNull]IVertexAndEdgeListGraph<string, Edge<string>> g)
+        public void Sort<TVertex, TEdge>([PexAssumeNotNull]IVertexAndEdgeListGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
-            SourceFirstTopologicalSortAlgorithm<string, Edge<string>> topo = new SourceFirstTopologicalSortAlgorithm<string, Edge<string>>(g);
+            var topo = new SourceFirstTopologicalSortAlgorithm<TVertex, TEdge>(g);
             topo.Compute();
         }
     }

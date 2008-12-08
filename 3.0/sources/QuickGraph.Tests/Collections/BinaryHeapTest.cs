@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using Microsoft.Pex.Framework.Validation;
 using Microsoft.Pex.Framework.Wizard;
 using System.Collections;
-using QuickGraph.Unit;
 using Microsoft.Pex.Framework.Factories;
 using QuickGraph.Unit.Exceptions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Collections
 {
@@ -26,7 +26,7 @@ namespace QuickGraph.Collections
     /// <summary>
     /// This class contains parameterized unit tests for BinaryHeap`2
     /// </summary>
-    [TestFixture]
+    [TestClass]
     [PexClass(typeof(BinaryHeap<,>))]
     [PexGenericArguments(typeof(int), typeof(int))]
     public partial class BinaryHeapTPriorityTValueTest
@@ -44,7 +44,7 @@ namespace QuickGraph.Collections
             target.ObjectInvariant();
         }
 
-        [Test]
+        [TestMethod]
         public void Constructor()
         {
             var target = new BinaryHeap<int, int>();
@@ -143,7 +143,7 @@ namespace QuickGraph.Collections
             Assert.AreEqual(0, target.Count);
         }
 
-        [Test]
+        [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void RemoveMinimumOnEmpty()
         {
@@ -175,7 +175,7 @@ namespace QuickGraph.Collections
             AssertInvariant<TPriority, TValue>(target);
         }
 
-        [Test]
+        [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MinimumOnEmpty()
         {
@@ -183,7 +183,7 @@ namespace QuickGraph.Collections
         }
     }
 
-    [TestFixture]
+    [TestClass]
     [PexClass(typeof(BinaryHeap<,>))]
     [PexGenericArguments(typeof(int), typeof(int))]
     public partial class BinaryHeapTPriorityTValueEnumeratorTest

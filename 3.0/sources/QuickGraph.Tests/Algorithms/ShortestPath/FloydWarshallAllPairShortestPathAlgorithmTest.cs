@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuickGraph.Unit;
 using QuickGraph.Algorithms.ShortestPath;
 using QuickGraph.Collections;
 using QuickGraph.Algorithms;
 using QuickGraph.Serialization;
 using QuickGraph.Algorithms.Observers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Tests.Algorithms.ShortestPath
 {
-    [TestFixture]
+    [TestClass]
     public class BoostFloydWarshallTest
     {
         public static AdjacencyGraph<char, Edge<char>> CreateGraph(Dictionary<Edge<char>, double> distances)
@@ -33,7 +33,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             return g;
         }
 
-        [Test]
+        [TestMethod]
         public void Compute()
         {
             var distances = new Dictionary<Edge<char>, double>();
@@ -86,10 +86,10 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
         }
     }
 
-    [TestFixture, CurrentFixture]
+    [TestClass]
     public class FloydDijkstraCompareTest
     {
-        [Test]
+        [TestMethod]
         public void Boost()
         {
             var distances = new Dictionary<Edge<char>, double>();
@@ -99,7 +99,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
                 );
         }
 
-        [Test]
+        [TestMethod]
         public void FloydVsBellmannGraphML()
         {
             Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
@@ -111,7 +111,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
                     );
         }
 
-        [Test]
+        [TestMethod]
         public void FloydVsDijkstraGraphML()
         {
             Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
