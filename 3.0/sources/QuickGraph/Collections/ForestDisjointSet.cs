@@ -28,7 +28,7 @@ namespace QuickGraph.Collections
 
         public ForestDisjointSet(int elementCapacity)
         {
-            Contract.Requires(elementCapacity >= 0);
+            Contract.Requires(elementCapacity >= 0 && elementCapacity < int.MaxValue);
             this.elements = new Dictionary<T, Element>(elementCapacity);
             this.setCount = 0;
         }
@@ -103,9 +103,10 @@ namespace QuickGraph.Collections
                 current = current.Parent;
 
             var root = current;
+            Contract.Assert(root != null);
             // path compression
             current = element;
-            while (current.Parent != root)
+            while (current != root)
             {
                 var temp = current;
                 current = current.Parent;

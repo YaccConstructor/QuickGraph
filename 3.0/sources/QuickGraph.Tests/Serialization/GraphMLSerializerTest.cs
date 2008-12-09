@@ -17,6 +17,7 @@ namespace QuickGraph.Serialization
 
         public static IEnumerable<BidirectionalGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetBidirectionalGraphs()
         {
+            yield return new BidirectionalGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
             foreach (var graphmlFile in TestGraphFactory.GetFileNames())
             {
                 var g = LoadBidirectionalGraph(graphmlFile);
@@ -41,6 +42,7 @@ namespace QuickGraph.Serialization
 
         public static IEnumerable<AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetAdjacencyGraphs()
         {
+            yield return new AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
             foreach (var graphmlFile in TestGraphFactory.GetFileNames())
             {
                 var g = LoadGraph(graphmlFile);
@@ -65,7 +67,17 @@ namespace QuickGraph.Serialization
 
         public static IEnumerable<UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetUndirectedGraphs()
         {
-            yield break;
+            yield return new UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+            foreach (var g in GetAdjacencyGraphs())
+            {
+                var ug = new UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+                foreach (var v in g.Vertices)
+                    ug.AddVertex(v);
+                foreach (var e in g.Edges)
+                    if (!ug.ContainsEdge(e.Source, e.Target))
+                        ug.AddEdge(e);
+                yield return ug;
+            }
         }
     }
 

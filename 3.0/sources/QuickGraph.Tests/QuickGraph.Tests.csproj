@@ -69,6 +69,10 @@
     <Reference Include="Microsoft.Pex.Framework, Version=0.5.30516.0, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Microsoft.Stubs, Version=0.1.2.3, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\pex\bin\Debug\Microsoft.Stubs.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -87,6 +91,7 @@
     <Compile Include="Algorithms\Condensation\WeaklyConnectedCondensationGraphTest.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTest.cs" />
+    <Compile Include="Algorithms\MinimumSpanningTree\MinimumSpanningTreeTest.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\PrimMinimumSpanningTreeAlgorithmTest.cs" />
     <Compile Include="Algorithms\RandomWalks\CyclePoppingRandomTreeAlgorithmTest.cs" />
     <Compile Include="Algorithms\RandomWalks\EdgeChainTest.cs" />
@@ -109,6 +114,7 @@
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Collections\BinaryHeapTest.cs" />
     <Compile Include="Collections\FibonacciHeapTest.cs" />
+    <Compile Include="Collections\ForestDisjointSetTTest.cs" />
     <Compile Include="Data\Store.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -117,10 +123,16 @@
     <Compile Include="Data\StoreTest.cs" />
     <Compile Include="DegreeTest.cs" />
     <Compile Include="EdgeListGraphInvariant.cs" />
+    <Compile Include="Factories\ForestDisjointSetFactory.cs" />
     <Compile Include="GraphConsoleSerializer.cs" />
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />
     <Compile Include="Properties\PexAssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuickGraph.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>QuickGraph.stubx</DependentUpon>
+    </Compile>
     <Compile Include="Regression\DijkstraTest.cs" />
     <Compile Include="Serialization\GraphMLSerializerTest.cs" />
     <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest.cs" />
@@ -3997,6 +4009,10 @@
     </None>
     <None Include="GraphML\Graph.log">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="QuickGraph.stubx">
+      <Generator>StubGenerator</Generator>
+      <LastGenOutput>QuickGraph.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

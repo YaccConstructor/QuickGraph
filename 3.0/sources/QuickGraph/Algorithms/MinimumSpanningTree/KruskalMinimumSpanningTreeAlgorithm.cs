@@ -61,10 +61,8 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             foreach (var e in this.VisitedGraph.Edges)
                 queue.Enqueue(e);
 
-            int treeCount = 0;
             int vertexCount = this.VisitedGraph.VertexCount;
-
-            while (treeCount < vertexCount - 1)
+            while (queue.Count > 0)
             {
                 var e = queue.Dequeue();
                 this.OnExamineEdge(e);
