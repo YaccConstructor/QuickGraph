@@ -77,7 +77,7 @@ namespace QuickGraph.Algorithms
             {
                 int component = this.components[v];
                 int equivalent = this.componentEquivalences[component];
-                if (component!=equivalent)
+                if (component != equivalent)
                     this.components[v] =equivalent;
             }
         }

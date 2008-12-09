@@ -4,6 +4,7 @@ using Microsoft.Pex.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Serialization;
 using System.Diagnostics.Contracts;
+using System.Diagnostics;
 
 namespace QuickGraph.Algorithms
 {
@@ -15,7 +16,8 @@ namespace QuickGraph.Algorithms
         {
             Contract.ContractFailed+= (sender, e) => {
                 e.Handled = true;
-                Assert.Fail(e.FailureKind.ToString() + ":" + e.DebugMessage);
+                Debugger.Break();
+                Assert.Fail(e.FailureKind.ToString() + ":" + e.DebugMessage + ":" + e.Condition);
             };
         }
 

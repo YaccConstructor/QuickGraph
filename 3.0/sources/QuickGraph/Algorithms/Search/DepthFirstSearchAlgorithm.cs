@@ -215,10 +215,15 @@ namespace QuickGraph.Algorithms.Search
                 if (cancelManager.IsCancelling) return;
 
                 var frame = todo.Pop();
-                if (frame.Depth > this.MaxDepth)
-                    continue;
                 var u = frame.Vertex;
                 var depth = frame.Depth;
+
+                if (depth > this.MaxDepth)
+                {
+                    this.VertexColors[u] = GraphColor.Black;
+                    this.OnFinishVertex(u);
+                    continue;
+                }
 
                 var edges = frame.Edges;
                 while(edges.MoveNext())
