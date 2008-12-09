@@ -1,28 +1,30 @@
 using System;
 using System.Collections.Generic;
-using QuickGraph.Unit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Pex.Framework;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms.Search
 {
-    [TypeFixture(typeof(IBidirectionalGraph<string, Edge<string>>))]
-    [TypeFactory(typeof(BidirectionalGraphFactory))]
+    [TestClass]
     public class BidirectionalDepthFirstSearchAlgorithmTest
     {
-        private BidirectionalDepthFirstSearchAlgorithm<string, Edge<string>> dfs;
-
-        [Test]
-        public void EmptyGraph(IBidirectionalGraph<string, Edge<string>> g)
+        [TestMethod]
+        public void ComputeAll()
         {
-            this.dfs = new BidirectionalDepthFirstSearchAlgorithm<string, Edge<string>>(g);
-            this.dfs.Compute();
-
-            VerifyDfs();
+            foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
+                this.Compute(g);
         }
 
-        private void VerifyDfs()
+        [PexMethod]
+        public void Compute<TVertex,TEdge>(IBidirectionalGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
+            var dfs = new BidirectionalDepthFirstSearchAlgorithm<TVertex, TEdge>(g);
+            dfs.Compute();
+
             // let's make sure
-            foreach (var v in dfs.VisitedGraph.Vertices)
+            foreach (var v in g.Vertices)
             {
                 Assert.IsTrue(dfs.VertexColors.ContainsKey(v));
                 Assert.AreEqual(dfs.VertexColors[v], GraphColor.Black);

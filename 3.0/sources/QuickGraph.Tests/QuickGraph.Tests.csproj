@@ -94,7 +94,6 @@
     <Compile Include="Algorithms\Search\BreadthFirstSearchAlgirthmTest.cs" />
     <Compile Include="Algorithms\Search\ParallelBreadthFirstSearchAlgirthmTest.cs" />
     <Compile Include="Algorithms\Search\DepthFirstSearchAlgorithmTest.cs" />
-    <Compile Include="Algorithms\Search\SearchingExamplesTest.cs" />
     <Compile Include="Algorithms\Search\UndirectedBreathFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\ShortestPath\BellmanFordShortestPathTest.cs" />
     <Compile Include="Algorithms\ShortestPath\DagShortestPathAlgorithmTest.cs" />
