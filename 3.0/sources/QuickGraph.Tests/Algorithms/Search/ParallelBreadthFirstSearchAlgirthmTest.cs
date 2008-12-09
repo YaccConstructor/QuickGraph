@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using QuickGraph.Unit;
-using QuickGraph.Operations;
 using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.Search

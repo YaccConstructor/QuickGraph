@@ -75,44 +75,6 @@ namespace QuickGraph.Algorithms
         }
 
         [TestMethod]
-        public void Loop()
-        {
-            IVertexListGraph<string,Edge<string>> g = new AdjacencyGraphFactory().Loop();
-            var strong = new StronglyConnectedComponentsAlgorithm<string, Edge<String>>(g);
-            strong.Compute();
-            Assert.AreEqual(1, strong.ComponentCount);
-
-            checkStrong(strong);
-        }
-
-        [TestMethod]
-        public void Simple()
-        {
-            var g = new AdjacencyGraphFactory().Simple();
-            var strong = new StronglyConnectedComponentsAlgorithm<string, Edge<String>>(g);
-
-            strong.Compute();
-            checkStrong(strong);
-        }
-
-        [TestMethod]
-        public void FileDependency()
-        {
-            var g = new AdjacencyGraphFactory().FileDependency();
-            var strong = new StronglyConnectedComponentsAlgorithm<string, Edge<String>>(g);
-
-            strong.Compute();
-            checkStrong(strong);
-        }
-
-        [TestMethod]
-        public void RegularLattice()
-        {
-            var g = new AdjacencyGraphFactory().RegularLattice10x10();
-            Compute(g);
-        }
-
-        [TestMethod]
         public void StronglyConnectedComponentAll()
         {
             foreach (var g in TestGraphFactory.GetAdjacencyGraphs())

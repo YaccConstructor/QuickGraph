@@ -1,5 +1,4 @@
 ﻿using System;
-using QuickGraph.Unit;
 using QuickGraph.Algorithms.RandomWalks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Serialization;
@@ -43,13 +42,5 @@ namespace QuickGraph.Algorithms.RandomWalks
             var target = new CyclePoppingRandomTreeAlgorithm<int, Edge<int>>(g);
             target.RandomTreeWithRoot(0);
         }
-
-        [TestMethod]
-        public void Loop()
-        {
-            var  target = new CyclePoppingRandomTreeAlgorithm<string, Edge<string>>(new AdjacencyGraphFactory().Loop());
-            target.RandomTree();
-        }
-
     }
 }

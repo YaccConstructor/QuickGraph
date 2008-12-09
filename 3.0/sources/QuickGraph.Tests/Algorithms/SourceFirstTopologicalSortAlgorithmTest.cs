@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Pex.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms
 {
@@ -8,11 +9,10 @@ namespace QuickGraph.Algorithms
     public partial class SourceFirstTopologicalSortAlgorithmTest
     {
         [TestMethod]
-        [ExpectedException(typeof(NonAcyclicGraphException))]
-        public void SortCyclic()
+        public void SortAll()
         {
-            var g = new AdjacencyGraphFactory().Loop();
-            this.Sort(g);
+            foreach(var g in TestGraphFactory.GetAdjacencyGraphs())
+                this.Sort(g);
         }
 
         [PexMethod]

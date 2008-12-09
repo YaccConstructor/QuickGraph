@@ -6,7 +6,6 @@ using Microsoft.Pex.Framework.Validation;
 using Microsoft.Pex.Framework.Wizard;
 using System.Collections;
 using Microsoft.Pex.Framework.Factories;
-using QuickGraph.Unit.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Collections

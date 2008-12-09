@@ -47,24 +47,6 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        [TestMethod]
-        public void Simple()
-        {
-            AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>();
-            GraphFactory.Simple(g);
-            this.Compute(g);
-            this.ComputeCriticalPath(g);
-        }
-
-        [TestMethod]
-        public void FileDependency()
-        {
-            AdjacencyGraph<string, Edge<string>> g = new AdjacencyGraph<string, Edge<string>>();
-            GraphFactory.FileDependency(g);
-            this.Compute(g);
-            this.ComputeCriticalPath(g);
-        }
-
         [PexMethod]
         public void ComputeCriticalPath<TVertex, TEdge>(
             IVertexListGraph<TVertex, TEdge> g)

@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms.Search
 {
     [TestClass]
     public class DepthFirstAlgorithmSearchTest
     {
-        private Dictionary<string,string> parents;
-        private Dictionary<string,int> discoverTimes;
-        private Dictionary<string,int> finishTimes;
+        private Dictionary<IdentifiableVertex, IdentifiableVertex> parents;
+        private Dictionary<IdentifiableVertex, int> discoverTimes;
+        private Dictionary<IdentifiableVertex, int> finishTimes;
         private int time;
-        private AdjacencyGraph<string,Edge<string>> g;
-        private DepthFirstSearchAlgorithm<string,Edge<string>> dfs;
+        private AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> g;
+        private DepthFirstSearchAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> dfs;
 
-        private void StartVertex(Object sender, VertexEventArgs<string> args)
+        private void StartVertex(Object sender, VertexEventArgs<IdentifiableVertex> args)
         {
             Assert.AreEqual(dfs.VertexColors[args.Vertex], GraphColor.White);
         }
 
-        private void DiscoverVertex(Object sender, VertexEventArgs<string> args)
+        private void DiscoverVertex(Object sender, VertexEventArgs<IdentifiableVertex> args)
         {
             Assert.AreEqual(dfs.VertexColors[args.Vertex], GraphColor.Gray);
             Assert.AreEqual(dfs.VertexColors[parents[args.Vertex]], GraphColor.Gray);
@@ -27,37 +28,37 @@ namespace QuickGraph.Algorithms.Search
             discoverTimes[args.Vertex] = time++;
         }
 
-        private void ExamineEdge(Object sender, EdgeEventArgs<string,Edge<string>> args)
+        private void ExamineEdge(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
         {
             Assert.AreEqual(dfs.VertexColors[args.Edge.Source], GraphColor.Gray);
         }
 
-        private void TreeEdge(Object sender, EdgeEventArgs<string,Edge<string>> args)
+        private void TreeEdge(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
         {
             Assert.AreEqual(dfs.VertexColors[args.Edge.Target], GraphColor.White);
             parents[args.Edge.Target] = args.Edge.Source;
         }
 
-        private void BackEdge(Object sender, EdgeEventArgs<string,Edge<string>> args)
+        private void BackEdge(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
         {
             Assert.AreEqual(dfs.VertexColors[args.Edge.Target], GraphColor.Gray);
         }
 
-        private void FowardOrCrossEdge(Object sender, EdgeEventArgs<string,Edge<string>> args)
+        private void FowardOrCrossEdge(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
         {
             Assert.AreEqual(dfs.VertexColors[args.Edge.Target], GraphColor.Black);
         }
 
-        private void FinishVertex(Object sender, VertexEventArgs<string> args)
+        private void FinishVertex(Object sender, VertexEventArgs<IdentifiableVertex> args)
         {
             Assert.AreEqual(dfs.VertexColors[args.Vertex], GraphColor.Black);
             finishTimes[args.Vertex] = time++;
         }
 
-        public bool IsDescendant(string u, string v)
+        public bool IsDescendant(IdentifiableVertex u, IdentifiableVertex v)
         {
-            string t = null;
-            string p = u;
+            IdentifiableVertex t = null;
+            IdentifiableVertex p = u;
             do
             {
                 t = p;
@@ -70,80 +71,68 @@ namespace QuickGraph.Algorithms.Search
             return false;
         }
 
-        [TestInitialize]
         public void Init()
         {
-
-            parents = new Dictionary<string,string>();
-            discoverTimes = new Dictionary<string,int>();
-            finishTimes = new Dictionary<string,int>();
+            parents = new Dictionary<IdentifiableVertex, IdentifiableVertex>();
+            discoverTimes = new Dictionary<IdentifiableVertex, int>();
+            finishTimes = new Dictionary<IdentifiableVertex, int>();
             time = 0;
-            g = new AdjacencyGraph<string,Edge<string>>(true);
-            dfs = new DepthFirstSearchAlgorithm<string, Edge<string>>(g);
+            g = new AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(true);
+            dfs = new DepthFirstSearchAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(g);
 
-            dfs.StartVertex += new VertexEventHandler<string>(this.StartVertex);
-            dfs.DiscoverVertex += new VertexEventHandler<string>(this.DiscoverVertex);
-            dfs.ExamineEdge += new EdgeEventHandler<string, Edge<string>>(this.ExamineEdge);
-            dfs.TreeEdge += new EdgeEventHandler<string, Edge<string>>(this.TreeEdge);
-            dfs.BackEdge += new EdgeEventHandler<string, Edge<string>>(this.BackEdge);
-            dfs.ForwardOrCrossEdge += new EdgeEventHandler<string, Edge<string>>(this.FowardOrCrossEdge);
-            dfs.FinishVertex += new VertexEventHandler<string>(this.FinishVertex);
+            dfs.StartVertex += new VertexEventHandler<IdentifiableVertex>(this.StartVertex);
+            dfs.DiscoverVertex += new VertexEventHandler<IdentifiableVertex>(this.DiscoverVertex);
+            dfs.ExamineEdge += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.ExamineEdge);
+            dfs.TreeEdge += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.TreeEdge);
+            dfs.BackEdge += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.BackEdge);
+            dfs.ForwardOrCrossEdge += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.FowardOrCrossEdge);
+            dfs.FinishVertex += new VertexEventHandler<IdentifiableVertex>(this.FinishVertex);
         }
 
-        [TestCleanup]
         public void TearDown()
         {
-            dfs.StartVertex -= new VertexEventHandler<string>(this.StartVertex);
-            dfs.DiscoverVertex -= new VertexEventHandler<string>(this.DiscoverVertex);
-            dfs.ExamineEdge -= new EdgeEventHandler<string, Edge<string>>(this.ExamineEdge);
-            dfs.TreeEdge -= new EdgeEventHandler<string, Edge<string>>(this.TreeEdge);
-            dfs.BackEdge -= new EdgeEventHandler<string, Edge<string>>(this.BackEdge);
-            dfs.ForwardOrCrossEdge -= new EdgeEventHandler<string, Edge<string>>(this.FowardOrCrossEdge);
-            dfs.FinishVertex -= new VertexEventHandler<string>(this.FinishVertex);
+            dfs.StartVertex -= new VertexEventHandler<IdentifiableVertex>(this.StartVertex);
+            dfs.DiscoverVertex -= new VertexEventHandler<IdentifiableVertex>(this.DiscoverVertex);
+            dfs.ExamineEdge -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.ExamineEdge);
+            dfs.TreeEdge -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.TreeEdge);
+            dfs.BackEdge -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.BackEdge);
+            dfs.ForwardOrCrossEdge -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.FowardOrCrossEdge);
+            dfs.FinishVertex -= new VertexEventHandler<IdentifiableVertex>(this.FinishVertex);
         }
 
         [TestMethod]
-        public void GraphWithSelfEdges()
+        public void DepthFirstSearchAll()
         {
-            var g = new AdjacencyGraph<string, Edge<string>>(false);
-            g.AddVertex("v1");
-            g.AddEdge(new Edge<string>("v1","v1"));
-
-            foreach (string v in g.Vertices)
-                parents[v] = v;
-
-            // compute
-            dfs.Compute();
-
-            CheckDfs();
-        }
-
-        [TestMethod]
-        public void GraphWithoutSelfEdges()
-        {
-            var g = new AdjacencyGraphFactory().FileDependency();
-
-            foreach (string v in g.Vertices)
-                parents[v] = v;
-
-            // compute
-            dfs.Compute();
-            CheckDfs();
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+            {
+                this.Init();
+                try
+                {
+                    foreach (var v in g.Vertices)
+                        parents[v] = v;
+                    dfs.Compute();
+                    CheckDfs();
+                }
+                finally
+                {
+                    this.TearDown();
+                }
+            }
         }
 
         protected void CheckDfs()
         {
             // check
             // all vertices should be black
-            foreach (string v in g.Vertices)
+            foreach (var v in g.Vertices)
             {
                 Assert.IsTrue(dfs.VertexColors.ContainsKey(v));
                 Assert.AreEqual(dfs.VertexColors[v], GraphColor.Black);
             }
 
-            foreach (string u in g.Vertices)
+            foreach (var u in g.Vertices)
             {
-                foreach (string v in g.Vertices)
+                foreach (var v in g.Vertices)
                 {
                     if (u != v)
                     {
