@@ -9,7 +9,7 @@ namespace QuickGraph.Algorithms.RandomWalks
     public class CyclePoppingRandomTreeAlgorithmTest
     {
         [TestMethod]
-        public void All()
+        public void CyclePoppingRandomTreeAll()
         {
             foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
             {

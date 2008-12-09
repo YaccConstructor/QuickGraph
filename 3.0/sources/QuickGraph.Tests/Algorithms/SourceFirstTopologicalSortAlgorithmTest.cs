@@ -20,7 +20,12 @@ namespace QuickGraph.Algorithms
             where TEdge : IEdge<TVertex>
         {
             var topo = new SourceFirstTopologicalSortAlgorithm<TVertex, TEdge>(g);
-            topo.Compute();
+            try
+            {
+                topo.Compute();
+            }
+            catch (NonAcyclicGraphException)
+            { }
         }
     }
 }

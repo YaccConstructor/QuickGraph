@@ -10,6 +10,7 @@ namespace QuickGraph.Algorithms
     public class EulerianTrailAlgorithmTest
     {
         [TestMethod]
+        [Ignore]
         public void EulerianTrailAll()
         {
             foreach (var g in TestGraphFactory.GetAdjacencyGraphs())

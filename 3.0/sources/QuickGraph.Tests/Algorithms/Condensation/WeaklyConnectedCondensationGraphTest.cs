@@ -19,7 +19,7 @@ namespace QuickGraph.Algorithms.Condensation
                 this.Condensate(g);
         }
 
-        [TestMethod]
+        [PexMethod]
         public void Condensate<TVertex,TEdge>(IVertexAndEdgeListGraph<TVertex,TEdge> g)
             where TEdge : IEdge<TVertex>
         {
@@ -36,7 +36,7 @@ namespace QuickGraph.Algorithms.Condensation
             where TEdge : IEdge<TVertex>
         {
             int count = 0;
-            foreach (AdjacencyGraph<TVertex,TEdge> vertices in algo.CondensatedGraph.Vertices)
+            foreach (var vertices in algo.CondensatedGraph.Vertices)
                 count += vertices.VertexCount;
             Assert.AreEqual(g.VertexCount, count, "VertexCount does not match");
         }
@@ -47,9 +47,9 @@ namespace QuickGraph.Algorithms.Condensation
         {
             // check edge count
             int count = 0;
-            foreach (CondensatedEdge<TVertex,TEdge, AdjacencyGraph<TVertex,TEdge>> edges in algo.CondensatedGraph.Edges)
+            foreach (var edges in algo.CondensatedGraph.Edges)
                 count += edges.Edges.Count;
-            foreach (AdjacencyGraph<TVertex,TEdge> vertices in algo.CondensatedGraph.Vertices)
+            foreach (var vertices in algo.CondensatedGraph.Vertices)
                 count += vertices.EdgeCount;
             Assert.AreEqual(g.EdgeCount, count, "EdgeCount does not match");
         }

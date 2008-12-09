@@ -3,12 +3,22 @@ using System.Collections.Generic;
 using Microsoft.Pex.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Serialization;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
     [TestClass, PexClass]
     public partial class WeaklyConnectedComponentsAlgorithmTest
     {
+        [AssemblyInitialize]
+        public static void AssemblyInitialize(TestContext tc)
+        {
+            Contract.ContractFailed+= (sender, e) => {
+                e.Handled = true;
+                Assert.Fail(e.FailureKind.ToString() + ":" + e.DebugMessage);
+            };
+        }
+
         [TestMethod]
         public void WeaklyConnectedComponentsAll()
         {
@@ -25,14 +35,14 @@ namespace QuickGraph.Algorithms
             var dfs = 
                 new WeaklyConnectedComponentsAlgorithm<TVertex,TEdge>(g);
             dfs.Compute();
-
-            Console.WriteLine("Weak components: {0}", dfs.ComponentCount);
-            Assert.AreEqual(g.VertexCount, dfs.Components.Count);
+            //Console.WriteLine("{0} components", dfs.ComponentCount);
+            //foreach(var kv in dfs.Components)
+            //    Console.WriteLine("component {0}-{1}", kv.Key, kv.Value);
 
             foreach(var kv in dfs.Components)
             {
                 Assert.IsTrue(0 <= kv.Value);
-                Assert.IsTrue(kv.Value < dfs.ComponentCount);
+                Assert.IsTrue(kv.Value < dfs.ComponentCount, "{0} < {1}", kv.Value, dfs.ComponentCount);
             }
 
             foreach(var vertex in g.Vertices)

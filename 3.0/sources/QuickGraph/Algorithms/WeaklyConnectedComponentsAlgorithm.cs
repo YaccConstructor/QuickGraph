@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
@@ -14,7 +15,6 @@ namespace QuickGraph.Algorithms
     {
         private readonly IDictionary<TVertex, int> components;
         private readonly Dictionary<int, int> componentEquivalences = new Dictionary<int, int>();
-        private readonly DepthFirstSearchAlgorithm<TVertex, TEdge> dfs;
         private int componentCount = 0;
         private int currentComponent = 0;
 
@@ -34,14 +34,9 @@ namespace QuickGraph.Algorithms
             IDictionary<TVertex, int> components)
             : base(host, visitedGraph)
         {
-            if (components == null)
-                throw new ArgumentNullException("components");
-            this.components = components;
+            Contract.Requires(components != null);
 
-            this.dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(this.VisitedGraph);
-            this.dfs.StartVertex += new VertexEventHandler<TVertex>(dfs_StartVertex);
-            this.dfs.TreeEdge += new EdgeEventHandler<TVertex, TEdge>(dfs_TreeEdge);
-            this.dfs.ForwardOrCrossEdge += new EdgeEventHandler<TVertex, TEdge>(dfs_ForwardOrCrossEdge);
+            this.components = components;
         }
 
         public IDictionary<TVertex, int> Components
@@ -60,15 +55,30 @@ namespace QuickGraph.Algorithms
             this.currentComponent = 0;
             this.componentEquivalences.Clear();
             this.components.Clear();
-            this.dfs.Compute();
+
+            var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(this.VisitedGraph);
+            try
+            {
+                dfs.StartVertex += new VertexEventHandler<TVertex>(dfs_StartVertex);
+                dfs.TreeEdge += new EdgeEventHandler<TVertex, TEdge>(dfs_TreeEdge);
+                dfs.ForwardOrCrossEdge += new EdgeEventHandler<TVertex, TEdge>(dfs_ForwardOrCrossEdge);
+
+                dfs.Compute();
+            }
+            finally
+            {
+                dfs.StartVertex -= new VertexEventHandler<TVertex>(dfs_StartVertex);
+                dfs.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(dfs_TreeEdge);
+                dfs.ForwardOrCrossEdge -= new EdgeEventHandler<TVertex, TEdge>(dfs_ForwardOrCrossEdge);
+            }
 
             // updating component numbers
             foreach (var v in this.VisitedGraph.Vertices)
             {
-                int component = this.Components[v];
+                int component = this.components[v];
                 int equivalent = this.componentEquivalences[component];
                 if (component!=equivalent)
-                    this.Components[v] =equivalent;
+                    this.components[v] =equivalent;
             }
         }
 
@@ -94,8 +104,16 @@ namespace QuickGraph.Algorithms
             if (otherComponent != this.currentComponent)
             {
                 this.componentCount--;
-                this.componentEquivalences[this.currentComponent] = otherComponent;
-                this.currentComponent = otherComponent;
+                Contract.Assert(this.componentCount > 0);
+                if (this.currentComponent > otherComponent)
+                {
+                    this.componentEquivalences[this.currentComponent] = otherComponent;
+                    this.currentComponent = otherComponent;
+                }
+                else
+                {
+                    this.componentEquivalences[otherComponent] = this.currentComponent;
+                }
             }
         }
     }
