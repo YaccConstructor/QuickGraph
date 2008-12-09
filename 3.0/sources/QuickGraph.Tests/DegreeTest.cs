@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Pex.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Serialization;
+using Microsoft.Pex.Framework.Settings;
 
 namespace QuickGraph.Tests
 {
