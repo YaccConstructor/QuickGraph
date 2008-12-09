@@ -113,8 +113,32 @@
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Collections\BinaryHeapTest.cs" />
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Constructor.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Insert.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndEnumerate.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndIndexOf.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndMinimum.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndRemoveAt.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndRemoveMinimum.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Collections\FibonacciHeapTest.cs" />
     <Compile Include="Collections\ForestDisjointSetTTest.cs" />
+    <Compile Include="Collections\ForestDisjointSetTTest.Unions.g.cs">
+      <DependentUpon>ForestDisjointSetTTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\Store.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

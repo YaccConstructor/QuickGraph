@@ -7,10 +7,11 @@ using System.Diagnostics;
 using QuickGraph.Predicates;
 using QuickGraph.Algorithms.Observers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Pex.Framework;
 
 namespace QuickGraph.Tests.Collections
 {
-    [TestClass]
+    [TestClass, PexClass(typeof(FibonacciHeap<,>))]
     public class FibonacciHeapTests
     {
         [TestMethod]

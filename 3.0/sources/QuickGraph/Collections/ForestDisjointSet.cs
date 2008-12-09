@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Diagnostics;
 
 namespace QuickGraph.Collections
 {
@@ -12,12 +13,22 @@ namespace QuickGraph.Collections
     public class ForestDisjointSet<T>
         : IDisjointSet<T>
     {
+#if DEBUG
+        [DebuggerDisplay("{ID}:{Rank}->{Parent}")]
+#endif
         class Element
         {
+#if DEBUG
+            public readonly int ID;
+            static int nextID;
+#endif
             public Element Parent;
             public int Rank;
             public Element()
             {
+#if DEBUG
+                this.ID = nextID++;
+#endif
                 this.Parent = null;
                 this.Rank = 0;
             }
@@ -127,16 +138,19 @@ namespace QuickGraph.Collections
 
             var leftRoot = Find(left);
             var rightRoot = Find(right);
+
             // union by rank
             if (leftRoot.Rank > rightRoot.Rank)
-                 rightRoot.Parent = leftRoot;
-             else if (leftRoot.Rank < rightRoot.Rank)
-                 leftRoot.Parent = rightRoot;
+                rightRoot.Parent = leftRoot;
+            else if (leftRoot.Rank < rightRoot.Rank)
+                leftRoot.Parent = rightRoot;
             else if (leftRoot != rightRoot)
             {
                 rightRoot.Parent = leftRoot;
                 leftRoot.Rank = leftRoot.Rank + 1;
             }
+            else
+                return; // do not update the setcount
 
             this.setCount--;
         }
