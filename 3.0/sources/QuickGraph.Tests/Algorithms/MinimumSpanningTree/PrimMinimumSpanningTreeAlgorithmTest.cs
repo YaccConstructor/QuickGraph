@@ -1,25 +1,34 @@
 using System;
 using System.Collections.Generic;
-using QuickGraph.Unit;
 using QuickGraph.Algorithms.Observers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Pex.Framework;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms.MinimumSpanningTree
 {
-    [TypeFixture(typeof(IUndirectedGraph<string, Edge<string>>))]
-    [TypeFactory(typeof(UndirectedGraphFactory))]
+    [TestClass]
     public class PrimMinimumSpanningTreeAlgorithmTest
     {
-        [Test]
-        public void Compute(IUndirectedGraph<string, Edge<string>> g)
+        [TestMethod]
+        public void PrimMinimumSpanningTreeAll()
         {
-            var prim = new PrimMinimumSpanningTreeAlgorithm<string, Edge<string>>(g, e => 1);
-            var predecessors = new VertexPredecessorRecorderObserver<string, Edge<string>>();
+            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
+                this.Compute(g);
+        }
+
+        [PexMethod]
+        public void Compute<TVertex, TEdge>([PexAssumeNotNull]IUndirectedGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
+        {
+            var prim = new PrimMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
+            var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
             predecessors.Attach(prim);
             prim.Compute();
 
-            foreach (string v in g.Vertices)
+            foreach (var v in g.Vertices)
             {
-                Edge<string> edge;
+                TEdge edge;
                 if (predecessors.VertexPredecessors.TryGetValue(v, out edge))
                     Console.WriteLine("{0}: {1}", v, edge);
                 else

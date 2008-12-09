@@ -62,6 +62,11 @@ namespace QuickGraph.Serialization
             }
             return g;
         }
+
+        public static IEnumerable<UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetUndirectedGraphs()
+        {
+            yield break;
+        }
     }
 
     [TestClass, PexClass]

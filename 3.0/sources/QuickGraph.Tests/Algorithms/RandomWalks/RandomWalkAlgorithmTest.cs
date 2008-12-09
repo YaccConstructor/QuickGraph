@@ -1,46 +1,56 @@
 ﻿using System;
 using System.Linq;
-using QuickGraph.Unit;
-
 using QuickGraph.Algorithms.Observers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Pex.Framework;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
-    [TypeFixture(typeof(IVertexListGraph<string,Edge<string>>))]
-    [TypeFactory(typeof(AdjacencyGraphFactory))]
-    [TypeFactory(typeof(BidirectionalGraphFactory))]
+    [TestClass]
     public class RandomWalkAlgorithmTest
     {
-        [Test]
-        public void RoundRobinTest(IVertexListGraph<string, Edge<string>> g)
+        [TestMethod]
+        public void RoundRobinAll()
         {
-            if (g.VertexCount == 0)
-                return;
-
-            RandomWalkAlgorithm<String, Edge<string>> walker =
-                new RandomWalkAlgorithm<String, Edge<string>>(g);
-            walker.EdgeChain = new NormalizedMarkovEdgeChain<string, Edge<string>>();
-
-            string root = g.Vertices.FirstOrDefault();
-            walker.Generate(root);
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+                this.RoundRobinTest(g);
         }
 
-        [Test]
-        public void RoundRobinTestWithVisitor(IVertexListGraph<string, Edge<string>> g)
+        [PexMethod]
+        public void RoundRobinTest<TVertex, TEdge>(IVertexListGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
             if (g.VertexCount == 0)
                 return;
 
-            RandomWalkAlgorithm<String, Edge<string>> walker =
-                new RandomWalkAlgorithm<String, Edge<string>>(g);
-            walker.EdgeChain = new NormalizedMarkovEdgeChain<string, Edge<string>>();
+            foreach (var root in g.Vertices)
+            {
+                var walker =
+                    new RandomWalkAlgorithm<TVertex, TEdge>(g);
+                walker.EdgeChain = new NormalizedMarkovEdgeChain<TVertex, TEdge>();
+                walker.Generate(root);
+            }
+        }
 
-            string root = g.Vertices.FirstOrDefault();
+        [PexMethod]
+        public void RoundRobinTestWithVisitor<TVertex, TEdge>(IVertexListGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
+        {
+            if (g.VertexCount == 0)
+                return;
 
-            EdgeRecorderObserver<string, Edge<string>> vis = new EdgeRecorderObserver<string, Edge<string>>();
-            vis.Attach(walker);
-            walker.Generate(root);
-            vis.Detach(walker);
+            foreach (var root in g.Vertices)
+            {
+                var walker =
+                    new RandomWalkAlgorithm<TVertex, TEdge>(g);
+                walker.EdgeChain = new NormalizedMarkovEdgeChain<TVertex, TEdge>();
+
+                var vis = new EdgeRecorderObserver<TVertex, TEdge>();
+                vis.Attach(walker);
+                walker.Generate(root);
+                vis.Detach(walker);
+            }
         }
 
     }

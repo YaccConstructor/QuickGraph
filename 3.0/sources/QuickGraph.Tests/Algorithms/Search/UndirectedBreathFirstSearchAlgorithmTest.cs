@@ -1,28 +1,29 @@
 using System;
 using System.Collections.Generic;
-using QuickGraph.Unit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Pex.Framework;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms.Search
 {
-    [TypeFixture(typeof(IUndirectedGraph<string, Edge<string>>))]
-    [TypeFactory(typeof(UndirectedGraphFactory))]
+    [TestClass]
     public class UndirectedBreadthFirstAlgorithmSearchTest
     {
-        private IDictionary<string, string> parents;
-        private IDictionary<string, int> distances;
-        private string currentVertex;
-        private string sourceVertex;
+        private IDictionary<IdentifiableVertex, IdentifiableVertex> parents;
+        private IDictionary<IdentifiableVertex, int> distances;
+        private IdentifiableVertex currentVertex;
+        private IdentifiableVertex sourceVertex;
         private int currentDistance;
-        private UndirectedBreadthFirstSearchAlgorithm<string,Edge<string>> algo;
+        private UndirectedBreadthFirstSearchAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> algo;
 
-        private void InitializeVertex(Object sender, VertexEventArgs<string> args)
+        private void InitializeVertex(Object sender, VertexEventArgs<IdentifiableVertex> args)
         {
             Assert.AreEqual(algo.VertexColors[args.Vertex], GraphColor.White);
         }
 
-        private void ExamineVertex(Object sender, VertexEventArgs<string> args)
+        private void ExamineVertex(Object sender, VertexEventArgs<IdentifiableVertex> args)
         {
-            string u = args.Vertex;
+            var u = args.Vertex;
             currentVertex = u;
             // Ensure that the distances monotonically increase.
             Assert.IsTrue(
@@ -34,9 +35,9 @@ namespace QuickGraph.Algorithms.Search
                 ++currentDistance;
         }
 
-        private void DiscoverVertex(Object sender, VertexEventArgs<string> args)
+        private void DiscoverVertex(Object sender, VertexEventArgs<IdentifiableVertex> args)
         {
-            string u = args.Vertex;
+            var u = args.Vertex;
 
             Assert.AreEqual(algo.VertexColors[u], GraphColor.Gray);
             if (u == sourceVertex)
@@ -49,10 +50,10 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
-        private void TreeEdge(Object sender, EdgeEventArgs<string,Edge<string>> args)
+        private void TreeEdge(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
         {
-            string u, v;
-            if (args.Edge.Source == currentVertex)
+            IdentifiableVertex u, v;
+            if (args.Edge.Source.Equals(currentVertex))
             {
                 u = args.Edge.Source;
                 v = args.Edge.Target;
@@ -69,10 +70,10 @@ namespace QuickGraph.Algorithms.Search
             distances[v] = distances[u] + 1;
         }
 
-        private void NonTreeEdge(Object sender, EdgeEventArgs<string,Edge<string>> args)
+        private void NonTreeEdge(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
         {
-            string u, v;
-            if (args.Edge.Source == currentVertex)
+            IdentifiableVertex u, v;
+            if (args.Edge.Source.Equals(currentVertex))
             {
                 u = args.Edge.Source;
                 v = args.Edge.Target;
@@ -101,9 +102,9 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
-        private void GrayTarget(Object sender, EdgeEventArgs<string,Edge<string>> args)
+        private void GrayTarget(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
         {
-            string v;
+            IdentifiableVertex v;
             if (args.Edge.Source == currentVertex)
             {
                 v = args.Edge.Target;
@@ -115,9 +116,9 @@ namespace QuickGraph.Algorithms.Search
             Assert.AreEqual(algo.VertexColors[v], GraphColor.Gray);
         }
 
-        private void BlackTarget(Object sender, EdgeEventArgs<string,Edge<string>> args)
+        private void BlackTarget(Object sender, EdgeEventArgs<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> args)
         {
-            string u, v;
+            IdentifiableVertex u, v;
             if (args.Edge.Source == currentVertex)
             {
                 u = args.Edge.Source;
@@ -131,7 +132,7 @@ namespace QuickGraph.Algorithms.Search
 
             Assert.AreEqual(algo.VertexColors[v], GraphColor.Black);
 
-            foreach (Edge<string> e in algo.VisitedGraph.AdjacentEdges(v))
+            foreach (Edge<IdentifiableVertex> e in algo.VisitedGraph.AdjacentEdges(v))
             {
                 Assert.IsFalse(algo.VertexColors[
                     (e.Source==v) ? e.Target : e.Source
@@ -139,51 +140,58 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
-        private void FinishVertex(Object sender, VertexEventArgs<string> args)
+        private void FinishVertex(Object sender, VertexEventArgs<IdentifiableVertex> args)
         {
             Assert.AreEqual(algo.VertexColors[args.Vertex], GraphColor.Black);
         }
 
-        [SetUp]
         public void Init()
         {
-            this.parents = new Dictionary<string, string>();
-            this.distances = new Dictionary<string, int>();
+            this.parents = new Dictionary<IdentifiableVertex, IdentifiableVertex>();
+            this.distances = new Dictionary<IdentifiableVertex, int>();
             this.currentDistance = 0;
             this.currentVertex = null;
             this.algo = null;
         }
 
-        [Test]
-        public void GraphWithSelfEdges(IUndirectedGraph<string,Edge<string>> graph)
+        [TestMethod]
+        public void UndirectedBreathFirstSearchAll()
         {
-            List<string> vertices = new List<string>(graph.Vertices);
+            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
+                this.Compute(g);
+        }
 
-            foreach (string v in vertices)
+        [PexMethod]
+        public void Compute(IUndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> graph)
+        {
+            foreach (var v in graph.Vertices)
                 Search(graph, v);
         }
 
-        private void Search(IUndirectedGraph<string,Edge<string>> graph, string rootVertex)
+        private void Search(
+            IUndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> graph, 
+            IdentifiableVertex rootVertex)
         {
-            Console.WriteLine(rootVertex);
-            algo = new UndirectedBreadthFirstSearchAlgorithm<string,Edge<string>>(graph);
+            this.Init();
+
+            algo = new UndirectedBreadthFirstSearchAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(graph);
             try
             {
-                algo.InitializeVertex += new VertexEventHandler<string>(this.InitializeVertex);
-                algo.DiscoverVertex += new VertexEventHandler<string>(this.DiscoverVertex);
-                algo.ExamineVertex += new VertexEventHandler<string>(this.ExamineVertex);
-                algo.TreeEdge += new EdgeEventHandler<string,Edge<string>>(this.TreeEdge);
-                algo.NonTreeEdge += new EdgeEventHandler<string,Edge<string>>(this.NonTreeEdge);
-                algo.GrayTarget += new EdgeEventHandler<string,Edge<string>>(this.GrayTarget);
-                algo.BlackTarget += new EdgeEventHandler<string,Edge<string>>(this.BlackTarget);
-                algo.FinishVertex += new VertexEventHandler<string>(this.FinishVertex);
+                algo.InitializeVertex += new VertexEventHandler<IdentifiableVertex>(this.InitializeVertex);
+                algo.DiscoverVertex += new VertexEventHandler<IdentifiableVertex>(this.DiscoverVertex);
+                algo.ExamineVertex += new VertexEventHandler<IdentifiableVertex>(this.ExamineVertex);
+                algo.TreeEdge += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.TreeEdge);
+                algo.NonTreeEdge += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.NonTreeEdge);
+                algo.GrayTarget += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.GrayTarget);
+                algo.BlackTarget += new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.BlackTarget);
+                algo.FinishVertex += new VertexEventHandler<IdentifiableVertex>(this.FinishVertex);
 
                 parents.Clear();
                 distances.Clear();
                 currentDistance = 0;
                 sourceVertex = rootVertex;
 
-                foreach (string v in this.algo.VisitedGraph.Vertices)
+                foreach (var v in this.algo.VisitedGraph.Vertices)
                 {
                     distances[v] = int.MaxValue;
                     parents[v] = v;
@@ -195,21 +203,21 @@ namespace QuickGraph.Algorithms.Search
             }
             finally
             {
-                algo.InitializeVertex -= new VertexEventHandler<string>(this.InitializeVertex);
-                algo.DiscoverVertex -= new VertexEventHandler<string>(this.DiscoverVertex);
-                algo.ExamineVertex -= new VertexEventHandler<string>(this.ExamineVertex);
-                algo.TreeEdge -= new EdgeEventHandler<string,Edge<string>>(this.TreeEdge);
-                algo.NonTreeEdge -= new EdgeEventHandler<string,Edge<string>>(this.NonTreeEdge);
-                algo.GrayTarget -= new EdgeEventHandler<string,Edge<string>>(this.GrayTarget);
-                algo.BlackTarget -= new EdgeEventHandler<string,Edge<string>>(this.BlackTarget);
-                algo.FinishVertex -= new VertexEventHandler<string>(this.FinishVertex);
+                algo.InitializeVertex -= new VertexEventHandler<IdentifiableVertex>(this.InitializeVertex);
+                algo.DiscoverVertex -= new VertexEventHandler<IdentifiableVertex>(this.DiscoverVertex);
+                algo.ExamineVertex -= new VertexEventHandler<IdentifiableVertex>(this.ExamineVertex);
+                algo.TreeEdge -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.TreeEdge);
+                algo.NonTreeEdge -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.NonTreeEdge);
+                algo.GrayTarget -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.GrayTarget);
+                algo.BlackTarget -= new EdgeEventHandler<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(this.BlackTarget);
+                algo.FinishVertex -= new VertexEventHandler<IdentifiableVertex>(this.FinishVertex);
             }
         }
 
         protected void CheckBfs()
         {
             // All white vertices should be unreachable from the source.
-            foreach (string v in this.algo.VisitedGraph.Vertices)
+            foreach (var v in this.algo.VisitedGraph.Vertices)
             {
                 if (algo.VertexColors[v] == GraphColor.White)
                 {
@@ -219,7 +227,7 @@ namespace QuickGraph.Algorithms.Search
 
             // The shortest path to a child should be one longer than
             // shortest path to the parent.
-            foreach (string v in this.algo.VisitedGraph.Vertices)
+            foreach (var v in this.algo.VisitedGraph.Vertices)
             {
                 if (parents[v] != v) // *ui not the root of the bfs tree
                     Assert.AreEqual(distances[v], distances[parents[v]] + 1);

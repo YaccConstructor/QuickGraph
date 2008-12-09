@@ -1,31 +1,30 @@
 using System;
 using System.Collections.Generic;
-using QuickGraph.Unit;
 using Microsoft.Pex.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Serialization;
 
 namespace QuickGraph.Algorithms
 {
-    [TypeFixture(typeof(IUndirectedGraph<string, Edge<string>>)), PexClass]
-    [TypeFactory(typeof(UndirectedGraphFactory))]
+    [TestClass, PexClass]
     public partial class UndirectedFirstTopologicalSortAlgorithmTest
     {
+        [TestMethod]
+        public void UndirectedFirstTopologicalSortAll()
+        {
+            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
+                this.Compute(g);
+        }
 
-        [Test, PexMethod]
-        public void Compute([PexAssumeNotNull]IUndirectedGraph<string, Edge<string>> g)
+        [PexMethod]
+        public void Compute<TVertex, TEdge>([PexAssumeNotNull]IUndirectedGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
             var topo =
-                new UndirectedFirstTopologicalSortAlgorithm<string, Edge<string>>(g);
+                new UndirectedFirstTopologicalSortAlgorithm<TVertex, TEdge>(g);
             topo.AllowCyclicGraph = true;
             topo.Compute();
-
-            Display(topo);
         }
 
-        private void Display(UndirectedFirstTopologicalSortAlgorithm<string, Edge<string>> topo)
-        {
-            int index = 0;
-            foreach (string v in topo.SortedVertices)
-                Console.WriteLine("{0}: {1}", index++, v);
-        }
     }
 }
