@@ -226,6 +226,11 @@ namespace QuickGraph.Collections
             }
         }
 
+        public Comparison<TPriority> PriorityComparison
+        {
+            get { return this.priorityComparsion; }
+        }
+
         public string DrawHeap()
         {
             var lines = new List<string>();
@@ -426,8 +431,15 @@ namespace QuickGraph.Collections
             }
         }
 
-        public void Dequeue()
+        public KeyValuePair<TPriority, TValue> Dequeue()
         {
+            if (this.count == 0)
+                throw new InvalidOperationException();
+
+            var result = new KeyValuePair<TPriority, TValue>(
+                this.next.Priority,
+                this.next.Value);
+
             this.nodes.Remove(next);
             next.Next = null;
             next.Parent = null;
@@ -449,6 +461,8 @@ namespace QuickGraph.Collections
             next.Children = null;
             count--;
             this.UpdateNext();
+
+            return result;
         }
 
         /// <summary>

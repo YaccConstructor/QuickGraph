@@ -48,9 +48,23 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         private void AssertAreEqual<TVertex, TEdge>(IDictionary<TVertex, TEdge> left, IDictionary<TVertex, TEdge> right)
             where TEdge : IEdge<TVertex>
         {
-            Assert.AreEqual(left.Count, right.Count);
-            foreach (var kv in left)
-                Assert.AreEqual(kv.Value, right[kv.Key]);
+            try
+            {
+                Assert.AreEqual(left.Count, right.Count);
+                foreach (var kv in left)
+                    Assert.AreEqual(kv.Value, right[kv.Key]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Count: {0} - {1}", left.Count, right.Count);
+                foreach (var kv in left)
+                {
+                    TEdge e;
+                    Assert.AreEqual("{0} - {1}", kv.Value, right.TryGetValue(kv.Key, out e) ? e.ToString() : "missing"  );
+                }
+
+                throw new AssertFailedException("comparison failed", ex);
+            }
         }
     }
 }

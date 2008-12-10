@@ -135,6 +135,12 @@
       <DependentUpon>BinaryHeapTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Collections\FibonacciHeapTest.cs" />
+    <Compile Include="Collections\FibonacciHeapTests.InsertAndMinimum.g.cs">
+      <DependentUpon>FibonacciHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\FibonacciHeapTests.InsertAndRemoveMinimum.g.cs">
+      <DependentUpon>FibonacciHeapTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Collections\ForestDisjointSetTTest.cs" />
     <Compile Include="Collections\ForestDisjointSetTTest.Unions.g.cs">
       <DependentUpon>ForestDisjointSetTTest.cs</DependentUpon>
@@ -147,6 +153,7 @@
     <Compile Include="Data\StoreTest.cs" />
     <Compile Include="DegreeTest.cs" />
     <Compile Include="EdgeListGraphInvariant.cs" />
+    <Compile Include="Factories\FibonacciHeapFactory.cs" />
     <Compile Include="Factories\ForestDisjointSetFactory.cs" />
     <Compile Include="GraphConsoleSerializer.cs" />
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />

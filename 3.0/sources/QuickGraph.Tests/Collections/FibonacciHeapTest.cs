@@ -8,12 +8,75 @@ using QuickGraph.Predicates;
 using QuickGraph.Algorithms.Observers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Pex.Framework;
+using Microsoft.Pex.Framework.Validation;
 
 namespace QuickGraph.Tests.Collections
 {
     [TestClass, PexClass(typeof(FibonacciHeap<,>))]
-    public class FibonacciHeapTests
+    [PexGenericArguments(typeof(int), typeof(int))]
+    public partial class FibonacciHeapTests
     {
+        /// <summary>
+        /// Checks heap invariant
+        /// </summary>
+        private static void AssertInvariant<TPriority, TValue>(
+            FibonacciHeap<TPriority, TValue> target
+            )
+        {
+            Assert.IsTrue(target.Count >= 0);
+        }
+
+        [PexMethod]
+        public void InsertAndRemoveMinimum<TPriority, TValue>(
+            [PexAssumeUnderTest] FibonacciHeap<TPriority, TValue> target,
+            [PexAssumeNotNull] KeyValuePair<TPriority, TValue>[] kvs)
+        {
+            var count = target.Count;
+            foreach (var kv in kvs)
+                target.Enqueue(kv.Key, kv.Value);
+
+            TPriority minimum = default(TPriority);
+            for (int i = 0; i < kvs.Length; ++i)
+            {
+                if (i == 0)
+                    minimum = target.Dequeue().Key;
+                else
+                {
+                    var m = target.Dequeue().Key;
+                    Assert.IsTrue(target.PriorityComparison(minimum, m) <= 0);
+                    minimum = m;
+                }
+                AssertInvariant(target);
+            }
+
+            Assert.AreEqual(0, target.Count);
+        }
+
+        [PexMethod]
+        [PexAllowedExceptionFromTypeUnderTest(typeof(InvalidOperationException))]
+        public void InsertAndMinimum<TPriority, TValue>(
+            [PexAssumeUnderTest] FibonacciHeap<TPriority, TValue> target,
+            [PexAssumeNotNull] KeyValuePair<TPriority, TValue>[] kvs)
+        {
+            PexAssume.IsTrue(kvs.Length > 0);
+
+            var count = target.Count;
+            TPriority minimum = default(TPriority);
+            for (int i = 0; i < kvs.Length; ++i)
+            {
+                KeyValuePair<TPriority, TValue> kv = kvs[i];
+                if (i == 0)
+                    minimum = kv.Key;
+                else
+                    minimum = target.PriorityComparison(kv.Key, minimum) < 0 ? kv.Key : minimum;
+                target.Enqueue(kv.Key, kv.Value);
+                // check minimum
+                var kvMin = target.Top.Priority;
+                Assert.AreEqual(minimum, kvMin);
+            }
+            AssertInvariant(target);
+        }
+
         [TestMethod]
         public void CreateHeap()
         {

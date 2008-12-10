@@ -23,8 +23,8 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         {
             var prim = new PrimMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
             var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            predecessors.Attach(prim);
-            prim.Compute();
+            using(ObserverScope.Create(prim, predecessors))
+                prim.Compute();
 
             foreach (var v in g.Vertices)
             {
