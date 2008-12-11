@@ -151,6 +151,8 @@
     <Compile Include="Algorithms\ConnectedComponentsAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\KruskalMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\Observers\VertexPredecessorPathRecorderObserver.cs" />
+    <Compile Include="Algorithms\RankedShortestPath\MartinPascoalSantosRankedShortestPath.cs" />
+    <Compile Include="Algorithms\RankedShortestPath\RankedShortestPathBase.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmComponent.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmServices.cs" />
     <Compile Include="Algorithms\IComputation.cs" />
