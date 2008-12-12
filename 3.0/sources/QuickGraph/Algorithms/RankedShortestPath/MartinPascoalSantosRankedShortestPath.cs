@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using QuickGraph.Algorithms.Services;
+using QuickGraph.Algorithms.ShortestPath;
 
 namespace QuickGraph.Algorithms.RankedShortestPath
 {
@@ -15,8 +16,10 @@ namespace QuickGraph.Algorithms.RankedShortestPath
         : RankingShortestPathBase<TVertex, TEdge, IVertexListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
+        readonly Dictionary<TEdge, double> distances = new Dictionary<TEdge, double>();
+
         public MartinPascoalSantosRankedShortestPath(IAlgorithmComponent host, IVertexListGraph<TVertex, TEdge> visitedGraph)
-            : base(host, visitedGraph)
+            : base(host, visitedGraph, ShortestDistanceRelaxer.Instance)
         { }
 
         protected override void InternalCompute()
@@ -26,16 +29,16 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                 throw new InvalidOperationException("root vertex not set");
 
             var h = new Dictionary<int, TVertex>();
-            var h1 = new Dictionary<TVertex, int>();
             var count = new Dictionary<TVertex, int>();
+            var costs = new Dictionary<int, double>();
             foreach (var v in this.VisitedGraph.Vertices)
                 count[v] = 0;
             int elm = 1;
             var X = new Dictionary<int, int>();
 
             h[elm] = root;
-            h1[root] = elm;
-            X.Add(elm, elm);
+            costs[elm] = 0;
+            X[elm] = elm;
 
             while (X.Count > 0)
             {
@@ -45,15 +48,38 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                 foreach (var e in this.VisitedGraph.OutEdges(i))
                 {
                     var j = e.Target;
+                    var costk = costs[k];
+                    var costkij = this.Relaxer.Combine(costk, this.distances[e]);
                     if (count[j] == K)
                     {
+                        // todo...
+                        int l = (int)h1(h, j).Max(lj => costs[lj]);
+                        if (this.Relaxer.Compare(costkij, costs[l]))
+                        {
+                            costs[k] = costkij;
+                            // eps[l] = k;
+                            X[l] = l;
+                        }
                     }
                     else
                     {
+                        elm++;
+                        costs[elm] = costkij;
+                        // eps[elm] = k;
+                        count[j]++;
+                        h[elm] = j;
+                        X[elm] = elm;
                     }
                 }
             }
         }
 
+
+        static IEnumerable<int> h1(Dictionary<int, TVertex> h, TVertex v)
+        {
+            foreach (var kv in h)
+                if (kv.Value.Equals(v))
+                    yield return kv.Key;
+        }
     }
 }

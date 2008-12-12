@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using QuickGraph.Algorithms.Services;
+using QuickGraph.Algorithms.ShortestPath;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.RankedShortestPath
 {
@@ -11,10 +13,23 @@ namespace QuickGraph.Algorithms.RankedShortestPath
         where TEdge : IEdge<TVertex>
         where TGraph : IGraph<TVertex, TEdge>
     {
+        readonly IDistanceRelaxer relaxer;
+
         public int K { get; set; }
 
-        protected RankingShortestPathBase(IAlgorithmComponent host, TGraph visitedGraph)
+        public IDistanceRelaxer Relaxer
+        {
+            get { return this.relaxer; }
+        }
+
+        protected RankingShortestPathBase(
+            IAlgorithmComponent host, 
+            TGraph visitedGraph,
+            IDistanceRelaxer relaxer)
             : base(host, visitedGraph)
-        { }
+        {
+            Contract.Requires(relaxer != null);
+            this.relaxer = relaxer;
+        }
     }
 }
