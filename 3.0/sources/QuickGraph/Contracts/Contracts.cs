@@ -1,11 +1,12 @@
 ﻿#if !CONTRACTS_FULL
+#pragma disable warning 1591
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace System.Diagnostics.Contracts
 {
-    public static class Contract
+    internal static class Contract
     {
         // Events
         public static event EventHandler<ContractFailedEventArgs> ContractFailed;
@@ -129,6 +130,67 @@ namespace System.Diagnostics.Contracts
             value = default(T);
             return value;
         }
+    }
+
+    [AttributeUsage(AttributeTargets.Delegate | AttributeTargets.Parameter | AttributeTargets.Event | AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Class, AllowMultiple = false, Inherited = true), Conditional("CONTRACTS_PRECONDITIONS"), Conditional("CONTRACTS_FULL")]
+    internal sealed class PureAttribute : Attribute
+    { }
+
+    internal enum ContractFailureKind
+    {
+        Precondition,
+        Postcondition,
+        Invariant,
+        Assert,
+        Assume
+    }
+
+    internal sealed class ContractFailedEventArgs : EventArgs
+    {
+        // Fields
+        private readonly string _condition;
+        private readonly string _debugMessage;
+        private readonly ContractFailureKind _failureKind;
+
+        // Methods
+        public ContractFailedEventArgs(ContractFailureKind failureKind, string debugMessage, string condition)
+        {
+            this._failureKind = failureKind;
+            this._debugMessage = debugMessage;
+            this._condition = condition;
+        }
+
+        // Properties
+        public string Condition
+        {
+            get
+            {
+                return this._condition;
+            }
+        }
+
+        public string DebugMessage
+        {
+            get
+            {
+                return this._debugMessage;
+            }
+        }
+
+        public ContractFailureKind FailureKind
+        {
+            get
+            {
+                return this._failureKind;
+            }
+        }
+
+        public bool Handled { get; set; }
+    }
+
+    [Conditional("CONTRACTS_FULL"), Conditional("CONTRACTS_PRECONDITIONS"), AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    internal sealed class ContractInvariantMethodAttribute : Attribute
+    {
     }
 }
 #endif
