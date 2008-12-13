@@ -116,7 +116,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release20|AnyCPU' ">
     <OutputPath>bin\Release20\</OutputPath>
-    <DefineConstants>TRACE;NET20</DefineConstants>
+    <DefineConstants>TRACE;NET20;NOCONTRACTS</DefineConstants>
     <Optimize>true</Optimize>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -244,6 +244,7 @@
     <Compile Include="Collections\VertexList.cs" />
     <Compile Include="Collections\VertexPair.cs" />
     <Compile Include="Contracts\Collections\IDisjointSetContract.cs" />
+    <Compile Include="Contracts\Contracts.cs" />
     <Compile Include="Contracts\DummyContract.cs" />
     <Compile Include="Contracts\IEdgeContract.cs" />
     <Compile Include="Contracts\EnumerableContract.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Contracts\IImplicitGraphContract.cs" />
     <Compile Include="Contracts\IIncidenceGraphContract.cs" />
     <Compile Include="Contracts\IVertexSetContract.cs" />
+    <Compile Include="Enumerable.cs" />
     <Compile Include="FuncDelegates.cs" />
     <Compile Include="GraphExtensions.cs" />
     <Compile Include="HashCodeHelper.cs" />

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using QuickGraph.Algorithms.Services;
 using QuickGraph.Algorithms.ShortestPath;
+using System.Linq;
 
 namespace QuickGraph.Algorithms.RankedShortestPath
 {
@@ -42,7 +42,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
 
             while (X.Count > 0)
             {
-                var k = X.First().Key;
+                var k = Enumerable.First(X).Key;
                 X.Remove(k);
                 var i = h[k];
                 foreach (var e in this.VisitedGraph.OutEdges(i))
@@ -53,7 +53,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                     if (count[j] == K)
                     {
                         // todo...
-                        int l = (int)h1(h, j).Max(lj => costs[lj]);
+                        int l = -1;//(int)h1(h, j).Max(lj => costs[lj]);
                         if (this.Relaxer.Compare(costkij, costs[l]))
                         {
                             costs[k] = costkij;
