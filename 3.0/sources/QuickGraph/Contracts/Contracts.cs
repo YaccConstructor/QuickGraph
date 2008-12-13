@@ -1,5 +1,4 @@
 ﻿#if !CONTRACTS_FULL
-#pragma disable warning 1591
 using System;
 using System.Collections.Generic;
 using System.Text;
