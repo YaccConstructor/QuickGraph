@@ -12,7 +12,7 @@ namespace System.Diagnostics.Contracts
 
         [Conditional("CONTRACTS_FULL"), Conditional("DEBUG")]
         public static void Assert(bool condition)
-        { }
+        {}
 
         [Conditional("DEBUG"), Conditional("CONTRACTS_FULL")]
         public static void Assert(bool condition, string message)
@@ -64,8 +64,19 @@ namespace System.Diagnostics.Contracts
         }
 
         [DebuggerNonUserCode]
-        public static void Failure(ContractFailureKind failureKind, string userProvidedMessage, string condition)
-        { }
+        public static void Failure(ContractFailureKind failureKind, string message)
+        {
+            var eh = ContractFailed;
+            if (eh != null)
+            {
+                var args = new ContractFailedEventArgs(failureKind, message, null);
+                eh(null, args);
+                if (args.Handled)
+                    return;
+            }
+
+            throw new ArgumentException(message);
+        }
 
         public static bool ForAll<T>(Predicate<T> predicate)
         {
@@ -109,14 +120,14 @@ namespace System.Diagnostics.Contracts
         public static void RequiresAlways(bool condition)
         {
             if (!condition)
-                throw new ArgumentException();
+                Failure(ContractFailureKind.Precondition, null);
         }
 
         [DebuggerNonUserCode]
         public static void RequiresAlways(bool condition, string message)
         {
             if (!condition)
-                throw new ArgumentException(message);
+                Failure(ContractFailureKind.Precondition, message);
         }
 
         public static T Result<T>()
