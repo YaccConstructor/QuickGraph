@@ -126,7 +126,7 @@
     <DocumentationFile>bin\Release20\QuickGraph.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL" Condition="'$(Configuration)' == 'DebugContracts'"/>
+    <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL" Condition="'$(Configuration)' == 'DebugContracts'" />
     <Reference Include="System" />
     <Reference Include="System.Core" Condition="'$(Configuration)' != 'Release20'">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -336,7 +336,6 @@
     <Compile Include="TryFuncDelegates.cs" />
     <Compile Include="VertexFactory.cs" />
     <Compile Include="IVertexListGraph.cs" />
-    <Compile Include="NamedEdge.cs" />
     <Compile Include="NonAcyclicGraphException.cs" />
     <Compile Include="Predicates\InDictionaryVertexPredicate.cs" />
     <Compile Include="Predicates\IsolatedVertexPredicate.cs" />

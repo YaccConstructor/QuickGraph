@@ -51,8 +51,11 @@ namespace QuickGraph
             }
         }
 
+        [Pure]
         public bool ContainsEdge(TEdge edge)
         {
+            Contract.Requires(edge != null);
+
             return this.edges.ContainsKey(edge);
         }
 

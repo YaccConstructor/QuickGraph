@@ -34,7 +34,6 @@ namespace QuickGraph
         /// <value>The target edge.</value>
         public TEdge TargetEdge
         {
-            [Pure]
             get { return this.targetEdge;}
         }
     }

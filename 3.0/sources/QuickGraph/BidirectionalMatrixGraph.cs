@@ -80,7 +80,7 @@ namespace QuickGraph
         #endregion
 
         #region IBidirectionalGraph<int,Edge> Members
-
+        [Pure]
         public bool IsInEdgesEmpty(int v)
         {
             Contract.Requires(0 <= v && v < this.VertexCount);
@@ -91,6 +91,7 @@ namespace QuickGraph
             return true;
         }
 
+        [Pure]
         public int InDegree(int v)
         {
             Contract.Requires(0 <= v && v < this.VertexCount);
@@ -102,9 +103,11 @@ namespace QuickGraph
             return count;
         }
 
+        [Pure]
         public IEnumerable<TEdge> InEdges(int v)
         {
             Contract.Requires(0 <= v && v < this.VertexCount);
+            Contract.Ensures(Contract.Result<IEnumerable<TEdge>>() != null);
 
             for (int i = 0; i < this.VertexCount; ++i)
             {
@@ -117,6 +120,11 @@ namespace QuickGraph
         [Pure]
         public bool TryGetInEdges(int v, out IEnumerable<TEdge> edges)
         {
+            Contract.Ensures(Contract.Result<bool>() == (0 <= 0 && v > this.VertexCount));
+            Contract.Ensures(
+                Contract.Result<bool>() == 
+                (Contract.ValueAtReturn<IEnumerable<TEdge>>(out edges) != null));
+
             if (v > -1 && v < this.vertexCount)
             {
                 edges = this.InEdges(v);
@@ -129,6 +137,8 @@ namespace QuickGraph
         public TEdge InEdge(int v, int index)
         {
             Contract.Requires(0 <= v && v < this.VertexCount);
+            Contract.Requires(0 <= index && index < this.VertexCount);
+            Contract.Ensures(Contract.Result<TEdge>() != null);
 
             int count = 0;
             for (int i = 0; i < this.VertexCount; ++i)
@@ -147,6 +157,7 @@ namespace QuickGraph
         public int Degree(int v)
         {
             Contract.Requires(0 <= v && v < this.VertexCount);
+            Contract.Ensures(Contract.Result<int>() == this.InDegree(v) + this.OutDegree(v));
 
             return this.InDegree(v) + this.OutDegree(v);
         }

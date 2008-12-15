@@ -36,7 +36,6 @@ namespace QuickGraph
         /// <value>The type of the vertex.</value>
         public static Type VertexType
         {
-            [Pure]
             get { return typeof(TVertex); }
         }
 
@@ -46,7 +45,6 @@ namespace QuickGraph
         /// <value></value>
         public TVertex Source
         {
-            [Pure]
             get { return this.source; }
         }
 
@@ -56,7 +54,6 @@ namespace QuickGraph
         /// <value></value>
         public TVertex Target
         {
-            [Pure]
             get { return this.target; }
         }
 

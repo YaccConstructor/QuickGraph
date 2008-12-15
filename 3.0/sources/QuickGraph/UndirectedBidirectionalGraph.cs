@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
@@ -15,8 +16,8 @@ namespace QuickGraph
 
         public UndirectedBidirectionalGraph(IBidirectionalGraph<TVertex, TEdge> visitedGraph)
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
+            Contract.Requires(visitedGraph != null);
+
             this.visitedGraph = visitedGraph;
         }
 
