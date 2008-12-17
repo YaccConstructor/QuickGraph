@@ -70,6 +70,17 @@ namespace QuickGraph.Collections.Contracts
         {
             return Contract.Result<bool>();
         }
+
+        bool IDisjointSet<T>.AreInSameSet(T left, T right)
+        {
+            IDisjointSet<T> ithis = this;
+            Contract.Requires(left != null);
+            Contract.Requires(right != null);
+            Contract.Requires(ithis.Contains(left));
+            Contract.Requires(ithis.Contains(right));
+
+            return Contract.Result<bool>();
+        }
     }
 }
 #endif
