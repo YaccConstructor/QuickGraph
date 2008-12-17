@@ -112,6 +112,7 @@
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithmTest.cs" />
+    <Compile Include="AssemblyContextTest.cs" />
     <Compile Include="Collections\BinaryHeapTest.cs" />
     <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Constructor.g.cs">
       <DependentUpon>BinaryHeapTest.cs</DependentUpon>
