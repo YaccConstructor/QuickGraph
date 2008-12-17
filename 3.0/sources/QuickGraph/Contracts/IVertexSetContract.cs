@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Contracts
 {
-    [ContractClassFor(typeof(IEdge<>))]
+    [ContractClassFor(typeof(IVertexSet<>))]
     sealed class IVertexSetContract<TVertex>
         : IVertexSet<TVertex>
     {
