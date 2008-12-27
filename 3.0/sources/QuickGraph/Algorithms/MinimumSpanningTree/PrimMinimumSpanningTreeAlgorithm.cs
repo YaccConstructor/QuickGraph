@@ -92,7 +92,6 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             }
 
             this.Initialize();
-
             try
             {
                 this.minimumWeights[rootVertex] = 0;
@@ -101,13 +100,11 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
 
                 while (queue.Count != 0)
                 {
-                    if (cancelManager.IsCancelling)
-                        return;
-                    TVertex u = queue.Dequeue();
+                    if (cancelManager.IsCancelling) return;
+
+                    var u = queue.Dequeue();
                     foreach (var edge in this.VisitedGraph.AdjacentEdges(u))
                     {
-                        if (cancelManager.IsCancelling)
-                            return;
                         double edgeWeight = this.edgeWeights(edge);
                         if (
                             queue.Contains(edge.Target) &&

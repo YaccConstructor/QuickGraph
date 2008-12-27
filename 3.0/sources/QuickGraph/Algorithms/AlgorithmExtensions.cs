@@ -8,6 +8,7 @@ using System.Diagnostics.Contracts;
 using QuickGraph.Contracts;
 using QuickGraph.Algorithms.RandomWalks;
 using QuickGraph.Collections;
+using System.Linq;
 
 namespace QuickGraph.Algorithms
 {
@@ -786,5 +787,28 @@ this
             return ds;
         }
 
+
+        public static IEnumerable<TEdge> PrimMinimumSpanningTree<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> weights)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(weights != null);
+
+            if (visitedGraph.VertexCount == 0)
+                return new TEdge[0];
+
+            var distanceRelaxer = ShortestDistanceRelaxer.Instance;
+            var dijkstra = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, weights, distanceRelaxer);
+            var edgeRecorder = new EdgeRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(dijkstra, edgeRecorder))
+                dijkstra.Compute(Enumerable.First(visitedGraph.Vertices));
+
+            return edgeRecorder.Edges;
+        }
     }
 }

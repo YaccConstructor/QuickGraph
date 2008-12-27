@@ -19,43 +19,50 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         public void KruskalMinimumSpanningTreeAll()
         {
             foreach (var g in TestGraphFactory.GetUndirectedGraphs())
-            {
-                GraphConsoleSerializer.DisplayGraph(g);
                 Kruskal(g);
-            }
         }
 
-        private static void Kruskal<TVertex,TEdge>(IUndirectedGraph<TVertex, TEdge> g)
+        [PexMethod]
+        public void Kruskal<TVertex,TEdge>([PexAssumeNotNull]IUndirectedGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
             var kruskal = new KruskalMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
-            kruskal.ExamineEdge += new EdgeEventHandler<TVertex, TEdge>((sender, e) =>
-            {
-                Console.WriteLine("\texamining {0}", e.Edge);
-            });
-            kruskal.TreeEdge += new EdgeEventHandler<TVertex, TEdge>((sender, e) =>
-            {
-                Console.WriteLine("\ttree edge {0}", e.Edge);
-            });
             AssertMinimumSpanningTree<TVertex, TEdge>(g, kruskal);
+        }
+
+        [TestMethod]
+        public void PrimMinimumSpanningTreeAll()
+        {
+            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
+                Prim(g);
+        }
+
+        [PexMethod]
+        public void Prim<TVertex, TEdge>([PexAssumeNotNull]IUndirectedGraph<TVertex, TEdge> g)
+             where TEdge : IEdge<TVertex>
+        {
+            var edges = AlgorithmExtensions.PrimMinimumSpanningTree(g, e => 1);
+            AssertSpanningTree(g, edges);
+//            var prim = new PrimMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
+  //          AssertMinimumSpanningTree<TVertex, TEdge>(g, prim);
         }
 
         private static void AssertMinimumSpanningTree<TVertex, TEdge>(
             IUndirectedGraph<TVertex, TEdge> g, 
-            IMinimumSpanningTreeAlgorithm<TVertex, TEdge> kruskal) 
+            IMinimumSpanningTreeAlgorithm<TVertex, TEdge> algorithm) 
             where TEdge : IEdge<TVertex>
         {
-            var kruskalTree = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(kruskal, kruskalTree))
-                kruskal.Compute();
+            var edgeRecorder = new EdgeRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(algorithm, edgeRecorder))
+                algorithm.Compute();
 
-            Console.WriteLine("kruskal cost: {0}", Cost(kruskalTree.VertexPredecessors));
-            AssertSpanningTree<TVertex, TEdge>(g, kruskalTree.VertexPredecessors);
+            Console.WriteLine("tree cost: {0}", edgeRecorder.Edges.Count);
+            AssertSpanningTree<TVertex, TEdge>(g, edgeRecorder.Edges);
         }
 
         private static void AssertSpanningTree<TVertex, TEdge>(
             IUndirectedGraph<TVertex,TEdge> g, 
-            IDictionary<TVertex, TEdge> tree)
+            IEnumerable<TEdge> tree)
             where TEdge : IEdge<TVertex>
         {
             var spanned = new Dictionary<TVertex, TEdge>();
@@ -63,7 +70,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             foreach (var e in tree)
             {
                 Console.WriteLine("\t{0}", e);
-                spanned[e.Value.Source] = spanned[e.Value.Target] = default(TEdge);
+                spanned[e.Source] = spanned[e.Target] = default(TEdge);
             }
 
             // find vertices that are connected to some edge

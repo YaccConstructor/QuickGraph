@@ -52,13 +52,20 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
 
         protected override void InternalCompute()
         {
+            var cancelManager = this.Services.CancelManager;
             var ds = new ForestDisjointSet<TVertex>(this.VisitedGraph.VertexCount);
             foreach (var v in this.VisitedGraph.Vertices)
                 ds.MakeSet(v);
 
+            if (cancelManager.IsCancelling)
+                return;
+
             var queue = new BinaryQueue<TEdge, double>(this.edgeWeights);
             foreach (var e in this.VisitedGraph.Edges)
                 queue.Enqueue(e);
+
+            if (cancelManager.IsCancelling)
+                return;
 
             int vertexCount = this.VisitedGraph.VertexCount;
             while (queue.Count > 0)
