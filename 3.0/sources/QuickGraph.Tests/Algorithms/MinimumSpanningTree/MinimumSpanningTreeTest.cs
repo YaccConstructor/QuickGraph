@@ -7,6 +7,8 @@ using QuickGraph.Algorithms.MinimumSpanningTree;
 using QuickGraph.Algorithms.Observers;
 using Microsoft.Pex.Framework;
 using QuickGraph.Serialization;
+using QuickGraph.Algorithms.Search;
+using QuickGraph.Algorithms;
 
 namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
 {
@@ -17,63 +19,42 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         public void KruskalMinimumSpanningTreeAll()
         {
             foreach (var g in TestGraphFactory.GetUndirectedGraphs())
-                foreach (var v in g.Vertices)
-                {
-                    Console.WriteLine("start from {0}", v);
-                    Kruskal(g, v);
-                }
-        }
-
-        private static void Kruskal<TVertex,TEdge>(IUndirectedGraph<TVertex, TEdge> g, TVertex v)
-            where TEdge : IEdge<TVertex>
-        {
-            var kruskal = new KruskalMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
-            var kruskalTree = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(kruskal, kruskalTree))
-                kruskal.Compute(v);
-
-            Console.WriteLine("kruskal cost: {0}", Cost(kruskalTree.VertexPredecessors));
-            AssertSpanningTree<TVertex, TEdge>(g, kruskalTree.VertexPredecessors);
-        }
-
-        [TestMethod]
-        public void PrimKruskalMinimumSpanningTreeAll()
-        {
-            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
-                this.Compare(g);
-        }
-
-        [PexMethod]
-        public void Compare<TVertex, TEdge>(IUndirectedGraph<TVertex, TEdge> g)
-            where TEdge :IEdge<TVertex>
-        {
-            foreach (var v in g.Vertices)
             {
-                CompareRoot<TVertex, TEdge>(g, v);
+                GraphConsoleSerializer.DisplayGraph(g);
+                Kruskal(g);
             }
         }
 
-        private void CompareRoot<TVertex, TEdge>(IUndirectedGraph<TVertex, TEdge> g, TVertex v) where TEdge : IEdge<TVertex>
+        private static void Kruskal<TVertex,TEdge>(IUndirectedGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
         {
-            var prim = new PrimMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
-            var primTree = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(prim, primTree))
-                prim.Compute(v);
-
             var kruskal = new KruskalMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
+            kruskal.ExamineEdge += new EdgeEventHandler<TVertex, TEdge>((sender, e) =>
+            {
+                Console.WriteLine("\texamining {0}", e.Edge);
+            });
+            kruskal.TreeEdge += new EdgeEventHandler<TVertex, TEdge>((sender, e) =>
+            {
+                Console.WriteLine("\ttree edge {0}", e.Edge);
+            });
+            AssertMinimumSpanningTree<TVertex, TEdge>(g, kruskal);
+        }
+
+        private static void AssertMinimumSpanningTree<TVertex, TEdge>(
+            IUndirectedGraph<TVertex, TEdge> g, 
+            IMinimumSpanningTreeAlgorithm<TVertex, TEdge> kruskal) 
+            where TEdge : IEdge<TVertex>
+        {
             var kruskalTree = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
             using (ObserverScope.Create(kruskal, kruskalTree))
-                kruskal.Compute(v);
+                kruskal.Compute();
 
-            Console.WriteLine("prim cost: {0}", Cost(primTree.VertexPredecessors));
             Console.WriteLine("kruskal cost: {0}", Cost(kruskalTree.VertexPredecessors));
-            AssertSpanningTree<TVertex, TEdge>(g, primTree.VertexPredecessors);
             AssertSpanningTree<TVertex, TEdge>(g, kruskalTree.VertexPredecessors);
-            AssertAreEqual(primTree.VertexPredecessors, kruskalTree.VertexPredecessors);
         }
 
         private static void AssertSpanningTree<TVertex, TEdge>(
-            IUndirectedGraph<TVertex, TEdge> g, 
+            IUndirectedGraph<TVertex,TEdge> g, 
             IDictionary<TVertex, TEdge> tree)
             where TEdge : IEdge<TVertex>
         {
@@ -85,7 +66,12 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                 spanned[e.Value.Source] = spanned[e.Value.Target] = default(TEdge);
             }
 
-            foreach (var v in g.Vertices)
+            // find vertices that are connected to some edge
+            Dictionary<TVertex, TEdge> treeable = new Dictionary<TVertex, TEdge>();
+            foreach (var e in g.Edges)
+                treeable[e.Source] = treeable[e.Target] = e;
+
+            foreach (var v in treeable.Keys)
                 Assert.IsTrue(spanned.ContainsKey(v), "{0} not in tree", v);
         }
 
@@ -94,7 +80,9 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             return tree.Count;
         }
 
-        private static void AssertAreEqual<TVertex, TEdge>(IDictionary<TVertex, TEdge> left, IDictionary<TVertex, TEdge> right)
+        private static void AssertAreEqual<TVertex, TEdge>(
+            IDictionary<TVertex, TEdge> left, 
+            IDictionary<TVertex, TEdge> right)
             where TEdge : IEdge<TVertex>
         {
             try
@@ -115,5 +103,32 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                 throw new AssertFailedException("comparison failed", ex);
             }
         }
+
+        [TestMethod]
+        public void PrimKruskalMinimumSpanningTreeAll()
+        {
+            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
+                this.CompareRoot(g);
+        }
+
+        [PexMethod]
+        public void CompareRoot<TVertex, TEdge>(IUndirectedGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
+        {
+            var prim = new PrimMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
+            var primTree = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(prim, primTree))
+                prim.Compute();
+
+            var kruskal = new KruskalMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
+            var kruskalTree = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(kruskal, kruskalTree))
+                kruskal.Compute();
+
+            Console.WriteLine("prim cost: {0}", Cost(primTree.VertexPredecessors));
+            Console.WriteLine("kruskal cost: {0}", Cost(kruskalTree.VertexPredecessors));
+            AssertAreEqual(primTree.VertexPredecessors, kruskalTree.VertexPredecessors);
+        }
+
     }
 }

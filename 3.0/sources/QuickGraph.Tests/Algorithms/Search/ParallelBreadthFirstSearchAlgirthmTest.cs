@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.Search
 {
 #if PARALLEL
+    using System.Threading.Tasks;
     [TestFixture]
     public class ParallelBreadthFirstAlgorithmSearchTest
     {

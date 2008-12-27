@@ -18,7 +18,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
     [Serializable]
     public sealed class PrimMinimumSpanningTreeAlgorithm<TVertex,TEdge> 
         : RootedAlgorithmBase<TVertex,IUndirectedGraph<TVertex,TEdge>>
-        , ITreeBuilderAlgorithm<TVertex,TEdge>
+        , IMinimumSpanningTreeAlgorithm<TVertex, TEdge>
         , IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {        

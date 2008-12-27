@@ -9,8 +9,8 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
 {
     [Serializable]
     public sealed class KruskalMinimumSpanningTreeAlgorithm<TVertex,TEdge> 
-        : RootedAlgorithmBase<TVertex,IUndirectedGraph<TVertex,TEdge>>
-        , ITreeBuilderAlgorithm<TVertex,TEdge>
+        : AlgorithmBase<IUndirectedGraph<TVertex,TEdge>>
+        , IMinimumSpanningTreeAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         readonly Func<TEdge, double> edgeWeights;

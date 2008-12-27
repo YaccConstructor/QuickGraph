@@ -11,16 +11,6 @@ namespace QuickGraph.Algorithms
     [TestClass, PexClass]
     public partial class WeaklyConnectedComponentsAlgorithmTest
     {
-        [AssemblyInitialize]
-        public static void AssemblyInitialize(TestContext tc)
-        {
-            Contract.ContractFailed+= (sender, e) => {
-                e.Handled = true;
-                Debugger.Break();
-                Assert.Fail(e.FailureKind.ToString() + ":" + e.DebugMessage + ":" + e.Condition);
-            };
-        }
-
         [TestMethod]
         public void WeaklyConnectedComponentsAll()
         {
