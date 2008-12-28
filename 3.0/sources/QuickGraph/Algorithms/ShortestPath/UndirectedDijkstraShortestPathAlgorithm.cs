@@ -4,6 +4,8 @@ using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Collections;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
+using System.Diagnostics;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
@@ -22,7 +24,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         IDistanceRecorderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private BinaryQueue<TVertex, double> vertexQueue;
+        private FibonacciQueue<TVertex, double> vertexQueue;
 
         public UndirectedDijkstraShortestPathAlgorithm(
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
@@ -57,40 +59,63 @@ namespace QuickGraph.Algorithms.ShortestPath
         public event EdgeEventHandler<TVertex, TEdge> EdgeNotRelaxed;
         private void OnEdgeNotRelaxed(TEdge e)
         {
-            if (EdgeNotRelaxed != null)
-                EdgeNotRelaxed(this, new EdgeEventArgs<TVertex, TEdge>(e));
+            var eh = EdgeNotRelaxed;
+            if (eh != null)
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
         private void InternalTreeEdge(Object sender, EdgeEventArgs<TVertex, TEdge> args)
         {
+            Contract.Requires(args != null);
+
             bool decreased = Relax(args.Edge);
             if (decreased)
-                OnTreeEdge(args.Edge);
+                this.OnTreeEdge(args.Edge);
             else
-                OnEdgeNotRelaxed(args.Edge);
+                this.OnEdgeNotRelaxed(args.Edge);
         }
 
         private void InternalGrayTarget(Object sender, EdgeEventArgs<TVertex, TEdge> args)
         {
+            Contract.Requires(args != null);
+
             bool decreased = Relax(args.Edge);
             if (decreased)
             {
                 this.vertexQueue.Update(args.Edge.Target);
+                this.AssertHeap();
                 OnTreeEdge(args.Edge);
             }
             else
             {
                 OnEdgeNotRelaxed(args.Edge);
             }
+        }
+
+        [Conditional("DEBUG")]
+        private void AssertHeap()
+        {
+            if (this.vertexQueue.Count == 0) return;
+
+            var top = this.vertexQueue.Peek();
+            var vertices = this.vertexQueue.ToArray();
+            for (int i = 1; i < vertices.Length; ++i)
+                if (this.Distances[top] > this.Distances[vertices[i]])
+                    Contract.Assert(false);
         }
 
         protected override void Initialize()
         {
             base.Initialize();
+
             this.VertexColors.Clear();
+            var initialDistance = this.DistanceRelaxer.InitialDistance;
             // init color, distance
             foreach (var u in VisitedGraph.Vertices)
+            {
                 this.VertexColors.Add(u, GraphColor.White);
+                this.Distances.Add(u, initialDistance);
+            }
         }
 
         protected override void InternalCompute()
@@ -107,7 +132,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public void ComputeNoInit(TVertex s)
         {
-            this.vertexQueue = new BinaryQueue<TVertex, double>(e => this.Distances[e]);
+            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.Distances);
             UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge> bfs = null;
 
             try
@@ -123,6 +148,9 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.DiscoverVertex += this.DiscoverVertex;
                 bfs.StartVertex += this.StartVertex;
                 bfs.ExamineEdge += this.ExamineEdge;
+#if DEBUG
+                bfs.ExamineEdge += (sender, e) => this.AssertHeap();
+#endif
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 

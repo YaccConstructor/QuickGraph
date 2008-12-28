@@ -5,6 +5,7 @@ using QuickGraph.Algorithms.Observers;
 using QuickGraph.Collections;
 using QuickGraph.Algorithms.Services;
 using System.Diagnostics.Contracts;
+using System.Diagnostics;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
@@ -115,9 +116,10 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             this.VertexColors[rootVertex] = GraphColor.Gray;
             this.Distances[rootVertex] = 0;
-            ComputeNoInit(rootVertex);
+            this.ComputeNoInit(rootVertex);
         }
 
+        [Conditional("DEBUG")]
         private void AssertHeap()
         {
             if (this.vertexQueue.Count == 0) return;

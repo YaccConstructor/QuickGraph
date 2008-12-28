@@ -8,33 +8,33 @@ using QuickGraph.Serialization;
 namespace QuickGraph.Algorithms.ShortestPath
 {
     [TestClass, PexClass]
-    public partial class DijkstraShortestPathAlgorithmTest2
+    public partial class UndirectedDijkstraShortestPathAlgorithmTest2
     {
         [TestMethod]
-        public void DijkstraAll()
+        public void UndirectedDijkstraAll()
         {
-            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
                 foreach (var root in g.Vertices)
-                    this.Dijkstra(g, root);
+                    this.UndirectedDijkstra(g, root);
         }
 
         [PexMethod]
-        public void Dijkstra<TVertex, TEdge>(IVertexAndEdgeListGraph<TVertex, TEdge> g, TVertex root)
+        public void UndirectedDijkstra<TVertex, TEdge>([PexAssumeNotNull]IUndirectedGraph<TVertex, TEdge> g, TVertex root)
             where TEdge : IEdge<TVertex>
         {
-            var algo = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(
+            var algo = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(
                 g,
                 e => 1
                 );
             var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algo, predecessors))
+            using(ObserverScope.Create(algo, predecessors))
                 algo.Compute(root);
 
             Verify(algo, predecessors);
         }
 
         private static void Verify<TVertex, TEdge>(
-            DijkstraShortestPathAlgorithm<TVertex, TEdge> algo,
+            UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge> algo,
             VertexPredecessorRecorderObserver<TVertex, TEdge> predecessors)
             where TEdge : IEdge<TVertex>
         {
