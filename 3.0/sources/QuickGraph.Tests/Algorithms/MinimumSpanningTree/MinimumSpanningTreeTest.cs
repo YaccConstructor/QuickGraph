@@ -78,6 +78,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             foreach (var e in g.Edges)
                 treeable[e.Source] = treeable[e.Target] = e;
 
+            // ensure they are in the tree
             foreach (var v in treeable.Keys)
                 Assert.IsTrue(spanned.ContainsKey(v), "{0} not in tree", v);
         }
@@ -104,7 +105,8 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                 foreach (var kv in left)
                 {
                     TEdge e;
-                    Assert.AreEqual("{0} - {1}", kv.Value, right.TryGetValue(kv.Key, out e) ? e.ToString() : "missing"  );
+                    Console.WriteLine(
+                        "{0} - {1}", kv.Value, right.TryGetValue(kv.Key, out e) ? e.ToString() : "missing"  );
                 }
 
                 throw new AssertFailedException("comparison failed", ex);

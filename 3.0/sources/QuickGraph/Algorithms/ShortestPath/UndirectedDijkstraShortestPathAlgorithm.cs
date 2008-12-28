@@ -116,25 +116,39 @@ namespace QuickGraph.Algorithms.ShortestPath
                 this.VertexColors.Add(u, GraphColor.White);
                 this.Distances.Add(u, initialDistance);
             }
+            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.Distances);
         }
 
         protected override void InternalCompute()
         {
             TVertex rootVertex;
-            if (!this.TryGetRootVertex(out rootVertex))
-                throw new InvalidOperationException("RootVertex not initialized");
+            if (this.TryGetRootVertex(out rootVertex))
+                this.ComputeFromRoot(rootVertex);
+            else
+            {
+                foreach (var v in this.VisitedGraph.Vertices)
+                    if (this.VertexColors[v] == GraphColor.White)
+                        this.ComputeFromRoot(v);
+            }
+        }
+
+        private void ComputeFromRoot(TVertex rootVertex)
+        {
+            Contract.Requires(rootVertex != null);
+            Contract.Requires(this.VisitedGraph.ContainsVertex(rootVertex));
+            Contract.Requires(this.VertexColors[rootVertex] == GraphColor.White);
 
             this.VertexColors[rootVertex] = GraphColor.Gray;
             this.Distances[rootVertex] = 0;
-
-            ComputeNoInit(rootVertex);
+            this.ComputeNoInit(rootVertex);
         }
 
         public void ComputeNoInit(TVertex s)
         {
-            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.Distances);
-            UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge> bfs = null;
+            Contract.Requires(s != null);
+            Contract.Requires(this.VisitedGraph.ContainsVertex(s));
 
+            UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge> bfs = null;
             try
             {
                 bfs = new UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge>(

@@ -806,7 +806,7 @@ this
             var dijkstra = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, weights, distanceRelaxer);
             var edgeRecorder = new EdgeRecorderObserver<TVertex, TEdge>();
             using (ObserverScope.Create(dijkstra, edgeRecorder))
-                dijkstra.Compute(Enumerable.First(visitedGraph.Vertices));
+                dijkstra.Compute();
 
             return edgeRecorder.Edges;
         }
