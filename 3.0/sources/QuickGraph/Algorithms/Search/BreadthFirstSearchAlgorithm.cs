@@ -170,12 +170,12 @@ namespace QuickGraph.Algorithms.Search
             base.Initialize();
 
             var cancelManager = this.Services.CancelManager;
+            if (cancelManager.IsCancelling)
+                return;
             // initialize vertex u
             foreach (var v in VisitedGraph.Vertices)
             {
-                if (cancelManager.IsCancelling)
-                    return;
-                VertexColors[v] = GraphColor.White;
+                this.VertexColors[v] = GraphColor.White;
                 OnInitializeVertex(v);
             }
         }
