@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Observers
 {
@@ -16,15 +17,16 @@ namespace QuickGraph.Algorithms.Observers
         IObserver<ITreeBuilderAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        private IList<TEdge> edges;
+        private readonly IList<TEdge> edges;
+
         public EdgeRecorderObserver()
             :this(new List<TEdge>())
         {}
 
         public EdgeRecorderObserver(IList<TEdge> edges)
         {
-            if (edges == null)
-                throw new ArgumentNullException("edges");
+            Contract.Requires(edges != null);
+
             this.edges = edges;
         }
 
@@ -38,26 +40,23 @@ namespace QuickGraph.Algorithms.Observers
 
         public void Attach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
+            Contract.Requires(algorithm != null);
+
             algorithm.TreeEdge +=new EdgeEventHandler<TVertex,TEdge>(RecordEdge);
         }
 
         public void Detach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.TreeEdge -=new EdgeEventHandler<TVertex,TEdge>(RecordEdge);
+            Contract.Requires(algorithm != null);
+
+            algorithm.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(RecordEdge);
         }
 
-        public void RecordEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
+        private void RecordEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
         {
-            this.Edges.Add(args.Edge);
-        }
-        public void RecordSource(Object sender, EdgeEdgeEventArgs<TVertex,TEdge> args)
-        {
-            this.Edges.Add(args.Edge);
-        }
-        public void RecordTarget(Object sender, EdgeEdgeEventArgs<TVertex,TEdge> args)
-        {
-            this.Edges.Add(args.TargetEdge);
-        }
+            Contract.Requires(args != null);
 
+            this.Edges.Add(args.Edge);
+        }
     }
 }

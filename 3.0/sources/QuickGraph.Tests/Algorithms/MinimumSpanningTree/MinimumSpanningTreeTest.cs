@@ -41,6 +41,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         public void Prim<TVertex, TEdge>([PexAssumeNotNull]IUndirectedGraph<TVertex, TEdge> g)
              where TEdge : IEdge<TVertex>
         {
+            GraphConsoleSerializer.DisplayGraph(g);
             var edges = AlgorithmExtensions.PrimMinimumSpanningTree(g, e => 1);
             AssertSpanningTree(g, edges);
 //            var prim = new PrimMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);

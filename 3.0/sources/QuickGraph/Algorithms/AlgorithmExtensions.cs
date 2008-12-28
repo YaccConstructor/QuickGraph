@@ -806,7 +806,14 @@ this
             var dijkstra = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, weights, distanceRelaxer);
             var edgeRecorder = new EdgeRecorderObserver<TVertex, TEdge>();
             using (ObserverScope.Create(dijkstra, edgeRecorder))
+            {
+                dijkstra.DiscoverVertex += (sender, args) => Console.WriteLine("discover vertex: " + args.Vertex);
+                dijkstra.ExamineEdge += (sender, args) => Console.WriteLine("examine edge: " + args.Edge);
+                dijkstra.TreeEdge += (sender, args) => Console.WriteLine("tree edge: " + args.Edge);
+                dijkstra.EdgeNotRelaxed += (sender, args) => Console.WriteLine("edge not relaxed: " + args.Edge);
+                dijkstra.ExamineVertex += (sender, args) => Console.WriteLine("examine vertex: " + args.Vertex);
                 dijkstra.Compute();
+            }
 
             return edgeRecorder.Edges;
         }
