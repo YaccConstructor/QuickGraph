@@ -24,7 +24,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         IDistanceRecorderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private FibonacciQueue<TVertex, double> vertexQueue;
+        private IPriorityQueue<TVertex> vertexQueue;
 
         public UndirectedDijkstraShortestPathAlgorithm(
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
@@ -82,7 +82,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             bool decreased = Relax(args.Edge, args.Source, args.Target);
             if (decreased)
             {
-                this.vertexQueue.Update(args.Edge.Target);
+                this.vertexQueue.Update(args.Target);
                 this.AssertHeap();
                 OnTreeEdge(args.Edge);
             }

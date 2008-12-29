@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Collections
 {
     public sealed class FibonacciQueue<TVertex, TDistance> :
-        IQueue<TVertex>
+        IPriorityQueue<TVertex>
     {
         public FibonacciQueue(
             IDictionary<TVertex, TDistance> distances

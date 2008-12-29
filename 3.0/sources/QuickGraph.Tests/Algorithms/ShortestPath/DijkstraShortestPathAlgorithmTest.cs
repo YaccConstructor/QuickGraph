@@ -59,7 +59,6 @@ namespace QuickGraph.Algorithms.ShortestPath
             Assert.AreEqual(e23, col[1]);
         }
 
-
         [TestMethod]
         public void RunOnDoubleLineGraph()
         {

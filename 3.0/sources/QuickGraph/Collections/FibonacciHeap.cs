@@ -453,6 +453,7 @@ namespace QuickGraph.Collections
                     degreeToNode.Remove(next.Degree);
                 }
             }
+            Contract.Assert(next.Children != null);
             foreach (var child in next.Children)
             {
                 child.Parent = null;

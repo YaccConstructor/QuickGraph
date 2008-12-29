@@ -241,6 +241,7 @@
     <Compile Include="Collections\FibonacciHeap.cs" />
     <Compile Include="Collections\FibonacciQueue.cs" />
     <Compile Include="Collections\IDisjointSet.cs" />
+    <Compile Include="Collections\IPriorityQueue.cs" />
     <Compile Include="Collections\IQueue.cs" />
     <Compile Include="Collections\VertexEdgeDictionary.cs" />
     <Compile Include="Collections\VertexList.cs" />

@@ -22,9 +22,13 @@ namespace QuickGraph.Algorithms.ShortestPath
         public void Dijkstra<TVertex, TEdge>(IVertexAndEdgeListGraph<TVertex, TEdge> g, TVertex root)
             where TEdge : IEdge<TVertex>
         {
+            var distances = new Dictionary<TEdge, double>();
+            foreach (var e in g.Edges)
+                distances[e] = g.OutDegree(e.Source) + 1;
+
             var algo = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(
                 g,
-                e => 1
+                e => distances[e]
                 );
             var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
             using (ObserverScope.Create(algo, predecessors))
@@ -35,7 +39,8 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         private static void Verify<TVertex, TEdge>(
             DijkstraShortestPathAlgorithm<TVertex, TEdge> algo,
-            VertexPredecessorRecorderObserver<TVertex, TEdge> predecessors)
+            VertexPredecessorRecorderObserver<TVertex, TEdge> predecessors
+            )
             where TEdge : IEdge<TVertex>
         {
             // let's verify the result
@@ -48,9 +53,10 @@ namespace QuickGraph.Algorithms.ShortestPath
                     continue;
                 double vd, vp;
                 bool found;
-                Assert.AreEqual(found = algo.TryGetDistance(v, out vd), algo.TryGetDistance(predecessor.Source, out vp));
-                if (found)
-                    Assert.AreEqual(vd, vp+1);
+                Assert.AreEqual(
+                    found = algo.TryGetDistance(v, out vd), 
+                    algo.TryGetDistance(predecessor.Source, out vp)
+                    );
             }
         }
     }
