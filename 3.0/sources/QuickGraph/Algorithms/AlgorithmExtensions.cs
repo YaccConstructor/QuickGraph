@@ -788,7 +788,16 @@ this
             return ds;
         }
 
-        public static IEnumerable<TEdge> PrimMinimumSpanningTree<TVertex, TEdge>(
+        /// <summary>
+        /// Computes the minimum spanning tree using Prim's algorithm.
+        /// Prim's algorithm is simply implemented by calling Dijkstra shortest path.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <param name="weights"></param>
+        /// <returns></returns>
+        public static IEnumerable<TEdge> MinimumSpanningTreePrim<TVertex, TEdge>(
 #if !NET20
 this 
 #endif
@@ -811,7 +820,15 @@ this
             return edgeRecorder.VertexPredecessors.Values;
         }
 
-        public static IEnumerable<TEdge> KruskalMinimumSpanningTree<TVertex, TEdge>(
+        /// <summary>
+        /// Computes the minimum spanning tree using Kruskal's algorithm.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <param name="weights"></param>
+        /// <returns></returns>
+        public static IEnumerable<TEdge> MinimumSpanningTreeKruskal<TVertex, TEdge>(
 #if !NET20
 this 
 #endif
