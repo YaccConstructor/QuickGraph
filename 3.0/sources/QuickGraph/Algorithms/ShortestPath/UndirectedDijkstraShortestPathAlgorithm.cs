@@ -17,8 +17,8 @@ namespace QuickGraph.Algorithms.ShortestPath
     ///     idref="lawler01combinatorial"
     ///     />
     [Serializable]
-    public sealed class UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge> :
-        ShortestPathAlgorithmBase<TVertex, TEdge, IUndirectedGraph<TVertex, TEdge>>,
+    public sealed class UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge> 
+        : ShortestPathAlgorithmBase<TVertex, TEdge, IUndirectedGraph<TVertex, TEdge>>,
         IVertexColorizerAlgorithm<TVertex, TEdge>,
         IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>,
         IDistanceRecorderAlgorithm<TVertex, TEdge>
@@ -64,22 +64,22 @@ namespace QuickGraph.Algorithms.ShortestPath
                 eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
-        private void InternalTreeEdge(Object sender, EdgeEventArgs<TVertex, TEdge> args)
+        private void InternalTreeEdge(Object sender, UndirectedEdgeEventArgs<TVertex, TEdge> args)
         {
             Contract.Requires(args != null);
 
-            bool decreased = Relax(args.Edge);
+            bool decreased = Relax(args.Edge, args.Source, args.Target);
             if (decreased)
                 this.OnTreeEdge(args.Edge);
             else
                 this.OnEdgeNotRelaxed(args.Edge);
         }
 
-        private void InternalGrayTarget(Object sender, EdgeEventArgs<TVertex, TEdge> args)
+        private void InternalGrayTarget(Object sender, UndirectedEdgeEventArgs<TVertex, TEdge> args)
         {
             Contract.Requires(args != null);
 
-            bool decreased = Relax(args.Edge);
+            bool decreased = Relax(args.Edge, args.Source, args.Target);
             if (decreased)
             {
                 this.vertexQueue.Update(args.Edge.Target);
@@ -168,8 +168,8 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 
-                bfs.TreeEdge += new EdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
-                bfs.GrayTarget += new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
+                bfs.TreeEdge += new UndirectedEdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
+                bfs.GrayTarget += new UndirectedEdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
 
                 bfs.Visit(s);
             }
@@ -184,8 +184,8 @@ namespace QuickGraph.Algorithms.ShortestPath
                     bfs.ExamineVertex -= this.ExamineVertex;
                     bfs.FinishVertex -= this.FinishVertex;
 
-                    bfs.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
-                    bfs.GrayTarget -= new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
+                    bfs.TreeEdge -= new UndirectedEdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
+                    bfs.GrayTarget -= new UndirectedEdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
                 }
             }
         }

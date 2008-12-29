@@ -14,7 +14,7 @@ namespace QuickGraph.Algorithms.Observers
     ///     />
     [Serializable]
     public sealed class VertexDistanceRecorderObserver<TVertex, TEdge> :
-        IObserver<IDistanceRecorderAlgorithm<TVertex, TEdge>>
+        IObserver<ITreeBuilderAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private readonly IDictionary<TVertex, int> distances;
@@ -25,8 +25,8 @@ namespace QuickGraph.Algorithms.Observers
 
         public VertexDistanceRecorderObserver(IDictionary<TVertex, int> distances)
         {
-            if (distances == null)
-                throw new ArgumentNullException("distances");
+            Contract.Requires(distances != null);
+
             this.distances = distances;
         }
 
@@ -35,15 +35,17 @@ namespace QuickGraph.Algorithms.Observers
             get { return this.distances; }
         }
 
-        public void Attach(IDistanceRecorderAlgorithm<TVertex, TEdge> algorithm)
+        public void Attach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
             Contract.Requires(algorithm != null);
+
             algorithm.TreeEdge += new EdgeEventHandler<TVertex, TEdge>(this.TreeEdge);
         }
 
-        public void Detach(IDistanceRecorderAlgorithm<TVertex, TEdge> algorithm)
+        public void Detach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
             Contract.Requires(algorithm != null);
+
             algorithm.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(this.TreeEdge);
         }
 

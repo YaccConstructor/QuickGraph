@@ -16,12 +16,12 @@ namespace QuickGraph.Algorithms.Search
     ///     chapter="4.2"
     ///     />
     [Serializable]
-    public sealed class UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge> :
-        RootedAlgorithmBase<TVertex, IUndirectedGraph<TVertex, TEdge>>,
-        IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>,
-        IDistanceRecorderAlgorithm<TVertex, TEdge>,
-        IVertexColorizerAlgorithm<TVertex, TEdge>,
-        ITreeBuilderAlgorithm<TVertex, TEdge>
+    public sealed class UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge> 
+        : RootedAlgorithmBase<TVertex, IUndirectedGraph<TVertex, TEdge>>
+        , IUndirectedVertexPredecessorRecorderAlgorithm<TVertex, TEdge>
+        , IDistanceRecorderAlgorithm<TVertex, TEdge>
+        , IVertexColorizerAlgorithm<TVertex, TEdge>
+        , IUndirectedTreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private IDictionary<TVertex, GraphColor> vertexColors;
@@ -108,36 +108,36 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
-        private void OnTreeEdge(TEdge e)
+        public event UndirectedEdgeEventHandler<TVertex, TEdge> TreeEdge;
+        private void OnTreeEdge(TEdge e, bool reversed)
         {
             var eh = this.TreeEdge;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> NonTreeEdge;
-        private void OnNonTreeEdge(TEdge e)
+        public event UndirectedEdgeEventHandler<TVertex, TEdge> NonTreeEdge;
+        private void OnNonTreeEdge(TEdge e, bool reversed)
         {
             var eh = this.NonTreeEdge;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> GrayTarget;
-        private void OnGrayTarget(TEdge e)
+        public event UndirectedEdgeEventHandler<TVertex, TEdge> GrayTarget;
+        private void OnGrayTarget(TEdge e, bool reversed)
         {
             var eh = this.GrayTarget;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> BlackTarget;
-        private void OnBlackTarget(TEdge e)
+        public event UndirectedEdgeEventHandler<TVertex, TEdge> BlackTarget;
+        private void OnBlackTarget(TEdge e, bool reversed)
         {
             var eh = this.BlackTarget;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
         public event VertexEventHandler<TVertex> FinishVertex;
@@ -205,24 +205,25 @@ namespace QuickGraph.Algorithms.Search
                 this.OnExamineVertex(u);
                 foreach (var e in VisitedGraph.AdjacentEdges(u))
                 {
-                    TVertex v = (e.Source.Equals(u)) ? e.Target : e.Source;
+                    var reversed = e.Target.Equals(u);
+                    TVertex v = reversed ? e.Source : e.Target;
                     this.OnExamineEdge(e);
 
                     var vColor = this.VertexColors[v];
                     if (vColor == GraphColor.White)
                     {
-                        this.OnTreeEdge(e);
+                        this.OnTreeEdge(e, reversed);
                         this.VertexColors[v] = GraphColor.Gray;
                         this.OnDiscoverVertex(v);
                         this.vertexQueue.Enqueue(v);
                     }
                     else
                     {
-                        this.OnNonTreeEdge(e);
+                        this.OnNonTreeEdge(e, reversed);
                         if (vColor == GraphColor.Gray)
-                            this.OnGrayTarget(e);
+                            this.OnGrayTarget(e, reversed);
                         else
-                            this.OnBlackTarget(e);
+                            this.OnBlackTarget(e, reversed);
                     }
                 }
                 this.VertexColors[u] = GraphColor.Black;

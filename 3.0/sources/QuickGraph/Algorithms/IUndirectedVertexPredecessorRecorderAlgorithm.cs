@@ -2,8 +2,8 @@
 
 namespace QuickGraph.Algorithms
 {
-    public interface IVertexPredecessorRecorderAlgorithm<TVertex,TEdge> 
-        : ITreeBuilderAlgorithm<TVertex, TEdge>
+    public interface IUndirectedVertexPredecessorRecorderAlgorithm<TVertex,TEdge> 
+        : IUndirectedTreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         event VertexEventHandler<TVertex> StartVertex;

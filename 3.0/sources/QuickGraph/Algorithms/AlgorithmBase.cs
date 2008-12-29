@@ -67,11 +67,21 @@ namespace QuickGraph.Algorithms
         {
             this.BeginComputation();
             this.Initialize();
-            this.InternalCompute();
+            try
+            {
+                this.InternalCompute();
+            }
+            finally
+            {
+                this.Clean();
+            }
             this.EndComputation();
         }
 
         protected virtual void Initialize()
+        { }
+
+        protected virtual void Clean()
         { }
 
         protected abstract void InternalCompute();

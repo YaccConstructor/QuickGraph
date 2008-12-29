@@ -149,6 +149,8 @@
     <Compile Include="Algorithms\Condensation\CondensatedEdge.cs" />
     <Compile Include="Algorithms\Condensation\MergedEdge.cs" />
     <Compile Include="Algorithms\ConnectedComponentsAlgorithm.cs" />
+    <Compile Include="Algorithms\IUndirectedVertexPredecessorRecorderAlgorithm.cs" />
+    <Compile Include="Algorithms\IUndirectedTreeBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\KruskalMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\Observers\VertexPredecessorPathRecorderObserver.cs" />
@@ -335,6 +337,7 @@
     <Compile Include="Serialization\GraphMLXmlResolver.cs" />
     <Compile Include="Serialization\SerializationExtensions.cs" />
     <Compile Include="TryFuncDelegates.cs" />
+    <Compile Include="UndirectedEdgeEventArgs.cs" />
     <Compile Include="VertexFactory.cs" />
     <Compile Include="IVertexListGraph.cs" />
     <Compile Include="NonAcyclicGraphException.cs" />

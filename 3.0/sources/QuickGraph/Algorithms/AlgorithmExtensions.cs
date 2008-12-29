@@ -9,6 +9,7 @@ using QuickGraph.Contracts;
 using QuickGraph.Algorithms.RandomWalks;
 using QuickGraph.Collections;
 using System.Linq;
+using QuickGraph.Algorithms.MinimumSpanningTree;
 
 namespace QuickGraph.Algorithms
 {
@@ -787,7 +788,6 @@ this
             return ds;
         }
 
-
         public static IEnumerable<TEdge> PrimMinimumSpanningTree<TVertex, TEdge>(
 #if !NET20
 this 
@@ -806,14 +806,29 @@ this
             var dijkstra = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, weights, distanceRelaxer);
             var edgeRecorder = new EdgeRecorderObserver<TVertex, TEdge>();
             using (ObserverScope.Create(dijkstra, edgeRecorder))
-            {
-                dijkstra.DiscoverVertex += (sender, args) => Console.WriteLine("discover vertex: " + args.Vertex);
-                dijkstra.ExamineEdge += (sender, args) => Console.WriteLine("examine edge: " + args.Edge);
-                dijkstra.TreeEdge += (sender, args) => Console.WriteLine("tree edge: " + args.Edge);
-                dijkstra.EdgeNotRelaxed += (sender, args) => Console.WriteLine("edge not relaxed: " + args.Edge);
-                dijkstra.ExamineVertex += (sender, args) => Console.WriteLine("examine vertex: " + args.Vertex);
                 dijkstra.Compute();
-            }
+
+            return edgeRecorder.Edges;
+        }
+
+        public static IEnumerable<TEdge> KruskalMinimumSpanningTree<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> weights)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(weights != null);
+
+            if (visitedGraph.VertexCount == 0)
+                return new TEdge[0];
+
+            var kruskal = new KruskalMinimumSpanningTreeAlgorithm<TVertex, TEdge>(visitedGraph, weights);
+            var edgeRecorder = new EdgeRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(kruskal, edgeRecorder))
+                kruskal.Compute();
 
             return edgeRecorder.Edges;
         }

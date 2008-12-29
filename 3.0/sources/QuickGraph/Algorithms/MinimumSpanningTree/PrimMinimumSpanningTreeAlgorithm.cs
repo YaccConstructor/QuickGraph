@@ -78,50 +78,47 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
 
         protected override void InternalCompute()
         {
-            if (this.VisitedGraph.VertexCount == 0)
-                return;
+            if (this.VisitedGraph.VertexCount == 0) return;
             var cancelManager = this.Services.CancelManager;
+
             TVertex rootVertex;
-            if (!this.TryGetRootVertex(out rootVertex))
+            if (this.TryGetRootVertex(out rootVertex))
+                this.ComputeNoInitialize(rootVertex);
+            else
             {
                 foreach (var v in this.VisitedGraph.Vertices)
-                {
-                    rootVertex = v;
-                    break;
-                }
+                    if (this.minimumWeights[v] == double.MaxValue)
+                        this.ComputeNoInitialize(v);
             }
+        }
 
-            this.Initialize();
-            try
+        private void ComputeNoInitialize(TVertex rootVertex)
+        {
+            var cancelManager = this.Services.CancelManager;
+
+            this.minimumWeights[rootVertex] = 0;
+            this.queue.Update(rootVertex);
+            this.OnStartVertex(rootVertex);
+
+            while (queue.Count != 0)
             {
-                this.minimumWeights[rootVertex] = 0;
-                this.queue.Update(rootVertex);
-                this.OnStartVertex(rootVertex);
+                if (cancelManager.IsCancelling) return;
 
-                while (queue.Count != 0)
+                var u = queue.Dequeue();
+                foreach (var edge in this.VisitedGraph.AdjacentEdges(u))
                 {
-                    if (cancelManager.IsCancelling) return;
+                    var v = edge.Source.Equals(u) ? edge.Target : edge.Source;
 
-                    var u = queue.Dequeue();
-                    foreach (var edge in this.VisitedGraph.AdjacentEdges(u))
+                    double edgeWeight = this.edgeWeights(edge);
+                    if (queue.Contains(edge.Target) &&
+                        edgeWeight < this.minimumWeights[v])
                     {
-                        double edgeWeight = this.edgeWeights(edge);
-                        if (
-                            queue.Contains(edge.Target) &&
-                            edgeWeight < this.minimumWeights[edge.Target]
-                            )
-                        {
-                            this.minimumWeights[edge.Target] = edgeWeight;
-                            this.queue.Update(edge.Target);
-                            this.OnTreeEdge(edge);
-                        }
+                        this.minimumWeights[v] = edgeWeight;
+                        this.queue.Update(v);
+                        this.OnTreeEdge(edge);
                     }
-                    this.OnFinishVertex(u);
                 }
-            }
-            finally
-            {
-                this.CleanUp();
+                this.OnFinishVertex(u);
             }
         }
 
@@ -138,8 +135,10 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             }
         }
 
-        private void CleanUp()
+        protected override void Clean()
         {
+            base.Clean();
+
             this.minimumWeights = null;
             this.queue = null;
         }

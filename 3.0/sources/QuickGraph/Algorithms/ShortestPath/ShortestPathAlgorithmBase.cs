@@ -99,15 +99,30 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         protected bool Relax(TEdge e)
         {
-            double du = this.distances[e.Source];
-            double dv = this.distances[e.Target];
+            Contract.Requires(e != null);
+
+            return Relax(e, e.Source, e.Target);
+        }
+
+        protected bool Relax(TEdge e, TVertex source, TVertex target)
+        {
+            Contract.Requires(e != null);
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
+            Contract.Requires(
+                (e.Source.Equals(source) && e.Target.Equals(target))
+                || (e.Source.Equals(target) && e.Target.Equals(target))
+                );
+
+            double du = this.distances[source];
+            double dv = this.distances[target];
             double we = this.Weights(e);
 
             var relaxer = this.DistanceRelaxer;
             var duwe = relaxer.Combine(du, we);
             if (relaxer.Compare(duwe, dv))
             {
-                this.distances[e.Target] = duwe;
+                this.distances[target] = duwe;
                 return true;
             }
             else

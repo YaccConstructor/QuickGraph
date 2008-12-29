@@ -44,8 +44,6 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             GraphConsoleSerializer.DisplayGraph(g);
             var edges = AlgorithmExtensions.PrimMinimumSpanningTree(g, e => 1);
             AssertSpanningTree(g, edges);
-//            var prim = new PrimMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
-  //          AssertMinimumSpanningTree<TVertex, TEdge>(g, prim);
         }
 
         private static void AssertMinimumSpanningTree<TVertex, TEdge>(
@@ -121,24 +119,33 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                 this.CompareRoot(g);
         }
 
-        [PexMethod]
-        public void CompareRoot<TVertex, TEdge>(IUndirectedGraph<TVertex, TEdge> g)
-            where TEdge : IEdge<TVertex>
+        [TestMethod]
+        [WorkItem(12240)]
+        public void Prim12240()
         {
-            var prim = new PrimMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
-            var primTree = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(prim, primTree))
-                prim.Compute();
+            var g = new UndirectedGraph<int, Edge<int>>();
+            // (1,2), (3,2),(3,4),(1,4)
+            g.AddVerticesAndEdge(new Edge<int>(1, 2));
+            g.AddVerticesAndEdge(new Edge<int>(3, 2));
+            g.AddVerticesAndEdge(new Edge<int>(3, 4));
+            g.AddVerticesAndEdge(new Edge<int>(1, 4));
 
-            var kruskal = new KruskalMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => 1);
-            var kruskalTree = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(kruskal, kruskalTree))
-                kruskal.Compute();
-
-            Console.WriteLine("prim cost: {0}", Cost(primTree.VertexPredecessors));
-            Console.WriteLine("kruskal cost: {0}", Cost(kruskalTree.VertexPredecessors));
-            AssertAreEqual(primTree.VertexPredecessors, kruskalTree.VertexPredecessors);
+            var cost = CompareRoot(g);
+            Assert.AreEqual(cost, 3);
         }
 
+        [PexMethod]
+        public int CompareRoot<TVertex, TEdge>(IUndirectedGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
+        {
+            var prim = new List<TEdge>(AlgorithmExtensions.PrimMinimumSpanningTree(g, e => 1));
+            var kruskal = new List<TEdge>(AlgorithmExtensions.KruskalMinimumSpanningTree(g, e => 1));
+
+            Console.WriteLine("prim cost: {0}", prim.Count);
+            Console.WriteLine("kruskal cost: {0}", kruskal.Count);
+            Assert.AreEqual(prim.Count, kruskal.Count);
+
+            return prim.Count;
+        }
     }
 }

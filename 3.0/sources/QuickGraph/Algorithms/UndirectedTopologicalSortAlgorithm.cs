@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 
 using QuickGraph.Algorithms.Search;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
     [Serializable]
-    public sealed class UndirectedTopologicalSortAlgorithm<TVertex, TEdge> :
-        AlgorithmBase<IUndirectedGraph<TVertex, TEdge>>
+    public sealed class UndirectedTopologicalSortAlgorithm<TVertex, TEdge>
+        : AlgorithmBase<IUndirectedGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private IList<TVertex> vertices;
@@ -22,8 +23,7 @@ namespace QuickGraph.Algorithms
             IList<TVertex> vertices)
             : base(g)
         {
-            if (vertices == null)
-                throw new ArgumentNullException("vertices");
+            Contract.Requires(vertices != null);
 
             this.vertices = vertices;
         }
