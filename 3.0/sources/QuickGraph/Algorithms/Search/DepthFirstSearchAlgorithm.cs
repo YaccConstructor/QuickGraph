@@ -59,7 +59,7 @@ namespace QuickGraph.Algorithms.Search
             IVertexListGraph<TVertex, TEdge> visitedGraph,
             IDictionary<TVertex, GraphColor> colors
             )
-            : this(host, visitedGraph, colors, null)
+            : this(host, visitedGraph, colors, e => e)
         { }
 
         /// <summary>
@@ -82,6 +82,8 @@ namespace QuickGraph.Algorithms.Search
             :base(host, visitedGraph)
 		{
             Contract.Requires(colors != null);
+            Contract.Requires(outEdgeEnumerator != null);
+
 			this.colors = colors;
             this.outEdgeEnumerator = outEdgeEnumerator;
 		}
