@@ -126,6 +126,32 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                 this.CompareRoot(g);
         }
 
+        [PexMethod]
+        public int CompareRoot<TVertex, TEdge>(IUndirectedGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
+        {
+            var distances = new Dictionary<TEdge, double>();
+            foreach (var e in g.Edges)
+                distances[e] = g.AdjacentDegree(e.Source) + 1;
+
+            var prim = new List<TEdge>(AlgorithmExtensions.PrimMinimumSpanningTree(g, e => distances[e]));
+            var kruskal = new List<TEdge>(AlgorithmExtensions.KruskalMinimumSpanningTree(g, e => distances[e]));
+
+            var primCost = prim.Sum(e => distances[e]);
+            var kruskalCost = kruskal.Sum(e => distances[e]);
+            Console.WriteLine("prim cost: {0}", primCost);
+            Console.WriteLine("kruskal cost: {0}", kruskalCost);
+            if (prim.Count != kruskal.Count)
+            {
+                GraphConsoleSerializer.DisplayGraph(g);
+                Console.WriteLine("prim: {0}", String.Join(", ", Array.ConvertAll(prim.ToArray(), e => e.ToString() + ':' + distances[e])));
+                Console.WriteLine("krus: {0}", String.Join(", ", Array.ConvertAll(kruskal.ToArray(), e => e.ToString() + ':' + distances[e])));
+                Assert.Fail("cost do not match");
+            }
+
+            return prim.Count;
+        }
+
         [TestMethod]
         [WorkItem(12240)]
         public void Prim12240()
@@ -139,24 +165,6 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
 
             var cost = CompareRoot(g);
             Assert.AreEqual(cost, 3);
-        }
-
-        [PexMethod]
-        public int CompareRoot<TVertex, TEdge>(IUndirectedGraph<TVertex, TEdge> g)
-            where TEdge : IEdge<TVertex>
-        {
-            var distances = new Dictionary<TEdge, double>();
-            foreach (var e in g.Edges)
-                distances[e] = g.AdjacentDegree(e.Source) + 1;
-
-            var prim = new List<TEdge>(AlgorithmExtensions.PrimMinimumSpanningTree(g, e => distances[e]));
-            var kruskal = new List<TEdge>(AlgorithmExtensions.KruskalMinimumSpanningTree(g, e => distances[e]));
-
-            Console.WriteLine("prim cost: {0}", prim.Count);
-            Console.WriteLine("kruskal cost: {0}", kruskal.Count);
-            Assert.AreEqual(prim.Count, kruskal.Count);
-
-            return prim.Count;
         }
     }
 }
