@@ -179,7 +179,6 @@
     <Compile Include="Algorithms\MaximumFlow\MaximumFlowAlgorithmBase.cs" />
     <Compile Include="Algorithms\MaximumFlow\MultiSourceSinkGraphAugmentorAlgorithm.cs" />
     <Compile Include="Algorithms\MaximumFlow\ReverseEdgeAugmentorAlgorithm.cs" />
-    <Compile Include="Algorithms\MinimumSpanningTree\PrimMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\Observers\IObserver.cs" />
     <Compile Include="Algorithms\Observers\ObserverUtility.cs" />
     <Compile Include="Algorithms\Observers\VertexRecorderObserver.cs" />

@@ -91,7 +91,6 @@
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTest.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\MinimumSpanningTreeTest.cs" />
-    <Compile Include="Algorithms\MinimumSpanningTree\PrimMinimumSpanningTreeAlgorithmTest.cs" />
     <Compile Include="Algorithms\RandomWalks\CyclePoppingRandomTreeAlgorithmTest.cs" />
     <Compile Include="Algorithms\RandomWalks\EdgeChainTest.cs" />
     <Compile Include="Algorithms\RandomWalks\RandomWalkAlgorithmTest.cs" />
