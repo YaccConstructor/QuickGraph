@@ -47,6 +47,24 @@ namespace QuickGraph
         #endregion
 
         #region IMutableUndirected<Vertex,Edge> Members
+        public event VertexEventHandler<TVertex> VertexAdded;
+        protected virtual void OnVertexAdded(VertexEventArgs<TVertex> args)
+        {
+            Contract.Requires(args != null);
+
+            var eh = this.VertexAdded;
+            if (eh != null)
+                eh(this, args);
+        }
+
+        public void AddVertexRange(IEnumerable<TVertex> vertices)
+        {
+            Contract.Requires(vertices != null);
+            Contract.Requires(Contract.ForAll(vertices, v => v != null));
+
+            foreach (var v in vertices)
+                this.AddVertex(v);
+        }
 
         public void AddVertex(TVertex v)
         {
@@ -57,6 +75,7 @@ namespace QuickGraph
                 ? new EdgeList<TVertex, TEdge>() 
                 : new EdgeList<TVertex, TEdge>(this.EdgeCapacity);
             this.adjacentEdges.Add(v, edges);
+            this.OnVertexAdded(new VertexEventArgs<TVertex>(v));
         }
 
         private List<TEdge> AddAndReturnEdges(TVertex v)
@@ -70,11 +89,26 @@ namespace QuickGraph
             return edges;
         }
 
+        public event VertexEventHandler<TVertex> VertexRemoved;
+        protected virtual void OnVertexRemoved(VertexEventArgs<TVertex> args)
+        {
+            Contract.Requires(args != null);
+
+            var eh = this.VertexRemoved;
+            if (eh != null)
+                eh(this, args);
+        }
+
         public bool RemoveVertex(TVertex v)
         {
             Contract.Requires(v != null);
             this.ClearAdjacentEdges(v);
-            return this.adjacentEdges.Remove(v);
+            bool result = this.adjacentEdges.Remove(v);
+
+            if (result)
+                this.OnVertexRemoved(new VertexEventArgs<TVertex>(v));
+
+            return result;
         }
 
         public int RemoveVertexIf(VertexPredicate<TVertex> pred)

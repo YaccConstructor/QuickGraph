@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace QuickGraph
 {
-    public interface IUndirectedGraph<TVertex,TEdge> :
-        IVertexAndEdgeSet<TVertex,TEdge>,
-        IGraph<TVertex,TEdge>
+    public interface IUndirectedGraph<TVertex,TEdge> 
+        : IVertexAndEdgeSet<TVertex,TEdge>
+        , IGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
         IEnumerable<TEdge> AdjacentEdges(TVertex v);

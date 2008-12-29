@@ -314,7 +314,7 @@ namespace QuickGraph
         {
             Contract.Requires(args != null);
 
-            VertexEventHandler<TVertex> eh = this.VertexAdded;
+            var eh = this.VertexAdded;
             if (eh != null)
                 eh(this, args);
         }
@@ -372,7 +372,7 @@ namespace QuickGraph
         {
             Contract.Requires(args != null);
 
-            VertexEventHandler<TVertex> eh = this.VertexRemoved;
+            var eh = this.VertexRemoved;
             if (eh != null)
                 eh(this, args);
         }
