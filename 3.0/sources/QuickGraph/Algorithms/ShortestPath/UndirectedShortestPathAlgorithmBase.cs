@@ -9,9 +9,9 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Algorithms.ShortestPath
 {
     [Serializable]
-    public abstract class ShortestPathAlgorithmBase<TVertex, TEdge, TGraph>
-        : RootedAlgorithmBase<TVertex,TGraph>
-        , ITreeBuilderAlgorithm<TVertex, TEdge>
+    public abstract class UndirectedShortestPathAlgorithmBase<TVertex, TEdge>
+        : RootedAlgorithmBase<TVertex, IUndirectedGraph<TVertex,TEdge>>
+        , IUndirectedTreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private readonly IDictionary<TVertex, GraphColor> vertexColors;
@@ -19,17 +19,17 @@ namespace QuickGraph.Algorithms.ShortestPath
         private readonly Func<TEdge, double> weights;
         private readonly IDistanceRelaxer distanceRelaxer;
 
-        protected ShortestPathAlgorithmBase(
+        protected UndirectedShortestPathAlgorithmBase(
             IAlgorithmComponent host,
-            TGraph visitedGraph,
+            IUndirectedGraph<TVertex,TEdge> visitedGraph,
             Func<TEdge, double> weights
             )
             :this(host, visitedGraph, weights, ShortestDistanceRelaxer.Instance)
         {}
 
-        protected ShortestPathAlgorithmBase(
+        protected UndirectedShortestPathAlgorithmBase(
             IAlgorithmComponent host,
-            TGraph visitedGraph,
+            IUndirectedGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
@@ -83,25 +83,29 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// The edge that participated in the last relaxation for vertex v is 
         /// an edge in the shortest paths tree.
         /// </summary>
-        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event UndirectedEdgeEventHandler<TVertex, TEdge> TreeEdge;
 
         /// <summary>
         /// Raises the <see cref="TreeEdge"/> event.
         /// </summary>
         /// <param name="e">edge that raised the event</param>
-        protected virtual void OnTreeEdge(TEdge e)
+        protected virtual void OnTreeEdge(TEdge e, bool reversed)
         {
             var eh = this.TreeEdge;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
-        protected bool Relax(TEdge e)
+        protected bool Relax(TEdge e, TVertex source, TVertex target)
         {
             Contract.Requires(e != null);
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
+            Contract.Requires(
+                (e.Source.Equals(source) && e.Target.Equals(target))
+                || (e.Source.Equals(target) && e.Target.Equals(target))
+                );
 
-            var source = e.Source;
-            var target = e.Target;
             double du = this.distances[source];
             double dv = this.distances[target];
             double we = this.Weights(e);

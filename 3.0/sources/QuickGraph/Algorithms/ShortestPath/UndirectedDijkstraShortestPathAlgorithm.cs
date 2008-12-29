@@ -18,10 +18,10 @@ namespace QuickGraph.Algorithms.ShortestPath
     ///     />
     [Serializable]
     public sealed class UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge> 
-        : ShortestPathAlgorithmBase<TVertex, TEdge, IUndirectedGraph<TVertex, TEdge>>,
-        IVertexColorizerAlgorithm<TVertex, TEdge>,
-        IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>,
-        IDistanceRecorderAlgorithm<TVertex, TEdge>
+        : UndirectedShortestPathAlgorithmBase<TVertex, TEdge>
+        , IVertexColorizerAlgorithm<TVertex, TEdge>
+        , IUndirectedVertexPredecessorRecorderAlgorithm<TVertex, TEdge>
+        , IDistanceRecorderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private IPriorityQueue<TVertex> vertexQueue;
@@ -56,12 +56,12 @@ namespace QuickGraph.Algorithms.ShortestPath
         public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
         public event VertexEventHandler<TVertex> FinishVertex;
 
-        public event EdgeEventHandler<TVertex, TEdge> EdgeNotRelaxed;
-        private void OnEdgeNotRelaxed(TEdge e)
+        public event UndirectedEdgeEventHandler<TVertex, TEdge> EdgeNotRelaxed;
+        private void OnEdgeNotRelaxed(TEdge e, bool reversed)
         {
             var eh = EdgeNotRelaxed;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
         private void InternalTreeEdge(Object sender, UndirectedEdgeEventArgs<TVertex, TEdge> args)
@@ -70,9 +70,9 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             bool decreased = Relax(args.Edge, args.Source, args.Target);
             if (decreased)
-                this.OnTreeEdge(args.Edge);
+                this.OnTreeEdge(args.Edge, args.Reversed);
             else
-                this.OnEdgeNotRelaxed(args.Edge);
+                this.OnEdgeNotRelaxed(args.Edge, args.Reversed);
         }
 
         private void InternalGrayTarget(Object sender, UndirectedEdgeEventArgs<TVertex, TEdge> args)
@@ -84,11 +84,11 @@ namespace QuickGraph.Algorithms.ShortestPath
             {
                 this.vertexQueue.Update(args.Target);
                 this.AssertHeap();
-                OnTreeEdge(args.Edge);
+                OnTreeEdge(args.Edge, args.Reversed);
             }
             else
             {
-                OnEdgeNotRelaxed(args.Edge);
+                OnEdgeNotRelaxed(args.Edge, args.Reversed);
             }
         }
 

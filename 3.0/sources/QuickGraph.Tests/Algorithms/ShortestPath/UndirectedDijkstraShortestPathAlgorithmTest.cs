@@ -37,7 +37,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 g,
                 e => distances[e]
                 );
-            var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            var predecessors = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
             using(ObserverScope.Create(algo, predecessors))
                 algo.Compute(root);
 
@@ -46,7 +46,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         private static void Verify<TVertex, TEdge>(
             UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge> algo,
-            VertexPredecessorRecorderObserver<TVertex, TEdge> predecessors)
+            UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge> predecessors)
             where TEdge : IEdge<TVertex>
         {
             // let's verify the result

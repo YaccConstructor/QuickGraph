@@ -154,7 +154,7 @@ this
             Contract.Requires(source != null);
 
             var algorithm = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
-            var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            var predecessorRecorder = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
             using (ObserverScope.Create(algorithm, predecessorRecorder))
                 algorithm.Compute(source);
 
@@ -804,11 +804,11 @@ this
 
             var distanceRelaxer = ShortestDistanceRelaxer.Instance;
             var dijkstra = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, weights, distanceRelaxer);
-            var edgeRecorder = new EdgeRecorderObserver<TVertex, TEdge>();
+            var edgeRecorder = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
             using (ObserverScope.Create(dijkstra, edgeRecorder))
                 dijkstra.Compute();
 
-            return edgeRecorder.Edges;
+            return edgeRecorder.VertexPredecessors.Values;
         }
 
         public static IEnumerable<TEdge> KruskalMinimumSpanningTree<TVertex, TEdge>(
