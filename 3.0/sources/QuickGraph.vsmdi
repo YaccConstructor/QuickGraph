@@ -5,10 +5,10 @@
   </TestList>
   <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d">
     <TestLinks>
-      <TestLink id="3e9aeca9-74b7-cb19-61f5-b34498e08a45" name="Unions06" storage="quickgraph.tests\bin\debug\quickgraph.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="8e560d9d-c79d-e7e1-3528-94ff730e7306" name="EulerianTrailAll" storage="quickgraph.tests\bin\debug\quickgraph.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="72284747-43a8-12e0-039e-9d2cce2fe1fb" name="InsertAndRemoveMinimum07" storage="quickgraph.tests\bin\debug\quickgraph.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="4adbccfe-177b-c995-b2f3-a89b9ef0bd3e" name="InsertAndRemoveMinimum08" storage="quickgraph.tests\bin\debug\quickgraph.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="3e9aeca9-74b7-cb19-61f5-b34498e08a45" name="Unions06" storage="quickgraph.tests\bin\debugcontracts\quickgraph.tests.dll" enabled="false" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="8e560d9d-c79d-e7e1-3528-94ff730e7306" name="EulerianTrailAll" storage="quickgraph.tests\bin\debugcontracts\quickgraph.tests.dll" enabled="false" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="72284747-43a8-12e0-039e-9d2cce2fe1fb" name="InsertAndRemoveMinimum07" storage="quickgraph.tests\bin\debugcontracts\quickgraph.tests.dll" enabled="false" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="4adbccfe-177b-c995-b2f3-a89b9ef0bd3e" name="InsertAndRemoveMinimum08" storage="quickgraph.tests\bin\debugcontracts\quickgraph.tests.dll" enabled="false" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
     </TestLinks>
   </TestList>
 </TestLists>

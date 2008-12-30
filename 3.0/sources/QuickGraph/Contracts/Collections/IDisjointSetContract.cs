@@ -56,13 +56,15 @@ namespace QuickGraph.Collections.Contracts
             return Contract.Result<object>();
         }
 
-        void IDisjointSet<T>.Union(T left, T right)
+        bool IDisjointSet<T>.Union(T left, T right)
         {
             IDisjointSet<T> ithis = this;
             Contract.Requires(left != null);
             Contract.Requires(ithis.Contains(left));
             Contract.Requires(right != null);
             Contract.Requires(ithis.Contains(right));
+
+            return Contract.Result<bool>();
         }
 
         [Pure]

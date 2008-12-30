@@ -88,7 +88,6 @@ namespace QuickGraph.Collections
             Contract.Requires(this.Contains(left));
             Contract.Requires(this.Contains(right));
             Contract.Ensures(this.FindNoCompression(this.elements[left]) == this.FindNoCompression(this.elements[right]));
-
             
             return this.Union(this.elements[left], this.elements[right]);
         }
@@ -154,7 +153,10 @@ namespace QuickGraph.Collections
         {
             Contract.Requires(left != null);
             Contract.Requires(right != null);
-            Contract.Ensures(left == right || Contract.OldValue(this.SetCount) - 1 == this.SetCount);
+            Contract.Ensures(
+                Contract.Result<bool>() 
+                ? Contract.OldValue(this.SetCount) - 1 == this.SetCount             
+                : Contract.OldValue(this.SetCount) == this.SetCount);
             Contract.Ensures(this.FindNoCompression(left) == this.FindNoCompression(right));
 
             // shortcut when already unioned,

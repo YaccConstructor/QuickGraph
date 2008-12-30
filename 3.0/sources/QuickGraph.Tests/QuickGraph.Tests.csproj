@@ -141,6 +141,9 @@
     <Compile Include="Collections\FibonacciHeapTests.InsertAndRemoveMinimum.g.cs">
       <DependentUpon>FibonacciHeapTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Collections\ForestDisjointSetTTest.AddAndUnion.g.cs">
+      <DependentUpon>ForestDisjointSetTTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Collections\ForestDisjointSetTTest.cs" />
     <Compile Include="Collections\ForestDisjointSetTTest.Unions.g.cs">
       <DependentUpon>ForestDisjointSetTTest.cs</DependentUpon>
