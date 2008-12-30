@@ -87,6 +87,7 @@ namespace QuickGraph.Collections
             Contract.Requires(right != null);
             Contract.Requires(this.Contains(left));
             Contract.Requires(this.Contains(right));
+            Contract.Ensures(this.FindNoCompression(this.elements[left]) == this.FindNoCompression(this.elements[right]));
 
             this.Union(this.elements[left], this.elements[right]);
         }
@@ -104,27 +105,48 @@ namespace QuickGraph.Collections
             return this.FindSet(left) == this.FindSet(right);
         }
 
-        private Element Find(Element element)
+        [Pure]
+        private Element FindNoCompression(Element element)
         {
             Contract.Requires(element != null);
+            Contract.Ensures(Contract.Result<Element>() != null);
 
             // find root,
             var current = element;
             while (current.Parent != null)
                 current = current.Parent;
 
-            var root = current;
-            Contract.Assert(root != null);
+            return current;
+        }
+
+        /// <summary>
+        /// Finds the parent element, and applies path compression
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        private Element Find(Element element)
+        {
+            Contract.Requires(element != null);
+            Contract.Ensures(Contract.Result<Element>() != null);
+
+            var root = this.FindNoCompression(element);            
+            CompressPath(element, root);
+            return root;
+        }
+
+        private static void CompressPath(Element element, Element root)
+        {
+            Contract.Requires(element != null);
+            Contract.Requires(root != null);
+
             // path compression
-            current = element;
+            var current = element;
             while (current != root)
             {
                 var temp = current;
                 current = current.Parent;
                 temp.Parent = root;
             }
-
-            return root;
         }
 
         private void Union(Element left, Element right)
@@ -132,6 +154,7 @@ namespace QuickGraph.Collections
             Contract.Requires(left != null);
             Contract.Requires(right != null);
             Contract.Ensures(left == right || Contract.OldValue(this.SetCount) - 1 == this.SetCount);
+            Contract.Ensures(this.FindNoCompression(left) == this.FindNoCompression(right));
 
             // shortcut when already unioned,
             if (left == right) return;

@@ -74,7 +74,6 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             }
         }
 
-
         static IEnumerable<int> h1(Dictionary<int, TVertex> h, TVertex v)
         {
             foreach (var kv in h)
