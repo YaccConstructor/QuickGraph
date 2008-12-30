@@ -49,7 +49,7 @@ namespace QuickGraph.Collections
         /// </summary>
         /// <param name="left"></param>
         /// <param name="right"></param>
-        void Union(T left, T right);
+        bool Union(T left, T right);
 
         /// <summary>
         /// Gets a value indicating whether the value is in the data structure

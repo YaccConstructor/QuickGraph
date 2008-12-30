@@ -81,7 +81,7 @@ namespace QuickGraph.Collections
             return this.elements.ContainsKey(value);
         }
 
-        public void Union(T left, T right)
+        public bool Union(T left, T right)
         {
             Contract.Requires(left != null);
             Contract.Requires(right != null);
@@ -89,7 +89,8 @@ namespace QuickGraph.Collections
             Contract.Requires(this.Contains(right));
             Contract.Ensures(this.FindNoCompression(this.elements[left]) == this.FindNoCompression(this.elements[right]));
 
-            this.Union(this.elements[left], this.elements[right]);
+            
+            return this.Union(this.elements[left], this.elements[right]);
         }
 
         public object FindSet(T value)
@@ -149,7 +150,7 @@ namespace QuickGraph.Collections
             }
         }
 
-        private void Union(Element left, Element right)
+        private bool Union(Element left, Element right)
         {
             Contract.Requires(left != null);
             Contract.Requires(right != null);
@@ -157,7 +158,7 @@ namespace QuickGraph.Collections
             Contract.Ensures(this.FindNoCompression(left) == this.FindNoCompression(right));
 
             // shortcut when already unioned,
-            if (left == right) return;
+            if (left == right) return false;
 
             var leftRoot = Find(left);
             var rightRoot = Find(right);
@@ -173,9 +174,10 @@ namespace QuickGraph.Collections
                 leftRoot.Rank = leftRoot.Rank + 1;
             }
             else
-                return; // do not update the setcount
+                return false; // do not update the setcount
 
             this.setCount--;
+            return true;
         }
 
         [ContractInvariantMethod]
