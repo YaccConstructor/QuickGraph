@@ -49,6 +49,7 @@ namespace QuickGraph.Collections
         /// </summary>
         /// <param name="left"></param>
         /// <param name="right"></param>
+        /// <returns>true if left and right were unioned, false if they already belong to the same set</returns>
         bool Union(T left, T right);
 
         /// <summary>

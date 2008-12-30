@@ -67,7 +67,6 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             if (cancelManager.IsCancelling)
                 return;
 
-            int vertexCount = this.VisitedGraph.VertexCount;
             while (queue.Count > 0)
             {
                 var e = queue.Dequeue();
