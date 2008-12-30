@@ -38,7 +38,9 @@ namespace QuickGraph.Algorithms.MaximumFlow
         }
 
         private static void VerifyCount<TVertex,TEdge>(
-            IMutableVertexAndEdgeListGraph<TVertex,TEdge> g, AllVerticesGraphAugmentorAlgorithm<TVertex,TEdge> augmentor, int vertexCount)
+            IMutableVertexAndEdgeListGraph<TVertex,TEdge> g, 
+            AllVerticesGraphAugmentorAlgorithm<TVertex,TEdge> augmentor,
+            int vertexCount)
             where TEdge : IEdge<TVertex>
         {
             Assert.AreEqual(vertexCount + 2, g.VertexCount);
@@ -46,7 +48,9 @@ namespace QuickGraph.Algorithms.MaximumFlow
             Assert.IsTrue(g.ContainsVertex(augmentor.SuperSink));
         }
 
-        private static void VerifySourceConnector<TVertex, TEdge>(IMutableVertexAndEdgeListGraph<TVertex, TEdge> g, AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge> augmentor)
+        private static void VerifySourceConnector<TVertex, TEdge>(
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> g, 
+            AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge> augmentor)
             where TEdge : IEdge<TVertex>
         {
             foreach (var v in g.Vertices)
@@ -59,7 +63,9 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        private static void VerifySinkConnector<TVertex, TEdge>(IMutableVertexAndEdgeListGraph<TVertex, TEdge> g, AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge> augmentor)
+        private static void VerifySinkConnector<TVertex, TEdge>(
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> g, 
+            AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge> augmentor)
             where TEdge : IEdge<TVertex>
         {
             foreach (var v in g.Vertices)
