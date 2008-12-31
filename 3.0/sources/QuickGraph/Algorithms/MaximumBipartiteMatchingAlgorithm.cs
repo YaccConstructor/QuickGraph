@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 
 using QuickGraph.Algorithms.MaximumFlow;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
-    public sealed class MaximumBipartiteMatchingAlgorithm<TVertex,TEdge> :
-        AlgorithmBase<IMutableVertexAndEdgeListGraph<TVertex,TEdge>>
+    public sealed class MaximumBipartiteMatchingAlgorithm<TVertex,TEdge> 
+        : AlgorithmBase<IMutableVertexAndEdgeListGraph<TVertex,TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private readonly VertexFactory<TVertex> vertexFactory;
@@ -20,10 +21,8 @@ namespace QuickGraph.Algorithms
             )
             :base(visitedGraph)
         {
-            if (vertexFactory == null)
-                throw new ArgumentNullException("vertexFactory");
-            if (edgeFactory == null)
-                throw new ArgumentNullException("edgeFactory");
+            Contract.Requires(vertexFactory != null);
+            Contract.Requires(edgeFactory != null);
 
             this.vertexFactory = vertexFactory;
             this.edgeFactory = edgeFactory;
@@ -48,8 +47,9 @@ namespace QuickGraph.Algorithms
         {
             var cancelManager = this.Services.CancelManager;
             this.matchedEdges.Clear();
-            AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge> augmentor=null;
-            ReversedEdgeAugmentorAlgorithm<TVertex,TEdge> reverser=null;
+
+            AllVerticesGraphAugmentorAlgorithm<TVertex, TEdge> augmentor = null;
+            ReversedEdgeAugmentorAlgorithm<TVertex,TEdge> reverser = null;
             try
             {
                 if (cancelManager.IsCancelling)
@@ -62,6 +62,7 @@ namespace QuickGraph.Algorithms
                     this.VertexFactory,
                     this.EdgeFactory);
                 augmentor.Compute();
+
                 if (cancelManager.IsCancelling)
                     return;
 
@@ -85,14 +86,13 @@ namespace QuickGraph.Algorithms
                     reverser.ReversedEdges
                     );
                 flow.Compute(augmentor.SuperSource, augmentor.SuperSink);
+                
                 if (cancelManager.IsCancelling)
                     return;
 
 
                 foreach (var edge in this.VisitedGraph.Edges)
                 {
-                    if (cancelManager.IsCancelling) return;
-
                     if (flow.ResidualCapacities[edge] == 0)
                         this.matchedEdges.Add(edge);
                 }

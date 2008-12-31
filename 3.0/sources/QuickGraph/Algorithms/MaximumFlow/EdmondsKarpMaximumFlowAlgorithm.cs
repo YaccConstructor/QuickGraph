@@ -5,6 +5,7 @@ using QuickGraph.Algorithms.Observers;
 using QuickGraph.Predicates;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -54,10 +55,13 @@ namespace QuickGraph.Algorithms.MaximumFlow
 		}
 	
 		private void Augment(
-			TVertex src,
+			TVertex source,
 			TVertex sink
 			)
 		{
+            Contract.Requires(source != null);
+            Contract.Requires(sink != null);
+
 			TEdge e;
 			TVertex u;
 
@@ -69,7 +73,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 e = Predecessors[u];
                 delta = Math.Min(delta, ResidualCapacities[e]);
                 u = e.Source;
-			} while (!u.Equals(src));
+			} while (!u.Equals(source));
 
 			// push delta units of flow along the augmenting path
             u = sink;
@@ -79,7 +83,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 ResidualCapacities[e] -= delta;
                 ResidualCapacities[ ReversedEdges[e] ] += delta;
 				u = e.Source;
-			} while (!u.Equals(src));
+			} while (!u.Equals(source));
 		}
     
 		/// <summary>
@@ -96,31 +100,32 @@ namespace QuickGraph.Algorithms.MaximumFlow
 			if (this.Sink==null)
                 throw new InvalidOperationException("Sink is not specified");
 
-            foreach(var u in VisitedGraph.Vertices)
-				foreach(var e in this.VisitedGraph.OutEdges(u))
+            var g = this.VisitedGraph;
+            foreach(var u in g.Vertices)
+				foreach(var e in g.OutEdges(u))
 					this.ResidualCapacities[e] = this.Capacities(e);   			
     
 			this.VertexColors[Sink] = GraphColor.Gray;
 			while (this.VertexColors[Sink] != GraphColor.White)
 			{
                 var vis = new VertexPredecessorRecorderObserver<TVertex,TEdge>(
-                    Predecessors
+                    this.Predecessors
 					);
 				var Q = new QuickGraph.Collections.Queue<TVertex>();
 				var bfs = new BreadthFirstSearchAlgorithm<TVertex,TEdge>(
-					ResidualGraph,
+					this.ResidualGraph,
 					Q,
-					VertexColors
+					this.VertexColors
 					);
                 using (ObserverScope.Create(bfs, vis))
                     bfs.Compute(this.Source);
 
                 if (this.VertexColors[this.Sink] != GraphColor.White)
-					Augment(this.Source, this.Sink);
+					this.Augment(this.Source, this.Sink);
 			} // while
 
             this.MaxFlow = 0;
-            foreach(var e in this.VisitedGraph.OutEdges(Source))
+            foreach(var e in g.OutEdges(Source))
 				this.MaxFlow += (this.Capacities(e) - this.ResidualCapacities[e]);
 		} 
 	}

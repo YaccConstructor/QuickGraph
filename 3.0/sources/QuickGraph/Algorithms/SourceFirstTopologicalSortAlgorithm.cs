@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using QuickGraph.Collections;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
@@ -49,14 +50,15 @@ namespace QuickGraph.Algorithms
         public event VertexEventHandler<TVertex> AddVertex;
         private void OnAddVertex(TVertex v)
         {
-            if (this.AddVertex != null)
-                this.AddVertex(this, new VertexEventArgs<TVertex>(v));
+            var eh = this.AddVertex;
+            if (eh != null)
+                eh(this, new VertexEventArgs<TVertex>(v));
         }
 
         public void Compute(IList<TVertex> vertices)
         {
-            if (vertices == null)
-                throw new ArgumentNullException("vertices");
+            Contract.Requires(vertices != null);
+
             this.sortedVertices = vertices;
             Compute();
         }
@@ -85,8 +87,7 @@ namespace QuickGraph.Algorithms
                         continue;
 
                     this.inDegrees[e.Target]--;
-                    if (this.inDegrees[e.Target] < 0)
-                        throw new InvalidOperationException("InDegree is negative, and cannot be");
+                    Contract.Assert(this.inDegrees[e.Target] >= 0);
                     this.heap.Update(e.Target);
                 }
             }

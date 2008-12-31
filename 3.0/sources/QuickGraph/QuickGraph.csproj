@@ -176,7 +176,6 @@
     <Compile Include="Algorithms\MaximumFlow\EdmondsKarpMaximumFlowAlgorithm.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Algorithms\MaximumFlow\FeasibleFlowAlgorithm.cs" />
     <Compile Include="Algorithms\MaximumFlow\GraphAugmentorAlgorithmBase.cs" />
     <Compile Include="Algorithms\MaximumFlow\GraphBalancingAlgorithm.cs" />
     <Compile Include="Algorithms\MaximumFlow\MaximumFlowAlgorithmBase.cs" />

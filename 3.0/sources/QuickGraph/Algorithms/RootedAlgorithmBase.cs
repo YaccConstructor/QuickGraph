@@ -5,8 +5,8 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Algorithms
 {
     [Serializable]
-    public abstract class RootedAlgorithmBase<TVertex,TGraph> : 
-        AlgorithmBase<TGraph>
+    public abstract class RootedAlgorithmBase<TVertex,TGraph> 
+        : AlgorithmBase<TGraph>
     {
         private TVertex rootVertex;
         private bool hasRootVertex;
