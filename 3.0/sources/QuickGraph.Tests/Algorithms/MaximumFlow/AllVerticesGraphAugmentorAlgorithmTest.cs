@@ -6,7 +6,7 @@ using QuickGraph.Serialization;
 namespace QuickGraph.Algorithms.MaximumFlow
 {
     [TestClass]
-    public class AllVerticesGraphAugmentorAlgorithmTest
+    public partial class AllVerticesGraphAugmentorAlgorithmTest
     {
         [TestMethod]
         public void AugmentAll()
@@ -29,6 +29,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 (s, t) => new IdentifiableEdge<IdentifiableVertex>(s, t, (edgeID++).ToString())
                 ))
             {
+                augmentor.Compute();
                 VerifyCount(g, augmentor, vertexCount);
                 VerifySourceConnector(g, augmentor);
                 VerifySinkConnector(g, augmentor);
