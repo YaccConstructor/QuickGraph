@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
@@ -12,9 +13,9 @@ namespace QuickGraph.Algorithms
         IConnectedComponentAlgorithm<TVertex,TEdge,IVertexListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-		private IDictionary<TVertex,int> components;
-		private IDictionary<TVertex,int> discoverTimes;
-		private IDictionary<TVertex,TVertex> roots;
+		private readonly IDictionary<TVertex,int> components;
+		private readonly Dictionary<TVertex,int> discoverTimes;
+		private readonly Dictionary<TVertex,TVertex> roots;
 		private Stack<TVertex> stack;
 		int componentCount;
 		int dfsTime;
@@ -36,8 +37,7 @@ namespace QuickGraph.Algorithms
 			IDictionary<TVertex,int> components)
             :base(host, g)
 		{
-			if (components==null)
-				throw new ArgumentNullException("components");
+            Contract.Requires(components != null);
 
 			this.components = components;
             this.roots = new Dictionary<TVertex, TVertex>();
@@ -95,21 +95,23 @@ namespace QuickGraph.Algorithms
 		/// <param name="args"></param>
 		private void FinishVertex(Object sender, VertexEventArgs<TVertex> args)
 		{
-			TVertex v = args.Vertex;
-			foreach(TEdge e in VisitedGraph.OutEdges(v))
+			var v = args.Vertex;
+            var roots = this.Roots;
+
+			foreach(var e in this.VisitedGraph.OutEdges(v))
 			{
-				TVertex w = e.Target;
+				var w = e.Target;
 				if (this.Components[w] == int.MaxValue)
-					this.Roots[v]=MinDiscoverTime(this.Roots[v], this.Roots[w]);
+					roots[v] = this.MinDiscoverTime(roots[v], roots[w]);
 			}
 
-			if (Roots[v].Equals(v)) 
+			if (this.roots[v].Equals(v)) 
 			{
-				TVertex w=default(TVertex);
+				var w = default(TVertex);
 				do 
 				{
 					w = this.stack.Pop(); 
-					this.Components[w]=componentCount;
+					this.Components[w] = componentCount;
 				} 
 				while (!w.Equals(v));
 				++componentCount;
@@ -118,7 +120,14 @@ namespace QuickGraph.Algorithms
 
 		private TVertex MinDiscoverTime(TVertex u, TVertex v)
 		{
-			if (this.DiscoverTimes[u]<this.DiscoverTimes[v])
+            Contract.Requires(u != null);
+            Contract.Requires(v != null);
+            Contract.Ensures(this.DiscoverTimes[u] < this.DiscoverTimes[v] 
+                ? Contract.Result<TVertex>().Equals(u) 
+                : Contract.Result<TVertex>().Equals(v)
+                );
+
+			if (this.discoverTimes[u] < this.discoverTimes[v])
 				return u;
 			else
 				return v;
@@ -126,11 +135,17 @@ namespace QuickGraph.Algorithms
 
 		protected override void InternalCompute()
 		{
+            Contract.Ensures(this.ComponentCount > 0);
+            Contract.Ensures(Contract.ForAll(this.VisitedGraph.Vertices, v => this.Components.ContainsKey(v)));
+            Contract.Ensures(this.VisitedGraph.VertexCount == this.Components.Count);
+            Contract.Ensures(Contract.ForAll(this.Components.Values, c => c <= this.ComponentCount));
+
 			this.Components.Clear();
 			this.Roots.Clear();
 			this.DiscoverTimes.Clear();
-			componentCount = 0;
-			dfsTime = 0;
+            this.stack.Clear();
+			this.componentCount = 0;
+			this.dfsTime = 0;
 
             DepthFirstSearchAlgorithm<TVertex, TEdge> dfs = null;
             try

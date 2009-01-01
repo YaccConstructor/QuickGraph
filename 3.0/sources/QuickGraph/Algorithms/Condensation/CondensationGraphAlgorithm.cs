@@ -55,8 +55,6 @@ namespace QuickGraph.Algorithms.Condensation
             var condensatedVertices = new Dictionary<int, TGraph>(componentCount);
             for (int i = 0; i < componentCount; ++i)
             {
-                if (cancelManager.IsCancelling) return;
-
                 TGraph v = new TGraph();
                 condensatedVertices.Add(i, v);
                 this.condensatedGraph.AddVertex(v);
@@ -75,8 +73,6 @@ namespace QuickGraph.Algorithms.Condensation
             // iterate over edges and condensate graph
             foreach (var edge in this.VisitedGraph.Edges)
             {
-                if (cancelManager.IsCancelling) return;
-
                 // get component ids
                 int sourceID = components[edge.Source];
                 int targetID = components[edge.Target];
@@ -89,9 +85,7 @@ namespace QuickGraph.Algorithms.Condensation
                     continue;
                 }
 
-                //
-                TGraph targets = condensatedVertices[targetID];
-
+                var targets = condensatedVertices[targetID];
                 // at last add edge
                 var edgeKey = new EdgeKey(sourceID, targetID);
                 CondensatedEdge<TVertex, TEdge, TGraph> condensatedEdge;
@@ -122,10 +116,11 @@ namespace QuickGraph.Algorithms.Condensation
             return componentAlgorithm.ComponentCount;
         }
 
-        private struct EdgeKey : IEquatable<EdgeKey>
+        struct EdgeKey 
+            : IEquatable<EdgeKey>
         {
-            int SourceID;
-            int TargetID;
+            readonly int SourceID;
+            readonly int TargetID;
 
             public EdgeKey(int sourceID, int targetID)
             {

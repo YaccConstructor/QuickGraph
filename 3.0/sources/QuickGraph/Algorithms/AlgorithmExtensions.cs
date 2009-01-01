@@ -554,12 +554,13 @@ this
             this 
 #endif
             IVertexListGraph<TVertex, TEdge> g,
-            IDictionary<TVertex, int> components)
+            out IDictionary<TVertex, int> components)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(g != null);
-            Contract.Requires(components != null);
+            Contract.Ensures(Contract.ValueAtReturn(out components) != null);
 
+            components = new Dictionary<TVertex, int>();
             var conn = new StronglyConnectedComponentsAlgorithm<TVertex, TEdge>(g, components);
             conn.Compute();
             return conn.ComponentCount;

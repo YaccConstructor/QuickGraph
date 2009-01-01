@@ -13,7 +13,7 @@ namespace QuickGraph.Algorithms.Condensation
     public class WeaklyConnectedCondensationGraphAlgorithmTest
     {
         [TestMethod]
-        public void CondenstateAll()
+        public void CondensateAll()
         {
             foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
                 this.Condensate(g);

@@ -81,7 +81,8 @@ namespace QuickGraph.Algorithms
                 this.Compute(g);
         }
 
-        private void Compute<TVertex,TEdge>(AdjacencyGraph<TVertex, TEdge> g)
+        [PexMethod]
+        public void Compute<TVertex,TEdge>([PexAssumeNotNull]AdjacencyGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
             var strong = new StronglyConnectedComponentsAlgorithm<TVertex, TEdge>(g);

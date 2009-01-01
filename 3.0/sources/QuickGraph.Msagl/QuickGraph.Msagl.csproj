@@ -87,7 +87,7 @@
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <ErrorReport>prompt</ErrorReport>
-    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
     <CodeContractsCustomRewriterAssembly>
     </CodeContractsCustomRewriterAssembly>
     <CodeContractsCustomRewriterClass>
@@ -106,6 +106,8 @@
     <CodeContractsBaseLineFile>
     </CodeContractsBaseLineFile>
     <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release20|AnyCPU' ">
     <OutputPath>bin\Release20\</OutputPath>
