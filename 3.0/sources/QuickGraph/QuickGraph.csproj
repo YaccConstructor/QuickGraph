@@ -253,6 +253,7 @@
     <Compile Include="Contracts\Collections\IDisjointSetContract.cs" />
     <Compile Include="Contracts\Contracts.cs" />
     <Compile Include="Contracts\DummyContract.cs" />
+    <Compile Include="Contracts\IBidirectionalGraphContract.cs" />
     <Compile Include="Contracts\IEdgeContract.cs" />
     <Compile Include="Contracts\EnumerableContract.cs" />
     <Compile Include="Contracts\GraphContract.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="Contracts\IGraphContract.cs" />
     <Compile Include="Contracts\IImplicitGraphContract.cs" />
     <Compile Include="Contracts\IIncidenceGraphContract.cs" />
+    <Compile Include="Contracts\IMutableBidirectionalGraphContract.cs" />
     <Compile Include="Contracts\IMutableEdgeListGraphContract.cs" />
     <Compile Include="Contracts\IMutableGraphContract.cs" />
     <Compile Include="Contracts\IMutableIncidenceGraphContract.cs" />
