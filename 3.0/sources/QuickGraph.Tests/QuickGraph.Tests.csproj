@@ -102,8 +102,8 @@
     <Compile Include="Algorithms\ShortestPath\BellmanFordShortestPathTest.cs" />
     <Compile Include="Algorithms\ShortestPath\UndirectedDijkstraShortestPathAlgorithmTest.cs" />
     <Compile Include="Algorithms\ShortestPath\DagShortestPathAlgorithmTest.cs" />
+    <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTestOld.cs" />
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest.cs" />
-    <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest2.cs" />
     <Compile Include="Algorithms\ShortestPath\FloydWarshallAllPairShortestPathAlgorithmTest.cs" />
     <Compile Include="Algorithms\SourceFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\StronglyConnectedComponentsAlgorithmTest.cs" />

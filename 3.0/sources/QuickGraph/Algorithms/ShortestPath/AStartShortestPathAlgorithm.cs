@@ -10,7 +10,7 @@ using System.Diagnostics;
 namespace QuickGraph.Algorithms.ShortestPath
 {
     /// <summary>
-    /// Dijkstra single-source shortest path algorithm for directed graph
+    /// A* single-source shortest path algorithm for directed graph
     /// with positive distance.
     /// </summary>
     /// <typeparam name="Vertex"></typeparam>
@@ -19,37 +19,52 @@ namespace QuickGraph.Algorithms.ShortestPath
     ///     idref="lawler01combinatorial"
     ///     />
     [Serializable]
-    public sealed class DijkstraShortestPathAlgorithm<TVertex, TEdge> :
-        ShortestPathAlgorithmBase<TVertex,TEdge,IVertexListGraph<TVertex,TEdge>>,
-        IVertexColorizerAlgorithm<TVertex,TEdge>,
+    public sealed class AStarShortestPathAlgorithm<TVertex, TEdge> :
+        ShortestPathAlgorithmBase<TVertex, TEdge, IVertexListGraph<TVertex, TEdge>>,
+        IVertexColorizerAlgorithm<TVertex, TEdge>,
         IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>,
         IDistanceRecorderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private FibonacciQueue<TVertex,double> vertexQueue;        
+        private FibonacciQueue<TVertex, double> vertexQueue;
+        private Dictionary<TVertex, double> costs;
+        private readonly Func<TVertex, double> costHeuristic;
 
-        public DijkstraShortestPathAlgorithm(
-            IVertexListGraph<TVertex, TEdge> visitedGraph,
-            Func<TEdge, double> weights)
-            : this(visitedGraph, weights, ShortestDistanceRelaxer.Instance)
-        { }
-
-        public DijkstraShortestPathAlgorithm(
+        public AStarShortestPathAlgorithm(
             IVertexListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> weights,
-            IDistanceRelaxer distanceRelaxer
+            Func<TVertex, double> costHeuristic
             )
-            : this(null, visitedGraph, weights, distanceRelaxer)
+            : this(visitedGraph, weights, costHeuristic, ShortestDistanceRelaxer.Instance)
         { }
 
-        public DijkstraShortestPathAlgorithm(
+        public AStarShortestPathAlgorithm(
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> weights,
+            Func<TVertex, double> costHeuristic,
+            IDistanceRelaxer distanceRelaxer
+            )
+            : this(null, visitedGraph, weights, costHeuristic, distanceRelaxer)
+        { }
+
+        public AStarShortestPathAlgorithm(
             IAlgorithmComponent host,
             IVertexListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> weights,
+            Func<TVertex, double> costHeuristic,
             IDistanceRelaxer distanceRelaxer
             )
-            :base(host, visitedGraph,weights, distanceRelaxer)
-        { }
+            : base(host, visitedGraph, weights, distanceRelaxer)
+        {
+            Contract.Requires(costHeuristic != null);
+
+            this.costHeuristic = costHeuristic;
+        }
+
+        public Func<TVertex, double> CostHeuristic
+        {
+            get { return this.costHeuristic; }
+        }
 
         public event VertexEventHandler<TVertex> InitializeVertex;
         public event VertexEventHandler<TVertex> DiscoverVertex;
@@ -58,15 +73,15 @@ namespace QuickGraph.Algorithms.ShortestPath
         public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
         public event VertexEventHandler<TVertex> FinishVertex;
 
-        public event EdgeEventHandler<TVertex,TEdge> EdgeNotRelaxed;
+        public event EdgeEventHandler<TVertex, TEdge> EdgeNotRelaxed;
         private void OnEdgeNotRelaxed(TEdge e)
         {
             var eh = this.EdgeNotRelaxed;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
+                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
-        private void InternalTreeEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
+        private void InternalTreeEdge(Object sender, EdgeEventArgs<TVertex, TEdge> args)
         {
             bool decreased = this.Relax(args.Edge);
             if (decreased)
@@ -80,12 +95,38 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         private void InternalGrayTarget(Object sender, EdgeEventArgs<TVertex, TEdge> args)
         {
-            bool decreased = this.Relax(args.Edge);
+            var e = args.Edge;
+            var target = e.Target;
+
+            bool decreased = this.Relax(e);
+            double distance = this.Distances[target];
             if (decreased)
             {
-                this.vertexQueue.Update(args.Edge.Target);
+                this.costs[target] = this.DistanceRelaxer.Combine(distance, this.costHeuristic(target));
+                this.vertexQueue.Update(target);
                 this.AssertHeap();
                 this.OnTreeEdge(args.Edge);
+            }
+            else
+            {
+                this.OnEdgeNotRelaxed(args.Edge);
+            }
+        }
+
+        private void InternalBlackTarget(Object sender, EdgeEventArgs<TVertex, TEdge> args)
+        {
+            var e = args.Edge;
+            var target = e.Target;
+
+            bool decreased = this.Relax(e);
+            double distance = this.Distances[target];
+            if (decreased)
+            {
+                this.OnTreeEdge(args.Edge);
+                this.costs[target] = this.DistanceRelaxer.Combine(distance, this.costHeuristic(target));
+                this.vertexQueue.Update(target);
+                this.AssertHeap();
+                this.VertexColors[target] = GraphColor.Gray;
             }
             else
             {
@@ -98,17 +139,19 @@ namespace QuickGraph.Algorithms.ShortestPath
             base.Initialize();
 
             this.VertexColors.Clear();
+            this.costs = new Dictionary<TVertex, double>(this.VisitedGraph.VertexCount);
             // init color, distance
             var initialDistance = this.DistanceRelaxer.InitialDistance;
             foreach (var u in VisitedGraph.Vertices)
             {
                 this.VertexColors.Add(u, GraphColor.White);
                 this.Distances.Add(u, initialDistance);
+                this.costs.Add(u, initialDistance);
             }
-            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.Distances);
+            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.costs);
         }
-        
-        protected override void  InternalCompute()
+
+        protected override void InternalCompute()
         {
             TVertex rootVertex;
             if (this.TryGetRootVertex(out rootVertex))
@@ -166,8 +209,9 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 
-                bfs.TreeEdge += new EdgeEventHandler<TVertex,TEdge>(this.InternalTreeEdge);
+                bfs.TreeEdge += new EdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
                 bfs.GrayTarget += new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
+                bfs.BlackTarget +=new EdgeEventHandler<TVertex,TEdge>(this.InternalBlackTarget);
 
                 bfs.Visit(s);
             }
@@ -184,6 +228,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
                     bfs.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
                     bfs.GrayTarget -= new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
+                    bfs.BlackTarget -= new EdgeEventHandler<TVertex, TEdge>(this.InternalBlackTarget);
                 }
             }
         }

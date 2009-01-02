@@ -215,6 +215,7 @@
     <Compile Include="Algorithms\Search\UndirectedDepthFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Services\ICancelManager.cs" />
     <Compile Include="Algorithms\Services\IService.cs" />
+    <Compile Include="Algorithms\ShortestPath\AStartShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\ShortestPath\BellmanFordShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\ShortestPath\UndirectedShortestPathAlgorithmBase.cs" />
     <Compile Include="Algorithms\ShortestPath\CriticalDistanceRelaxer.cs" />
