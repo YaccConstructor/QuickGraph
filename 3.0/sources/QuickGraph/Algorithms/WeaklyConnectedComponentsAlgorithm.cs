@@ -4,6 +4,7 @@ using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.Services;
 using System.Diagnostics.Contracts;
+using System.Diagnostics;
 
 namespace QuickGraph.Algorithms
 {
@@ -49,12 +50,23 @@ namespace QuickGraph.Algorithms
             get { return this.componentCount; }
         }
 
-        protected override void  InternalCompute()
+        protected override void Initialize()
         {
             this.componentCount = 0;
             this.currentComponent = 0;
             this.componentEquivalences.Clear();
             this.components.Clear();
+        }
+
+        protected override void  InternalCompute()
+        {
+            Contract.Ensures(0 <= this.ComponentCount && this.ComponentCount <= this.VisitedGraph.VertexCount);
+            Contract.Ensures(Contract.ForAll(this.VisitedGraph.Vertices,
+                v => 0 <= this.Components[v] && this.Components[v] < this.ComponentCount));
+
+            // shortcut for empty graph
+            if (this.VisitedGraph.VertexCount == 0)
+                return;
 
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(this.VisitedGraph);
             try
@@ -76,10 +88,11 @@ namespace QuickGraph.Algorithms
             foreach (var v in this.VisitedGraph.Vertices)
             {
                 int component = this.components[v];
-                int equivalent = this.componentEquivalences[component];
+                int equivalent = this.GetComponentEquivalence(component);
                 if (component != equivalent)
-                    this.components[v] =equivalent;
+                    this.components[v] = equivalent;
             }
+            this.componentEquivalences.Clear();
         }
 
         void dfs_StartVertex(object sender, VertexEventArgs<TVertex> e)
@@ -97,11 +110,38 @@ namespace QuickGraph.Algorithms
             this.components.Add(e.Edge.Target, this.currentComponent);
         }
 
+        private int GetComponentEquivalence(int component)
+        {
+            int equivalent = component;
+            int temp = this.componentEquivalences[equivalent];
+            bool compress = false;
+            while (temp != equivalent)
+            {
+                equivalent = temp;
+                temp = this.componentEquivalences[equivalent];
+                compress = true;
+            }
+
+            // path compression
+            if (compress)
+            {
+                int c = component;
+                temp = this.componentEquivalences[c];
+                while (temp != equivalent)
+                {
+                    temp = this.componentEquivalences[c];
+                    this.componentEquivalences[c] = equivalent;
+                }
+            }
+
+            return equivalent;
+        }
+
         void dfs_ForwardOrCrossEdge(object sender, EdgeEventArgs<TVertex, TEdge> e)
         {
             // we have touched another tree, updating count and current component
-            int otherComponent = this.componentEquivalences[this.components[e.Edge.Target]];
-            if (otherComponent != this.currentComponent)
+            int otherComponent = this.GetComponentEquivalence(this.components[e.Edge.Target]);
+            if(otherComponent != this.currentComponent)
             {
                 this.componentCount--;
                 Contract.Assert(this.componentCount > 0);

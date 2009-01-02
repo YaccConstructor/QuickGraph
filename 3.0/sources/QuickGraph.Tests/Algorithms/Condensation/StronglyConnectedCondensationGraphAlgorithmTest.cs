@@ -23,7 +23,7 @@ namespace QuickGraph.Algorithms.Condensation
             [PexAssumeNotNull]IVertexAndEdgeListGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
-            var cg = g.Condensate<TVertex, TEdge, AdjacencyGraph<TVertex,TEdge>>();
+            var cg = g.CondensateStronglyConnected<TVertex, TEdge, AdjacencyGraph<TVertex,TEdge>>();
 
             CheckVertexCount(g, cg);
             CheckEdgeCount(g, cg);

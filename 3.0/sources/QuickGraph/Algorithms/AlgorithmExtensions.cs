@@ -603,7 +603,7 @@ this
         }
 
         /// <summary>
-        /// Condensates a graph
+        /// Condensates the strongly connected components of a directed graph
         /// </summary>
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
@@ -611,7 +611,7 @@ this
         /// <param name="g"></param>
         /// <returns></returns>
         public static IMutableBidirectionalGraph<TGraph,CondensatedEdge<TVertex, TEdge,TGraph>> 
-            Condensate<TVertex, TEdge, TGraph>(
+            CondensateStronglyConnected<TVertex, TEdge, TGraph>(
 #if !NET20
             this 
 #endif
@@ -620,10 +620,35 @@ this
             where TEdge : IEdge<TVertex>
             where TGraph : IMutableVertexAndEdgeListGraph<TVertex,TEdge>, new()
         {
-            if (g == null)
-                throw new ArgumentNullException("g");
+            Contract.Requires(g != null);
 
             var condensator = new CondensationGraphAlgorithm<TVertex, TEdge, TGraph>(g);
+            condensator.Compute();
+            return condensator.CondensatedGraph;
+        }
+
+        /// <summary>
+        /// Condensates the weakly connected components of a graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TGraph"></typeparam>
+        /// <param name="g"></param>
+        /// <returns></returns>
+        public static IMutableBidirectionalGraph<TGraph, CondensatedEdge<TVertex, TEdge, TGraph>>
+            CondensateWeaklyConnected<TVertex, TEdge, TGraph>(
+#if !NET20
+this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> g
+            )
+            where TEdge : IEdge<TVertex>
+            where TGraph : IMutableVertexAndEdgeListGraph<TVertex, TEdge>, new()
+        {
+            Contract.Requires(g != null);
+
+            var condensator = new CondensationGraphAlgorithm<TVertex, TEdge, TGraph>(g);
+            condensator.StronglyConnected = false;
             condensator.Compute();
             return condensator.CondensatedGraph;
         }

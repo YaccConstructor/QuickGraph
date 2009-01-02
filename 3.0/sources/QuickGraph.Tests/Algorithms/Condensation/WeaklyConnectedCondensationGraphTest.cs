@@ -13,14 +13,14 @@ namespace QuickGraph.Algorithms.Condensation
     public class WeaklyConnectedCondensationGraphAlgorithmTest
     {
         [TestMethod]
-        public void CondensateAll()
+        public void WeaklyConnectedCondensatAll()
         {
             foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
-                this.Condensate(g);
+                this.WeaklyConnectedCondensate(g);
         }
 
         [PexMethod]
-        public void Condensate<TVertex,TEdge>(IVertexAndEdgeListGraph<TVertex,TEdge> g)
+        public void WeaklyConnectedCondensate<TVertex, TEdge>(IVertexAndEdgeListGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
             var algo = new CondensationGraphAlgorithm<TVertex,TEdge, AdjacencyGraph<TVertex,TEdge>>(g);

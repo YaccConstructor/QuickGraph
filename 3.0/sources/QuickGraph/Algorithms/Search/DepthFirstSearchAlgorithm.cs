@@ -197,23 +197,25 @@ namespace QuickGraph.Algorithms.Search
 			// if there is a starting vertex, start whith him:
             TVertex rootVertex;
             if (this.TryGetRootVertex(out rootVertex))
-			{
-				OnStartVertex(rootVertex);
-                Visit(rootVertex);
+            {
+                this.OnStartVertex(rootVertex);
+                this.Visit(rootVertex);
             }
-
-            var cancelManager = this.Services.CancelManager;
-            // process each vertex 
-			foreach(TVertex u in this.VisitedGraph.Vertices)
-			{
-                if (cancelManager.IsCancelling)
-                    return;
-                if (this.VertexColors[u] == GraphColor.White)
+            else
+            {
+                var cancelManager = this.Services.CancelManager;
+                // process each vertex 
+                foreach (var u in this.VisitedGraph.Vertices)
                 {
-					this.OnStartVertex(u);
-					this.Visit(u);
-				}
-			}
+                    if (cancelManager.IsCancelling)
+                        return;
+                    if (this.VertexColors[u] == GraphColor.White)
+                    {
+                        this.OnStartVertex(u);
+                        this.Visit(u);
+                    }
+                }
+            }
 		}
 
         protected override void Initialize()

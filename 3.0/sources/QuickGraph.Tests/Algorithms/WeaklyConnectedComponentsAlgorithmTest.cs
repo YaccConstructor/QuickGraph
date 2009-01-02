@@ -22,15 +22,17 @@ namespace QuickGraph.Algorithms
         public void Compute<TVertex,TEdge>([PexAssumeNotNull]IVertexListGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
-            GraphConsoleSerializer.DisplayGraph(g);
-
             var dfs = 
                 new WeaklyConnectedComponentsAlgorithm<TVertex,TEdge>(g);
             dfs.Compute();
-            //Console.WriteLine("{0} components", dfs.ComponentCount);
-            //foreach(var kv in dfs.Components)
-            //    Console.WriteLine("component {0}-{1}", kv.Key, kv.Value);
+            if (g.VertexCount == 0)
+            {
+                Assert.IsTrue(dfs.ComponentCount == 0);
+                return;
+            }
 
+            Assert.IsTrue(0 < dfs.ComponentCount);
+            Assert.IsTrue(dfs.ComponentCount <= g.VertexCount);
             foreach(var kv in dfs.Components)
             {
                 Assert.IsTrue(0 <= kv.Value);
