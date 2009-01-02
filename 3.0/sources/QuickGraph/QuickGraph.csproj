@@ -260,6 +260,7 @@
     <Compile Include="Contracts\GraphContract.cs" />
     <Compile Include="Contracts\IEdgeSetContract.cs" />
     <Compile Include="Contracts\IGraphContract.cs" />
+    <Compile Include="Contracts\IIdentifiableContract.cs" />
     <Compile Include="Contracts\IImplicitGraphContract.cs" />
     <Compile Include="Contracts\IIncidenceGraphContract.cs" />
     <Compile Include="Contracts\IMutableBidirectionalGraphContract.cs" />
