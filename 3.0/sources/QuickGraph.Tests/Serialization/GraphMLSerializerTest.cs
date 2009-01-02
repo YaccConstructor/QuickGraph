@@ -71,13 +71,17 @@ namespace QuickGraph.Serialization
             foreach (var g in GetAdjacencyGraphs())
             {
                 var ug = new UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
-                foreach (var v in g.Vertices)
-                    ug.AddVertex(v);
-                foreach (var e in g.Edges)
-                    if (!ug.ContainsEdge(e.Source, e.Target))
-                        ug.AddEdge(e);
+                ug.AddVerticesAndEdgeRange(g.Edges);
                 yield return ug;
             }
+        }
+
+        public static UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> LoadUndirectedGraph(string graphmlFile)
+        {
+            var g = LoadGraph(graphmlFile);
+            var ug = new UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+            ug.AddVerticesAndEdgeRange(g.Edges);
+            return ug;
         }
     }
 

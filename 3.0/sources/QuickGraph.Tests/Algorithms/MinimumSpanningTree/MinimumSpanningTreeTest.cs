@@ -127,7 +127,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         }
 
         [PexMethod]
-        public int CompareRoot<TVertex, TEdge>(IUndirectedGraph<TVertex, TEdge> g)
+        public double CompareRoot<TVertex, TEdge>(IUndirectedGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
             var distances = new Dictionary<TEdge, double>();
@@ -141,7 +141,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             var kruskalCost = kruskal.Sum(e => distances[e]);
             Console.WriteLine("prim cost: {0}", primCost);
             Console.WriteLine("kruskal cost: {0}", kruskalCost);
-            if (prim.Count != kruskal.Count)
+            if (primCost != kruskalCost)
             {
                 GraphConsoleSerializer.DisplayGraph(g);
                 Console.WriteLine("prim: {0}", String.Join(", ", Array.ConvertAll(prim.ToArray(), e => e.ToString() + ':' + distances[e])));
@@ -149,7 +149,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                 Assert.Fail("cost do not match");
             }
 
-            return prim.Count;
+            return kruskalCost;
         }
 
         [TestMethod]
@@ -165,6 +165,15 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
 
             var cost = CompareRoot(g);
             Assert.AreEqual(cost, 3);
+        }
+
+        [TestMethod]
+        [WorkItem(12273)]
+        public void Prim12273()
+        {
+            var g = TestGraphFactory.LoadUndirectedGraph("repro12273.graphml");
+            var cost = CompareRoot(g);
+            Assert.AreEqual(cost, 63);
         }
     }
 }

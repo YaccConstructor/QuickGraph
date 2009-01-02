@@ -4156,6 +4156,9 @@
     <None Include="GraphML\Graph.log">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="GraphML\repro12273.graphml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="QuickGraph.stubx">
       <Generator>StubGenerator</Generator>
       <LastGenOutput>QuickGraph.Designer.cs</LastGenOutput>
