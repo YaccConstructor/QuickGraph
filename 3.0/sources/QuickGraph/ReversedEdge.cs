@@ -33,6 +33,7 @@ namespace QuickGraph
             get { return this.OriginalEdge.Source; }
         }
         
+        [Pure]
         public override bool  Equals(object obj)
         {
             if (!(obj is ReversedEdge<TVertex, TEdge>))
@@ -41,16 +42,19 @@ namespace QuickGraph
             return Equals((ReversedEdge<TVertex, TEdge>)obj);
         }
 
+        [Pure]
         public override int GetHashCode()
         {
             return this.OriginalEdge.GetHashCode();
         }
 
+        [Pure]
         public override string ToString()
         {
             return String.Format("R({0})", this.OriginalEdge);
         }
 
+        [Pure]
         public bool Equals(ReversedEdge<TVertex, TEdge> other)
         {
             return this.OriginalEdge.Equals(other.OriginalEdge);

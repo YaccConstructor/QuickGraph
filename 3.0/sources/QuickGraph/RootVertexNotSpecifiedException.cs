@@ -3,7 +3,8 @@
 namespace QuickGraph
 {
     [System.Serializable]
-    public class RootVertexNotSpecifiedException : System.ApplicationException
+    public class RootVertexNotSpecifiedException 
+        : QuickGraphException
     {
         public RootVertexNotSpecifiedException() { }
         public RootVertexNotSpecifiedException(string message) : base( message ) { }
