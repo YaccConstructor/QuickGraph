@@ -55,9 +55,14 @@ namespace QuickGraph.Contracts
             return Contract.Result<bool>();
         }
 
+        [Pure]
         TEdge IImplicitGraph<TVertex, TEdge>.OutEdge(TVertex v, int index)
         {
-            throw new NotImplementedException();
+            IImplicitGraph<TVertex, TEdge> ithis = this;
+            Contract.Requires(v != null);
+            Contract.Ensures(Enumerable.Any(ithis.OutEdges(v), e => e.Equals(Contract.Result<TEdge>())));
+
+            return Contract.Result<TEdge>();
         }
 
         #region IGraph<TVertex,TEdge> Members

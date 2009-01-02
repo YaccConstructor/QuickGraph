@@ -14,7 +14,6 @@ namespace QuickGraph.Contracts
     {
         bool IEdgeSet<TVertex, TEdge>.IsEdgesEmpty
         {
-            [Pure]
             get 
             {
                 IEdgeSet<TVertex, TEdge> ithis = this;
@@ -26,7 +25,6 @@ namespace QuickGraph.Contracts
 
         int IEdgeSet<TVertex, TEdge>.EdgeCount
         {
-            [Pure]
             get
             {
                 IEdgeSet<TVertex, TEdge> ithis = this;
@@ -38,7 +36,6 @@ namespace QuickGraph.Contracts
 
         IEnumerable<TEdge> IEdgeSet<TVertex, TEdge>.Edges
         {
-            [Pure]
             get 
             {
                 Contract.Ensures(Contract.Result<IEnumerable<TEdge>>() != null);

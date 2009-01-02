@@ -13,7 +13,6 @@ namespace QuickGraph.Contracts
     {
         bool IVertexSet<TVertex>.IsVerticesEmpty
         {
-            [Pure]
             get 
             {
                 IVertexSet<TVertex> ithis = this;
@@ -25,7 +24,6 @@ namespace QuickGraph.Contracts
 
         int IVertexSet<TVertex>.VertexCount
         {
-            [Pure]
             get
             {
                 IVertexSet<TVertex> ithis = this;
@@ -37,7 +35,6 @@ namespace QuickGraph.Contracts
 
         IEnumerable<TVertex> IVertexSet<TVertex>.Vertices
         {
-            [Pure]
             get 
             {
                 Contract.Ensures(Contract.Result<IEnumerable<TVertex>>() != null);

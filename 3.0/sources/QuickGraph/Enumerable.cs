@@ -8,6 +8,7 @@ namespace System.Linq
 {
     public static class Enumerable
     {
+        [Pure]
         public static T First<T>(IEnumerable<T> elements)
         {
             Contract.Requires(elements != null);
@@ -16,6 +17,7 @@ namespace System.Linq
             throw new ArgumentException();
         }
 
+        [Pure]
         public static T FirstOrDefault<T>(IEnumerable<T> elements)
         {
             Contract.Requires(elements != null);
@@ -24,6 +26,7 @@ namespace System.Linq
             return default(T);
         }
 
+        [Pure]
         public static int Sum<T>(IEnumerable<T> elements, Func<T, int> map)
         {
             Contract.Requires(elements != null);
