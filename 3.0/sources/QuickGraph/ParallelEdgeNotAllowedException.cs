@@ -3,7 +3,8 @@
 namespace QuickGraph
 {
     [System.Serializable]
-    public class ParallelEdgeNotAllowedException : System.ApplicationException
+    public class ParallelEdgeNotAllowedException 
+        : QuickGraphException
     {
         public ParallelEdgeNotAllowedException() { }
         public ParallelEdgeNotAllowedException(string message) : base( message ) { }

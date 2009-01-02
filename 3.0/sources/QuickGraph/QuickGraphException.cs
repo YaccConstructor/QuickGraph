@@ -6,13 +6,12 @@ using System.Text;
 namespace QuickGraph
 {
     [global::System.Serializable]
-    public class NegativeWeightException 
-        : QuickGraphException
+    public abstract class QuickGraphException : ApplicationException
     {
-        public NegativeWeightException() { }
-        public NegativeWeightException(string message) : base(message) { }
-        public NegativeWeightException(string message, Exception inner) : base(message, inner) { }
-        protected NegativeWeightException(
+        protected QuickGraphException() { }
+        protected QuickGraphException(string message) : base(message) { }
+        protected QuickGraphException(string message, Exception inner) : base(message, inner) { }
+        protected QuickGraphException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context)
             : base(info, context) { }

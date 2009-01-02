@@ -308,7 +308,7 @@
     <Compile Include="IUndirectedGraph.cs" />
     <Compile Include="IVertexAndEdgeSet.cs" />
     <Compile Include="IVertexSet.cs" />
-    <Compile Include="NotStronglyConnectedGraphException.cs" />
+    <Compile Include="NonStronglyConnectedGraphException.cs" />
     <Compile Include="Petri\AllwaysTrueConditionExpression.cs" />
     <Compile Include="Petri\Arc.cs" />
     <Compile Include="Petri\IArc.cs" />
@@ -353,6 +353,7 @@
     <Compile Include="IMutableVertexAndEdgeListGraph.cs" />
     <Compile Include="IMutableVertexListGraph.cs" />
     <Compile Include="IVertexAndEdgeListGraph.cs" />
+    <Compile Include="QuickGraphException.cs" />
     <Compile Include="Serialization\GraphMLXmlResolver.cs" />
     <Compile Include="Serialization\SerializationExtensions.cs" />
     <Compile Include="TryFuncDelegates.cs" />
