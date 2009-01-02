@@ -261,6 +261,7 @@
     <Compile Include="Contracts\IImplicitGraphContract.cs" />
     <Compile Include="Contracts\IIncidenceGraphContract.cs" />
     <Compile Include="Contracts\IMutableEdgeListGraphContract.cs" />
+    <Compile Include="Contracts\IMutableGraphContract.cs" />
     <Compile Include="Contracts\IMutableVertexSetContract.cs" />
     <Compile Include="Contracts\IVertexSetContract.cs" />
     <Compile Include="EdgePredicate.cs" />
