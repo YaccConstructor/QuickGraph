@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using QuickGraph.Contracts;
 using QuickGraph.Collections;
+using System.Linq;
 
 namespace QuickGraph
 {
@@ -552,7 +553,11 @@ namespace QuickGraph
         [ContractInvariantMethod]
         protected void ObjectInvariant()
         {
-            Contract.Invariant(this.edgeCount >= 0);            
+            Contract.Invariant(this.edgeCount >= 0);
+            Contract.Invariant(Enumerable.Sum(this.vertexInEdges.Values, ie => ie.Count) == this.edgeCount);
+            Contract.Invariant(this.vertexInEdges.Count == this.vertexOutEdges.Count);
+            Contract.Invariant(Contract.ForAll(this.vertexInEdges, kv => this.vertexOutEdges.ContainsKey(kv.Key)));
+            Contract.Invariant(Contract.ForAll(this.vertexOutEdges, kv => this.vertexInEdges.ContainsKey(kv.Key)));
         }
 
         public void ClearInEdges(TVertex v)
