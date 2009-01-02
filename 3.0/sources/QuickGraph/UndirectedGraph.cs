@@ -250,6 +250,15 @@ namespace QuickGraph
             return true;
         }
 
+        public int AddVerticesAndEdgeRange(IEnumerable<TEdge> edges)
+        {
+            int count = 0;
+            foreach (var edge in edges)
+                if (this.AddVerticesAndEdge(edge))
+                    count++;
+            return count;
+        }
+
         public bool AddEdge(TEdge edge)
         {
             Contract.Requires(GraphContract.InVertexSet(this, edge));
@@ -271,12 +280,13 @@ namespace QuickGraph
             return true;
         }
 
-        public void AddEdgeRange(IEnumerable<TEdge> edges)
+        public int AddEdgeRange(IEnumerable<TEdge> edges)
         {
-            Contract.Requires(edges != null);
-
+            int count = 0;
             foreach (var edge in edges)
-                this.AddEdge(edge);
+                if (this.AddEdge(edge))
+                    count++;
+            return count;
         }
 
         public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;

@@ -395,14 +395,18 @@ namespace QuickGraph
 
         public virtual bool AddVerticesAndEdge(TEdge e)
         {
-            Contract.Requires(e != null);
-
-            if (!this.ContainsVertex(e.Source))
-                this.AddVertex(e.Source);
-            if (!this.ContainsVertex(e.Target))
-                this.AddVertex(e.Target);
-
+            this.AddVertex(e.Source);
+            this.AddVertex(e.Target);
             return this.AddEdge(e);
+        }
+
+        public int AddVerticesAndEdgeRange(IEnumerable<TEdge> edges)
+        {
+            int count = 0;
+            foreach (var edge in edges)
+                if (this.AddVerticesAndEdge(edge))
+                    count++;
+            return count;
         }
 
         public virtual bool AddEdge(TEdge e)
@@ -423,13 +427,13 @@ namespace QuickGraph
             return true;
         }
 
-        public void AddEdgeRange(IEnumerable<TEdge> edges)
+        public int AddEdgeRange(IEnumerable<TEdge> edges)
         {
-            Contract.Requires(edges != null);
-            Contract.Requires(Contract.ForAll(edges, e => e != null && GraphContract.InVertexSet(this, e)));
-
+            int count = 0;
             foreach (var edge in edges)
-                this.AddEdge(edge);
+                if (this.AddEdge(edge))
+                    count++;
+            return count;
         }
 
         public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;

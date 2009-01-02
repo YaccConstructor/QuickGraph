@@ -384,24 +384,16 @@ namespace QuickGraph
         #endregion
 
         #region IMutableGraph<int,Edge> Members
-
         public void Clear()
         {
-            throw new Exception("The method or operation is not implemented.");
+            for(int i = 0;i<this.vertexCount;++i)
+                for(int j = 0;j<this.vertexCount;++j)
+                    this.edges[i,j] = default(TEdge);
+            this.edgeCount = 0;
         }
-
         #endregion
 
         #region IMutableEdgeListGraph<int,Edge> Members
-        bool IMutableEdgeListGraph<int,TEdge>.AddVerticesAndEdge(TEdge edge)
-        {
-            Contract.Requires(edge != null);
-            Contract.Requires(GraphContract.InVertexSet(this, edge.Source));
-            Contract.Requires(GraphContract.InVertexSet(this, edge.Target));
-
-            return this.AddEdge(edge);
-        }
-
         public bool AddEdge(TEdge edge)
         {
             Contract.Requires(edge != null);
@@ -414,11 +406,13 @@ namespace QuickGraph
             return true;
         }
 
-        public void AddEdgeRange(IEnumerable<TEdge> edges)
+        public int AddEdgeRange(IEnumerable<TEdge> edges)
         {
-            Contract.Requires(edges != null);
+            int count = 0;
             foreach (var edge in edges)
-                this.AddEdge(edge);
+                if (this.AddEdge(edge))
+                    count++;
+            return count;
         }
 
         public event EdgeEventHandler<int, TEdge> EdgeAdded;
