@@ -34,7 +34,7 @@ namespace QuickGraph.Contracts
             IMutableEdgeListGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(edges != null);
             Contract.Requires(Contract.ForAll(edges, e => e != null));
-            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Sum(edges, e => ithis.ContainsEdge(e) ? 0 : 1)));
+            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(edges, e => !ithis.ContainsEdge(e))));
             Contract.Ensures(Contract.ForAll(edges, e => ithis.ContainsEdge(e)));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + Contract.Result<int>());
 
@@ -62,7 +62,7 @@ namespace QuickGraph.Contracts
         {
             IMutableEdgeListGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(predicate != null);
-            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Sum(ithis.Edges, e => predicate(e) ? 1 : 0)));
+            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(ithis.Edges, e => predicate(e))));
             Contract.Ensures(Contract.ForAll(ithis.Edges, e => !predicate(e)));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) - Contract.Result<int>());
 

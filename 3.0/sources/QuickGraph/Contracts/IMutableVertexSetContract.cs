@@ -35,7 +35,7 @@ namespace QuickGraph.Contracts
             IMutableVertexSet<TVertex> ithis = this;
             Contract.Requires(vertices != null);
             Contract.Requires(Contract.ForAll(vertices, v => v != null));
-            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Sum(vertices, v => ithis.ContainsVertex(v) ? 0 : 1)));
+            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(vertices, v => !ithis.ContainsVertex(v))));
             Contract.Ensures(Contract.ForAll(vertices, v => ithis.ContainsVertex(v)));
             Contract.Ensures(ithis.VertexCount == Contract.OldValue(ithis.VertexCount) + Contract.Result<int>());
 
@@ -63,7 +63,7 @@ namespace QuickGraph.Contracts
         {
             IMutableVertexSet<TVertex> ithis = this;
             Contract.Requires(pred != null);
-            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Sum(ithis.Vertices, v => pred(v) ? 1 : 0)));
+            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(ithis.Vertices, v => pred(v))));
             Contract.Ensures(Contract.ForAll(ithis.Vertices, v => !pred(v)));
             Contract.Ensures(ithis.VertexCount == Contract.OldValue(ithis.VertexCount) - Contract.Result<int>());
 

@@ -7,36 +7,28 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Contracts
 {
-    [ContractClassFor(typeof(IMutableIncidenceGraph<,>))]
-    sealed class IMutableIncidenceGraphContract<TVertex, TEdge>
-        : IMutableIncidenceGraph<TVertex, TEdge>
+    [ContractClassFor(typeof(IMutableVertexListGraph<,>))]
+    sealed class IMutableVertexListGraphContract<TVertex, TEdge>
+        : IMutableVertexListGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         #region IMutableIncidenceGraph<TVertex,TEdge> Members
 
-        int IMutableIncidenceGraph<TVertex, TEdge>.RemoveOutEdgeIf(
-            TVertex v, 
-            EdgePredicate<TVertex, TEdge> predicate)
+        int IMutableIncidenceGraph<TVertex, TEdge>.RemoveOutEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
         {
-            IMutableIncidenceGraph<TVertex, TEdge> ithis = this;
-            Contract.Requires(v != null);
-            Contract.Requires(predicate != null);
-            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(ithis.OutEdges(v), ve => predicate(ve))));
-            Contract.Ensures(Contract.ForAll(ithis.OutEdges(v), ve => !predicate(ve)));
-
-            return Contract.Result<int>();
+            throw new NotImplementedException();
         }
 
         void IMutableIncidenceGraph<TVertex, TEdge>.ClearOutEdges(TVertex v)
         {
-            IMutableIncidenceGraph<TVertex, TEdge> ithis = this;
-            Contract.Requires(v != null);
-            Contract.Ensures(ithis.OutDegree(v) == 0);
-
+            throw new NotImplementedException();
         }
 
         void IMutableIncidenceGraph<TVertex, TEdge>.TrimEdgeExcess()
-        {}
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region IMutableGraph<TVertex,TEdge> Members
@@ -104,6 +96,66 @@ namespace QuickGraph.Contracts
         }
 
         TEdge IImplicitGraph<TVertex, TEdge>.OutEdge(TVertex v, int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IMutableVertexSet<TVertex> Members
+
+        event VertexEventHandler<TVertex> IMutableVertexSet<TVertex>.VertexAdded
+        {
+            add { throw new NotImplementedException(); }
+            remove { throw new NotImplementedException(); }
+        }
+
+        bool IMutableVertexSet<TVertex>.AddVertex(TVertex v)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IMutableVertexSet<TVertex>.AddVertexRange(IEnumerable<TVertex> vertices)
+        {
+            throw new NotImplementedException();
+        }
+
+        event VertexEventHandler<TVertex> IMutableVertexSet<TVertex>.VertexRemoved
+        {
+            add { throw new NotImplementedException(); }
+            remove { throw new NotImplementedException(); }
+        }
+
+        bool IMutableVertexSet<TVertex>.RemoveVertex(TVertex v)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IMutableVertexSet<TVertex>.RemoveVertexIf(VertexPredicate<TVertex> pred)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IVertexSet<TVertex> Members
+
+        bool IVertexSet<TVertex>.IsVerticesEmpty
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        int IVertexSet<TVertex>.VertexCount
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        IEnumerable<TVertex> IVertexSet<TVertex>.Vertices
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        bool IVertexSet<TVertex>.ContainsVertex(TVertex vertex)
         {
             throw new NotImplementedException();
         }
