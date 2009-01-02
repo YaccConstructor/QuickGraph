@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
+using QuickGraph.Contracts;
 
 namespace QuickGraph
 {
@@ -6,6 +8,9 @@ namespace QuickGraph
     /// A cloneable edge
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
+#if CONTRACTS_FULL
+    [ContractClass(typeof(ICloneableEdgeContract<>))]
+#endif
     public interface ICloneableEdge<TVertex> 
         : IEdge<TVertex>
     {

@@ -254,6 +254,7 @@
     <Compile Include="Contracts\Contracts.cs" />
     <Compile Include="Contracts\DummyContract.cs" />
     <Compile Include="Contracts\IBidirectionalGraphContract.cs" />
+    <Compile Include="Contracts\ICloneableEdgeContract.cs" />
     <Compile Include="Contracts\IEdgeContract.cs" />
     <Compile Include="Contracts\EnumerableContract.cs" />
     <Compile Include="Contracts\GraphContract.cs" />
