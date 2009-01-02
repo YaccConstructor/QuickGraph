@@ -279,6 +279,7 @@
     <Compile Include="GraphExtensions.cs" />
     <Compile Include="HashCodeHelper.cs" />
     <Compile Include="IEdgeSet.cs" />
+    <Compile Include="IMutableVertexAndEdgeSet.cs" />
     <Compile Include="IMutableVertexSet.cs" />
     <Compile Include="NegativeCycleGraphException.cs" />
     <Compile Include="NegativeWeightException.cs" />

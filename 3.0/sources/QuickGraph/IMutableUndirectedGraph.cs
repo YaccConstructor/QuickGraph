@@ -12,6 +12,7 @@ namespace QuickGraph
         : IMutableEdgeListGraph<TVertex,TEdge>
         , IMutableVertexSet<TVertex>
         , IUndirectedGraph<TVertex,TEdge>
+        , IMutableVertexAndEdgeSet<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         int RemoveAdjacentEdgeIf(TVertex vertex, EdgePredicate<TVertex, TEdge> predicate);

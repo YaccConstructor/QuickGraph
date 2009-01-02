@@ -2597,7 +2597,7 @@ namespace QuickGraph.Stubs
         /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexSet`1.AddVertexRange(System.Collections.Generic.IEnumerable`1&lt;!0&gt; vertices)</summary>
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SHierarchy<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TVertex>, int> AddVertexRange;
 
-        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SHierarchy<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TEdge>, int> AddVerticesAndEdgeRange;
 
         /// <summary>Stub of property QuickGraph.IGraph`2.AllowParallelEdges</summary>
@@ -3124,9 +3124,9 @@ namespace QuickGraph.Stubs
             }
         }
 
-        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdge(!1 edge)</summary>
+        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdge(!1 edge)</summary>
         [global::System.Diagnostics.DebuggerHidden]
-        bool global::QuickGraph.IMutableVertexAndEdgeListGraph<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
+        bool global::QuickGraph.IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
         {
             global::Microsoft.Stubs
               .IDefaultStub<global::QuickGraph.Stubs.SHierarchy<TVertex, TEdge>> stub
@@ -3136,9 +3136,9 @@ namespace QuickGraph.Stubs
             return stub.Result<bool>(this);
         }
 
-        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
         [global::System.Diagnostics.DebuggerHidden]
-        int global::QuickGraph.IMutableVertexAndEdgeListGraph<TVertex, TEdge>.AddVerticesAndEdgeRange(global::System.Collections.Generic.IEnumerable<TEdge> edges)
+        int global::QuickGraph.IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdgeRange(global::System.Collections.Generic.IEnumerable<TEdge> edges)
         {
             global::Microsoft.Stubs.StubDelegates
               .Func<global::QuickGraph.Stubs.SHierarchy<TVertex, TEdge>, 
@@ -4561,7 +4561,7 @@ namespace QuickGraph.Stubs
         /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexSet`1.AddVertexRange(System.Collections.Generic.IEnumerable`1&lt;!0&gt; vertices)</summary>
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableBidirectionalGraph<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TVertex>, int> AddVertexRange;
 
-        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableBidirectionalGraph<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TEdge>, int> AddVerticesAndEdgeRange;
 
         /// <summary>Stub of property QuickGraph.IGraph`2.AllowParallelEdges</summary>
@@ -5052,9 +5052,9 @@ namespace QuickGraph.Stubs
             }
         }
 
-        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdge(!1 edge)</summary>
+        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdge(!1 edge)</summary>
         [global::System.Diagnostics.DebuggerHidden]
-        bool global::QuickGraph.IMutableVertexAndEdgeListGraph<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
+        bool global::QuickGraph.IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
         {
             global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
               .SMutableBidirectionalGraph<TVertex, TEdge>> stub
@@ -5063,9 +5063,9 @@ namespace QuickGraph.Stubs
             return stub.Result<bool>(this);
         }
 
-        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
         [global::System.Diagnostics.DebuggerHidden]
-        int global::QuickGraph.IMutableVertexAndEdgeListGraph<TVertex, TEdge>.AddVerticesAndEdgeRange(global::System.Collections.Generic.IEnumerable<TEdge> edges)
+        int global::QuickGraph.IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdgeRange(global::System.Collections.Generic.IEnumerable<TEdge> edges)
         {
             global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
               .SMutableBidirectionalGraph<TVertex, TEdge>, 
@@ -6036,6 +6036,9 @@ namespace QuickGraph.Stubs
         /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexSet`1.AddVertexRange(System.Collections.Generic.IEnumerable`1&lt;!0&gt; vertices)</summary>
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableUndirectedGraph<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TVertex>, int> AddVertexRange;
 
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableUndirectedGraph<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TEdge>, int> AddVerticesAndEdgeRange;
+
         /// <summary>Stub of property QuickGraph.IGraph`2.AllowParallelEdges</summary>
         bool global::QuickGraph.IGraph<TVertex, TEdge>.AllowParallelEdges
         {
@@ -6303,6 +6306,37 @@ namespace QuickGraph.Stubs
             return stub.Result<int>(this);
         }
 
+        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdge(!1 edge)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        bool global::QuickGraph.IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
+        {
+            global::Microsoft.Stubs.IDefaultStub<
+            global::QuickGraph.Stubs.SMutableUndirectedGraph<TVertex, TEdge>
+            > stub = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+              .SMutableUndirectedGraph<TVertex, TEdge>>)this).DefaultStub;
+            return stub.Result<bool>(this);
+        }
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        int global::QuickGraph.IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdgeRange(global::System.Collections.Generic.IEnumerable<TEdge> edges)
+        {
+            global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+              .SMutableUndirectedGraph<TVertex, TEdge>, 
+            global::System.Collections.Generic.IEnumerable<TEdge>, int> sh
+               = this.AddVerticesAndEdgeRange;
+            if ((object)sh != (object)null)
+              return sh.Invoke(this, edges);
+            else 
+            {
+              global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                .SMutableUndirectedGraph<TVertex, TEdge>> stub
+                 = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                  .SMutableUndirectedGraph<TVertex, TEdge>>)this).DefaultStub;
+              return stub.Result<int>(this);
+            }
+        }
+
         /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexSet`1.AddVertex(!0 v)</summary>
         [global::System.Diagnostics.DebuggerHidden]
         bool global::QuickGraph.IMutableVertexSet<TVertex>.AddVertex(TVertex v)
@@ -6516,7 +6550,7 @@ namespace QuickGraph.Stubs
         /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexSet`1.AddVertexRange(System.Collections.Generic.IEnumerable`1&lt;!0&gt; vertices)</summary>
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeListGraph<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TVertex>, int> AddVertexRange;
 
-        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeListGraph<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TEdge>, int> AddVerticesAndEdgeRange;
 
         /// <summary>Stub of property QuickGraph.IGraph`2.AllowParallelEdges</summary>
@@ -6908,9 +6942,9 @@ namespace QuickGraph.Stubs
             }
         }
 
-        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdge(!1 edge)</summary>
+        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdge(!1 edge)</summary>
         [global::System.Diagnostics.DebuggerHidden]
-        bool global::QuickGraph.IMutableVertexAndEdgeListGraph<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
+        bool global::QuickGraph.IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
         {
             global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
               .SMutableVertexAndEdgeListGraph<TVertex, TEdge>> stub
@@ -6919,9 +6953,9 @@ namespace QuickGraph.Stubs
             return stub.Result<bool>(this);
         }
 
-        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
         [global::System.Diagnostics.DebuggerHidden]
-        int global::QuickGraph.IMutableVertexAndEdgeListGraph<TVertex, TEdge>.AddVerticesAndEdgeRange(global::System.Collections.Generic.IEnumerable<TEdge> edges)
+        int global::QuickGraph.IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdgeRange(global::System.Collections.Generic.IEnumerable<TEdge> edges)
         {
             global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
               .SMutableVertexAndEdgeListGraph<TVertex, TEdge>, 
@@ -7075,6 +7109,444 @@ namespace QuickGraph.Stubs
 
         /// <summary>Stub of method System.Collections.Generic.IEnumerable`1&lt;!0&gt; QuickGraph.IVertexSet`1.get_Vertices()</summary>
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeListGraph<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TVertex>> VerticesGet;
+    }
+}
+namespace QuickGraph.Stubs
+{
+    /// <summary>Stub of IMutableVertexAndEdgeSet`2</summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Stubs", "0.1.2.3")]
+    [global::System.Serializable]
+    [global::System.Diagnostics.DebuggerStepThrough]
+    public partial class SMutableVertexAndEdgeSet<TVertex,TEdge>
+      : global::Microsoft.Stubs.StubBase<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>>
+      , global::QuickGraph.IMutableVertexAndEdgeSet<TVertex, TEdge>
+        where TEdge : global::QuickGraph.IEdge<TVertex>
+    {
+        /// <summary>Initializes a new instance of type SMutableVertexAndEdgeSet</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        public SMutableVertexAndEdgeSet()
+        {
+        }
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableEdgeListGraph`2.AddEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TEdge>, int> AddEdgeRange;
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexSet`1.AddVertexRange(System.Collections.Generic.IEnumerable`1&lt;!0&gt; vertices)</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TVertex>, int> AddVertexRange;
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TEdge>, int> AddVerticesAndEdgeRange;
+
+        /// <summary>Stub of property QuickGraph.IGraph`2.AllowParallelEdges</summary>
+        bool global::QuickGraph.IGraph<TVertex, TEdge>.AllowParallelEdges
+        {
+            [global::System.Diagnostics.DebuggerHidden]
+            get
+            {
+                global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>, bool> sh = this.AllowParallelEdgesGet
+                  ;
+                if ((object)sh != (object)null)
+                  return sh.Invoke(this);
+                else 
+                {
+                  global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                    .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                     = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                      .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+                  return stub.Result<bool>(this);
+                }
+            }
+        }
+
+        /// <summary>Stub of method System.Boolean QuickGraph.IGraph`2.get_AllowParallelEdges()</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, bool> AllowParallelEdgesGet;
+
+        /// <summary>Stub of method System.Void QuickGraph.IMutableGraph`2.Clear()</summary>
+        public global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>> Clear;
+
+        /// <summary>Event EdgeAdded</summary>
+        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+
+        /// <summary>Stub of property QuickGraph.IEdgeSet`2.EdgeCount</summary>
+        int global::QuickGraph.IEdgeSet<TVertex, TEdge>.EdgeCount
+        {
+            [global::System.Diagnostics.DebuggerHidden]
+            get
+            {
+                global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>, int> sh = this.EdgeCountGet;
+                if ((object)sh != (object)null)
+                  return sh.Invoke(this);
+                else 
+                {
+                  global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                    .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                     = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                      .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+                  return stub.Result<int>(this);
+                }
+            }
+        }
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IEdgeSet`2.get_EdgeCount()</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, int> EdgeCountGet;
+
+        /// <summary>Event EdgeRemoved</summary>
+        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+
+        /// <summary>Stub of property QuickGraph.IEdgeSet`2.Edges</summary>
+        global::System.Collections.Generic.IEnumerable<TEdge> global::QuickGraph.IEdgeSet<TVertex, TEdge>.Edges
+        {
+            [global::System.Diagnostics.DebuggerHidden]
+            get
+            {
+                global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>, 
+                global::System.Collections.Generic.IEnumerable<TEdge>> sh = this.EdgesGet;
+                if ((object)sh != (object)null)
+                  return sh.Invoke(this);
+                else 
+                {
+                  global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                    .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                     = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                      .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+                  return 
+                    stub.Result<global::System.Collections.Generic.IEnumerable<TEdge>>(this);
+                }
+            }
+        }
+
+        /// <summary>Stub of method System.Collections.Generic.IEnumerable`1&lt;!1&gt; QuickGraph.IEdgeSet`2.get_Edges()</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TEdge>> EdgesGet;
+
+        /// <summary>Stub of property QuickGraph.IGraph`2.IsDirected</summary>
+        bool global::QuickGraph.IGraph<TVertex, TEdge>.IsDirected
+        {
+            [global::System.Diagnostics.DebuggerHidden]
+            get
+            {
+                global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>, bool> sh = this.IsDirectedGet;
+                if ((object)sh != (object)null)
+                  return sh.Invoke(this);
+                else 
+                {
+                  global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                    .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                     = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                      .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+                  return stub.Result<bool>(this);
+                }
+            }
+        }
+
+        /// <summary>Stub of method System.Boolean QuickGraph.IGraph`2.get_IsDirected()</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, bool> IsDirectedGet;
+
+        /// <summary>Stub of property QuickGraph.IEdgeSet`2.IsEdgesEmpty</summary>
+        bool global::QuickGraph.IEdgeSet<TVertex, TEdge>.IsEdgesEmpty
+        {
+            [global::System.Diagnostics.DebuggerHidden]
+            get
+            {
+                global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>, bool> sh = this.IsEdgesEmptyGet;
+                if ((object)sh != (object)null)
+                  return sh.Invoke(this);
+                else 
+                {
+                  global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                    .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                     = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                      .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+                  return stub.Result<bool>(this);
+                }
+            }
+        }
+
+        /// <summary>Stub of method System.Boolean QuickGraph.IEdgeSet`2.get_IsEdgesEmpty()</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, bool> IsEdgesEmptyGet;
+
+        /// <summary>Stub of property QuickGraph.IVertexSet`1.IsVerticesEmpty</summary>
+        bool global::QuickGraph.IVertexSet<TVertex>.IsVerticesEmpty
+        {
+            [global::System.Diagnostics.DebuggerHidden]
+            get
+            {
+                global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>, bool> sh = this.IsVerticesEmptyGet;
+                if ((object)sh != (object)null)
+                  return sh.Invoke(this);
+                else 
+                {
+                  global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                    .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                     = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                      .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+                  return stub.Result<bool>(this);
+                }
+            }
+        }
+
+        /// <summary>Stub of method System.Boolean QuickGraph.IVertexSet`1.get_IsVerticesEmpty()</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, bool> IsVerticesEmptyGet;
+
+        /// <summary>Stub of method System.Boolean QuickGraph.IEdgeSet`2.ContainsEdge(!1 edge)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        bool global::QuickGraph.IEdgeSet<TVertex, TEdge>.ContainsEdge(TEdge edge)
+        {
+            global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+               = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+            return stub.Result<bool>(this);
+        }
+
+        /// <summary>Stub of method System.Boolean QuickGraph.IMutableEdgeListGraph`2.AddEdge(!1 edge)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        bool global::QuickGraph.IMutableEdgeListGraph<TVertex, TEdge>.AddEdge(TEdge edge)
+        {
+            global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+               = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+            return stub.Result<bool>(this);
+        }
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableEdgeListGraph`2.AddEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        int global::QuickGraph.IMutableEdgeListGraph<TVertex, TEdge>.AddEdgeRange(global::System.Collections.Generic.IEnumerable<TEdge> edges)
+        {
+            global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>, 
+            global::System.Collections.Generic.IEnumerable<TEdge>, int> sh
+               = this.AddEdgeRange;
+            if ((object)sh != (object)null)
+              return sh.Invoke(this, edges);
+            else 
+            {
+              global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                 = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+              return stub.Result<int>(this);
+            }
+        }
+
+        /// <summary>Stub of method System.Boolean QuickGraph.IMutableEdgeListGraph`2.RemoveEdge(!1 edge)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        bool global::QuickGraph.IMutableEdgeListGraph<TVertex, TEdge>.RemoveEdge(TEdge edge)
+        {
+            global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+               = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+            return stub.Result<bool>(this);
+        }
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableEdgeListGraph`2.RemoveEdgeIf(QuickGraph.EdgePredicate`2&lt;!0,!1&gt; predicate)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        int global::QuickGraph.IMutableEdgeListGraph<TVertex, TEdge>.RemoveEdgeIf(global::QuickGraph.EdgePredicate<TVertex, TEdge> predicate)
+        {
+            global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>, 
+            global::QuickGraph.EdgePredicate<TVertex, TEdge>, int> sh = this.RemoveEdgeIf;
+            if ((object)sh != (object)null)
+              return sh.Invoke(this, predicate);
+            else 
+            {
+              global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                 = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+              return stub.Result<int>(this);
+            }
+        }
+
+        /// <summary>Stub of method System.Void QuickGraph.IMutableGraph`2.Clear()</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        void global::QuickGraph.IMutableGraph<TVertex, TEdge>.Clear()
+        {
+            global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>> sh = this.Clear;
+            if ((object)sh != (object)null)
+              sh.Invoke(this);
+            else 
+            {
+              global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                 = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+              stub.VoidResult(this);
+            }
+        }
+
+        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdge(!1 edge)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        bool global::QuickGraph.IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
+        {
+            global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+               = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+            return stub.Result<bool>(this);
+        }
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        int global::QuickGraph.IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdgeRange(global::System.Collections.Generic.IEnumerable<TEdge> edges)
+        {
+            global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>, 
+            global::System.Collections.Generic.IEnumerable<TEdge>, int> sh
+               = this.AddVerticesAndEdgeRange;
+            if ((object)sh != (object)null)
+              return sh.Invoke(this, edges);
+            else 
+            {
+              global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                 = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+              return stub.Result<int>(this);
+            }
+        }
+
+        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexSet`1.AddVertex(!0 v)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        bool global::QuickGraph.IMutableVertexSet<TVertex>.AddVertex(TVertex v)
+        {
+            global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+               = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+            return stub.Result<bool>(this);
+        }
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexSet`1.AddVertexRange(System.Collections.Generic.IEnumerable`1&lt;!0&gt; vertices)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        int global::QuickGraph.IMutableVertexSet<TVertex>.AddVertexRange(global::System.Collections.Generic.IEnumerable<TVertex> vertices)
+        {
+            global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>, 
+            global::System.Collections.Generic.IEnumerable<TVertex>, 
+            int> sh = this.AddVertexRange;
+            if ((object)sh != (object)null)
+              return sh.Invoke(this, vertices);
+            else 
+            {
+              global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                 = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+              return stub.Result<int>(this);
+            }
+        }
+
+        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexSet`1.RemoveVertex(!0 v)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        bool global::QuickGraph.IMutableVertexSet<TVertex>.RemoveVertex(TVertex v)
+        {
+            global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+               = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+            return stub.Result<bool>(this);
+        }
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexSet`1.RemoveVertexIf(QuickGraph.VertexPredicate`1&lt;!0&gt; pred)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        int global::QuickGraph.IMutableVertexSet<TVertex>.RemoveVertexIf(global::QuickGraph.VertexPredicate<TVertex> pred)
+        {
+            global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>, 
+            global::QuickGraph.VertexPredicate<TVertex>, int> sh = this.RemoveVertexIf;
+            if ((object)sh != (object)null)
+              return sh.Invoke(this, pred);
+            else 
+            {
+              global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                 = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+              return stub.Result<int>(this);
+            }
+        }
+
+        /// <summary>Stub of method System.Boolean QuickGraph.IVertexSet`1.ContainsVertex(!0 vertex)</summary>
+        [global::System.Diagnostics.DebuggerHidden]
+        bool global::QuickGraph.IVertexSet<TVertex>.ContainsVertex(TVertex vertex)
+        {
+            global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+              .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+               = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+            return stub.Result<bool>(this);
+        }
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableEdgeListGraph`2.RemoveEdgeIf(QuickGraph.EdgePredicate`2&lt;!0,!1&gt; predicate)</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, global::QuickGraph.EdgePredicate<TVertex, TEdge>, int> RemoveEdgeIf;
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexSet`1.RemoveVertexIf(QuickGraph.VertexPredicate`1&lt;!0&gt; pred)</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, global::QuickGraph.VertexPredicate<TVertex>, int> RemoveVertexIf;
+
+        /// <summary>Event VertexAdded</summary>
+        public event global::QuickGraph.VertexEventHandler<TVertex> VertexAdded;
+
+        /// <summary>Stub of property QuickGraph.IVertexSet`1.VertexCount</summary>
+        int global::QuickGraph.IVertexSet<TVertex>.VertexCount
+        {
+            [global::System.Diagnostics.DebuggerHidden]
+            get
+            {
+                global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>, int> sh = this.VertexCountGet;
+                if ((object)sh != (object)null)
+                  return sh.Invoke(this);
+                else 
+                {
+                  global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                    .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                     = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                      .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+                  return stub.Result<int>(this);
+                }
+            }
+        }
+
+        /// <summary>Stub of method System.Int32 QuickGraph.IVertexSet`1.get_VertexCount()</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, int> VertexCountGet;
+
+        /// <summary>Event VertexRemoved</summary>
+        public event global::QuickGraph.VertexEventHandler<TVertex> VertexRemoved;
+
+        /// <summary>Stub of property QuickGraph.IVertexSet`1.Vertices</summary>
+        global::System.Collections.Generic.IEnumerable<TVertex> global::QuickGraph.IVertexSet<TVertex>.Vertices
+        {
+            [global::System.Diagnostics.DebuggerHidden]
+            get
+            {
+                global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs
+                  .SMutableVertexAndEdgeSet<TVertex, TEdge>, 
+                global::System.Collections.Generic.IEnumerable<TVertex>> sh = this.VerticesGet;
+                if ((object)sh != (object)null)
+                  return sh.Invoke(this);
+                else 
+                {
+                  global::Microsoft.Stubs.IDefaultStub<global::QuickGraph.Stubs
+                    .SMutableVertexAndEdgeSet<TVertex, TEdge>> stub
+                     = ((global::Microsoft.Stubs.IStub<global::QuickGraph.Stubs
+                      .SMutableVertexAndEdgeSet<TVertex, TEdge>>)this).DefaultStub;
+                  return 
+                    stub.Result<global::System.Collections.Generic.IEnumerable<TVertex>>(this);
+                }
+            }
+        }
+
+        /// <summary>Stub of method System.Collections.Generic.IEnumerable`1&lt;!0&gt; QuickGraph.IVertexSet`1.get_Vertices()</summary>
+        public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, global::System.Collections.Generic.IEnumerable<TVertex>> VerticesGet;
     }
 }
 namespace QuickGraph.Stubs
@@ -7720,10 +8192,10 @@ namespace QuickGraph.Petri.Stubs
         /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexSet`1.AddVertexRange(System.Collections.Generic.IEnumerable`1&lt;!0&gt; vertices)</summary>
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Petri.Stubs.SPetriGraph<Token>, global::System.Collections.Generic.IEnumerable<global::QuickGraph.Petri.IPetriVertex>, int> AddVertexRange;
 
-        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdge(!1 edge)</summary>
+        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdge(!1 edge)</summary>
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Petri.Stubs.SPetriGraph<Token>, global::QuickGraph.Petri.IArc<Token>, bool> AddVerticesAndEdge;
 
-        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Petri.Stubs.SPetriGraph<Token>, global::System.Collections.Generic.IEnumerable<global::QuickGraph.Petri.IArc<Token>>, int> AddVerticesAndEdgeRange;
 
         /// <summary>Stub of property QuickGraph.IGraph`2.AllowParallelEdges</summary>
@@ -8499,9 +8971,9 @@ namespace QuickGraph.Petri.Stubs
             }
         }
 
-        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdge(!1 edge)</summary>
+        /// <summary>Stub of method System.Boolean QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdge(!1 edge)</summary>
         [global::System.Diagnostics.DebuggerHidden]
-        bool global::QuickGraph.IMutableVertexAndEdgeListGraph<global::QuickGraph.Petri.IPetriVertex, global::QuickGraph.Petri.IArc<Token>>.AddVerticesAndEdge(global::QuickGraph.Petri.IArc<Token> edge)
+        bool global::QuickGraph.IMutableVertexAndEdgeSet<global::QuickGraph.Petri.IPetriVertex, global::QuickGraph.Petri.IArc<Token>>.AddVerticesAndEdge(global::QuickGraph.Petri.IArc<Token> edge)
         {
             global::Microsoft.Stubs.StubDelegates
               .Func<global::QuickGraph.Petri.Stubs.SPetriGraph<Token>, 
@@ -8519,9 +8991,9 @@ namespace QuickGraph.Petri.Stubs
             }
         }
 
-        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeListGraph`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
+        /// <summary>Stub of method System.Int32 QuickGraph.IMutableVertexAndEdgeSet`2.AddVerticesAndEdgeRange(System.Collections.Generic.IEnumerable`1&lt;!1&gt; edges)</summary>
         [global::System.Diagnostics.DebuggerHidden]
-        int global::QuickGraph.IMutableVertexAndEdgeListGraph<global::QuickGraph.Petri.IPetriVertex, global::QuickGraph.Petri.IArc<Token>>.AddVerticesAndEdgeRange(global::System.Collections.Generic.IEnumerable<global::QuickGraph.Petri.IArc<Token>> edges)
+        int global::QuickGraph.IMutableVertexAndEdgeSet<global::QuickGraph.Petri.IPetriVertex, global::QuickGraph.Petri.IArc<Token>>.AddVerticesAndEdgeRange(global::System.Collections.Generic.IEnumerable<global::QuickGraph.Petri.IArc<Token>> edges)
         {
             global::Microsoft.Stubs.StubDelegates
               .Func<global::QuickGraph.Petri.Stubs.SPetriGraph<Token>, 
