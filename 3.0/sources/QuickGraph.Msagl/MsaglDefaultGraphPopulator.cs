@@ -47,10 +47,17 @@ namespace QuickGraph.Msagl
 
         protected override Microsoft.Msagl.Drawing.Edge AddEdge(TEdge e)
         {
-            return (Microsoft.Msagl.Drawing.Edge)this.MsaglGraph.AddEdge(
+            var edge = (Microsoft.Msagl.Drawing.Edge)this.MsaglGraph.AddEdge(
                 this.vertexIds[e.Source],
                 this.vertexIds[e.Target]
                 );
+            edge.LabelText = this.GetEdgeLabel(e);
+            return edge;
+        }
+
+        protected virtual string GetEdgeLabel(TEdge e)
+        {
+            return e.ToString();
         }
     }
 }

@@ -9,6 +9,10 @@ using Microsoft.Pex.Framework;
 using QuickGraph.Serialization;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms;
+using QuickGraph.Msagl;
+using System.Xml.Serialization;
+using System.IO;
+using System.Xml.XPath;
 
 namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
 {
@@ -167,13 +171,55 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             Assert.AreEqual(cost, 3);
         }
 
+        public class WeightedEdge
+            : IdentifiableEdge<string>
+        {
+            public WeightedEdge(string source, string target, string id, int weight)
+                :base(source, target, id)
+            {
+                this.Weight = weight;
+            }
+
+            public readonly int Weight;
+
+            public override string ToString()
+            {
+                return String.Format("{0}: {1}", this.ID, this.Weight);
+            }
+        }
+
         [TestMethod]
         [WorkItem(12273)]
         public void Prim12273()
         {
-            var g = TestGraphFactory.LoadUndirectedGraph("repro12273.graphml");
-            var cost = CompareRoot(g);
-            Assert.AreEqual(cost, 63);
+            var doc = new XPathDocument("repro12273.xml");
+            var ug = new UndirectedGraph<string, WeightedEdge>();
+            foreach (XPathNavigator v in doc.CreateNavigator().Select("graph/node"))
+                ug.AddVertex(v.GetAttribute("id", ""));
+            foreach (XPathNavigator e in doc.CreateNavigator().Select("graph/edge"))
+                ug.AddEdge(new WeightedEdge(
+                    e.GetAttribute("source", ""),
+                    e.GetAttribute("target", ""),
+                    e.GetAttribute("id", ""),
+                    int.Parse(e.GetAttribute("weight", ""))
+                    )
+                );
+
+            //MsaglGraphExtensions.ShowMsaglGraph(ug);
+            var prim = new List<WeightedEdge>(ug.MinimumSpanningTreePrim(e => e.Weight));
+            var pcost = prim.Sum(e => e.Weight);
+            Console.WriteLine("prim cost {0}", pcost);
+            foreach(var e in prim)
+                Console.WriteLine(e);
+
+            var kruskal = new List<WeightedEdge>(ug.MinimumSpanningTreeKruskal(e => e.Weight));
+            var kcost = kruskal.Sum(e => e.Weight);
+            Console.WriteLine("kruskal cost {0}", kcost);
+            foreach (var e in kruskal)
+                Console.WriteLine(e);
+
+            Assert.AreEqual(pcost, 63);
+            Assert.AreEqual(pcost, kcost);
         }
     }
 }

@@ -4,7 +4,8 @@ using System.Text;
 
 namespace QuickGraph.Msagl
 {
-    public sealed class MsaglToStringGraphPopulator<TVertex,TEdge> : MsaglDefaultGraphPopulator<TVertex, TEdge>
+    public sealed class MsaglToStringGraphPopulator<TVertex,TEdge> 
+        : MsaglDefaultGraphPopulator<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private readonly IFormatProvider formatProvider;

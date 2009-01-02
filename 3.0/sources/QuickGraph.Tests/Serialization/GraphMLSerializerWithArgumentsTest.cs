@@ -226,6 +226,7 @@ namespace QuickGraph.Serialization
                     g.SerializeToGraphML(xwriter);
 
                 xml = writer.ToString();
+                Console.WriteLine("serialized: " + xml);
             }
 
             TestAdjacencyGraph newg;
@@ -245,6 +246,7 @@ namespace QuickGraph.Serialization
                 using (var xwriter = XmlWriter.Create(writer))
                     serializer.Serialize(xwriter, newg);
                 newxml = writer.ToString();
+                Console.WriteLine("roundtrip: " + newxml);
             }
 
             Assert.AreEqual(xml, newxml);

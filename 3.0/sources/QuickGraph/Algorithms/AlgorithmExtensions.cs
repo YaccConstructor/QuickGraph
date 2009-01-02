@@ -865,13 +865,34 @@ this
             if (visitedGraph.VertexCount == 0)
                 return new TEdge[0];
 
-            var distanceRelaxer = ShortestDistanceRelaxer.Instance;
+            var distanceRelaxer = PrimRelaxer.Instance;
             var dijkstra = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, weights, distanceRelaxer);
             var edgeRecorder = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
             using (ObserverScope.Create(dijkstra, edgeRecorder))
                 dijkstra.Compute();
 
             return edgeRecorder.VertexPredecessors.Values;
+        }
+
+        class PrimRelaxer
+            : IDistanceRelaxer
+        {
+            public static readonly IDistanceRelaxer Instance = new PrimRelaxer();
+
+            public double InitialDistance
+            {
+                get { return double.MaxValue; }
+            }
+
+            public bool Compare(double a, double b)
+            {
+                return a < b;
+            }
+
+            public double Combine(double distance, double weight)
+            {
+                return weight;
+            }
         }
 
         /// <summary>

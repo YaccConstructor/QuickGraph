@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<graphml>
   <graph>
     <node id="1" />
     <node id="2" />
@@ -32,11 +31,10 @@
     <edge id="7_8" source="7" target="8" weight="9" />
     <edge id="7_9" source="7" target="9" weight="4" />
     <edge id="7_11" source="7" target="11" weight="12" />
-    <edge id="7_10" source="7" target="10" weight="13" />\
+    <edge id="7_10" source="7" target="10" weight="13" />
     <edge id="8_9" source="8" target="9" weight="14" />
     <edge id="8_12" source="8" target="12" weight="5" />
     <edge id="9_10" source="9" target="10" weight="19" />
     <edge id="10_12" source="10" target="12" weight="2" />
     <edge id="11_12" source="11" target="12" weight="7" />
   </graph>
-</graphml>

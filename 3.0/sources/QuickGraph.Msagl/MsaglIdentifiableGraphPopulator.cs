@@ -20,9 +20,10 @@ namespace QuickGraph.Msagl
 
         protected override Microsoft.Msagl.Drawing.Edge AddEdge(TEdge e)
         {
-            return (Microsoft.Msagl.Drawing.Edge)this.MsaglGraph.AddEdge(
+            var edge = (Microsoft.Msagl.Drawing.Edge)this.MsaglGraph.AddEdge(
                 e.Source.ID,
                 e.Target.ID);
+            return edge;
         }
     }
 }
