@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if CONTRACTS_FULL
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -207,3 +208,4 @@ namespace QuickGraph.Contracts
         #endregion
     }
 }
+#endif
