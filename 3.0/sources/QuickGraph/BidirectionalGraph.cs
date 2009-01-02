@@ -331,10 +331,10 @@ namespace QuickGraph
             return this.vertexOutEdges[edge.Source].Contains(edge);
         }
 
-        public virtual void AddVertex(TVertex v)
+        public virtual bool AddVertex(TVertex v)
         {
-            Contract.Requires(v != null);
-            Contract.Requires(!GraphContract.InVertexSet(this, v));
+            if (this.ContainsVertex(v))
+                return false;
 
             if (this.EdgeCapacity > 0)
             {
@@ -347,13 +347,16 @@ namespace QuickGraph
                 this.vertexInEdges.Add(v, new EdgeList<TVertex, TEdge>());
             }
             this.OnVertexAdded(new VertexEventArgs<TVertex>(v));
+            return true;
         }
 
-        public virtual void AddVertexRange(IEnumerable<TVertex> vertices)
+        public virtual int AddVertexRange(IEnumerable<TVertex> vertices)
         {
-            Contract.Requires(vertices != null);
+            int count = 0;
             foreach (var v in vertices)
-                this.AddVertex(v);
+                if (this.AddVertex(v))
+                    count++;
+            return count;
         }
 
         public event VertexEventHandler<TVertex> VertexAdded;

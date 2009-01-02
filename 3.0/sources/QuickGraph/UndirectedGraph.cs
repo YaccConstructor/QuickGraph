@@ -57,25 +57,26 @@ namespace QuickGraph
                 eh(this, args);
         }
 
-        public void AddVertexRange(IEnumerable<TVertex> vertices)
+        public int AddVertexRange(IEnumerable<TVertex> vertices)
         {
-            Contract.Requires(vertices != null);
-            Contract.Requires(Contract.ForAll(vertices, v => v != null));
-
+            int count = 0;
             foreach (var v in vertices)
-                this.AddVertex(v);
+                if (this.AddVertex(v))
+                    count++;
+            return count;
         }
 
-        public void AddVertex(TVertex v)
+        public bool AddVertex(TVertex v)
         {
-            Contract.Requires(v != null);
-            Contract.Requires(!GraphContract.InVertexSet(this, v));
+            if (this.ContainsVertex(v))
+                return false;
 
             var edges = this.EdgeCapacity < 0 
                 ? new EdgeList<TVertex, TEdge>() 
                 : new EdgeList<TVertex, TEdge>(this.EdgeCapacity);
             this.adjacentEdges.Add(v, edges);
             this.OnVertexAdded(new VertexEventArgs<TVertex>(v));
+            return true;
         }
 
         private List<TEdge> AddAndReturnEdges(TVertex v)
