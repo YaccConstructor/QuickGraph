@@ -134,8 +134,8 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             foreach (var e in g.Edges)
                 distances[e] = g.AdjacentDegree(e.Source) + 1;
 
-            var prim = new List<TEdge>(AlgorithmExtensions.MinimumSpanningTreePrim(g, e => distances[e]));
-            var kruskal = new List<TEdge>(AlgorithmExtensions.MinimumSpanningTreeKruskal(g, e => distances[e]));
+            var prim = new List<TEdge>(g.MinimumSpanningTreePrim(e => distances[e]));
+            var kruskal = new List<TEdge>(g.MinimumSpanningTreeKruskal(e => distances[e]));
 
             var primCost = prim.Sum(e => distances[e]);
             var kruskalCost = kruskal.Sum(e => distances[e]);
