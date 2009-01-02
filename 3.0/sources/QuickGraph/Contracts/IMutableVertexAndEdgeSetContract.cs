@@ -7,14 +7,14 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Contracts
 {
-    [ContractClassFor(typeof(IMutableVertexAndEdgeListGraph<,>))]
-    sealed class IMutableVertexAndEdgeListGraphContract<TVertex, TEdge>
-        : IMutableVertexAndEdgeListGraph<TVertex, TEdge>
+    [ContractClassFor(typeof(IMutableVertexAndEdgeSet<,>))]
+    sealed class IMutableVertexAndEdgeSetContract<TVertex, TEdge>
+        : IMutableVertexAndEdgeSet<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        bool IMutableVertexAndEdgeListGraph<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
+        bool IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
         {
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> ithis = this;
+            IMutableVertexAndEdgeSet<TVertex, TEdge> ithis = this;
             Contract.Requires(edge != null);
             Contract.Ensures(ithis.ContainsEdge(edge));
             Contract.Ensures(Contract.Result<bool>() == Contract.OldValue(ithis.ContainsEdge(edge)));
@@ -23,9 +23,9 @@ namespace QuickGraph.Contracts
             return Contract.Result<bool>();
         }
 
-        int IMutableVertexAndEdgeListGraph<TVertex, TEdge>.AddVerticesAndEdgeRange(IEnumerable<TEdge> edges)
+        int IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdgeRange(IEnumerable<TEdge> edges)
         {
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> ithis = this;
+            IMutableVertexAndEdgeSet<TVertex, TEdge> ithis = this;
             Contract.Requires(edges != null);
             Contract.Requires(Contract.ForAll(edges, edge => edge != null));
             Contract.Ensures(Contract.ForAll(edges, edge => ithis.ContainsEdge(edge)));
@@ -35,28 +35,24 @@ namespace QuickGraph.Contracts
             return Contract.Result<int>();
         }
 
-        #region IMutableIncidenceGraph<TVertex,TEdge> Members
+        #region IVertexSet<TVertex> Members
 
-        int IMutableIncidenceGraph<TVertex, TEdge>.RemoveOutEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
+        bool IVertexSet<TVertex>.IsVerticesEmpty
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        void IMutableIncidenceGraph<TVertex, TEdge>.ClearOutEdges(TVertex v)
+        int IVertexSet<TVertex>.VertexCount
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        void IMutableIncidenceGraph<TVertex, TEdge>.TrimEdgeExcess()
+        IEnumerable<TVertex> IVertexSet<TVertex>.Vertices
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        #endregion
-
-        #region IMutableGraph<TVertex,TEdge> Members
-
-        void IMutableGraph<TVertex, TEdge>.Clear()
+        bool IVertexSet<TVertex>.ContainsVertex(TVertex vertex)
         {
             throw new NotImplementedException();
         }
@@ -77,48 +73,24 @@ namespace QuickGraph.Contracts
 
         #endregion
 
-        #region IIncidenceGraph<TVertex,TEdge> Members
+        #region IEdgeSet<TVertex,TEdge> Members
 
-        bool IIncidenceGraph<TVertex, TEdge>.ContainsEdge(TVertex source, TVertex target)
+        bool IEdgeSet<TVertex, TEdge>.IsEdgesEmpty
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        bool IIncidenceGraph<TVertex, TEdge>.TryGetEdges(TVertex source, TVertex target, out IEnumerable<TEdge> edges)
+        int IEdgeSet<TVertex, TEdge>.EdgeCount
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        bool IIncidenceGraph<TVertex, TEdge>.TryGetEdge(TVertex source, TVertex target, out TEdge edge)
+        IEnumerable<TEdge> IEdgeSet<TVertex, TEdge>.Edges
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        #endregion
-
-        #region IImplicitGraph<TVertex,TEdge> Members
-
-        bool IImplicitGraph<TVertex, TEdge>.IsOutEdgesEmpty(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IImplicitGraph<TVertex, TEdge>.OutDegree(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<TEdge> IImplicitGraph<TVertex, TEdge>.OutEdges(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IImplicitGraph<TVertex, TEdge>.TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
-        {
-            throw new NotImplementedException();
-        }
-
-        TEdge IImplicitGraph<TVertex, TEdge>.OutEdge(TVertex v, int index)
+        bool IEdgeSet<TVertex, TEdge>.ContainsEdge(TEdge edge)
         {
             throw new NotImplementedException();
         }
@@ -161,30 +133,6 @@ namespace QuickGraph.Contracts
 
         #endregion
 
-        #region IVertexSet<TVertex> Members
-
-        bool IVertexSet<TVertex>.IsVerticesEmpty
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        int IVertexSet<TVertex>.VertexCount
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        IEnumerable<TVertex> IVertexSet<TVertex>.Vertices
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IVertexSet<TVertex>.ContainsVertex(TVertex vertex)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
         #region IMutableEdgeListGraph<TVertex,TEdge> Members
 
         bool IMutableEdgeListGraph<TVertex, TEdge>.AddEdge(TEdge edge)
@@ -221,24 +169,9 @@ namespace QuickGraph.Contracts
 
         #endregion
 
-        #region IEdgeSet<TVertex,TEdge> Members
+        #region IMutableGraph<TVertex,TEdge> Members
 
-        bool IEdgeSet<TVertex, TEdge>.IsEdgesEmpty
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        int IEdgeSet<TVertex, TEdge>.EdgeCount
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        IEnumerable<TEdge> IEdgeSet<TVertex, TEdge>.Edges
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IEdgeSet<TVertex, TEdge>.ContainsEdge(TEdge edge)
+        void IMutableGraph<TVertex, TEdge>.Clear()
         {
             throw new NotImplementedException();
         }

@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using QuickGraph.Contracts;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
+#if CONTRACTS_FULL
+    [ContractClass(typeof(IMutableVertexAndEdgeSetContract<,>))]
+#endif
     public interface IMutableVertexAndEdgeSet<TVertex,TEdge> 
         : IVertexAndEdgeSet<TVertex, TEdge>
         , IMutableVertexSet<TVertex>

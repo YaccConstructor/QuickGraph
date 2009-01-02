@@ -61,7 +61,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out edges) != null);
             Contract.Ensures(!Contract.Result<bool>() || 
                 Contract.ForAll(
-                Contract.Result<IEnumerable<TEdge>>(),
+                Contract.ValueAtReturn<IEnumerable<TEdge>>(out edges),
                 edge => edge != null && ithis.ContainsEdge(edge) && edge.Target.Equals(v)
                 )
             );

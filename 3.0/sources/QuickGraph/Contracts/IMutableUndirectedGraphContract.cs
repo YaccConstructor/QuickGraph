@@ -206,6 +206,20 @@ namespace QuickGraph.Contracts
         }
 
         #endregion
+
+        #region IMutableVertexAndEdgeSet<TVertex,TEdge> Members
+
+        bool IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdgeRange(IEnumerable<TEdge> edges)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
 #endif

@@ -46,12 +46,12 @@ namespace QuickGraph.Contracts
 
         #region IMutableVertexAndEdgeListGraph<TVertex,TEdge> Members
 
-        bool IMutableVertexAndEdgeListGraph<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
+        bool IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdge(TEdge edge)
         {
             throw new NotImplementedException();
         }
 
-        int IMutableVertexAndEdgeListGraph<TVertex, TEdge>.AddVerticesAndEdgeRange(IEnumerable<TEdge> edges)
+        int IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdgeRange(IEnumerable<TEdge> edges)
         {
             throw new NotImplementedException();
         }

@@ -5,9 +5,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
-#if CONTRACTS_FULL
-    [ContractClass(typeof(IMutableVertexAndEdgeListGraphContract<,>))]
-#endif
+//#if CONTRACTS_FULL
+//    [ContractClass(typeof(IMutableVertexAndEdgeListGraphContract<,>))]
+//#endif
     public interface IMutableVertexAndEdgeListGraph<TVertex,TEdge>
         : IMutableVertexListGraph<TVertex,TEdge>
         , IMutableEdgeListGraph<TVertex,TEdge>
