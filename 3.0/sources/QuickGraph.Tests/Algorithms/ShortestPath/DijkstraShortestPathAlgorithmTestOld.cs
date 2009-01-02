@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace QuickGraph.Algorithms.ShortestPath
 {
     [TestClass]
-    public class DijkstraShortestPathTest
+    public class DijkstraShortestPathTestOld
     {
         [TestMethod]
         public void RunOnLineGraph()

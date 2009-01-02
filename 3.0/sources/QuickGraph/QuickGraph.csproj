@@ -269,6 +269,7 @@
     <Compile Include="IEdgeSet.cs" />
     <Compile Include="IMutableVertexSet.cs" />
     <Compile Include="NegativeCycleGraphException.cs" />
+    <Compile Include="NegativeWeightException.cs" />
     <Compile Include="ParallelEdgeNotAllowedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BidirectionalGraph.cs" />

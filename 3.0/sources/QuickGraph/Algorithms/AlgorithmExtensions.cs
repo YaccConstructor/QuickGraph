@@ -165,6 +165,34 @@ this
             };
         }
 
+        public static TryFunc<TVertex, IEnumerable<TEdge>> ShortestPathsAStar<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> edgeWeights,
+            Func<TVertex, double> costHeuristic,
+            TVertex source
+            )
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(edgeWeights != null);
+            Contract.Requires(costHeuristic != null);
+            Contract.Requires(source != null);
+
+            var algorithm = new AStarShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights, costHeuristic);
+            var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using (ObserverScope.Create(algorithm, predecessorRecorder))
+                algorithm.Compute(source);
+
+            var predecessors = predecessorRecorder.VertexPredecessors;
+            return delegate(TVertex v, out IEnumerable<TEdge> edges)
+            {
+                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+            };
+        }
+
         public static TryFunc<TVertex, IEnumerable<TEdge>> ShortestPathsDijkstra<TVertex, TEdge>(
 #if !NET20
             this 

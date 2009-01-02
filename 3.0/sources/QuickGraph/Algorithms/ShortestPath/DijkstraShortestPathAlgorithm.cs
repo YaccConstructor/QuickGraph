@@ -49,7 +49,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             IDistanceRelaxer distanceRelaxer
             )
             :base(host, visitedGraph,weights, distanceRelaxer)
-        { }
+        {}
 
         public event VertexEventHandler<TVertex> InitializeVertex;
         public event VertexEventHandler<TVertex> DiscoverVertex;
@@ -64,6 +64,12 @@ namespace QuickGraph.Algorithms.ShortestPath
             var eh = this.EdgeNotRelaxed;
             if (eh != null)
                 eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
+        }
+
+        private void InternalExamineEdge(Object sender, EdgeEventArgs<TVertex, TEdge> args)
+        {
+            if (this.Weights(args.Edge) < 0)
+                throw new NegativeWeightException();
         }
 
         private void InternalTreeEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
@@ -161,11 +167,15 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.StartVertex += this.StartVertex;
                 bfs.ExamineEdge += this.ExamineEdge;
 #if DEBUG
-                bfs.ExamineEdge += (sender, e) => this.AssertHeap();
+                bfs.ExamineEdge += (sender, e) =>
+                {
+                    this.AssertHeap();
+                };
 #endif
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 
+                bfs.ExamineEdge += new EdgeEventHandler<TVertex,TEdge>(this.InternalExamineEdge);
                 bfs.TreeEdge += new EdgeEventHandler<TVertex,TEdge>(this.InternalTreeEdge);
                 bfs.GrayTarget += new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
 
@@ -182,6 +192,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                     bfs.ExamineVertex -= this.ExamineVertex;
                     bfs.FinishVertex -= this.FinishVertex;
 
+                    bfs.ExamineEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalExamineEdge);
                     bfs.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
                     bfs.GrayTarget -= new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
                 }

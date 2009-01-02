@@ -81,6 +81,12 @@ namespace QuickGraph.Algorithms.ShortestPath
                 eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
         }
 
+        private void InternalExamineEdge(Object sender, EdgeEventArgs<TVertex, TEdge> args)
+        {
+            if (this.Weights(args.Edge) < 0)
+                throw new NegativeWeightException();
+        }
+
         private void InternalTreeEdge(Object sender, EdgeEventArgs<TVertex, TEdge> args)
         {
             bool decreased = this.Relax(args.Edge);
@@ -124,7 +130,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             {
                 this.OnTreeEdge(args.Edge);
                 this.costs[target] = this.DistanceRelaxer.Combine(distance, this.costHeuristic(target));
-                this.vertexQueue.Update(target);
+                this.vertexQueue.Enqueue(target);
                 this.AssertHeap();
                 this.VertexColors[target] = GraphColor.Gray;
             }
@@ -209,6 +215,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 
+                bfs.ExamineEdge += new EdgeEventHandler<TVertex, TEdge>(this.InternalExamineEdge);
                 bfs.TreeEdge += new EdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
                 bfs.GrayTarget += new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
                 bfs.BlackTarget +=new EdgeEventHandler<TVertex,TEdge>(this.InternalBlackTarget);
@@ -226,6 +233,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                     bfs.ExamineVertex -= this.ExamineVertex;
                     bfs.FinishVertex -= this.FinishVertex;
 
+                    bfs.ExamineEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalExamineEdge);
                     bfs.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
                     bfs.GrayTarget -= new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
                     bfs.BlackTarget -= new EdgeEventHandler<TVertex, TEdge>(this.InternalBlackTarget);
