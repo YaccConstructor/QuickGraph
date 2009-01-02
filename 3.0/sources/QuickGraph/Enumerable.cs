@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using QuickGraph;
 
 namespace System.Linq
 {
@@ -21,6 +22,16 @@ namespace System.Linq
             foreach (var element in elements)
                 return element;
             return default(T);
+        }
+
+        public static int Sum<T>(IEnumerable<T> elements, Func<T, int> map)
+        {
+            Contract.Requires(elements != null);
+            Contract.Requires(map != null);
+            int sum = 0;
+            foreach (var element in elements)
+                sum += map(element);
+            return sum;
         }
     }
 }
