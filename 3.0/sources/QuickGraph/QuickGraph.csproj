@@ -271,6 +271,7 @@
     <Compile Include="Contracts\IMutableVertexAndEdgeListGraphContract.cs" />
     <Compile Include="Contracts\IMutableVertexListGraphContract.cs" />
     <Compile Include="Contracts\IMutableVertexSetContract.cs" />
+    <Compile Include="Contracts\IUndirectedGraphContract.cs" />
     <Compile Include="Contracts\IVertexSetContract.cs" />
     <Compile Include="EdgePredicate.cs" />
     <Compile Include="Enumerable.cs" />
