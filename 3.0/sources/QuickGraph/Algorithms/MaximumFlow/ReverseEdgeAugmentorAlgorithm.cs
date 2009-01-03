@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -25,10 +26,9 @@ namespace QuickGraph.Algorithms.MaximumFlow
             IMutableVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph,
             EdgeFactory<TVertex,TEdge> edgeFactory)
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
-            if (edgeFactory == null)
-                throw new ArgumentNullException("edgeFactory");
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(edgeFactory != null);
+
             this.visitedGraph = visitedGraph;
             this.edgeFactory = edgeFactory;
         }

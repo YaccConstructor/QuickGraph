@@ -8,7 +8,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Algorithms.Exploration
 {
     public sealed class CloneableVertexGraphExplorerAlgorithm<TVertex,TEdge> :
-        RootedAlgorithmBase<TVertex,IMutableVertexAndEdgeListGraph<TVertex, TEdge>>,
+        RootedAlgorithmBase<TVertex, IMutableVertexAndEdgeSet<TVertex, TEdge>>,
         ITreeBuilderAlgorithm<TVertex,TEdge>
         where TVertex : ICloneable, IComparable<TVertex>
         where TEdge : IEdge<TVertex>
@@ -32,7 +32,7 @@ namespace QuickGraph.Algorithms.Exploration
 
         public CloneableVertexGraphExplorerAlgorithm(
             IAlgorithmComponent host,
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph
+            IMutableVertexAndEdgeSet<TVertex, TEdge> visitedGraph
             )
             :base(host, visitedGraph)
         {}

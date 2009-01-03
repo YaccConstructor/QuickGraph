@@ -7,7 +7,7 @@ namespace QuickGraph.Algorithms.Condensation
     public sealed class CondensationGraphAlgorithm<TVertex,TEdge,TGraph> :
         AlgorithmBase<IVertexAndEdgeListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
-        where TGraph : IMutableVertexAndEdgeListGraph<TVertex, TEdge>, new()
+        where TGraph : IMutableVertexAndEdgeSet<TVertex, TEdge>, new()
     {
         private bool stronglyConnected = true;
 

@@ -9,7 +9,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
         : AlgorithmBase<TGraph>
         , IDisposable
         where TEdge : IEdge<TVertex>
-        where TGraph : IMutableVertexAndEdgeListGraph<TVertex,TEdge>
+        where TGraph : IMutableVertexAndEdgeSet<TVertex, TEdge>
     {
         private bool augmented = false;
         private List<TEdge> augmentedEdges = new List<TEdge>();
@@ -27,10 +27,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
             )
             :base(host, visitedGraph)
         {
-            if (vertexFactory == null)
-                throw new ArgumentNullException("vertexFactory");
-            if (edgeFactory == null)
-                throw new ArgumentNullException("edgeFactory");
+            Contract.Requires(vertexFactory != null);
+            Contract.Requires(edgeFactory != null);
 
             this.vertexFactory = vertexFactory;
             this.edgeFactory = edgeFactory;

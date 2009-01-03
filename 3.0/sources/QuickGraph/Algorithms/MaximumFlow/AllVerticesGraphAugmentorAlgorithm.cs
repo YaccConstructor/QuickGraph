@@ -3,12 +3,12 @@ using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
-    public sealed class AllVerticesGraphAugmentorAlgorithm<TVertex,TEdge> 
-        : GraphAugmentorAlgorithmBase<TVertex,TEdge,IMutableVertexAndEdgeListGraph<TVertex,TEdge>>
+    public sealed class AllVerticesGraphAugmentorAlgorithm<TVertex,TEdge>
+        : GraphAugmentorAlgorithmBase<TVertex, TEdge, IMutableVertexAndEdgeSet<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         public AllVerticesGraphAugmentorAlgorithm(
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            IMutableVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             VertexFactory<TVertex> vertexFactory,
             EdgeFactory<TVertex, TEdge> edgeFactory
             )
@@ -17,7 +17,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
         public AllVerticesGraphAugmentorAlgorithm(
             IAlgorithmComponent host,
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            IMutableVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             VertexFactory<TVertex> vertexFactory,
             EdgeFactory<TVertex,TEdge> edgeFactory
             )

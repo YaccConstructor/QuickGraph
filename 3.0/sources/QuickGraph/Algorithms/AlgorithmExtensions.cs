@@ -606,7 +606,7 @@ this
             this 
 #endif
             IVertexAndEdgeListGraph<TVertex, TEdge> g,
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> clone)
+            IMutableVertexAndEdgeSet<TVertex, TEdge> clone)
             where TVertex : ICloneable
             where TEdge : ICloneableEdge<TVertex>
         {
@@ -646,7 +646,7 @@ this
             IVertexAndEdgeListGraph<TVertex,TEdge> g
             )
             where TEdge : IEdge<TVertex>
-            where TGraph : IMutableVertexAndEdgeListGraph<TVertex,TEdge>, new()
+            where TGraph : IMutableVertexAndEdgeSet<TVertex,TEdge>, new()
         {
             Contract.Requires(g != null);
 
@@ -671,7 +671,7 @@ this
             IVertexAndEdgeListGraph<TVertex, TEdge> g
             )
             where TEdge : IEdge<TVertex>
-            where TGraph : IMutableVertexAndEdgeListGraph<TVertex, TEdge>, new()
+            where TGraph : IMutableVertexAndEdgeSet<TVertex, TEdge>, new()
         {
             Contract.Requires(g != null);
 
