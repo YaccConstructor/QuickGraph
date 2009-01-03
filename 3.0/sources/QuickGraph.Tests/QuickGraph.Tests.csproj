@@ -283,6 +283,7 @@
     <Compile Include="Serialization\GraphMLSerializerTest.cs" />
     <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest.cs" />
     <Compile Include="Serialization\SystemSerializationTest.cs" />
+    <Compile Include="Serialization\XmlSerializationTest.cs" />
     <Compile Include="UndirectedGraphInvariant.cs" />
   </ItemGroup>
   <ItemGroup>
