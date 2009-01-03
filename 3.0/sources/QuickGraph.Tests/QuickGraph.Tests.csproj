@@ -258,6 +258,7 @@
     <Compile Include="Collections\ForestDisjointSetTTest.Unions.g.cs">
       <DependentUpon>ForestDisjointSetTTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataStructureTest.cs" />
     <Compile Include="Data\Store.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

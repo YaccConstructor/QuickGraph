@@ -388,7 +388,7 @@ namespace QuickGraph.Serialization
 
         public void Deserialize(
             XmlReader reader,
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            IMutableVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             IdentifiableVertexFactory<TVertex> vertexFactory,
             IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory)
         {
@@ -410,7 +410,7 @@ namespace QuickGraph.Serialization
         {
             private readonly GraphMLSerializer<TVertex, TEdge> serializer;
             private readonly XmlReader reader;
-            private readonly IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph;
+            private readonly IMutableVertexAndEdgeSet<TVertex, TEdge> visitedGraph;
             private readonly IdentifiableVertexFactory<TVertex> vertexFactory;
             private readonly IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory;
             private string graphMLNamespace = "";
@@ -418,7 +418,7 @@ namespace QuickGraph.Serialization
             public ReaderWorker(
                 GraphMLSerializer<TVertex,TEdge> serializer,
                 XmlReader reader,
-                IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+                IMutableVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
                 IdentifiableVertexFactory<TVertex> vertexFactory,
                 IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
                 )
@@ -446,7 +446,7 @@ namespace QuickGraph.Serialization
                 get { return this.reader; }
             }
 
-            public IMutableVertexAndEdgeListGraph<TVertex, TEdge> VisitedGraph
+            public IMutableVertexAndEdgeSet<TVertex, TEdge> VisitedGraph
             {
                 get { return this.visitedGraph; }
             }
