@@ -13,6 +13,7 @@ using QuickGraph.Msagl;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml.XPath;
+using System.Xml;
 
 namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
 {
@@ -175,16 +176,26 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         [WorkItem(12273)]
         public void Prim12273()
         {
-            var doc = new XPathDocument("repro12273.xml");
+          //  var doc = new XPathDocument("repro12273.xml");
 
-            var ug = doc.DeserializeFromXml(
+            //var ug = doc.DeserializeFromXml(
+            //    "graph", "node", "edge",
+            //    nav => new UndirectedGraph<string, TaggedEdge<string, double>>(),
+            //    nav => nav.GetAttribute("id", ""),
+            //    nav => new TaggedEdge<string, double>(
+            //        nav.GetAttribute("source", ""),
+            //        nav.GetAttribute("target", ""),
+            //        int.Parse(nav.GetAttribute("weight", ""))
+            //        )
+            //    );
+            var ug = XmlReader.Create("repro12273.xml").DeserializeFromXml(
                 "graph", "node", "edge",
-                nav => new UndirectedGraph<string, TaggedEdge<string, double>>(),
-                nav => nav.GetAttribute("id", ""),
-                nav => new TaggedEdge<string, double>(
-                    nav.GetAttribute("source", ""),
-                    nav.GetAttribute("target", ""),
-                    int.Parse(nav.GetAttribute("weight", ""))
+                reader => new UndirectedGraph<string, TaggedEdge<string, double>>(),
+                reader => reader.GetAttribute("id"),
+                reader => new TaggedEdge<string, double>(
+                    reader.GetAttribute("source"),
+                    reader.GetAttribute("target"),
+                    int.Parse(reader.GetAttribute("weight"))
                     )
                 );
 
