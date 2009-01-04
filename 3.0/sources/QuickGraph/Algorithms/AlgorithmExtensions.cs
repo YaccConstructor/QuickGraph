@@ -10,6 +10,7 @@ using QuickGraph.Algorithms.RandomWalks;
 using QuickGraph.Collections;
 using System.Linq;
 using QuickGraph.Algorithms.MinimumSpanningTree;
+using QuickGraph.Algorithms.RankedShortestPath;
 
 namespace QuickGraph.Algorithms
 {
@@ -272,6 +273,46 @@ this
         }
 
         #endregion
+
+        #region K-Shortest path
+        /// <summary>
+        /// Computes the k-shortest path from <paramref name="source"/>
+        /// <paramref name="target"/> using Hoffman-Pavlet algorithm.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <param name="edgeWeights"></param>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="pathCount"></param>
+        /// <returns></returns>
+        public static IEnumerable<IEnumerable<TEdge>> RankedShortestPathHoffman<TVertex, TEdge>(
+#if !NET20
+            this 
+#endif
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> edgeWeights,
+            TVertex source,
+            TVertex target,
+            int pathCount)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(edgeWeights != null);
+            Contract.Requires(source != null && visitedGraph.ContainsVertex(source));
+            Contract.Requires(target != null && visitedGraph.ContainsVertex(target));
+            Contract.Requires(pathCount > 1);
+
+            var algo = new HoffmanPavletRankedShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
+            algo.ShortestPathCount = pathCount;
+            algo.Compute(source, target);
+
+            return algo.ComputedShortestPaths;
+        }
+
+        #endregion
+
         /// <summary>
         /// Gets the list of sink vertices
         /// </summary>
