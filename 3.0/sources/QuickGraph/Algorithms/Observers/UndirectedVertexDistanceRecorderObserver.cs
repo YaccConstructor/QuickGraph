@@ -6,13 +6,10 @@ using QuickGraph.Algorithms.ShortestPath;
 namespace QuickGraph.Algorithms.Observers
 {
     /// <summary>
-    /// 
+    /// A distance recorder for undirected tree builder algorithms
     /// </summary>
     /// <typeparam name="Vertex"></typeparam>
     /// <typeparam name="Edge"></typeparam>
-    /// <reference-ref
-    ///     idref="boost"
-    ///     />
     [Serializable]
     public sealed class UndirectedVertexDistanceRecorderObserver<TVertex, TEdge> 
         : IObserver<IUndirectedTreeBuilderAlgorithm<TVertex, TEdge>>
