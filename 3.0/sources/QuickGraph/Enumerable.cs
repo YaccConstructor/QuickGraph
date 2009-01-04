@@ -9,6 +9,25 @@ namespace System.Linq
     public static class Enumerable
     {
         [Pure]
+        public static int Count<T>(IEnumerable<T> elements)
+        {
+            Contract.Requires(elements != null);
+
+            ICollection<T> collection = elements as ICollection<T>;
+            if (collection != null)
+                return collection.Count;
+
+            T[] array = elements as T[];
+            if (array != null)
+                return array.Length;
+
+            int count = 0;
+            foreach (var element in elements)
+                count++;
+            return count;
+        }
+
+        [Pure]
         public static T First<T>(IEnumerable<T> elements)
         {
             Contract.Requires(elements != null);
@@ -24,6 +43,17 @@ namespace System.Linq
             foreach (var element in elements)
                 return element;
             return default(T);
+        }
+
+        [Pure]
+        public static double Sum<T>(IEnumerable<T> elements, Func<T, double> map)
+        {
+            Contract.Requires(elements != null);
+            Contract.Requires(map != null);
+            double sum = 0;
+            foreach (var element in elements)
+                sum += map(element);
+            return sum;
         }
 
         [Pure]
