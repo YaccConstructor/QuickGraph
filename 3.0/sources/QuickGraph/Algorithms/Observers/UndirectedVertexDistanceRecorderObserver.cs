@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using QuickGraph.Algorithms.ShortestPath;
 
 namespace QuickGraph.Algorithms.Observers
 {
@@ -17,20 +18,39 @@ namespace QuickGraph.Algorithms.Observers
         : IObserver<IUndirectedTreeBuilderAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        private readonly IDictionary<TVertex, int> distances;
+        private readonly IDistanceRelaxer distanceRelaxer;
+        private readonly Func<TEdge, double> edgeWeights;
+        private readonly IDictionary<TVertex, double> distances;
 
-        public UndirectedVertexDistanceRecorderObserver()
-            :this(new Dictionary<TVertex,int>())
+        public UndirectedVertexDistanceRecorderObserver(Func<TEdge, double> edgeWeights)
+            : this(edgeWeights, EdgeDistanceRelaxer.Instance, new Dictionary<TVertex, double>())
         {}
 
-        public UndirectedVertexDistanceRecorderObserver(IDictionary<TVertex, int> distances)
+        public UndirectedVertexDistanceRecorderObserver(
+            Func<TEdge, double> edgeWeights,
+            IDistanceRelaxer distanceRelaxer,
+            IDictionary<TVertex, double> distances)
         {
+            Contract.Requires(edgeWeights != null);
+            Contract.Requires(distanceRelaxer != null);
             Contract.Requires(distances != null);
 
+            this.edgeWeights = edgeWeights;
+            this.distanceRelaxer = distanceRelaxer;
             this.distances = distances;
         }
 
-        public IDictionary<TVertex, int> Distances
+        public IDistanceRelaxer DistanceRelaxer
+        {
+            get { return this.distanceRelaxer; }
+        }
+
+        public Func<TEdge, double> EdgeWeights
+        {
+            get { return this.edgeWeights; }
+        }
+
+        public IDictionary<TVertex, double> Distances
         {
             get { return this.distances; }
         }
@@ -51,10 +71,10 @@ namespace QuickGraph.Algorithms.Observers
 
         private void TreeEdge(Object sender, UndirectedEdgeEventArgs<TVertex,TEdge> args)
         {
-            int sourceDistance;
-            if(!this.distances.TryGetValue(args.Source, out sourceDistance))
-                this.distances[args.Source] = sourceDistance = 0;
-            this.distances[args.Target] = sourceDistance + 1;
+            double sourceDistance;
+            if (!this.distances.TryGetValue(args.Source, out sourceDistance))
+                this.distances[args.Source] = sourceDistance = this.distanceRelaxer.InitialDistance;
+            this.distances[args.Target] = this.DistanceRelaxer.Combine(sourceDistance, this.edgeWeights(args.Edge));
         }
     }
 }

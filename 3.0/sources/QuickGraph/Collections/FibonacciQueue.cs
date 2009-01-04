@@ -9,6 +9,10 @@ namespace QuickGraph.Collections
     public sealed class FibonacciQueue<TVertex, TDistance> :
         IPriorityQueue<TVertex>
     {
+        public FibonacciQueue(Func<TVertex, TDistance> distances)
+            : this(null, distances, Comparer<TDistance>.Default.Compare)
+        { }
+
         public FibonacciQueue(
             IEnumerable<TVertex> values,
             Func<TVertex, TDistance> distances
@@ -21,17 +25,25 @@ namespace QuickGraph.Collections
             Func<TVertex, TDistance> distances,
             Comparison<TDistance> distanceComparison
             )
-		{
-            Contract.Requires(values != null);
+        {
             Contract.Requires(distances != null);
             Contract.Requires(distanceComparison != null);
 
             this.distances = distances;
             this.mDistances = new Dictionary<TVertex, FibonacciHeapCell<TDistance, TVertex>>();
-            foreach(var x in values)
-                this.mDistances.Add(x, new FibonacciHeapCell<TDistance, TVertex> { Priority = this.distances(x), Value = x, Removed = true });
-            this.heap = new FibonacciHeap<TDistance, TVertex>(HeapDirection.Increasing, distanceComparison);            
-		}
+            if (values != null)
+                foreach (var x in values)
+                    this.mDistances.Add(x,
+                        new FibonacciHeapCell<TDistance, TVertex>
+                        {
+                            Priority = this.distances(x),
+                            Value = x,
+                            Removed = true
+                        }
+                    );
+            this.heap = new FibonacciHeap<TDistance, TVertex>(HeapDirection.Increasing, distanceComparison);
+        }
+
         private readonly FibonacciHeap<TDistance, TVertex> heap;
         private readonly Dictionary<TVertex, FibonacciHeapCell<TDistance, TVertex>> mDistances;        
         private readonly Func<TVertex, TDistance> distances;

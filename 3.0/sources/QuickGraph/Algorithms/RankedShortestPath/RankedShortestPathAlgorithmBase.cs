@@ -4,31 +4,83 @@ using System.Text;
 using QuickGraph.Algorithms.Services;
 using QuickGraph.Algorithms.ShortestPath;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace QuickGraph.Algorithms.RankedShortestPath
 {
-    abstract class RankedShortestPathAlgorithmBase<TVertex, TEdge, TGraph>
+    public abstract class RankedShortestPathAlgorithmBase<TVertex, TEdge, TGraph>
         : RootedAlgorithmBase<TVertex, TGraph>
         where TEdge : IEdge<TVertex>
         where TGraph : IGraph<TVertex, TEdge>
     {
-        readonly IDistanceRelaxer relaxer;
+        private readonly IDistanceRelaxer distanceRelaxer;
+        private int shortestPathCount = 3;
+        private List<IEnumerable<TEdge>> computedShortestPaths;
 
-        public int K { get; set; }
-
-        public IDistanceRelaxer Relaxer
+        public int ShortestPathCount
         {
-            get { return this.relaxer; }
+            get { return this.shortestPathCount; }
+            set
+            {
+                Contract.Requires(value > 1);
+                Contract.Ensures(this.ShortestPathCount == value);
+
+                this.shortestPathCount = value;
+            }
+        }
+
+        public int ComputedShortestPathCount
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<int>() == Enumerable.Count(this.ComputedShortestPaths));
+
+                return this.computedShortestPaths == null ? 0 : this.computedShortestPaths.Count;
+            }
+        }
+
+        public IEnumerable<IEnumerable<TEdge>> ComputedShortestPaths
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<IEnumerable<IEnumerable<TEdge>>>() != null);
+
+                if (this.computedShortestPaths == null)
+                    yield break;
+                else
+                    foreach (var path in this.computedShortestPaths)
+                        yield return path;
+            }
+        }
+
+        protected void AddComputedShortestPath(IEnumerable<TEdge> path)
+        {
+            Contract.Requires(path != null);
+            Contract.Requires(Contract.ForAll(path, e => e != null));
+
+            this.computedShortestPaths.Add(path);
+        }
+
+        public IDistanceRelaxer DistanceRelaxer
+        {
+            get { return this.distanceRelaxer; }
         }
 
         protected RankedShortestPathAlgorithmBase(
             IAlgorithmComponent host, 
             TGraph visitedGraph,
-            IDistanceRelaxer relaxer)
+            IDistanceRelaxer distanceRelaxer)
             : base(host, visitedGraph)
         {
-            Contract.Requires(relaxer != null);
-            this.relaxer = relaxer;
+            Contract.Requires(distanceRelaxer != null);
+
+            this.distanceRelaxer = distanceRelaxer;
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            this.computedShortestPaths = new List<IEnumerable<TEdge>>(this.ShortestPathCount);
         }
     }
 }

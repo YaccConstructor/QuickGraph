@@ -49,12 +49,12 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                 {
                     var j = e.Target;
                     var costk = costs[k];
-                    var costkij = this.Relaxer.Combine(costk, this.distances[e]);
-                    if (count[j] == K)
+                    var costkij = this.DistanceRelaxer.Combine(costk, this.distances[e]);
+                    if (count[j] == this.ShortestPathCount)
                     {
                         // todo...
                         int l = -1;//(int)h1(h, j).Max(lj => costs[lj]);
-                        if (this.Relaxer.Compare(costkij, costs[l]))
+                        if (this.DistanceRelaxer.Compare(costkij, costs[l]))
                         {
                             costs[k] = costkij;
                             // eps[l] = k;

@@ -21,7 +21,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>
     public sealed class HoffmanPavletRankedShortestPathAlgorithm<TVertex, TEdge>
-        : RootedAlgorithmBase<TVertex, IUndirectedGraph<TVertex, TEdge>>
+        : RankedShortestPathAlgorithmBase<TVertex, TEdge, IUndirectedGraph<TVertex, TEdge>>
         where TEdge: IEdge<TVertex>
     {
         private readonly Func<TEdge, double> edgeWeights;
@@ -31,14 +31,15 @@ namespace QuickGraph.Algorithms.RankedShortestPath
         public HoffmanPavletRankedShortestPathAlgorithm(
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights)
-            : this(null, visitedGraph, edgeWeights)
+            : this(null, visitedGraph, edgeWeights, ShortestDistanceRelaxer.Instance)
         { }
 
         public HoffmanPavletRankedShortestPathAlgorithm(
             IAlgorithmComponent host,
             IUndirectedGraph<TVertex, TEdge> visitedGraph,
-            Func<TEdge, double> edgeWeights)
-            :base(host, visitedGraph)
+            Func<TEdge, double> edgeWeights,
+            IDistanceRelaxer distanceRelaxer)
+            :base(host, visitedGraph, distanceRelaxer)
         {
             Contract.Requires(edgeWeights != null);
 
@@ -81,6 +82,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
 
         protected override void InternalCompute()
         {
+            var cancelManager = this.Services.CancelManager;
             TVertex root;
             if (!this.TryGetRootVertex(out root))
                 throw new RootVertexNotSpecifiedException();
@@ -90,27 +92,142 @@ namespace QuickGraph.Algorithms.RankedShortestPath
 
             // start by building the minimum tree starting from the goal vertex.
             var successorsObserver = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
-            var distancesObserser = new UndirectedVertexDistanceRecorderObserver<TVertex, TEdge>();
-            var shortestpath = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(this.VisitedGraph, this.edgeWeights);
+            var distancesObserser = new UndirectedVertexDistanceRecorderObserver<TVertex, TEdge>(this.edgeWeights);
+            var shortestpath = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(
+                this, this.VisitedGraph, this.edgeWeights, this.DistanceRelaxer);
             using (ObserverScope.Create(shortestpath, successorsObserver))
             using (ObserverScope.Create(shortestpath, distancesObserser))
                 shortestpath.Compute(goal);
+            if (cancelManager.IsCancelling) return;
 
             var successors = successorsObserver.VertexPredecessors;
             var distances = distancesObserser.Distances;
 
             // first shortest path
-            //var path = GetShortestPath(successors, root);
+            var path = new List<TEdge>();
+            AppendShortestPath(
+                path,
+                successors,
+                root);
+            this.AddComputedShortestPath(path);
 
-            //var queue = new FibonacciQueue<DeviationPath, double>();
+            var queue = new FibonacciQueue<DeviationPath, double>(dp => dp.Weight);
+
+            // create deviation paths
+            this.CreateDeviationPaths(
+                queue,
+                root,
+                successors,
+                distances,
+                path,
+                0);
+
+            while (queue.Count > 0 && this.ComputedShortestPathCount < this.ShortestPathCount)
+            {
+                var deviation = queue.Dequeue();
+                // turn into path
+
+                // add to list
+            }
         }
 
-        //class DeviationPath
-        //{
-        //    public readonly TVertex BranchingVertex;
-        //    public readonly TVertex NewVertex;
-        //    public readonly TEdge DeviationEdge;
-        //    public readonly double Weight;
-        //}
+        private void CreateDeviationPaths(
+            IQueue<DeviationPath> queue, 
+            TVertex root,
+            IDictionary<TVertex, TEdge> successors, 
+            IDictionary<TVertex, double> distances, 
+            List<TEdge> path,
+            int startEdge)
+        {
+            Contract.Requires(queue != null);
+            Contract.Requires(root != null);
+            Contract.Requires(successors != null);
+            Contract.Requires(distances != null);
+            Contract.Requires(path != null);
+            Contract.Requires(EdgeExtensions.IsAdjacent<TVertex, TEdge>(path[0], root));
+            Contract.Requires(0 <= startEdge && startEdge < path.Count);
+
+            int iedge = 0;
+            TVertex previousVertex = root;
+            double previousWeight = 0;
+            for (; iedge < startEdge; ++iedge)
+            {
+                var edge = path[iedge];
+                if (iedge >= startEdge)
+                {
+                    // find best candidate amound adjacent edges
+                    TEdge deviationEdge = edge;
+                    double deviationWeight = double.MaxValue;
+                    foreach (var aedge in this.VisitedGraph.AdjacentEdges(previousVertex))
+                    {
+                        var atarget = EdgeExtensions.GetOtherVertex<TVertex, TEdge>(aedge, previousVertex);
+                        var aweight = this.edgeWeights(aedge) + distances[atarget];// + path weight
+                        if (aweight < deviationWeight)
+                        {
+                            deviationEdge = aedge;
+                            deviationWeight = aweight;
+                        }
+                    }
+
+                    // found deviation
+                    if (!deviationEdge.Equals(edge))
+                    {
+                        var weight = previousWeight + deviationWeight;
+                        var deviation = new DeviationPath(path, iedge, deviationEdge, deviationWeight);
+                        queue.Enqueue(deviation);
+                    }
+                }
+
+                // update counter
+                previousVertex = EdgeExtensions.GetOtherVertex<TVertex, TEdge>(edge, previousVertex);
+                previousWeight += this.edgeWeights(edge);
+            }
+        }
+
+        private void AppendShortestPath(
+            List<TEdge> path, 
+            IDictionary<TVertex, TEdge> successors, 
+            TVertex startVertex)
+        {
+            Contract.Requires(path != null);
+            Contract.Requires(successors != null);
+            Contract.Requires(startVertex != null);
+            Contract.Ensures(
+                path[path.Count - 1].Source.Equals(this.goalVertex)
+                || path[path.Count - 1].Target.Equals(this.goalVertex)
+                );
+
+            var current = startVertex;
+            TEdge edge;
+            while(successors.TryGetValue(current, out edge))
+            {
+                path.Add(edge);
+                current = edge.Source.Equals(current) ? edge.Source : edge.Target;
+            }
+        }
+
+        class DeviationPath
+        {
+            public readonly List<TEdge> ParentPath;
+            public readonly int DeviationIndex;
+            public readonly TEdge DeviationEdge;
+            public readonly double Weight;
+            public DeviationPath(
+                List<TEdge> parentPath, 
+                int deviationIndex,
+                TEdge deviationEdge,
+                double weight)
+            {
+                Contract.Requires(parentPath != null);
+                Contract.Requires(0 <= deviationIndex && deviationIndex < parentPath.Count);
+                Contract.Requires(deviationEdge != null);
+                Contract.Requires(weight >= 0);
+
+                this.ParentPath = parentPath;
+                this.DeviationIndex = deviationIndex;
+                this.DeviationEdge = deviationEdge;
+                this.Weight = weight;
+            }
+        }
     }
 }
