@@ -103,35 +103,53 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             var successors = successorsObserver.VertexPredecessors;
             var distances = distancesObserser.Distances;
 
-            // first shortest path
-            var path = new List<TEdge>();
-            AppendShortestPath(
-                path,
-                successors,
-                root);
-            this.AddComputedShortestPath(path);
-
             var queue = new FibonacciQueue<DeviationPath, double>(dp => dp.Weight);
 
-            // create deviation paths
-            this.CreateDeviationPaths(
-                queue,
-                root,
-                successors,
-                distances,
-                path,
-                0);
+            // first shortest path
+            {
+                var path = new List<TEdge>();
+                AppendShortestPath(
+                    path,
+                    successors,
+                    root);
+                this.AddComputedShortestPath(path);
+
+                // create deviation paths
+                this.EnqueueDeviationPaths(
+                    queue,
+                    root,
+                    successors,
+                    distances,
+                    path,
+                    0);
+            }
 
             while (queue.Count > 0 && this.ComputedShortestPathCount < this.ShortestPathCount)
             {
                 var deviation = queue.Dequeue();
                 // turn into path
-
+                var path = new List<TEdge>();
+                for (int i = 0; i < deviation.DeviationIndex; ++i)
+                    path.Add(deviation.ParentPath[i]);
+                path.Add(deviation.DeviationEdge);
+                int startEdge = path.Count;
+                this.AppendShortestPath(path, successors, deviation.DeviationTarget);
                 // add to list
+                this.AddComputedShortestPath(path);
+
+                // append new deviation paths
+                this.EnqueueDeviationPaths(
+                    queue,
+                    root,
+                    successors,
+                    distances,
+                    path,
+                    startEdge
+                    );
             }
         }
 
-        private void CreateDeviationPaths(
+        private void EnqueueDeviationPaths(
             IQueue<DeviationPath> queue, 
             TVertex root,
             IDictionary<TVertex, TEdge> successors, 
@@ -157,6 +175,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                 {
                     // find best candidate amound adjacent edges
                     TEdge deviationEdge = edge;
+                    TVertex deviationTarget = EdgeExtensions.GetOtherVertex<TVertex, TEdge>(edge, previousVertex);
                     double deviationWeight = double.MaxValue;
                     foreach (var aedge in this.VisitedGraph.AdjacentEdges(previousVertex))
                     {
@@ -165,6 +184,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                         if (aweight < deviationWeight)
                         {
                             deviationEdge = aedge;
+                            deviationTarget = atarget;
                             deviationWeight = aweight;
                         }
                     }
@@ -173,7 +193,10 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                     if (!deviationEdge.Equals(edge))
                     {
                         var weight = previousWeight + deviationWeight;
-                        var deviation = new DeviationPath(path, iedge, deviationEdge, deviationWeight);
+                        var deviation = new DeviationPath(
+                            path, iedge, 
+                            deviationEdge, deviationTarget, deviationWeight
+                            );
                         queue.Enqueue(deviation);
                     }
                 }
@@ -211,21 +234,26 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             public readonly List<TEdge> ParentPath;
             public readonly int DeviationIndex;
             public readonly TEdge DeviationEdge;
+            public readonly TVertex DeviationTarget;
             public readonly double Weight;
             public DeviationPath(
                 List<TEdge> parentPath, 
                 int deviationIndex,
                 TEdge deviationEdge,
+                TVertex deviationTarget,
                 double weight)
             {
                 Contract.Requires(parentPath != null);
                 Contract.Requires(0 <= deviationIndex && deviationIndex < parentPath.Count);
                 Contract.Requires(deviationEdge != null);
+                Contract.Requires(deviationTarget != null);
+                Contract.Requires(EdgeExtensions.IsAdjacent<TVertex, TEdge>(deviationEdge, deviationTarget));
                 Contract.Requires(weight >= 0);
 
                 this.ParentPath = parentPath;
                 this.DeviationIndex = deviationIndex;
                 this.DeviationEdge = deviationEdge;
+                this.DeviationTarget = deviationTarget;
                 this.Weight = weight;
             }
         }

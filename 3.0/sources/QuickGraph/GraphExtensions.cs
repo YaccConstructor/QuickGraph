@@ -11,6 +11,51 @@ namespace QuickGraph
     public static class GraphExtensions
     {
         /// <summary>
+        /// Converts a sequence of edges into an undirected graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="edges"></param>
+        /// <param name="allowParralelEdges"></param>
+        /// <returns></returns>
+        public static UndirectedGraph<TVertex, TEdge> ToUndirectedGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IEnumerable<TEdge> edges)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(edges != null);
+            Contract.Requires(Contract.ForAll(edges, e => e != null));
+
+            return ToUndirectedGraph<TVertex, TEdge>(edges, true);
+        }
+
+        /// <summary>
+        /// Converts a sequence of edges into an undirected graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="edges"></param>
+        /// <param name="allowParralelEdges"></param>
+        /// <returns></returns>
+        public static UndirectedGraph<TVertex, TEdge> ToUndirectedGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IEnumerable<TEdge> edges,
+            bool allowParralelEdges)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(edges != null);
+            Contract.Requires(Contract.ForAll(edges, e => e != null));
+
+            var g = new UndirectedGraph<TVertex, TEdge>(allowParralelEdges);
+            g.AddVerticesAndEdgeRange(edges);
+            return g;
+        }
+
+        /// <summary>
         /// Converts a set of edges into a bidirectional graph.
         /// </summary>
         /// <typeparam name="TVertex">The type of the vertex.</typeparam>
@@ -31,9 +76,7 @@ namespace QuickGraph
             Contract.Requires(EnumerableContract.ElementsNotNull(edges));
 
             var g = new BidirectionalGraph<TVertex, TEdge>(allowParallelEdges);
-            foreach (var edge in edges)
-                g.AddVerticesAndEdge(edge);
-
+            g.AddVerticesAndEdgeRange(edges);
             return g;
         }
 
@@ -79,9 +122,7 @@ namespace QuickGraph
             Contract.Requires(EnumerableContract.ElementsNotNull(edges));
 
             var g = new AdjacencyGraph<TVertex, TEdge>(allowParallelEdges);
-            foreach (var edge in edges)
-                g.AddVerticesAndEdge(edge);
-
+            g.AddVerticesAndEdgeRange(edges);
             return g;
         }
 
