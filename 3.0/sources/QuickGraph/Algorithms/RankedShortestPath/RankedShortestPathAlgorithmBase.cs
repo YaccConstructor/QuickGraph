@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.RankedShortestPath
 {
-    abstract class RankingShortestPathBase<TVertex, TEdge, TGraph>
+    abstract class RankedShortestPathAlgorithmBase<TVertex, TEdge, TGraph>
         : RootedAlgorithmBase<TVertex, TGraph>
         where TEdge : IEdge<TVertex>
         where TGraph : IGraph<TVertex, TEdge>
@@ -21,7 +21,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             get { return this.relaxer; }
         }
 
-        protected RankingShortestPathBase(
+        protected RankedShortestPathAlgorithmBase(
             IAlgorithmComponent host, 
             TGraph visitedGraph,
             IDistanceRelaxer relaxer)

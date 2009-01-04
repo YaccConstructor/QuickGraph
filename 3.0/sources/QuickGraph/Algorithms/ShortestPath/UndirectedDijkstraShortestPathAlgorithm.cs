@@ -116,7 +116,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 this.VertexColors.Add(u, GraphColor.White);
                 this.Distances.Add(u, initialDistance);
             }
-            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.Distances);
+            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.VisitedGraph.Vertices, v => this.Distances[v]);
         }
 
         protected override void InternalCompute()

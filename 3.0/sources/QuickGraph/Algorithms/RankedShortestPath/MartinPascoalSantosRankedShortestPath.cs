@@ -13,7 +13,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>
     class MartinPascoalSantosRankedShortestPath<TVertex, TEdge>
-        : RankingShortestPathBase<TVertex, TEdge, IVertexListGraph<TVertex, TEdge>>
+        : RankedShortestPathAlgorithmBase<TVertex, TEdge, IVertexListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         readonly Dictionary<TEdge, double> distances = new Dictionary<TEdge, double>();
