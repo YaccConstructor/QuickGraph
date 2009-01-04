@@ -13,6 +13,27 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
     public partial class HoffmanPavletRankedShortestPathAlgorithmTest
     {
         [TestMethod]
+        public void HoffmanPavletRankedShortestPathAll()
+        {
+            foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
+            {
+                if (g.VertexCount == 0) continue;
+
+                var weights = new Dictionary<IdentifiableEdge<IdentifiableVertex>, double>();
+                foreach (var e in g.Edges)
+                    weights.Add(e, g.OutDegree(e.Source) + 1);
+
+                this.HoffmanPavletRankedShortestPath(
+                    g, 
+                    weights,
+                    Enumerable.First(g.Vertices),
+                    Enumerable.Last(g.Vertices),
+                    g.VertexCount
+                    );                    
+            }
+        }
+
+        [TestMethod]
         public void HoffmanPavletRankedShortestPathNetwork()
         {
             // create network graph
@@ -64,18 +85,20 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
                 9,8,5
             };
             int i = 0;
-            for (; i < data.Length; i+=3)
+            for (; i + 2 < data.Length; i+=3)
             {
-                Edge<int> edge = new Edge<int>(data[i * 3 + 0], data[i * 3 + 1]);
+                Edge<int> edge = new Edge<int>(data[i + 0], data[i + 1]);
                 g.AddVerticesAndEdge(edge);
-                weights[edge] = data[i * 3 + 2];
+                weights[edge] = data[i + 2];
             }
             Assert.AreEqual(data.Length, i);
+
+            this.HoffmanPavletRankedShortestPath(g, weights, 9, 1, 10);
         }
 
         [PexMethod]
         public IEnumerable<IEnumerable<TEdge>> HoffmanPavletRankedShortestPath<TVertex,TEdge>(
-            [PexAssumeNotNull]IUndirectedGraph<TVertex, TEdge> g,
+            [PexAssumeNotNull]IBidirectionalGraph<TVertex, TEdge> g,
             [PexAssumeNotNull]Dictionary<TEdge, double> edgeWeights,
             TVertex rootVertex,
             TVertex goalVertex,
@@ -83,9 +106,26 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
             )
             where TEdge : IEdge<TVertex>
         {
+            GraphConsoleSerializer.DisplayGraph((IVertexAndEdgeSet<TVertex, TEdge>)g);
+
+            PexAssert.TrueForAll(g.Edges, edgeWeights.ContainsKey);
+
             var target = new HoffmanPavletRankedShortestPathAlgorithm<TVertex, TEdge>(g, e => edgeWeights[e]);
             target.ShortestPathCount = pathCount;
             target.Compute(rootVertex, goalVertex);
+
+            double lastWeight = double.MinValue;
+            foreach (var path in target.ComputedShortestPaths)
+            {
+                Console.WriteLine("path: {0}", Enumerable.Sum(path, e => edgeWeights[e]));
+                double weight = Enumerable.Sum(path, e => edgeWeights[e]);
+                Assert.IsTrue(lastWeight <= weight, "{0} <= {1}", lastWeight, weight);
+                Assert.AreEqual(rootVertex, Enumerable.First(path).Source);
+                Assert.AreEqual(goalVertex, Enumerable.Last(path).Target);
+                Assert.IsTrue(EdgeExtensions.IsPathWithoutCycles<TVertex, TEdge>(path));
+
+                lastWeight = weight;
+            }
 
             return target.ComputedShortestPaths;
         }

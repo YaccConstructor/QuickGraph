@@ -58,7 +58,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             Contract.Requires(path != null);
             Contract.Requires(Contract.ForAll(path, e => e != null));
 
-            this.computedShortestPaths.Add(path);
+            this.computedShortestPaths.Add(new List<TEdge>(path).ToArray());
         }
 
         public IDistanceRelaxer DistanceRelaxer

@@ -75,5 +75,102 @@ this
             return edge.Source.Equals(vertex) 
                 || edge.Target.Equals(vertex);
         }
+
+        [Pure]
+        public static bool IsPath<TVertex, TEdge>(
+#if !NET20
+this 
+#endif            
+            IEnumerable<TEdge> path)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(path != null);
+            bool first = true;
+            TVertex lastTarget = default(TVertex);
+            foreach (var edge in path)
+            {
+                if (first)
+                {
+                    lastTarget = edge.Target;
+                    first = false;
+                }
+                else
+                {
+                    if (!lastTarget.Equals(edge.Source))
+                        return false;
+                    lastTarget = edge.Target;
+                }
+            }
+
+            return true;
+        }
+
+        [Pure]
+        public static bool HasCycles<TVertex, TEdge>(
+#if !NET20
+this 
+#endif            
+            IEnumerable<TEdge> path)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(path != null);
+
+            Dictionary<TVertex, int> vertices = new Dictionary<TVertex, int>();
+            bool first = true;
+            foreach (var edge in path)
+            {
+                if (first)
+                {
+                    vertices.Add(edge.Source, 0);
+                    vertices.Add(edge.Target, 0);
+                    first = false;
+                }
+                else
+                {
+                    if (vertices.ContainsKey(edge.Target))
+                        return true;
+                    vertices.Add(edge.Target, 0);
+                }
+            }
+
+            return false;
+        }
+
+        [Pure]
+        public static bool IsPathWithoutCycles<TVertex, TEdge>(
+#if !NET20
+this 
+#endif            
+            IEnumerable<TEdge> path)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(path != null);
+
+            Dictionary<TVertex, int> vertices = new Dictionary<TVertex, int>();
+            bool first = true;
+            TVertex lastTarget = default(TVertex);
+            foreach (var edge in path)
+            {
+                if (first)
+                {
+                    lastTarget = edge.Target;
+                    vertices.Add(edge.Source, 0);
+                    vertices.Add(lastTarget, 0);
+                    first = false;
+                }
+                else
+                {
+                    if (!lastTarget.Equals(edge.Source))
+                        return false;
+                    if (vertices.ContainsKey(edge.Target))
+                        return false;
+
+                    lastTarget = edge.Target;
+                    vertices.Add(edge.Target, 0);
+                }
+            }
+
+            return true;
+        }
     }
 }
