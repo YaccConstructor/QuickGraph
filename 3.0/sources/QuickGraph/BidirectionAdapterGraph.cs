@@ -29,7 +29,7 @@ namespace QuickGraph
             {
                 EdgeList<TVertex, TEdge> list;
                 if (!this.inEdges.TryGetValue(edge.Target, out list))
-                    this.inEdges[edge.Target] = list = new EdgeList<TVertex, TEdge>();
+                    this.inEdges.Add(edge.Target, list = new EdgeList<TVertex, TEdge>());
                 list.Add(edge);
             }
         }
