@@ -20,7 +20,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
     /// </remarks>
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>
-    public sealed class HoffmanPavletRankedShortestPathAlgorithm<TVertex, TEdge>
+    public sealed class HoffmanPavleyRankedShortestPathAlgorithm<TVertex, TEdge>
         : RankedShortestPathAlgorithmBase<TVertex, TEdge, IBidirectionalGraph<TVertex, TEdge>>
         where TEdge: IEdge<TVertex>
     {
@@ -28,13 +28,13 @@ namespace QuickGraph.Algorithms.RankedShortestPath
         private TVertex goalVertex;
         private bool goalVertexSet = false;
 
-        public HoffmanPavletRankedShortestPathAlgorithm(
+        public HoffmanPavleyRankedShortestPathAlgorithm(
             IBidirectionalGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights)
             : this(null, visitedGraph, edgeWeights, ShortestDistanceRelaxer.Instance)
         { }
 
-        public HoffmanPavletRankedShortestPathAlgorithm(
+        public HoffmanPavleyRankedShortestPathAlgorithm(
             IAlgorithmComponent host,
             IBidirectionalGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights,

@@ -287,7 +287,7 @@ this
         /// <param name="target"></param>
         /// <param name="pathCount"></param>
         /// <returns></returns>
-        public static IEnumerable<IEnumerable<TEdge>> RankedShortestPathHoffman<TVertex, TEdge>(
+        public static IEnumerable<IEnumerable<TEdge>> RankedShortestPathHoffmanPavley<TVertex, TEdge>(
 #if !NET20
             this 
 #endif
@@ -304,7 +304,7 @@ this
             Contract.Requires(target != null && visitedGraph.ContainsVertex(target));
             Contract.Requires(pathCount > 1);
 
-            var algo = new HoffmanPavletRankedShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
+            var algo = new HoffmanPavleyRankedShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
             algo.ShortestPathCount = pathCount;
             algo.Compute(source, target);
 

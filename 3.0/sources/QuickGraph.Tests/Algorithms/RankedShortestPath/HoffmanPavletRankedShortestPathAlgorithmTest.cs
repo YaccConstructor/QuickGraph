@@ -110,7 +110,7 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
 
             PexAssert.TrueForAll(g.Edges, edgeWeights.ContainsKey);
 
-            var target = new HoffmanPavletRankedShortestPathAlgorithm<TVertex, TEdge>(g, e => edgeWeights[e]);
+            var target = new HoffmanPavleyRankedShortestPathAlgorithm<TVertex, TEdge>(g, e => edgeWeights[e]);
             target.ShortestPathCount = pathCount;
             target.Compute(rootVertex, goalVertex);
 
