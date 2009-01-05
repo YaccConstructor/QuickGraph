@@ -241,6 +241,7 @@
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithm.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithm.cs" />
     <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithm.cs" />
+    <Compile Include="BidirectionAdapterGraph.cs" />
     <Compile Include="Collections\BinaryHeap.cs" />
     <Compile Include="Collections\ForestDisjointSet.cs" />
     <Compile Include="Collections\EdgeEdgeDictionary.cs" />

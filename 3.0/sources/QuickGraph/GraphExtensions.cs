@@ -11,6 +11,29 @@ namespace QuickGraph
     public static class GraphExtensions
     {
         /// <summary>
+        /// Wraps a adjacency graph (out-edge only) into a bidirectional graph.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="graph"></param>
+        /// <returns></returns>
+        public static IBidirectionalGraph<TVertex, TEdge> ToBidirectionalGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> graph)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(graph != null);
+
+            var self = graph as IBidirectionalGraph<TVertex, TEdge>;
+            if (self != null)
+                return self;
+
+            return new BidirectionAdapterGraph<TVertex,TEdge>(graph);
+        }
+
+        /// <summary>
         /// Converts a sequence of edges into an undirected graph
         /// </summary>
         /// <typeparam name="TVertex"></typeparam>
