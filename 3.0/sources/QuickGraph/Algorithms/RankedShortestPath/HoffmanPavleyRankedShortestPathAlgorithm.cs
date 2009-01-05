@@ -249,9 +249,13 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                 if (distances.TryGetValue(atarget, out adistance))
                 {
                     var deviationWeight =
-                        previousWeight +
-                        this.edgeWeights(deviationEdge) +
-                        adistance;
+                        this.DistanceRelaxer.Combine(
+                            previousWeight,
+                            this.DistanceRelaxer.Combine(
+                                this.edgeWeights(deviationEdge),
+                                adistance
+                                )
+                            );
 
                     var deviation = new DeviationPath(
                         path, iedge,
