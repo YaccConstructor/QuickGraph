@@ -307,9 +307,6 @@
     <Compile Include="IIdentifiable.cs" />
     <Compile Include="IdentifiableEdgeFactory.cs" />
     <Compile Include="IdentifiableVertexFactory.cs" />
-    <Compile Include="IIndexedEnumerable.cs" />
-    <Compile Include="IIndexedImplicitGraph.cs" />
-    <Compile Include="IIndexedVertexListGraph.cs" />
     <Compile Include="IMutableUndirectedGraph.cs" />
     <Compile Include="IUndirectedGraph.cs" />
     <Compile Include="IVertexAndEdgeSet.cs" />
