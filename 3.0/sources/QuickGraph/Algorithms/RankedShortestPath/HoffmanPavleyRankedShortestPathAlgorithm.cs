@@ -11,7 +11,7 @@ using QuickGraph.Collections;
 namespace QuickGraph.Algorithms.RankedShortestPath
 {
     /// <summary>
-    /// Hoffman and Pavlet K-shortest path algorithm.
+    /// Hoffman and Pavley K-shortest path algorithm.
     /// </summary>
     /// <remarks>
     /// Reference:

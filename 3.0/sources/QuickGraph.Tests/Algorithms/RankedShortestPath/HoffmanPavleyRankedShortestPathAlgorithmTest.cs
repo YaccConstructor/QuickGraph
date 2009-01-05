@@ -10,10 +10,10 @@ using QuickGraph.Algorithms.RankedShortestPath;
 namespace QuickGraph.Tests.Algorithms.RankedShortestPath
 {
     [TestClass]
-    public partial class HoffmanPavletRankedShortestPathAlgorithmTest
+    public partial class HoffmanPavleyRankedShortestPathAlgorithmTest
     {
         [TestMethod]
-        public void HoffmanPavletRankedShortestPathAll()
+        public void HoffmanPavleyRankedShortestPathAll()
         {
             foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
             {
@@ -23,7 +23,7 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
                 foreach (var e in g.Edges)
                     weights.Add(e, g.OutDegree(e.Source) + 1);
 
-                this.HoffmanPavletRankedShortestPath(
+                this.HoffmanPavleyRankedShortestPath(
                     g, 
                     weights,
                     Enumerable.First(g.Vertices),
@@ -34,7 +34,7 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
         }
 
         [TestMethod]
-        public void HoffmanPavletRankedShortestPathNetwork()
+        public void HoffmanPavleyRankedShortestPathNetwork()
         {
             // create network graph
             var g = new BidirectionalGraph<int, Edge<int>>();
@@ -93,11 +93,11 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
             }
             Assert.AreEqual(data.Length, i);
 
-            this.HoffmanPavletRankedShortestPath(g, weights, 9, 1, 10);
+            this.HoffmanPavleyRankedShortestPath(g, weights, 9, 1, 10);
         }
 
         [PexMethod]
-        public IEnumerable<IEnumerable<TEdge>> HoffmanPavletRankedShortestPath<TVertex,TEdge>(
+        public IEnumerable<IEnumerable<TEdge>> HoffmanPavleyRankedShortestPath<TVertex,TEdge>(
             [PexAssumeNotNull]IBidirectionalGraph<TVertex, TEdge> g,
             [PexAssumeNotNull]Dictionary<TEdge, double> edgeWeights,
             TVertex rootVertex,

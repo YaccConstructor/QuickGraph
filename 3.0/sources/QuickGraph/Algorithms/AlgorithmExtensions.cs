@@ -277,7 +277,7 @@ this
         #region K-Shortest path
         /// <summary>
         /// Computes the k-shortest path from <paramref name="source"/>
-        /// <paramref name="target"/> using Hoffman-Pavlet algorithm.
+        /// <paramref name="target"/> using Hoffman-Pavley algorithm.
         /// </summary>
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
