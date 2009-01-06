@@ -58,10 +58,12 @@ namespace QuickGraph.Contracts
             IUndirectedGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(v != null);
             Contract.Requires(ithis.ContainsVertex(v));
-            var result = Contract.Result<TEdge>();
-            Contract.Ensures(result != null && (result.Source.Equals(v) || result.Target.Equals(v)));
+            Contract.Ensures(Contract.Result<TEdge>() != null);
+            Contract.Ensures(
+                Contract.Result<TEdge>().Source.Equals(v) 
+                || Contract.Result<TEdge>().Target.Equals(v));
 
-            return result;
+            return Contract.Result<TEdge>();
         }
 
         [Pure]

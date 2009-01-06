@@ -46,8 +46,8 @@ this
             Contract.Requires(vertex != null);
             Contract.Requires(!edge.Source.Equals(edge.Target));
             Contract.Requires(edge.Source.Equals(vertex) || edge.Target.Equals(vertex));
-            Contract.Ensures(Contract.Result<TEdge>() != null);
-            Contract.Ensures(Contract.Result<TEdge>().Equals(edge.Source.Equals(vertex) ? edge.Target : edge.Source));
+            Contract.Ensures(Contract.Result<TVertex>() != null);
+            Contract.Ensures(Contract.Result<TVertex>().Equals(edge.Source.Equals(vertex) ? edge.Target : edge.Source));
             
             return edge.Source.Equals(vertex) ? edge.Target : edge.Source;
         }

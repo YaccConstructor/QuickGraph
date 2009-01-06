@@ -133,9 +133,6 @@ namespace QuickGraph
         [Pure]
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
-            Contract.Requires(v != null);
-            Contract.Requires(GraphContract.InVertexSet(this, v));
-
             return this.vertexEdges[v];
         }
 
