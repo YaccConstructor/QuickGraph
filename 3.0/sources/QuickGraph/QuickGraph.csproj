@@ -232,6 +232,7 @@
     <Compile Include="Algorithms\ShortestPath\ShortestPathAlgorithmBase.cs" />
     <Compile Include="Algorithms\ShortestPath\UndirectedDijkstraShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\SourceFirstTopologicalSortAlgorithm.cs" />
+    <Compile Include="Algorithms\TarjanOfflineLeastCommonAncestorAlgorithm.cs" />
     <Compile Include="Algorithms\TopologicalSortAlgorithm.cs" />
     <Compile Include="Algorithms\Observers\VertexDistanceRecorderObserver.cs" />
     <Compile Include="Algorithms\Observers\EdgePredecessorRecorderObserver.cs" />

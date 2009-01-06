@@ -285,7 +285,7 @@ namespace QuickGraph.Algorithms.Search
                     switch (c)
                     {
                         case GraphColor.White:
-                            OnTreeEdge(e);
+                            this.OnTreeEdge(e);
                             todo.Push(new SearchFrame(u, edges, frame.Depth + 1));
                             u = v;
                             edges = this.VisitedGraph.OutEdges(u).GetEnumerator();
@@ -293,9 +293,9 @@ namespace QuickGraph.Algorithms.Search
                             this.OnDiscoverVertex(u);
                             break;
                         case GraphColor.Gray:
-                            OnBackEdge(e); break;
+                            this.OnBackEdge(e); break;
                         case GraphColor.Black:
-                            OnForwardOrCrossEdge(e); break;
+                            this.OnForwardOrCrossEdge(e); break;
                     }
                 }
 
