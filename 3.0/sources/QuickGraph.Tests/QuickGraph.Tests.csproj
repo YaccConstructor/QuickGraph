@@ -218,6 +218,7 @@
     <Compile Include="Algorithms\ShortestPath\FloydWarshallAllPairShortestPathAlgorithmTest.cs" />
     <Compile Include="Algorithms\SourceFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\StronglyConnectedComponentsAlgorithmTest.cs" />
+    <Compile Include="Algorithms\TarjanOfflineLeastCommonAncestorAlgorithmTest.cs" />
     <Compile Include="Algorithms\TopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />

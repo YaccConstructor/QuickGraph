@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics.Contracts;
+using QuickGraph.Collections;
 
 namespace QuickGraph
 {
@@ -274,6 +275,26 @@ this
             where TEdge : IEdge<TVertex>
         {
             return ToBidirectionalGraph(vertices, outEdgesFactory, true);
+        }
+
+        /// <summary>
+        /// Converts a sequence of vertex pairs into an adjancency graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <param name="vertexPairs"></param>
+        /// <returns></returns>
+        public static AdjacencyGraph<TVertex, Edge<TVertex>> ToAdjacencyGraph<TVertex>(
+#if !NET20
+this 
+#endif
+            IEnumerable<VertexPair<TVertex>> vertexPairs)
+        {
+            Contract.Requires(vertexPairs != null);
+
+            var g = new AdjacencyGraph<TVertex, Edge<TVertex>>();
+            foreach (var pair in vertexPairs)
+                g.AddVerticesAndEdge(new Edge<TVertex>(pair.Source, pair.Target));
+            return g;
         }
     }
 }

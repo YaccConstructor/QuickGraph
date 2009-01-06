@@ -24,13 +24,15 @@ namespace QuickGraph.Collections
 #endif
             public Element Parent;
             public int Rank;
-            public Element()
+            public readonly T Value;
+            public Element(T value)
             {
 #if DEBUG
                 this.ID = nextID++;
 #endif
                 this.Parent = null;
                 this.Rank = 0;
+                this.Value = value;
             }
         }
 
@@ -68,7 +70,7 @@ namespace QuickGraph.Collections
         {
             Contract.Requires(value != null);
 
-            var element = new Element();
+            var element = new Element(value);
             this.elements.Add(value, element);
             this.setCount++;
         }
@@ -92,17 +94,17 @@ namespace QuickGraph.Collections
             return this.Union(this.elements[left], this.elements[right]);
         }
 
-        public object FindSet(T value)
+        public T FindSet(T value)
         {
             Contract.Requires(value != null);
             Contract.Requires(this.Contains(value));
 
-            return this.Find(this.elements[value]);
+            return this.Find(this.elements[value]).Value;
         }
 
         public bool AreInSameSet(T left, T right)
         {
-            return this.FindSet(left) == this.FindSet(right);
+            return this.FindSet(left).Equals(this.FindSet(right));
         }
 
         [Pure]

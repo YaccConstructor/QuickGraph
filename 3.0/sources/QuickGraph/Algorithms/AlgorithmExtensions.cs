@@ -965,5 +965,46 @@ this
 
             return edgeRecorder.Edges;
         }
+
+        /// <summary>
+        /// Computes the offline least common ancestor between pairs of vertices in a rooted tree
+        /// using Tarjan algorithm.
+        /// </summary>
+        /// <remarks>
+        /// Reference:
+        /// Gabow, H. N. and Tarjan, R. E. 1983. A linear-time algorithm for a special case of disjoint set union. In Proceedings of the Fifteenth Annual ACM Symposium on theory of Computing STOC '83. ACM, New York, NY, 246-251. DOI= http://doi.acm.org/10.1145/800061.808753 
+        /// </remarks>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <param name="root"></param>
+        /// <param name="pairs"></param>
+        /// <returns></returns>
+        public static TryFunc<VertexPair<TVertex>, TVertex> OfflineLeastCommonAncestorTarjan<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IVertexListGraph<TVertex, TEdge> visitedGraph,
+            TVertex root,
+            IEnumerable<VertexPair<TVertex>> pairs
+            )
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(root != null);
+            Contract.Requires(pairs != null);
+            Contract.Requires(visitedGraph.ContainsVertex(root));
+            Contract.Requires(Contract.ForAll(pairs, p => visitedGraph.ContainsVertex(p.Source)));
+            Contract.Requires(Contract.ForAll(pairs, p => visitedGraph.ContainsVertex(p.Target)));
+
+            var algo = new TarjanOfflineLeastCommonAncestorAlgorithm<TVertex, TEdge>(visitedGraph);
+            algo.Compute(root, pairs);
+            var ancestors = algo.Ancestors;
+
+            return delegate(VertexPair<TVertex> pair, out TVertex value)
+            {
+                return ancestors.TryGetValue(pair, out value);
+            };
+        }
     }
 }

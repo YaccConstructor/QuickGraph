@@ -34,7 +34,7 @@ namespace QuickGraph.Collections
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        object FindSet(T value);
+        T FindSet(T value);
 
         /// <summary>
         /// Gets a value indicating if left and right are contained in the same set

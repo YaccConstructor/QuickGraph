@@ -1497,16 +1497,16 @@ namespace QuickGraph.Collections.Stubs
             return stub.Result<bool>(this);
         }
 
-        /// <summary>Stub of method System.Object QuickGraph.Collections.IDisjointSet`1.FindSet(!0 value)</summary>
+        /// <summary>Stub of method !0 QuickGraph.Collections.IDisjointSet`1.FindSet(!0 value)</summary>
         [global::System.Diagnostics.DebuggerHidden]
-        object global::QuickGraph.Collections.IDisjointSet<T>.FindSet(T value)
+        T global::QuickGraph.Collections.IDisjointSet<T>.FindSet(T value)
         {
             global::Microsoft.Stubs
               .IDefaultStub<global::QuickGraph.Collections.Stubs.SDisjointSet<T>> stub
                = ((global::Microsoft.Stubs
                 .IStub<global::QuickGraph.Collections.Stubs.SDisjointSet<T>>)this)
                 .DefaultStub;
-            return stub.Result<object>(this);
+            return stub.Result<T>(this);
         }
 
         /// <summary>Stub of method System.Void QuickGraph.Collections.IDisjointSet`1.MakeSet(!0 value)</summary>

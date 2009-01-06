@@ -46,14 +46,13 @@ namespace QuickGraph.Collections.Contracts
             Contract.Ensures(ithis.ElementCount == Contract.OldValue(ithis.ElementCount) + 1);
         }
 
-        object IDisjointSet<T>.FindSet(T value)
+        T IDisjointSet<T>.FindSet(T value)
         {
             IDisjointSet<T> ithis = this;
             Contract.Requires(value != null);
             Contract.Requires(ithis.Contains(value));
-            Contract.Ensures(Contract.Result<object>() != null);
 
-            return Contract.Result<object>();
+            return Contract.Result<T>();
         }
 
         bool IDisjointSet<T>.Union(T left, T right)

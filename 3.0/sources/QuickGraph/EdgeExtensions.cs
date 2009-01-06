@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using QuickGraph.Collections;
 
 namespace QuickGraph
 {
@@ -171,6 +172,23 @@ this
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Creates a vertex pair (source, target) from the edge
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <param name="edge"></param>
+        /// <returns></returns>
+        public static VertexPair<TVertex> ToVertexPair<TVertex>(
+#if !NET20
+this 
+#endif            
+            IEdge<TVertex> edge)
+        {
+            Contract.Requires(edge != null);
+
+            return new VertexPair<TVertex>(edge.Source, edge.Target);
         }
     }
 }
