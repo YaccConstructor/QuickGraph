@@ -315,6 +315,9 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Algorithms\RankedShortestPath\AdjacencyGraph.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="Data\Store.xsc">
       <DependentUpon>Store.xsd</DependentUpon>
     </None>

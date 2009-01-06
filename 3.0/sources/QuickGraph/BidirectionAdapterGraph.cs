@@ -48,9 +48,14 @@ namespace QuickGraph
                 return 0;
         }
 
+        static readonly TEdge[] emptyEdges = new TEdge[0];
         public IEnumerable<TEdge> InEdges(TVertex v)
         {
-            return this.inEdges[v];
+            EdgeList<TVertex, TEdge> edges;
+            if (this.inEdges.TryGetValue(v, out edges))
+                return edges;
+            else
+                return emptyEdges;
         }
 
         public bool TryGetInEdges(TVertex v, out IEnumerable<TEdge> edges)
