@@ -36,7 +36,7 @@ this
             var predecessors = predecessorRecorder.VertexPredecessors;
             return delegate(TVertex v, out IEnumerable<TEdge> edges)
             {
-                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+                return EdgeExtensions.TryGetPath(predecessors, v, out edges);
             };
         }
 
@@ -60,7 +60,7 @@ this
             var predecessors = predecessorRecorder.VertexPredecessors;
             return delegate(TVertex v, out IEnumerable<TEdge> edges)
             {
-                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+                return EdgeExtensions.TryGetPath(predecessors, v, out edges);
             };
         }
 
@@ -100,43 +100,8 @@ this
             var predecessors = predecessorRecorder.VertexPredecessors;
             return delegate(TVertex v, out IEnumerable<TEdge> edges)
             {
-                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+                return EdgeExtensions.TryGetPath(predecessors, v, out edges);
             };
-        }
-
-        public static bool TryGetPath<TVertex, TEdge>(
-#if !NET20
-            this 
-#endif
-            IDictionary<TVertex, TEdge> predecessors,
-            TVertex v,
-            out IEnumerable<TEdge> result)
-            where TEdge : IEdge<TVertex>
-        {
-            Contract.Requires(predecessors != null);
-            Contract.Requires(v != null);
-
-            var path = new List<TEdge>();
-
-            TVertex vc = v;
-            TEdge e;
-            while (predecessors.TryGetValue(vc, out e))
-            {
-                path.Add(e);
-                vc = e.Source;
-            }
-
-            if (path.Count > 0)
-            {
-                path.Reverse();
-                result = path.ToArray();
-                return true;
-            }
-            else
-            {
-                result = null;
-                return false;
-            }
         }
 
         #region shortest paths
@@ -162,7 +127,7 @@ this
             var predecessors = predecessorRecorder.VertexPredecessors;
             return delegate(TVertex v, out IEnumerable<TEdge> edges)
             {
-                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+                return EdgeExtensions.TryGetPath(predecessors, v, out edges);
             };
         }
 
@@ -190,7 +155,7 @@ this
             var predecessors = predecessorRecorder.VertexPredecessors;
             return delegate(TVertex v, out IEnumerable<TEdge> edges)
             {
-                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+                return EdgeExtensions.TryGetPath(predecessors, v, out edges);
             };
         }
 
@@ -216,7 +181,7 @@ this
             var predecessors = predecessorRecorder.VertexPredecessors;
             return delegate(TVertex v, out IEnumerable<TEdge> edges)
             {
-                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+                return EdgeExtensions.TryGetPath(predecessors, v, out edges);
             };
         }
 
@@ -242,7 +207,7 @@ this
             var predecessors = predecessorRecorder.VertexPredecessors;
             return delegate(TVertex v, out IEnumerable<TEdge> edges)
             {
-                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+                return EdgeExtensions.TryGetPath(predecessors, v, out edges);
             };
         }
 
@@ -268,7 +233,7 @@ this
             var predecessors = predecessorRecorder.VertexPredecessors;
             return delegate(TVertex v, out IEnumerable<TEdge> edges)
             {
-                return AlgorithmExtensions.TryGetPath(predecessors, v, out edges);
+                return EdgeExtensions.TryGetPath(predecessors, v, out edges);
             };
         }
 

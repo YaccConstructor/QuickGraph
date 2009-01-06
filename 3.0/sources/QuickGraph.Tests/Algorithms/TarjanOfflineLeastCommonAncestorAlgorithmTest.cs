@@ -7,6 +7,8 @@ using Microsoft.Pex.Framework;
 using QuickGraph.Collections;
 using QuickGraph.Algorithms;
 using QuickGraph.Serialization;
+using QuickGraph.Algorithms.Observers;
+using QuickGraph.Algorithms.Search;
 
 namespace QuickGraph.Tests.Algorithms
 {
@@ -47,11 +49,18 @@ namespace QuickGraph.Tests.Algorithms
             where TEdge : IEdge<TVertex>
         {
             var lca = g.OfflineLeastCommonAncestorTarjan(root, pairs);
+            var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+            var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(g);
+            using(ObserverScope.Create(dfs, predecessors))
+                dfs.Compute(root);
+
             TVertex ancestor;
             foreach(var pair in pairs)
                 if (lca(pair, out ancestor))
-                { }
-                    //Console.WriteLine("{0}-{1} -> {2}", pair.Source, pair.Target, ancestor);
+                {
+                    Assert.IsTrue(EdgeExtensions.IsPredecessor(predecessors.VertexPredecessors, root, pair.Source));
+                    Assert.IsTrue(EdgeExtensions.IsPredecessor(predecessors.VertexPredecessors, root, pair.Target));
+                }
         }
     }
 }

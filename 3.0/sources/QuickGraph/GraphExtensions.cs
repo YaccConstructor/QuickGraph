@@ -292,9 +292,65 @@ this
             Contract.Requires(vertexPairs != null);
 
             var g = new AdjacencyGraph<TVertex, Edge<TVertex>>();
-            foreach (var pair in vertexPairs)
-                g.AddVerticesAndEdge(new Edge<TVertex>(pair.Source, pair.Target));
+            AddVertexPairRange(g, vertexPairs);
             return g;
         }
+
+        /// <summary>
+        /// Converts a sequence of vertex pairs into an bidirectional graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <param name="vertexPairs"></param>
+        /// <returns></returns>
+        public static BidirectionalGraph<TVertex, Edge<TVertex>> ToBidirectionalGraph<TVertex>(
+#if !NET20
+this 
+#endif
+            IEnumerable<VertexPair<TVertex>> vertexPairs)
+        {
+            Contract.Requires(vertexPairs != null);
+
+            var g = new BidirectionalGraph<TVertex, Edge<TVertex>>();
+            AddVertexPairRange(g, vertexPairs);
+            return g;
+        }
+
+        /// <summary>
+        /// Converts a sequence of vertex pairs into an bidirectional graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <param name="vertexPairs"></param>
+        /// <returns></returns>
+        public static UndirectedGraph<TVertex, Edge<TVertex>> ToUndirectedGraph<TVertex>(
+#if !NET20
+this 
+#endif
+            IEnumerable<VertexPair<TVertex>> vertexPairs)
+        {
+            Contract.Requires(vertexPairs != null);
+
+            var g = new UndirectedGraph<TVertex, Edge<TVertex>>();
+            AddVertexPairRange(g, vertexPairs);
+            return g;
+        }
+
+        /// <summary>
+        /// Adds a sequence of vertex pairs as edges into the graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <param name="graph"></param>
+        /// <param name="vertexPairs"></param>
+        public static void AddVertexPairRange<TVertex>(
+#if !NET20
+this 
+#endif
+            IMutableVertexAndEdgeSet<TVertex, Edge<TVertex>> graph,
+            IEnumerable<VertexPair<TVertex>> vertexPairs)
+        {
+            Contract.Requires(graph != null);
+            Contract.Requires(vertexPairs != null);
+            foreach (var pair in vertexPairs)
+                graph.AddVerticesAndEdge(new Edge<TVertex>(pair.Source, pair.Target));
+        }        
     }
 }

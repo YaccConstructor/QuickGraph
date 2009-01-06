@@ -190,5 +190,86 @@ this
 
             return new VertexPair<TVertex>(edge.Source, edge.Target);
         }
+
+        /// <summary>
+        /// Checks that <paramref name="root"/> is a predecessor of <paramref name="vertex"/>
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="predecessors"></param>
+        /// <param name="root"></param>
+        /// <param name="vertex"></param>
+        /// <returns></returns>
+        public static bool IsPredecessor<TVertex, TEdge>(
+#if !NET20
+this 
+#endif            
+            IDictionary<TVertex, TEdge> predecessors, TVertex root, TVertex vertex)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(predecessors != null);
+            Contract.Requires(root != null);
+            Contract.Requires(vertex != null);
+
+            var current = vertex;
+
+            if (root.Equals(current)) 
+                return true;
+
+            TEdge predecessor;
+            while(predecessors.TryGetValue(current, out predecessor) &&
+                  !current.Equals(predecessor.Source))
+            {
+                if (predecessor.Source.Equals(root))
+                    return true;
+                current = predecessor.Source;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Tries to get the predecessor path, if reachable.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="predecessors"></param>
+        /// <param name="v"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool TryGetPath<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IDictionary<TVertex, TEdge> predecessors,
+            TVertex v,
+            out IEnumerable<TEdge> result)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(predecessors != null);
+            Contract.Requires(v != null);
+
+            var path = new List<TEdge>();
+
+            TVertex vc = v;
+            TEdge e;
+            while (predecessors.TryGetValue(vc, out e))
+            {
+                path.Add(e);
+                vc = e.Source;
+            }
+
+            if (path.Count > 0)
+            {
+                path.Reverse();
+                result = path.ToArray();
+                return true;
+            }
+            else
+            {
+                result = null;
+                return false;
+            }
+        }
     }
 }
