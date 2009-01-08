@@ -10,9 +10,12 @@ namespace QuickGraph.Serialization
 {
     public static class TestGraphFactory
     {
-        public static string[] GetFileNames()
+        public static IEnumerable<string> GetFileNames()
         {
-            return Directory.GetFiles(".", "*.graphml");
+            var list = new List<string>();
+            list.AddRange(Directory.GetFiles(".", "*.graphml"));
+            list.AddRange(Directory.GetFiles("graphml", "*.graphml"));
+            return list;
         }
 
         public static IEnumerable<BidirectionalGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetBidirectionalGraphs()
