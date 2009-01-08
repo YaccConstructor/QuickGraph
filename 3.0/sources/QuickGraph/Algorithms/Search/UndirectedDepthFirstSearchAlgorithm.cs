@@ -74,56 +74,56 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
-        public event VertexEventHandler<TVertex> InitializeVertex;
+        public event VertexAction<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
         {
             if (InitializeVertex != null)
                 InitializeVertex(this, v);
         }
 
-        public event VertexEventHandler<TVertex> StartVertex;
+        public event VertexAction<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
             if (StartVertex != null)
                 StartVertex(this, v);
         }
 
-        public event VertexEventHandler<TVertex> DiscoverVertex;
+        public event VertexAction<TVertex> DiscoverVertex;
         private void OnDiscoverVertex(TVertex v)
         {
             if (DiscoverVertex != null)
                 DiscoverVertex(this, v);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
+        public event EdgeAction<TVertex, TEdge> ExamineEdge;
         private void OnExamineEdge(TEdge e)
         {
             if (ExamineEdge != null)
                 ExamineEdge(this, e);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event EdgeAction<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
                 TreeEdge(this, e);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> BackEdge;
+        public event EdgeAction<TVertex, TEdge> BackEdge;
         private void OnBackEdge(TEdge e)
         {
             if (BackEdge != null)
                 BackEdge(this, e);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> ForwardOrCrossEdge;
+        public event EdgeAction<TVertex, TEdge> ForwardOrCrossEdge;
         private void OnForwardOrCrossEdge(TEdge e)
         {
             if (ForwardOrCrossEdge != null)
                 ForwardOrCrossEdge(this, e);
         }
 
-        public event VertexEventHandler<TVertex> FinishVertex;
+        public event VertexAction<TVertex> FinishVertex;
         private void OnFinishVertex(TVertex v)
         {
             if (FinishVertex != null)

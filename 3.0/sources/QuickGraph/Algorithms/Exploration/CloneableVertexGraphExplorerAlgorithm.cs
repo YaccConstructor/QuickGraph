@@ -76,7 +76,7 @@ namespace QuickGraph.Algorithms.Exploration
             get { return this.finishedSuccessfully; }
         }
 
-        public event VertexEventHandler<TVertex> DiscoverVertex;
+        public event VertexAction<TVertex> DiscoverVertex;
         private void OnDiscoverVertex(TVertex v)
         {
             Contract.Requires(v != null);
@@ -88,7 +88,7 @@ namespace QuickGraph.Algorithms.Exploration
             if (eh != null)
                 eh(this, v);
         }
-        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
+        public event EdgeAction<TVertex,TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
             Contract.Requires(e != null);
@@ -97,7 +97,7 @@ namespace QuickGraph.Algorithms.Exploration
             if (eh != null)
                 eh(this, e);
         }
-        public event EdgeEventHandler<TVertex, TEdge> BackEdge;
+        public event EdgeAction<TVertex, TEdge> BackEdge;
         private void OnBackEdge(TEdge e)
         {
             Contract.Requires(e != null);
@@ -105,7 +105,7 @@ namespace QuickGraph.Algorithms.Exploration
             if (eh != null)
                 eh(this, e);
         }
-        public event EdgeEventHandler<TVertex, TEdge> EdgeSkipped;
+        public event EdgeAction<TVertex, TEdge> EdgeSkipped;
         private void OnEdgeSkipped(TEdge e)
         {
             Contract.Requires(e != null);

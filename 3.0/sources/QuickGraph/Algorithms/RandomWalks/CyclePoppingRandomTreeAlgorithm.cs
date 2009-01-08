@@ -92,7 +92,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
         }
 
-        public event VertexEventHandler<TVertex> InitializeVertex;
+        public event VertexAction<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
         {
             var eh = this.InitializeVertex;
@@ -100,7 +100,7 @@ namespace QuickGraph.Algorithms.RandomWalks
                 eh(this, v);
         }
 
-        public event VertexEventHandler<TVertex> FinishVertex;
+        public event VertexAction<TVertex> FinishVertex;
         private void OnFinishVertex(TVertex v)
         {
             var eh = this.FinishVertex;
@@ -108,7 +108,7 @@ namespace QuickGraph.Algorithms.RandomWalks
                 eh(this, v);
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
+        public event EdgeAction<TVertex,TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
             var eh = this.TreeEdge;
@@ -116,7 +116,7 @@ namespace QuickGraph.Algorithms.RandomWalks
                 eh(this, e);
         }
 
-        public event VertexEventHandler<TVertex> ClearTreeVertex;
+        public event VertexAction<TVertex> ClearTreeVertex;
         private void OnClearTreeVertex(TVertex v)
         {
             var eh = this.ClearTreeVertex;

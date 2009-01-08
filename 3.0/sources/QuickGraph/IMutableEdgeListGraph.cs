@@ -28,7 +28,7 @@ namespace QuickGraph
         /// <summary>
         /// Raised when an edge is added to the graph.
         /// </summary>
-        event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        event EdgeAction<TVertex, TEdge> EdgeAdded;
 
         /// <summary>
         /// Adds a set of edges to the graph.
@@ -47,7 +47,7 @@ namespace QuickGraph
         /// <summary>
         /// Raised when an edge has been removed from the graph.
         /// </summary>
-        event EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+        event EdgeAction<TVertex, TEdge> EdgeRemoved;
 
         /// <summary>
         /// Removes all edges that match <paramref name="predicate"/>.

@@ -73,7 +73,7 @@ namespace QuickGraph.Algorithms
                 return eor.Current;
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
+        public event EdgeAction<TVertex,TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
             Contract.Requires(e != null);
@@ -82,7 +82,7 @@ namespace QuickGraph.Algorithms
                 eh(this, e);
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> CircuitEdge;
+        public event EdgeAction<TVertex,TEdge> CircuitEdge;
         private void OnCircuitEdge(TEdge e)
         {
             Contract.Requires(e != null);
@@ -92,7 +92,7 @@ namespace QuickGraph.Algorithms
                 eh(this, e);
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> VisitEdge;
+        public event EdgeAction<TVertex,TEdge> VisitEdge;
         private void OnVisitEdge(TEdge e)
         {
             Contract.Requires(e != null);

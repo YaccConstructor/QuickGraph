@@ -83,7 +83,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// The edge that participated in the last relaxation for vertex v is 
         /// an edge in the shortest paths tree.
         /// </summary>
-        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event EdgeAction<TVertex, TEdge> TreeEdge;
 
         /// <summary>
         /// Raises the <see cref="TreeEdge"/> event.

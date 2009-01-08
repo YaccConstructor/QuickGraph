@@ -54,7 +54,7 @@ namespace QuickGraph.Algorithms
             set { this.allowCyclicGraph = value; }
         }
 
-        public event VertexEventHandler<TVertex> AddVertex;
+        public event VertexAction<TVertex> AddVertex;
         private void OnAddVertex(TVertex v)
         {
             if (this.AddVertex != null)

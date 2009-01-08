@@ -6,7 +6,7 @@ namespace QuickGraph.Algorithms
         : IUndirectedTreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        event VertexEventHandler<TVertex> StartVertex;
-        event VertexEventHandler<TVertex> FinishVertex;
+        event VertexAction<TVertex> StartVertex;
+        event VertexAction<TVertex> FinishVertex;
     }
 }

@@ -77,7 +77,7 @@ namespace QuickGraph.Algorithms.Search
         /// <summary>
         /// Invoked on the source vertex once before the start of the search. 
         /// </summary>
-        public event VertexEventHandler<TVertex> StartVertex;
+        public event VertexAction<TVertex> StartVertex;
 
         /// <summary>
         /// Triggers the StartVertex event.
@@ -92,7 +92,7 @@ namespace QuickGraph.Algorithms.Search
         /// <summary>
         /// Invoked on the first edge of a test case
         /// </summary>
-        public event EdgeEventHandler<TVertex,TEdge> StartEdge;
+        public event EdgeAction<TVertex,TEdge> StartEdge;
 
         /// <summary>
         /// Triggers the StartEdge event.
@@ -107,7 +107,7 @@ namespace QuickGraph.Algorithms.Search
         /// <summary>
         /// 
         /// </summary>
-        public event EdgeEdgeEventHandler<TVertex, TEdge> DiscoverTreeEdge;
+        public event EdgeEdgeAction<TVertex, TEdge> DiscoverTreeEdge;
 
         /// <summary>
         /// Triggers DiscoverEdge event
@@ -116,8 +116,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="e"></param>
         private void OnDiscoverTreeEdge(TEdge se, TEdge e)
         {
-            if (DiscoverTreeEdge != null)
-                DiscoverTreeEdge(this, new EdgeEdgeEventArgs<TVertex, TEdge>(se, e));
+            var eh = this.DiscoverTreeEdge;
+            if (eh != null)
+                eh(this, se, e);
         }
 
         /// <summary>
@@ -125,7 +126,7 @@ namespace QuickGraph.Algorithms.Search
         /// the search tree. If you wish to record predecessors, do so at this 
         /// event point. 
         /// </summary>
-        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event EdgeAction<TVertex, TEdge> TreeEdge;
 
         /// <summary>
         /// Triggers the TreeEdge event.
@@ -140,7 +141,7 @@ namespace QuickGraph.Algorithms.Search
         /// <summary>
         /// Invoked on the back edges in the graph. 
         /// </summary>
-        public event EdgeEventHandler<TVertex, TEdge> BackEdge;
+        public event EdgeAction<TVertex, TEdge> BackEdge;
 
         /// <summary>
         /// Triggers the BackEdge event.
@@ -156,7 +157,7 @@ namespace QuickGraph.Algorithms.Search
         /// Invoked on forward or cross edges in the graph. 
         /// (In an undirected graph this method is never called.) 
         /// </summary>
-        public event EdgeEventHandler<TVertex, TEdge> ForwardOrCrossEdge;
+        public event EdgeAction<TVertex, TEdge> ForwardOrCrossEdge;
 
         /// <summary>
         /// Triggers the ForwardOrCrossEdge event.
@@ -173,7 +174,7 @@ namespace QuickGraph.Algorithms.Search
         /// the search tree and all of the adjacent vertices have been 
         /// discovered (but before their out-edges have been examined). 
         /// </summary>
-        public event EdgeEventHandler<TVertex, TEdge> FinishEdge;
+        public event EdgeAction<TVertex, TEdge> FinishEdge;
 
         /// <summary>
         /// Triggers the ForwardOrCrossEdge event.

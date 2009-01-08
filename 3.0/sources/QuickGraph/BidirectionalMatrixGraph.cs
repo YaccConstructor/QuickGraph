@@ -416,7 +416,7 @@ namespace QuickGraph
             return count;
         }
 
-        public event EdgeEventHandler<int, TEdge> EdgeAdded;
+        public event EdgeAction<int, TEdge> EdgeAdded;
         protected virtual void OnEdgeAdded(TEdge args)
         {
             var eh = this.EdgeAdded;
@@ -440,7 +440,7 @@ namespace QuickGraph
                 return false;
         }
 
-        public event EdgeEventHandler<int, TEdge> EdgeRemoved;
+        public event EdgeAction<int, TEdge> EdgeRemoved;
         protected virtual void OnEdgeRemoved(TEdge args)
         {
             var eh = this.EdgeRemoved;

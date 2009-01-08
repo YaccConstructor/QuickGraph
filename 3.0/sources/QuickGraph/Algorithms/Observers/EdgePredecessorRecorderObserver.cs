@@ -58,8 +58,8 @@ namespace QuickGraph.Algorithms.Observers
             if (algorithm == null)
                 throw new ArgumentNullException("algorithm");
 
-            algorithm.DiscoverTreeEdge +=new EdgeEdgeEventHandler<TVertex,TEdge>(this.DiscoverTreeEdge);
-            algorithm.FinishEdge +=new EdgeEventHandler<TVertex,TEdge>(this.FinishEdge);
+            algorithm.DiscoverTreeEdge +=new EdgeEdgeAction<TVertex,TEdge>(this.DiscoverTreeEdge);
+            algorithm.FinishEdge +=new EdgeAction<TVertex,TEdge>(this.FinishEdge);
         }
 
         public void Detach(IEdgePredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
@@ -67,8 +67,8 @@ namespace QuickGraph.Algorithms.Observers
             if (algorithm == null)
                 throw new ArgumentNullException("algorithm");
 
-            algorithm.DiscoverTreeEdge -= new EdgeEdgeEventHandler<TVertex, TEdge>(this.DiscoverTreeEdge);
-            algorithm.FinishEdge -= new EdgeEventHandler<TVertex, TEdge>(this.FinishEdge);
+            algorithm.DiscoverTreeEdge -= new EdgeEdgeAction<TVertex, TEdge>(this.DiscoverTreeEdge);
+            algorithm.FinishEdge -= new EdgeAction<TVertex, TEdge>(this.FinishEdge);
         }
 
         public ICollection<TEdge> Path(TEdge se)
@@ -140,10 +140,10 @@ namespace QuickGraph.Algorithms.Observers
             return es;
         }
 
-        private void DiscoverTreeEdge(Object sender, EdgeEdgeEventArgs<TVertex,TEdge> args)
+        private void DiscoverTreeEdge(Object sender, TEdge edge, TEdge targetEdge)
         {
-            if (!args.Edge.Equals(args.TargetEdge))
-                EdgePredecessors[args.TargetEdge] = args.Edge;
+            if (!edge.Equals(targetEdge))
+                this.EdgePredecessors[targetEdge] = edge;
         }
 
         private void FinishEdge(Object sender, TEdge args)

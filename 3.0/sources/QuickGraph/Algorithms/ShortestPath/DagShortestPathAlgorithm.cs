@@ -49,14 +49,14 @@ namespace QuickGraph.Algorithms.ShortestPath
             :base(host, g,weights, distanceRelaxer)
         {}
 
-        public event VertexEventHandler<TVertex> InitializeVertex;
+        public event VertexAction<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
         {
             if (InitializeVertex != null)
                 InitializeVertex(this, v);
         }
 
-        public event VertexEventHandler<TVertex> StartVertex;
+        public event VertexAction<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
             var eh = this.StartVertex;
@@ -64,35 +64,35 @@ namespace QuickGraph.Algorithms.ShortestPath
                 eh(this, v);
         }
 
-        public event VertexEventHandler<TVertex> DiscoverVertex;
+        public event VertexAction<TVertex> DiscoverVertex;
         private void OnDiscoverVertex(TVertex v)
         {
             if (DiscoverVertex != null)
                 DiscoverVertex(this, v);
         }
 
-        public event VertexEventHandler<TVertex> ExamineVertex;
+        public event VertexAction<TVertex> ExamineVertex;
         private void OnExamineVertex(TVertex v)
         {
             if (ExamineVertex != null)
                 ExamineVertex(this, v);
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> ExamineEdge;
+        public event EdgeAction<TVertex,TEdge> ExamineEdge;
         private void OnExamineEdge(TEdge e)
         {
             if (ExamineEdge != null)
                 ExamineEdge(this, e);
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> EdgeNotRelaxed;
+        public event EdgeAction<TVertex,TEdge> EdgeNotRelaxed;
         private void OnEdgeNotRelaxed(TEdge e)
         {
             if (EdgeNotRelaxed != null)
                 EdgeNotRelaxed(this, e);
         }
 
-        public event VertexEventHandler<TVertex> FinishVertex;
+        public event VertexAction<TVertex> FinishVertex;
         private void OnFinishVertex(TVertex v)
         {
             if (FinishVertex != null)

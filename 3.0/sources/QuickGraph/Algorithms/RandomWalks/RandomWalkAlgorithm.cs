@@ -65,21 +65,21 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
         }
 
-        public event VertexEventHandler<TVertex> StartVertex;
+        public event VertexAction<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
             if (StartVertex != null)
                 StartVertex(this, v);
         }
 
-        public event VertexEventHandler<TVertex> EndVertex;
+        public event VertexAction<TVertex> EndVertex;
         private void OnEndVertex(TVertex v)
         {
             if (EndVertex != null)
                 EndVertex(this, v);
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
+        public event EdgeAction<TVertex,TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
             if (this.TreeEdge != null)

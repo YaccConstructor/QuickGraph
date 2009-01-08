@@ -780,14 +780,14 @@ this
                 var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(g);
                 try
                 {
-                    dfs.BackEdge += new EdgeEventHandler<TVertex, TEdge>(dfs_BackEdge);
+                    dfs.BackEdge += new EdgeAction<TVertex, TEdge>(dfs_BackEdge);
                     isDag = true;
                     dfs.Compute();
                     return isDag;
                 }
                 finally
                 {
-                    dfs.BackEdge -= new EdgeEventHandler<TVertex, TEdge>(dfs_BackEdge);
+                    dfs.BackEdge -= new EdgeAction<TVertex, TEdge>(dfs_BackEdge);
                 }
             }
 

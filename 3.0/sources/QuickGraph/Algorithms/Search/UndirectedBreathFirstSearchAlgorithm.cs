@@ -67,7 +67,7 @@ namespace QuickGraph.Algorithms.Search
             return this.vertexColors[vertex];
         }
 
-        public event VertexEventHandler<TVertex> InitializeVertex;
+        public event VertexAction<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
         {
             var eh = this.InitializeVertex;
@@ -76,7 +76,7 @@ namespace QuickGraph.Algorithms.Search
         }
 
 
-        public event VertexEventHandler<TVertex> StartVertex;
+        public event VertexAction<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
             var eh = this.StartVertex;
@@ -84,7 +84,7 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, v);
         }
 
-        public event VertexEventHandler<TVertex> ExamineVertex;
+        public event VertexAction<TVertex> ExamineVertex;
         private void OnExamineVertex(TVertex v)
         {
             var eh = this.ExamineVertex;
@@ -92,7 +92,7 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, v);
         }
 
-        public event VertexEventHandler<TVertex> DiscoverVertex;
+        public event VertexAction<TVertex> DiscoverVertex;
         private void OnDiscoverVertex(TVertex v)
         {
             var eh = this.DiscoverVertex;
@@ -100,7 +100,7 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, v);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
+        public event EdgeAction<TVertex, TEdge> ExamineEdge;
         private void OnExamineEdge(TEdge e)
         {
             var eh = this.ExamineEdge;
@@ -140,7 +140,7 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
-        public event VertexEventHandler<TVertex> FinishVertex;
+        public event VertexAction<TVertex> FinishVertex;
         private void OnFinishVertex(TVertex v)
         {
             var eh = this.FinishVertex;

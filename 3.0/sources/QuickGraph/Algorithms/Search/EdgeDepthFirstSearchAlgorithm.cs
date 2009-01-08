@@ -71,7 +71,7 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> InitializeEdge;
+        public event EdgeAction<TVertex,TEdge> InitializeEdge;
         private void OnInitializeEdge(TEdge e)
         {
             var eh = this.InitializeEdge;
@@ -79,56 +79,58 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, e);
         }
 
-        public event VertexEventHandler<TVertex> StartVertex;
+        public event VertexAction<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
             if (StartVertex != null)
                 StartVertex(this, v);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> StartEdge;
+        public event EdgeAction<TVertex, TEdge> StartEdge;
         private void OnStartEdge(TEdge e)
         {
             if (StartEdge != null)
                 StartEdge(this, e);
         }
 
-        public event EdgeEdgeEventHandler<TVertex, TEdge> DiscoverTreeEdge;
+        public event EdgeEdgeAction<TVertex, TEdge> DiscoverTreeEdge;
         private void OnDiscoverTreeEdge(TEdge e, TEdge targetEge)
         {
-            if (DiscoverTreeEdge != null)
-                DiscoverTreeEdge(this, new EdgeEdgeEventArgs<TVertex, TEdge>(e, targetEge));
+            var eh = this.DiscoverTreeEdge;
+            if (eh != null)
+                eh(this, e, targetEge);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
+        public event EdgeAction<TVertex, TEdge> ExamineEdge;
         private void OnExamineEdge(TEdge e)
         {
-            if (ExamineEdge != null)
-                ExamineEdge(this, e);
+            var eh = this.ExamineEdge;
+            if (eh != null)
+                eh(this, e);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event EdgeAction<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
                 TreeEdge(this, e);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> BackEdge;
+        public event EdgeAction<TVertex, TEdge> BackEdge;
         private void OnBackEdge(TEdge e)
         {
             if (BackEdge != null)
                 BackEdge(this, e);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> ForwardOrCrossEdge;
+        public event EdgeAction<TVertex, TEdge> ForwardOrCrossEdge;
         private void OnForwardOrCrossEdge(TEdge e)
         {
             if (ForwardOrCrossEdge != null)
                 ForwardOrCrossEdge(this, e);
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> FinishEdge;
+        public event EdgeAction<TVertex,TEdge> FinishEdge;
         private void OnFinishEdge(TEdge e)
         {
             if (FinishEdge != null)

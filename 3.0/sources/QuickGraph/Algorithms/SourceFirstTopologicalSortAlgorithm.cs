@@ -47,7 +47,7 @@ namespace QuickGraph.Algorithms
             }
         }
 
-        public event VertexEventHandler<TVertex> AddVertex;
+        public event VertexAction<TVertex> AddVertex;
         private void OnAddVertex(TVertex v)
         {
             var eh = this.AddVertex;

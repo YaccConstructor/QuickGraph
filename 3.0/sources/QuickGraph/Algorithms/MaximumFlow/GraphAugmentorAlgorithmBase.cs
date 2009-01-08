@@ -64,7 +64,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             get { return this.augmentedEdges; }
         }
 
-        public event VertexEventHandler<TVertex> SuperSourceAdded;
+        public event VertexAction<TVertex> SuperSourceAdded;
         private void OnSuperSourceAdded(TVertex v)
         {
             Contract.Requires(v != null);
@@ -73,7 +73,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 eh(this, v);
         }
 
-        public event VertexEventHandler<TVertex> SuperSinkAdded;
+        public event VertexAction<TVertex> SuperSinkAdded;
         private void OnSuperSinkAdded(TVertex v)
         {
             Contract.Requires(v != null);
@@ -82,7 +82,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 eh(this, v);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        public event EdgeAction<TVertex, TEdge> EdgeAdded;
         private void OnEdgeAdded(TEdge e)
         {
             Contract.Requires(e != null);

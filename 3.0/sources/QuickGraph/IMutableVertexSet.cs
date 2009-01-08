@@ -11,11 +11,11 @@ namespace QuickGraph
     public interface IMutableVertexSet<TVertex>
         : IVertexSet<TVertex>
     {
-        event VertexEventHandler<TVertex> VertexAdded;
+        event VertexAction<TVertex> VertexAdded;
         bool AddVertex(TVertex v);
         int AddVertexRange(IEnumerable<TVertex> vertices);
 
-        event VertexEventHandler<TVertex> VertexRemoved;
+        event VertexAction<TVertex> VertexRemoved;
         bool RemoveVertex(TVertex v);
         int RemoveVertexIf(VertexPredicate<TVertex> pred);
     }

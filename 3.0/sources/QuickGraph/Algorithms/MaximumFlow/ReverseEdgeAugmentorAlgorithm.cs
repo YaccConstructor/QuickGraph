@@ -70,7 +70,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public event EdgeEventHandler<TVertex,TEdge> ReversedEdgeAdded;
+        public event EdgeAction<TVertex,TEdge> ReversedEdgeAdded;
         private void OnReservedEdgeAdded(TEdge e)
         {
             var eh = this.ReversedEdgeAdded;

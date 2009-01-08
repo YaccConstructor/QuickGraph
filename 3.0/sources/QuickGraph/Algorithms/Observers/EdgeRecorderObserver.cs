@@ -42,14 +42,14 @@ namespace QuickGraph.Algorithms.Observers
         {
             Contract.Requires(algorithm != null);
 
-            algorithm.TreeEdge +=new EdgeEventHandler<TVertex,TEdge>(RecordEdge);
+            algorithm.TreeEdge +=new EdgeAction<TVertex,TEdge>(RecordEdge);
         }
 
         public void Detach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
             Contract.Requires(algorithm != null);
 
-            algorithm.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(RecordEdge);
+            algorithm.TreeEdge -= new EdgeAction<TVertex, TEdge>(RecordEdge);
         }
 
         private void RecordEdge(Object sender, TEdge args)

@@ -69,7 +69,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// Invoked on each vertex in the graph before the start of the 
         /// algorithm.
         /// </summary>
-        public event VertexEventHandler<TVertex> InitializeVertex;
+        public event VertexAction<TVertex> InitializeVertex;
 
         /// <summary>
         /// Raises the <see cref="InitializeVertex"/> event.
@@ -85,7 +85,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// <summary>
         /// Invoked on every edge in the graph |V| times.
         /// </summary>
-        public event EdgeEventHandler<TVertex,TEdge> ExamineEdge;
+        public event EdgeAction<TVertex,TEdge> ExamineEdge;
 
         /// <summary>
         /// Raises the <see cref="ExamineEdge"/> event.
@@ -102,7 +102,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         ///  Invoked if the distance label for the target vertex is not 
         ///  decreased.
         /// </summary>
-        public event EdgeEventHandler<TVertex,TEdge> EdgeNotRelaxed;
+        public event EdgeAction<TVertex,TEdge> EdgeNotRelaxed;
 
         /// <summary>
         /// Raises the <see cref="EdgeNotRelaxed"/> event.
@@ -121,7 +121,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         ///  
         ///  If the edge is minimized then this function is invoked.
         /// </summary>
-        public event EdgeEventHandler<TVertex,TEdge> EdgeMinimized;
+        public event EdgeAction<TVertex,TEdge> EdgeMinimized;
 
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// If the edge was not minimized, this function is invoked. 
         /// This happens when there is a negative cycle in the graph. 
         /// </summary>
-        public event EdgeEventHandler<TVertex,TEdge> EdgeNotMinimized;
+        public event EdgeAction<TVertex,TEdge> EdgeNotMinimized;
 
 
         /// <summary>

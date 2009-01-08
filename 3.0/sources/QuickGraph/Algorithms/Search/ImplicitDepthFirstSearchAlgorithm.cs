@@ -72,7 +72,7 @@ namespace QuickGraph.Algorithms.Search
         /// <summary>
         /// Invoked on the source vertex once before the start of the search. 
         /// </summary>
-        public event VertexEventHandler<TVertex> StartVertex;
+        public event VertexAction<TVertex> StartVertex;
 
         /// <summary>
         /// Raises the <see cref="StartVertex"/> event.
@@ -87,7 +87,7 @@ namespace QuickGraph.Algorithms.Search
         /// <summary>
         /// Invoked when a vertex is encountered for the first time. 
         /// </summary>
-        public event VertexEventHandler<TVertex> DiscoverVertex;
+        public event VertexAction<TVertex> DiscoverVertex;
 
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace QuickGraph.Algorithms.Search
         /// <summary>
         /// Invoked on every out-edge of each vertex after it is discovered. 
         /// </summary>
-        public event EdgeEventHandler<TVertex,TEdge> ExamineEdge;
+        public event EdgeAction<TVertex,TEdge> ExamineEdge;
 
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace QuickGraph.Algorithms.Search
         /// the search tree. If you wish to record predecessors, do so at this 
         /// event point. 
         /// </summary>
-        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event EdgeAction<TVertex, TEdge> TreeEdge;
 
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace QuickGraph.Algorithms.Search
         /// <summary>
         /// Invoked on the back edges in the graph. 
         /// </summary>
-        public event EdgeEventHandler<TVertex, TEdge> BackEdge;
+        public event EdgeAction<TVertex, TEdge> BackEdge;
 
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace QuickGraph.Algorithms.Search
         /// Invoked on forward or cross edges in the graph. 
         /// (In an undirected graph this method is never called.) 
         /// </summary>
-        public event EdgeEventHandler<TVertex, TEdge> ForwardOrCrossEdge;
+        public event EdgeAction<TVertex, TEdge> ForwardOrCrossEdge;
 
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace QuickGraph.Algorithms.Search
         /// the search tree and all of the adjacent vertices have been 
         /// discovered (but before their out-edges have been examined). 
         /// </summary>
-        public event VertexEventHandler<TVertex> FinishVertex;
+        public event VertexAction<TVertex> FinishVertex;
 
         /// <summary>
         /// Raises the <see cref="FinishVertex"/> event.

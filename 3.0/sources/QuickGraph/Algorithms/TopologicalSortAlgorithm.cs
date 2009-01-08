@@ -62,8 +62,8 @@ namespace QuickGraph.Algorithms
                     this.VisitedGraph,
                     new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount)
                     );
-                dfs.BackEdge += new EdgeEventHandler<TVertex, TEdge>(this.BackEdge);
-                dfs.FinishVertex += new VertexEventHandler<TVertex>(this.FinishVertex);
+                dfs.BackEdge += new EdgeAction<TVertex, TEdge>(this.BackEdge);
+                dfs.FinishVertex += new VertexAction<TVertex>(this.FinishVertex);
 
                 dfs.Compute();
             }
@@ -71,8 +71,8 @@ namespace QuickGraph.Algorithms
             {
                 if (dfs != null)
                 {
-                    dfs.BackEdge -= new EdgeEventHandler<TVertex, TEdge>(this.BackEdge);
-                    dfs.FinishVertex -= new VertexEventHandler<TVertex>(this.FinishVertex);
+                    dfs.BackEdge -= new EdgeAction<TVertex, TEdge>(this.BackEdge);
+                    dfs.FinishVertex -= new VertexAction<TVertex>(this.FinishVertex);
                 }
             }
         }

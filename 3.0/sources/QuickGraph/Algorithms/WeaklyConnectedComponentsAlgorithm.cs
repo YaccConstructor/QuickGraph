@@ -71,17 +71,17 @@ namespace QuickGraph.Algorithms
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(this.VisitedGraph);
             try
             {
-                dfs.StartVertex += new VertexEventHandler<TVertex>(dfs_StartVertex);
-                dfs.TreeEdge += new EdgeEventHandler<TVertex, TEdge>(dfs_TreeEdge);
-                dfs.ForwardOrCrossEdge += new EdgeEventHandler<TVertex, TEdge>(dfs_ForwardOrCrossEdge);
+                dfs.StartVertex += new VertexAction<TVertex>(dfs_StartVertex);
+                dfs.TreeEdge += new EdgeAction<TVertex, TEdge>(dfs_TreeEdge);
+                dfs.ForwardOrCrossEdge += new EdgeAction<TVertex, TEdge>(dfs_ForwardOrCrossEdge);
 
                 dfs.Compute();
             }
             finally
             {
-                dfs.StartVertex -= new VertexEventHandler<TVertex>(dfs_StartVertex);
-                dfs.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(dfs_TreeEdge);
-                dfs.ForwardOrCrossEdge -= new EdgeEventHandler<TVertex, TEdge>(dfs_ForwardOrCrossEdge);
+                dfs.StartVertex -= new VertexAction<TVertex>(dfs_StartVertex);
+                dfs.TreeEdge -= new EdgeAction<TVertex, TEdge>(dfs_TreeEdge);
+                dfs.ForwardOrCrossEdge -= new EdgeAction<TVertex, TEdge>(dfs_ForwardOrCrossEdge);
             }
 
             // updating component numbers

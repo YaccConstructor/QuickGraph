@@ -1578,10 +1578,10 @@ namespace QuickGraph.Algorithms.Stubs
         }
 
         /// <summary>Event DiscoverVertex</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> DiscoverVertex;
+        public event global::QuickGraph.VertexAction<TVertex> DiscoverVertex;
 
         /// <summary>Event InitializeVertex</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> InitializeVertex;
+        public event global::QuickGraph.VertexAction<TVertex> InitializeVertex;
     }
 }
 namespace QuickGraph.Algorithms.ShortestPath.Stubs
@@ -2247,10 +2247,10 @@ namespace QuickGraph.Algorithms.Stubs
         }
 
         /// <summary>Event DiscoverTreeEdge</summary>
-        public event global::QuickGraph.EdgeEdgeEventHandler<TVertex, TEdge> DiscoverTreeEdge;
+        public event global::QuickGraph.EdgeEdgeAction<TVertex, TEdge> DiscoverTreeEdge;
 
         /// <summary>Event FinishEdge</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> FinishEdge;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> FinishEdge;
     }
 }
 namespace QuickGraph.Stubs
@@ -2544,7 +2544,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs.SHierarchy<TVertex, TEdge>> Clear;
 
         /// <summary>Event EdgeAdded</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeAdded;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.EdgeCount</summary>
         int global::QuickGraph.IEdgeSet<TVertex, TEdge>.EdgeCount
@@ -2573,7 +2573,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SHierarchy<TVertex, TEdge>, int> EdgeCountGet;
 
         /// <summary>Event EdgeRemoved</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeRemoved;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.Edges</summary>
         global::System.Collections.Generic.IEnumerable<TEdge> global::QuickGraph.IEdgeSet<TVertex, TEdge>.Edges
@@ -3184,7 +3184,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs.SHierarchy<TVertex, TEdge>> TrimEdgeExcess;
 
         /// <summary>Event VertexAdded</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexAdded;
+        public event global::QuickGraph.VertexAction<TVertex> VertexAdded;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.VertexCount</summary>
         int global::QuickGraph.IVertexSet<TVertex>.VertexCount
@@ -3213,7 +3213,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SHierarchy<TVertex, TEdge>, int> VertexCountGet;
 
         /// <summary>Event VertexRemoved</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexRemoved;
+        public event global::QuickGraph.VertexAction<TVertex> VertexRemoved;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.Vertices</summary>
         global::System.Collections.Generic.IEnumerable<TVertex> global::QuickGraph.IVertexSet<TVertex>.Vertices
@@ -3874,7 +3874,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Algorithms.MinimumSpanningTree.Stubs.SMinimumSpanningTreeAlgorithm<TVertex, TEdge>, object> SyncRootGet;
 
         /// <summary>Event TreeEdge</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> TreeEdge;
 
         /// <summary>Stub of property QuickGraph.Algorithms.IAlgorithm`1.VisitedGraph</summary>
         global::QuickGraph.IUndirectedGraph<TVertex, TEdge> global::QuickGraph.Algorithms.IAlgorithm<global::QuickGraph.IUndirectedGraph<TVertex, TEdge>>.VisitedGraph
@@ -3960,7 +3960,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs.SMutableBidirectionalGraph<TVertex, TEdge>> Clear;
 
         /// <summary>Event EdgeAdded</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeAdded;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.EdgeCount</summary>
         int global::QuickGraph.IEdgeSet<TVertex, TEdge>.EdgeCount
@@ -3987,7 +3987,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableBidirectionalGraph<TVertex, TEdge>, int> EdgeCountGet;
 
         /// <summary>Event EdgeRemoved</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeRemoved;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.Edges</summary>
         global::System.Collections.Generic.IEnumerable<TEdge> global::QuickGraph.IEdgeSet<TVertex, TEdge>.Edges
@@ -4532,7 +4532,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs.SMutableBidirectionalGraph<TVertex, TEdge>> TrimEdgeExcess;
 
         /// <summary>Event VertexAdded</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexAdded;
+        public event global::QuickGraph.VertexAction<TVertex> VertexAdded;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.VertexCount</summary>
         int global::QuickGraph.IVertexSet<TVertex>.VertexCount
@@ -4559,7 +4559,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableBidirectionalGraph<TVertex, TEdge>, int> VertexCountGet;
 
         /// <summary>Event VertexRemoved</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexRemoved;
+        public event global::QuickGraph.VertexAction<TVertex> VertexRemoved;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.Vertices</summary>
         global::System.Collections.Generic.IEnumerable<TVertex> global::QuickGraph.IVertexSet<TVertex>.Vertices
@@ -4636,7 +4636,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs.SMutableEdgeListGraph<TVertex, TEdge>> Clear;
 
         /// <summary>Event EdgeAdded</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeAdded;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.EdgeCount</summary>
         int global::QuickGraph.IEdgeSet<TVertex, TEdge>.EdgeCount
@@ -4663,7 +4663,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableEdgeListGraph<TVertex, TEdge>, int> EdgeCountGet;
 
         /// <summary>Event EdgeRemoved</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeRemoved;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.Edges</summary>
         global::System.Collections.Generic.IEnumerable<TEdge> global::QuickGraph.IEdgeSet<TVertex, TEdge>.Edges
@@ -5434,7 +5434,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs.SMutableUndirectedGraph<TVertex, TEdge>> Clear;
 
         /// <summary>Event EdgeAdded</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeAdded;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.EdgeCount</summary>
         int global::QuickGraph.IEdgeSet<TVertex, TEdge>.EdgeCount
@@ -5461,7 +5461,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableUndirectedGraph<TVertex, TEdge>, int> EdgeCountGet;
 
         /// <summary>Event EdgeRemoved</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeRemoved;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.Edges</summary>
         global::System.Collections.Generic.IEnumerable<TEdge> global::QuickGraph.IEdgeSet<TVertex, TEdge>.Edges
@@ -5838,7 +5838,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableUndirectedGraph<TVertex, TEdge>, global::QuickGraph.VertexPredicate<TVertex>, int> RemoveVertexIf;
 
         /// <summary>Event VertexAdded</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexAdded;
+        public event global::QuickGraph.VertexAction<TVertex> VertexAdded;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.VertexCount</summary>
         int global::QuickGraph.IVertexSet<TVertex>.VertexCount
@@ -5865,7 +5865,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableUndirectedGraph<TVertex, TEdge>, int> VertexCountGet;
 
         /// <summary>Event VertexRemoved</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexRemoved;
+        public event global::QuickGraph.VertexAction<TVertex> VertexRemoved;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.Vertices</summary>
         global::System.Collections.Generic.IEnumerable<TVertex> global::QuickGraph.IVertexSet<TVertex>.Vertices
@@ -5949,7 +5949,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs.SMutableVertexAndEdgeListGraph<TVertex, TEdge>> Clear;
 
         /// <summary>Event EdgeAdded</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeAdded;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.EdgeCount</summary>
         int global::QuickGraph.IEdgeSet<TVertex, TEdge>.EdgeCount
@@ -5976,7 +5976,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeListGraph<TVertex, TEdge>, int> EdgeCountGet;
 
         /// <summary>Event EdgeRemoved</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeRemoved;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.Edges</summary>
         global::System.Collections.Generic.IEnumerable<TEdge> global::QuickGraph.IEdgeSet<TVertex, TEdge>.Edges
@@ -6422,7 +6422,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs.SMutableVertexAndEdgeListGraph<TVertex, TEdge>> TrimEdgeExcess;
 
         /// <summary>Event VertexAdded</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexAdded;
+        public event global::QuickGraph.VertexAction<TVertex> VertexAdded;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.VertexCount</summary>
         int global::QuickGraph.IVertexSet<TVertex>.VertexCount
@@ -6449,7 +6449,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeListGraph<TVertex, TEdge>, int> VertexCountGet;
 
         /// <summary>Event VertexRemoved</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexRemoved;
+        public event global::QuickGraph.VertexAction<TVertex> VertexRemoved;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.Vertices</summary>
         global::System.Collections.Generic.IEnumerable<TVertex> global::QuickGraph.IVertexSet<TVertex>.Vertices
@@ -6533,7 +6533,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>> Clear;
 
         /// <summary>Event EdgeAdded</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeAdded;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.EdgeCount</summary>
         int global::QuickGraph.IEdgeSet<TVertex, TEdge>.EdgeCount
@@ -6560,7 +6560,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, int> EdgeCountGet;
 
         /// <summary>Event EdgeRemoved</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> EdgeRemoved;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.Edges</summary>
         global::System.Collections.Generic.IEnumerable<TEdge> global::QuickGraph.IEdgeSet<TVertex, TEdge>.Edges
@@ -6860,7 +6860,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, global::QuickGraph.VertexPredicate<TVertex>, int> RemoveVertexIf;
 
         /// <summary>Event VertexAdded</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexAdded;
+        public event global::QuickGraph.VertexAction<TVertex> VertexAdded;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.VertexCount</summary>
         int global::QuickGraph.IVertexSet<TVertex>.VertexCount
@@ -6887,7 +6887,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexAndEdgeSet<TVertex, TEdge>, int> VertexCountGet;
 
         /// <summary>Event VertexRemoved</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexRemoved;
+        public event global::QuickGraph.VertexAction<TVertex> VertexRemoved;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.Vertices</summary>
         global::System.Collections.Generic.IEnumerable<TVertex> global::QuickGraph.IVertexSet<TVertex>.Vertices
@@ -7249,7 +7249,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Action<global::QuickGraph.Stubs.SMutableVertexListGraph<TVertex, TEdge>> TrimEdgeExcess;
 
         /// <summary>Event VertexAdded</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexAdded;
+        public event global::QuickGraph.VertexAction<TVertex> VertexAdded;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.VertexCount</summary>
         int global::QuickGraph.IVertexSet<TVertex>.VertexCount
@@ -7276,7 +7276,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexListGraph<TVertex, TEdge>, int> VertexCountGet;
 
         /// <summary>Event VertexRemoved</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexRemoved;
+        public event global::QuickGraph.VertexAction<TVertex> VertexRemoved;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.Vertices</summary>
         global::System.Collections.Generic.IEnumerable<TVertex> global::QuickGraph.IVertexSet<TVertex>.Vertices
@@ -7431,7 +7431,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexSet<TVertex>, global::QuickGraph.VertexPredicate<TVertex>, int> RemoveVertexIf;
 
         /// <summary>Event VertexAdded</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexAdded;
+        public event global::QuickGraph.VertexAction<TVertex> VertexAdded;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.VertexCount</summary>
         int global::QuickGraph.IVertexSet<TVertex>.VertexCount
@@ -7460,7 +7460,7 @@ namespace QuickGraph.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Stubs.SMutableVertexSet<TVertex>, int> VertexCountGet;
 
         /// <summary>Event VertexRemoved</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> VertexRemoved;
+        public event global::QuickGraph.VertexAction<TVertex> VertexRemoved;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.Vertices</summary>
         global::System.Collections.Generic.IEnumerable<TVertex> global::QuickGraph.IVertexSet<TVertex>.Vertices
@@ -7616,7 +7616,7 @@ namespace QuickGraph.Petri.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Petri.Stubs.SPetriGraph<Token>, global::QuickGraph.Petri.IPetriVertex, int> Degree;
 
         /// <summary>Event EdgeAdded</summary>
-        public event global::QuickGraph.EdgeEventHandler<global::QuickGraph.Petri.IPetriVertex, global::QuickGraph.Petri.IArc<Token>> EdgeAdded;
+        public event global::QuickGraph.EdgeAction<global::QuickGraph.Petri.IPetriVertex, global::QuickGraph.Petri.IArc<Token>> EdgeAdded;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.EdgeCount</summary>
         int global::QuickGraph.IEdgeSet<global::QuickGraph.Petri.IPetriVertex, global::QuickGraph.Petri.IArc<Token>>.EdgeCount
@@ -7645,7 +7645,7 @@ namespace QuickGraph.Petri.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Petri.Stubs.SPetriGraph<Token>, int> EdgeCountGet;
 
         /// <summary>Event EdgeRemoved</summary>
-        public event global::QuickGraph.EdgeEventHandler<global::QuickGraph.Petri.IPetriVertex, global::QuickGraph.Petri.IArc<Token>> EdgeRemoved;
+        public event global::QuickGraph.EdgeAction<global::QuickGraph.Petri.IPetriVertex, global::QuickGraph.Petri.IArc<Token>> EdgeRemoved;
 
         /// <summary>Stub of property QuickGraph.IEdgeSet`2.Edges</summary>
         global::System.Collections.Generic.IEnumerable<global::QuickGraph.Petri.IArc<Token>> global::QuickGraph.IEdgeSet<global::QuickGraph.Petri.IPetriVertex, global::QuickGraph.Petri.IArc<Token>>.Edges
@@ -8515,7 +8515,7 @@ namespace QuickGraph.Petri.Stubs
         public global::Microsoft.Stubs.StubDelegates.OutFunc<global::QuickGraph.Petri.Stubs.SPetriGraph<Token>, global::QuickGraph.Petri.IPetriVertex, global::System.Collections.Generic.IEnumerable<global::QuickGraph.Petri.IArc<Token>>, bool> TryGetOutEdges;
 
         /// <summary>Event VertexAdded</summary>
-        public event global::QuickGraph.VertexEventHandler<global::QuickGraph.Petri.IPetriVertex> VertexAdded;
+        public event global::QuickGraph.VertexAction<global::QuickGraph.Petri.IPetriVertex> VertexAdded;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.VertexCount</summary>
         int global::QuickGraph.IVertexSet<global::QuickGraph.Petri.IPetriVertex>.VertexCount
@@ -8544,7 +8544,7 @@ namespace QuickGraph.Petri.Stubs
         public global::Microsoft.Stubs.StubDelegates.Func<global::QuickGraph.Petri.Stubs.SPetriGraph<Token>, int> VertexCountGet;
 
         /// <summary>Event VertexRemoved</summary>
-        public event global::QuickGraph.VertexEventHandler<global::QuickGraph.Petri.IPetriVertex> VertexRemoved;
+        public event global::QuickGraph.VertexAction<global::QuickGraph.Petri.IPetriVertex> VertexRemoved;
 
         /// <summary>Stub of property QuickGraph.IVertexSet`1.Vertices</summary>
         global::System.Collections.Generic.IEnumerable<global::QuickGraph.Petri.IPetriVertex> global::QuickGraph.IVertexSet<global::QuickGraph.Petri.IPetriVertex>.Vertices
@@ -9342,7 +9342,7 @@ namespace QuickGraph.Algorithms.Stubs
         }
 
         /// <summary>Event TreeEdge</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> TreeEdge;
     }
 }
 namespace QuickGraph.Stubs
@@ -9696,10 +9696,10 @@ namespace QuickGraph.Algorithms.Stubs
         }
 
         /// <summary>Event FinishVertex</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> FinishVertex;
+        public event global::QuickGraph.VertexAction<TVertex> FinishVertex;
 
         /// <summary>Event StartVertex</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> StartVertex;
+        public event global::QuickGraph.VertexAction<TVertex> StartVertex;
 
         /// <summary>Event TreeEdge</summary>
         public event global::QuickGraph.UndirectedEdgeEventHandler<TVertex, TEdge> TreeEdge;
@@ -10611,13 +10611,13 @@ namespace QuickGraph.Algorithms.Stubs
         }
 
         /// <summary>Event FinishVertex</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> FinishVertex;
+        public event global::QuickGraph.VertexAction<TVertex> FinishVertex;
 
         /// <summary>Event StartVertex</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> StartVertex;
+        public event global::QuickGraph.VertexAction<TVertex> StartVertex;
 
         /// <summary>Event TreeEdge</summary>
-        public event global::QuickGraph.EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event global::QuickGraph.EdgeAction<TVertex, TEdge> TreeEdge;
     }
 }
 namespace QuickGraph.Stubs
@@ -10742,10 +10742,10 @@ namespace QuickGraph.Algorithms.Stubs
         }
 
         /// <summary>Event DiscoverVertex</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> DiscoverVertex;
+        public event global::QuickGraph.VertexAction<TVertex> DiscoverVertex;
 
         /// <summary>Event FinishVertex</summary>
-        public event global::QuickGraph.VertexEventHandler<TVertex> FinishVertex;
+        public event global::QuickGraph.VertexAction<TVertex> FinishVertex;
     }
 }
 

@@ -49,12 +49,12 @@ namespace QuickGraph.Algorithms.ShortestPath
             : base(host, visitedGraph, weights, distanceRelaxer)
         { }
 
-        public event VertexEventHandler<TVertex> InitializeVertex;
-        public event VertexEventHandler<TVertex> StartVertex;
-        public event VertexEventHandler<TVertex> DiscoverVertex;
-        public event VertexEventHandler<TVertex> ExamineVertex;
-        public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
-        public event VertexEventHandler<TVertex> FinishVertex;
+        public event VertexAction<TVertex> InitializeVertex;
+        public event VertexAction<TVertex> StartVertex;
+        public event VertexAction<TVertex> DiscoverVertex;
+        public event VertexAction<TVertex> ExamineVertex;
+        public event EdgeAction<TVertex, TEdge> ExamineEdge;
+        public event VertexAction<TVertex> FinishVertex;
 
         public event UndirectedEdgeEventHandler<TVertex, TEdge> EdgeNotRelaxed;
         private void OnEdgeNotRelaxed(TEdge e, bool reversed)

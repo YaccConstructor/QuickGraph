@@ -51,14 +51,14 @@ namespace QuickGraph.Algorithms.ShortestPath
             :base(host, visitedGraph,weights, distanceRelaxer)
         {}
 
-        public event VertexEventHandler<TVertex> InitializeVertex;
-        public event VertexEventHandler<TVertex> DiscoverVertex;
-        public event VertexEventHandler<TVertex> StartVertex;
-        public event VertexEventHandler<TVertex> ExamineVertex;
-        public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
-        public event VertexEventHandler<TVertex> FinishVertex;
+        public event VertexAction<TVertex> InitializeVertex;
+        public event VertexAction<TVertex> DiscoverVertex;
+        public event VertexAction<TVertex> StartVertex;
+        public event VertexAction<TVertex> ExamineVertex;
+        public event EdgeAction<TVertex, TEdge> ExamineEdge;
+        public event VertexAction<TVertex> FinishVertex;
 
-        public event EdgeEventHandler<TVertex,TEdge> EdgeNotRelaxed;
+        public event EdgeAction<TVertex,TEdge> EdgeNotRelaxed;
         private void OnEdgeNotRelaxed(TEdge e)
         {
             var eh = this.EdgeNotRelaxed;
@@ -175,9 +175,9 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 
-                bfs.ExamineEdge += new EdgeEventHandler<TVertex,TEdge>(this.InternalExamineEdge);
-                bfs.TreeEdge += new EdgeEventHandler<TVertex,TEdge>(this.InternalTreeEdge);
-                bfs.GrayTarget += new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
+                bfs.ExamineEdge += new EdgeAction<TVertex,TEdge>(this.InternalExamineEdge);
+                bfs.TreeEdge += new EdgeAction<TVertex,TEdge>(this.InternalTreeEdge);
+                bfs.GrayTarget += new EdgeAction<TVertex, TEdge>(this.InternalGrayTarget);
 
                 bfs.Visit(s);
             }
@@ -192,9 +192,9 @@ namespace QuickGraph.Algorithms.ShortestPath
                     bfs.ExamineVertex -= this.ExamineVertex;
                     bfs.FinishVertex -= this.FinishVertex;
 
-                    bfs.ExamineEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalExamineEdge);
-                    bfs.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(this.InternalTreeEdge);
-                    bfs.GrayTarget -= new EdgeEventHandler<TVertex, TEdge>(this.InternalGrayTarget);
+                    bfs.ExamineEdge -= new EdgeAction<TVertex, TEdge>(this.InternalExamineEdge);
+                    bfs.TreeEdge -= new EdgeAction<TVertex, TEdge>(this.InternalTreeEdge);
+                    bfs.GrayTarget -= new EdgeAction<TVertex, TEdge>(this.InternalGrayTarget);
                 }
             }
         }

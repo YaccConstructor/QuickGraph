@@ -109,7 +109,7 @@ namespace QuickGraph
             return count;
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        public event EdgeAction<TVertex, TEdge> EdgeAdded;
         protected virtual void OnEdgeAdded(TEdge args)
         {
             var eh = this.EdgeAdded;
@@ -128,7 +128,7 @@ namespace QuickGraph
                 return false;
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+        public event EdgeAction<TVertex, TEdge> EdgeRemoved;
         protected virtual void OnEdgeRemoved(TEdge args)
         {
             var eh = this.EdgeRemoved;

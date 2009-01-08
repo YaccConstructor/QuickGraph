@@ -359,7 +359,7 @@ namespace QuickGraph
             return count;
         }
 
-        public event VertexEventHandler<TVertex> VertexAdded;
+        public event VertexAction<TVertex> VertexAdded;
         protected virtual void OnVertexAdded(TVertex args)
         {
             var eh = this.VertexAdded;
@@ -403,7 +403,7 @@ namespace QuickGraph
             return true;
         }
 
-        public event VertexEventHandler<TVertex> VertexRemoved;
+        public event VertexAction<TVertex> VertexRemoved;
         protected virtual void OnVertexRemoved(TVertex args)
         {
             var eh = this.VertexRemoved;
@@ -467,7 +467,7 @@ namespace QuickGraph
             return count;
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        public event EdgeAction<TVertex, TEdge> EdgeAdded;
         protected virtual void OnEdgeAdded(TEdge args)
         {
             var eh = this.EdgeAdded;
@@ -493,7 +493,7 @@ namespace QuickGraph
             }
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
+        public event EdgeAction<TVertex, TEdge> EdgeRemoved;
         protected virtual void OnEdgeRemoved(TEdge args)
         {
             var eh = this.EdgeRemoved;

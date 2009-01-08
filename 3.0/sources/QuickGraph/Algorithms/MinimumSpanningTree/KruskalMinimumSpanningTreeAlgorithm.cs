@@ -34,7 +34,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
             this.edgeWeights = edgeWeights;
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
+        public event EdgeAction<TVertex, TEdge> ExamineEdge;
         private void OnExamineEdge(TEdge edge)
         {
             var eh = this.ExamineEdge;
@@ -42,7 +42,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
                 eh(this, edge);
         }
 
-        public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event EdgeAction<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge edge)
         {
             var eh = this.TreeEdge;

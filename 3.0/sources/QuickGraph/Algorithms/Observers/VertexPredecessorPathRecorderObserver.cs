@@ -46,16 +46,16 @@ namespace QuickGraph.Algorithms.Observers
         {
             Contract.Requires(algorithm != null);
             
-            algorithm.TreeEdge+=new EdgeEventHandler<TVertex,TEdge>(TreeEdge);
-            algorithm.FinishVertex+=new VertexEventHandler<TVertex>(FinishVertex);
+            algorithm.TreeEdge+=new EdgeAction<TVertex,TEdge>(TreeEdge);
+            algorithm.FinishVertex+=new VertexAction<TVertex>(FinishVertex);
         }
 
         public void Detach(IVertexPredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
             Contract.Requires(algorithm != null);
 
-            algorithm.TreeEdge -= new EdgeEventHandler<TVertex, TEdge>(TreeEdge);
-            algorithm.FinishVertex -= new VertexEventHandler<TVertex>(FinishVertex);
+            algorithm.TreeEdge -= new EdgeAction<TVertex, TEdge>(TreeEdge);
+            algorithm.FinishVertex -= new VertexAction<TVertex>(FinishVertex);
         }
 
         void TreeEdge(Object sender, TEdge e)

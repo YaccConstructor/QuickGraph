@@ -206,21 +206,21 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public event VertexEventHandler<TVertex> BalancingSourceAdded;
+        public event VertexAction<TVertex> BalancingSourceAdded;
         private void OnBalancingSourceAdded()
         {
             var eh = this.BalancingSourceAdded;
             if (eh != null)
                 eh(this, source);
         }
-        public event VertexEventHandler<TVertex> BalancingSinkAdded;
+        public event VertexAction<TVertex> BalancingSinkAdded;
         private void OnBalancingSinkAdded()
         {
             var eh = this.BalancingSinkAdded;
             if (eh != null)
                 eh(this, this.sink);
         }
-        public event EdgeEventHandler<TVertex,TEdge> EdgeAdded;
+        public event EdgeAction<TVertex,TEdge> EdgeAdded;
         private void OnEdgeAdded(TEdge edge)
         {
             Contract.Requires(edge != null);
@@ -229,7 +229,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             if (eh != null)
                 eh(this, edge);
         }
-        public event VertexEventHandler<TVertex> SurplusVertexAdded;
+        public event VertexAction<TVertex> SurplusVertexAdded;
         private void OnSurplusVertexAdded(TVertex vertex)
         {
             Contract.Requires(vertex != null);
@@ -237,7 +237,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             if (eh != null)
                 eh(this, vertex);
         }
-        public event VertexEventHandler<TVertex> DeficientVertexAdded;
+        public event VertexAction<TVertex> DeficientVertexAdded;
         private void OnDeficientVertexAdded(TVertex vertex)
         {
             Contract.Requires(vertex != null);
