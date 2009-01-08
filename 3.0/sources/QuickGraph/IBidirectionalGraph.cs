@@ -25,6 +25,7 @@ namespace QuickGraph
         /// <returns>
         /// 	<c>true</c> if <paramref name="v"/> has no in-edges; otherwise, <c>false</c>.
         /// </returns>
+        [Pure]
         bool IsInEdgesEmpty(TVertex v);
 
         /// <summary>
@@ -32,6 +33,7 @@ namespace QuickGraph
         /// </summary>
         /// <param name="v">The vertex.</param>
         /// <returns>The number of in-edges pointing towards <paramref name="v"/></returns>
+        [Pure]
         int InDegree(TVertex v);
 
         /// <summary>
@@ -39,6 +41,7 @@ namespace QuickGraph
         /// </summary>
         /// <param name="v">The vertex</param>
         /// <returns>The collection of in-edges of <paramref name="v"/></returns>
+        [Pure]
         IEnumerable<TEdge> InEdges(TVertex v);
 
         /// <summary>
@@ -47,6 +50,7 @@ namespace QuickGraph
         /// <param name="v"></param>
         /// <param name="edges"></param>
         /// <returns></returns>
+        [Pure]
         bool TryGetInEdges(TVertex v, out IEnumerable<TEdge> edges);
 
         /// <summary>
@@ -55,6 +59,7 @@ namespace QuickGraph
         /// <param name="v">The vertex.</param>
         /// <param name="index">The index.</param>
         /// <returns></returns>
+        [Pure]
         TEdge InEdge(TVertex v, int index);
 
         /// <summary>
@@ -63,6 +68,7 @@ namespace QuickGraph
         /// </summary>
         /// <param name="v">The vertex</param>
         /// <returns>The sum of <see cref="OutDegree"/> and <see cref="InDegree"/> of <paramref name="v"/></returns>
+        [Pure]
         int Degree(TVertex v);
     }
 }

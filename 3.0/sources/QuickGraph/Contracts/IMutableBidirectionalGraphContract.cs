@@ -121,26 +121,31 @@ namespace QuickGraph.Contracts
 
         #region IImplicitGraph<TVertex,TEdge> Members
 
+        [Pure] // InterfacePureBug
         bool IImplicitGraph<TVertex, TEdge>.IsOutEdgesEmpty(TVertex v)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         int IImplicitGraph<TVertex, TEdge>.OutDegree(TVertex v)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         IEnumerable<TEdge> IImplicitGraph<TVertex, TEdge>.OutEdges(TVertex v)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         bool IImplicitGraph<TVertex, TEdge>.TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         TEdge IImplicitGraph<TVertex, TEdge>.OutEdge(TVertex v, int index)
         {
             throw new NotImplementedException();
@@ -272,31 +277,37 @@ namespace QuickGraph.Contracts
 
         #region IBidirectionalGraph<TVertex,TEdge> Members
 
+        [Pure] // InterfacePureBug
         bool IBidirectionalGraph<TVertex, TEdge>.IsInEdgesEmpty(TVertex v)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         int IBidirectionalGraph<TVertex, TEdge>.InDegree(TVertex v)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         IEnumerable<TEdge> IBidirectionalGraph<TVertex, TEdge>.InEdges(TVertex v)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         bool IBidirectionalGraph<TVertex, TEdge>.TryGetInEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         TEdge IBidirectionalGraph<TVertex, TEdge>.InEdge(TVertex v, int index)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         int IBidirectionalGraph<TVertex, TEdge>.Degree(TVertex v)
         {
             throw new NotImplementedException();

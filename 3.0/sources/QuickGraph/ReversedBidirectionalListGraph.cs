@@ -98,23 +98,27 @@ namespace QuickGraph
             }
         }
 
+        [Pure]
         public bool IsOutEdgesEmpty(TVertex v)
         {
             return this.OriginalGraph.IsInEdgesEmpty(v);
         }
 
+        [Pure]
         public int OutDegree(TVertex v)
         {
             return this.OriginalGraph.InDegree(v);
         }
 
-        public IEnumerable<ReversedEdge<TVertex,TEdge>> InEdges(TVertex v)
+        [Pure]
+        public IEnumerable<ReversedEdge<TVertex, TEdge>> InEdges(TVertex v)
         {
             foreach(TEdge edge in this.OriginalGraph.OutEdges(v))
                 yield return new ReversedEdge<TVertex,TEdge>(edge);
         }
 
-        public ReversedEdge<TVertex,TEdge> InEdge(TVertex v, int index)
+        [Pure]
+        public ReversedEdge<TVertex, TEdge> InEdge(TVertex v, int index)
         {
             TEdge edge = this.OriginalGraph.OutEdge(v, index);
             if (edge == null)
@@ -122,17 +126,20 @@ namespace QuickGraph
             return new ReversedEdge<TVertex, TEdge>(edge);
         }
 
+        [Pure]
         public bool IsInEdgesEmpty(TVertex v)
         {
             return this.OriginalGraph.IsOutEdgesEmpty(v);
         }
 
+        [Pure]
         public int InDegree(TVertex v)
         {
             return this.OriginalGraph.OutDegree(v);
         }
 
-        public IEnumerable<ReversedEdge<TVertex,TEdge>>  OutEdges(TVertex v)
+        [Pure]
+        public IEnumerable<ReversedEdge<TVertex, TEdge>> OutEdges(TVertex v)
         {
             foreach(TEdge edge in this.OriginalGraph.InEdges(v))
                 yield return new ReversedEdge<TVertex,TEdge>(edge);
@@ -172,7 +179,8 @@ namespace QuickGraph
             }
         }
 
-        public ReversedEdge<TVertex,TEdge> OutEdge(TVertex v, int index)
+        [Pure]
+        public ReversedEdge<TVertex, TEdge> OutEdge(TVertex v, int index)
         {
             TEdge edge = this.OriginalGraph.InEdge(v, index);
             if (edge == null)
@@ -195,6 +203,7 @@ namespace QuickGraph
             return this.OriginalGraph.ContainsEdge(edge.OriginalEdge);
         }
 
+        [Pure]
         public int Degree(TVertex v)
         {
             return this.OriginalGraph.Degree(v);

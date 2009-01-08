@@ -19,11 +19,13 @@ namespace QuickGraph.Predicates
             :base(baseGraph,vertexPredicate,edgePredicate)
         { }
 
+        [Pure]
         public bool IsOutEdgesEmpty(TVertex v)
         {
             return this.OutDegree(v) == 0;
         }
 
+        [Pure]
         public int OutDegree(TVertex v)
         {
             int count =0;
@@ -33,6 +35,7 @@ namespace QuickGraph.Predicates
             return count;
         }
 
+        [Pure]
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
             Contract.Requires(v != null);
@@ -42,6 +45,7 @@ namespace QuickGraph.Predicates
                     yield return edge;
         }
 
+        [Pure]
         public bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
             Contract.Requires(v != null);
@@ -56,6 +60,7 @@ namespace QuickGraph.Predicates
             return true;
         }
 
+        [Pure]
         public TEdge OutEdge(TVertex v, int index)
         {
             throw new NotSupportedException();

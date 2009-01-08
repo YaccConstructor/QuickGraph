@@ -28,6 +28,7 @@ namespace QuickGraph
 
         #region IUndirectedGraph<Vertex,Edge> Members
 
+        [Pure]
         public IEnumerable<TEdge> AdjacentEdges(TVertex v)
         {
             foreach (var e in this.VisitedGraph.OutEdges(v))

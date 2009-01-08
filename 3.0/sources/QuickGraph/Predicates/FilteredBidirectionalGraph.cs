@@ -19,6 +19,7 @@ namespace QuickGraph.Predicates
             :base(baseGraph,vertexPredicate,edgePredicate)
         { }
 
+        [Pure]
         public bool IsInEdgesEmpty(TVertex v)
         {
             Contract.Requires(v != null);
@@ -26,6 +27,7 @@ namespace QuickGraph.Predicates
             return this.InDegree(v) == 0;
         }
 
+        [Pure]
         public int InDegree(TVertex v)
         {
             Contract.Requires(v != null);
@@ -37,6 +39,7 @@ namespace QuickGraph.Predicates
             return count;
         }
 
+        [Pure]
         public IEnumerable<TEdge> InEdges(TVertex v)
         {
             foreach (var edge in this.InEdges(v))
@@ -61,6 +64,7 @@ namespace QuickGraph.Predicates
             }
         }
 
+        [Pure]
         public int Degree(TVertex v)
         {
             return this.OutDegree(v) + this.InDegree(v);

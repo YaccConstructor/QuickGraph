@@ -20,6 +20,7 @@ namespace QuickGraph.Predicates
             : base(baseGraph, vertexPredicate, edgePredicate)
         { }
 
+        [Pure]
         public IEnumerable<TEdge> AdjacentEdges(TVertex v)
         {
             if (this.VertexPredicate(v))

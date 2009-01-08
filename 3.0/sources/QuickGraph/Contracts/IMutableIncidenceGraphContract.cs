@@ -83,26 +83,31 @@ namespace QuickGraph.Contracts
 
         #region IImplicitGraph<TVertex,TEdge> Members
 
+        [Pure] // InterfacePureBug
         bool IImplicitGraph<TVertex, TEdge>.IsOutEdgesEmpty(TVertex v)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         int IImplicitGraph<TVertex, TEdge>.OutDegree(TVertex v)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         IEnumerable<TEdge> IImplicitGraph<TVertex, TEdge>.OutEdges(TVertex v)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         bool IImplicitGraph<TVertex, TEdge>.TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
             throw new NotImplementedException();
         }
 
+        [Pure] // InterfacePureBug
         TEdge IImplicitGraph<TVertex, TEdge>.OutEdge(TVertex v, int index)
         {
             throw new NotImplementedException();

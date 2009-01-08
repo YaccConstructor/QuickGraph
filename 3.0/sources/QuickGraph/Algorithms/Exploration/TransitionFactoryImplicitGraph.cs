@@ -39,11 +39,13 @@ namespace QuickGraph.Algorithms.Exploration
             set { this.successorEdgePredicate = value; }
         }
 
+        [Pure]
         public bool IsOutEdgesEmpty(TVertex v)
         {
             return this.OutDegree(v) == 0;
         }
 
+        [Pure]
         public int OutDegree(TVertex v)
         {
             int i = 0;
@@ -52,6 +54,7 @@ namespace QuickGraph.Algorithms.Exploration
             return i;
         }
 
+        [Pure]
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
             foreach (ITransitionFactory<TVertex, TEdge> transitionFactory
@@ -69,6 +72,7 @@ namespace QuickGraph.Algorithms.Exploration
             }
         }
 
+        [Pure]
         public bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
             Contract.Requires(v != null);
@@ -77,6 +81,7 @@ namespace QuickGraph.Algorithms.Exploration
             return true;
         }
 
+        [Pure]
         public TEdge OutEdge(TVertex v, int index)
         {
             int i = 0;

@@ -134,6 +134,7 @@ namespace QuickGraph
             return false;
         }
 
+        [Pure]
         public TEdge InEdge(int v, int index)
         {
             Contract.Requires(0 <= v && v < this.VertexCount);
@@ -154,6 +155,7 @@ namespace QuickGraph
             throw new ArgumentOutOfRangeException("index");
         }
 
+        [Pure]
         public int Degree(int v)
         {
             Contract.Requires(0 <= v && v < this.VertexCount);
