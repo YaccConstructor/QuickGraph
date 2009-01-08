@@ -14,7 +14,8 @@ namespace QuickGraph.Serialization
         {
             var list = new List<string>();
             list.AddRange(Directory.GetFiles(".", "*.graphml"));
-            list.AddRange(Directory.GetFiles("graphml", "*.graphml"));
+            if (Directory.Exists("graphml"))
+                list.AddRange(Directory.GetFiles("graphml", "*.graphml"));
             return list;
         }
 

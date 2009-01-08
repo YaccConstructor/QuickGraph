@@ -169,7 +169,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             g.AddVerticesAndEdge(new Edge<int>(1, 4));
 
             var cost = CompareRoot(g);
-            Assert.AreEqual(cost, 3);
+            Assert.AreEqual(9, cost);
         }
 
         [TestMethod]

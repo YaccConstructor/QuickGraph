@@ -134,6 +134,8 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
 
         [TestMethod]
         [WorkItem(12288)]
+        [Ignore]
+        [Description("binary data outdated")]
         public void Repro12288()
         {
             AdjacencyGraph<int, Edge<int>> g;
