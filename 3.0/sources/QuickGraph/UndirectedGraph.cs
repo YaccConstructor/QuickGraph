@@ -48,7 +48,7 @@ namespace QuickGraph
 
         #region IMutableUndirected<Vertex,Edge> Members
         public event VertexEventHandler<TVertex> VertexAdded;
-        protected virtual void OnVertexAdded(VertexEventArgs<TVertex> args)
+        protected virtual void OnVertexAdded(TVertex args)
         {
             Contract.Requires(args != null);
 
@@ -75,7 +75,7 @@ namespace QuickGraph
                 ? new EdgeList<TVertex, TEdge>() 
                 : new EdgeList<TVertex, TEdge>(this.EdgeCapacity);
             this.adjacentEdges.Add(v, edges);
-            this.OnVertexAdded(new VertexEventArgs<TVertex>(v));
+            this.OnVertexAdded(v);
             return true;
         }
 
@@ -91,7 +91,7 @@ namespace QuickGraph
         }
 
         public event VertexEventHandler<TVertex> VertexRemoved;
-        protected virtual void OnVertexRemoved(VertexEventArgs<TVertex> args)
+        protected virtual void OnVertexRemoved(TVertex args)
         {
             Contract.Requires(args != null);
 
@@ -107,7 +107,7 @@ namespace QuickGraph
             bool result = this.adjacentEdges.Remove(v);
 
             if (result)
-                this.OnVertexRemoved(new VertexEventArgs<TVertex>(v));
+                this.OnVertexRemoved(v);
 
             return result;
         }

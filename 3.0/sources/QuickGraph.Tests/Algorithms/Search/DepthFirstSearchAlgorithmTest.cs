@@ -48,17 +48,17 @@ namespace QuickGraph.Algorithms.Search
 
             dfs.StartVertex += (sender, args) =>
             {
-                Assert.AreEqual(dfs.VertexColors[args.Vertex], GraphColor.White);
-                Assert.IsFalse(parents.ContainsKey(args.Vertex));
-                parents[args.Vertex] = args.Vertex;
+                Assert.AreEqual(dfs.VertexColors[args], GraphColor.White);
+                Assert.IsFalse(parents.ContainsKey(args));
+                parents[args] = args;
             };
 
             dfs.DiscoverVertex += (sender, args) =>
             {
-                Assert.AreEqual(dfs.VertexColors[args.Vertex], GraphColor.Gray);
-                Assert.AreEqual(dfs.VertexColors[parents[args.Vertex]], GraphColor.Gray);
+                Assert.AreEqual(dfs.VertexColors[args], GraphColor.Gray);
+                Assert.AreEqual(dfs.VertexColors[parents[args]], GraphColor.Gray);
 
-                discoverTimes[args.Vertex] = time++;
+                discoverTimes[args] = time++;
             };
 
             dfs.ExamineEdge += (sender, args) =>
@@ -84,8 +84,8 @@ namespace QuickGraph.Algorithms.Search
 
             dfs.FinishVertex += (sender, args) =>
             {
-                Assert.AreEqual(dfs.VertexColors[args.Vertex], GraphColor.Black);
-                finishTimes[args.Vertex] = time++;
+                Assert.AreEqual(dfs.VertexColors[args], GraphColor.Black);
+                finishTimes[args] = time++;
             };
 
             dfs.Compute();

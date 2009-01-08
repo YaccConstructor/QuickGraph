@@ -53,7 +53,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         private void OnInitializeVertex(TVertex v)
         {
             if (InitializeVertex != null)
-                InitializeVertex(this, new VertexEventArgs<TVertex>(v));
+                InitializeVertex(this, v);
         }
 
         public event VertexEventHandler<TVertex> StartVertex;
@@ -61,21 +61,21 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             var eh = this.StartVertex;
             if (eh!=null)
-                eh(this, new VertexEventArgs<TVertex>(v));
+                eh(this, v);
         }
 
         public event VertexEventHandler<TVertex> DiscoverVertex;
         private void OnDiscoverVertex(TVertex v)
         {
             if (DiscoverVertex != null)
-                DiscoverVertex(this, new VertexEventArgs<TVertex>(v));
+                DiscoverVertex(this, v);
         }
 
         public event VertexEventHandler<TVertex> ExamineVertex;
         private void OnExamineVertex(TVertex v)
         {
             if (ExamineVertex != null)
-                ExamineVertex(this, new VertexEventArgs<TVertex>(v));
+                ExamineVertex(this, v);
         }
 
         public event EdgeEventHandler<TVertex,TEdge> ExamineEdge;
@@ -96,7 +96,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         private void OnFinishVertex(TVertex v)
         {
             if (FinishVertex != null)
-                FinishVertex(this, new VertexEventArgs<TVertex>(v));
+                FinishVertex(this, v);
         }
 
         protected override void Initialize()

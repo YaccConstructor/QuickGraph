@@ -63,14 +63,14 @@ namespace QuickGraph.Algorithms.Observers
             VertexPredecessors[e.Edge.Target] = e.Edge;
         }
 
-        void FinishVertex(Object sender, VertexEventArgs<TVertex> e)
+        void FinishVertex(object sender, TVertex v)
         {
             foreach (var edge in this.VertexPredecessors.Values)
             {
-                if (edge.Source.Equals(e.Vertex))
+                if (edge.Source.Equals(v))
                     return;
             }
-            this.endPathVertices.Add(e.Vertex);
+            this.endPathVertices.Add(v);
         }
 
         public IEnumerable<IEnumerable<TEdge>> AllPaths()

@@ -81,7 +81,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnStartVertex(TVertex v)
         {
             if (StartVertex != null)
-                StartVertex(this, new VertexEventArgs<TVertex>(v));
+                StartVertex(this, v);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnDiscoverVertex(TVertex v)
         {
             if (DiscoverVertex != null)
-                DiscoverVertex(this, new VertexEventArgs<TVertex>(v));
+                DiscoverVertex(this, v);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnFinishVertex(TVertex v)
         {
             if (FinishVertex != null)
-                FinishVertex(this, new VertexEventArgs<TVertex>(v));
+                FinishVertex(this, v);
         }
 
         protected override void InternalCompute()

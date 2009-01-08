@@ -50,14 +50,14 @@ namespace QuickGraph.Algorithms
             get { return this.componentCount; }
         }
 
-        private void StartVertex(Object sender, VertexEventArgs<TVertex> args)
+        private void StartVertex(Object sender, TVertex v)
         {
             ++this.componentCount;
         }
 
-        private void DiscoverVertex(Object sender, VertexEventArgs<TVertex> args)
+        private void DiscoverVertex(Object sender, TVertex v)
         {
-            Components[args.Vertex] = this.componentCount;
+            Components[v] = this.componentCount;
         }
 
         protected override void InternalCompute()

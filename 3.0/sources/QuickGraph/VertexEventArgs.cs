@@ -4,10 +4,10 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph
 {
     [Serializable]
-    public class VertexEventArgs<TVertex> : EventArgs
+    public abstract class VertexEventArgs<TVertex> : EventArgs
     {
         private readonly TVertex vertex;
-        public VertexEventArgs(TVertex vertex)
+        protected VertexEventArgs(TVertex vertex)
         {
             Contract.Requires(vertex != null);
             this.vertex = vertex;
@@ -19,7 +19,5 @@ namespace QuickGraph
         }
     }
 
-    public delegate void VertexEventHandler<Vertex>(
-        object sender,
-        VertexEventArgs<Vertex> e);
+    public delegate void VertexEventHandler<TVertex>(object sender, TVertex e);
 }

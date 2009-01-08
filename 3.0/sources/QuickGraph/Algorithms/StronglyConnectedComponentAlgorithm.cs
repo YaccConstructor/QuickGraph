@@ -79,9 +79,8 @@ namespace QuickGraph.Algorithms
 			}
 		}
 
-		private void DiscoverVertex(Object sender, VertexEventArgs<TVertex> args)
+		private void DiscoverVertex(Object sender, TVertex v)
 		{
-			TVertex v = args.Vertex;
 			this.Roots[v]=v;
 			this.Components[v]=int.MaxValue;
 			this.DiscoverTimes[v]=dfsTime++;
@@ -93,9 +92,8 @@ namespace QuickGraph.Algorithms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		private void FinishVertex(Object sender, VertexEventArgs<TVertex> args)
+		private void FinishVertex(Object sender, TVertex v)
 		{
-			var v = args.Vertex;
             var roots = this.Roots;
 
 			foreach(var e in this.VisitedGraph.OutEdges(v))

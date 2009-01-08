@@ -86,7 +86,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnStartVertex(TVertex v)
         {
             if (this.StartVertex != null)
-                StartVertex(this, new VertexEventArgs<TVertex>(v));
+                StartVertex(this, v);
         }
 
         /// <summary>

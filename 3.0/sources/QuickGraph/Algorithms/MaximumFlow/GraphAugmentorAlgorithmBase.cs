@@ -70,7 +70,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             Contract.Requires(v != null);
             var eh = this.SuperSourceAdded;
             if (eh != null)
-                eh(this, new VertexEventArgs<TVertex>(v));
+                eh(this, v);
         }
 
         public event VertexEventHandler<TVertex> SuperSinkAdded;
@@ -79,7 +79,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             Contract.Requires(v != null);
             var eh = this.SuperSinkAdded;
             if (eh != null)
-                eh(this, new VertexEventArgs<TVertex>(v));
+                eh(this, v);
         }
 
         public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;

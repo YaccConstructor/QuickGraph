@@ -95,13 +95,13 @@ namespace QuickGraph.Algorithms
             this.componentEquivalences.Clear();
         }
 
-        void dfs_StartVertex(object sender, VertexEventArgs<TVertex> e)
+        void dfs_StartVertex(object sender, TVertex v)
         {
             // we are looking on a new tree
             this.currentComponent = this.componentEquivalences.Count;
             this.componentEquivalences.Add(this.currentComponent, this.currentComponent);
             this.componentCount++;
-            this.components.Add(e.Vertex, this.currentComponent);
+            this.components.Add(v, this.currentComponent);
         }
 
         void dfs_TreeEdge(object sender, EdgeEventArgs<TVertex, TEdge> e)

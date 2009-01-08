@@ -50,9 +50,9 @@ namespace QuickGraph.Algorithms.Observers
             algorithm.DiscoverVertex -= new VertexEventHandler<TVertex>(algorithm_DiscoverVertex);
         }
 
-        void algorithm_DiscoverVertex(object sender, VertexEventArgs<TVertex> e)
+        void algorithm_DiscoverVertex(object sender, TVertex v)
         {
-            this.vertices.Add(e.Vertex);
+            this.vertices.Add(v);
         }
     }
 }

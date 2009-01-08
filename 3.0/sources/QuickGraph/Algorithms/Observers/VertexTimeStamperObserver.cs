@@ -62,14 +62,14 @@ namespace QuickGraph.Algorithms.Observers
             algorithm.FinishVertex -= new VertexEventHandler<TVertex>(FinishVertex);
         }
 
-        void DiscoverVertex(Object sender, VertexEventArgs<TVertex> e)
+        void DiscoverVertex(object sender, TVertex v)
         {
-            this.discoverTimes[e.Vertex] = this.currentTime++;
+            this.discoverTimes[v] = this.currentTime++;
         }
 
-        void FinishVertex(Object sender, VertexEventArgs<TVertex> e)
+        void FinishVertex(object sender, TVertex v)
         {
-            this.finishTimes[e.Vertex] = this.currentTime++;
+            this.finishTimes[v] = this.currentTime++;
         }
     }
 }

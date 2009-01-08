@@ -346,7 +346,7 @@ namespace QuickGraph
                 this.vertexOutEdges.Add(v, new EdgeList<TVertex, TEdge>());
                 this.vertexInEdges.Add(v, new EdgeList<TVertex, TEdge>());
             }
-            this.OnVertexAdded(new VertexEventArgs<TVertex>(v));
+            this.OnVertexAdded(v);
             return true;
         }
 
@@ -360,7 +360,7 @@ namespace QuickGraph
         }
 
         public event VertexEventHandler<TVertex> VertexAdded;
-        protected virtual void OnVertexAdded(VertexEventArgs<TVertex> args)
+        protected virtual void OnVertexAdded(TVertex args)
         {
             var eh = this.VertexAdded;
             if (eh != null)
@@ -398,13 +398,13 @@ namespace QuickGraph
             this.vertexOutEdges.Remove(v);
             this.vertexInEdges.Remove(v);
             this.edgeCount -= edgesToRemove.Count;
-            this.OnVertexRemoved(new VertexEventArgs<TVertex>(v));
+            this.OnVertexRemoved(v);
 
             return true;
         }
 
         public event VertexEventHandler<TVertex> VertexRemoved;
-        protected virtual void OnVertexRemoved(VertexEventArgs<TVertex> args)
+        protected virtual void OnVertexRemoved(TVertex args)
         {
             var eh = this.VertexRemoved;
             if (eh != null)

@@ -78,21 +78,21 @@ namespace QuickGraph.Algorithms.Search
         private void OnInitializeVertex(TVertex v)
         {
             if (InitializeVertex != null)
-                InitializeVertex(this, new VertexEventArgs<TVertex>(v));
+                InitializeVertex(this, v);
         }
 
         public event VertexEventHandler<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
             if (StartVertex != null)
-                StartVertex(this, new VertexEventArgs<TVertex>(v));
+                StartVertex(this, v);
         }
 
         public event VertexEventHandler<TVertex> DiscoverVertex;
         private void OnDiscoverVertex(TVertex v)
         {
             if (DiscoverVertex != null)
-                DiscoverVertex(this, new VertexEventArgs<TVertex>(v));
+                DiscoverVertex(this, v);
         }
 
         public event EdgeEventHandler<TVertex, TEdge> ExamineEdge;
@@ -127,7 +127,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnFinishVertex(TVertex v)
         {
             if (FinishVertex != null)
-                FinishVertex(this, new VertexEventArgs<TVertex>(v));
+                FinishVertex(this, v);
         }
 
         protected override void InternalCompute()

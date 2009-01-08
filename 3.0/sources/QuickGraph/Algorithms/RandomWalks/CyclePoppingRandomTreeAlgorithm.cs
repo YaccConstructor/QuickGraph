@@ -97,7 +97,7 @@ namespace QuickGraph.Algorithms.RandomWalks
         {
             var eh = this.InitializeVertex;
             if (eh != null)
-                eh(this, new VertexEventArgs<TVertex>(v));
+                eh(this, v);
         }
 
         public event VertexEventHandler<TVertex> FinishVertex;
@@ -105,7 +105,7 @@ namespace QuickGraph.Algorithms.RandomWalks
         {
             var eh = this.FinishVertex;
             if (eh != null)
-                eh(this, new VertexEventArgs<TVertex>(v));
+                eh(this, v);
         }
 
         public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
@@ -121,7 +121,7 @@ namespace QuickGraph.Algorithms.RandomWalks
         {
             var eh = this.ClearTreeVertex;
             if (eh != null)
-                eh(this, new VertexEventArgs<TVertex>(v));
+                eh(this, v);
         }
 
         protected override void Initialize()

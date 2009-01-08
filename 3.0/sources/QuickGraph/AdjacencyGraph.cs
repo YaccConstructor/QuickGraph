@@ -294,7 +294,7 @@ namespace QuickGraph
                 this.vertexEdges.Add(v, new EdgeList<TVertex,TEdge>(this.EdgeCapacity));
             else
                 this.vertexEdges.Add(v, new EdgeList<TVertex, TEdge>());
-            this.OnVertexAdded(new VertexEventArgs<TVertex>(v));
+            this.OnVertexAdded(v);
             return true;
         }
 
@@ -308,7 +308,7 @@ namespace QuickGraph
         }
 
         public event VertexEventHandler<TVertex> VertexAdded;
-        protected virtual void OnVertexAdded(VertexEventArgs<TVertex> args)
+        protected virtual void OnVertexAdded(TVertex args)
         {
             Contract.Requires(args != null);
 
@@ -360,13 +360,13 @@ namespace QuickGraph
 
             Contract.Assert(this.edgeCount >= 0);
             this.vertexEdges.Remove(v);
-            this.OnVertexRemoved(new VertexEventArgs<TVertex>(v));
+            this.OnVertexRemoved(v);
 
             return true;
         }
 
         public event VertexEventHandler<TVertex> VertexRemoved;
-        protected virtual void OnVertexRemoved(VertexEventArgs<TVertex> args)
+        protected virtual void OnVertexRemoved(TVertex args)
         {
             Contract.Requires(args != null);
 

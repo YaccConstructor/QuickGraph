@@ -58,7 +58,7 @@ namespace QuickGraph.Algorithms
         private void OnAddVertex(TVertex v)
         {
             if (this.AddVertex != null)
-                this.AddVertex(this, new VertexEventArgs<TVertex>(v));
+                this.AddVertex(this, v);
         }
 
         public void Compute(IList<TVertex> vertices)

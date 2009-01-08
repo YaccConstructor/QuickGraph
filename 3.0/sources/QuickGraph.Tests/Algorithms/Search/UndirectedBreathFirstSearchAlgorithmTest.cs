@@ -30,12 +30,12 @@ namespace QuickGraph.Algorithms.Search
 
             algo.InitializeVertex += (sender, args) =>
             {
-                Assert.AreEqual(algo.VertexColors[args.Vertex], GraphColor.White);
+                Assert.AreEqual(algo.VertexColors[args], GraphColor.White);
             };
 
             algo.DiscoverVertex += (sender, args) =>
             {
-                var u = args.Vertex;
+                var u = args;
                 Assert.AreEqual(algo.VertexColors[u], GraphColor.Gray);
                 if (u.Equals(sourceVertex))
                     currentVertex = sourceVertex;
@@ -55,7 +55,7 @@ namespace QuickGraph.Algorithms.Search
 
             algo.ExamineVertex += (sender, args) =>
             {
-                var u = args.Vertex;
+                var u = args;
                 currentVertex = u;
                 // Ensure that the distances monotonically increase.
                 Assert.IsTrue(
@@ -125,7 +125,7 @@ namespace QuickGraph.Algorithms.Search
 
             algo.FinishVertex += (sender, args) =>
             {
-                Assert.AreEqual(algo.VertexColors[args.Vertex], GraphColor.Black);
+                Assert.AreEqual(algo.VertexColors[args], GraphColor.Black);
             };
 
 

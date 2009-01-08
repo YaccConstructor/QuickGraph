@@ -82,7 +82,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnStartVertex(TVertex v)
         {
             if (StartVertex != null)
-                StartVertex(this, new VertexEventArgs<TVertex>(v));
+                StartVertex(this, v);
         }
 
         public event EdgeEventHandler<TVertex, TEdge> StartEdge;

@@ -86,7 +86,7 @@ namespace QuickGraph.Algorithms.Exploration
 
             var eh = this.DiscoverVertex;
             if (eh != null)
-                eh(this, new VertexEventArgs<TVertex>(v));
+                eh(this, v);
         }
         public event EdgeEventHandler<TVertex,TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
