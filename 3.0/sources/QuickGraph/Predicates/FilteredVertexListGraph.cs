@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 namespace QuickGraph.Predicates
 {
     [Serializable]
@@ -48,6 +49,7 @@ namespace QuickGraph.Predicates
             }
         }
 
+        [Pure] // InterfacePureBug
         public bool ContainsVertex(TVertex vertex)
         {
             if (!this.VertexPredicate(vertex))

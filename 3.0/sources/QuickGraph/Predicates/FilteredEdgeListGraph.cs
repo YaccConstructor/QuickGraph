@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Predicates
 {
@@ -56,6 +57,7 @@ namespace QuickGraph.Predicates
             }
         }
 
+        [Pure]
         public bool ContainsEdge(TEdge edge)
         {
             if (

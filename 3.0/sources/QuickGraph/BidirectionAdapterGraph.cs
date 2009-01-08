@@ -146,6 +146,7 @@ namespace QuickGraph
             get { return this.baseGraph.Vertices; }
         }
 
+        [Pure]
         public bool ContainsVertex(TVertex vertex)
         {
             return this.baseGraph.ContainsVertex(vertex);
@@ -166,6 +167,7 @@ namespace QuickGraph
             get { return this.baseGraph.Edges; }
         }
 
+        [Pure]
         public bool ContainsEdge(TEdge edge)
         {
             return this.baseGraph.ContainsEdge(edge);

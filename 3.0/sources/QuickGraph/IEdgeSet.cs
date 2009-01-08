@@ -41,6 +41,7 @@ namespace QuickGraph
         /// <returns>
         /// 	<c>true</c> if the specified edge contains edge; otherwise, <c>false</c>.
         /// </returns>
+        [Pure]
         bool ContainsEdge(TEdge edge);
     }
 

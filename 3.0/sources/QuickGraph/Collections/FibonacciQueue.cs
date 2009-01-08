@@ -74,7 +74,7 @@ namespace QuickGraph.Collections
         public void Enqueue(TVertex value)
         {
             Contract.Requires(value != null);
-            Contract.Requires(this.mDistances.ContainsKey(value));
+            Contract.Requires(this.Contains(value));
 
             this.mDistances[value] = heap.Enqueue(this.distances(value), value);
         }

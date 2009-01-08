@@ -99,6 +99,7 @@ namespace QuickGraph.Predicates
             }
         }
 
+        [Pure]
         public bool ContainsEdge(TEdge edge)
         {
             if (!TestEdge(edge))
@@ -106,6 +107,7 @@ namespace QuickGraph.Predicates
             return this.BaseGraph.ContainsEdge(edge);
         }
 
+        [Pure]
         public TEdge InEdge(TVertex v, int index)
         {
             throw new NotSupportedException();

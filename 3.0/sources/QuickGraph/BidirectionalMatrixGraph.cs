@@ -287,6 +287,7 @@ namespace QuickGraph
             }
         }
 
+        [Pure]
         public bool ContainsVertex(int vertex)
         {
             Contract.Requires(0 <= vertex && vertex < this.VertexCount);
@@ -297,11 +298,9 @@ namespace QuickGraph
         #endregion
 
         #region IEdgeListGraph<int,Edge> Members
-
+        [Pure]
         public bool ContainsEdge(TEdge edge)
         {
-            Contract.Requires(edge != null);
-
             TEdge e = this.edges[edge.Source, edge.Target];
             return e!=null && 
                 e.Equals(edge);

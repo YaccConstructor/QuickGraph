@@ -155,6 +155,7 @@ namespace QuickGraph.Contracts
             get { throw new NotImplementedException(); }
         }
 
+        [Pure] // InterfacePureBug
         bool IVertexSet<TVertex>.ContainsVertex(TVertex vertex)
         {
             throw new NotImplementedException();

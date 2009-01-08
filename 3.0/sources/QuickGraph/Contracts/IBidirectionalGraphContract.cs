@@ -168,11 +168,11 @@ namespace QuickGraph.Contracts
             get { throw new NotImplementedException(); }
         }
 
+        [Pure] // InterfacePureBug
         bool IVertexSet<TVertex>.ContainsVertex(TVertex vertex)
         {
             throw new NotImplementedException();
         }
-
         #endregion
 
         #region IEdgeSet<TVertex,TEdge> Members
@@ -192,6 +192,7 @@ namespace QuickGraph.Contracts
             get { throw new NotImplementedException(); }
         }
 
+        [Pure] // InterfacePureBug
         bool IEdgeSet<TVertex, TEdge>.ContainsEdge(TEdge edge)
         {
             throw new NotImplementedException();

@@ -13,11 +13,19 @@ namespace QuickGraph
         , IGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
+        [Pure]
         IEnumerable<TEdge> AdjacentEdges(TVertex v);
+
+        [Pure]
         int AdjacentDegree(TVertex v);
+
+        [Pure]
         bool IsAdjacentEdgesEmpty(TVertex v);
+
+        [Pure]
         TEdge AdjacentEdge(TVertex v, int index);
 
+        [Pure]
         bool ContainsEdge(TVertex source, TVertex target);
     }
 }

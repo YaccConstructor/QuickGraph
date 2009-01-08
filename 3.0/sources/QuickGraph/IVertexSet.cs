@@ -42,6 +42,7 @@ namespace QuickGraph
         /// <returns>
         /// 	<c>true</c> if the specified vertex contains vertex; otherwise, <c>false</c>.
         /// </returns>
+        [Pure]
         bool ContainsVertex(TVertex vertex);
     }
 }

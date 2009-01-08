@@ -184,6 +184,7 @@ namespace QuickGraph
 
         #region IUndirectedGraph<Vertex,Edge> Members
 
+        [Pure]
         public bool ContainsEdge(TVertex source, TVertex target)
         {
             Contract.Requires(source != null);
@@ -199,6 +200,7 @@ namespace QuickGraph
             return false;
         }
 
+        [Pure]
         public TEdge AdjacentEdge(TVertex v, int index)
         {
             return this.adjacentEdges[v][index];
@@ -220,9 +222,9 @@ namespace QuickGraph
         }
 
 
+        [Pure]
         public bool ContainsVertex(TVertex vertex)
         {
-            Contract.Requires(vertex != null);
             return this.adjacentEdges.ContainsKey(vertex);
         }
         #endregion
@@ -378,6 +380,7 @@ namespace QuickGraph
             }
         }
 
+        [Pure]
         public bool ContainsEdge(TEdge edge)
         {
             Contract.Requires(GraphContract.InVertexSet(this, edge));
@@ -400,18 +403,21 @@ namespace QuickGraph
 
         #region IUndirectedGraph<Vertex,Edge> Members
 
+        [Pure]
         public IEnumerable<TEdge> AdjacentEdges(TVertex v)
         {
             Contract.Requires(GraphContract.InVertexSet(this, v));
             return this.adjacentEdges[v];
         }
 
+        [Pure]
         public int AdjacentDegree(TVertex v)
         {
             Contract.Requires(GraphContract.InVertexSet(this, v));
             return this.adjacentEdges[v].Count;
         }
 
+        [Pure]
         public bool IsAdjacentEdgesEmpty(TVertex v)
         {
             Contract.Requires(GraphContract.InVertexSet(this, v));

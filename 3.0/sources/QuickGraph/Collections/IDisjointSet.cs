@@ -57,6 +57,7 @@ namespace QuickGraph.Collections
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        [Pure]
         bool Contains(T value);
     }
 }

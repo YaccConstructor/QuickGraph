@@ -19,7 +19,7 @@ namespace QuickGraph.Contracts
                 IEdgeSet<TVertex, TEdge> ithis = this;
                 Contract.Ensures(Contract.Result<bool>() == (ithis.EdgeCount == 0));
 
-                return Contract.Result<bool>();
+                return default(bool);
             }
         }
 

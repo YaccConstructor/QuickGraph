@@ -48,7 +48,7 @@ namespace QuickGraph
         	get { return this.OriginalGraph.Vertices; }
         }
 
-
+        [Pure]
         public bool ContainsVertex(TVertex vertex)
         {
             return this.OriginalGraph.ContainsVertex(vertex);
@@ -189,7 +189,8 @@ namespace QuickGraph
             }
         }
 
-        public bool  ContainsEdge(ReversedEdge<TVertex,TEdge> edge)
+        [Pure]
+        public bool ContainsEdge(ReversedEdge<TVertex, TEdge> edge)
         {
             return this.OriginalGraph.ContainsEdge(edge.OriginalEdge);
         }

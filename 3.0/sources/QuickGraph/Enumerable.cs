@@ -9,6 +9,14 @@ namespace System.Linq
     public static class Enumerable
     {
         [Pure]
+        public static T[] ToArray<T>(IEnumerable<T> values)
+        {
+            Contract.Requires(values != null);
+
+            return new List<T>(values).ToArray();
+        }
+
+        [Pure]
         public static int Count<T>(IEnumerable<T> elements)
         {
             Contract.Requires(elements != null);
