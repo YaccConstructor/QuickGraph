@@ -362,7 +362,7 @@ namespace QuickGraph
         public event VertexEventHandler<TVertex> VertexAdded;
         protected virtual void OnVertexAdded(VertexEventArgs<TVertex> args)
         {
-            VertexEventHandler<TVertex> eh = this.VertexAdded;
+            var eh = this.VertexAdded;
             if (eh != null)
                 eh(this, args);
         }

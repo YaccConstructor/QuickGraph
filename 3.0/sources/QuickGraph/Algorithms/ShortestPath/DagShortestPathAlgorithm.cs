@@ -59,7 +59,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         public event VertexEventHandler<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
-            VertexEventHandler<TVertex> eh = this.StartVertex;
+            var eh = this.StartVertex;
             if (eh!=null)
                 eh(this, new VertexEventArgs<TVertex>(v));
         }
