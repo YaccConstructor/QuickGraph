@@ -16,7 +16,7 @@ namespace QuickGraph.Contracts
             get 
             {
                 Contract.Ensures(Contract.Result<string>() != null);
-                return Contract.Result<string>();
+                return default(string);
             }
         }
     }

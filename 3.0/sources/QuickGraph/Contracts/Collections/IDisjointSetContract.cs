@@ -15,7 +15,7 @@ namespace QuickGraph.Collections.Contracts
         {
             get
             {
-                return Contract.Result<int>();
+                return default(int);
             }
         }
 
@@ -23,7 +23,7 @@ namespace QuickGraph.Collections.Contracts
         {
             get
             {
-                return Contract.Result<int>();
+                return default(int);
             }
         }
 
@@ -52,7 +52,7 @@ namespace QuickGraph.Collections.Contracts
             Contract.Requires(value != null);
             Contract.Requires(ithis.Contains(value));
 
-            return Contract.Result<T>();
+            return default(T);
         }
 
         bool IDisjointSet<T>.Union(T left, T right)
@@ -63,13 +63,13 @@ namespace QuickGraph.Collections.Contracts
             Contract.Requires(right != null);
             Contract.Requires(ithis.Contains(right));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         [Pure]
         bool IDisjointSet<T>.Contains(T value)
         {
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         bool IDisjointSet<T>.AreInSameSet(T left, T right)
@@ -80,7 +80,7 @@ namespace QuickGraph.Collections.Contracts
             Contract.Requires(ithis.Contains(left));
             Contract.Requires(ithis.Contains(right));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
     }
 }

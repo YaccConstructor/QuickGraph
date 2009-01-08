@@ -24,7 +24,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(ithis.OutEdges(v), ve => predicate(ve))));
             Contract.Ensures(Contract.ForAll(ithis.OutEdges(v), ve => !predicate(ve)));
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         void IMutableIncidenceGraph<TVertex, TEdge>.ClearOutEdges(TVertex v)

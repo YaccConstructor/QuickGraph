@@ -12,12 +12,12 @@ namespace QuickGraph.Contracts
     {
         bool IGraph<TVertex, TEdge>.IsDirected
         {
-            get { return Contract.Result<bool>(); }
+            get { return default(bool); }
         }
 
         bool IGraph<TVertex, TEdge>.AllowParallelEdges
         {
-            get { return Contract.Result<bool>(); }
+            get { return default(bool); }
         }
     }
 }

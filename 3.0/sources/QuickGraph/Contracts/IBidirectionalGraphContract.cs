@@ -21,7 +21,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Contract.Result<bool>() == (ithis.InDegree(v) == 0));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         [Pure]
@@ -32,7 +32,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Contract.Result<int>() == Enumerable.Count(ithis.InEdges(v)));
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         [Pure]
@@ -48,7 +48,7 @@ namespace QuickGraph.Contracts
                 )
             );
 
-            return Contract.Result<IEnumerable<TEdge>>();
+            return default(IEnumerable<TEdge>);
         }
 
         [Pure]
@@ -67,13 +67,18 @@ namespace QuickGraph.Contracts
             );
 
             edges = null;
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         [Pure]
         TEdge IBidirectionalGraph<TVertex, TEdge>.InEdge(TVertex v, int index)
         {
-            throw new NotImplementedException();
+            IBidirectionalGraph<TVertex, TEdge> ithis = this;
+            Contract.Requires(v != null);
+            Contract.Requires(ithis.ContainsVertex(v));
+            Contract.Ensures(Contract.Result<TEdge>().Equals(Enumerable.ElementAt(ithis.InEdges(v), index)));
+
+            return default(TEdge);
         }
 
         [Pure]
@@ -84,7 +89,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Contract.Result<int>() == ithis.InDegree(v) + ithis.OutDegree(v));
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         #endregion

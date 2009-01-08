@@ -19,7 +19,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(v != null);
             Contract.Ensures(Contract.Result<bool>() == (ithis.OutDegree(v) == 0));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         [Pure]
@@ -29,7 +29,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(v != null);
             Contract.Ensures(Contract.Result<int>() == Enumerable.Count<TEdge>(ithis.OutEdges(v)));
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         [Pure]
@@ -42,7 +42,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.Result<IEnumerable<TEdge>>() != null);
             Contract.Ensures(Contract.ForAll(ithis.OutEdges(v),e => e.Source.Equals(v)));
 
-            return Contract.Result<IEnumerable<TEdge>>();
+            return default(IEnumerable<TEdge>);
         }
 
         [Pure]
@@ -52,7 +52,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(v != null);
 
             Contract.ValueAtReturn(out edges);
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         [Pure]
@@ -62,7 +62,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(v != null);
             Contract.Ensures(Enumerable.Any(ithis.OutEdges(v), e => e.Equals(Contract.Result<TEdge>())));
 
-            return Contract.Result<TEdge>();
+            return default(TEdge);
         }
 
         #region IGraph<TVertex,TEdge> Members

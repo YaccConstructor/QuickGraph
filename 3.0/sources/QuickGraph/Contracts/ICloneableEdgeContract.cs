@@ -19,7 +19,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.Result<ICloneableEdge<TVertex>>().Source.Equals(source));
             Contract.Ensures(Contract.Result<ICloneableEdge<TVertex>>().Target.Equals(target));
 
-            return Contract.Result<ICloneableEdge<TVertex>>();
+            return default(ICloneableEdge<TVertex>);
         }
 
         #region IEdge<TVertex> Members

@@ -20,7 +20,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.Result<bool>() == Contract.OldValue(ithis.ContainsEdge(edge)));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + (Contract.Result<bool>() ? 1 : 0));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         int IMutableVertexAndEdgeSet<TVertex, TEdge>.AddVerticesAndEdgeRange(IEnumerable<TEdge> edges)
@@ -32,7 +32,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.Result<int>() == Enumerable.Count(edges, edge => Contract.OldValue(!ithis.ContainsEdge(edge))));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + Contract.Result<int>());
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         #region IVertexSet<TVertex> Members

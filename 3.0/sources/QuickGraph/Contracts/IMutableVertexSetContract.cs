@@ -27,7 +27,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(ithis.ContainsVertex(v));
             Contract.Ensures(ithis.VertexCount == Contract.OldValue(ithis.VertexCount) + (Contract.Result<bool>() ? 1 : 0));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         int IMutableVertexSet<TVertex>.AddVertexRange(IEnumerable<TVertex> vertices)
@@ -39,7 +39,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.ForAll(vertices, v => ithis.ContainsVertex(v)));
             Contract.Ensures(ithis.VertexCount == Contract.OldValue(ithis.VertexCount) + Contract.Result<int>());
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         event VertexEventHandler<TVertex> IMutableVertexSet<TVertex>.VertexRemoved
@@ -56,7 +56,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(!ithis.ContainsVertex(v));
             Contract.Ensures(ithis.VertexCount == Contract.OldValue(ithis.VertexCount) - (Contract.Result<bool>() ? 1 : 0));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         int IMutableVertexSet<TVertex>.RemoveVertexIf(VertexPredicate<TVertex> pred)
@@ -67,7 +67,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.ForAll(ithis.Vertices, v => !pred(v)));
             Contract.Ensures(ithis.VertexCount == Contract.OldValue(ithis.VertexCount) - Contract.Result<int>());
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         #endregion

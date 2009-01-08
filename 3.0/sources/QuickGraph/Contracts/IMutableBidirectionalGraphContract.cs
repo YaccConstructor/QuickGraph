@@ -23,7 +23,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(ithis.InEdges(v), e => predicate(e))));
             Contract.Ensures(ithis.InDegree(v) == Contract.OldValue(ithis.InDegree(v)) - Contract.Result<int>());
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         void IMutableBidirectionalGraph<TVertex, TEdge>.ClearInEdges(TVertex v)

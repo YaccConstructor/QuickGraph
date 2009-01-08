@@ -24,7 +24,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(ithis.AdjacentEdges(vertex), e => predicate(e))));
             Contract.Ensures(Contract.ForAll(ithis.AdjacentEdges(vertex), v => !predicate(v)));
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         void IMutableUndirectedGraph<TVertex, TEdge>.ClearAdjacentEdges(TVertex vertex)

@@ -19,12 +19,12 @@ namespace QuickGraph.Contracts
 
         TVertex IEdge<TVertex>.Source
         {
-            get { return Contract.Result<TVertex>(); }
+            get { return default(TVertex); }
         }
 
         TVertex IEdge<TVertex>.Target
         {
-            get { return Contract.Result<TVertex>(); }
+            get { return default(TVertex); }
         }
     }
 }

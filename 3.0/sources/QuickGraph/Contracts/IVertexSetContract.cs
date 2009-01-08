@@ -18,7 +18,7 @@ namespace QuickGraph.Contracts
                 IVertexSet<TVertex> ithis = this;
                 Contract.Ensures(Contract.Result<bool>() == (ithis.VertexCount == 0));
 
-                return Contract.Result<bool>();
+                return default(bool);
             }
         }
 
@@ -29,7 +29,7 @@ namespace QuickGraph.Contracts
                 IVertexSet<TVertex> ithis = this;
                 Contract.Ensures(Contract.Result<int>() == Enumerable.Count(ithis.Vertices));
 
-                return Contract.Result<int>();
+                return default(int);
             }
         }
 
@@ -39,7 +39,7 @@ namespace QuickGraph.Contracts
             {
                 Contract.Ensures(Contract.Result<IEnumerable<TVertex>>() != null);
 
-                return Contract.Result<IEnumerable<TVertex>>();
+                return default(IEnumerable<TVertex>);
             }
         }
 
@@ -50,7 +50,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(vertex != null);
             Contract.Ensures(Contract.Result<bool>() == Contract.Exists(ithis.Vertices, v => v.Equals(vertex)));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
     }
 }

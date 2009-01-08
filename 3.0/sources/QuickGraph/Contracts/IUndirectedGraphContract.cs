@@ -27,7 +27,7 @@ namespace QuickGraph.Contracts
                     )
                 );
 
-            return Contract.Result<IEnumerable<TEdge>>();
+            return default(IEnumerable<TEdge>);
         }
 
         [Pure]
@@ -38,7 +38,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Contract.Result<int>() == Enumerable.Count(ithis.AdjacentEdges(v)));
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         [Pure]
@@ -49,7 +49,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Contract.Result<bool>() == (ithis.AdjacentDegree(v) == 0));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         [Pure]
@@ -63,7 +63,7 @@ namespace QuickGraph.Contracts
                 Contract.Result<TEdge>().Source.Equals(v) 
                 || Contract.Result<TEdge>().Target.Equals(v));
 
-            return Contract.Result<TEdge>();
+            return default(TEdge);
         }
 
         [Pure]
@@ -74,7 +74,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(target != null);
             Contract.Ensures(Contract.Result<bool>() == Enumerable.Any(ithis.AdjacentEdges(source), e => e.Target.Equals(target) || e.Source.Equals(target)));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
         #endregion
 

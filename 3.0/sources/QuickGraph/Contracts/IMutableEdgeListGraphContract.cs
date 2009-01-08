@@ -20,7 +20,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(ithis.ContainsEdge(e));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + (Contract.Result<bool>() ? 1 : 0));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         event EdgeEventHandler<TVertex, TEdge> IMutableEdgeListGraph<TVertex, TEdge>.EdgeAdded
@@ -38,7 +38,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.ForAll(edges, e => ithis.ContainsEdge(e)));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + Contract.Result<int>());
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         bool IMutableEdgeListGraph<TVertex, TEdge>.RemoveEdge(TEdge e)
@@ -49,7 +49,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(!ithis.ContainsEdge(e));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) - (Contract.Result<bool>() ? 1 : 0));
 
-            return Contract.Result<bool>();
+            return default(bool);
         }
 
         event EdgeEventHandler<TVertex, TEdge> IMutableEdgeListGraph<TVertex, TEdge>.EdgeRemoved
@@ -66,7 +66,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.ForAll(ithis.Edges, e => !predicate(e)));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) - Contract.Result<int>());
 
-            return Contract.Result<int>();
+            return default(int);
         }
 
         #endregion
