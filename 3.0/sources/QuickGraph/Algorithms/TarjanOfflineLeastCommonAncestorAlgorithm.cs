@@ -84,17 +84,13 @@ namespace QuickGraph.Algorithms
                 throw new InvalidProgramException("pairs not set");
 
             var gpair = GraphExtensions.ToAdjacencyGraph(this.pairs);
-
-            if (cancelManager.IsCancelling) return;
-
             var disjointSet = new ForestDisjointSet<TVertex>();
-            foreach (var v in this.VisitedGraph.Vertices)
-                disjointSet.MakeSet(v);
-
-            if (cancelManager.IsCancelling) return;
-
             var vancestors = new Dictionary<TVertex, TVertex>();
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(this, this.VisitedGraph, new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount));
+            dfs.InitializeVertex += (sender, args) =>
+                {
+                    disjointSet.MakeSet(args.Vertex);
+                };
             dfs.DiscoverVertex += (sender, args) =>
                 {
                     vancestors[args.Vertex] = args.Vertex;

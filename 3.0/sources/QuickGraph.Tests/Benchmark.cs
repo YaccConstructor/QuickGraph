@@ -94,8 +94,20 @@ namespace QuickGraph.Tests
 
     public sealed class Benchmark
     {
+        readonly string name;
         long duration = 0;
         long samples = 0;
+
+        public Benchmark(string name)
+        {
+            Contract.Requires(!String.IsNullOrEmpty(name));
+            this.name = name;
+        }
+
+        public string Name
+        {
+            get { return this.name; }
+        }
 
         public double Seconds
         {
@@ -109,7 +121,7 @@ namespace QuickGraph.Tests
 
         public override string ToString()
         {
-            return String.Format("{0}s, {1} samples", this.Seconds, this.samples);
+            return String.Format("{0}: {1}s, {2} samples", this.Name, this.Seconds, this.samples);
         }
 
         public void Run(Action action)

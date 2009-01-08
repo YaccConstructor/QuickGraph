@@ -191,9 +191,6 @@ namespace QuickGraph.Algorithms.Search
 
         protected override void InternalCompute()
 		{
-            // put all vertex to white
-			Initialize();
-
 			// if there is a starting vertex, start whith him:
             TVertex rootVertex;
             if (this.TryGetRootVertex(out rootVertex))
