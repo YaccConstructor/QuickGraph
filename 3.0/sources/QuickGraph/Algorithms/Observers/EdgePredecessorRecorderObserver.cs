@@ -146,13 +146,13 @@ namespace QuickGraph.Algorithms.Observers
                 EdgePredecessors[args.TargetEdge] = args.Edge;
         }
 
-        private void FinishEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
+        private void FinishEdge(Object sender, TEdge args)
         {
             foreach (var edge in this.EdgePredecessors.Values)
-                if (edge.Equals(args.Edge))
+                if (edge.Equals(args))
                     return;
 
-            this.EndPathEdges.Add(args.Edge);
+            this.EndPathEdges.Add(args);
         }
     }
 }

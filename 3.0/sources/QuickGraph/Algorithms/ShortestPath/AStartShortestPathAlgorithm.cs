@@ -78,30 +78,29 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             var eh = this.EdgeNotRelaxed;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, e);
         }
 
-        private void InternalExamineEdge(Object sender, EdgeEventArgs<TVertex, TEdge> args)
+        private void InternalExamineEdge(Object sender, TEdge args)
         {
-            if (this.Weights(args.Edge) < 0)
+            if (this.Weights(args) < 0)
                 throw new NegativeWeightException();
         }
 
-        private void InternalTreeEdge(Object sender, EdgeEventArgs<TVertex, TEdge> args)
+        private void InternalTreeEdge(Object sender, TEdge args)
         {
-            bool decreased = this.Relax(args.Edge);
+            bool decreased = this.Relax(args);
             if (decreased)
             {
-                this.OnTreeEdge(args.Edge);
+                this.OnTreeEdge(args);
                 this.AssertHeap();
             }
             else
-                this.OnEdgeNotRelaxed(args.Edge);
+                this.OnEdgeNotRelaxed(args);
         }
 
-        private void InternalGrayTarget(Object sender, EdgeEventArgs<TVertex, TEdge> args)
+        private void InternalGrayTarget(Object sender, TEdge e)
         {
-            var e = args.Edge;
             var target = e.Target;
 
             bool decreased = this.Relax(e);
@@ -111,24 +110,23 @@ namespace QuickGraph.Algorithms.ShortestPath
                 this.costs[target] = this.DistanceRelaxer.Combine(distance, this.costHeuristic(target));
                 this.vertexQueue.Update(target);
                 this.AssertHeap();
-                this.OnTreeEdge(args.Edge);
+                this.OnTreeEdge(e);
             }
             else
             {
-                this.OnEdgeNotRelaxed(args.Edge);
+                this.OnEdgeNotRelaxed(e);
             }
         }
 
-        private void InternalBlackTarget(Object sender, EdgeEventArgs<TVertex, TEdge> args)
+        private void InternalBlackTarget(Object sender, TEdge e)
         {
-            var e = args.Edge;
             var target = e.Target;
 
             bool decreased = this.Relax(e);
             double distance = this.Distances[target];
             if (decreased)
             {
-                this.OnTreeEdge(args.Edge);
+                this.OnTreeEdge(e);
                 this.costs[target] = this.DistanceRelaxer.Combine(distance, this.costHeuristic(target));
                 this.vertexQueue.Enqueue(target);
                 this.AssertHeap();
@@ -136,7 +134,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
             else
             {
-                this.OnEdgeNotRelaxed(args.Edge);
+                this.OnEdgeNotRelaxed(e);
             }
         }
 

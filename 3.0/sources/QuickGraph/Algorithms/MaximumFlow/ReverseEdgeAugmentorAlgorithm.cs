@@ -71,10 +71,11 @@ namespace QuickGraph.Algorithms.MaximumFlow
         }
 
         public event EdgeEventHandler<TVertex,TEdge> ReversedEdgeAdded;
-        private void OnReservedEdgeAdded(EdgeEventArgs<TVertex,TEdge> e)
+        private void OnReservedEdgeAdded(TEdge e)
         {
-            if (this.ReversedEdgeAdded != null)
-                this.ReversedEdgeAdded(this, e);
+            var eh = this.ReversedEdgeAdded;
+            if (eh != null)
+                eh(this, e);
         }
 
         public void AddReversedEdges()
@@ -125,7 +126,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 this.augmentedEgdes.Add(reversedEdge);
                 this.reversedEdges[edge] = reversedEdge;
                 this.reversedEdges[reversedEdge] = edge;
-                this.OnReservedEdgeAdded(new EdgeEventArgs<TVertex,TEdge>(reversedEdge));
+                this.OnReservedEdgeAdded(reversedEdge);
             }
 
             this.augmented = true;

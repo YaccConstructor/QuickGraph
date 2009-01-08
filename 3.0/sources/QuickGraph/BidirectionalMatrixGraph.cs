@@ -403,7 +403,7 @@ namespace QuickGraph
                 throw new ParallelEdgeNotAllowedException();
             this.edges[edge.Source,edge.Target] = edge;
             this.edgeCount++;
-            this.OnEdgeAdded(new EdgeEventArgs<int, TEdge>(edge));
+            this.OnEdgeAdded(edge);
             return true;
         }
 
@@ -417,7 +417,7 @@ namespace QuickGraph
         }
 
         public event EdgeEventHandler<int, TEdge> EdgeAdded;
-        protected virtual void OnEdgeAdded(EdgeEventArgs<int, TEdge> args)
+        protected virtual void OnEdgeAdded(TEdge args)
         {
             var eh = this.EdgeAdded;
             if (eh != null)
@@ -433,7 +433,7 @@ namespace QuickGraph
             if (!e.Equals(default(TEdge)))
             {
                 this.edgeCount--;
-                this.OnEdgeRemoved(new EdgeEventArgs<int, TEdge>(edge));
+                this.OnEdgeRemoved(edge);
                 return true;
             }
             else
@@ -441,7 +441,7 @@ namespace QuickGraph
         }
 
         public event EdgeEventHandler<int, TEdge> EdgeRemoved;
-        protected virtual void OnEdgeRemoved(EdgeEventArgs<int, TEdge> args)
+        protected virtual void OnEdgeRemoved(TEdge args)
         {
             var eh = this.EdgeRemoved;
             if (eh != null)

@@ -329,7 +329,7 @@ namespace QuickGraph
                 if (this.EdgeRemoved != null) // lazily notify
                 {
                     foreach (var edge in edges)
-                        this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
+                        this.OnEdgeRemoved(edge);
                 }
                 this.edgeCount -= edges.Count;
                 edges.Clear();
@@ -351,7 +351,7 @@ namespace QuickGraph
                 foreach (var edge in edgeToRemove)
                 {
                     kv.Value.Remove(edge);
-                    this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
+                    this.OnEdgeRemoved(edge);
                 }
                 // update count
                 this.edgeCount -= edgeToRemove.Count;
@@ -419,7 +419,7 @@ namespace QuickGraph
             this.vertexEdges[e.Source].Add(e);
             this.edgeCount++;
 
-            this.OnEdgeAdded(new EdgeEventArgs<TVertex, TEdge>(e));
+            this.OnEdgeAdded(e);
 
             return true;
         }
@@ -434,7 +434,7 @@ namespace QuickGraph
         }
 
         public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
-        protected virtual void OnEdgeAdded(EdgeEventArgs<TVertex, TEdge> args)
+        protected virtual void OnEdgeAdded(TEdge args)
         {
             var eh = this.EdgeAdded;
             if (eh != null)
@@ -450,7 +450,7 @@ namespace QuickGraph
             {
                 this.edgeCount--;
                 Contract.Assert(this.edgeCount >= 0);
-                this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(e));
+                this.OnEdgeRemoved(e);
                 return true;
             }
             else
@@ -458,9 +458,9 @@ namespace QuickGraph
         }
 
         public event EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
-        protected virtual void OnEdgeRemoved(EdgeEventArgs<TVertex, TEdge> args)
+        protected virtual void OnEdgeRemoved(TEdge args)
         {
-            EdgeEventHandler<TVertex, TEdge> eh = this.EdgeRemoved;
+            var eh = this.EdgeRemoved;
             if (eh != null)
                 eh(this, args);
         }
@@ -490,7 +490,7 @@ namespace QuickGraph
             if (this.EdgeRemoved != null) // call only if someone is listening
             {
                 foreach (var edge in edges)
-                    this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
+                    this.OnEdgeRemoved(edge);
             }
             edges.Clear();
             this.edgeCount -= count;
@@ -511,7 +511,7 @@ namespace QuickGraph
             foreach (var edge in edgeToRemove)
             {
                 edges.Remove(edge);
-                this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
+                this.OnEdgeRemoved(edge);
             }
             this.edgeCount -= edgeToRemove.Count;
 

@@ -90,9 +90,8 @@ namespace QuickGraph.Algorithms
 
             dfs.InitializeVertex += (sender, args) => disjointSet.MakeSet(args);
             dfs.DiscoverVertex += (sender, args) => vancestors[args] = args;
-            dfs.TreeEdge += (sender, args) =>
+            dfs.TreeEdge += (sender, edge) =>
                 {
-                    var edge = args.Edge;
                     disjointSet.Union(edge.Source, edge.Target);
                     vancestors[disjointSet.FindSet(edge.Source)] = edge.Source;
                 };

@@ -48,7 +48,7 @@ namespace QuickGraph.Algorithms.Observers
             algorithm.TreeEdge -= new UndirectedEdgeEventHandler<TVertex, TEdge>(TreeEdge);
         }
 
-        void TreeEdge(Object sender, UndirectedEdgeEventArgs<TVertex, TEdge> e)
+        void TreeEdge(Object sender, UndirectedEdgeEventArgs<TVertex,TEdge> e)
         {
             this.vertexPredecessors[e.Target] = e.Edge;
         }

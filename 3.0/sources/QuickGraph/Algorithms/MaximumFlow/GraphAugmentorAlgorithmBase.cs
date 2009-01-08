@@ -88,7 +88,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             Contract.Requires(e != null);
             var eh = this.EdgeAdded;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, e);
         }
 
 

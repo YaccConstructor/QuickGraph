@@ -74,8 +74,9 @@ namespace QuickGraph.Algorithms.Search
         public event EdgeEventHandler<TVertex,TEdge> InitializeEdge;
         private void OnInitializeEdge(TEdge e)
         {
-            if (InitializeEdge != null)
-                InitializeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+            var eh = this.InitializeEdge;
+            if (eh != null)
+                eh(this, e);
         }
 
         public event VertexEventHandler<TVertex> StartVertex;
@@ -89,7 +90,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnStartEdge(TEdge e)
         {
             if (StartEdge != null)
-                StartEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                StartEdge(this, e);
         }
 
         public event EdgeEdgeEventHandler<TVertex, TEdge> DiscoverTreeEdge;
@@ -103,35 +104,35 @@ namespace QuickGraph.Algorithms.Search
         private void OnExamineEdge(TEdge e)
         {
             if (ExamineEdge != null)
-                ExamineEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                ExamineEdge(this, e);
         }
 
         public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                TreeEdge(this, e);
         }
 
         public event EdgeEventHandler<TVertex, TEdge> BackEdge;
         private void OnBackEdge(TEdge e)
         {
             if (BackEdge != null)
-                BackEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                BackEdge(this, e);
         }
 
         public event EdgeEventHandler<TVertex, TEdge> ForwardOrCrossEdge;
         private void OnForwardOrCrossEdge(TEdge e)
         {
             if (ForwardOrCrossEdge != null)
-                ForwardOrCrossEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                ForwardOrCrossEdge(this, e);
         }
 
         public event EdgeEventHandler<TVertex,TEdge> FinishEdge;
         private void OnFinishEdge(TEdge e)
         {
             if (FinishEdge != null)
-                FinishEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+                FinishEdge(this, e);
         }
         
         protected override void  InternalCompute()

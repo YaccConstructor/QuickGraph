@@ -767,15 +767,15 @@ this
         {
             Contract.Requires(g != null);
 
-            return new DagTester().IsDag(g);
+            return new DagTester<TVertex,TEdge>().IsDag(g);
         }
 
-        class DagTester
+        class DagTester<TVertex,TEdge>
+                where TEdge : IEdge<TVertex>
         {
             private bool isDag = true;
 
-            public bool IsDag<TVertex,TEdge>(IVertexListGraph<TVertex, TEdge> g)
-                where TEdge : IEdge<TVertex>
+            public bool IsDag(IVertexListGraph<TVertex, TEdge> g)
             {
                 var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(g);
                 try
@@ -791,8 +791,7 @@ this
                 }
             }
 
-            void dfs_BackEdge<Vertex,Edge>(object sender, EdgeEventArgs<Vertex, Edge> e)
-                where Edge : IEdge<Vertex>
+            void dfs_BackEdge(object sender, TEdge e)
             {
                 isDag = false;
             }

@@ -63,23 +63,23 @@ namespace QuickGraph.Algorithms.Search
 
             dfs.ExamineEdge += (sender, args) =>
             {
-                Assert.AreEqual(dfs.VertexColors[args.Edge.Source], GraphColor.Gray);
+                Assert.AreEqual(dfs.VertexColors[args.Source], GraphColor.Gray);
             };
 
             dfs.TreeEdge += (sender, args) =>
             {
-                Assert.AreEqual(dfs.VertexColors[args.Edge.Target], GraphColor.White);
-                parents[args.Edge.Target] = args.Edge.Source;
+                Assert.AreEqual(dfs.VertexColors[args.Target], GraphColor.White);
+                parents[args.Target] = args.Source;
             };
 
             dfs.BackEdge += (sender, args) =>
             {
-                Assert.AreEqual(dfs.VertexColors[args.Edge.Target], GraphColor.Gray);
+                Assert.AreEqual(dfs.VertexColors[args.Target], GraphColor.Gray);
             };
 
             dfs.ForwardOrCrossEdge += (sender, args) =>
             {
-                Assert.AreEqual(dfs.VertexColors[args.Edge.Target], GraphColor.Black);
+                Assert.AreEqual(dfs.VertexColors[args.Target], GraphColor.Black);
             };
 
             dfs.FinishVertex += (sender, args) =>

@@ -113,7 +113,7 @@ namespace QuickGraph.Algorithms.RandomWalks
         {
             var eh = this.TreeEdge;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
+                eh(this, e);
         }
 
         public event VertexEventHandler<TVertex> ClearTreeVertex;

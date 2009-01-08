@@ -63,39 +63,39 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             var eh = this.EdgeNotRelaxed;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
+                eh(this, e);
         }
 
-        private void InternalExamineEdge(Object sender, EdgeEventArgs<TVertex, TEdge> args)
+        private void InternalExamineEdge(Object sender, TEdge args)
         {
-            if (this.Weights(args.Edge) < 0)
+            if (this.Weights(args) < 0)
                 throw new NegativeWeightException();
         }
 
-        private void InternalTreeEdge(Object sender, EdgeEventArgs<TVertex,TEdge> args)
+        private void InternalTreeEdge(Object sender, TEdge args)
         {
-            bool decreased = this.Relax(args.Edge);
+            bool decreased = this.Relax(args);
             if (decreased)
             {
-                this.OnTreeEdge(args.Edge);
+                this.OnTreeEdge(args);
                 this.AssertHeap();
             }
             else
-                this.OnEdgeNotRelaxed(args.Edge);
+                this.OnEdgeNotRelaxed(args);
         }
 
-        private void InternalGrayTarget(Object sender, EdgeEventArgs<TVertex, TEdge> args)
+        private void InternalGrayTarget(Object sender, TEdge edge)
         {
-            bool decreased = this.Relax(args.Edge);
+            bool decreased = this.Relax(edge);
             if (decreased)
             {
-                this.vertexQueue.Update(args.Edge.Target);
+                this.vertexQueue.Update(edge.Target);
                 this.AssertHeap();
-                this.OnTreeEdge(args.Edge);
+                this.OnTreeEdge(edge);
             }
             else
             {
-                this.OnEdgeNotRelaxed(args.Edge);
+                this.OnEdgeNotRelaxed(edge);
             }
         }
 

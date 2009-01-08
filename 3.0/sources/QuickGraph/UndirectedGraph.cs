@@ -247,7 +247,7 @@ namespace QuickGraph
             targetEdges.Add(edge);
             this.edgeCount++;
 
-            this.OnEdgeAdded(new EdgeEventArgs<TVertex, TEdge>(edge));
+            this.OnEdgeAdded(edge);
 
             return true;
         }
@@ -277,7 +277,7 @@ namespace QuickGraph
             targetEdges.Add(edge);
             this.edgeCount++;
 
-            this.OnEdgeAdded(new EdgeEventArgs<TVertex, TEdge>(edge));
+            this.OnEdgeAdded(edge);
 
             return true;
         }
@@ -292,9 +292,9 @@ namespace QuickGraph
         }
 
         public event EdgeEventHandler<TVertex, TEdge> EdgeAdded;
-        protected virtual void OnEdgeAdded(EdgeEventArgs<TVertex, TEdge> args)
+        protected virtual void OnEdgeAdded(TEdge args)
         {
-            EdgeEventHandler<TVertex, TEdge> eh = this.EdgeAdded;
+            var eh = this.EdgeAdded;
             if (eh != null)
                 eh(this, args);
         }
@@ -308,7 +308,7 @@ namespace QuickGraph
             {
                 this.edgeCount--;
                 Contract.Assert(this.edgeCount >= 0);
-                this.OnEdgeRemoved(new EdgeEventArgs<TVertex, TEdge>(edge));
+                this.OnEdgeRemoved(edge);
                 return true;
             }
             else
@@ -316,9 +316,9 @@ namespace QuickGraph
         }
 
         public event EdgeEventHandler<TVertex, TEdge> EdgeRemoved;
-        protected virtual void OnEdgeRemoved(EdgeEventArgs<TVertex, TEdge> args)
+        protected virtual void OnEdgeRemoved(TEdge args)
         {
-            EdgeEventHandler<TVertex, TEdge> eh = this.EdgeRemoved;
+            var eh = this.EdgeRemoved;
             if (eh != null)
                 eh(this, args);
         }

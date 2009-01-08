@@ -101,7 +101,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnStartEdge(TEdge e)
         {
             if (this.StartEdge != null)
-                StartEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                StartEdge(this, e);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                TreeEdge(this, e);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnBackEdge(TEdge e)
         {
             if (BackEdge != null)
-                BackEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                BackEdge(this, e);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnForwardOrCrossEdge(TEdge e)
         {
             if (this.ForwardOrCrossEdge != null)
-                ForwardOrCrossEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                ForwardOrCrossEdge(this, e);
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnFinishEdge(TEdge e)
         {
             if (this.FinishEdge != null)
-                FinishEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                FinishEdge(this, e);
         }
 
         

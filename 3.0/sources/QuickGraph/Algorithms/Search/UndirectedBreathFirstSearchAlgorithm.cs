@@ -105,7 +105,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.ExamineEdge;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, e);
         }
 
         public event UndirectedEdgeEventHandler<TVertex, TEdge> TreeEdge;

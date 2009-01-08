@@ -104,10 +104,10 @@ namespace QuickGraph.Algorithms
             this.components.Add(v, this.currentComponent);
         }
 
-        void dfs_TreeEdge(object sender, EdgeEventArgs<TVertex, TEdge> e)
+        void dfs_TreeEdge(object sender, TEdge e)
         {
             // new edge, we store with the current component number
-            this.components.Add(e.Edge.Target, this.currentComponent);
+            this.components.Add(e.Target, this.currentComponent);
         }
 
         private int GetComponentEquivalence(int component)
@@ -137,10 +137,10 @@ namespace QuickGraph.Algorithms
             return equivalent;
         }
 
-        void dfs_ForwardOrCrossEdge(object sender, EdgeEventArgs<TVertex, TEdge> e)
+        void dfs_ForwardOrCrossEdge(object sender, TEdge e)
         {
             // we have touched another tree, updating count and current component
-            int otherComponent = this.GetComponentEquivalence(this.components[e.Edge.Target]);
+            int otherComponent = this.GetComponentEquivalence(this.components[e.Target]);
             if(otherComponent != this.currentComponent)
             {
                 this.componentCount--;

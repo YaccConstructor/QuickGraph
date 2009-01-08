@@ -83,7 +83,7 @@ namespace QuickGraph.Algorithms.RandomWalks
         private void OnTreeEdge(TEdge e)
         {
             if (this.TreeEdge != null)
-                this.TreeEdge(this, new EdgeEventArgs<TVertex,TEdge>(e));
+                this.TreeEdge(this, e);
         }
 
         private TEdge Successor(TVertex u)

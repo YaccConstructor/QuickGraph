@@ -36,7 +36,7 @@ namespace QuickGraph
     }
 
     /// <summary>
-    /// The handler for events involving <see cref="EdgeEventArgs&lt;TVertex, TEdge&gt;"/>
+    /// The handler for events involving edges
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>
@@ -44,6 +44,6 @@ namespace QuickGraph
     /// <param name="e"></param>
     public delegate void EdgeEventHandler<TVertex,TEdge>(
         Object sender,
-        EdgeEventArgs<TVertex,TEdge> e)
+        TEdge e)
         where TEdge : IEdge<TVertex>;
 }

@@ -227,7 +227,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
             var eh = this.EdgeAdded;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(edge));
+                eh(this, edge);
         }
         public event VertexEventHandler<TVertex> SurplusVertexAdded;
         private void OnSurplusVertexAdded(TVertex vertex)

@@ -95,7 +95,7 @@ namespace QuickGraph.Algorithms.Exploration
 
             var eh = this.TreeEdge;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, e);
         }
         public event EdgeEventHandler<TVertex, TEdge> BackEdge;
         private void OnBackEdge(TEdge e)
@@ -103,7 +103,7 @@ namespace QuickGraph.Algorithms.Exploration
             Contract.Requires(e != null);
             var eh = this.BackEdge;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, e);
         }
         public event EdgeEventHandler<TVertex, TEdge> EdgeSkipped;
         private void OnEdgeSkipped(TEdge e)
@@ -111,7 +111,7 @@ namespace QuickGraph.Algorithms.Exploration
             Contract.Requires(e != null);
             var eh = this.EdgeSkipped;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                eh(this, e);
         }
 
         protected override void  InternalCompute()

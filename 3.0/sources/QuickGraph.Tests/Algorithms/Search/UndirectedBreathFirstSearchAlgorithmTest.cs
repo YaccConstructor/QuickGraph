@@ -49,8 +49,8 @@ namespace QuickGraph.Algorithms.Search
             };
             algo.ExamineEdge += (sender, args) =>
             {
-                Assert.IsTrue(args.Edge.Source.Equals(currentVertex) ||
-                              args.Edge.Target.Equals(currentVertex));
+                Assert.IsTrue(args.Source.Equals(currentVertex) ||
+                              args.Target.Equals(currentVertex));
             };
 
             algo.ExamineVertex += (sender, args) =>

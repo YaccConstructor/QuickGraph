@@ -31,7 +31,7 @@ namespace QuickGraph.Glee
         public event GleeEdgeEventHandler<TVertex, TEdge> EdgeAdded;
         protected virtual void OnEdgeAdded(GleeEdgeEventArgs<TVertex, TEdge> e)
         {
-            GleeEdgeEventHandler<TVertex, TEdge> eh = this.EdgeAdded;
+            var eh = this.EdgeAdded;
             if (eh != null)
                 eh(this, e);
         }

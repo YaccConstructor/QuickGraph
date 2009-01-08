@@ -99,28 +99,28 @@ namespace QuickGraph.Algorithms.Search
         private void OnExamineEdge(TEdge e)
         {
             if (ExamineEdge != null)
-                ExamineEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                ExamineEdge(this, e);
         }
 
         public event EdgeEventHandler<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
-                TreeEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                TreeEdge(this, e);
         }
 
         public event EdgeEventHandler<TVertex, TEdge> BackEdge;
         private void OnBackEdge(TEdge e)
         {
             if (BackEdge != null)
-                BackEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                BackEdge(this, e);
         }
 
         public event EdgeEventHandler<TVertex, TEdge> ForwardOrCrossEdge;
         private void OnForwardOrCrossEdge(TEdge e)
         {
             if (ForwardOrCrossEdge != null)
-                ForwardOrCrossEdge(this, new EdgeEventArgs<TVertex, TEdge>(e));
+                ForwardOrCrossEdge(this, e);
         }
 
         public event VertexEventHandler<TVertex> FinishVertex;

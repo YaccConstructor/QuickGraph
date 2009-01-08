@@ -95,7 +95,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             var eh = this.ExamineEdge;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
+                eh(this, e);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             var eh = this.EdgeNotRelaxed;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
+                eh(this, e);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             var eh = this.EdgeMinimized;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
+                eh(this, e);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             var eh = this.EdgeNotMinimized;
             if (eh != null)
-                eh(this, new EdgeEventArgs<TVertex,TEdge>(e));
+                eh(this, e);
         }
 
         /// <summary>

@@ -49,7 +49,7 @@ namespace QuickGraph.Algorithms.Search
             };
             algo.ExamineEdge += (sender, args) =>
             {
-                Assert.AreEqual(args.Edge.Source, currentVertex);
+                Assert.AreEqual(args.Source, currentVertex);
             };
 
             algo.ExamineVertex += (sender, args) =>
@@ -67,8 +67,8 @@ namespace QuickGraph.Algorithms.Search
             };
             algo.TreeEdge += (sender, args) =>
             {
-                var u = args.Edge.Source;
-                var v = args.Edge.Target;
+                var u = args.Source;
+                var v = args.Target;
 
                 Assert.AreEqual(algo.VertexColors[v], GraphColor.White);
                 Assert.AreEqual(distances[u], currentDistance);
@@ -77,8 +77,8 @@ namespace QuickGraph.Algorithms.Search
             };
             algo.NonTreeEdge += (sender, args) =>
             {
-                var u = args.Edge.Source;
-                var v = args.Edge.Target;
+                var u = args.Source;
+                var v = args.Target;
 
                 Assert.IsFalse(algo.VertexColors[v] == GraphColor.White);
 
@@ -100,13 +100,13 @@ namespace QuickGraph.Algorithms.Search
 
             algo.GrayTarget += (sender, args) =>
             {
-                Assert.AreEqual(algo.VertexColors[args.Edge.Target], GraphColor.Gray);
+                Assert.AreEqual(algo.VertexColors[args.Target], GraphColor.Gray);
             };
             algo.BlackTarget += (sender, args) =>
             {
-                Assert.AreEqual(algo.VertexColors[args.Edge.Target], GraphColor.Black);
+                Assert.AreEqual(algo.VertexColors[args.Target], GraphColor.Black);
 
-                foreach (var e in algo.VisitedGraph.OutEdges(args.Edge.Target))
+                foreach (var e in algo.VisitedGraph.OutEdges(args.Target))
                     Assert.IsFalse(algo.VertexColors[e.Target] == GraphColor.White);
             };
 
