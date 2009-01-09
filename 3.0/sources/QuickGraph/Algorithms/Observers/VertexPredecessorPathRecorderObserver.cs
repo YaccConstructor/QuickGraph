@@ -63,7 +63,7 @@ namespace QuickGraph.Algorithms.Observers
             VertexPredecessors[e.Target] = e;
         }
 
-        void FinishVertex(object sender, TVertex v)
+        void FinishVertex(TVertex v)
         {
             foreach (var edge in this.VertexPredecessors.Values)
             {

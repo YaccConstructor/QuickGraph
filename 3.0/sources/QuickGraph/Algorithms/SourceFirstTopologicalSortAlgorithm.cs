@@ -52,7 +52,7 @@ namespace QuickGraph.Algorithms
         {
             var eh = this.AddVertex;
             if (eh != null)
-                eh(this, v);
+                eh(v);
         }
 
         public void Compute(IList<TVertex> vertices)

@@ -211,14 +211,14 @@ namespace QuickGraph.Algorithms.MaximumFlow
         {
             var eh = this.BalancingSourceAdded;
             if (eh != null)
-                eh(this, source);
+                eh(this.source);
         }
         public event VertexAction<TVertex> BalancingSinkAdded;
         private void OnBalancingSinkAdded()
         {
             var eh = this.BalancingSinkAdded;
             if (eh != null)
-                eh(this, this.sink);
+                eh(this.sink);
         }
         public event EdgeAction<TVertex,TEdge> EdgeAdded;
         private void OnEdgeAdded(TEdge edge)
@@ -235,7 +235,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             Contract.Requires(vertex != null);
             var eh = this.SurplusVertexAdded;
             if (eh != null)
-                eh(this, vertex);
+                eh(vertex);
         }
         public event VertexAction<TVertex> DeficientVertexAdded;
         private void OnDeficientVertexAdded(TVertex vertex)
@@ -244,7 +244,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
             var eh = this.DeficientVertexAdded;
             if (eh != null)
-                eh(this, vertex);
+                eh(vertex);
         }
 
         public int GetBalancingIndex(TVertex v)

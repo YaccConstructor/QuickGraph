@@ -46,14 +46,14 @@ namespace QuickGraph.Algorithms.Search
             int time = 0;
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(g);
 
-            dfs.StartVertex += (sender, args) =>
+            dfs.StartVertex += args =>
             {
                 Assert.AreEqual(dfs.VertexColors[args], GraphColor.White);
                 Assert.IsFalse(parents.ContainsKey(args));
                 parents[args] = args;
             };
 
-            dfs.DiscoverVertex += (sender, args) =>
+            dfs.DiscoverVertex += args =>
             {
                 Assert.AreEqual(dfs.VertexColors[args], GraphColor.Gray);
                 Assert.AreEqual(dfs.VertexColors[parents[args]], GraphColor.Gray);
@@ -82,7 +82,7 @@ namespace QuickGraph.Algorithms.Search
                 Assert.AreEqual(dfs.VertexColors[args.Target], GraphColor.Black);
             };
 
-            dfs.FinishVertex += (sender, args) =>
+            dfs.FinishVertex += args =>
             {
                 Assert.AreEqual(dfs.VertexColors[args], GraphColor.Black);
                 finishTimes[args] = time++;

@@ -69,14 +69,14 @@ namespace QuickGraph.Algorithms.RandomWalks
         private void OnStartVertex(TVertex v)
         {
             if (StartVertex != null)
-                StartVertex(this, v);
+                StartVertex(v);
         }
 
         public event VertexAction<TVertex> EndVertex;
         private void OnEndVertex(TVertex v)
         {
             if (EndVertex != null)
-                EndVertex(this, v);
+                EndVertex(v);
         }
 
         public event EdgeAction<TVertex,TEdge> TreeEdge;

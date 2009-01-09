@@ -95,7 +95,7 @@ namespace QuickGraph.Algorithms
             this.componentEquivalences.Clear();
         }
 
-        void dfs_StartVertex(object sender, TVertex v)
+        void dfs_StartVertex(TVertex v)
         {
             // we are looking on a new tree
             this.currentComponent = this.componentEquivalences.Count;

@@ -88,16 +88,16 @@ namespace QuickGraph.Algorithms
             var vancestors = new Dictionary<TVertex, TVertex>();
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(this, this.VisitedGraph, new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount));
 
-            dfs.InitializeVertex += (sender, args) => disjointSet.MakeSet(args);
-            dfs.DiscoverVertex += (sender, args) => vancestors[args] = args;
+            dfs.InitializeVertex += v => disjointSet.MakeSet(v);
+            dfs.DiscoverVertex += v => vancestors[v] = v;
             dfs.TreeEdge += (sender, edge) =>
                 {
                     disjointSet.Union(edge.Source, edge.Target);
                     vancestors[disjointSet.FindSet(edge.Source)] = edge.Source;
                 };
-            dfs.FinishVertex += (sender, args) =>
+            dfs.FinishVertex += v =>
                 {
-                    foreach (var e in gpair.OutEdges(args))
+                    foreach (var e in gpair.OutEdges(v))
                         if (dfs.VertexColors[e.Target] == GraphColor.Black)
                             this.ancestors[EdgeExtensions.ToVertexPair(e)] = vancestors[disjointSet.FindSet(e.Target)];
                 };

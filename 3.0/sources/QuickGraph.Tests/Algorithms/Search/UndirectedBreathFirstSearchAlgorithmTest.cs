@@ -28,14 +28,13 @@ namespace QuickGraph.Algorithms.Search
             int currentDistance = 0;
             var algo = new UndirectedBreadthFirstSearchAlgorithm<TVertex, TEdge>(g);
 
-            algo.InitializeVertex += (sender, args) =>
+            algo.InitializeVertex += u =>
             {
-                Assert.AreEqual(algo.VertexColors[args], GraphColor.White);
+                Assert.AreEqual(algo.VertexColors[u], GraphColor.White);
             };
 
-            algo.DiscoverVertex += (sender, args) =>
+            algo.DiscoverVertex += u =>
             {
-                var u = args;
                 Assert.AreEqual(algo.VertexColors[u], GraphColor.Gray);
                 if (u.Equals(sourceVertex))
                     currentVertex = sourceVertex;
@@ -53,7 +52,7 @@ namespace QuickGraph.Algorithms.Search
                               args.Target.Equals(currentVertex));
             };
 
-            algo.ExamineVertex += (sender, args) =>
+            algo.ExamineVertex += args =>
             {
                 var u = args;
                 currentVertex = u;
@@ -123,7 +122,7 @@ namespace QuickGraph.Algorithms.Search
                 //    Assert.IsFalse(algo.VertexColors[e.Target] == GraphColor.White);
             };
 
-            algo.FinishVertex += (sender, args) =>
+            algo.FinishVertex += args =>
             {
                 Assert.AreEqual(algo.VertexColors[args], GraphColor.Black);
             };

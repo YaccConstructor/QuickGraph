@@ -50,12 +50,12 @@ namespace QuickGraph.Algorithms
             get { return this.componentCount; }
         }
 
-        private void StartVertex(Object sender, TVertex v)
+        private void StartVertex(TVertex v)
         {
             ++this.componentCount;
         }
 
-        private void DiscoverVertex(Object sender, TVertex v)
+        private void DiscoverVertex(TVertex v)
         {
             Components[v] = this.componentCount;
         }

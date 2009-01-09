@@ -90,7 +90,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.InitializeVertex;
             if (eh != null)
-                eh(this, v);
+                eh(v);
         }
 
         public event VertexAction<TVertex> StartVertex;
@@ -98,7 +98,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.StartVertex;
             if (eh != null)
-                eh(this, v);
+                eh(v);
         }
 
         public event VertexAction<TVertex> ExamineVertex;
@@ -106,7 +106,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.ExamineVertex;
             if (eh != null)
-                eh(this, v);
+                eh(v);
         }
 
         public event VertexAction<TVertex> DiscoverVertex;
@@ -114,7 +114,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.DiscoverVertex;
             if (eh != null)
-                eh(this, v);
+                eh(v);
         }
 
         public event EdgeAction<TVertex, TEdge> ExamineEdge;
@@ -162,7 +162,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.FinishVertex;
             if (eh != null)
-                eh(this, v);
+                eh(v);
         }
 
         protected override void Initialize()

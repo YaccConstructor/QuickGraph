@@ -364,7 +364,7 @@ namespace QuickGraph
         {
             var eh = this.VertexAdded;
             if (eh != null)
-                eh(this, args);
+                eh(args);
         }
 
         public virtual bool RemoveVertex(TVertex v)
@@ -408,7 +408,7 @@ namespace QuickGraph
         {
             var eh = this.VertexRemoved;
             if (eh != null)
-                eh(this, args);
+                eh(args);
         }
 
         public int RemoveVertexIf(VertexPredicate<TVertex> predicate)

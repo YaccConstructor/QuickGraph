@@ -19,5 +19,5 @@ namespace QuickGraph
         }
     }
 
-    public delegate void VertexAction<TVertex>(object sender, TVertex e);
+    public delegate void VertexAction<TVertex>(TVertex e);
 }

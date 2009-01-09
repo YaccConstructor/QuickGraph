@@ -79,7 +79,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             var eh = this.InitializeVertex;
             if (eh != null)
-                eh(this, v);
+                eh(v);
         }
 
         /// <summary>

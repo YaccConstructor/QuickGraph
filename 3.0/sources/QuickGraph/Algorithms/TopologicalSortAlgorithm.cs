@@ -47,7 +47,7 @@ namespace QuickGraph.Algorithms
                 throw new NonAcyclicGraphException();
         }
 
-        private void FinishVertex(Object sender, TVertex v)
+        private void FinishVertex(TVertex v)
         {
             vertices.Insert(0, v);
         }

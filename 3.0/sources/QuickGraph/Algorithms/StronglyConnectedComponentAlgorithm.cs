@@ -79,7 +79,7 @@ namespace QuickGraph.Algorithms
 			}
 		}
 
-		private void DiscoverVertex(Object sender, TVertex v)
+		private void DiscoverVertex(TVertex v)
 		{
 			this.Roots[v]=v;
 			this.Components[v]=int.MaxValue;
@@ -92,7 +92,7 @@ namespace QuickGraph.Algorithms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		private void FinishVertex(Object sender, TVertex v)
+		private void FinishVertex(TVertex v)
 		{
             var roots = this.Roots;
 

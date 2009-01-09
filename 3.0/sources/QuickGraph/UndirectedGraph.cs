@@ -54,7 +54,7 @@ namespace QuickGraph
 
             var eh = this.VertexAdded;
             if (eh != null)
-                eh(this, args);
+                eh(args);
         }
 
         public int AddVertexRange(IEnumerable<TVertex> vertices)
@@ -97,7 +97,7 @@ namespace QuickGraph
 
             var eh = this.VertexRemoved;
             if (eh != null)
-                eh(this, args);
+                eh(args);
         }
 
         public bool RemoveVertex(TVertex v)
