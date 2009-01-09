@@ -37,10 +37,8 @@ namespace QuickGraph.Collections
 
         public override int GetHashCode()
         {
-            return HashCodeHelper.Combine(
-                this.Source.GetHashCode(),
-                this.Target.GetHashCode()
-                );
+            return this.Source.GetHashCode() ^
+                this.Target.GetHashCode();
         }
 
         public bool Equals(VertexPair<TVertex> other)

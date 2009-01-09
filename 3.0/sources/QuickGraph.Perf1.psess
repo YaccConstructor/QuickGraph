@@ -3,13 +3,13 @@
   <Options>
     <Solution>C:\codeplex\quickgraph\3.0\sources\QuickGraph.sln</Solution>
     <CollectionMethod>Sampling</CollectionMethod>
-    <AllocationMethod>Allocation</AllocationMethod>
-    <LaunchRuntimeControl>true</LaunchRuntimeControl>
-    <Reportname>C:\codeplex\quickgraph\3.0\sources\QuickGraph.Perf</Reportname>
+    <AllocationMethod>None</AllocationMethod>
+    <LaunchRuntimeControl>false</LaunchRuntimeControl>
+    <Reportname>C:\codeplex\quickgraph\3.0\sources\QuickGraphPerf.vsp</Reportname>
     <AddReport>true</AddReport>
     <UniqueReport>Timestamp</UniqueReport>
     <SamplingMethod>Cycles</SamplingMethod>
-    <CycleCount>10000000</CycleCount>
+    <CycleCount>1000000</CycleCount>
     <PageFaultCount>10</PageFaultCount>
     <SysCallCount>10</SysCallCount>
     <SamplingCounter Name="" ReloadValue="00000000000f4240" DisplayName="" />
@@ -35,14 +35,14 @@
   </PostinstrumentEvent>
   <Binaries>
     <ProjBinary>
-      <Path>C:\codeplex\quickgraph\3.0\sources\QuickGraph.Perf\obj\Debug\QuickGraph.Perf.exe</Path>
+      <Path>C:\codeplex\quickgraph\3.0\sources\QuickGraph.Perf\obj\Release\QuickGraph.Perf.exe</Path>
       <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
       <Instrument>true</Instrument>
       <Sample>true</Sample>
       <LaunchProject>true</LaunchProject>
       <LaunchMethod>Executable</LaunchMethod>
-      <ExecutablePath>C:\codeplex\quickgraph\3.0\sources\QuickGraph.Perf\bin\Debug\QuickGraph.Perf.exe</ExecutablePath>
-      <StartupDirectory>C:\codeplex\quickgraph\3.0\sources\QuickGraph.Perf\bin\Debug\</StartupDirectory>
+      <ExecutablePath>C:\codeplex\quickgraph\3.0\sources\QuickGraph.Perf\bin\Release\QuickGraph.Perf.exe</ExecutablePath>
+      <StartupDirectory>C:\codeplex\quickgraph\3.0\sources\QuickGraph.Perf\bin\Release\</StartupDirectory>
       <Arguments />
       <NetAppHost>IIS</NetAppHost>
       <NetBrowser>InternetExplorer</NetBrowser>

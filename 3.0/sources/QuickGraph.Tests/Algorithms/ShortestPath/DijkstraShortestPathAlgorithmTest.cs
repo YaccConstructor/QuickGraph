@@ -22,7 +22,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         public void Dijkstra<TVertex, TEdge>(IVertexAndEdgeListGraph<TVertex, TEdge> g, TVertex root)
             where TEdge : IEdge<TVertex>
         {
-            var distances = new Dictionary<TEdge, double>();
+            var distances = new Dictionary<TEdge, double>(g.EdgeCount);
             foreach (var e in g.Edges)
                 distances[e] = g.OutDegree(e.Source) + 1;
 

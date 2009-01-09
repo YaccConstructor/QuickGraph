@@ -11,8 +11,10 @@ namespace QuickGraph.Perf
     {
         static void Main(string[] args)
         {
-            new TarjanOfflineLeastCommonAncestorAlgorithmTest()
-                .TarjanOfflineLeastCommonAncestorAlgorithmAll();
+            //new TarjanOfflineLeastCommonAncestorAlgorithmTest()
+            //    .TarjanOfflineLeastCommonAncestorAlgorithmAll();
+            new DijkstraShortestPathAlgorithmTest()
+                .DijkstraAll();
         }
     }
 }

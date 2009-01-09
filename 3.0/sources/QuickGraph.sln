@@ -21,7 +21,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D81E7BA-91B1-473B-B9BB-4DECB1825F66}"
 	ProjectSection(SolutionItems) = preProject
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
-		QuickGraph.Perf.psess = QuickGraph.Perf.psess
+		QuickGraph.Perf1.psess = QuickGraph.Perf1.psess
 		QuickGraph.vsmdi = QuickGraph.vsmdi
 	EndProjectSection
 EndProject
