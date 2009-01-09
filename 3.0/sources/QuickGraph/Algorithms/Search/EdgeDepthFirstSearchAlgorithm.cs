@@ -76,7 +76,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.InitializeEdge;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         public event VertexAction<TVertex> StartVertex;
@@ -90,7 +90,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnStartEdge(TEdge e)
         {
             if (StartEdge != null)
-                StartEdge(this, e);
+                StartEdge(e);
         }
 
         public event EdgeEdgeAction<TVertex, TEdge> DiscoverTreeEdge;
@@ -98,7 +98,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.DiscoverTreeEdge;
             if (eh != null)
-                eh(this, e, targetEge);
+                eh(e, targetEge);
         }
 
         public event EdgeAction<TVertex, TEdge> ExamineEdge;
@@ -106,35 +106,35 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.ExamineEdge;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         public event EdgeAction<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
-                TreeEdge(this, e);
+                TreeEdge(e);
         }
 
         public event EdgeAction<TVertex, TEdge> BackEdge;
         private void OnBackEdge(TEdge e)
         {
             if (BackEdge != null)
-                BackEdge(this, e);
+                BackEdge(e);
         }
 
         public event EdgeAction<TVertex, TEdge> ForwardOrCrossEdge;
         private void OnForwardOrCrossEdge(TEdge e)
         {
             if (ForwardOrCrossEdge != null)
-                ForwardOrCrossEdge(this, e);
+                ForwardOrCrossEdge(e);
         }
 
         public event EdgeAction<TVertex,TEdge> FinishEdge;
         private void OnFinishEdge(TEdge e)
         {
             if (FinishEdge != null)
-                FinishEdge(this, e);
+                FinishEdge(e);
         }
         
         protected override void  InternalCompute()

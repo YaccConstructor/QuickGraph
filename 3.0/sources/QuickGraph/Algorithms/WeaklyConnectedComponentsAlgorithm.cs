@@ -104,7 +104,7 @@ namespace QuickGraph.Algorithms
             this.components.Add(v, this.currentComponent);
         }
 
-        void dfs_TreeEdge(object sender, TEdge e)
+        void dfs_TreeEdge(TEdge e)
         {
             // new edge, we store with the current component number
             this.components.Add(e.Target, this.currentComponent);
@@ -137,7 +137,7 @@ namespace QuickGraph.Algorithms
             return equivalent;
         }
 
-        void dfs_ForwardOrCrossEdge(object sender, TEdge e)
+        void dfs_ForwardOrCrossEdge(TEdge e)
         {
             // we have touched another tree, updating count and current component
             int otherComponent = this.GetComponentEquivalence(this.components[e.Target]);

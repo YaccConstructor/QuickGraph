@@ -42,8 +42,6 @@ namespace QuickGraph
     /// <typeparam name="TEdge"></typeparam>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    public delegate void EdgeAction<TVertex,TEdge>(
-        Object sender,
-        TEdge e)
+    public delegate void EdgeAction<TVertex,TEdge>(TEdge e)
         where TEdge : IEdge<TVertex>;
 }

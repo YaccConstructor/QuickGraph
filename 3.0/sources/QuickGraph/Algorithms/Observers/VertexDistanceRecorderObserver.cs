@@ -66,7 +66,7 @@ namespace QuickGraph.Algorithms.Observers
             algorithm.TreeEdge -= new EdgeAction<TVertex, TEdge>(this.TreeEdge);
         }
 
-        private void TreeEdge(Object sender, TEdge edge)
+        private void TreeEdge(TEdge edge)
         {
             var source = edge.Source;
             var target = edge.Target;

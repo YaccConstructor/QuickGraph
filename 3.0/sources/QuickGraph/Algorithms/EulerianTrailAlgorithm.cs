@@ -79,7 +79,7 @@ namespace QuickGraph.Algorithms
             Contract.Requires(e != null);
             var eh = this.TreeEdge;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         public event EdgeAction<TVertex,TEdge> CircuitEdge;
@@ -89,7 +89,7 @@ namespace QuickGraph.Algorithms
 
             var eh = this.CircuitEdge;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         public event EdgeAction<TVertex,TEdge> VisitEdge;
@@ -99,7 +99,7 @@ namespace QuickGraph.Algorithms
 
             var eh = this.VisitEdge;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         private bool Search(TVertex u)

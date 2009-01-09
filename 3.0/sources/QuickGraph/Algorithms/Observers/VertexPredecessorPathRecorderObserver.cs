@@ -58,7 +58,7 @@ namespace QuickGraph.Algorithms.Observers
             algorithm.FinishVertex -= new VertexAction<TVertex>(FinishVertex);
         }
 
-        void TreeEdge(Object sender, TEdge e)
+        void TreeEdge(TEdge e)
         {
             VertexPredecessors[e.Target] = e;
         }

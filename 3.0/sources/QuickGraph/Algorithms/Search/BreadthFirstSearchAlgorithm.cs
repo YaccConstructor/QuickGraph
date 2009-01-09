@@ -122,7 +122,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.ExamineEdge;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         public event EdgeAction<TVertex, TEdge> TreeEdge;
@@ -130,7 +130,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.TreeEdge;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         public event EdgeAction<TVertex, TEdge> NonTreeEdge;
@@ -138,7 +138,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.NonTreeEdge;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         public event EdgeAction<TVertex, TEdge> GrayTarget;
@@ -146,7 +146,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.GrayTarget;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         public event EdgeAction<TVertex, TEdge> BlackTarget;
@@ -154,7 +154,7 @@ namespace QuickGraph.Algorithms.Search
         {
             var eh = this.BlackTarget;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         public event VertexAction<TVertex> FinishVertex;

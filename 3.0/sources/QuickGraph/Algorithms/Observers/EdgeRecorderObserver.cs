@@ -52,7 +52,7 @@ namespace QuickGraph.Algorithms.Observers
             algorithm.TreeEdge -= new EdgeAction<TVertex, TEdge>(RecordEdge);
         }
 
-        private void RecordEdge(Object sender, TEdge args)
+        private void RecordEdge(TEdge args)
         {
             Contract.Requires(args != null);
 

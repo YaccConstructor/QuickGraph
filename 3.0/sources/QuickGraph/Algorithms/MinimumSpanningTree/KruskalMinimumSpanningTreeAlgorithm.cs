@@ -39,7 +39,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         {
             var eh = this.ExamineEdge;
             if (eh != null)
-                eh(this, edge);
+                eh(edge);
         }
 
         public event EdgeAction<TVertex, TEdge> TreeEdge;
@@ -47,7 +47,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         {
             var eh = this.TreeEdge;
             if (eh != null)
-                eh(this, edge);
+                eh(edge);
         }
 
         protected override void InternalCompute()

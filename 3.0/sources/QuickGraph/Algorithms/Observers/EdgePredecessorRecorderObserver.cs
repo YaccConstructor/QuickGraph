@@ -140,13 +140,13 @@ namespace QuickGraph.Algorithms.Observers
             return es;
         }
 
-        private void DiscoverTreeEdge(Object sender, TEdge edge, TEdge targetEdge)
+        private void DiscoverTreeEdge(TEdge edge, TEdge targetEdge)
         {
             if (!edge.Equals(targetEdge))
                 this.EdgePredecessors[targetEdge] = edge;
         }
 
-        private void FinishEdge(Object sender, TEdge args)
+        private void FinishEdge(TEdge args)
         {
             foreach (var edge in this.EdgePredecessors.Values)
                 if (edge.Equals(args))

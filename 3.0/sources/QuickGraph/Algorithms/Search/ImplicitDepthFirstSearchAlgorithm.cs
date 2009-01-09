@@ -113,7 +113,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnExamineEdge(TEdge e)
         {
             if (ExamineEdge != null)
-                ExamineEdge(this, e);
+                ExamineEdge(e);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnTreeEdge(TEdge e)
         {
             if (TreeEdge != null)
-                TreeEdge(this, e);
+                TreeEdge(e);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnBackEdge(TEdge e)
         {
             if (BackEdge != null)
-                BackEdge(this, e);
+                BackEdge(e);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace QuickGraph.Algorithms.Search
         private void OnForwardOrCrossEdge(TEdge e)
         {
             if (ForwardOrCrossEdge != null)
-                ForwardOrCrossEdge(this, e);
+                ForwardOrCrossEdge(e);
         }
 
         /// <summary>

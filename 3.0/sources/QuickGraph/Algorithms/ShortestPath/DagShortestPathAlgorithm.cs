@@ -82,14 +82,14 @@ namespace QuickGraph.Algorithms.ShortestPath
         private void OnExamineEdge(TEdge e)
         {
             if (ExamineEdge != null)
-                ExamineEdge(this, e);
+                ExamineEdge(e);
         }
 
         public event EdgeAction<TVertex,TEdge> EdgeNotRelaxed;
         private void OnEdgeNotRelaxed(TEdge e)
         {
             if (EdgeNotRelaxed != null)
-                EdgeNotRelaxed(this, e);
+                EdgeNotRelaxed(e);
         }
 
         public event VertexAction<TVertex> FinishVertex;

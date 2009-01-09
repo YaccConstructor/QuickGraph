@@ -75,7 +75,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
         {
             var eh = this.ReversedEdgeAdded;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         public void AddReversedEdges()

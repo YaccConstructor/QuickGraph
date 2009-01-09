@@ -438,7 +438,7 @@ namespace QuickGraph
         {
             var eh = this.EdgeAdded;
             if (eh != null)
-                eh(this, args);
+                eh(args);
         }
 
         public virtual bool RemoveEdge(TEdge e)
@@ -462,7 +462,7 @@ namespace QuickGraph
         {
             var eh = this.EdgeRemoved;
             if (eh != null)
-                eh(this, args);
+                eh(args);
         }
 
         public int RemoveEdgeIf(EdgePredicate<TVertex, TEdge> predicate)

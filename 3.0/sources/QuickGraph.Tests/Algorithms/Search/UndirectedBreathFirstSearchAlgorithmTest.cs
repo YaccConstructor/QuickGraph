@@ -46,7 +46,7 @@ namespace QuickGraph.Algorithms.Search
                     Assert.AreEqual(distances[u], distances[parents[u]] + 1);
                 }
             };
-            algo.ExamineEdge += (sender, args) =>
+            algo.ExamineEdge += args =>
             {
                 Assert.IsTrue(args.Source.Equals(currentVertex) ||
                               args.Target.Equals(currentVertex));

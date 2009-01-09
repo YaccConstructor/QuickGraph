@@ -93,7 +93,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             var eh = this.TreeEdge;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
         protected bool Relax(TEdge e)

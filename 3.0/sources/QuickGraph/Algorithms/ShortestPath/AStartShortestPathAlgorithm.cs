@@ -78,16 +78,16 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             var eh = this.EdgeNotRelaxed;
             if (eh != null)
-                eh(this, e);
+                eh(e);
         }
 
-        private void InternalExamineEdge(Object sender, TEdge args)
+        private void InternalExamineEdge(TEdge args)
         {
             if (this.Weights(args) < 0)
                 throw new NegativeWeightException();
         }
 
-        private void InternalTreeEdge(Object sender, TEdge args)
+        private void InternalTreeEdge(TEdge args)
         {
             bool decreased = this.Relax(args);
             if (decreased)
@@ -99,7 +99,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 this.OnEdgeNotRelaxed(args);
         }
 
-        private void InternalGrayTarget(Object sender, TEdge e)
+        private void InternalGrayTarget(TEdge e)
         {
             var target = e.Target;
 
@@ -118,7 +118,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
-        private void InternalBlackTarget(Object sender, TEdge e)
+        private void InternalBlackTarget(TEdge e)
         {
             var target = e.Target;
 
@@ -208,7 +208,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.StartVertex += this.StartVertex;
                 bfs.ExamineEdge += this.ExamineEdge;
 #if DEBUG
-                bfs.ExamineEdge += (sender, e) => this.AssertHeap();
+                bfs.ExamineEdge += e => this.AssertHeap();
 #endif
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;

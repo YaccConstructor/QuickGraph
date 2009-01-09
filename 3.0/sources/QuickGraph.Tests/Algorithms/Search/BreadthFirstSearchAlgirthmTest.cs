@@ -46,7 +46,7 @@ namespace QuickGraph.Algorithms.Search
                     Assert.AreEqual(distances[u], distances[parents[u]] + 1);
                 }
             };
-            algo.ExamineEdge += (sender, args) =>
+            algo.ExamineEdge += args =>
             {
                 Assert.AreEqual(args.Source, currentVertex);
             };
@@ -64,7 +64,7 @@ namespace QuickGraph.Algorithms.Search
                 if (distances[u] == currentDistance + 1) // new level
                     ++currentDistance;
             };
-            algo.TreeEdge += (sender, args) =>
+            algo.TreeEdge += args =>
             {
                 var u = args.Source;
                 var v = args.Target;
@@ -74,7 +74,7 @@ namespace QuickGraph.Algorithms.Search
                 parents[v] = u;
                 distances[v] = distances[u] + 1;
             };
-            algo.NonTreeEdge += (sender, args) =>
+            algo.NonTreeEdge += args =>
             {
                 var u = args.Source;
                 var v = args.Target;
@@ -97,11 +97,11 @@ namespace QuickGraph.Algorithms.Search
                 }
             };
 
-            algo.GrayTarget += (sender, args) =>
+            algo.GrayTarget += args =>
             {
                 Assert.AreEqual(algo.VertexColors[args.Target], GraphColor.Gray);
             };
-            algo.BlackTarget += (sender, args) =>
+            algo.BlackTarget += args =>
             {
                 Assert.AreEqual(algo.VertexColors[args.Target], GraphColor.Black);
 

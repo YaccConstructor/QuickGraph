@@ -41,7 +41,7 @@ namespace QuickGraph.Algorithms
             get { return this.allowCyclicGraph; }
         }
 
-        private void BackEdge(Object sender, TEdge args)
+        private void BackEdge(TEdge args)
         {
             if (!this.AllowCyclicGraph)
                 throw new NonAcyclicGraphException();

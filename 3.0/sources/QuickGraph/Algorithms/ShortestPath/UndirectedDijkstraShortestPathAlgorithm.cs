@@ -163,7 +163,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.StartVertex += this.StartVertex;
                 bfs.ExamineEdge += this.ExamineEdge;
 #if DEBUG
-                bfs.ExamineEdge += (sender, e) => this.AssertHeap();
+                bfs.ExamineEdge += e => this.AssertHeap();
 #endif
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;

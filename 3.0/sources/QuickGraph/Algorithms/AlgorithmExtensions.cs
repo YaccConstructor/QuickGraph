@@ -791,7 +791,7 @@ this
                 }
             }
 
-            void dfs_BackEdge(object sender, TEdge e)
+            void dfs_BackEdge(TEdge e)
             {
                 isDag = false;
             }
