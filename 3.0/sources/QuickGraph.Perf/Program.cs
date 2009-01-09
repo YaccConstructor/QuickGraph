@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using QuickGraph.Algorithms.ShortestPath;
 using QuickGraph.Tests.Algorithms;
+using QuickGraph.Tests.Algorithms.MinimumSpanningTree;
 
 namespace QuickGraph.Perf
 {
@@ -13,8 +14,9 @@ namespace QuickGraph.Perf
         {
             //new TarjanOfflineLeastCommonAncestorAlgorithmTest()
             //    .TarjanOfflineLeastCommonAncestorAlgorithmAll();
-            new DijkstraShortestPathAlgorithmTest()
-                .DijkstraAll();
+  //          new DijkstraShortestPathAlgorithmTest()
+//                .DijkstraAll();
+            new MinimumSpanningTreeTest().PrimKruskalMinimumSpanningTreeAll();
         }
     }
 }
