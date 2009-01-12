@@ -143,7 +143,7 @@ namespace QuickGraph.Graphviz
             Output.WriteLine(";");
         }
 
-        public event FormatEdgeEventHandler<TVertex,TEdge> FormatEdge;
+        public event FormatEdgeAction<TVertex,TEdge> FormatEdge;
         private void OnFormatEdge(TEdge e)
         {
             if (FormatEdge != null)

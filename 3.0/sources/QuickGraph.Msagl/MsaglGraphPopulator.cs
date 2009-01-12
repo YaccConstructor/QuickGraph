@@ -28,7 +28,7 @@ namespace QuickGraph.Msagl
                 eh(this, e);
         }
 
-        public event MsaglEdgeEventHandler<TVertex, TEdge> EdgeAdded;
+        public event MsaglEdgeAction<TVertex, TEdge> EdgeAdded;
         protected virtual void OnEdgeAdded(MsaglEdgeEventArgs<TVertex,TEdge> e)
         {
             var eh = this.EdgeAdded;

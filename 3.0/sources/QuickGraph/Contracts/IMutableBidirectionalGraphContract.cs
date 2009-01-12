@@ -155,7 +155,7 @@ namespace QuickGraph.Contracts
 
         #region IMutableVertexSet<TVertex> Members
 
-        event VertexEventHandler<TVertex> IMutableVertexSet<TVertex>.VertexAdded
+        event VertexAction<TVertex> IMutableVertexSet<TVertex>.VertexAdded
         {
             add { throw new NotImplementedException(); }
             remove { throw new NotImplementedException(); }
@@ -171,7 +171,7 @@ namespace QuickGraph.Contracts
             throw new NotImplementedException();
         }
 
-        event VertexEventHandler<TVertex> IMutableVertexSet<TVertex>.VertexRemoved
+        event VertexAction<TVertex> IMutableVertexSet<TVertex>.VertexRemoved
         {
             add { throw new NotImplementedException(); }
             remove { throw new NotImplementedException(); }
@@ -221,7 +221,7 @@ namespace QuickGraph.Contracts
             throw new NotImplementedException();
         }
 
-        event EdgeEventHandler<TVertex, TEdge> IMutableEdgeListGraph<TVertex, TEdge>.EdgeAdded
+        event EdgeAction<TVertex, TEdge> IMutableEdgeListGraph<TVertex, TEdge>.EdgeAdded
         {
             add { throw new NotImplementedException(); }
             remove { throw new NotImplementedException(); }
@@ -237,7 +237,7 @@ namespace QuickGraph.Contracts
             throw new NotImplementedException();
         }
 
-        event EdgeEventHandler<TVertex, TEdge> IMutableEdgeListGraph<TVertex, TEdge>.EdgeRemoved
+        event EdgeAction<TVertex, TEdge> IMutableEdgeListGraph<TVertex, TEdge>.EdgeRemoved
         {
             add { throw new NotImplementedException(); }
             remove { throw new NotImplementedException(); }

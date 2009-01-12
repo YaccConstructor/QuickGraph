@@ -59,7 +59,7 @@ namespace QuickGraph.Msagl
 #endif
             IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             MsaglVertexNodeEventHandler<TVertex> nodeAdded,
-            MsaglEdgeEventHandler<TVertex, TEdge> edgeAdded
+            MsaglEdgeAction<TVertex, TEdge> edgeAdded
             )
             where TEdge : IEdge<TVertex>
         {
@@ -91,7 +91,7 @@ namespace QuickGraph.Msagl
 #endif
             IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             MsaglVertexNodeEventHandler<TVertex> nodeAdded,
-            MsaglEdgeEventHandler<TVertex, TEdge> edgeAdded
+            MsaglEdgeAction<TVertex, TEdge> edgeAdded
             )
             where TVertex : IIdentifiable
             where TEdge : IEdge<TVertex>
@@ -134,7 +134,7 @@ namespace QuickGraph.Msagl
 #endif
             IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
             MsaglVertexNodeEventHandler<TVertex> nodeAdded,
-            MsaglEdgeEventHandler<TVertex, TEdge> edgeAdded
+            MsaglEdgeAction<TVertex, TEdge> edgeAdded
             )
             where TEdge : IEdge<TVertex>
         {

@@ -152,7 +152,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 this.Distances.Add(u, initialDistance);
                 this.costs.Add(u, initialDistance);
             }
-            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.VisitedGraph.Vertices, v => this.costs[v]);
+            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.costs);
         }
 
         protected override void InternalCompute()

@@ -5,6 +5,6 @@ namespace QuickGraph.Algorithms
     public interface IUndirectedTreeBuilderAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
-        event UndirectedEdgeEventHandler<TVertex, TEdge> TreeEdge;
+        event UndirectedEdgeAction<TVertex, TEdge> TreeEdge;
     }
 }

@@ -58,7 +58,7 @@ namespace QuickGraph.Collections
         }
     }
 
-    internal class FibonacciHeapLinkedList<TPriority, TValue> 
+    public sealed class FibonacciHeapLinkedList<TPriority, TValue> 
         : IEnumerable<FibonacciHeapCell<TPriority, TValue>>
     {
         FibonacciHeapCell<TPriority, TValue> first;
@@ -161,29 +161,27 @@ namespace QuickGraph.Collections
         #endregion
     }
 
-    public class FibonacciHeapCell<TPriority, TValue>
+    public sealed class FibonacciHeapCell<TPriority, TValue>
     {
         /// <summary>
         /// Determines of a Node has had a child cut from it before
         /// </summary>
-        internal bool Marked { get; set; }
-
+        public bool Marked;
         /// <summary>
         /// Determines the depth of a node
         /// </summary>
-        internal int Degree { get; set; }
-
-        public TPriority Priority { get; set; }
-        public TValue Value { get; set; }
-        public bool Removed { get; set; }
-        internal FibonacciHeapLinkedList<TPriority, TValue> Children { get; set; }
-        internal FibonacciHeapCell<TPriority, TValue> Parent { get; set; }
-        internal FibonacciHeapCell<TPriority, TValue> Next { get; set; }
-        internal FibonacciHeapCell<TPriority, TValue> Previous { get; set; }
+        public int Degree;
+        public TPriority Priority;
+        public TValue Value;
+        public bool Removed;
+        public FibonacciHeapLinkedList<TPriority, TValue> Children;
+        public FibonacciHeapCell<TPriority, TValue> Parent;
+        public FibonacciHeapCell<TPriority, TValue> Next;
+        public FibonacciHeapCell<TPriority, TValue> Previous;
     }
 
     [DebuggerDisplay("Count = {Count}")]
-    public class FibonacciHeap<TPriority, TValue> 
+    public sealed class FibonacciHeap<TPriority, TValue> 
         : IEnumerable<FibonacciHeapCell<TPriority, TValue>>
     {
         public FibonacciHeap()

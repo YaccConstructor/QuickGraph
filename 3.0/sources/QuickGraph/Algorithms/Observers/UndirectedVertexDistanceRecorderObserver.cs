@@ -56,14 +56,14 @@ namespace QuickGraph.Algorithms.Observers
         {
             Contract.Requires(algorithm != null);
 
-            algorithm.TreeEdge += new UndirectedEdgeEventHandler<TVertex, TEdge>(this.TreeEdge);
+            algorithm.TreeEdge += new UndirectedEdgeAction<TVertex, TEdge>(this.TreeEdge);
         }
 
         public void Detach(IUndirectedTreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
             Contract.Requires(algorithm != null);
 
-            algorithm.TreeEdge -= new UndirectedEdgeEventHandler<TVertex, TEdge>(this.TreeEdge);
+            algorithm.TreeEdge -= new UndirectedEdgeAction<TVertex, TEdge>(this.TreeEdge);
         }
 
         private void TreeEdge(Object sender, UndirectedEdgeEventArgs<TVertex,TEdge> args)

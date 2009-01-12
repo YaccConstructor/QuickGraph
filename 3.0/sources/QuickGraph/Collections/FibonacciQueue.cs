@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 using System.Diagnostics.Contracts;
+using System.Linq;
+using QuickGraph.Algorithms;
 
 namespace QuickGraph.Collections
 {
@@ -10,30 +12,34 @@ namespace QuickGraph.Collections
         IPriorityQueue<TVertex>
     {
         public FibonacciQueue(Func<TVertex, TDistance> distances)
-            : this(null, distances, Comparer<TDistance>.Default.Compare)
+            : this(0, null, distances, Comparer<TDistance>.Default.Compare)
         { }
 
         public FibonacciQueue(
+            int valueCount,
             IEnumerable<TVertex> values,
             Func<TVertex, TDistance> distances
             )
-            : this(values, distances, Comparer<TDistance>.Default.Compare)
+            : this(valueCount, values, distances, Comparer<TDistance>.Default.Compare)
         { }
 
         public FibonacciQueue(
+            int valueCount,
             IEnumerable<TVertex> values,
             Func<TVertex, TDistance> distances,
             Comparison<TDistance> distanceComparison
             )
         {
+            Contract.Requires(valueCount == Enumerable.Count(values));
             Contract.Requires(distances != null);
             Contract.Requires(distanceComparison != null);
 
             this.distances = distances;
-            this.mDistances = new Dictionary<TVertex, FibonacciHeapCell<TDistance, TVertex>>();
-            if (values != null)
+            this.cells = new Dictionary<TVertex, FibonacciHeapCell<TDistance, TVertex>>(valueCount);
+            if (valueCount > 0)
                 foreach (var x in values)
-                    this.mDistances.Add(x,
+                    this.cells.Add(
+                        x,
                         new FibonacciHeapCell<TDistance, TVertex>
                         {
                             Priority = this.distances(x),
@@ -44,8 +50,36 @@ namespace QuickGraph.Collections
             this.heap = new FibonacciHeap<TDistance, TVertex>(HeapDirection.Increasing, distanceComparison);
         }
 
+        public FibonacciQueue(
+            Dictionary<TVertex, TDistance> values,
+            Comparison<TDistance> distanceComparison
+            )
+        {
+            Contract.Requires(values != null);
+            Contract.Requires(distanceComparison != null);
+
+            this.distances = AlgorithmExtensions.GetIndexer(values);
+            this.cells = new Dictionary<TVertex, FibonacciHeapCell<TDistance, TVertex>>(values.Count);
+            foreach (var kv in values)
+                this.cells.Add(
+                    kv.Key,
+                    new FibonacciHeapCell<TDistance, TVertex>
+                    {
+                        Priority = kv.Value,
+                        Value = kv.Key,
+                        Removed = true
+                    }
+                );
+            this.heap = new FibonacciHeap<TDistance, TVertex>(HeapDirection.Increasing, distanceComparison);
+        }
+
+        public FibonacciQueue(
+            Dictionary<TVertex, TDistance> values)
+            : this(values, Comparer<TDistance>.Default.Compare)
+        { }
+
         private readonly FibonacciHeap<TDistance, TVertex> heap;
-        private readonly Dictionary<TVertex, FibonacciHeapCell<TDistance, TVertex>> mDistances;        
+        private readonly Dictionary<TVertex, FibonacciHeapCell<TDistance, TVertex>> cells;        
         private readonly Func<TVertex, TDistance> distances;
         #region IQueue<TVertex> Members
 
@@ -62,13 +96,13 @@ namespace QuickGraph.Collections
 
             FibonacciHeapCell<TDistance, TVertex> result;
             return 
-                this.mDistances.TryGetValue(value, out result) && 
+                this.cells.TryGetValue(value, out result) && 
                 !result.Removed;
         }
 
         public void Update(TVertex v)
         {
-            this.heap.ChangeKey(this.mDistances[v], this.distances(v));
+            this.heap.ChangeKey(this.cells[v], this.distances(v));
         }
 
         public void Enqueue(TVertex value)
@@ -76,7 +110,7 @@ namespace QuickGraph.Collections
             Contract.Requires(value != null);
             Contract.Requires(this.Contains(value));
 
-            this.mDistances[value] = heap.Enqueue(this.distances(value), value);
+            this.cells[value] = this.heap.Enqueue(this.distances(value), value);
         }
 
         public TVertex Dequeue()

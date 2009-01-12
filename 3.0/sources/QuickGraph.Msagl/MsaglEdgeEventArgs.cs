@@ -23,7 +23,7 @@ namespace QuickGraph.Msagl
         }
     }
 
-    public delegate void MsaglEdgeEventHandler<Vertex, Edge>(
+    public delegate void MsaglEdgeAction<Vertex, Edge>(
         object sender,
         MsaglEdgeEventArgs<Vertex, Edge> e)
         where Edge : IEdge<Vertex>;

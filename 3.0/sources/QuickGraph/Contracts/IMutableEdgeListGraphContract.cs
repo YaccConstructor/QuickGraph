@@ -23,7 +23,7 @@ namespace QuickGraph.Contracts
             return default(bool);
         }
 
-        event EdgeEventHandler<TVertex, TEdge> IMutableEdgeListGraph<TVertex, TEdge>.EdgeAdded
+        event EdgeAction<TVertex, TEdge> IMutableEdgeListGraph<TVertex, TEdge>.EdgeAdded
         {
             add { throw new NotImplementedException(); }
             remove { throw new NotImplementedException(); }
@@ -52,7 +52,7 @@ namespace QuickGraph.Contracts
             return default(bool);
         }
 
-        event EdgeEventHandler<TVertex, TEdge> IMutableEdgeListGraph<TVertex, TEdge>.EdgeRemoved
+        event EdgeAction<TVertex, TEdge> IMutableEdgeListGraph<TVertex, TEdge>.EdgeRemoved
         {
             add { throw new NotImplementedException(); }
             remove { throw new NotImplementedException(); }

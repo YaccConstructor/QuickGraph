@@ -13,7 +13,7 @@ namespace QuickGraph.Contracts
     {
         #region IMutableVertexSet<TVertex> Members
 
-        event VertexEventHandler<TVertex> IMutableVertexSet<TVertex>.VertexAdded
+        event VertexAction<TVertex> IMutableVertexSet<TVertex>.VertexAdded
         {
             add { throw new NotImplementedException(); }
             remove { throw new NotImplementedException(); }
@@ -42,7 +42,7 @@ namespace QuickGraph.Contracts
             return default(int);
         }
 
-        event VertexEventHandler<TVertex> IMutableVertexSet<TVertex>.VertexRemoved
+        event VertexAction<TVertex> IMutableVertexSet<TVertex>.VertexRemoved
         {
             add { throw new NotImplementedException(); }
             remove { throw new NotImplementedException(); }

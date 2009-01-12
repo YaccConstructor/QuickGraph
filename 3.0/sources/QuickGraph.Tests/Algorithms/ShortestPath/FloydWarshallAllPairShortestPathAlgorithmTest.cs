@@ -129,6 +129,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             Func<AdjacencyGraph<TVertex, TEdge>, Func<TEdge, double>, ShortestPathAlgorithmBase<TVertex, TEdge, TGraph>> shortestPathAlgorithmFactory
             )
             where TEdge : IEdge<TVertex>
+            where TGraph : IVertexSet<TVertex>
         {
             // compute all paths
             var fw = new FloydWarshallAllShortestPathAlgorithm<TVertex, TEdge>(g, distances);

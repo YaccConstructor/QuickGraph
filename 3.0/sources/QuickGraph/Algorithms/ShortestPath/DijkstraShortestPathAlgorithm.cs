@@ -19,11 +19,11 @@ namespace QuickGraph.Algorithms.ShortestPath
     ///     idref="lawler01combinatorial"
     ///     />
     [Serializable]
-    public sealed class DijkstraShortestPathAlgorithm<TVertex, TEdge> :
-        ShortestPathAlgorithmBase<TVertex,TEdge,IVertexListGraph<TVertex,TEdge>>,
-        IVertexColorizerAlgorithm<TVertex,TEdge>,
-        IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>,
-        IDistanceRecorderAlgorithm<TVertex, TEdge>
+    public sealed class DijkstraShortestPathAlgorithm<TVertex, TEdge> 
+        : ShortestPathAlgorithmBase<TVertex,TEdge,IVertexListGraph<TVertex,TEdge>>
+        , IVertexColorizerAlgorithm<TVertex,TEdge>
+        , IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>
+        , IDistanceRecorderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private FibonacciQueue<TVertex,double> vertexQueue;        
@@ -103,7 +103,6 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             base.Initialize();
 
-            this.VertexColors.Clear();
             // init color, distance
             var initialDistance = this.DistanceRelaxer.InitialDistance;
             foreach (var u in VisitedGraph.Vertices)
@@ -111,7 +110,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 this.VertexColors.Add(u, GraphColor.White);
                 this.Distances.Add(u, initialDistance);
             }
-            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.VisitedGraph.Vertices, v => this.Distances[v]);
+            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.DistancesIndexGetter());
         }
         
         protected override void  InternalCompute()

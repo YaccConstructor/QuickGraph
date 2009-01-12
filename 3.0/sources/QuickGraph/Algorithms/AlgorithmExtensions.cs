@@ -11,11 +11,28 @@ using QuickGraph.Collections;
 using System.Linq;
 using QuickGraph.Algorithms.MinimumSpanningTree;
 using QuickGraph.Algorithms.RankedShortestPath;
+using System.Reflection;
 
 namespace QuickGraph.Algorithms
 {
     public static class AlgorithmExtensions
     {
+        /// <summary>
+        /// Returns the method that implement the access indexer.
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dictionary"></param>
+        /// <returns></returns>
+        public static Func<TKey, TValue> GetIndexer<TKey, TValue>(Dictionary<TKey, TValue> dictionary)
+        {
+            Contract.Requires(dictionary != null);
+            Contract.Ensures(Contract.Result<MethodInfo>() != null);
+
+            var method = dictionary.GetType().GetProperty("Item").GetGetMethod();
+            return (Func<TKey, TValue>)Delegate.CreateDelegate(typeof(Func<TKey, TValue>), dictionary, method, true);
+        }
+
         public static TryFunc<TVertex, IEnumerable<TEdge>> TreeBreadthFirstSearch<TVertex, TEdge>(
 #if !NET20
 this 

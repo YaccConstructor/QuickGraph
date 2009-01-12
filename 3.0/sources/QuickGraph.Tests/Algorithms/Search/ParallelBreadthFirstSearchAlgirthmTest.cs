@@ -125,7 +125,7 @@ namespace QuickGraph.Algorithms.Search
                 algo.InitializeVertex += new VertexEventHandler<int>(this.InitializeVertex);
                 algo.DiscoverVertex += new ParallelVertexEventHandler<int,int>(this.DiscoverVertex);
                 algo.ExamineVertex += new ParallelVertexEventHandler<int, int>(this.ExamineVertex);
-                algo.TreeEdge += new ParallelEdgeEventHandler<int, Edge<int>, int>(this.TreeEdge);
+                algo.TreeEdge += new ParallelEdgeAction<int, Edge<int>, int>(this.TreeEdge);
                 algo.NextLevel += new EventHandler(algo_NextLevel);
                 algo.FinishVertex += new ParallelVertexEventHandler<int,int>(this.FinishVertex);
 
@@ -148,7 +148,7 @@ namespace QuickGraph.Algorithms.Search
                 algo.InitializeVertex -= new VertexEventHandler<int>(this.InitializeVertex);
                 algo.DiscoverVertex -= new ParallelVertexEventHandler<int,int>(this.DiscoverVertex);
                 algo.ExamineVertex -= new ParallelVertexEventHandler<int,int>(this.ExamineVertex);
-                algo.TreeEdge -= new ParallelEdgeEventHandler<int, Edge<int>,int>(this.TreeEdge);
+                algo.TreeEdge -= new ParallelEdgeAction<int, Edge<int>,int>(this.TreeEdge);
                 algo.FinishVertex -= new ParallelVertexEventHandler<int,int>(this.FinishVertex);
             }
         }

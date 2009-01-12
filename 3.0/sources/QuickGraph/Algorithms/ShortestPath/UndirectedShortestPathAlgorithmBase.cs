@@ -14,10 +14,10 @@ namespace QuickGraph.Algorithms.ShortestPath
         , IUndirectedTreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private readonly IDictionary<TVertex, GraphColor> vertexColors;
-        private readonly Dictionary<TVertex, double> distances;
         private readonly Func<TEdge, double> weights;
         private readonly IDistanceRelaxer distanceRelaxer;
+        private Dictionary<TVertex, GraphColor> vertexColors;
+        private Dictionary<TVertex, double> distances;
 
         protected UndirectedShortestPathAlgorithmBase(
             IAlgorithmComponent host,
@@ -38,13 +38,11 @@ namespace QuickGraph.Algorithms.ShortestPath
             Contract.Requires(weights != null);
             Contract.Requires(distanceRelaxer != null);
 
-            this.vertexColors = new Dictionary<TVertex, GraphColor>();
-            this.distances = new Dictionary<TVertex, double>();
             this.weights = weights;
             this.distanceRelaxer = distanceRelaxer;
         }
 
-        public IDictionary<TVertex, GraphColor> VertexColors
+        public Dictionary<TVertex, GraphColor> VertexColors
         {
             get
             {
@@ -63,9 +61,14 @@ namespace QuickGraph.Algorithms.ShortestPath
             return this.distances.TryGetValue(vertex, out distance);
         }
 
-        public IDictionary<TVertex, double> Distances
+        public Dictionary<TVertex, double> Distances
         {
             get { return this.distances; }
+        }
+
+        protected Func<TVertex, double> DistancesIndexGetter()
+        {
+            return AlgorithmExtensions.GetIndexer<TVertex, double>(this.distances);
         }
 
         public Func<TEdge, double> Weights
@@ -78,12 +81,19 @@ namespace QuickGraph.Algorithms.ShortestPath
             get { return this.distanceRelaxer; }
         }
 
+        protected override void Initialize()
+        {
+            base.Initialize();
+            this.vertexColors = new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount);
+            this.distances = new Dictionary<TVertex, double>(this.VisitedGraph.VertexCount);
+        }
+
         /// <summary>
         /// Invoked when the distance label for the target vertex is decreased. 
         /// The edge that participated in the last relaxation for vertex v is 
         /// an edge in the shortest paths tree.
         /// </summary>
-        public event UndirectedEdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event UndirectedEdgeAction<TVertex, TEdge> TreeEdge;
 
         /// <summary>
         /// Raises the <see cref="TreeEdge"/> event.

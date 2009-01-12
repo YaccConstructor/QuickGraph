@@ -108,7 +108,7 @@ namespace QuickGraph.Algorithms.Search
                 eh(e);
         }
 
-        public event UndirectedEdgeEventHandler<TVertex, TEdge> TreeEdge;
+        public event UndirectedEdgeAction<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e, bool reversed)
         {
             var eh = this.TreeEdge;
@@ -116,7 +116,7 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
-        public event UndirectedEdgeEventHandler<TVertex, TEdge> NonTreeEdge;
+        public event UndirectedEdgeAction<TVertex, TEdge> NonTreeEdge;
         private void OnNonTreeEdge(TEdge e, bool reversed)
         {
             var eh = this.NonTreeEdge;
@@ -124,7 +124,7 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
-        public event UndirectedEdgeEventHandler<TVertex, TEdge> GrayTarget;
+        public event UndirectedEdgeAction<TVertex, TEdge> GrayTarget;
         private void OnGrayTarget(TEdge e, bool reversed)
         {
             var eh = this.GrayTarget;
@@ -132,7 +132,7 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
-        public event UndirectedEdgeEventHandler<TVertex, TEdge> BlackTarget;
+        public event UndirectedEdgeAction<TVertex, TEdge> BlackTarget;
         private void OnBlackTarget(TEdge e, bool reversed)
         {
             var eh = this.BlackTarget;

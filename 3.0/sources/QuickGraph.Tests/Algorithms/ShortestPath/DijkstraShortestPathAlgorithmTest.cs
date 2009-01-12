@@ -11,6 +11,11 @@ namespace QuickGraph.Algorithms.ShortestPath
     public partial class DijkstraShortestPathAlgorithmTest
     {
         [TestMethod]
+        public void Repro()
+        {
+        }
+
+        [TestMethod]
         public void DijkstraAll()
         {
             foreach (var g in TestGraphFactory.GetAdjacencyGraphs())

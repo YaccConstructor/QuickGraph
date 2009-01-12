@@ -28,7 +28,7 @@ namespace QuickGraph.Graphviz
         }
     }
 
-    public delegate void FormatEdgeEventHandler<TVertex, TEdge>(
+    public delegate void FormatEdgeAction<TVertex, TEdge>(
         object sender, 
         FormatEdgeEventArgs<TVertex,TEdge> e)
         where TEdge : IEdge<TVertex>;
