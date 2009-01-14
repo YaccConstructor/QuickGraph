@@ -5174,6 +5174,10 @@
     <None Include="..\QuickGraph.Tests\GraphML\Graph.log">
       <Link>GraphML\Graph.log</Link>
     </None>
+    <None Include="..\QuickGraph.Tests\GraphML\repro12359.graphml">
+      <Link>GraphML\repro12359.graphml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\QuickGraph.Tests\GraphML\repro12273.xml">

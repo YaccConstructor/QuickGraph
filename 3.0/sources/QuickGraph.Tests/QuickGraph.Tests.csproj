@@ -4207,6 +4207,9 @@
     <Content Include="GraphML\repro12273.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="GraphML\repro12359.graphml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="QuickGraph.stubx">
       <Generator>StubGenerator</Generator>
       <LastGenOutput>QuickGraph.Designer.cs</LastGenOutput>

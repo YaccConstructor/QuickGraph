@@ -27,7 +27,7 @@ namespace QuickGraph.Algorithms
         public static Func<TKey, TValue> GetIndexer<TKey, TValue>(Dictionary<TKey, TValue> dictionary)
         {
             Contract.Requires(dictionary != null);
-            Contract.Ensures(Contract.Result<MethodInfo>() != null);
+            Contract.Ensures(Contract.Result<Func<TKey, TValue>>() != null);
 
             var method = dictionary.GetType().GetProperty("Item").GetGetMethod();
             return (Func<TKey, TValue>)Delegate.CreateDelegate(typeof(Func<TKey, TValue>), dictionary, method, true);

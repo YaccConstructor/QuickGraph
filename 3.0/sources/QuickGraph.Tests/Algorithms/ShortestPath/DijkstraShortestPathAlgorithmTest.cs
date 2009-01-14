@@ -11,8 +11,15 @@ namespace QuickGraph.Algorithms.ShortestPath
     public partial class DijkstraShortestPathAlgorithmTest
     {
         [TestMethod]
-        public void Repro()
+        public void Repro12359()
         {
+            var g = TestGraphFactory.LoadGraph("repro12359.graphml");
+            int i = 0;
+            foreach (var v in g.Vertices)
+            {
+                if (i++ > 5) break;
+                Dijkstra(g, v);
+            }
         }
 
         [TestMethod]
