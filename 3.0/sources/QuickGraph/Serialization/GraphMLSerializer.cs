@@ -183,6 +183,8 @@ namespace QuickGraph.Serialization
                 bool first = true;
                 foreach (var kv in SerializationHelper.GetAttributeProperties(elementType))
                 {
+                    var property = kv.Property;
+
                     if (!first)
                     {
                         gen.MarkLabel(next);
@@ -192,20 +194,20 @@ namespace QuickGraph.Serialization
 
                     // if (!key.Equals("foo"))
                     gen.Emit(OpCodes.Ldloc_0);
-                    gen.Emit(OpCodes.Ldstr, kv.Value);
+                    gen.Emit(OpCodes.Ldstr, kv.Name);
                     gen.EmitCall(OpCodes.Call, Metadata.StringEqualsMethod,null);
                     // if false jump to next
                     gen.Emit(OpCodes.Brfalse, next);
 
                     // do our stuff
                     MethodInfo readMethod = null;
-                    if (!Metadata.TryGetReadContentMethod(kv.Key.PropertyType, out readMethod))
-                        throw new ArgumentException(String.Format("Property {0} has a non-supported type",kv.Key.Name));
+                    if (!Metadata.TryGetReadContentMethod(property.PropertyType, out readMethod))
+                        throw new ArgumentException(String.Format("Property {0} has a non-supported type", property.Name));
 
                     // do we have a set method ?
-                    var setMethod = kv.Key.GetSetMethod();
+                    var setMethod = property.GetSetMethod();
                     if (setMethod==null)
-                        throw new ArgumentException(String.Format("Property {0}.{1} has not set method", kv.Key.DeclaringType, kv.Key.Name));
+                        throw new ArgumentException(String.Format("Property {0}.{1} has not set method", property.DeclaringType, property.Name));
                     // reader.ReadXXX
                     gen.Emit(OpCodes.Ldarg_2); // element
                     gen.Emit(OpCodes.Ldarg_0); // reader
@@ -333,7 +335,9 @@ namespace QuickGraph.Serialization
 
                 foreach (var kv in SerializationHelper.GetAttributeProperties(nodeType))
                 {
-                    var property = kv.Key;
+                    var property = kv.Property;
+                    var name = kv.Name;
+
                     var getMethod = property.GetGetMethod();
                     if (getMethod == null)
                         throw new NotSupportedException(String.Format("Property {0}.{1} has not getter", property.DeclaringType, property.Name));
@@ -352,7 +356,7 @@ namespace QuickGraph.Serialization
                     // writer.WriteStartAttribute("key");
                     gen.Emit(OpCodes.Ldarg_0);
                     gen.Emit(OpCodes.Ldstr, "key");
-                    gen.Emit(OpCodes.Ldstr, kv.Value);
+                    gen.Emit(OpCodes.Ldstr, name);
                     gen.EmitCall(OpCodes.Callvirt, Metadata.WriteAttributeStringMethod, null);
 
                     // writer.WriteValue(v.xxx);
@@ -673,14 +677,16 @@ namespace QuickGraph.Serialization
 
                 foreach (var kv in SerializationHelper.GetAttributeProperties(nodeType))
                 {
+                    var property = kv.Property;
+                    var name = kv.Name;
+                    Type propertyType = property.PropertyType;
+
                     //<key id="d1" for="edge" attr.name="weight" attr.type="double"/>
                     this.Writer.WriteStartElement("key", GraphMLNamespace);
-                    this.Writer.WriteAttributeString("id", kv.Value);
+                    this.Writer.WriteAttributeString("id", name);
                     this.Writer.WriteAttributeString("for", forNode);
-                    this.Writer.WriteAttributeString("attr.name", kv.Value);
+                    this.Writer.WriteAttributeString("attr.name", name);
 
-                    var property = kv.Key;
-                    Type propertyType = property.PropertyType;
                     switch(Type.GetTypeCode(propertyType))
                     {
                         case TypeCode.Boolean:
@@ -704,6 +710,38 @@ namespace QuickGraph.Serialization
                         default:
                             throw new NotSupportedException(String.Format("Property type {0}.{1} not supported by the GraphML schema", property.DeclaringType, property.Name));
                     }
+
+                    // <default>...</default>
+                    object defaultValue;
+                    if (kv.TryGetDefaultValue(out defaultValue))
+                    {
+                        this.Writer.WriteStartElement("default");
+                        switch (Type.GetTypeCode(defaultValue.GetType()))
+                        {
+                            case TypeCode.Boolean:
+                                this.Writer.WriteString(XmlConvert.ToString((bool)defaultValue));
+                                break;
+                            case TypeCode.Int32:
+                                this.Writer.WriteString(XmlConvert.ToString((int)defaultValue));
+                                break;
+                            case TypeCode.Int64:
+                                this.Writer.WriteString(XmlConvert.ToString((long)defaultValue));
+                                break;
+                            case TypeCode.Single:
+                                this.Writer.WriteString(XmlConvert.ToString((float)defaultValue));
+                                break;
+                            case TypeCode.Double:
+                                this.Writer.WriteString(XmlConvert.ToString((double)defaultValue));
+                                break;
+                            case TypeCode.String:
+                                this.Writer.WriteString((string)defaultValue);
+                                break;
+                            default:
+                                throw new NotSupportedException(String.Format("Property type {0}.{1} not supported by the GraphML schema", property.DeclaringType, property.Name));
+                        }
+                        this.Writer.WriteEndElement();
+                    }
+
                     this.Writer.WriteEndElement();
                 }
             }

@@ -6,6 +6,7 @@ using System.Xml;
 using Microsoft.Pex.Framework;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.ComponentModel;
 
 namespace QuickGraph.Serialization
 {
@@ -48,6 +49,7 @@ namespace QuickGraph.Serialization
 
             string _string;
             [XmlAttribute("v_string")]
+            [DefaultValue("bla")]
             public string String
             {
                 get 
@@ -63,6 +65,7 @@ namespace QuickGraph.Serialization
             }
             int _int;
             [XmlAttribute("v_int")]
+            [DefaultValue(1)]
             public int Int
             {
                 get
@@ -78,6 +81,7 @@ namespace QuickGraph.Serialization
             }
             long _long;
             [XmlAttribute("v_long")]
+            [DefaultValue(2)]
             public long Long
             {
                 get
@@ -181,10 +185,13 @@ namespace QuickGraph.Serialization
             }
 
             [XmlAttribute("e_string")]
+            [DefaultValue("bla")]
             public string String  {get;set;}
             [XmlAttribute("e_int")]
+            [DefaultValue(1)]
             public int Int { get; set; }
             [XmlAttribute("e_long")]
+            [DefaultValue(2)]
             public long Long { get; set; }
             [XmlAttribute("e_double")]
             public double Double { get; set; }

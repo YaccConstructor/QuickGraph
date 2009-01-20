@@ -28,6 +28,7 @@ namespace QuickGraph.Collections
     [TestClass]
     [PexClass(typeof(BinaryHeap<,>))]
     [PexGenericArguments(typeof(int), typeof(int))]
+    [PexAllowedContractRequiresFailureAtTypeUnderTestSurface]
     public partial class BinaryHeapTPriorityTValueTest
     {
         /// <summary>

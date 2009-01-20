@@ -252,6 +252,7 @@
     <Compile Include="Collections\IDisjointSet.cs" />
     <Compile Include="Collections\IPriorityQueue.cs" />
     <Compile Include="Collections\IQueue.cs" />
+    <Compile Include="Collections\SoftHeap.cs" />
     <Compile Include="Collections\VertexEdgeDictionary.cs" />
     <Compile Include="Collections\VertexList.cs" />
     <Compile Include="Collections\VertexPair.cs" />

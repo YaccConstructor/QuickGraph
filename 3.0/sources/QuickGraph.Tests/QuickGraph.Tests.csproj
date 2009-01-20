@@ -126,115 +126,6 @@
     <Compile Include="..\version.cs">
       <Link>Properties\version.cs</Link>
     </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.AddEdge.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.AddEdgeRange.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.AddVertex.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.AddVertexRange.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.AddVerticesAndEdge.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.AllowParallelEdgesGet.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.Clear.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.ClearOutEdges.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.Clone.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.Constructor.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.Constructor01.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.Constructor02.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.Constructor03.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.ContainsEdge.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.ContainsEdge01.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.ContainsVertex.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.cs" />
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.EdgeCapacityGetSet.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.EdgeCountGet.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.EdgesGet.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.EdgeTypeGet.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.IsDirectedGet.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.IsEdgesEmptyGet.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.IsOutEdgesEmpty.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.IsVerticesEmptyGet.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.OutDegree.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.OutEdge.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.OutEdges.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.RemoveEdge.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.RemoveVertex.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.TrimEdgeExcess.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.TryGetEdge.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.TryGetEdges.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.TryGetOutEdges.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.VertexCountGet.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.VertexTypeGet.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdjacencyGraphTVertexTEdgeTest.VerticesGet.g.cs">
-      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\WeaklyConnectedCondensationGraphTest.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
@@ -301,6 +192,10 @@
     <Compile Include="Collections\ForestDisjointSetTTest.Unions.g.cs">
       <DependentUpon>ForestDisjointSetTTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Collections\SoftHeapTKeyTValueTest.Add.g.cs">
+      <DependentUpon>SoftHeapTTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\SoftHeapTTest.cs" />
     <Compile Include="DataStructureTest.cs" />
     <Compile Include="Data\Store.Designer.cs">
       <AutoGen>True</AutoGen>
