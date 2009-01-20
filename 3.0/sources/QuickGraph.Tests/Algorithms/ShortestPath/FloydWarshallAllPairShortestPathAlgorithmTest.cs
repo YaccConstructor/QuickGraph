@@ -102,24 +102,24 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
         [TestMethod]
         public void FloydVsBellmannGraphML()
         {
-            Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
+            Func<Edge<string>, double> distances = e => 1;
             foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
-                this.Compare<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>, IVertexAndEdgeListGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>>(
+                this.Compare<string, Edge<string>, IVertexAndEdgeListGraph<string, Edge<string>>>(
                     g,
                     distances,
-                    (G, d) => new BellmanFordShortestPathAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(G, d)
+                    (G, d) => new BellmanFordShortestPathAlgorithm<string, Edge<string>>(G, d)
                     );
         }
 
         [TestMethod]
         public void FloydVsDijkstraGraphML()
         {
-            Func<IdentifiableEdge<IdentifiableVertex>, double> distances = e => 1;
+            Func<Edge<string>, double> distances = e => 1;
             foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
-                this.Compare<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>, IVertexListGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>>(
+                this.Compare<string, Edge<string>, IVertexListGraph<string, Edge<string>>>(
                     g, 
                     distances,
-                    (G, d) => new DijkstraShortestPathAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(G, d)
+                    (G, d) => new DijkstraShortestPathAlgorithm<string, Edge<string>>(G, d)
                     );
         }
 

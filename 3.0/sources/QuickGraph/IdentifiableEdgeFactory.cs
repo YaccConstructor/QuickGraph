@@ -8,5 +8,5 @@ namespace QuickGraph
     /// A factory of identifiable edges.
     /// </summary>
     public delegate TEdge IdentifiableEdgeFactory<TVertex, TEdge>(TVertex source, TVertex target, string id)
-        where TEdge: IIdentifiable, IEdge<TVertex>;
+        where TEdge: IEdge<TVertex>;
 }

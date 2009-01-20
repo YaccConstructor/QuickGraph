@@ -2,6 +2,7 @@
 using QuickGraph.Algorithms.RandomWalks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Serialization;
+using QuickGraph.Collections;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
@@ -15,7 +16,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             {
                 foreach (var v in g.Vertices)
                 {
-                    var target = new CyclePoppingRandomTreeAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(g);
+                    var target = new CyclePoppingRandomTreeAlgorithm<string, Edge<string>>(g);
                     target.Compute(v);
                 }
             }

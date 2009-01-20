@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Pex.Framework;
 using QuickGraph.Serialization;
+using QuickGraph.Collections;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -17,16 +18,16 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
         [PexMethod]
         public void Augment(
-            IMutableVertexAndEdgeListGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> g)
+            IMutableVertexAndEdgeListGraph<string, Edge<string>> g)
         {
             int vertexCount = g.VertexCount;
             int edgeCount = g.EdgeCount;
             int vertexId = g.VertexCount+1;
             int edgeID = g.EdgeCount+1;
-            using (var augmentor = new AllVerticesGraphAugmentorAlgorithm<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>(
+            using (var augmentor = new AllVerticesGraphAugmentorAlgorithm<string, Edge<string>>(
                 g,
-                () => new IdentifiableVertex((vertexId++).ToString()),
-                (s, t) => new IdentifiableEdge<IdentifiableVertex>(s, t, (edgeID++).ToString())
+                () => (vertexId++).ToString(),
+                (s, t) => new Edge<string>(s, t)
                 ))
             {
                 augmentor.Compute();

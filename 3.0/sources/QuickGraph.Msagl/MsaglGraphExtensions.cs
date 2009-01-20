@@ -35,11 +35,14 @@ namespace QuickGraph.Msagl
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
-            where TVertex : IIdentifiable
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            VertexIdentity<TVertex> vertexIdentities)
             where TEdge : IEdge<TVertex>
         {
-            return new MsaglIndentifiableGraphPopulator<TVertex, TEdge>(visitedGraph);
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(vertexIdentities != null);
+
+            return new MsaglIndentifiableGraphPopulator<TVertex, TEdge>(visitedGraph, vertexIdentities);
         }
 
         public static Microsoft.Msagl.Drawing.Graph ToMsaglGraph<TVertex, TEdge>(
@@ -90,15 +93,16 @@ namespace QuickGraph.Msagl
             this 
 #endif
             IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            VertexIdentity<TVertex> vertexIdentities,
             MsaglVertexNodeEventHandler<TVertex> nodeAdded,
             MsaglEdgeAction<TVertex, TEdge> edgeAdded
             )
-            where TVertex : IIdentifiable
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
+            Contract.Requires(vertexIdentities != null);
 
-            var populator = CreateIdentifiableMsaglPopulator(visitedGraph);
+            var populator = CreateIdentifiableMsaglPopulator(visitedGraph, vertexIdentities);
             try
             {
                 if (nodeAdded != null)

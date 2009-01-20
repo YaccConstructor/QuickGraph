@@ -101,6 +101,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         protected override void Initialize()
         {
+            base.Initialize();
             // init color, distance
             var initialDistance = this.DistanceRelaxer.InitialDistance;
             foreach (var u in VisitedGraph.Vertices)

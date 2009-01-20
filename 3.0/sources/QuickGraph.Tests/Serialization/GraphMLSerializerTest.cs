@@ -5,6 +5,7 @@ using System.Xml;
 using Microsoft.Pex.Framework;
 using System.Xml.XPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Collections;
 
 namespace QuickGraph.Serialization
 {
@@ -19,9 +20,9 @@ namespace QuickGraph.Serialization
             return list;
         }
 
-        public static IEnumerable<BidirectionalGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetBidirectionalGraphs()
+        public static IEnumerable<BidirectionalGraph<string, Edge<string>>> GetBidirectionalGraphs()
         {
-            yield return new BidirectionalGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+            yield return new BidirectionalGraph<string, Edge<string>>();
             foreach (var graphmlFile in TestGraphFactory.GetFileNames())
             {
                 var g = LoadBidirectionalGraph(graphmlFile);
@@ -29,24 +30,24 @@ namespace QuickGraph.Serialization
             }
         }
 
-        public static BidirectionalGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> LoadBidirectionalGraph(string graphmlFile)
+        public static BidirectionalGraph<string, Edge<string>> LoadBidirectionalGraph(string graphmlFile)
         {
             Console.WriteLine(graphmlFile);
-            var g = new BidirectionalGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+            var g = new BidirectionalGraph<string, Edge<string>>();
             using (var reader = new StreamReader(graphmlFile))
             {
                 g.DeserializeFromGraphML(
                     reader,
-                    id => new IdentifiableVertex(id),
-                    (source, target, id) => new IdentifiableEdge<IdentifiableVertex>(source, target, id)
+                    id => id,
+                    (source, target, id) => new Edge<string>(source, target)
                     );
             }
             return g;
         }
 
-        public static IEnumerable<AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetAdjacencyGraphs()
+        public static IEnumerable<AdjacencyGraph<string, Edge<string>>> GetAdjacencyGraphs()
         {
-            yield return new AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+            yield return new AdjacencyGraph<string, Edge<string>>();
             foreach (var graphmlFile in TestGraphFactory.GetFileNames())
             {
                 var g = LoadGraph(graphmlFile);
@@ -54,36 +55,36 @@ namespace QuickGraph.Serialization
             }
         }
 
-        public static AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> LoadGraph(string graphmlFile)
+        public static AdjacencyGraph<string, Edge<string>> LoadGraph(string graphmlFile)
         {
             Console.WriteLine(graphmlFile);
-            var g = new AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+            var g = new AdjacencyGraph<string, Edge<string>>();
             using (var reader = new StreamReader(graphmlFile))
             {
                 g.DeserializeFromGraphML(
                     reader,
-                    id => new IdentifiableVertex(id),
-                    (source, target, id) => new IdentifiableEdge<IdentifiableVertex>(source, target, id)
+                    id => id,
+                    (source, target, id) => new Edge<string>(source, target)
                     );
             }
             return g;
         }
 
-        public static IEnumerable<UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>> GetUndirectedGraphs()
+        public static IEnumerable<UndirectedGraph<string, Edge<string>>> GetUndirectedGraphs()
         {
-            yield return new UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+            yield return new UndirectedGraph<string, Edge<string>>();
             foreach (var g in GetAdjacencyGraphs())
             {
-                var ug = new UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+                var ug = new UndirectedGraph<string, Edge<string>>();
                 ug.AddVerticesAndEdgeRange(g.Edges);
                 yield return ug;
             }
         }
 
-        public static UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>> LoadUndirectedGraph(string graphmlFile)
+        public static UndirectedGraph<string, Edge<string>> LoadUndirectedGraph(string graphmlFile)
         {
             var g = LoadGraph(graphmlFile);
-            var ug = new UndirectedGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+            var ug = new UndirectedGraph<string, Edge<string>>();
             ug.AddVerticesAndEdgeRange(g.Edges);
             return ug;
         }
@@ -98,20 +99,20 @@ namespace QuickGraph.Serialization
             foreach (var graphmlFile in TestGraphFactory.GetFileNames())
             {
                 Console.Write(graphmlFile);
-                var g = new AdjacencyGraph<IdentifiableVertex, IdentifiableEdge<IdentifiableVertex>>();
+                var g = new AdjacencyGraph<string, Edge<string>>();
                 using (var reader = new StreamReader(graphmlFile))
                 {
                     g.DeserializeFromGraphML(
                         reader,
-                        id => new IdentifiableVertex(id),
-                        (source, target, id) => new IdentifiableEdge<IdentifiableVertex>(source, target, id)
+                        id => id,
+                        (source, target, id) => new Edge<string>(source, target)
                         );
                 }
                 Console.Write(": {0} vertices, {1} edges", g.VertexCount, g.EdgeCount);
 
-                var vertices = new Dictionary<string, IdentifiableVertex>();
+                var vertices = new Dictionary<string, string>();
                 foreach(var v in g.Vertices)
-                    vertices.Add(v.ID, v);
+                    vertices.Add(v, v);
 
                 // check all nodes are loaded
                 var settings = new XmlReaderSettings();

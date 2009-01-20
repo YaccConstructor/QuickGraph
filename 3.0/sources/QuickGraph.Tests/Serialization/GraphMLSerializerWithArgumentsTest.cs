@@ -13,7 +13,7 @@ namespace QuickGraph.Serialization
     [TestClass, PexClass]
     public partial class GraphMLSerializerWithArgumentsTest
     {
-        public sealed class TestVertex : IIdentifiable
+        public sealed class TestVertex
         {
             private string id;
 
@@ -145,7 +145,7 @@ namespace QuickGraph.Serialization
             }
         }
 
-        public sealed class TestEdge : Edge<TestVertex>, IIdentifiable
+        public sealed class TestEdge : Edge<TestVertex>
         {
             private string id;
 
@@ -230,7 +230,11 @@ namespace QuickGraph.Serialization
             using (var writer = new StringWriter())
             {
                 using (var xwriter = XmlWriter.Create(writer))
-                    g.SerializeToGraphML(xwriter);
+                    g.SerializeToGraphML(
+                        xwriter,
+                        v => v.ID,
+                        e => e.ID
+                        );
 
                 xml = writer.ToString();
                 Console.WriteLine("serialized: " + xml);
@@ -251,7 +255,10 @@ namespace QuickGraph.Serialization
             using (var writer = new StringWriter())
             {
                 using (var xwriter = XmlWriter.Create(writer))
-                    serializer.Serialize(xwriter, newg);
+                    serializer.Serialize(
+                        xwriter, newg,
+                        v => v.ID,
+                        e => e.ID);
                 newxml = writer.ToString();
                 Console.WriteLine("roundtrip: " + newxml);
             }

@@ -22,11 +22,11 @@ namespace QuickGraph.Tests.Algorithms
             {
                 if (g.VertexCount == 0) continue;
 
-                var pairs = new List<VertexPair<IdentifiableVertex>>();
+                var pairs = new List<VertexPair<string>>();
                 foreach(var v in g.Vertices)
                     foreach(var w in g.Vertices)
                         if (!v.Equals(w))
-                            pairs.Add(new VertexPair<IdentifiableVertex>(v,w));
+                            pairs.Add(new VertexPair<string>(v,w));
 
                 int count = 0;
                 foreach (var root in g.Vertices)

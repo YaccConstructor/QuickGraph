@@ -266,7 +266,6 @@
     <Compile Include="Contracts\GraphContract.cs" />
     <Compile Include="Contracts\IEdgeSetContract.cs" />
     <Compile Include="Contracts\IGraphContract.cs" />
-    <Compile Include="Contracts\IIdentifiableContract.cs" />
     <Compile Include="Contracts\IImplicitGraphContract.cs" />
     <Compile Include="Contracts\IIncidenceGraphContract.cs" />
     <Compile Include="Contracts\IMutableBidirectionalGraphContract.cs" />
@@ -280,6 +279,7 @@
     <Compile Include="Contracts\IUndirectedGraphContract.cs" />
     <Compile Include="Contracts\IVertexSetContract.cs" />
     <Compile Include="EdgeExtensions.cs" />
+    <Compile Include="EdgeIdentity.cs" />
     <Compile Include="EdgePredicate.cs" />
     <Compile Include="Enumerable.cs" />
     <Compile Include="FuncDelegates.cs" />
@@ -302,11 +302,8 @@
     <Compile Include="EdgeEdgeEventArgs.cs" />
     <Compile Include="EdgeEventArgs.cs" />
     <Compile Include="EdgeListGraph.cs" />
-    <Compile Include="IdentifiableEdge.cs" />
-    <Compile Include="IdentifiableVertex.cs" />
     <Compile Include="IHierarchy.cs" />
     <Compile Include="IHyperEdge.cs" />
-    <Compile Include="IIdentifiable.cs" />
     <Compile Include="IdentifiableEdgeFactory.cs" />
     <Compile Include="IdentifiableVertexFactory.cs" />
     <Compile Include="IMutableUndirectedGraph.cs" />
@@ -384,6 +381,7 @@
     <Compile Include="UndirectedBidirectionalGraph.cs" />
     <Compile Include="UndirectedGraph.cs" />
     <Compile Include="VertexEventArgs.cs" />
+    <Compile Include="VertexIdentity.cs" />
     <Compile Include="VertexPredicate.cs" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Pex.Framework;
 using QuickGraph.Serialization;
+using QuickGraph.Collections;
 
 namespace QuickGraph.Algorithms
 {
@@ -15,8 +16,7 @@ namespace QuickGraph.Algorithms
         {
             foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
             {
-                int edgeid = 0;
-                this.ComputeTrail(g, (s, t) => new IdentifiableEdge<IdentifiableVertex>(s, t, (edgeid++).ToString()));
+                this.ComputeTrail(g, (s, t) => new Edge<string>(s, t));
             }
         }
 

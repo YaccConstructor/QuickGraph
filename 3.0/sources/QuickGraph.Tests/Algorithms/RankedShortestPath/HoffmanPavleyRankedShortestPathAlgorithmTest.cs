@@ -8,6 +8,7 @@ using Microsoft.Pex.Framework;
 using QuickGraph.Algorithms.RankedShortestPath;
 using System.IO;
 using QuickGraph.Algorithms;
+using QuickGraph.Collections;
 
 namespace QuickGraph.Tests.Algorithms.RankedShortestPath
 {
@@ -21,7 +22,7 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
             {
                 if (g.VertexCount == 0) continue;
 
-                var weights = new Dictionary<IdentifiableEdge<IdentifiableVertex>, double>();
+                var weights = new Dictionary<Edge<string>, double>();
                 foreach (var e in g.Edges)
                     weights.Add(e, g.OutDegree(e.Source) + 1);
 

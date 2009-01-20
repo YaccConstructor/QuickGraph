@@ -11,12 +11,13 @@ namespace QuickGraph.Collections
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
     [Serializable]
-    [DebuggerDisplay("{Source} -> {Target}")]
+    [DebuggerDisplay("{source} -> {target}")]
     public struct VertexPair<TVertex>
         : IEquatable<VertexPair<TVertex>>
+        , IEdge<TVertex>
     {
-        public readonly TVertex Source;
-        public readonly TVertex Target;
+        readonly TVertex source;
+        readonly TVertex target;
 
         public static VertexPair<TVertex> FromEdge<TEdge>(TEdge edge)
             where TEdge : IEdge<TVertex>
@@ -31,21 +32,21 @@ namespace QuickGraph.Collections
             Contract.Requires(source != null);
             Contract.Requires(target != null);
 
-            this.Source = source;
-            this.Target = target;
+            this.source = source;
+            this.target = target;
         }
 
         public override int GetHashCode()
         {
-            return this.Source.GetHashCode() ^
-                this.Target.GetHashCode();
+            return this.source.GetHashCode() ^
+                this.target.GetHashCode();
         }
 
         public bool Equals(VertexPair<TVertex> other)
         {
             return
-                other.Source.Equals(this.Source) &&
-                other.Target.Equals(this.Target);
+                other.source.Equals(this.source) &&
+                other.target.Equals(this.target);
         }
 
         public override bool Equals(object obj)
@@ -57,7 +58,19 @@ namespace QuickGraph.Collections
 
         public override string ToString()
         {
-            return this.Source.ToString() + " -> " + this.Target.ToString();
+            return this.source.ToString() + " -> " + this.target.ToString();
+        }
+
+        [Pure]
+        public TVertex Source
+        {
+            get { return this.source; }
+        }
+
+        [Pure]
+        public TVertex Target
+        {
+            get { return this.target; }
         }
     }
 }

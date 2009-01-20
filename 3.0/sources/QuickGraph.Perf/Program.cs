@@ -7,6 +7,7 @@ using QuickGraph.Tests.Algorithms;
 using QuickGraph.Tests.Algorithms.MinimumSpanningTree;
 using QuickGraph.Serialization;
 using QuickGraph.Algorithms.Observers;
+using QuickGraph.Collections;
 
 namespace QuickGraph.Perf
 {
@@ -18,7 +19,7 @@ namespace QuickGraph.Perf
             // new DijkstraShortestPathAlgorithmTest().DijkstraAll();
             // new MinimumSpanningTreeTest().PrimKruskalMinimumSpanningTreeAll();
             var g = TestGraphFactory.LoadGraph(@"graphml\repro12359.graphml");
-            var distances = new Dictionary<IdentifiableEdge<IdentifiableVertex>, double>(g.EdgeCount);
+            var distances = new Dictionary<Edge<string>, double>(g.EdgeCount);
             foreach (var e in g.Edges)
                 distances[e] = g.OutDegree(e.Source) + 1;
             int i = 0;

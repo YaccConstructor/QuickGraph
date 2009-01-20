@@ -35,11 +35,11 @@ namespace QuickGraph.Glee
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
-            where TVertex : IIdentifiable
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            VertexIdentity<TVertex> vertexIdentities)
             where TEdge : IEdge<TVertex>
         {
-            return new GleeIndentifiableGraphPopulator<TVertex, TEdge>(visitedGraph);
+            return new GleeIndentifiableGraphPopulator<TVertex, TEdge>(visitedGraph, vertexIdentities);
         }
 
         public static Microsoft.Glee.Drawing.Graph ToGleeGraph<TVertex, TEdge>(
@@ -80,15 +80,16 @@ namespace QuickGraph.Glee
             this 
 #endif
             IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            VertexIdentity<TVertex> vertexIdentities,
             GleeVertexNodeEventHandler<TVertex> nodeAdded,
             GleeEdgeEventHandler<TVertex, TEdge> edgeAdded
             )
-            where TVertex : IIdentifiable
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
+            Contract.Requires(vertexIdentities != null);
 
-            var populator = CreateIdentifiableGleePopulator(visitedGraph);
+            var populator = CreateIdentifiableGleePopulator(visitedGraph, vertexIdentities);
             try
             {
                 if (nodeAdded != null)

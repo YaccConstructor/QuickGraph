@@ -35,8 +35,7 @@ namespace QuickGraph.Serialization
     /// </remarks>
     public sealed class GraphMLSerializer<TVertex,TEdge> 
         : SerializerBase<TVertex,TEdge>
-        where TVertex : IIdentifiable
-        where TEdge : IIdentifiable, IEdge<TVertex>
+        where TEdge : IEdge<TVertex>
     {
         public const string GraphMLNamespace = "http://graphml.graphdrawing.org/xmlns";
 
@@ -380,13 +379,17 @@ namespace QuickGraph.Serialization
 
         public void Serialize(
             XmlWriter writer, 
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph
+            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            VertexIdentity<TVertex> vertexIdentities,
+            EdgeIdentity<TVertex, TEdge> edgeIdentities
             )
         {
             Contract.Requires(writer != null);
             Contract.Requires(visitedGraph != null);
+            Contract.Requires(vertexIdentities != null);
+            Contract.Requires(edgeIdentities != null);
 
-            var worker = new WriterWorker(this, writer, visitedGraph);
+            var worker = new WriterWorker(this, writer, visitedGraph, vertexIdentities, edgeIdentities);
             worker.Serialize();
         }
 
@@ -562,7 +565,7 @@ namespace QuickGraph.Serialization
                         GraphMLSerializer<TVertex, TEdge>.ReadDelegateCompiler.VertexAttributesReader(subReader, this.graphMLNamespace, vertex);
                     // add to graph
                     this.VisitedGraph.AddVertex(vertex);
-                    vertices.Add(vertex.ID, vertex);
+                    vertices.Add(id, vertex);
                 }
             }
 
@@ -580,19 +583,27 @@ namespace QuickGraph.Serialization
             private readonly GraphMLSerializer<TVertex, TEdge> serializer;
             private readonly XmlWriter writer;
             private readonly IVertexAndEdgeSet<TVertex, TEdge> visitedGraph;
+            private readonly VertexIdentity<TVertex> vertexIdentities;
+            private readonly EdgeIdentity<TVertex, TEdge> edgeIdentities;
 
             public WriterWorker(
                 GraphMLSerializer<TVertex,TEdge> serializer,
                 XmlWriter writer,
-                IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+                IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+                VertexIdentity<TVertex> vertexIdentities,
+                EdgeIdentity<TVertex, TEdge> edgeIdentities)
             {
                 Contract.Requires(serializer != null);
                 Contract.Requires(writer != null);
                 Contract.Requires(visitedGraph != null);
+                Contract.Requires(vertexIdentities != null);
+                Contract.Requires(edgeIdentities != null);
 
                 this.serializer = serializer;
                 this.writer = writer;
                 this.visitedGraph = visitedGraph;
+                this.vertexIdentities = vertexIdentities;
+                this.edgeIdentities = edgeIdentities;
             }
 
             public GraphMLSerializer<TVertex, TEdge> Serializer
@@ -751,7 +762,7 @@ namespace QuickGraph.Serialization
                 foreach (var v in this.VisitedGraph.Vertices)
                 {
                     this.Writer.WriteStartElement("node", GraphMLNamespace);
-                    this.Writer.WriteAttributeString("id", v.ID);
+                    this.Writer.WriteAttributeString("id", this.vertexIdentities(v));
                     GraphMLSerializer<TVertex, TEdge>.WriteDelegateCompiler.VertexAttributesWriter(this.Writer, v);
                     this.Writer.WriteEndElement();
                 }
@@ -762,9 +773,9 @@ namespace QuickGraph.Serialization
                 foreach (var e in this.VisitedGraph.Edges)
                 {
                     this.Writer.WriteStartElement("edge", GraphMLNamespace);
-                    this.Writer.WriteAttributeString("id", e.ID);
-                    this.Writer.WriteAttributeString("source", e.Source.ID);
-                    this.Writer.WriteAttributeString("target", e.Target.ID);
+                    this.Writer.WriteAttributeString("id", this.edgeIdentities(e));
+                    this.Writer.WriteAttributeString("source", this.vertexIdentities(e.Source));
+                    this.Writer.WriteAttributeString("target", this.vertexIdentities(e.Target));
                     GraphMLSerializer<TVertex, TEdge>.WriteDelegateCompiler.EdgeAttributesWriter(this.Writer, e);
                     this.Writer.WriteEndElement();
                 }

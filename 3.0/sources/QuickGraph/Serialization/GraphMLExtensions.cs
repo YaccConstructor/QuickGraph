@@ -15,15 +15,16 @@ namespace QuickGraph.Serialization
             this 
 #endif
             IVertexAndEdgeSet<TVertex, TEdge> graph,
-            XmlWriter writer)
-            where TVertex : IIdentifiable
-            where TEdge : IIdentifiable, IEdge<TVertex>
+            XmlWriter writer,
+            VertexIdentity<TVertex> vertexIdentities,
+            EdgeIdentity<TVertex, TEdge> edgeIdentities)
+            where TEdge : IEdge<TVertex>
         {
             Contract.Requires(graph != null);
             Contract.Requires(writer != null);
 
             var serializer = new GraphMLSerializer<TVertex, TEdge>();
-            serializer.Serialize(writer, graph);
+            serializer.Serialize(writer, graph, vertexIdentities, edgeIdentities);
         }
 
         public static void DeserializeFromGraphML<TVertex, TEdge>(
@@ -35,8 +36,7 @@ namespace QuickGraph.Serialization
             IdentifiableVertexFactory<TVertex> vertexFactory,
             IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
             )
-            where TVertex : IIdentifiable
-            where TEdge : IIdentifiable, IEdge<TVertex>
+            where TEdge : IEdge<TVertex>
         {
             Contract.Requires(graph != null);
             Contract.Requires(reader != null);
@@ -61,8 +61,7 @@ namespace QuickGraph.Serialization
             IdentifiableVertexFactory<TVertex> vertexFactory,
             IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
             )
-            where TVertex : IIdentifiable
-            where TEdge : IIdentifiable, IEdge<TVertex>
+            where TEdge : IEdge<TVertex>
         {
             Contract.Requires(graph != null);
             Contract.Requires(reader != null);
@@ -82,8 +81,7 @@ namespace QuickGraph.Serialization
             IdentifiableVertexFactory<TVertex> vertexFactory,
             IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
             )
-            where TVertex : IIdentifiable
-            where TEdge : IIdentifiable, IEdge<TVertex>
+            where TEdge : IEdge<TVertex>
         {
             Contract.Requires(graph != null);
             Contract.Requires(reader != null);
@@ -112,8 +110,7 @@ namespace QuickGraph.Serialization
         }
 
         private static void AddGraphMLSchema<TVertex, TEdge>(XmlReaderSettings settings)
-            where TVertex : IIdentifiable
-            where TEdge : IIdentifiable, IEdge<TVertex>
+            where TEdge : IEdge<TVertex>
         {
             using (var xsdStream = typeof(GraphMLExtensions).Assembly.GetManifestResourceStream(typeof(GraphMLExtensions), "graphml.xsd"))
             using (var xsdReader = XmlReader.Create(xsdStream))
