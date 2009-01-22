@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Serialization
 {
@@ -12,13 +13,18 @@ namespace QuickGraph.Serialization
     public sealed class GraphMLXmlResolver 
         : XmlUrlResolver
     {
+        public const string GraphMLNamespace = "http://graphml.graphdrawing.org/xmlns";
+        
         public override object GetEntity(Uri absoluteUri, string role, Type ofObjectToReturn)
         {
             if (absoluteUri.AbsoluteUri == "http://www.graphdrawing.org/dtds/graphml.dtd")
                 return typeof(GraphMLExtensions).Assembly.GetManifestResourceStream(typeof(GraphMLExtensions), "graphml.dtd");
             else if (absoluteUri.AbsoluteUri == "http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd")
                 return typeof(GraphMLExtensions).Assembly.GetManifestResourceStream(typeof(GraphMLExtensions), "graphml.xsd");
+            else if (absoluteUri.AbsoluteUri == "http://graphml.graphdrawing.org/xmlns/1.0/graphml-structure.xsd")
+                return typeof(GraphExtensions).Assembly.GetManifestResourceStream(typeof(GraphMLExtensions), "graphml-structure.xsd");
 
+            Contract.Assert(false, "unexpected resolved document + " + absoluteUri.AbsoluteUri);
             return base.GetEntity(absoluteUri, role, ofObjectToReturn);
         }
     }

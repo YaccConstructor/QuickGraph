@@ -18,7 +18,7 @@ namespace QuickGraph.Serialization
     /// <typeparam name="Edge"></typeparam>
     /// <remarks>
     /// <para>
-    /// Custom vertex and edge attributes can be specified by 
+    /// Custom vertex, edge and graph attributes can be specified by 
     /// using the <see cref="System.Xml.Serialization.XmlAttributeAttribute"/>
     /// attribute on properties (field not suppored).
     /// </para>
@@ -33,12 +33,11 @@ namespace QuickGraph.Serialization
     /// Hyperedge, nodes, nested graphs not supported.
     /// </para>
     /// </remarks>
-    public sealed class GraphMLSerializer<TVertex,TEdge> 
+    public sealed class GraphMLSerializer<TVertex,TEdge,TGraph> 
         : SerializerBase<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
+        where TGraph : IVertexAndEdgeSet<TVertex, TEdge>
     {
-        public const string GraphMLNamespace = "http://graphml.graphdrawing.org/xmlns";
-
         #region Compiler
         private delegate void WriteVertexAttributesDelegate(
             XmlWriter writer,
@@ -46,14 +45,9 @@ namespace QuickGraph.Serialization
         private delegate void WriteEdgeAttributesDelegate(
             XmlWriter writer,
             TEdge e);
-        private delegate void ReadVertexAttributesDelegate(
-            XmlReader reader,
-            string namespaceUri,
-            TVertex v);
-        private delegate void ReadEdgeAttributesDelegate(
-            XmlReader reader,
-            string namespaceUri,
-            TEdge e);
+        private delegate void WriteGraphAttributesDelegate(
+            XmlWriter writer,
+            TGraph e);
 
         public static bool MoveNextData(XmlReader reader)
         {
@@ -61,186 +55,14 @@ namespace QuickGraph.Serialization
             return
                 reader.NodeType == XmlNodeType.Element &&
                 reader.Name == "data" &&
-                reader.NamespaceURI == GraphMLNamespace;
-        }
-
-        static class ReadDelegateCompiler
-        {
-            public static readonly ReadVertexAttributesDelegate VertexAttributesReader;
-            public static readonly ReadEdgeAttributesDelegate EdgeAttributesReader;
-
-            static ReadDelegateCompiler()
-            {
-                VertexAttributesReader =
-                    (ReadVertexAttributesDelegate)CreateReadDelegate(
-                    typeof(ReadVertexAttributesDelegate),
-                    typeof(TVertex),
-                    "id"
-                    );
-                EdgeAttributesReader =
-                    (ReadEdgeAttributesDelegate)CreateReadDelegate(
-                    typeof(ReadEdgeAttributesDelegate),
-                    typeof(TEdge),
-                    "id", "source", "target"
-                    );
-            }
-
-            static class Metadata
-            {
-                public static readonly MethodInfo ReadToFollowingMethod =
-                    typeof(XmlReader).GetMethod(
-                        "ReadToFollowing",
-                        BindingFlags.Instance | BindingFlags.Public,
-                        null,
-                        new Type[] { typeof(string), typeof(string) },
-                        null);
-                public static readonly MethodInfo GetAttributeMethod =
-                    typeof(XmlReader).GetMethod(
-                        "GetAttribute",
-                        BindingFlags.Instance | BindingFlags.Public,
-                        null,
-                        new Type[] { typeof(string) },
-                        null);
-                public static readonly PropertyInfo NameProperty =
-                    typeof(XmlReader).GetProperty("Name");
-                public static readonly PropertyInfo NamespaceUriProperty =
-                    typeof(XmlReader).GetProperty("NamespaceUri");
-                public static readonly MethodInfo StringEqualsMethod =
-                    typeof(string).GetMethod(
-                        "op_Equality",
-                        BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public,
-                        null,
-                        new Type[] { typeof(string), typeof(string) },
-                        null);
-                public static readonly ConstructorInfo ArgumentExceptionCtor =
-                    typeof(ArgumentException).GetConstructor(new Type[] { typeof(string) });
-
-                private static readonly Dictionary<Type, MethodInfo> ReadContentMethods;
-
-                static Metadata()
-                {
-                    ReadContentMethods = new Dictionary<Type, MethodInfo>();
-                    ReadContentMethods.Add(typeof(bool), typeof(XmlReader).GetMethod("ReadElementContentAsBoolean", new Type[] { typeof(string), typeof(string) }));
-                    ReadContentMethods.Add(typeof(int), typeof(XmlReader).GetMethod("ReadElementContentAsInt", new Type[] { typeof(string), typeof(string) }));
-                    ReadContentMethods.Add(typeof(long), typeof(XmlReader).GetMethod("ReadElementContentAsLong", new Type[] { typeof(string), typeof(string) }));
-                    ReadContentMethods.Add(typeof(float), typeof(XmlReader).GetMethod("ReadElementContentAsFloat", new Type[] { typeof(string), typeof(string) }));
-                    ReadContentMethods.Add(typeof(double), typeof(XmlReader).GetMethod("ReadElementContentAsDouble", new Type[] { typeof(string), typeof(string) }));
-                    ReadContentMethods.Add(typeof(string), typeof(XmlReader).GetMethod("ReadElementContentAsString", new Type[] { typeof(string), typeof(string) }));
-                }
-
-                public static bool TryGetReadContentMethod(Type type, out MethodInfo method)
-                {
-                    Contract.Requires(type != null);
-
-                    bool result = ReadContentMethods.TryGetValue(type, out method);
-                    Contract.Assert(!result || method != null, type.FullName);
-                    return result;
-                }
-            }
-
-            public static Delegate CreateReadDelegate(
-                Type delegateType,
-                Type elementType,
-                params string[] ignoredAttributes
-                )
-            {
-                Contract.Requires(delegateType != null);
-                Contract.Requires(elementType != null);
-
-                var method = new DynamicMethod(
-                    "Read"+elementType.Name,
-                    typeof(void),
-                    new Type[] { typeof(XmlReader), typeof(string), elementType },
-                    elementType.Module
-                    );
-                var gen = method.GetILGenerator();
-
-                LocalBuilder key= gen.DeclareLocal(typeof(string));
-
-                Label start = gen.DefineLabel();
-                Label doWhile = gen.DefineLabel();
-
-                gen.Emit(OpCodes.Br, doWhile);
-                gen.MarkLabel(start);
-
-                gen.Emit(OpCodes.Ldarg_0);
-                gen.Emit(OpCodes.Ldstr, "key");
-                gen.EmitCall(OpCodes.Callvirt, Metadata.GetAttributeMethod, null);
-                gen.Emit(OpCodes.Stloc_0);
-
-                // if (String.Equals(key, "id")) continue;
-                foreach (string ignoredAttribute in ignoredAttributes)
-                {
-                    gen.Emit(OpCodes.Ldloc_0);
-                    gen.Emit(OpCodes.Ldstr, ignoredAttribute);
-                    gen.EmitCall(OpCodes.Call, Metadata.StringEqualsMethod, null);
-                    gen.Emit(OpCodes.Brtrue, doWhile);
-                }
-
-                // we need to create the swicth for each property
-                Label next = gen.DefineLabel();
-                bool first = true;
-                foreach (var kv in SerializationHelper.GetAttributeProperties(elementType))
-                {
-                    var property = kv.Property;
-
-                    if (!first)
-                    {
-                        gen.MarkLabel(next);
-                        next = gen.DefineLabel();
-                    }
-                    first = false;
-
-                    // if (!key.Equals("foo"))
-                    gen.Emit(OpCodes.Ldloc_0);
-                    gen.Emit(OpCodes.Ldstr, kv.Name);
-                    gen.EmitCall(OpCodes.Call, Metadata.StringEqualsMethod,null);
-                    // if false jump to next
-                    gen.Emit(OpCodes.Brfalse, next);
-
-                    // do our stuff
-                    MethodInfo readMethod = null;
-                    if (!Metadata.TryGetReadContentMethod(property.PropertyType, out readMethod))
-                        throw new ArgumentException(String.Format("Property {0} has a non-supported type", property.Name));
-
-                    // do we have a set method ?
-                    var setMethod = property.GetSetMethod();
-                    if (setMethod==null)
-                        throw new ArgumentException(String.Format("Property {0}.{1} has not set method", property.DeclaringType, property.Name));
-                    // reader.ReadXXX
-                    gen.Emit(OpCodes.Ldarg_2); // element
-                    gen.Emit(OpCodes.Ldarg_0); // reader
-                    gen.Emit(OpCodes.Ldstr, "data");
-                    gen.Emit(OpCodes.Ldarg_1); // namespace uri
-                    gen.EmitCall(OpCodes.Callvirt, readMethod, null);
-                    gen.EmitCall(OpCodes.Callvirt, setMethod, null);
-
-                    // jump to do while
-                    gen.Emit(OpCodes.Br, doWhile);
-                }
-
-                // we don't know this parameter.. we throw
-                gen.MarkLabel(next);
-                gen.Emit(OpCodes.Ldloc_0);
-                gen.Emit(OpCodes.Newobj, Metadata.ArgumentExceptionCtor);
-                gen.Emit(OpCodes.Throw);
-
-                gen.MarkLabel(doWhile);
-                gen.Emit(OpCodes.Ldarg_0);
-                gen.EmitCall(OpCodes.Call, new Func<XmlReader, bool>(MoveNextData).Method ,null);
-                gen.Emit(OpCodes.Brtrue, start);
-
-                gen.Emit(OpCodes.Ret);
-
-                //let's bake the method
-                return method.CreateDelegate(delegateType);
-            }
+                reader.NamespaceURI == GraphMLXmlResolver.GraphMLNamespace;
         }
 
         static class WriteDelegateCompiler
         {
             public static readonly WriteVertexAttributesDelegate VertexAttributesWriter;
             public static readonly WriteEdgeAttributesDelegate EdgeAttributesWriter;
+            public static readonly WriteGraphAttributesDelegate GraphAttributesWriter;
 
             static WriteDelegateCompiler()
             {
@@ -253,6 +75,11 @@ namespace QuickGraph.Serialization
                         typeof(TEdge),
                         typeof(WriteEdgeAttributesDelegate)
                         );
+                GraphAttributesWriter =
+                    (WriteGraphAttributesDelegate)CreateWriteDelegate(
+                        typeof(TGraph),
+                        typeof(WriteGraphAttributesDelegate)
+                    );
             }
 
             static class Metadata
@@ -349,7 +176,7 @@ namespace QuickGraph.Serialization
                     // writer.WriteStartElement("data")
                     gen.Emit(OpCodes.Ldarg_0);
                     gen.Emit(OpCodes.Ldstr, "data");
-                    gen.Emit(OpCodes.Ldstr, GraphMLNamespace);
+                    gen.Emit(OpCodes.Ldstr, GraphMLXmlResolver.GraphMLNamespace);
                     gen.EmitCall(OpCodes.Callvirt, Metadata.WriteStartElementMethod, null);
 
                     // writer.WriteStartAttribute("key");
@@ -379,7 +206,7 @@ namespace QuickGraph.Serialization
 
         public void Serialize(
             XmlWriter writer, 
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            TGraph visitedGraph,
             VertexIdentity<TVertex> vertexIdentities,
             EdgeIdentity<TVertex, TEdge> edgeIdentities
             )
@@ -393,203 +220,18 @@ namespace QuickGraph.Serialization
             worker.Serialize();
         }
 
-        public void Deserialize(
-            XmlReader reader,
-            IMutableVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
-            IdentifiableVertexFactory<TVertex> vertexFactory,
-            IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory)
+        internal class WriterWorker
         {
-            Contract.Requires(reader != null);
-            Contract.Requires(visitedGraph != null);
-            Contract.Requires(vertexFactory != null);
-            Contract.Requires(edgeFactory != null);
-
-            var worker = new ReaderWorker(
-                this,
-                reader,
-                visitedGraph,
-                vertexFactory,
-                edgeFactory);
-            worker.Deserialize();
-        }
-
-        class ReaderWorker
-        {
-            private readonly GraphMLSerializer<TVertex, TEdge> serializer;
-            private readonly XmlReader reader;
-            private readonly IMutableVertexAndEdgeSet<TVertex, TEdge> visitedGraph;
-            private readonly IdentifiableVertexFactory<TVertex> vertexFactory;
-            private readonly IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory;
-            private string graphMLNamespace = "";
-
-            public ReaderWorker(
-                GraphMLSerializer<TVertex,TEdge> serializer,
-                XmlReader reader,
-                IMutableVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
-                IdentifiableVertexFactory<TVertex> vertexFactory,
-                IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
-                )
-            {
-                Contract.Requires(serializer != null);
-                Contract.Requires(reader != null);
-                Contract.Requires(visitedGraph != null);
-                Contract.Requires(vertexFactory != null);
-                Contract.Requires(edgeFactory != null);
-
-                this.serializer = serializer;
-                this.reader = reader;
-                this.visitedGraph = visitedGraph;
-                this.vertexFactory = vertexFactory;
-                this.edgeFactory = edgeFactory;
-            }
-
-            public GraphMLSerializer<TVertex, TEdge> Serializer
-            {
-                get { return this.serializer; }
-            }
-
-            public XmlReader Reader
-            {
-                get { return this.reader; }
-            }
-
-            public IMutableVertexAndEdgeSet<TVertex, TEdge> VisitedGraph
-            {
-                get { return this.visitedGraph; }
-            }
-
-            public void Deserialize()
-            {
-                this.ReadHeader();
-                this.ReadGraphHeader();
-                this.ReadElements();
-            }
-
-            private void ReadHeader()
-            {
-                // read flow until we hit the graphml node
-                while (reader.Read())
-                {
-                    if (reader.NodeType == XmlNodeType.Element &&
-                        reader.Name == "graphml")
-                    {
-                        this.graphMLNamespace = reader.NamespaceURI;
-                        return;
-                    }
-                }
-                        
-                throw new ArgumentException("graphml node not found");
-            }
-
-            private void ReadGraphHeader()
-            {
-                if (!this.Reader.ReadToDescendant("graph", this.graphMLNamespace))
-                    throw new ArgumentException("graph node not found");
-            }
-
-            private void ReadElements()
-            {
-                Contract.Requires(
-                    this.Reader.Name == "graph" &&
-                    this.Reader.NamespaceURI == this.graphMLNamespace,
-                    "incorrect reader position");
-
-                var vertices = new Dictionary<string, TVertex>();
-
-                // read vertices or edges
-                var reader = this.Reader;
-                while (reader.Read())
-                {
-                    if (reader.NodeType == XmlNodeType.Element &&
-                        reader.NamespaceURI == this.graphMLNamespace)
-                    {
-                        if (reader.Name == "node")
-                            this.ReadVertex(vertices);
-                        else if (reader.Name == "edge")
-                            this.ReadEdge(vertices);
-                        else
-                            throw new InvalidOperationException(String.Format("invalid reader position {0}:{1}", this.Reader.NamespaceURI, this.Reader.Name));
-                    }
-                }
-            }
-
-            private void ReadEdge(Dictionary<string, TVertex> vertices)
-            {
-                Contract.Requires(vertices != null);
-                Contract.Assert(
-                    this.Reader.NodeType == XmlNodeType.Element &&
-                    this.Reader.Name == "edge" &&
-                    this.Reader.NamespaceURI == this.graphMLNamespace);
-
-                // get subtree
-                using (var subReader = this.Reader.ReadSubtree())
-                {
-                    // read id
-                    string id = this.ReadAttributeValue("id");
-                    string sourceid = this.ReadAttributeValue("source");
-                    TVertex source;
-                    if (!vertices.TryGetValue(sourceid, out source))
-                        throw new ArgumentException("Could not find vertex " + sourceid);
-                    string targetid = this.ReadAttributeValue("target");
-                    TVertex target;
-                    if (!vertices.TryGetValue(targetid, out target))
-                        throw new ArgumentException("Could not find vertex " + targetid);
-
-                    TEdge edge = this.edgeFactory(source, target, id);
-
-                    // read data
-                    if (subReader.ReadToFollowing("data", this.graphMLNamespace))
-                        GraphMLSerializer<TVertex, TEdge>.ReadDelegateCompiler.EdgeAttributesReader(subReader, this.graphMLNamespace, edge);
-
-                    this.VisitedGraph.AddEdge(edge);
-                }
-            }
-
-            private void ReadVertex(Dictionary<string, TVertex> vertices)
-            {
-                Contract.Requires(vertices != null);
-                Contract.Assert(
-                    this.Reader.NodeType == XmlNodeType.Element &&
-                    this.Reader.Name == "node" &&
-                    this.Reader.NamespaceURI == this.graphMLNamespace);
-
-                // get subtree
-                using (var subReader = this.Reader.ReadSubtree())
-                {
-                    // read id
-                    string id = this.ReadAttributeValue("id");
-                    // create new vertex
-                    TVertex vertex = vertexFactory(id);
-                    // read data
-                    if (subReader.ReadToFollowing("data", this.graphMLNamespace))
-                        GraphMLSerializer<TVertex, TEdge>.ReadDelegateCompiler.VertexAttributesReader(subReader, this.graphMLNamespace, vertex);
-                    // add to graph
-                    this.VisitedGraph.AddVertex(vertex);
-                    vertices.Add(id, vertex);
-                }
-            }
-
-            private string ReadAttributeValue(string attributeName)
-            {
-                this.Reader.MoveToAttribute(attributeName);
-                if (!this.Reader.ReadAttributeValue())
-                    throw new ArgumentException("missing "+ attributeName +" attribute");
-                return this.Reader.Value;
-            }
-        }
-
-        class WriterWorker
-        {
-            private readonly GraphMLSerializer<TVertex, TEdge> serializer;
+            private readonly GraphMLSerializer<TVertex, TEdge,TGraph> serializer;
             private readonly XmlWriter writer;
-            private readonly IVertexAndEdgeSet<TVertex, TEdge> visitedGraph;
+            private readonly TGraph visitedGraph;
             private readonly VertexIdentity<TVertex> vertexIdentities;
             private readonly EdgeIdentity<TVertex, TEdge> edgeIdentities;
 
             public WriterWorker(
-                GraphMLSerializer<TVertex,TEdge> serializer,
+                GraphMLSerializer<TVertex, TEdge, TGraph> serializer,
                 XmlWriter writer,
-                IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+                TGraph visitedGraph,
                 VertexIdentity<TVertex> vertexIdentities,
                 EdgeIdentity<TVertex, TEdge> edgeIdentities)
             {
@@ -606,7 +248,7 @@ namespace QuickGraph.Serialization
                 this.edgeIdentities = edgeIdentities;
             }
 
-            public GraphMLSerializer<TVertex, TEdge> Serializer
+            public GraphMLSerializer<TVertex, TEdge, TGraph> Serializer
             {
                 get { return this.serializer; }
             }
@@ -616,7 +258,7 @@ namespace QuickGraph.Serialization
                 get { return this.writer; }
             }
 
-            public IVertexAndEdgeSet<TVertex, TEdge> VisitedGraph
+            public TGraph VisitedGraph
             {
                 get { return this.visitedGraph; }
             }
@@ -624,6 +266,7 @@ namespace QuickGraph.Serialization
             public void Serialize()
             {
                 this.WriteHeader();
+                this.WriteGraphAttributeDefinitions();
                 this.WriteVertexAttributeDefinitions();
                 this.WriteEdgeAttributeDefinitions();
                 this.WriteGraphHeader();
@@ -637,7 +280,7 @@ namespace QuickGraph.Serialization
             {
                 if (this.Serializer.EmitDocumentDeclaration)
                     this.Writer.WriteStartDocument();
-                this.Writer.WriteStartElement("", "graphml", GraphMLNamespace);
+                this.Writer.WriteStartElement("", "graphml", GraphMLXmlResolver.GraphMLNamespace);
             }
 
             private void WriteFooter()
@@ -648,7 +291,7 @@ namespace QuickGraph.Serialization
 
             private void WriteGraphHeader()
             {
-                this.Writer.WriteStartElement("graph", GraphMLNamespace);
+                this.Writer.WriteStartElement("graph", GraphMLXmlResolver.GraphMLNamespace);
                 this.Writer.WriteAttributeString("id", "G");
                 this.Writer.WriteAttributeString("edgedefault",
                     (this.VisitedGraph.IsDirected) ? "directed" : "undirected"
@@ -658,6 +301,8 @@ namespace QuickGraph.Serialization
                 this.Writer.WriteAttributeString("parse.order", "nodesfirst");
                 this.Writer.WriteAttributeString("parse.nodeids", "free");
                 this.Writer.WriteAttributeString("parse.edgeids", "free");
+
+                GraphMLSerializer<TVertex, TEdge, TGraph>.WriteDelegateCompiler.GraphAttributesWriter(this.Writer, this.VisitedGraph);
             }
 
             private void WriteGraphFooter()
@@ -665,12 +310,20 @@ namespace QuickGraph.Serialization
                 this.Writer.WriteEndElement();
             }
 
+            private void WriteGraphAttributeDefinitions()
+            {
+                string forNode = "graph";
+                Type nodeType = typeof(TGraph);
+
+                this.WriteAttributeDefinitions(forNode, nodeType);
+            }
+
             private void WriteVertexAttributeDefinitions()
             {
                 string forNode = "node";
                 Type nodeType = typeof(TVertex);
 
-                WriteAttributeDefinitions(forNode, nodeType);
+                this.WriteAttributeDefinitions(forNode, nodeType);
             }
 
             private void WriteEdgeAttributeDefinitions()
@@ -678,7 +331,7 @@ namespace QuickGraph.Serialization
                 string forNode = "edge";
                 Type nodeType = typeof(TEdge);
 
-                WriteAttributeDefinitions(forNode, nodeType);
+                this.WriteAttributeDefinitions(forNode, nodeType);
             }
 
             private void WriteAttributeDefinitions(string forNode, Type nodeType)
@@ -693,7 +346,7 @@ namespace QuickGraph.Serialization
                     Type propertyType = property.PropertyType;
 
                     //<key id="d1" for="edge" attr.name="weight" attr.type="double"/>
-                    this.Writer.WriteStartElement("key", GraphMLNamespace);
+                    this.Writer.WriteStartElement("key", GraphMLXmlResolver.GraphMLNamespace);
                     this.Writer.WriteAttributeString("id", name);
                     this.Writer.WriteAttributeString("for", forNode);
                     this.Writer.WriteAttributeString("attr.name", name);
@@ -761,9 +414,9 @@ namespace QuickGraph.Serialization
             {
                 foreach (var v in this.VisitedGraph.Vertices)
                 {
-                    this.Writer.WriteStartElement("node", GraphMLNamespace);
+                    this.Writer.WriteStartElement("node", GraphMLXmlResolver.GraphMLNamespace);
                     this.Writer.WriteAttributeString("id", this.vertexIdentities(v));
-                    GraphMLSerializer<TVertex, TEdge>.WriteDelegateCompiler.VertexAttributesWriter(this.Writer, v);
+                    GraphMLSerializer<TVertex, TEdge,TGraph>.WriteDelegateCompiler.VertexAttributesWriter(this.Writer, v);
                     this.Writer.WriteEndElement();
                 }
             }
@@ -772,11 +425,11 @@ namespace QuickGraph.Serialization
             {
                 foreach (var e in this.VisitedGraph.Edges)
                 {
-                    this.Writer.WriteStartElement("edge", GraphMLNamespace);
+                    this.Writer.WriteStartElement("edge", GraphMLXmlResolver.GraphMLNamespace);
                     this.Writer.WriteAttributeString("id", this.edgeIdentities(e));
                     this.Writer.WriteAttributeString("source", this.vertexIdentities(e.Source));
                     this.Writer.WriteAttributeString("target", this.vertexIdentities(e.Target));
-                    GraphMLSerializer<TVertex, TEdge>.WriteDelegateCompiler.EdgeAttributesWriter(this.Writer, e);
+                    GraphMLSerializer<TVertex, TEdge,TGraph>.WriteDelegateCompiler.EdgeAttributesWriter(this.Writer, e);
                     this.Writer.WriteEndElement();
                 }
             }

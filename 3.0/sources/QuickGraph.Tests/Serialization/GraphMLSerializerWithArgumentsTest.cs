@@ -13,6 +13,107 @@ namespace QuickGraph.Serialization
     [TestClass, PexClass]
     public partial class GraphMLSerializerWithArgumentsTest
     {
+        public sealed class TestGraph
+            : AdjacencyGraph<TestVertex, TestEdge>
+        {
+            string _string;
+            [XmlAttribute("g_string")]
+            [DefaultValue("bla")]
+            public string String
+            {
+                get 
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._string; 
+                }
+                set 
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._string = value;
+                }
+            }
+            int _int;
+            [XmlAttribute("g_int")]
+            [DefaultValue(1)]
+            public int Int
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._int;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._int = value;
+                }
+            }
+            long _long;
+            [XmlAttribute("g_long")]
+            [DefaultValue(2)]
+            public long Long
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._long;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._long = value;
+                }
+            }
+
+            bool _bool;
+            [XmlAttribute("g_bool")]
+            public bool Bool
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._bool;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._bool = value;
+                }
+            }
+
+            float _float;
+            [XmlAttribute("g_float")]
+            public float Float
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._float;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._float = value;
+                }
+            }
+
+            double _double;
+            [XmlAttribute("g_double")]
+            public double Double
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._double;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._double = value;
+                }
+            }
+        }
+
         public sealed class TestVertex
         {
             private string id;
@@ -21,25 +122,6 @@ namespace QuickGraph.Serialization
                 string id)
             {
                 this.id = id;
-            }
-
-            public TestVertex(
-                string id,
-                string _string,
-                int _int,
-                long _long,
-                float _float,
-                double _double,
-                bool _bool
-                )
-                :this(id)
-            {
-                this.Int = _int;
-                this.Long = _long;
-                this.Bool = _bool;
-                this.Float = _float;
-                this.Double = _double;
-                this.String = _string;
             }
 
             public string ID
@@ -201,36 +283,42 @@ namespace QuickGraph.Serialization
             public float Float { get; set; }
         }
 
-        public sealed class TestAdjacencyGraph : AdjacencyGraph<TestVertex, TestEdge>
-        { }
-
         [TestMethod]
         public void WriteVertex()
         {
-            TestAdjacencyGraph g = new TestAdjacencyGraph();
-            TestVertex v = new TestVertex(
-                "v1",
-                "string",
-                10,
-                20,
-                25.0F,
-                30.0,
-                true
-                );
+            TestGraph g = new TestGraph()
+            {
+                Bool = true,
+                Double = 1.0,
+                Float = 2.0F,
+                Int = 10,
+                Long = 100,
+                String = "foo"
+            };
+
+            TestVertex v = new TestVertex("v1")
+            {
+                String = "string",
+                Int = 10,
+                Long = 20,
+                Float = 25.0F,
+                Double = 30.0,
+                Bool = true
+            };
 
             g.AddVertex(v);
             VerifySerialization(g);
         }
 
-        private void VerifySerialization(TestAdjacencyGraph g)
+        private void VerifySerialization(TestGraph g)
         {
-            GraphMLSerializer<TestVertex, TestEdge> serializer = new GraphMLSerializer<TestVertex, TestEdge>();
-
             string xml;
             using (var writer = new StringWriter())
             {
-                using (var xwriter = XmlWriter.Create(writer))
-                    g.SerializeToGraphML(
+                var settins = new XmlWriterSettings();
+                settins.Indent = true;
+                using (var xwriter = XmlWriter.Create(writer, settins))
+                    g.SerializeToGraphML<TestVertex, TestEdge, TestGraph>(
                         xwriter,
                         v => v.ID,
                         e => e.ID
@@ -240,10 +328,10 @@ namespace QuickGraph.Serialization
                 Console.WriteLine("serialized: " + xml);
             }
 
-            TestAdjacencyGraph newg;
+            TestGraph newg;
             using (var reader = new StringReader(xml))
             {
-                newg = new TestAdjacencyGraph();
+                newg = new TestGraph();
                 newg.DeserializeAndValidateFromGraphML(
                     reader,
                     id => new TestVertex(id),
@@ -254,9 +342,11 @@ namespace QuickGraph.Serialization
             string newxml;
             using (var writer = new StringWriter())
             {
-                using (var xwriter = XmlWriter.Create(writer))
-                    serializer.Serialize(
-                        xwriter, newg,
+                var settins = new XmlWriterSettings();
+                settins.Indent = true;
+                using (var xwriter = XmlWriter.Create(writer, settins))
+                    newg.SerializeToGraphML<TestVertex, TestEdge, TestGraph>(
+                        xwriter,
                         v => v.ID,
                         e => e.ID);
                 newxml = writer.ToString();
@@ -270,25 +360,27 @@ namespace QuickGraph.Serialization
         public void WriteEdge()
         {
             {
-                TestAdjacencyGraph g = new TestAdjacencyGraph();
-                TestVertex v1 = new TestVertex(
-                    "v1",
-                    "vertex",
-                    10,
-                    20,
-                    25.0F,
-                    30.0,
-                    true
-                    );
-                TestVertex v2 = new TestVertex(
-                    "v2",
-                    "vertex2",
-                    50,
-                    60,
-                    25.0F,
-                    70.0,
-                    false
-                    );
+                var g = new TestGraph();
+                TestVertex v1 = new TestVertex("v1")
+                {
+                    String = "string",
+                    Int = 10,
+                    Long = 20,
+                    Float = 25.0F,
+                    Double = 30.0,
+                    Bool = true
+                };
+
+                TestVertex v2 = new TestVertex("v2")
+                {
+                    String = "string2",
+                    Int = 110,
+                    Long = 120,
+                    Float = 125.0F,
+                    Double = 130.0,
+                    Bool = true
+                };
+
 
                 g.AddVertex(v1);
                 g.AddVertex(v2);

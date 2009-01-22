@@ -10,33 +10,35 @@ namespace QuickGraph.Serialization
 {
     public static class GraphMLExtensions
     {
-        public static void SerializeToGraphML<TVertex, TEdge>(
+        public static void SerializeToGraphML<TVertex, TEdge,TGraph>(
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> graph,
+            TGraph graph,
             XmlWriter writer,
             VertexIdentity<TVertex> vertexIdentities,
             EdgeIdentity<TVertex, TEdge> edgeIdentities)
             where TEdge : IEdge<TVertex>
+            where TGraph : IVertexAndEdgeSet<TVertex, TEdge>
         {
             Contract.Requires(graph != null);
             Contract.Requires(writer != null);
 
-            var serializer = new GraphMLSerializer<TVertex, TEdge>();
+            var serializer = new GraphMLSerializer<TVertex, TEdge,TGraph>();
             serializer.Serialize(writer, graph, vertexIdentities, edgeIdentities);
         }
 
-        public static void DeserializeFromGraphML<TVertex, TEdge>(
+        public static void DeserializeFromGraphML<TVertex, TEdge,TGraph>(
 #if !NET20
             this 
 #endif
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> graph,
+            TGraph graph,
             TextReader reader,
             IdentifiableVertexFactory<TVertex> vertexFactory,
             IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
             )
             where TEdge : IEdge<TVertex>
+            where TGraph : IMutableVertexAndEdgeListGraph<TVertex, TEdge>
         {
             Contract.Requires(graph != null);
             Contract.Requires(reader != null);
@@ -49,51 +51,53 @@ namespace QuickGraph.Serialization
             settings.ValidationFlags = XmlSchemaValidationFlags.None;
 
             using(var xreader = XmlReader.Create(reader, settings))
-                DeserializeFromGraphML<TVertex, TEdge>(graph, xreader, vertexFactory, edgeFactory);
+                DeserializeFromGraphML<TVertex, TEdge,TGraph>(graph, xreader, vertexFactory, edgeFactory);
         }
 
-        public static void DeserializeFromGraphML<TVertex, TEdge>(
+        public static void DeserializeFromGraphML<TVertex, TEdge,TGraph>(
 #if !NET20
             this 
 #endif
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> graph,
+            TGraph graph,
             XmlReader reader,
             IdentifiableVertexFactory<TVertex> vertexFactory,
             IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
             )
             where TEdge : IEdge<TVertex>
+            where TGraph : IMutableVertexAndEdgeListGraph<TVertex, TEdge>
         {
             Contract.Requires(graph != null);
             Contract.Requires(reader != null);
             Contract.Requires(vertexFactory != null);
             Contract.Requires(edgeFactory != null);
 
-            var serializer = new GraphMLSerializer<TVertex, TEdge>();
+            var serializer = new GraphMLDeserializer<TVertex, TEdge,TGraph>();
             serializer.Deserialize(reader, graph, vertexFactory, edgeFactory);
         }
 
-        public static void DeserializeAndValidateFromGraphML<TVertex, TEdge>(
+        public static void DeserializeAndValidateFromGraphML<TVertex, TEdge,TGraph>(
 #if !NET20
             this 
 #endif
-            IMutableVertexAndEdgeListGraph<TVertex, TEdge> graph,
+            TGraph graph,
             TextReader reader,
             IdentifiableVertexFactory<TVertex> vertexFactory,
             IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
             )
             where TEdge : IEdge<TVertex>
+            where TGraph : IMutableVertexAndEdgeListGraph<TVertex, TEdge>
         {
             Contract.Requires(graph != null);
             Contract.Requires(reader != null);
             Contract.Requires(vertexFactory != null);
             Contract.Requires(edgeFactory != null);
 
-            var serializer = new GraphMLSerializer<TVertex, TEdge>();
+            var serializer = new GraphMLDeserializer<TVertex, TEdge,TGraph>();
             var settings = new XmlReaderSettings();
             // add graphxml schema
-            AddGraphMLSchema<TVertex, TEdge>(settings);
             settings.ValidationType = ValidationType.Schema;
             settings.XmlResolver = new GraphMLXmlResolver();
+            AddGraphMLSchema<TVertex, TEdge, TGraph>(settings);
 
             try
             {
@@ -109,12 +113,13 @@ namespace QuickGraph.Serialization
             }
         }
 
-        private static void AddGraphMLSchema<TVertex, TEdge>(XmlReaderSettings settings)
+        private static void AddGraphMLSchema<TVertex, TEdge,TGraph>(XmlReaderSettings settings)
             where TEdge : IEdge<TVertex>
+            where TGraph : IVertexAndEdgeSet<TVertex, TEdge>
         {
             using (var xsdStream = typeof(GraphMLExtensions).Assembly.GetManifestResourceStream(typeof(GraphMLExtensions), "graphml.xsd"))
-            using (var xsdReader = XmlReader.Create(xsdStream))
-                settings.Schemas.Add(GraphMLSerializer<TVertex, TEdge>.GraphMLNamespace, xsdReader);
+            using (var xsdReader = XmlReader.Create(xsdStream, settings))
+                settings.Schemas.Add(GraphMLXmlResolver.GraphMLNamespace, xsdReader);
         }
 
         static void ValidationEventHandler(object sender, System.Xml.Schema.ValidationEventArgs e)
