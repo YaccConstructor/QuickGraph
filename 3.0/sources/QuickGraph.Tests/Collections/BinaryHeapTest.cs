@@ -61,6 +61,24 @@ namespace QuickGraph.Collections
             AssertInvariant<TPriority, TValue>(target);
         }
 
+        [PexMethod]
+        [PexAllowedExceptionFromTypeUnderTest(typeof(InvalidOperationException))]
+        public void Operations<TPriority, TValue>(
+            [PexAssumeUnderTest]BinaryHeap<TPriority, TValue> target,
+            [PexAssumeNotNull]KeyValuePair<bool, TPriority>[] values)
+        {
+            foreach (var value in values)
+            {
+                if (value.Key)
+                    target.Add(value.Value, default(TValue));
+                else
+                {
+                    var min = target.RemoveMinimum();
+                }
+                AssertInvariant<TPriority, TValue>(target);
+            }
+        }
+
         [PexMethod(MaxRuns = 20)]
         public void Insert<TPriority, TValue>(
             [PexAssumeUnderTest]BinaryHeap<TPriority, TValue> target,

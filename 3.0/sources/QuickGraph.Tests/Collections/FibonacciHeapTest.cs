@@ -77,6 +77,24 @@ namespace QuickGraph.Tests.Collections
             AssertInvariant(target);
         }
 
+        [PexMethod(MaxConstraintSolverTime = 2)]
+        [PexAllowedExceptionFromTypeUnderTest(typeof(InvalidOperationException))]
+        public void Operations<TPriority, TValue>(
+            [PexAssumeUnderTest]FibonacciHeap<TPriority, TValue> target,
+            [PexAssumeNotNull]KeyValuePair<bool, TPriority>[] values)
+        {
+            foreach (var value in values)
+            {
+                if (value.Key)
+                    target.Enqueue(value.Value, default(TValue));
+                else
+                {
+                    var min = target.Dequeue();
+                }
+                AssertInvariant<TPriority, TValue>(target);
+            }
+        }
+
         [TestMethod]
         public void CreateHeap()
         {

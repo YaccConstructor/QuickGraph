@@ -181,11 +181,17 @@
     <Compile Include="Collections\BinaryHeapTPriorityTValueTest.InsertAndRemoveMinimum.g.cs">
       <DependentUpon>BinaryHeapTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Operations.g.cs">
+      <DependentUpon>BinaryHeapTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Collections\FibonacciHeapTest.cs" />
     <Compile Include="Collections\FibonacciHeapTests.InsertAndMinimum.g.cs">
       <DependentUpon>FibonacciHeapTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Collections\FibonacciHeapTests.InsertAndRemoveMinimum.g.cs">
+      <DependentUpon>FibonacciHeapTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\FibonacciHeapTests.Operations.g.cs">
       <DependentUpon>FibonacciHeapTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Collections\ForestDisjointSetTTest.AddAndUnion.g.cs">
