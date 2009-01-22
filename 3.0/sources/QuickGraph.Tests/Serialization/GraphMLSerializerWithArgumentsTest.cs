@@ -51,7 +51,7 @@ namespace QuickGraph.Serialization
             }
             long _long;
             [XmlAttribute("g_long")]
-            [DefaultValue(2)]
+            [DefaultValue(2L)]
             public long Long
             {
                 get
@@ -130,6 +130,23 @@ namespace QuickGraph.Serialization
                 get { return this.id; }
             }
 
+            string _stringd;
+            [XmlAttribute("v_stringdefault")]
+            [DefaultValue("bla")]
+            public string StringDefault
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._stringd;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._stringd = value;
+                }
+            }
+
             string _string;
             [XmlAttribute("v_string")]
             [DefaultValue("bla")]
@@ -164,7 +181,7 @@ namespace QuickGraph.Serialization
             }
             long _long;
             [XmlAttribute("v_long")]
-            [DefaultValue(2)]
+            [DefaultValue(2L)]
             public long Long
             {
                 get
@@ -274,7 +291,7 @@ namespace QuickGraph.Serialization
             [DefaultValue(1)]
             public int Int { get; set; }
             [XmlAttribute("e_long")]
-            [DefaultValue(2)]
+            [DefaultValue(2L)]
             public long Long { get; set; }
             [XmlAttribute("e_double")]
             public double Double { get; set; }
@@ -299,6 +316,7 @@ namespace QuickGraph.Serialization
 
             TestVertex v = new TestVertex("v1")
             {
+                StringDefault = "bla",
                 String = "string",
                 Int = 10,
                 Long = 20,
@@ -317,6 +335,7 @@ namespace QuickGraph.Serialization
             Assert.AreEqual(g.String, sg.String);
 
             var sv = Enumerable.First(sg.Vertices);
+            Assert.AreEqual(sv.StringDefault, "bla");
             Assert.AreEqual(v.String, sv.String);
             Assert.AreEqual(v.Int, sv.Int);
             Assert.AreEqual(v.Long, sv.Long);

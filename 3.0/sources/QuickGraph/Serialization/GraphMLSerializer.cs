@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using System.Reflection.Emit;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using System.ComponentModel;
 
 namespace QuickGraph.Serialization
 {
@@ -39,13 +40,13 @@ namespace QuickGraph.Serialization
         where TGraph : IVertexAndEdgeSet<TVertex, TEdge>
     {
         #region Compiler
-        private delegate void WriteVertexAttributesDelegate(
+        delegate void WriteVertexAttributesDelegate(
             XmlWriter writer,
             TVertex v);
-        private delegate void WriteEdgeAttributesDelegate(
+        delegate void WriteEdgeAttributesDelegate(
             XmlWriter writer,
             TEdge e);
-        private delegate void WriteGraphAttributesDelegate(
+        delegate void WriteGraphAttributesDelegate(
             XmlWriter writer,
             TGraph e);
 
@@ -158,6 +159,7 @@ namespace QuickGraph.Serialization
                     nodeType.Module
                     );
                 var gen = method.GetILGenerator();
+                Label @default = default(Label);
 
                 foreach (var kv in SerializationHelper.GetAttributeProperties(nodeType))
                 {
@@ -170,6 +172,46 @@ namespace QuickGraph.Serialization
                     MethodInfo writeValueMethod;
                     if (!Metadata.TryGetWriteValueMethod(property.PropertyType, out writeValueMethod))
                         throw new NotSupportedException(String.Format("Property {0}.{1} type is not supported", property.DeclaringType, property.Name));
+
+                    var defaultValueAttribute =
+                        Attribute.GetCustomAttribute(property, typeof(DefaultValueAttribute)) 
+                        as DefaultValueAttribute;
+                    if (defaultValueAttribute != null)
+                    {
+                        @default = gen.DefineLabel();
+                        var value = defaultValueAttribute.Value;
+                        if (value != null &&
+                            value.GetType() != property.PropertyType)
+                            throw new InvalidOperationException("inconsistent default value of property " + property.Name);
+
+                        switch (Type.GetTypeCode(property.PropertyType))
+                        {
+                            case TypeCode.Int32:
+                                gen.Emit(OpCodes.Ldc_I4, (int)value);
+                                break;
+                            case TypeCode.Int64:
+                                gen.Emit(OpCodes.Ldc_I8, (long)value);
+                                break;
+                            case TypeCode.Single:
+                                gen.Emit(OpCodes.Ldc_R4, (float)value);
+                                break;
+                            case TypeCode.Double:
+                                gen.Emit(OpCodes.Ldc_R8, (double)value);
+                                break;
+                            case TypeCode.String:
+                                gen.Emit(OpCodes.Ldstr, (string)value);
+                                break;
+                            case TypeCode.Boolean:
+                                gen.Emit((bool)value ? OpCodes.Ldc_I4_1 : OpCodes.Ldc_I4_0);
+                                break;
+                            default:
+                                throw new InvalidOperationException("unsupported type " + property.PropertyType);
+                        }
+                        gen.Emit(OpCodes.Ldarg_1);
+                        gen.EmitCall(OpCodes.Callvirt, getMethod, null);
+                        gen.Emit(OpCodes.Ceq);
+                        gen.Emit(OpCodes.Brtrue, @default);
+                    }
 
                     // for each property of the type,
                     // write it to the xmlwriter (we need to take care of value types, etc...)
@@ -194,6 +236,12 @@ namespace QuickGraph.Serialization
                     // writer.WriteEndElement()
                     gen.Emit(OpCodes.Ldarg_0);
                     gen.EmitCall(OpCodes.Callvirt, Metadata.WriteEndElementMethod, null);
+
+                    if (defaultValueAttribute != null)
+                    {
+                        gen.MarkLabel(@default);
+                        @default = default(Label);
+                    }
                 }
 
                 gen.Emit(OpCodes.Ret);

@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using System.Reflection.Emit;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using System.ComponentModel;
 
 namespace QuickGraph.Serialization
 {
@@ -39,36 +40,27 @@ namespace QuickGraph.Serialization
         where TGraph : IMutableVertexAndEdgeSet<TVertex, TEdge>
     {
         #region Compiler
-        private delegate void ReadVertexAttributesDelegate(
+        delegate void ReadVertexAttributesDelegate(
             XmlReader reader,
             string namespaceUri,
             TVertex v);
-        private delegate void ReadEdgeAttributesDelegate(
+        delegate void ReadEdgeAttributesDelegate(
             XmlReader reader,
             string namespaceUri,
             TEdge e);
-        private delegate void ReadGraphAttributesDelegate(
+        delegate void ReadGraphAttributesDelegate(
             XmlReader reader,
             string namespaceUri,
             TGraph g);
-
-        public static bool MoveNextData(XmlReader reader, string graphMLNamespace)
-        {
-            Contract.Requires(reader != null);
-
-            while (reader.Read() && reader.NodeType != XmlNodeType.Element) ;
-
-            return
-                reader.NodeType == XmlNodeType.Element &&
-                reader.Name == "data" &&
-                reader.NamespaceURI == graphMLNamespace;
-        }
 
         static class ReadDelegateCompiler
         {
             public static readonly ReadVertexAttributesDelegate VertexAttributesReader;
             public static readonly ReadEdgeAttributesDelegate EdgeAttributesReader;
             public static readonly ReadGraphAttributesDelegate GraphAttributesReader;
+            public static readonly Action<TVertex> SetVertexDefault;
+            public static readonly Action<TEdge> SetEdgeDefault;
+            public static readonly Action<TGraph> SetGraphDefault; 
 
             static ReadDelegateCompiler()
             {
@@ -88,6 +80,21 @@ namespace QuickGraph.Serialization
                     (ReadGraphAttributesDelegate)CreateReadDelegate(
                     typeof(ReadGraphAttributesDelegate),
                     typeof(TGraph)
+                    );
+                SetVertexDefault =
+                    (Action<TVertex>)CreateSetDefaultDelegate(
+                        typeof(Action<TVertex>),
+                        typeof(TVertex)
+                    );
+                SetEdgeDefault =
+                    (Action<TEdge>)CreateSetDefaultDelegate(
+                        typeof(Action<TEdge>),
+                        typeof(TEdge)
+                    );
+                SetGraphDefault =
+                    (Action<TGraph>)CreateSetDefaultDelegate(
+                        typeof(Action<TGraph>),
+                        typeof(TGraph)
                     );
             }
 
@@ -142,6 +149,69 @@ namespace QuickGraph.Serialization
                     Contract.Assert(!result || method != null, type.FullName);
                     return result;
                 }
+            }
+
+            public static Delegate CreateSetDefaultDelegate(
+                Type delegateType,
+                Type elementType
+                )
+            {
+                Contract.Requires(delegateType != null);
+                Contract.Requires(elementType != null);
+
+                var method = new DynamicMethod(
+                    "Set" + elementType.Name + "Default",
+                    typeof(void),
+                    new Type[] { elementType },
+                    elementType.Module
+                    );
+                var gen = method.GetILGenerator();
+
+                // we need to create the swicth for each property
+                foreach (var kv in SerializationHelper.GetAttributeProperties(elementType))
+                {
+                    var property = kv.Property;
+                    var defaultValueAttribute = Attribute.GetCustomAttribute(property, typeof(DefaultValueAttribute))
+                        as DefaultValueAttribute;
+                    if (defaultValueAttribute == null)
+                        continue;
+                    var setMethod = property.GetSetMethod();
+                    if (setMethod == null)
+                        throw new InvalidOperationException("property " + property.Name + " is not settable");
+                    var value = defaultValueAttribute.Value;
+                    if (value != null &&
+                        value.GetType() != property.PropertyType)
+                        throw new InvalidOperationException("invalid default value type of property " + property.Name);
+                    gen.Emit(OpCodes.Ldarg_0);
+                    switch (Type.GetTypeCode(property.PropertyType))
+                    {
+                        case TypeCode.Int32:
+                            gen.Emit(OpCodes.Ldc_I4, (int)value);
+                            break;
+                        case TypeCode.Int64:
+                            gen.Emit(OpCodes.Ldc_I8, (long)value);
+                            break;
+                        case TypeCode.Single:
+                            gen.Emit(OpCodes.Ldc_R4, (float)value);
+                            break;
+                        case TypeCode.Double:
+                            gen.Emit(OpCodes.Ldc_R8, (double)value);
+                            break;
+                        case TypeCode.String:
+                            gen.Emit(OpCodes.Ldstr, (string)value);
+                            break;
+                        case TypeCode.Boolean:
+                            gen.Emit((bool)value ? OpCodes.Ldc_I4_1 : OpCodes.Ldc_I4_0);
+                            break;
+                        default:
+                            throw new InvalidOperationException("unsupported type " + property.PropertyType);
+                    }
+                    gen.EmitCall(setMethod.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, setMethod, null);
+                }
+                gen.Emit(OpCodes.Ret);
+
+                //let's bake the method
+                return method.CreateDelegate(delegateType);
             }
 
             public static Delegate CreateReadDelegate(
@@ -337,7 +407,9 @@ namespace QuickGraph.Serialization
                     this.Reader.NamespaceURI == this.graphMLNamespace,
                     "incorrect reader position");
 
-                var vertices = new Dictionary<string, TVertex>();
+                ReadDelegateCompiler.SetGraphDefault(this.VisitedGraph);
+
+                var vertices = new Dictionary<string, TVertex>(StringComparer.Ordinal);
 
                 // read vertices or edges
                 var reader = this.Reader;
@@ -386,7 +458,8 @@ namespace QuickGraph.Serialization
                     if (!vertices.TryGetValue(targetid, out target))
                         throw new ArgumentException("Could not find vertex " + targetid);
 
-                    TEdge edge = this.edgeFactory(source, target, id);
+                    var edge = this.edgeFactory(source, target, id);
+                    ReadDelegateCompiler.SetEdgeDefault(edge);
 
                     // read data
                     while (subReader.Read())
@@ -394,7 +467,7 @@ namespace QuickGraph.Serialization
                         if (reader.NodeType == XmlNodeType.Element &&
                             reader.Name == "data" &&
                             reader.NamespaceURI == this.graphMLNamespace)
-                            GraphMLDeserializer<TVertex, TEdge, TGraph>.ReadDelegateCompiler.EdgeAttributesReader(subReader, this.graphMLNamespace, edge);
+                            ReadDelegateCompiler.EdgeAttributesReader(subReader, this.graphMLNamespace, edge);
                     }
 
                     this.VisitedGraph.AddEdge(edge);
@@ -417,14 +490,14 @@ namespace QuickGraph.Serialization
                     // create new vertex
                     TVertex vertex = vertexFactory(id);
                     // apply defaults
-                    // TODO
+                    ReadDelegateCompiler.SetVertexDefault(vertex);
                     // read data
                     while (subReader.Read())
                     {
                         if (reader.NodeType == XmlNodeType.Element &&
                             reader.Name == "data" &&
                             reader.NamespaceURI == this.graphMLNamespace)
-                            GraphMLDeserializer<TVertex, TEdge, TGraph>.ReadDelegateCompiler.VertexAttributesReader(subReader, this.graphMLNamespace, vertex);
+                            ReadDelegateCompiler.VertexAttributesReader(subReader, this.graphMLNamespace, vertex);
                     }
                     // add to graph
                     this.VisitedGraph.AddVertex(vertex);
