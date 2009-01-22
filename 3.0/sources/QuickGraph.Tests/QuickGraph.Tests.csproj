@@ -185,6 +185,9 @@
       <DependentUpon>BinaryHeapTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Collections\FibonacciHeapTest.cs" />
+    <Compile Include="Collections\FibonacciHeapTests.CompareBinary.g.cs">
+      <DependentUpon>FibonacciHeapTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Collections\FibonacciHeapTests.InsertAndMinimum.g.cs">
       <DependentUpon>FibonacciHeapTest.cs</DependentUpon>
     </Compile>

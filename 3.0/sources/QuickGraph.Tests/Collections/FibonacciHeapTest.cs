@@ -79,6 +79,30 @@ namespace QuickGraph.Tests.Collections
 
         [PexMethod(MaxConstraintSolverTime = 2)]
         [PexAllowedExceptionFromTypeUnderTest(typeof(InvalidOperationException))]
+        public void CompareBinary<TPriority, TValue>(
+            [PexAssumeNotNull]KeyValuePair<bool, TPriority>[] values)
+        {
+            var fib = new FibonacciHeap<TPriority, TValue>();
+            var bin = new BinaryHeap<TPriority, TValue>();
+            foreach (var value in values)
+            {
+                if (value.Key)
+                    PexAssert.AreBehaviorsEqual(
+                        () => fib.Enqueue(value.Value, default(TValue)),
+                        () => bin.Add(value.Value, default(TValue))
+                        );
+                else
+                {
+                    PexAssert.AreBehaviorsEqual(
+                        () => fib.Dequeue().Key,
+                        () => bin.RemoveMinimum().Key
+                        );
+                }
+            }
+        }
+
+        [PexMethod(MaxConstraintSolverTime = 2)]
+        [PexAllowedExceptionFromTypeUnderTest(typeof(InvalidOperationException))]
         public void Operations<TPriority, TValue>(
             [PexAssumeUnderTest]FibonacciHeap<TPriority, TValue> target,
             [PexAssumeNotNull]KeyValuePair<bool, TPriority>[] values)
