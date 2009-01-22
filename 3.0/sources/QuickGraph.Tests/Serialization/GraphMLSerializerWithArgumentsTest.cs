@@ -408,6 +408,7 @@ namespace QuickGraph.Serialization
 
                 TestVertex v1 = new TestVertex("v1")
                 {
+                    StringDefault = "bla",
                     String = "string",
                     Int = 10,
                     Long = 20,
@@ -418,6 +419,7 @@ namespace QuickGraph.Serialization
 
                 TestVertex v2 = new TestVertex("v2")
                 {
+                    StringDefault = "bla",
                     String = "string2",
                     Int = 110,
                     Long = 120,
