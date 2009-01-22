@@ -7,6 +7,7 @@ using Microsoft.Pex.Framework;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ComponentModel;
+using System.Linq;
 
 namespace QuickGraph.Serialization
 {
@@ -307,10 +308,24 @@ namespace QuickGraph.Serialization
             };
 
             g.AddVertex(v);
-            VerifySerialization(g);
+            var sg = VerifySerialization(g);
+            Assert.AreEqual(g.Bool, sg.Bool);
+            Assert.AreEqual(g.Double, sg.Double);
+            Assert.AreEqual(g.Float, sg.Float);
+            Assert.AreEqual(g.Int, sg.Int);
+            Assert.AreEqual(g.Long, sg.Long);
+            Assert.AreEqual(g.String, sg.String);
+
+            var sv = Enumerable.First(sg.Vertices);
+            Assert.AreEqual(v.String, sv.String);
+            Assert.AreEqual(v.Int, sv.Int);
+            Assert.AreEqual(v.Long, sv.Long);
+            Assert.AreEqual(v.Float, sv.Float);
+            Assert.AreEqual(v.Double, sv.Double);
+            Assert.AreEqual(v.Bool, sv.Bool);
         }
 
-        private void VerifySerialization(TestGraph g)
+        private TestGraph VerifySerialization(TestGraph g)
         {
             string xml;
             using (var writer = new StringWriter())
@@ -354,13 +369,24 @@ namespace QuickGraph.Serialization
             }
 
             Assert.AreEqual(xml, newxml);
+
+            return newg;
         }
 
         [TestMethod]
         public void WriteEdge()
         {
             {
-                var g = new TestGraph();
+                var g = new TestGraph()
+                {
+                    Bool = true,
+                    Double = 1.0,
+                    Float = 2.0F,
+                    Int = 10,
+                    Long = 100,
+                    String = "foo"
+                };
+
                 TestVertex v1 = new TestVertex("v1")
                 {
                     String = "string",
@@ -385,7 +411,7 @@ namespace QuickGraph.Serialization
                 g.AddVertex(v1);
                 g.AddVertex(v2);
 
-                TestEdge edge = new TestEdge(
+                var e = new TestEdge(
                     v1,v2,
                     "e1",
                     "edge",
@@ -395,8 +421,18 @@ namespace QuickGraph.Serialization
                     110.0,
                     true
                     );
-                g.AddEdge(edge);
-                VerifySerialization(g);
+                g.AddEdge(e);
+                var sg = VerifySerialization(g);
+
+                var se = Enumerable.First(sg.Edges);
+                Assert.AreEqual(e.ID, se.ID);
+                Assert.AreEqual(e.String, se.String);
+                Assert.AreEqual(e.Int, se.Int);
+                Assert.AreEqual(e.Long, se.Long);
+                Assert.AreEqual(e.Float, se.Float);
+                Assert.AreEqual(e.Double, se.Double);
+                Assert.AreEqual(e.Bool, se.Bool);
+
             }
         }
 
