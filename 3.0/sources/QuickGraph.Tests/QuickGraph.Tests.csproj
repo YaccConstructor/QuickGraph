@@ -106,6 +106,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Contracts" Condition="'$(Configuration)' == 'DebugContracts'" />
+    <Reference Include="Microsoft.Pex.CodeCanvas, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Users\jhalleux\Documents\Visual Studio 2008\Projects\Microsoft.Pex.CodeCanvas\Microsoft.Pex.CodeCanvas\bin\Debug\Microsoft.Pex.CodeCanvas.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Pex.Framework, Version=0.5.30516.0, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>

@@ -256,7 +256,7 @@ this
             while (predecessors.TryGetValue(vc, out e))
             {
                 path.Add(e);
-                vc = e.Source;
+                vc = vc.Equals(e.Target) ? e.Source : e.Target;
             }
 
             if (path.Count > 0)

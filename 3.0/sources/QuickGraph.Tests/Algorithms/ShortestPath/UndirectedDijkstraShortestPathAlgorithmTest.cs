@@ -64,5 +64,33 @@ namespace QuickGraph.Algorithms.ShortestPath
              //       Assert.AreEqual(vd, vp+1);
             }
         }
+
+        [TestMethod]
+        [WorkItem(42450)]
+        public void Repro42450()
+        {
+            var ug = new UndirectedGraph<object, Edge<object>>(true);
+            object v1 = "vertex1";
+            object v2 = "vertex2";
+            object v3 = "vertex3";
+            var e1 = new Edge<object>(v1, v2);
+            var e2 = new Edge<object>(v2, v3);
+            var e3 = new Edge<object>(v3, v1);
+            ug.AddVertex(v1);
+            ug.AddVertex(v2);
+            ug.AddVertex(v3);
+            ug.AddEdge(e1);
+            ug.AddEdge(e2);
+            ug.AddEdge(e3);
+
+            var udspa =
+                new UndirectedDijkstraShortestPathAlgorithm<object, QuickGraph.Edge<object>>(ug, edge => (double)1);
+            var observer =
+                new UndirectedVertexPredecessorRecorderObserver<object, Edge<object>>();
+            using(ObserverScope.Create(udspa,observer))
+                udspa.Compute(v1);
+            IEnumerable<QuickGraph.Edge<object>> path;
+            observer.TryGetPath(v3, out path);
+        }
     }
 }

@@ -9,6 +9,9 @@ using QuickGraph.Algorithms.Observers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Pex.Framework;
 using Microsoft.Pex.Framework.Validation;
+using Microsoft.Pex.CodeCanvas;
+
+[assembly: PexCodeCanvasPackage]
 
 namespace QuickGraph.Tests.Collections
 {
@@ -79,6 +82,7 @@ namespace QuickGraph.Tests.Collections
 
         [PexMethod(MaxConstraintSolverTime = 2)]
         [PexAllowedExceptionFromTypeUnderTest(typeof(InvalidOperationException))]
+        [PexCodeCanvasSearchFrontier(@"C:\codebox\codecanvas\bin\Debug\CodeCanvas.sdf")]
         public void CompareBinary<TPriority, TValue>(
             [PexAssumeNotNull]KeyValuePair<bool, TPriority>[] values)
         {
