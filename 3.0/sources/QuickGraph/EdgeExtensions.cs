@@ -40,7 +40,7 @@ this
 #if !NET20
 this 
 #endif
-            IEdge<TVertex> edge, TVertex vertex)
+            TEdge edge, TVertex vertex)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edge != null);
@@ -67,7 +67,7 @@ this
 #if !NET20
 this 
 #endif
-            IEdge<TVertex> edge, TVertex vertex)
+            TEdge edge, TVertex vertex)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edge != null);
@@ -217,12 +217,14 @@ this
                 return true;
 
             TEdge predecessor;
-            while(predecessors.TryGetValue(current, out predecessor) &&
-                  !current.Equals(predecessor.Source))
+            while(predecessors.TryGetValue(current, out predecessor))
             {
-                if (predecessor.Source.Equals(root))
+                var source = GetOtherVertex(predecessor, current);
+                if (current.Equals(source))
+                    return false;
+                if (source.Equals(root))
                     return true;
-                current = predecessor.Source;
+                current = source;
             }
 
             return false;
@@ -256,7 +258,7 @@ this
             while (predecessors.TryGetValue(vc, out e))
             {
                 path.Add(e);
-                vc = vc.Equals(e.Target) ? e.Source : e.Target;
+                vc = GetOtherVertex(e, vc);
             }
 
             if (path.Count > 0)
