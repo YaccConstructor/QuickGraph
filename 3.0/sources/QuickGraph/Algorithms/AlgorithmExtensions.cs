@@ -570,6 +570,30 @@ this
         }
 
         /// <summary>
+        /// Computes the incremental connected components for a growing graph (edge added only).
+        /// Each call to the delegate re-computes the component dictionary. The returned dictionary
+        /// is shared accross multiple calls of the method.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="g"></param>
+        /// <returns></returns>
+        public static Func<KeyValuePair<int, IDictionary<TVertex, int>>> IncrementalConnectedComponents<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IMutableVertexAndEdgeSet<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(g != null);
+
+            var incrementalComponents = new IncrementalConnectedComponentsAlgorithm<TVertex, TEdge>(g);
+            incrementalComponents.Compute();
+
+            return () => incrementalComponents.GetComponents();
+        }
+
+        /// <summary>
         /// Computes the weakly connected components of a graph
         /// </summary>
         /// <typeparam name="TVertex"></typeparam>
