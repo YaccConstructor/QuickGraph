@@ -150,7 +150,7 @@
     <Compile Include="Algorithms\Condensation\CondensationGraphAlgorithm.cs" />
     <Compile Include="Algorithms\Condensation\CondensatedEdge.cs" />
     <Compile Include="Algorithms\Condensation\MergedEdge.cs" />
-    <Compile Include="Algorithms\ConnectedComponentsAlgorithm.cs" />
+    <Compile Include="Algorithms\ConnectedComponents\ConnectedComponentsAlgorithm.cs" />
     <Compile Include="Algorithms\IUndirectedVertexPredecessorRecorderAlgorithm.cs" />
     <Compile Include="Algorithms\IUndirectedTreeBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />
@@ -369,7 +369,7 @@
     <Compile Include="Predicates\ResidualEdgePrediate.cs" />
     <Compile Include="Predicates\ReversedResidualEdgePredicate.cs" />
     <Compile Include="Predicates\SinkVertexPredicate.cs" />
-    <Compile Include="Algorithms\StronglyConnectedComponentAlgorithm.cs" />
+    <Compile Include="Algorithms\ConnectedComponents\StronglyConnectedComponentAlgorithm.cs" />
     <Compile Include="QuickGraphResourceManager.cs" />
     <Compile Include="ReversedEdge.cs" />
     <Compile Include="ReversedBidirectionalListGraph.cs" />

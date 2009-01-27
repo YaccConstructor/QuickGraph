@@ -12,6 +12,7 @@ using System.Linq;
 using QuickGraph.Algorithms.MinimumSpanningTree;
 using QuickGraph.Algorithms.RankedShortestPath;
 using System.Reflection;
+using QuickGraph.Algorithms.ConnectedComponents;
 
 namespace QuickGraph.Algorithms
 {

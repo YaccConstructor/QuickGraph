@@ -5,7 +5,7 @@ using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Services;
 using System.Diagnostics.Contracts;
 
-namespace QuickGraph.Algorithms
+namespace QuickGraph.Algorithms.ConnectedComponents
 {
     [Serializable]
     public sealed class StronglyConnectedComponentsAlgorithm<TVertex, TEdge> :
