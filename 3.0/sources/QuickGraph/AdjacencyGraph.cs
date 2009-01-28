@@ -57,7 +57,6 @@ namespace QuickGraph
 
         public bool IsDirected
         {
-            [Pure]
             get { return this.isDirected; }
         }
 
@@ -69,26 +68,22 @@ namespace QuickGraph
 
         public int EdgeCapacity
         {
-            [Pure]
             get { return this.edgeCapacity; }
             set { this.edgeCapacity = value; }
         }
 
         public static Type VertexType
         {
-            [Pure]
             get { return typeof(TVertex); }
         }
 
         public static Type EdgeType
         {
-            [Pure]
             get { return typeof(TEdge); }
         }
 
         public bool IsVerticesEmpty
         {
-            [Pure]
             get { return this.vertexEdges.Count == 0; }
         }
 

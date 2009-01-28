@@ -133,6 +133,10 @@
     <Compile Include="..\version.cs">
       <Link>Properties\version.cs</Link>
     </Compile>
+    <Compile Include="AdjacencyGraphTVertexTEdgeTest.AddEdge.g.cs">
+      <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdjacencyGraphTVertexTEdgeTest.cs" />
     <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\WeaklyConnectedCondensationGraphTest.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
