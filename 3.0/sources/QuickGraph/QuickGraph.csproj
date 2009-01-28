@@ -152,6 +152,7 @@
     <Compile Include="Algorithms\Condensation\MergedEdge.cs" />
     <Compile Include="Algorithms\ConnectedComponents\ConnectedComponentsAlgorithm.cs" />
     <Compile Include="Algorithms\ConnectedComponents\IncrementalConnectedComponentsAlgorithm.cs" />
+    <Compile Include="Algorithms\Contracts\IAlgorithmContract.cs" />
     <Compile Include="Algorithms\IUndirectedVertexPredecessorRecorderAlgorithm.cs" />
     <Compile Include="Algorithms\IUndirectedTreeBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />

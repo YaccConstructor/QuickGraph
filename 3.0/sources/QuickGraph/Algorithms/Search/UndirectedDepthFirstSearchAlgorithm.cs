@@ -16,9 +16,8 @@ namespace QuickGraph.Algorithms.Search
         RootedAlgorithmBase<TVertex, IUndirectedGraph<TVertex, TEdge>>,
         IDistanceRecorderAlgorithm<TVertex, TEdge>,
         IVertexColorizerAlgorithm<TVertex, TEdge>,
-        IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>,
-        IVertexTimeStamperAlgorithm<TVertex, TEdge>,
-        ITreeBuilderAlgorithm<TVertex, TEdge>
+        IUndirectedVertexPredecessorRecorderAlgorithm<TVertex, TEdge>,
+        IVertexTimeStamperAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private IDictionary<TVertex, GraphColor> colors;
@@ -98,15 +97,17 @@ namespace QuickGraph.Algorithms.Search
         public event EdgeAction<TVertex, TEdge> ExamineEdge;
         private void OnExamineEdge(TEdge e)
         {
-            if (ExamineEdge != null)
-                ExamineEdge(e);
+            var eh = this.ExamineEdge;
+            if (eh != null)
+                eh(e);
         }
 
-        public event EdgeAction<TVertex, TEdge> TreeEdge;
-        private void OnTreeEdge(TEdge e)
+        public event UndirectedEdgeAction<TVertex, TEdge> TreeEdge;
+        private void OnTreeEdge(TEdge e, bool reversed)
         {
-            if (TreeEdge != null)
-                TreeEdge(e);
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
         public event EdgeAction<TVertex, TEdge> BackEdge;
@@ -192,15 +193,22 @@ namespace QuickGraph.Algorithms.Search
                     return;
 
                 OnExamineEdge(e);
+                bool reversed;
                 if (u.Equals(e.Source))
+                {
                     v = e.Target;
+                    reversed = false;
+                }
                 else
+                {
                     v = e.Source;
+                    reversed = true;
+                }
 
                 GraphColor c = VertexColors[v];
                 if (c == GraphColor.White)
                 {
-                    OnTreeEdge(e);
+                    OnTreeEdge(e, reversed);
                     Visit(v, depth + 1);
                 }
                 else if (c == GraphColor.Gray)

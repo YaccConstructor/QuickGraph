@@ -21,18 +21,16 @@ namespace QuickGraph.Algorithms
         /// <param name="visitedGraph"></param>
         protected AlgorithmBase(IAlgorithmComponent host, TGraph visitedGraph)
         {
+            Contract.Requires(visitedGraph != null);
             if (host == null)
                 host = this;
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
             this.visitedGraph = visitedGraph;
             this.services = new AlgorithmServices(host);
         }
 
         protected AlgorithmBase(TGraph visitedGraph)
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
+            Contract.Requires(visitedGraph != null);
             this.visitedGraph = visitedGraph;
             this.services = new AlgorithmServices(this);
         }

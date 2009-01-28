@@ -203,4 +203,14 @@ namespace System.Diagnostics.Contracts
     {
     }
 }
+
+namespace QuickGraph.Algorithms.Contracts
+{
+    /// <summary>
+    /// Ensures that System.Diagnostics.Contracts namespace exists 
+    /// </summary>
+    class DummyAlgorithmContract
+    { }
+}
+
 #endif

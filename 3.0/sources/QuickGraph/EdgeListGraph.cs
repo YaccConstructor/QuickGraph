@@ -54,8 +54,6 @@ namespace QuickGraph
         [Pure]
         public bool ContainsEdge(TEdge edge)
         {
-            Contract.Requires(edge != null);
-
             return this.edges.ContainsKey(edge);
         }
 
@@ -91,8 +89,6 @@ namespace QuickGraph
 
         public bool AddEdge(TEdge edge)
         {
-            Contract.Requires(edge != null);
-
             if(this.ContainsEdge(edge))
                 return false;
             this.edges.Add(edge, edge);
@@ -150,7 +146,10 @@ namespace QuickGraph
 
         public void Clear()
         {
+            var edges = this.edges.Clone();
             this.edges.Clear();
+            foreach (var edge in edges.Keys)
+                this.OnEdgeRemoved(edge);
         }
 
         #region ICloneable Members

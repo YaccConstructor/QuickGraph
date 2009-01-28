@@ -45,6 +45,7 @@ this
             Contract.Requires(visitedGraph != null);
             Contract.Requires(root != null);
             Contract.Requires(visitedGraph.ContainsVertex(root));
+            Contract.Ensures(Contract.Result<TryFunc<TVertex, IEnumerable<TEdge>>>() != null);
 
             var algo = new BreadthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
@@ -69,6 +70,7 @@ this
             Contract.Requires(visitedGraph != null);
             Contract.Requires(root != null);
             Contract.Requires(visitedGraph.ContainsVertex(root));
+            Contract.Ensures(Contract.Result<TryFunc<TVertex, IEnumerable<TEdge>>>() != null);
 
             var algo = new DepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
@@ -93,6 +95,7 @@ this
             Contract.Requires(visitedGraph != null);
             Contract.Requires(root != null);
             Contract.Requires(visitedGraph.ContainsVertex(root));
+            Contract.Ensures(Contract.Result<TryFunc<TVertex, IEnumerable<TEdge>>>() != null);
 
             return TreeCyclePoppingRandom(visitedGraph, root, new NormalizedMarkovEdgeChain<TVertex, TEdge>());
         }
@@ -109,6 +112,7 @@ this
             Contract.Requires(visitedGraph != null);
             Contract.Requires(root != null);
             Contract.Requires(visitedGraph.ContainsVertex(root));
+            Contract.Ensures(Contract.Result<TryFunc<TVertex, IEnumerable<TEdge>>>() != null);
 
             var algo = new CyclePoppingRandomTreeAlgorithm<TVertex, TEdge>(visitedGraph, edgeChain);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
@@ -376,8 +380,9 @@ this
             Contract.Requires(visitedGraph != null);
 
             var dfs = new UndirectedDepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
-            var vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            vis.Attach(dfs);
+            var vis = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
+            using(ObserverScope.Create(dfs, vis))
+                dfs.Compute();
 
             foreach (var predecessor in vis.VertexPredecessors)
             {
