@@ -72,7 +72,7 @@ namespace QuickGraph.Algorithms.ConnectedComponents
                 var representative = this.ds.FindSet(v);
                 int index;
                 if (!representatives.TryGetValue(representative, out index))
-                    representatives[representative] = representatives.Count;
+                    representatives[representative] = index = representatives.Count;
                 components[v] = index;
             }
 
