@@ -79,6 +79,11 @@ namespace QuickGraph.Algorithms.ConnectedComponents
             return new KeyValuePair<int, IDictionary<TVertex, int>>(this.ds.SetCount, components);
         }
 
+        void VisitedGraph_VertexAdded(TVertex v)
+        {
+            this.ds.MakeSet(v);
+        }
+
         void VisitedGraph_EdgeAdded(TEdge e)
         {
             this.ds.Union(e.Source, e.Target);
@@ -87,11 +92,6 @@ namespace QuickGraph.Algorithms.ConnectedComponents
         void VisitedGraph_VertexRemoved(TVertex e)
         {
             throw new InvalidOperationException("vertex removal not supported for incremental connected components");
-        }
-
-        void VisitedGraph_VertexAdded(TVertex e)
-        {
-            throw new InvalidOperationException("vertex addition not supported for incremental connected components");
         }
 
         void VisitedGraph_EdgeRemoved(TEdge e)
