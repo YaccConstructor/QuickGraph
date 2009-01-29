@@ -413,8 +413,6 @@ namespace QuickGraph
 
         public int RemoveVertexIf(VertexPredicate<TVertex> predicate)
         {
-            Contract.Requires(predicate != null);
-
             var vertices = new VertexList<TVertex>();
             foreach (var v in this.Vertices)
                 if (predicate(v))
@@ -427,7 +425,6 @@ namespace QuickGraph
 
         public virtual bool AddEdge(TEdge e)
         {
-            Contract.Requires(GraphContract.InVertexSet(this, e));
             if (!this.AllowParallelEdges)
             {
                 if (this.ContainsEdge(e.Source, e.Target))

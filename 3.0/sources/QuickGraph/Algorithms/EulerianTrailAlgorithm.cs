@@ -5,6 +5,7 @@ using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.Services;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace QuickGraph.Algorithms
 {
@@ -227,14 +228,7 @@ namespace QuickGraph.Algorithms
 
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
-            {
-                // pick first vertex
-                foreach (var v in this.VisitedGraph.Vertices)
-                {
-                    rootVertex = v;
-                    break;
-                }
-            }
+                rootVertex = Enumerable.First(this.VisitedGraph.Vertices);
 
             this.currentVertex = rootVertex;
             // start search
