@@ -43,8 +43,6 @@ namespace QuickGraph.Algorithms.RankedShortestPath
         {
             get
             {
-                Contract.Ensures(Contract.Result<IEnumerable<IEnumerable<TEdge>>>() != null);
-
                 if (this.computedShortestPaths == null)
                     yield break;
                 else

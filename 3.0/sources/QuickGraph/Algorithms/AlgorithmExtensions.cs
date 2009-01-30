@@ -13,6 +13,7 @@ using QuickGraph.Algorithms.MinimumSpanningTree;
 using QuickGraph.Algorithms.RankedShortestPath;
 using System.Reflection;
 using QuickGraph.Algorithms.ConnectedComponents;
+using System.Diagnostics;
 
 namespace QuickGraph.Algorithms
 {
@@ -315,11 +316,19 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
+            return SinksImplementation<TVertex, TEdge>(visitedGraph);
+        }
 
+        [DebuggerHidden]
+        private static IEnumerable<TVertex> SinksImplementation<TVertex, TEdge>(
+            IVertexListGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
+        {
             foreach (var v in visitedGraph.Vertices)
                 if (visitedGraph.IsOutEdgesEmpty(v))
                     yield return v;
         }
+
 
         /// <summary>
         /// Gets the list of root vertices
@@ -336,7 +345,14 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
+            return RootsImplementation(visitedGraph);
+        }
 
+        [DebuggerHidden]
+        private static IEnumerable<TVertex> RootsImplementation<TVertex, TEdge>(
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
+        {
             foreach (var v in visitedGraph.Vertices)
                 if (visitedGraph.IsInEdgesEmpty(v))
                     yield return v;
@@ -357,7 +373,14 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
+            return IsolatedVerticesImplementation(visitedGraph);
+        }
 
+        [DebuggerHidden]
+        private static IEnumerable<TVertex> IsolatedVerticesImplementation<TVertex, TEdge>(
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
+        {
             foreach (var v in visitedGraph.Vertices)
                 if (visitedGraph.Degree(v) == 0)
                     yield return v;

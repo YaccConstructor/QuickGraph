@@ -56,9 +56,6 @@ namespace QuickGraph.Algorithms
 
         private IEnumerable<TEdge> SelectOutEdgesNotInCircuit(TVertex v)
         {
-            Contract.Requires(v != null);
-            Contract.Ensures(Contract.Result<IEnumerable<TEdge>>() != null);
-
             foreach (var edge in VisitedGraph.OutEdges(v))
                 if (this.NotInCircuit(edge))
                     yield return edge;

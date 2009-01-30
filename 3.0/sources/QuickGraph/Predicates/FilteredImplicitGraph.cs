@@ -38,8 +38,6 @@ namespace QuickGraph.Predicates
         [Pure]
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
-            Contract.Requires(v != null);
-
             foreach (var edge in this.BaseGraph.OutEdges(v))
                 if (this.TestEdge(edge))
                     yield return edge;
