@@ -106,9 +106,6 @@ namespace QuickGraph
         [Pure]
         public IEnumerable<TEdge> InEdges(int v)
         {
-            Contract.Requires(0 <= v && v < this.VertexCount);
-            Contract.Ensures(Contract.Result<IEnumerable<TEdge>>() != null);
-
             for (int i = 0; i < this.VertexCount; ++i)
             {
                 TEdge e = this.edges[i, v];
@@ -233,8 +230,6 @@ namespace QuickGraph
         [Pure]
         public IEnumerable<TEdge> OutEdges(int v)
         {
-            Contract.Requires(0 <= v && v < this.VertexCount);
-
             for (int j = 0; j < this.vertexCount; ++j)
             {
                 TEdge e = this.edges[v, j];

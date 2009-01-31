@@ -316,11 +316,11 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
-            return SinksImplementation<TVertex, TEdge>(visitedGraph);
+            return SinksIterator<TVertex, TEdge>(visitedGraph);
         }
 
         [DebuggerHidden]
-        private static IEnumerable<TVertex> SinksImplementation<TVertex, TEdge>(
+        private static IEnumerable<TVertex> SinksIterator<TVertex, TEdge>(
             IVertexListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
@@ -345,11 +345,11 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
-            return RootsImplementation(visitedGraph);
+            return RootsIterator(visitedGraph);
         }
 
         [DebuggerHidden]
-        private static IEnumerable<TVertex> RootsImplementation<TVertex, TEdge>(
+        private static IEnumerable<TVertex> RootsIterator<TVertex, TEdge>(
             IBidirectionalGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
@@ -373,11 +373,11 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
-            return IsolatedVerticesImplementation(visitedGraph);
+            return IsolatedVerticesIterator(visitedGraph);
         }
 
         [DebuggerHidden]
-        private static IEnumerable<TVertex> IsolatedVerticesImplementation<TVertex, TEdge>(
+        private static IEnumerable<TVertex> IsolatedVerticesIterator<TVertex, TEdge>(
             IBidirectionalGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
@@ -395,13 +395,21 @@ this
         /// <returns></returns>
         public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
 #if !NET20
-            this 
+this 
 #endif
             IUndirectedGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
 
+            return RootsIterator<TVertex, TEdge>(visitedGraph);
+        }
+
+        [DebuggerHidden]
+        private static IEnumerable<TVertex> RootsIterator<TVertex, TEdge>(
+            IUndirectedGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
+        {
             var dfs = new UndirectedDepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
             var vis = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
             using(ObserverScope.Create(dfs, vis))
