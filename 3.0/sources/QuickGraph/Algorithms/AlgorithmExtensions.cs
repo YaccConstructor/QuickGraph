@@ -429,22 +429,30 @@ this
         /// <typeparam name="TEdge"></typeparam>
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
-        public static IEnumerable<TVertex> Roots<TVertex,TEdge>(
+        public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
 #if !NET20
-            this 
+this 
 #endif
-            IVertexListGraph<TVertex,TEdge> visitedGraph)
+            IVertexListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(visitedGraph != null);
+            return RootsIterator<TVertex, TEdge>(visitedGraph);
+        }
 
+        [DebuggerHidden]
+        private static IEnumerable<TVertex> RootsIterator<TVertex,TEdge>(
+            IVertexListGraph<TVertex,TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
+        {
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
             var vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            vis.Attach(dfs);
+            using (ObserverScope.Create(dfs, vis))
+                dfs.Compute();
 
             foreach (var predecessor in vis.VertexPredecessors)
             {
-                if (predecessor.Value.Equals(default(TEdge)))
+                if (object.Equals(predecessor.Value, default(TEdge)))
                     yield return predecessor.Key;
             }
         }

@@ -148,6 +148,7 @@
     <Compile Include="Algorithms\RankedShortestPath\HoffmanPavleyRankedShortestPathAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\BidirectionalDepthFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\BreadthFirstSearchAlgirthmTest.cs" />
+    <Compile Include="Algorithms\Search\UndirectedDepthFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\ParallelBreadthFirstSearchAlgirthmTest.cs" />
     <Compile Include="Algorithms\Search\DepthFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\UndirectedBreathFirstSearchAlgorithmTest.cs" />

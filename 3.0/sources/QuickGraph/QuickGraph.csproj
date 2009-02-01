@@ -164,6 +164,7 @@
     <Compile Include="Algorithms\RankedShortestPath\HoffmanPavleyRankedShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\RankedShortestPath\MartinPascoalSantosRankedShortestPath.cs" />
     <Compile Include="Algorithms\RankedShortestPath\RankedShortestPathAlgorithmBase.cs" />
+    <Compile Include="Algorithms\Search\UndirectedDepthFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmComponent.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmServices.cs" />
     <Compile Include="Algorithms\IComputation.cs" />
@@ -217,7 +218,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Algorithms\Search\UndirectedBreathFirstSearchAlgorithm.cs" />
-    <Compile Include="Algorithms\Search\UndirectedDepthFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Services\ICancelManager.cs" />
     <Compile Include="Algorithms\Services\IService.cs" />
     <Compile Include="Algorithms\ShortestPath\AStartShortestPathAlgorithm.cs" />
