@@ -159,20 +159,20 @@ namespace QuickGraph.Algorithms.Search
                 eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
-        public event EdgeAction<TVertex, TEdge> BackEdge;
-        private void OnBackEdge(TEdge e)
+        public event UndirectedEdgeAction<TVertex, TEdge> BackEdge;
+        private void OnBackEdge(TEdge e, bool reversed)
         {
             var eh = this.BackEdge;
             if (eh != null)
-                eh(e);
+                eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
-        public event EdgeAction<TVertex, TEdge> ForwardOrCrossEdge;
-        private void OnForwardOrCrossEdge(TEdge e)
+        public event UndirectedEdgeAction<TVertex, TEdge> ForwardOrCrossEdge;
+        private void OnForwardOrCrossEdge(TEdge e, bool reversed)
         {
             var eh = this.ForwardOrCrossEdge;
             if (eh != null)
-                eh(e);
+                eh(this, new UndirectedEdgeEventArgs<TVertex, TEdge>(e, reversed));
         }
 
         public event VertexAction<TVertex> FinishVertex;
@@ -285,9 +285,9 @@ namespace QuickGraph.Algorithms.Search
                             this.OnDiscoverVertex(u);
                             break;
                         case GraphColor.Gray:
-                            this.OnBackEdge(e); break;
+                            this.OnBackEdge(e, reversed); break;
                         case GraphColor.Black:
-                            this.OnForwardOrCrossEdge(e); break;
+                            this.OnForwardOrCrossEdge(e, reversed); break;
                     }
                 }
 

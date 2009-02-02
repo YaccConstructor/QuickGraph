@@ -42,7 +42,7 @@ namespace QuickGraph.Algorithms
             set { this.allowCyclicGraph = value; }
         }
 
-        private void BackEdge(TEdge args)
+        private void BackEdge(object sender, UndirectedEdgeEventArgs<TVertex, TEdge> a)
         {
             if (!this.AllowCyclicGraph)
                 throw new NonAcyclicGraphException();
@@ -63,7 +63,7 @@ namespace QuickGraph.Algorithms
                     VisitedGraph,
                     new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount)
                     );
-                dfs.BackEdge += new EdgeAction<TVertex, TEdge>(this.BackEdge);
+                dfs.BackEdge += new UndirectedEdgeAction<TVertex, TEdge>(this.BackEdge);
                 dfs.FinishVertex += new VertexAction<TVertex>(this.FinishVertex);
 
                 dfs.Compute();
@@ -72,7 +72,7 @@ namespace QuickGraph.Algorithms
             {
                 if (dfs != null)
                 {
-                    dfs.BackEdge -= new EdgeAction<TVertex, TEdge>(this.BackEdge);
+                    dfs.BackEdge -= new UndirectedEdgeAction<TVertex, TEdge>(this.BackEdge);
                     dfs.FinishVertex -= new VertexAction<TVertex>(this.FinishVertex);
                 }
             }

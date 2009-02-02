@@ -74,12 +74,12 @@ namespace QuickGraph.Algorithms.Search
                 parents[target] = source;
             };
 
-            dfs.BackEdge += args =>
+            dfs.BackEdge += (sender, args) =>
             {
                 Assert.AreEqual(dfs.VertexColors[args.Target], GraphColor.Gray);
             };
 
-            dfs.ForwardOrCrossEdge += args =>
+            dfs.ForwardOrCrossEdge += (sender, args) =>
             {
                 Assert.AreEqual(dfs.VertexColors[args.Target], GraphColor.Black);
             };
