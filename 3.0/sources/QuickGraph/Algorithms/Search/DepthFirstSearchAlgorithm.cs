@@ -285,7 +285,7 @@ namespace QuickGraph.Algorithms.Search
                             this.OnTreeEdge(e);
                             todo.Push(new SearchFrame(u, edges, frame.Depth + 1));
                             u = v;
-                            edges = this.VisitedGraph.OutEdges(u).GetEnumerator();
+                            edges = oee(this.VisitedGraph.OutEdges(u)).GetEnumerator();
                             this.VertexColors[u] = GraphColor.Gray;
                             this.OnDiscoverVertex(u);
                             break;
