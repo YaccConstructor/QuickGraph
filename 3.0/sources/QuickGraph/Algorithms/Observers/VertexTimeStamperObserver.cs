@@ -49,15 +49,12 @@ namespace QuickGraph.Algorithms.Observers
 
         public void Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
-            Contract.Requires(algorithm != null);
             algorithm.DiscoverVertex+=new VertexAction<TVertex>(DiscoverVertex);
             algorithm.FinishVertex+=new VertexAction<TVertex>(FinishVertex);
         }
 
         public void Detach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
-            Contract.Requires(algorithm != null);
-
             algorithm.DiscoverVertex -= new VertexAction<TVertex>(DiscoverVertex);
             algorithm.FinishVertex -= new VertexAction<TVertex>(FinishVertex);
         }

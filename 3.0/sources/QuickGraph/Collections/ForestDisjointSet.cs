@@ -68,8 +68,6 @@ namespace QuickGraph.Collections
         /// <param name="value"></param>
         public void MakeSet(T value)
         {
-            Contract.Requires(value != null);
-
             var element = new Element(value);
             this.elements.Add(value, element);
             this.setCount++;
@@ -78,27 +76,16 @@ namespace QuickGraph.Collections
         [Pure]
         public bool Contains(T value)
         {
-            Contract.Requires(value != null);
-
             return this.elements.ContainsKey(value);
         }
 
         public bool Union(T left, T right)
         {
-            Contract.Requires(left != null);
-            Contract.Requires(right != null);
-            Contract.Requires(this.Contains(left));
-            Contract.Requires(this.Contains(right));
-            Contract.Ensures(this.FindNoCompression(this.elements[left]) == this.FindNoCompression(this.elements[right]));
-            
             return this.Union(this.elements[left], this.elements[right]);
         }
 
         public T FindSet(T value)
         {
-            Contract.Requires(value != null);
-            Contract.Requires(this.Contains(value));
-
             return this.Find(this.elements[value]).Value;
         }
 

@@ -5,6 +5,7 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Predicates
 {
+#if FALSE
     [Serializable]
     public sealed class FilteredEdgeListGraph<TVertex,TEdge,TGraph> :
         FilteredGraph<TVertex,TEdge,TGraph>,
@@ -70,4 +71,7 @@ namespace QuickGraph.Predicates
                 return false;
         }
     }
+}
+
+#endif
 }

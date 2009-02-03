@@ -37,7 +37,7 @@ namespace QuickGraph.Serialization
     public sealed class GraphMLSerializer<TVertex,TEdge,TGraph> 
         : SerializerBase<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
-        where TGraph : IVertexAndEdgeSet<TVertex, TEdge>
+        where TGraph : IEdgeListGraph<TVertex, TEdge>
     {
         #region Compiler
         delegate void WriteVertexAttributesDelegate(

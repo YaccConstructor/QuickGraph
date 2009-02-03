@@ -54,15 +54,11 @@ namespace QuickGraph.Algorithms.Observers
 
         public void Attach(IUndirectedTreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
-            Contract.Requires(algorithm != null);
-
             algorithm.TreeEdge += new UndirectedEdgeAction<TVertex, TEdge>(this.TreeEdge);
         }
 
         public void Detach(IUndirectedTreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
-            Contract.Requires(algorithm != null);
-
             algorithm.TreeEdge -= new UndirectedEdgeAction<TVertex, TEdge>(this.TreeEdge);
         }
 

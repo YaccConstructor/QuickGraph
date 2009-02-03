@@ -6,10 +6,10 @@ using Microsoft.Glee.Drawing;
 namespace QuickGraph.Glee
 {
     public abstract class GleeGraphPopulator<TVertex,TEdge> :
-        AlgorithmBase<IVertexAndEdgeSet<TVertex, TEdge>>
+        AlgorithmBase<IEdgeListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        protected GleeGraphPopulator(IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+        protected GleeGraphPopulator(IEdgeListGraph<TVertex, TEdge> visitedGraph)
             : base(visitedGraph)
         { }
 

@@ -10,7 +10,7 @@ namespace QuickGraph.Graphviz
         where TEdge : IEdge<TVertex>
     {
         private readonly static Regex writeLineReplace = new Regex("\n", RegexOptions.Compiled | RegexOptions.Multiline);
-        private IVertexAndEdgeSet<TVertex, TEdge> visitedGraph;
+        private IEdgeListGraph<TVertex, TEdge> visitedGraph;
         private StringWriter output;
         private GraphvizImageType imageType;
         private readonly Dictionary<TVertex, int> vertexIds = new Dictionary<TVertex, int>();
@@ -19,12 +19,12 @@ namespace QuickGraph.Graphviz
         private GraphvizVertex commonVertexFormat;
         private GraphvizEdge commonEdgeFormat;
 
-        public GraphvizAlgorithm(IVertexAndEdgeSet<TVertex, TEdge> g)
+        public GraphvizAlgorithm(IEdgeListGraph<TVertex, TEdge> g)
             :this(g,".",GraphvizImageType.Png)
         {}
 
         public GraphvizAlgorithm(
-            IVertexAndEdgeSet<TVertex, TEdge> g,
+            IEdgeListGraph<TVertex, TEdge> g,
             String path,
             GraphvizImageType imageType
             )
@@ -69,7 +69,7 @@ namespace QuickGraph.Graphviz
             }
         }
 
-        public IVertexAndEdgeSet<TVertex, TEdge> VisitedGraph
+        public IEdgeListGraph<TVertex, TEdge> VisitedGraph
         {
             get
             {

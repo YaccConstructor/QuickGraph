@@ -22,16 +22,12 @@ namespace QuickGraph.Predicates
         [Pure]
         public bool IsInEdgesEmpty(TVertex v)
         {
-            Contract.Requires(v != null);
-
             return this.InDegree(v) == 0;
         }
 
         [Pure]
         public int InDegree(TVertex v)
         {
-            Contract.Requires(v != null);
-
             int count = 0;
             foreach (var edge in this.InEdges(v))
                 if (TestEdge(edge))
@@ -50,8 +46,6 @@ namespace QuickGraph.Predicates
         [Pure]
         public bool TryGetInEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
-            Contract.Requires(v != null);
-
             if (this.ContainsVertex(v))
             {
                 edges = this.InEdges(v);

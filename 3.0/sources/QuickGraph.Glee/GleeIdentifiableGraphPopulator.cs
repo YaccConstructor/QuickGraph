@@ -10,7 +10,7 @@ namespace QuickGraph.Glee
         where TEdge : IEdge<TVertex>
     {
         private readonly VertexIdentity<TVertex> vertexIdentities;
-        public GleeIndentifiableGraphPopulator(IVertexAndEdgeSet<TVertex, TEdge> visitedGraph, VertexIdentity<TVertex> vertexIdentities)
+        public GleeIndentifiableGraphPopulator(IEdgeListGraph<TVertex, TEdge> visitedGraph, VertexIdentity<TVertex> vertexIdentities)
             : base(visitedGraph)
         {
             Contract.Requires(vertexIdentities != null);

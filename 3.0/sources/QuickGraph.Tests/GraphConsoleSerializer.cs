@@ -4,7 +4,7 @@ namespace QuickGraph
 {
     public static class GraphConsoleSerializer
     {
-        public static void DisplayGraph<Vertex, Edge>(IVertexAndEdgeSet<Vertex, Edge> g)
+        public static void DisplayGraph<Vertex, Edge>(IEdgeListGraph<Vertex, Edge> g)
             where Edge : IEdge<Vertex>
         {
             Console.WriteLine("{0} vertices, {1} edges", g.VertexCount, g.EdgeCount);

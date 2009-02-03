@@ -30,8 +30,8 @@ namespace QuickGraph.Contracts
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> left,
-            IVertexAndEdgeSet<TVertex, TEdge> right)
+            IEdgeListGraph<TVertex, TEdge> left,
+            IEdgeListGraph<TVertex, TEdge> right)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(left != null);
@@ -53,7 +53,7 @@ namespace QuickGraph.Contracts
 
         [Pure]
         public static bool InVertexSet<TVertex, TEdge>(
-            IVertexAndEdgeSet<TVertex, TEdge> g,
+            IEdgeListGraph<TVertex, TEdge> g,
             TEdge e)
             where TEdge : IEdge<TVertex>
         {
@@ -66,7 +66,7 @@ namespace QuickGraph.Contracts
 
         [Pure]
         public static bool InEdgeSet<TVertex, TEdge>(
-            IVertexAndEdgeSet<TVertex, TEdge> g,
+            IEdgeListGraph<TVertex, TEdge> g,
             TEdge e)
             where TEdge : IEdge<TVertex>
         {

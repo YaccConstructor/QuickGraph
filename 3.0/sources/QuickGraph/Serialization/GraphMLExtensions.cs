@@ -19,7 +19,7 @@ namespace QuickGraph.Serialization
             VertexIdentity<TVertex> vertexIdentities,
             EdgeIdentity<TVertex, TEdge> edgeIdentities)
             where TEdge : IEdge<TVertex>
-            where TGraph : IVertexAndEdgeSet<TVertex, TEdge>
+            where TGraph : IEdgeListGraph<TVertex, TEdge>
         {
             Contract.Requires(graph != null);
             Contract.Requires(writer != null);
@@ -115,7 +115,7 @@ namespace QuickGraph.Serialization
 
         private static void AddGraphMLSchema<TVertex, TEdge,TGraph>(XmlReaderSettings settings)
             where TEdge : IEdge<TVertex>
-            where TGraph : IVertexAndEdgeSet<TVertex, TEdge>
+            where TGraph : IEdgeListGraph<TVertex, TEdge>
         {
             using (var xsdStream = typeof(GraphMLExtensions).Assembly.GetManifestResourceStream(typeof(GraphMLExtensions), "graphml.xsd"))
             using (var xsdReader = XmlReader.Create(xsdStream, settings))

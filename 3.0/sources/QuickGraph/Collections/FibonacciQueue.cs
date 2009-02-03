@@ -92,8 +92,6 @@ namespace QuickGraph.Collections
         [Pure]
         public bool Contains(TVertex value)
         {
-            Contract.Requires(value != null);
-
             FibonacciHeapCell<TDistance, TVertex> result;
             return 
                 this.cells.TryGetValue(value, out result) && 
@@ -107,9 +105,6 @@ namespace QuickGraph.Collections
 
         public void Enqueue(TVertex value)
         {
-            Contract.Requires(value != null);
-            Contract.Requires(this.Contains(value));
-
             this.cells[value] = this.heap.Enqueue(this.distances(value), value);
         }
 

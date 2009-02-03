@@ -262,15 +262,17 @@ namespace QuickGraph.Algorithms.Search
                 var frame = todo.Pop();
                 var u = frame.Vertex;
                 var depth = frame.Depth;
+                var edges = frame.Edges;
 
                 if (depth > this.MaxDepth)
                 {
+                    if (edges != null)
+                        edges.Dispose();
                     this.VertexColors[u] = GraphColor.Black;
                     this.OnFinishVertex(u);
                     continue;
                 }
 
-                var edges = frame.Edges;
                 while(edges.MoveNext())
                 {
                     TEdge e = edges.Current;
@@ -283,9 +285,10 @@ namespace QuickGraph.Algorithms.Search
                     {
                         case GraphColor.White:
                             this.OnTreeEdge(e);
-                            todo.Push(new SearchFrame(u, edges, frame.Depth + 1));
+                            todo.Push(new SearchFrame(u, edges, depth));
                             u = v;
                             edges = oee(this.VisitedGraph.OutEdges(u)).GetEnumerator();
+                            depth++;
                             this.VertexColors[u] = GraphColor.Gray;
                             this.OnDiscoverVertex(u);
                             break;
@@ -295,6 +298,8 @@ namespace QuickGraph.Algorithms.Search
                             this.OnForwardOrCrossEdge(e); break;
                     }
                 }
+                if (edges != null)
+                    edges.Dispose();
 
                 this.VertexColors[u] = GraphColor.Black;
                 this.OnFinishVertex(u);

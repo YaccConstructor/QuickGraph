@@ -46,7 +46,6 @@ namespace QuickGraph.Predicates
         [Pure]
         public bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
-            Contract.Requires(v != null);
             IEnumerable<TEdge> baseEdges;
             if (!this.BaseGraph.TryGetOutEdges(v, out baseEdges))
             {

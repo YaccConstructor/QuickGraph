@@ -75,8 +75,6 @@ namespace QuickGraph.Algorithms.Exploration
         [Pure]
         public bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
-            Contract.Requires(v != null);
-
             edges = this.OutEdges(v);
             return true;
         }

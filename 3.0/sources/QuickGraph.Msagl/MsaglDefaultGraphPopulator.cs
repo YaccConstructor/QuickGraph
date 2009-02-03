@@ -8,7 +8,7 @@ namespace QuickGraph.Msagl
         : MsaglGraphPopulator<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        public MsaglDefaultGraphPopulator(IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+        public MsaglDefaultGraphPopulator(IEdgeListGraph<TVertex, TEdge> visitedGraph)
             : base(visitedGraph)
         { }
 

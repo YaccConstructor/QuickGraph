@@ -68,8 +68,8 @@ namespace QuickGraph.Tests.Serialization
         }
 
         private static void AssertGraphsEqual(
-            IVertexAndEdgeSet<int, Edge<int>> g, 
-            IVertexAndEdgeSet<int, Edge<int>> result)
+            IEdgeListGraph<int, Edge<int>> g, 
+            IEdgeListGraph<int, Edge<int>> result)
         {
             // check equal
             Assert.IsTrue(GraphContract.VertexCountEqual(g, result));

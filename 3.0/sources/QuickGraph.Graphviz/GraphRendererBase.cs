@@ -10,7 +10,7 @@ namespace QuickGraph.Graphviz
         private GraphvizAlgorithm<TVertex, TEdge> graphviz;
 
         public GraphRendererBase(
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+            IEdgeListGraph<TVertex, TEdge> visitedGraph)
         {
             this.graphviz = new GraphvizAlgorithm<TVertex, TEdge>(visitedGraph);
             this.Initialize();
@@ -31,7 +31,7 @@ namespace QuickGraph.Graphviz
             get { return this.graphviz; }
         }
 
-        public IVertexAndEdgeSet<TVertex, TEdge> VisitedGraph
+        public IEdgeListGraph<TVertex, TEdge> VisitedGraph
         {
             get { return this.graphviz.VisitedGraph; }
         }

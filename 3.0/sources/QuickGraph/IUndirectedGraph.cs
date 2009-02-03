@@ -9,7 +9,7 @@ namespace QuickGraph
     [ContractClass(typeof(IUndirectedGraphContract<,>))]
 #endif
     public interface IUndirectedGraph<TVertex,TEdge> 
-        : IVertexAndEdgeSet<TVertex,TEdge>
+        : IEdgeListGraph<TVertex,TEdge>
         , IGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {

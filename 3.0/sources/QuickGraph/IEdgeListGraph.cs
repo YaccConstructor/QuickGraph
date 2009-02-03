@@ -5,7 +5,8 @@ namespace QuickGraph
 {
     public interface IEdgeListGraph<TVertex, TEdge> : 
         IGraph<TVertex, TEdge>,
-        IEdgeSet<TVertex, TEdge>
+        IEdgeSet<TVertex, TEdge>,
+        IVertexSet<TVertex>
         where TEdge : IEdge<TVertex>
     {}
 }

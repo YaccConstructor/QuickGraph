@@ -6,10 +6,10 @@ using Microsoft.Msagl.Drawing;
 namespace QuickGraph.Msagl
 {
     public abstract class MsaglGraphPopulator<TVertex,TEdge> :
-        AlgorithmBase<IVertexAndEdgeSet<TVertex, TEdge>>
+        AlgorithmBase<IEdgeListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        protected MsaglGraphPopulator(IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+        protected MsaglGraphPopulator(IEdgeListGraph<TVertex, TEdge> visitedGraph)
             : base(visitedGraph)
         { }
 

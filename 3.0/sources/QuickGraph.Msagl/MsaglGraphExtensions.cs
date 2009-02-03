@@ -13,7 +13,7 @@ namespace QuickGraph.Msagl
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            IEdgeListGraph<TVertex, TEdge> visitedGraph,
             IFormatProvider formatProvider,
             string format)
             where TEdge : IEdge<TVertex>
@@ -25,7 +25,7 @@ namespace QuickGraph.Msagl
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+            IEdgeListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             return new MsaglDefaultGraphPopulator<TVertex, TEdge>(visitedGraph);
@@ -35,7 +35,7 @@ namespace QuickGraph.Msagl
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            IEdgeListGraph<TVertex, TEdge> visitedGraph,
             VertexIdentity<TVertex> vertexIdentities)
             where TEdge : IEdge<TVertex>
         {
@@ -49,7 +49,7 @@ namespace QuickGraph.Msagl
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+            IEdgeListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             return ToMsaglGraph<TVertex,TEdge>(visitedGraph, null, null);
@@ -60,7 +60,7 @@ namespace QuickGraph.Msagl
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            IEdgeListGraph<TVertex, TEdge> visitedGraph,
             MsaglVertexNodeEventHandler<TVertex> nodeAdded,
             MsaglEdgeAction<TVertex, TEdge> edgeAdded
             )
@@ -92,7 +92,7 @@ namespace QuickGraph.Msagl
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            IEdgeListGraph<TVertex, TEdge> visitedGraph,
             VertexIdentity<TVertex> vertexIdentities,
             MsaglVertexNodeEventHandler<TVertex> nodeAdded,
             MsaglEdgeAction<TVertex, TEdge> edgeAdded
@@ -126,7 +126,7 @@ namespace QuickGraph.Msagl
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+            IEdgeListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             ShowDialog(ToMsaglGraph(visitedGraph));
@@ -136,7 +136,7 @@ namespace QuickGraph.Msagl
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            IEdgeListGraph<TVertex, TEdge> visitedGraph,
             MsaglVertexNodeEventHandler<TVertex> nodeAdded,
             MsaglEdgeAction<TVertex, TEdge> edgeAdded
             )

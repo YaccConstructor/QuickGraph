@@ -10,8 +10,8 @@ namespace QuickGraph
 #if CONTRACTS_FULL
     [ContractClass(typeof(IMutableVertexAndEdgeSetContract<,>))]
 #endif
-    public interface IMutableVertexAndEdgeSet<TVertex,TEdge> 
-        : IVertexAndEdgeSet<TVertex, TEdge>
+    public interface IMutableVertexAndEdgeSet<TVertex,TEdge>
+        : IEdgeListGraph<TVertex, TEdge>
         , IMutableVertexSet<TVertex>
         , IMutableEdgeListGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>

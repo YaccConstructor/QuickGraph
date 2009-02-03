@@ -13,7 +13,7 @@ namespace QuickGraph.Glee
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            IEdgeListGraph<TVertex, TEdge> visitedGraph,
             IFormatProvider formatProvider,
             string format)
             where TEdge : IEdge<TVertex>
@@ -25,7 +25,7 @@ namespace QuickGraph.Glee
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph)
+            IEdgeListGraph<TVertex, TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
             return new GleeDefaultGraphPopulator<TVertex, TEdge>(visitedGraph);
@@ -35,7 +35,7 @@ namespace QuickGraph.Glee
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            IEdgeListGraph<TVertex, TEdge> visitedGraph,
             VertexIdentity<TVertex> vertexIdentities)
             where TEdge : IEdge<TVertex>
         {
@@ -46,7 +46,7 @@ namespace QuickGraph.Glee
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            IEdgeListGraph<TVertex, TEdge> visitedGraph,
             GleeVertexNodeEventHandler<TVertex> nodeAdded,
             GleeEdgeEventHandler<TVertex, TEdge> edgeAdded
             )
@@ -79,7 +79,7 @@ namespace QuickGraph.Glee
 #if !NET20
             this 
 #endif
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            IEdgeListGraph<TVertex, TEdge> visitedGraph,
             VertexIdentity<TVertex> vertexIdentities,
             GleeVertexNodeEventHandler<TVertex> nodeAdded,
             GleeEdgeEventHandler<TVertex, TEdge> edgeAdded

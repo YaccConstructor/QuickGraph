@@ -11,7 +11,7 @@ namespace QuickGraph.Msagl
     {
         private readonly VertexIdentity<TVertex> vertexIdentities;
 
-        public MsaglIndentifiableGraphPopulator(IVertexAndEdgeSet<TVertex, TEdge> visitedGraph, VertexIdentity<TVertex> vertexIdentities)
+        public MsaglIndentifiableGraphPopulator(IEdgeListGraph<TVertex, TEdge> visitedGraph, VertexIdentity<TVertex> vertexIdentities)
             : base(visitedGraph)
         {
             Contract.Requires(vertexIdentities != null);

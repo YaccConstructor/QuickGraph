@@ -12,7 +12,7 @@ namespace QuickGraph.Glee
         private readonly string format;
 
         public GleeToStringGraphPopulator(
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            IEdgeListGraph<TVertex, TEdge> visitedGraph,
             IFormatProvider formatProvider,
             string format
             )

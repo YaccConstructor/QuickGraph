@@ -16,6 +16,8 @@ namespace QuickGraph.Contracts
         {
             IMutableEdgeListGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(e != null);
+            Contract.Requires(ithis.ContainsVertex(e.Source));
+            Contract.Requires(ithis.ContainsVertex(e.Target));
             Contract.Ensures(Contract.Result<bool>() == Contract.OldValue(!ithis.ContainsEdge(e)));
             Contract.Ensures(ithis.ContainsEdge(e));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + (Contract.Result<bool>() ? 1 : 0));
@@ -33,7 +35,11 @@ namespace QuickGraph.Contracts
         {
             IMutableEdgeListGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(edges != null);
-            Contract.Requires(Contract.ForAll(edges, e => e != null));
+            Contract.Requires(Contract.ForAll(edges, e =>
+                e != null &&
+                ithis.ContainsVertex(e.Source) &&
+                ithis.ContainsVertex(e.Target)
+                ));
             Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(edges, e => !ithis.ContainsEdge(e))));
             Contract.Ensures(Contract.ForAll(edges, e => ithis.ContainsEdge(e)));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + Contract.Result<int>());
@@ -114,6 +120,29 @@ namespace QuickGraph.Contracts
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region IVertexSet<TVertex> Members
+        bool IVertexSet<TVertex>.IsVerticesEmpty
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        int IVertexSet<TVertex>.VertexCount
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        IEnumerable<TVertex> IVertexSet<TVertex>.Vertices
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        [Pure]
+        bool IVertexSet<TVertex>.ContainsVertex(TVertex vertex)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

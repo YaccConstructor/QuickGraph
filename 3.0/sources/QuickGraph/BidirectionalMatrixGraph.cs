@@ -83,8 +83,6 @@ namespace QuickGraph
         [Pure]
         public bool IsInEdgesEmpty(int v)
         {
-            Contract.Requires(0 <= v && v < this.VertexCount);
-
             for (int i = 0; i < this.VertexCount; ++i)
                 if (this.edges[i, v] != null)
                     return false;
@@ -94,8 +92,6 @@ namespace QuickGraph
         [Pure]
         public int InDegree(int v)
         {
-            Contract.Requires(0 <= v && v < this.VertexCount);
-
             int count = 0;
             for (int i = 0; i < this.VertexCount; ++i)
                 if (this.edges[i, v] != null)
@@ -134,10 +130,6 @@ namespace QuickGraph
         [Pure]
         public TEdge InEdge(int v, int index)
         {
-            Contract.Requires(0 <= v && v < this.VertexCount);
-            Contract.Requires(0 <= index && index < this.VertexCount);
-            Contract.Ensures(Contract.Result<TEdge>() != null);
-
             int count = 0;
             for (int i = 0; i < this.VertexCount; ++i)
             {
@@ -155,9 +147,6 @@ namespace QuickGraph
         [Pure]
         public int Degree(int v)
         {
-            Contract.Requires(0 <= v && v < this.VertexCount);
-            Contract.Ensures(Contract.Result<int>() == this.InDegree(v) + this.OutDegree(v));
-
             return this.InDegree(v) + this.OutDegree(v);
         }
 
@@ -167,26 +156,17 @@ namespace QuickGraph
 
         public bool ContainsEdge(int source, int target)
         {
-            Contract.Requires(0 <= source && source < this.VertexCount);
-            Contract.Requires(0 <= target && target < this.VertexCount);
-
             return this.edges[source, target] != null;
         }
 
         public bool TryGetEdge(int source, int target, out TEdge edge)
         {
-            Contract.Requires(0 <= source && source < this.VertexCount);
-            Contract.Requires(0 <= target && target < this.VertexCount);
-
             edge = this.edges[source, target];
             return edge != null;
         }
 
         public bool TryGetEdges(int source, int target, out IEnumerable<TEdge> edges)
         {
-            Contract.Requires(0 <= source && source < this.VertexCount);
-            Contract.Requires(0 <= target && target < this.VertexCount);
-
             TEdge edge;
             if (this.TryGetEdge(source, target, out edge))
             {
@@ -207,8 +187,6 @@ namespace QuickGraph
         [Pure]
         public bool IsOutEdgesEmpty(int v)
         {
-            Contract.Requires(0 <= v && v < this.VertexCount);
-
             for (int j = 0; j < this.vertexCount; ++j)
                 if (this.edges[v, j] != null)
                     return false;
@@ -218,8 +196,6 @@ namespace QuickGraph
         [Pure]
         public int OutDegree(int v)
         {
-            Contract.Requires(0 <= v && v < this.VertexCount);
-
             int count = 0;
             for (int j = 0; j < this.vertexCount; ++j)
                 if (this.edges[v, j] != null)
@@ -241,8 +217,6 @@ namespace QuickGraph
         [Pure]
         public bool TryGetOutEdges(int v, out IEnumerable<TEdge> edges)
         {
-            Contract.Requires(0 <= v && v < this.VertexCount);
-
             if (v > -1 && v < this.vertexCount)
             {
                 edges = this.OutEdges(v);
@@ -255,8 +229,6 @@ namespace QuickGraph
         [Pure]
         public TEdge OutEdge(int v, int index)
         {
-            Contract.Requires(0 <= v && v < this.VertexCount);
-
             int count = 0;
             for (int j = 0; j < this.vertexCount; ++j)
             {
@@ -287,8 +259,6 @@ namespace QuickGraph
         [Pure]
         public bool ContainsVertex(int vertex)
         {
-            Contract.Requires(0 <= vertex && vertex < this.VertexCount);
-
             return vertex >= 0 && vertex < this.VertexCount;
         }
 
@@ -392,8 +362,6 @@ namespace QuickGraph
         #region IMutableEdgeListGraph<int,Edge> Members
         public bool AddEdge(TEdge edge)
         {
-            Contract.Requires(edge != null);
-
             if (this.edges[edge.Source, edge.Target]!=null)
                 throw new ParallelEdgeNotAllowedException();
             this.edges[edge.Source,edge.Target] = edge;
@@ -421,8 +389,6 @@ namespace QuickGraph
 
         public bool RemoveEdge(TEdge edge)
         {
-            Contract.Requires(edge != null);
-
             TEdge e = this.edges[edge.Source, edge.Target];
             this.edges[edge.Source, edge.Target] = default(TEdge);
             if (!e.Equals(default(TEdge)))

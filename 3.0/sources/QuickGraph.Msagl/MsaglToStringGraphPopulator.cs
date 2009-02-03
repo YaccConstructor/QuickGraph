@@ -12,7 +12,7 @@ namespace QuickGraph.Msagl
         private readonly string format;
 
         public MsaglToStringGraphPopulator(
-            IVertexAndEdgeSet<TVertex, TEdge> visitedGraph,
+            IEdgeListGraph<TVertex, TEdge> visitedGraph,
             IFormatProvider formatProvider,
             string format
             )

@@ -53,8 +53,6 @@ namespace QuickGraph.Algorithms.RandomWalks
 
         public GraphColor GetVertexColor(TVertex v)
         {
-            Contract.Requires(v != null);
-
             return this.vertexColors[v];
         }
 

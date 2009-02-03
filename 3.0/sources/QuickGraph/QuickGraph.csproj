@@ -311,7 +311,6 @@
     <Compile Include="IdentifiableVertexFactory.cs" />
     <Compile Include="IMutableUndirectedGraph.cs" />
     <Compile Include="IUndirectedGraph.cs" />
-    <Compile Include="IVertexAndEdgeSet.cs" />
     <Compile Include="IVertexSet.cs" />
     <Compile Include="NonStronglyConnectedGraphException.cs" />
     <Compile Include="Petri\AllwaysTrueConditionExpression.cs" />

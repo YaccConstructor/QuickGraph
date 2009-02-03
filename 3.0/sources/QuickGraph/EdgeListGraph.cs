@@ -179,5 +179,53 @@ namespace QuickGraph
             return this.Clone();
         }
         #endregion
+
+        #region IVertexSet<TVertex> Members
+        [Pure]
+        public bool IsVerticesEmpty
+        {
+            get { return this.edges.Count == 0; }
+        }
+
+        [Pure]
+        public int VertexCount
+        {
+            get
+            {
+                return this.GetVertexCounts().Count;
+            }
+        }
+
+        [Pure]
+        public IEnumerable<TVertex> Vertices
+        {
+            get
+            {
+                return this.GetVertexCounts().Keys;
+            }
+        }
+
+        private Dictionary<TVertex, int> GetVertexCounts()
+        {
+            var vertices = new Dictionary<TVertex, int>(this.EdgeCount * 2);
+            foreach (var e in this.Edges)
+            {
+                vertices[e.Source]++;
+                vertices[e.Target]++;
+            }
+            return vertices;
+        }
+
+        [Pure]
+        public bool ContainsVertex(TVertex vertex)
+        {
+            foreach (var e in this.Edges)
+                if (e.Source.Equals(vertex) ||
+                    e.Target.Equals(vertex))
+                    return true;
+
+            return false;
+        }
+        #endregion
     }
 }
