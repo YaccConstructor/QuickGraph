@@ -17,24 +17,32 @@ namespace QuickGraph.Algorithms.Observers
         IObserver<IVertexTimeStamperAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        private readonly IDictionary<TVertex, int> discoverTimes;
-        private readonly IDictionary<TVertex, int> finishTimes;
+        private readonly Dictionary<TVertex, int> discoverTimes;
+        private readonly Dictionary<TVertex, int> _finishTimes;
         private int currentTime = 0;
+
 
         public VertexTimeStamperObserver()
             :this(new Dictionary<TVertex,int>(), new Dictionary<TVertex,int>())
         {}
 
-        public VertexTimeStamperObserver(
-            IDictionary<TVertex, int> discoverTimes,
-            IDictionary<TVertex, int> finishTimes)
+        public VertexTimeStamperObserver(Dictionary<TVertex, int> discoverTimes)
         {
-            if (discoverTimes == null)
-                throw new ArgumentNullException("discoverTimes");
-            if (finishTimes == null)
-                throw new ArgumentNullException("finishTimes");
+            Contract.Requires(discoverTimes != null);
+
             this.discoverTimes = discoverTimes;
-            this.finishTimes = finishTimes;
+            this._finishTimes = null;
+        }
+
+        public VertexTimeStamperObserver(
+            Dictionary<TVertex, int> discoverTimes,
+            Dictionary<TVertex, int> finishTimes)
+        {
+            Contract.Requires(discoverTimes != null);
+            Contract.Requires(finishTimes != null);
+
+            this.discoverTimes = discoverTimes;
+            this._finishTimes = finishTimes;
         }
 
         public IDictionary<TVertex, int> DiscoverTimes
@@ -44,19 +52,21 @@ namespace QuickGraph.Algorithms.Observers
 
         public IDictionary<TVertex, int> FinishTimes
         {
-            get { return this.finishTimes; }
+            get { return this._finishTimes; }
         }
 
         public void Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
             algorithm.DiscoverVertex+=new VertexAction<TVertex>(DiscoverVertex);
-            algorithm.FinishVertex+=new VertexAction<TVertex>(FinishVertex);
+            if (this._finishTimes != null)
+                algorithm.FinishVertex+=new VertexAction<TVertex>(FinishVertex);
         }
 
         public void Detach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
             algorithm.DiscoverVertex -= new VertexAction<TVertex>(DiscoverVertex);
-            algorithm.FinishVertex -= new VertexAction<TVertex>(FinishVertex);
+            if (this._finishTimes != null)
+                algorithm.FinishVertex -= new VertexAction<TVertex>(FinishVertex);
         }
 
         void DiscoverVertex(TVertex v)
@@ -66,7 +76,7 @@ namespace QuickGraph.Algorithms.Observers
 
         void FinishVertex(TVertex v)
         {
-            this.finishTimes[v] = this.currentTime++;
+            this._finishTimes[v] = this.currentTime++;
         }
     }
 }

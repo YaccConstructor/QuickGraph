@@ -56,6 +56,19 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="colors">vertex color map</param>
         public DepthFirstSearchAlgorithm(
             IAlgorithmComponent host,
+            IVertexListGraph<TVertex, TEdge> visitedGraph
+            )
+            : this(host, visitedGraph, new Dictionary<TVertex, GraphColor>(), e => e)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the algorithm.
+        /// </summary>
+        /// <param name="host">algorithm host</param>
+        /// <param name="visitedGraph">visited graph</param>
+        /// <param name="colors">vertex color map</param>
+        public DepthFirstSearchAlgorithm(
+            IAlgorithmComponent host,
             IVertexListGraph<TVertex, TEdge> visitedGraph,
             IDictionary<TVertex, GraphColor> colors
             )

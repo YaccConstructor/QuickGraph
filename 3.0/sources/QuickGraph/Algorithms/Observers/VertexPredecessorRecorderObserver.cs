@@ -17,14 +17,14 @@ namespace QuickGraph.Algorithms.Observers
         IObserver<ITreeBuilderAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        private readonly IDictionary<TVertex, TEdge> vertexPredecessors;
+        private readonly Dictionary<TVertex, TEdge> vertexPredecessors;
 
         public VertexPredecessorRecorderObserver()
             :this(new Dictionary<TVertex,TEdge>())
         {}
 
         public VertexPredecessorRecorderObserver(
-            IDictionary<TVertex, TEdge> vertexPredecessors)
+            Dictionary<TVertex, TEdge> vertexPredecessors)
         {
             Contract.Requires(vertexPredecessors != null);
 

@@ -156,8 +156,10 @@
     <Compile Include="Algorithms\Contracts\IAlgorithmContract.cs" />
     <Compile Include="Algorithms\IUndirectedVertexPredecessorRecorderAlgorithm.cs" />
     <Compile Include="Algorithms\IUndirectedTreeBuilderAlgorithm.cs" />
+    <Compile Include="Algorithms\LengauerTarjanDominatorAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\KruskalMinimumSpanningTreeAlgorithm.cs" />
+    <Compile Include="Algorithms\Observers\Contracts\IObserverContract.cs" />
     <Compile Include="Algorithms\Observers\UndirectedVertexDistanceRecorderObserver.cs" />
     <Compile Include="Algorithms\Observers\UndirectedVertexPredecessorRecorderObserver.cs" />
     <Compile Include="Algorithms\Observers\VertexPredecessorPathRecorderObserver.cs" />

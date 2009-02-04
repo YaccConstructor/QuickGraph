@@ -12,7 +12,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
         private readonly IMutableVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph;
         private readonly EdgeFactory<TVertex, TEdge> edgeFactory;
         private IList<TEdge> augmentedEgdes = new List<TEdge>();
-        private IDictionary<TEdge,TEdge> reversedEdges = new Dictionary<TEdge,TEdge>();
+        private Dictionary<TEdge,TEdge> reversedEdges = new Dictionary<TEdge,TEdge>();
         private bool augmented = false;
 
         public ReversedEdgeAugmentorAlgorithm(
@@ -54,7 +54,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IDictionary<TEdge,TEdge> ReversedEdges
+        public Dictionary<TEdge,TEdge> ReversedEdges
         {
             get
             {

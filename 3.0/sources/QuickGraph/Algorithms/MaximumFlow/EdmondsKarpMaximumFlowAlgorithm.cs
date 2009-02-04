@@ -24,7 +24,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public EdmondsKarpMaximumFlowAlgorithm(
             IVertexListGraph<TVertex, TEdge> g,
             Func<TEdge, double> capacities,
-            IDictionary<TEdge, TEdge> reversedEdges
+            Dictionary<TEdge, TEdge> reversedEdges
             )
             : this(null, g, capacities, reversedEdges)
         { }
@@ -33,7 +33,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             IAlgorithmComponent host,
 			IVertexListGraph<TVertex,TEdge> g,
 			Func<TEdge,double> capacities,
-			IDictionary<TEdge,TEdge> reversedEdges
+			Dictionary<TEdge,TEdge> reversedEdges
 			)
 			: base(host, g,capacities,reversedEdges)
 		{}

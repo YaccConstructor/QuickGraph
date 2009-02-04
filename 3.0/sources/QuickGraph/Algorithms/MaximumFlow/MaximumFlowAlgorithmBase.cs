@@ -13,11 +13,11 @@ namespace QuickGraph.Algorithms.MaximumFlow
         IVertexColorizerAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private IDictionary<TVertex,TEdge> predecessors;
+        private Dictionary<TVertex,TEdge> predecessors;
         private Func<TEdge,double> capacities;
-        private IDictionary<TEdge,double> residualCapacities;
-        private IDictionary<TEdge,TEdge> reversedEdges;
-        private IDictionary<TVertex,GraphColor> vertexColors;
+        private Dictionary<TEdge,double> residualCapacities;
+        private Dictionary<TEdge,TEdge> reversedEdges;
+        private Dictionary<TVertex,GraphColor> vertexColors;
         private TVertex source;
         private TVertex sink;
         private double maxFlow = 0;
@@ -26,7 +26,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             IAlgorithmComponent host,
             IVertexListGraph<TVertex,TEdge> visitedGraph,
             Func<TEdge, double> capacities,
-            IDictionary<TEdge,TEdge> reversedEdges
+            Dictionary<TEdge,TEdge> reversedEdges
             )
             :base(host, visitedGraph)
         {
@@ -43,7 +43,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             this.vertexColors = new Dictionary<TVertex, GraphColor>();
         }
 
-        public IDictionary<TVertex,TEdge> Predecessors
+        public Dictionary<TVertex,TEdge> Predecessors
         {
             get
             {
@@ -59,7 +59,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IDictionary<TEdge,double> ResidualCapacities
+        public Dictionary<TEdge,double> ResidualCapacities
         {
             get
             {
@@ -67,7 +67,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IDictionary<TEdge,TEdge> ReversedEdges
+        public Dictionary<TEdge,TEdge> ReversedEdges
         {
             get
             {
@@ -75,7 +75,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        public IDictionary<TVertex,GraphColor> VertexColors
+        public Dictionary<TVertex,GraphColor> VertexColors
         {
             get
             {
