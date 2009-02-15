@@ -48,13 +48,5 @@ namespace QuickGraph.Predicates
                         yield return v;
             }
         }
-
-        [Pure] // InterfacePureBug
-        public bool ContainsVertex(TVertex vertex)
-        {
-            if (!this.VertexPredicate(vertex))
-                return false;
-            return this.ContainsVertex(vertex);
-        }
     }
 }

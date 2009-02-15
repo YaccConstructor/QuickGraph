@@ -115,7 +115,7 @@ namespace QuickGraph.Algorithms.Ranking
                 > fg = new FilteredBidirectionalGraph<TVertex, TEdge, IBidirectionalGraph<TVertex, TEdge>>(
                 this.VisitedGraph,
                 new InDictionaryVertexPredicate<TVertex,double>(this.ranks).Test,
-                new AnyEdgePredicate<TVertex,TEdge>().Test
+                e => true
                 );
 
             int iter = 0;

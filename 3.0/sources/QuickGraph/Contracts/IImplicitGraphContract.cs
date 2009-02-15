@@ -17,6 +17,7 @@ namespace QuickGraph.Contracts
         {
             IImplicitGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(v != null);
+            Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Contract.Result<bool>() == (ithis.OutDegree(v) == 0));
 
             return default(bool);
@@ -27,6 +28,7 @@ namespace QuickGraph.Contracts
         {
             IImplicitGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(v != null);
+            Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Contract.Result<int>() == Enumerable.Count<TEdge>(ithis.OutEdges(v)));
 
             return default(int);
@@ -50,8 +52,8 @@ namespace QuickGraph.Contracts
         {
             IImplicitGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(v != null);
+            Contract.Ensures(Contract.Result<bool>() == (Contract.ValueAtReturn(out edges) != null));
 
-            Contract.ValueAtReturn(out edges);
             return default(bool);
         }
 
@@ -60,6 +62,7 @@ namespace QuickGraph.Contracts
         {
             IImplicitGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(v != null);
+            Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Enumerable.Any(ithis.OutEdges(v), e => e.Equals(Contract.Result<TEdge>())));
 
             return default(TEdge);
@@ -74,6 +77,14 @@ namespace QuickGraph.Contracts
         bool IGraph<TVertex, TEdge>.AllowParallelEdges
         {
             get { throw new NotImplementedException(); }
+        }
+        #endregion
+
+        #region IImplicitVertexSet<TVertex> Members
+        [Pure]
+        bool IImplicitVertexSet<TVertex>.ContainsVertex(TVertex vertex)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

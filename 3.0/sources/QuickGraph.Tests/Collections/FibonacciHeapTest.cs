@@ -82,7 +82,6 @@ namespace QuickGraph.Tests.Collections
 
         [PexMethod(MaxConstraintSolverTime = 2)]
         [PexAllowedExceptionFromTypeUnderTest(typeof(InvalidOperationException))]
-        [PexCodeCanvasSearchFrontier(@"C:\codebox\codecanvas\bin\Debug\CodeCanvas.sdf")]
         public void CompareBinary<TPriority, TValue>(
             [PexAssumeNotNull]KeyValuePair<bool, TPriority>[] values)
         {

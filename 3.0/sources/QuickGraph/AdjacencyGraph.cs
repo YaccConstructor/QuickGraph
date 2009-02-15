@@ -408,7 +408,9 @@ namespace QuickGraph
 
         public virtual bool RemoveEdge(TEdge e)
         {
-            if (this.vertexEdges[e.Source].Remove(e))
+            EdgeList<TVertex, TEdge> edges;
+            if (this.vertexEdges.TryGetValue(e.Source, out edges) &&
+                edges.Remove(e))
             {
                 this.edgeCount--;
                 Contract.Assert(this.edgeCount >= 0);

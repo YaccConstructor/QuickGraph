@@ -264,6 +264,7 @@
     <Compile Include="Collections\VertexPair.cs" />
     <Compile Include="Contracts\Collections\IDisjointSetContract.cs" />
     <Compile Include="Contracts\Contracts.cs" />
+    <Compile Include="Contracts\IImplicitVertexSetContract.cs" />
     <Compile Include="Contracts\DummyContract.cs" />
     <Compile Include="Contracts\IBidirectionalGraphContract.cs" />
     <Compile Include="Contracts\ICloneableEdgeContract.cs" />
@@ -292,11 +293,13 @@
     <Compile Include="GraphExtensions.cs" />
     <Compile Include="HashCodeHelper.cs" />
     <Compile Include="IEdgeSet.cs" />
+    <Compile Include="IImplicitVertexSet.cs" />
     <Compile Include="IMutableVertexAndEdgeSet.cs" />
     <Compile Include="IMutableVertexSet.cs" />
     <Compile Include="NegativeCycleGraphException.cs" />
     <Compile Include="NegativeWeightException.cs" />
     <Compile Include="ParallelEdgeNotAllowedException.cs" />
+    <Compile Include="Predicates\FilteredImplicitVertexSetGraph.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BidirectionalGraph.cs" />
     <Compile Include="BidirectionalMatrixGraph.cs" />
@@ -333,8 +336,6 @@
     <Compile Include="Petri\PetriNetSimulator.cs" />
     <Compile Include="Petri\Place.cs" />
     <Compile Include="Petri\Transition.cs" />
-    <Compile Include="Predicates\AnyEdgePredicate.cs" />
-    <Compile Include="Predicates\AnyVertexPredicate.cs" />
     <Compile Include="Predicates\FilteredBidirectionalGraph.cs" />
     <Compile Include="Predicates\FilteredEdgeListGraph.cs" />
     <Compile Include="Predicates\FilteredGraph.cs" />

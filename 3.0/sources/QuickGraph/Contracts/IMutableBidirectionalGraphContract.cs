@@ -207,7 +207,7 @@ namespace QuickGraph.Contracts
         }
 
         [Pure] // InterfacePureBug
-        bool IVertexSet<TVertex>.ContainsVertex(TVertex vertex)
+        bool IImplicitVertexSet<TVertex>.ContainsVertex(TVertex vertex)
         {
             throw new NotImplementedException();
         }

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 
 using QuickGraph.Algorithms.Observers;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
     [Serializable]
-    public sealed class RandomWalkAlgorithm<TVertex, TEdge> :
-        ITreeBuilderAlgorithm<TVertex,TEdge>
+    public sealed class RandomWalkAlgorithm<TVertex, TEdge> 
+        : ITreeBuilderAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
         private IImplicitGraph<TVertex,TEdge> visitedGraph;
@@ -23,10 +24,9 @@ namespace QuickGraph.Algorithms.RandomWalks
             IEdgeChain<TVertex,TEdge> edgeChain
             )
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
-            if (edgeChain == null)
-                throw new ArgumentNullException("edgeChain");
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(edgeChain != null);
+
             this.visitedGraph = visitedGraph;
             this.edgeChain = edgeChain;
         }

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace QuickGraph.Predicates
 {
     [Serializable]
-    public class FilteredIncidenceGraph<TVertex, TEdge, TGraph> :
-        FilteredImplicitGraph<TVertex,TEdge,TGraph>,
-        IIncidenceGraph<TVertex,TEdge>
+    public class FilteredIncidenceGraph<TVertex, TEdge, TGraph> 
+        : FilteredImplicitGraph<TVertex,TEdge,TGraph>
+        , IIncidenceGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
         where TGraph : IIncidenceGraph<TVertex,TEdge>
     {

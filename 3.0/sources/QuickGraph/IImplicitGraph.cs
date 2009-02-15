@@ -15,6 +15,7 @@ namespace QuickGraph
 #endif
     public interface IImplicitGraph<TVertex,TEdge> 
         : IGraph<TVertex,TEdge>
+       , IImplicitVertexSet<TVertex>
         where TEdge : IEdge<TVertex>
     {
         /// <summary>

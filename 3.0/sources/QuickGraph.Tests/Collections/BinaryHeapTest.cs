@@ -10,7 +10,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Collections
 {
-    [PexFactoryClass]
     public partial class BinaryHeapFactory
     {
         [PexFactoryMethod(typeof(BinaryHeap<int, int>))]

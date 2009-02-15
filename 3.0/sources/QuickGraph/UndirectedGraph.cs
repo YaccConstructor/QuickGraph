@@ -145,8 +145,9 @@ namespace QuickGraph
 
         public void ClearAdjacentEdges(TVertex v)
         {
-            var edges = this.adjacentEdges[v];
+            var edges = this.adjacentEdges[v].Clone();
             this.edgeCount -= edges.Count;
+
             foreach (var edge in edges)
             {
                 EdgeList<TVertex, TEdge> aEdges;

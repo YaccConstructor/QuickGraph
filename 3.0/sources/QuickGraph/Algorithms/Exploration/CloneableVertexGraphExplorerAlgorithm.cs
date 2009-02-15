@@ -17,9 +17,9 @@ namespace QuickGraph.Algorithms.Exploration
 
         private Queue<TVertex> unexploredVertices = new Queue<TVertex>();
 
-        private VertexPredicate<TVertex> addVertexPredicate = new AnyVertexPredicate<TVertex>().Test;
-        private VertexPredicate<TVertex> exploreVertexPredicate = new AnyVertexPredicate<TVertex>().Test;
-        private EdgePredicate<TVertex, TEdge> addEdgePredicate = new AnyEdgePredicate<TVertex, TEdge>().Test;
+        private VertexPredicate<TVertex> addVertexPredicate = v => true;
+        private VertexPredicate<TVertex> exploreVertexPredicate = v => true;
+        private EdgePredicate<TVertex, TEdge> addEdgePredicate = e => true;
         private Predicate<CloneableVertexGraphExplorerAlgorithm<TVertex, TEdge>> finishedPredicate =
             new DefaultFinishedPredicate().Test;
         private bool finishedSuccessfully;

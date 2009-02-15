@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics.Contracts;
-using QuickGraph.Algorithms.Contracts;
 
 namespace QuickGraph.Algorithms
 {
 #if CONTRACTS_FULL
-    [ContractClass(typeof(IComputationContract))]
+    [ContractClass(typeof(Contracts.IComputationContract))]
 #endif
     public interface IComputation
     {

@@ -43,15 +43,13 @@ namespace QuickGraph.Contracts
             }
         }
 
+        #region IImplicitVertexSet<TVertex> Members
         [Pure]
-        bool IVertexSet<TVertex>.ContainsVertex(TVertex vertex)
+        bool IImplicitVertexSet<TVertex>.ContainsVertex(TVertex vertex)
         {
-            IVertexSet<TVertex> ithis = this;
-            Contract.Requires(vertex != null);
-            Contract.Ensures(Contract.Result<bool>() == Contract.Exists(ithis.Vertices, v => v.Equals(vertex)));
-
-            return default(bool);
+            throw new NotImplementedException();
         }
+        #endregion
     }
 }
 #endif

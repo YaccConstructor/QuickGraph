@@ -17,7 +17,7 @@ namespace QuickGraph.Contracts
             IMutableVertexAndEdgeSet<TVertex, TEdge> ithis = this;
             Contract.Requires(edge != null);
             Contract.Ensures(ithis.ContainsEdge(edge));
-            Contract.Ensures(Contract.Result<bool>() == Contract.OldValue(ithis.ContainsEdge(edge)));
+            Contract.Ensures(Contract.Result<bool>() == Contract.OldValue(!ithis.ContainsEdge(edge)));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + (Contract.Result<bool>() ? 1 : 0));
 
             return default(bool);
@@ -29,7 +29,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(edges != null);
             Contract.Requires(Contract.ForAll(edges, edge => edge != null));
             Contract.Ensures(Contract.ForAll(edges, edge => ithis.ContainsEdge(edge)));
-            Contract.Ensures(Contract.Result<int>() == Enumerable.Count(edges, edge => Contract.OldValue(!ithis.ContainsEdge(edge))));
+            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(edges, edge => !ithis.ContainsEdge(edge))));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + Contract.Result<int>());
 
             return default(int);
@@ -53,7 +53,7 @@ namespace QuickGraph.Contracts
         }
 
         [Pure] // InterfacePureBug
-        bool IVertexSet<TVertex>.ContainsVertex(TVertex vertex)
+        bool IImplicitVertexSet<TVertex>.ContainsVertex(TVertex vertex)
         {
             throw new NotImplementedException();
         }

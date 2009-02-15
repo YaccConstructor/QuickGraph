@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.Contracts;
+using System.Diagnostics;
 
 namespace QuickGraph.Tests
 {
@@ -19,8 +20,17 @@ namespace QuickGraph.Tests
 
         static void Contract_ContractFailed(object sender, System.Diagnostics.Contracts.ContractFailedEventArgs e)
         {
+            string message = string.Format("{0}, {1}", e.DebugMessage, e.Condition);
             e.Handled = true;
-            Assert.Fail("{0}: {1} {2}", e.FailureKind, e.DebugMessage, e.Condition);
+            switch (e.FailureKind)
+            {
+                case ContractFailureKind.Precondition:
+                    Debug.Assert(false, message);
+                    break;
+                default:
+                    Assert.Fail(message);
+                    break;
+            }
         }
     }
 }

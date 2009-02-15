@@ -20,6 +20,7 @@ namespace QuickGraph.Contracts
         {
             IMutableIncidenceGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(v != null);
+            Contract.Requires(ithis.ContainsVertex(v));
             Contract.Requires(predicate != null);
             Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(ithis.OutEdges(v), ve => predicate(ve))));
             Contract.Ensures(Contract.ForAll(ithis.OutEdges(v), ve => !predicate(ve)));
@@ -31,8 +32,8 @@ namespace QuickGraph.Contracts
         {
             IMutableIncidenceGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(v != null);
+            Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(ithis.OutDegree(v) == 0);
-
         }
 
         void IMutableIncidenceGraph<TVertex, TEdge>.TrimEdgeExcess()
@@ -109,6 +110,15 @@ namespace QuickGraph.Contracts
 
         [Pure] // InterfacePureBug
         TEdge IImplicitGraph<TVertex, TEdge>.OutEdge(TVertex v, int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IImplicitVertexSet<TVertex> Members
+        [Pure]
+        bool IImplicitVertexSet<TVertex>.ContainsVertex(TVertex vertex)
         {
             throw new NotImplementedException();
         }

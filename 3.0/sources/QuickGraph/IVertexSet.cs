@@ -14,6 +14,7 @@ namespace QuickGraph
     [ContractClass(typeof(IVertexSetContract<>))]
 #endif
     public interface IVertexSet<TVertex>
+        : IImplicitVertexSet<TVertex>
     {
         /// <summary>
         /// Gets a value indicating whether there are no vertices in this set.
@@ -34,15 +35,5 @@ namespace QuickGraph
         /// </summary>
         /// <value>The vertices.</value>
         IEnumerable<TVertex> Vertices { get;}
-
-        /// <summary>
-        /// Determines whether the specified vertex contains vertex.
-        /// </summary>
-        /// <param name="vertex">The vertex.</param>
-        /// <returns>
-        /// 	<c>true</c> if the specified vertex contains vertex; otherwise, <c>false</c>.
-        /// </returns>
-        [Pure]
-        bool ContainsVertex(TVertex vertex);
     }
 }

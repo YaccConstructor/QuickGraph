@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using QuickGraph.Algorithms.Observers.Contracts;
 
 namespace QuickGraph.Algorithms.Observers
 {
@@ -12,7 +11,7 @@ namespace QuickGraph.Algorithms.Observers
     ///     id="gof02designpatterns"
     ///     />
 #if CONTRACTS_FULL
-    [ContractClass(typeof(IObserverContract<>))]
+    [ContractClass(typeof(Contracts.IObserverContract<>))]
 #endif
     public interface IObserver<TAlgorithm>
     {

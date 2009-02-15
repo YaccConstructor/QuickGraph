@@ -14,11 +14,6 @@ namespace QuickGraph.Algorithms.RandomWalks
 
         public override TEdge Successor(IImplicitGraph<TVertex, TEdge> g, TVertex u)
         {
-            if (g == null)
-                throw new ArgumentNullException("g");
-            if (u == null)
-                throw new ArgumentNullException("u");
-
             // get number of out-edges
             int n = g.OutDegree(u);
             if (n == 0)
