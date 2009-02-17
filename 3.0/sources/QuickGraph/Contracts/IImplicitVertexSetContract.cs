@@ -8,7 +8,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IImplicitVertexSet<>))]
-    sealed class IImplicitVertexSetContract<TVertex>
+    class IImplicitVertexSetContract<TVertex>
         : IImplicitVertexSet<TVertex>
     {
         [Pure]

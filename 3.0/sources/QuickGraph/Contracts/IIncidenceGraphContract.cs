@@ -9,84 +9,50 @@ namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IIncidenceGraph<,>))]
     sealed class IIncidenceGraphContract<TVertex, TEdge>
-        : IIncidenceGraph<TVertex, TEdge>
+        : IImplicitGraphContract<TVertex, TEdge>
+        , IIncidenceGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        #region IIncidenceGraph<TVertex,TEdge> Members
-
         bool IIncidenceGraph<TVertex, TEdge>.ContainsEdge(TVertex source, TVertex target)
         {
-            throw new NotImplementedException();
+            IIncidenceGraph<TVertex, TEdge> ithis = this;
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
+            Contract.Requires(ithis.ContainsVertex(source));
+            Contract.Requires(ithis.ContainsVertex(target));
+
+            return default(bool);
         }
 
-        bool IIncidenceGraph<TVertex, TEdge>.TryGetEdges(TVertex source, TVertex target, out IEnumerable<TEdge> edges)
+        bool IIncidenceGraph<TVertex, TEdge>.TryGetEdges(
+            TVertex source, 
+            TVertex target, 
+            out IEnumerable<TEdge> edges)
         {
-            throw new NotImplementedException();
+            IIncidenceGraph<TVertex, TEdge> ithis = this;
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
+            Contract.Requires(ithis.ContainsVertex(source));
+            Contract.Requires(ithis.ContainsVertex(target));
+
+            edges = null;
+            return default(bool);
         }
 
-        bool IIncidenceGraph<TVertex, TEdge>.TryGetEdge(TVertex source, TVertex target, out TEdge edge)
+        bool IIncidenceGraph<TVertex, TEdge>.TryGetEdge(
+            TVertex source, 
+            TVertex target, 
+            out TEdge edge)
         {
-            throw new NotImplementedException();
+            IIncidenceGraph<TVertex, TEdge> ithis = this;
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
+            Contract.Requires(ithis.ContainsVertex(source));
+            Contract.Requires(ithis.ContainsVertex(target));
+
+            edge = default(TEdge);
+            return default(bool);
         }
-
-        #endregion
-
-        #region IImplicitGraph<TVertex,TEdge> Members
-
-        [Pure] // InterfacePureBug
-        bool IImplicitGraph<TVertex, TEdge>.IsOutEdgesEmpty(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        int IImplicitGraph<TVertex, TEdge>.OutDegree(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        IEnumerable<TEdge> IImplicitGraph<TVertex, TEdge>.OutEdges(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        bool IImplicitGraph<TVertex, TEdge>.TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        TEdge IImplicitGraph<TVertex, TEdge>.OutEdge(TVertex v, int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IGraph<TVertex,TEdge> Members
-
-        bool IGraph<TVertex, TEdge>.IsDirected
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IGraph<TVertex, TEdge>.AllowParallelEdges
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion
-
-        #region IImplicitVertexSet<TVertex> Members
-        [Pure]
-        bool IImplicitVertexSet<TVertex>.ContainsVertex(TVertex vertex)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
 }
 #endif

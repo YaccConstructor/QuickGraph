@@ -8,8 +8,9 @@ using System.Linq;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IImplicitGraph<,>))]
-    sealed class IImplicitGraphContract<TVertex, TEdge> 
-        : IImplicitGraph<TVertex, TEdge>
+    class IImplicitGraphContract<TVertex, TEdge> 
+        : IGraphContract<TVertex, TEdge>
+        , IImplicitGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         [Pure]
@@ -67,18 +68,6 @@ namespace QuickGraph.Contracts
 
             return default(TEdge);
         }
-
-        #region IGraph<TVertex,TEdge> Members
-        bool IGraph<TVertex, TEdge>.IsDirected
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IGraph<TVertex, TEdge>.AllowParallelEdges
-        {
-            get { throw new NotImplementedException(); }
-        }
-        #endregion
 
         #region IImplicitVertexSet<TVertex> Members
         [Pure]
