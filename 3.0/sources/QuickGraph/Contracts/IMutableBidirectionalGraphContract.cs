@@ -9,7 +9,8 @@ namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IMutableBidirectionalGraph<,>))]
     sealed class IMutableBidirectionalGraphContract<TVertex, TEdge>
-        : IMutableBidirectionalGraph<TVertex, TEdge>
+        : IBidirectionalGraphContract<TVertex, TEdge>
+        , IMutableBidirectionalGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         int IMutableBidirectionalGraph<TVertex, TEdge>.RemoveInEdgeIf(TVertex v, EdgePredicate<TVertex, TEdge> predicate)
@@ -86,73 +87,6 @@ namespace QuickGraph.Contracts
 
         #endregion
 
-        #region IGraph<TVertex,TEdge> Members
-
-        bool IGraph<TVertex, TEdge>.IsDirected
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IGraph<TVertex, TEdge>.AllowParallelEdges
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion
-
-        #region IIncidenceGraph<TVertex,TEdge> Members
-
-        bool IIncidenceGraph<TVertex, TEdge>.ContainsEdge(TVertex source, TVertex target)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IIncidenceGraph<TVertex, TEdge>.TryGetEdges(TVertex source, TVertex target, out IEnumerable<TEdge> edges)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IIncidenceGraph<TVertex, TEdge>.TryGetEdge(TVertex source, TVertex target, out TEdge edge)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IImplicitGraph<TVertex,TEdge> Members
-
-        [Pure] // InterfacePureBug
-        bool IImplicitGraph<TVertex, TEdge>.IsOutEdgesEmpty(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        int IImplicitGraph<TVertex, TEdge>.OutDegree(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        IEnumerable<TEdge> IImplicitGraph<TVertex, TEdge>.OutEdges(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        bool IImplicitGraph<TVertex, TEdge>.TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        TEdge IImplicitGraph<TVertex, TEdge>.OutEdge(TVertex v, int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
         #region IMutableVertexSet<TVertex> Members
 
         event VertexAction<TVertex> IMutableVertexSet<TVertex>.VertexAdded
@@ -189,31 +123,6 @@ namespace QuickGraph.Contracts
 
         #endregion
 
-        #region IVertexSet<TVertex> Members
-
-        bool IVertexSet<TVertex>.IsVerticesEmpty
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        int IVertexSet<TVertex>.VertexCount
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        IEnumerable<TVertex> IVertexSet<TVertex>.Vertices
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        [Pure] // InterfacePureBug
-        bool IImplicitVertexSet<TVertex>.ContainsVertex(TVertex vertex)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
         #region IMutableEdgeListGraph<TVertex,TEdge> Members
 
         bool IMutableEdgeListGraph<TVertex, TEdge>.AddEdge(TEdge edge)
@@ -244,71 +153,6 @@ namespace QuickGraph.Contracts
         }
 
         int IMutableEdgeListGraph<TVertex, TEdge>.RemoveEdgeIf(EdgePredicate<TVertex, TEdge> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IEdgeSet<TVertex,TEdge> Members
-
-        bool IEdgeSet<TVertex, TEdge>.IsEdgesEmpty
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        int IEdgeSet<TVertex, TEdge>.EdgeCount
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        IEnumerable<TEdge> IEdgeSet<TVertex, TEdge>.Edges
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        [Pure] // InterfacePureBug
-        bool IEdgeSet<TVertex, TEdge>.ContainsEdge(TEdge edge)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IBidirectionalGraph<TVertex,TEdge> Members
-
-        [Pure] // InterfacePureBug
-        bool IBidirectionalGraph<TVertex, TEdge>.IsInEdgesEmpty(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        int IBidirectionalGraph<TVertex, TEdge>.InDegree(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        IEnumerable<TEdge> IBidirectionalGraph<TVertex, TEdge>.InEdges(TVertex v)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        bool IBidirectionalGraph<TVertex, TEdge>.TryGetInEdges(TVertex v, out IEnumerable<TEdge> edges)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        TEdge IBidirectionalGraph<TVertex, TEdge>.InEdge(TVertex v, int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Pure] // InterfacePureBug
-        int IBidirectionalGraph<TVertex, TEdge>.Degree(TVertex v)
         {
             throw new NotImplementedException();
         }

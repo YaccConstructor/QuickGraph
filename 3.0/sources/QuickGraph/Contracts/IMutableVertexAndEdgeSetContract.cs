@@ -8,7 +8,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IMutableVertexAndEdgeSet<,>))]
-    sealed class IMutableVertexAndEdgeSetContract<TVertex, TEdge>
+    class IMutableVertexAndEdgeSetContract<TVertex, TEdge>
         : IMutableVertexAndEdgeSet<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
