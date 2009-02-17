@@ -14,8 +14,8 @@ namespace QuickGraph
 #if CONTRACTS_FULL
     [ContractClass(typeof(IBidirectionalGraphContract<,>))]
 #endif
-    public interface IBidirectionalGraph<TVertex,TEdge> : 
-        IVertexAndEdgeListGraph<TVertex,TEdge>
+    public interface IBidirectionalGraph<TVertex,TEdge> 
+        : IVertexAndEdgeListGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
         /// <summary>

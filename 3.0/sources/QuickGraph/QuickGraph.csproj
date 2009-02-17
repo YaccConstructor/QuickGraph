@@ -264,6 +264,7 @@
     <Compile Include="Collections\VertexPair.cs" />
     <Compile Include="Contracts\Collections\IDisjointSetContract.cs" />
     <Compile Include="Contracts\Contracts.cs" />
+    <Compile Include="Contracts\IEdgeListGraphContract.cs" />
     <Compile Include="Contracts\IImplicitVertexSetContract.cs" />
     <Compile Include="Contracts\DummyContract.cs" />
     <Compile Include="Contracts\IBidirectionalGraphContract.cs" />

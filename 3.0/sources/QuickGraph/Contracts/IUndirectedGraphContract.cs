@@ -8,8 +8,9 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IUndirectedGraph<,>))]
-    sealed class IUndirectedGraphContract<TVertex, TEdge>
-        : IUndirectedGraph<TVertex, TEdge>
+    class IUndirectedGraphContract<TVertex, TEdge>
+        : IEdgeListGraphContract<TVertex,TEdge>
+        , IUndirectedGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         #region IUndirectedGraph<TVertex,TEdge> Members
