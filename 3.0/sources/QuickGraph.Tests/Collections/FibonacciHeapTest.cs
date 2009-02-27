@@ -9,9 +9,6 @@ using QuickGraph.Algorithms.Observers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Pex.Framework;
 using Microsoft.Pex.Framework.Validation;
-using Microsoft.Pex.CodeCanvas;
-
-[assembly: PexCodeCanvasPackage]
 
 namespace QuickGraph.Tests.Collections
 {

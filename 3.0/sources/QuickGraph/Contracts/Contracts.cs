@@ -1,4 +1,4 @@
-﻿#if !CONTRACTS_FULL
+﻿#if INLINED_CONTRACTS
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -201,6 +201,26 @@ namespace System.Diagnostics.Contracts
     [Conditional("CONTRACTS_FULL"), Conditional("CONTRACTS_PRECONDITIONS"), AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     internal sealed class ContractInvariantMethodAttribute : Attribute
     {
+    }
+
+    [Conditional("CONTRACTS_FULL"), AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    internal sealed class ContractClassForAttribute : Attribute
+    {
+        public Type TypeContractsAreFor { get; private set; }
+        public ContractClassForAttribute(Type type)
+        {
+            this.TypeContractsAreFor = type;
+        }
+    }
+
+    [Conditional("CONTRACTS_FULL"), AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    internal sealed class ContractClassAttribute : Attribute
+    {
+        public Type TypeContainingContracts { get; private set; } 
+        public ContractClassAttribute(Type type) 
+        {
+            this.TypeContainingContracts = type;
+        }
     }
 }
 
