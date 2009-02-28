@@ -8,9 +8,7 @@ namespace QuickGraph.Collections
     /// A disjoint-set data structure
     /// </summary>
     /// <typeparam name="T"></typeparam>
-#if CONTRACTS_FULL
     [ContractClass(typeof(QuickGraph.Collections.Contracts.IDisjointSetContract<>))]
-#endif
     public interface IDisjointSet<T>
     {
         /// <summary>

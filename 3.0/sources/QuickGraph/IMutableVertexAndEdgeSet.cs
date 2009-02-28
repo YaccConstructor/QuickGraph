@@ -7,9 +7,7 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
-#if CONTRACTS_FULL
     [ContractClass(typeof(IMutableVertexAndEdgeSetContract<,>))]
-#endif
     public interface IMutableVertexAndEdgeSet<TVertex,TEdge>
         : IEdgeListGraph<TVertex, TEdge>
         , IMutableVertexSet<TVertex>

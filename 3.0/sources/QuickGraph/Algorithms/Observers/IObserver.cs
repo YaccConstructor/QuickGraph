@@ -10,9 +10,7 @@ namespace QuickGraph.Algorithms.Observers
     /// <reference-ref
     ///     id="gof02designpatterns"
     ///     />
-#if CONTRACTS_FULL
     [ContractClass(typeof(Contracts.IObserverContract<>))]
-#endif
     public interface IObserver<TAlgorithm>
     {
         void Attach(TAlgorithm algorithm);

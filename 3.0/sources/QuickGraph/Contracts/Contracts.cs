@@ -222,6 +222,9 @@ namespace System.Diagnostics.Contracts
             this.TypeContainingContracts = type;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
+    internal sealed class ContractReferenceAssemblyAttribute : Attribute { }
 }
 
 namespace QuickGraph.Algorithms.Contracts

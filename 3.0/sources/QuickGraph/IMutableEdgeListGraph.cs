@@ -10,9 +10,7 @@ namespace QuickGraph
     /// </summary>
     /// <typeparam name="TVertex">the vertex type</typeparam>
     /// <typeparam name="TEdge">the edge type</typeparam>
-#if CONTRACTS_FULL
     [ContractClass(typeof(IMutableEdgeListGraphContract<,>))]
-#endif
     public interface IMutableEdgeListGraph<TVertex, TEdge> 
         : IMutableGraph<TVertex, TEdge>
         , IEdgeListGraph<TVertex,TEdge>

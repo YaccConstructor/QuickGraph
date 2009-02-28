@@ -1,5 +1,4 @@
-﻿#if CONTRACTS_FULL
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics.Contracts;
@@ -55,6 +54,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(v != null);
             Contract.Ensures(Contract.Result<bool>() == (Contract.ValueAtReturn(out edges) != null));
 
+            edges = null;
             return default(bool);
         }
 
@@ -78,4 +78,3 @@ namespace QuickGraph.Contracts
         #endregion
     }
 }
-#endif

@@ -5,9 +5,7 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
-#if CONTRACTS_FULL
     [ContractClass(typeof(IIncidenceGraphContract<,>))]
-#endif
     public interface IIncidenceGraph<TVertex, TEdge> 
         : IImplicitGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>

@@ -1,5 +1,4 @@
-﻿#if CONTRACTS_FULL
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -18,8 +17,8 @@ namespace QuickGraph.Contracts
             Contract.Requires(e != null);
             Contract.Requires(ithis.ContainsVertex(e.Source));
             Contract.Requires(ithis.ContainsVertex(e.Target));
-            Contract.Ensures(Contract.Result<bool>() == Contract.OldValue(!ithis.ContainsEdge(e)));
             Contract.Ensures(ithis.ContainsEdge(e));
+            Contract.Ensures(Contract.Result<bool>() == Contract.OldValue(!ithis.ContainsEdge(e)));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + (Contract.Result<bool>() ? 1 : 0));
 
             return default(bool);
@@ -146,4 +145,3 @@ namespace QuickGraph.Contracts
         #endregion
     }
 }
-#endif

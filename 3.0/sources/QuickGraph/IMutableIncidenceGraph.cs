@@ -5,9 +5,7 @@ using QuickGraph.Contracts;
 
 namespace QuickGraph
 {
-#if CONTRACTS_FULL
     [ContractClass(typeof(IMutableIncidenceGraphContract<,>))]
-#endif
     public interface IMutableIncidenceGraph<TVertex,TEdge> :
         IMutableGraph<TVertex,TEdge>,
         IIncidenceGraph<TVertex,TEdge>

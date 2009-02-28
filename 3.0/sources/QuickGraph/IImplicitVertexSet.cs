@@ -8,9 +8,7 @@ namespace QuickGraph
     /// An implicit set of vertices
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
-#if CONTRACTS_FULL
     [ContractClass(typeof(IImplicitVertexSetContract<>))]
-#endif
     public interface IImplicitVertexSet<TVertex>
     {
         /// <summary>

@@ -8,9 +8,7 @@ namespace QuickGraph
     /// A cloneable edge
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
-#if CONTRACTS_FULL
     [ContractClass(typeof(ICloneableEdgeContract<>))]
-#endif
     public interface ICloneableEdge<TVertex> 
         : IEdge<TVertex>
     {

@@ -5,9 +5,7 @@ using QuickGraph.Contracts;
 
 namespace QuickGraph
 {
-#if CONTRACTS_FULL
     [ContractClass(typeof(IMutableUndirectedGraphContract<,>))]
-#endif
     public interface IMutableUndirectedGraph<TVertex,TEdge> 
         : IMutableEdgeListGraph<TVertex,TEdge>
         , IMutableVertexSet<TVertex>

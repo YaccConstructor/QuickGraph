@@ -5,9 +5,7 @@ using QuickGraph.Contracts;
 
 namespace QuickGraph
 {
-#if CONTRACTS_FULL
     [ContractClass(typeof(IMutableVertexSetContract<>))]
-#endif
     public interface IMutableVertexSet<TVertex>
         : IVertexSet<TVertex>
     {

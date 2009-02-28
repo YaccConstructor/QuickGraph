@@ -1,5 +1,4 @@
-﻿#if CONTRACTS_FULL
-using System;
+﻿using System;
 using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Contracts
@@ -64,4 +63,3 @@ namespace QuickGraph.Algorithms.Contracts
         #endregion
     }
 }
-#endif

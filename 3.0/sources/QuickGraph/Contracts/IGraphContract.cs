@@ -1,5 +1,4 @@
-﻿#if CONTRACTS_FULL
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
@@ -21,4 +20,3 @@ namespace QuickGraph.Contracts
         }
     }
 }
-#endif

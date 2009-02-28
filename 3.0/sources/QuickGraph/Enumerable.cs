@@ -17,6 +17,44 @@ namespace System.Linq
         }
 
         [Pure]
+        public static bool Any<T>(IEnumerable<T> elements, Predicate<T> filter)
+        {
+            Contract.Requires(elements != null);
+            Contract.Requires(filter != null);
+
+            foreach (var element in elements)
+                if (filter(element))
+                    return true;
+            return false;
+        }
+
+        [Pure]
+        public static T ElementAt<T>(IEnumerable<T> elements, int index)
+        {
+            Contract.Requires(elements != null);
+            Contract.Requires(index > -1);
+
+            int count = 0;
+            foreach (var element in elements)
+                if (count++ == index)
+                    return element;
+            throw new ArgumentOutOfRangeException("index");
+        }
+
+        [Pure]
+        public static int Count<T>(IEnumerable<T> elements, Predicate<T> filter)
+        {
+            Contract.Requires(elements != null);
+            Contract.Requires(filter != null);
+
+            int count = 0;
+            foreach (var element in elements)
+                if (filter(element))
+                    count++;
+            return count;
+        }
+
+        [Pure]
         public static int Count<T>(IEnumerable<T> elements)
         {
             Contract.Requires(elements != null);

@@ -10,10 +10,8 @@ namespace QuickGraph
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
-#if CONTRACTS_FULL
    [ContractClass(typeof(IImplicitGraphContract<,>))]
-#endif
-    public interface IImplicitGraph<TVertex,TEdge> 
+   public interface IImplicitGraph<TVertex,TEdge> 
         : IGraph<TVertex,TEdge>
        , IImplicitVertexSet<TVertex>
         where TEdge : IEdge<TVertex>

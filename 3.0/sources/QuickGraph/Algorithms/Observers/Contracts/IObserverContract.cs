@@ -1,5 +1,4 @@
-﻿#if CONTRACTS_FULL
-using System;
+﻿using System;
 using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Observers.Contracts
@@ -19,4 +18,3 @@ namespace QuickGraph.Algorithms.Observers.Contracts
         }
     }
 }
-#endif
