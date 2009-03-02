@@ -43,7 +43,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             var dij = new DijkstraShortestPathAlgorithm<int, Edge<int>>(g, e => 1);
             var vis = new VertexPredecessorRecorderObserver<int, Edge<int>>();
-            using(ObserverScope.Create(dij, vis))
+            using(vis.Attach(dij))
                 dij.Compute(1);
 
             IEnumerable<Edge<int>> path;
@@ -93,7 +93,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             var dij = new DijkstraShortestPathAlgorithm<int, Edge<int>>(g, e => 1);
             var vis = new VertexPredecessorRecorderObserver<int, Edge<int>>();
-            using(ObserverScope.Create(dij, vis))
+            using(vis.Attach(dij))
                 dij.Compute(1);
 
             IEnumerable<Edge<int>> path;
@@ -157,7 +157,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             // Attach a Vertex Predecessor Recorder Observer to give us the paths
             predecessorObserver = new VertexPredecessorRecorderObserver<string, Edge<string>>();
 
-            using (ObserverScope.Create(algo, predecessorObserver))
+            using (predecessorObserver.Attach(algo))
                 // Run the algorithm with A set to be the source
                 algo.Compute("A");
 

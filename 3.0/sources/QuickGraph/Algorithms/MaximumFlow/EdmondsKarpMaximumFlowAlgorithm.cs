@@ -117,7 +117,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 					Q,
 					this.VertexColors
 					);
-                using (ObserverScope.Create(bfs, vis))
+                using (vis.Attach(bfs))
                     bfs.Compute(this.Source);
 
                 if (this.VertexColors[this.Sink] != GraphColor.White)

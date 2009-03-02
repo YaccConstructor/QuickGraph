@@ -38,7 +38,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 e => distances[e]
                 );
             var predecessors = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using(ObserverScope.Create(algo, predecessors))
+            using(predecessors.Attach(algo))
                 algo.Compute(root);
 
             Verify(algo, predecessors);
@@ -87,7 +87,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 new UndirectedDijkstraShortestPathAlgorithm<object, QuickGraph.Edge<object>>(ug, edge => (double)1);
             var observer =
                 new UndirectedVertexPredecessorRecorderObserver<object, Edge<object>>();
-            using(ObserverScope.Create(udspa,observer))
+            using (observer.Attach(udspa))
                 udspa.Compute(v1);
             IEnumerable<QuickGraph.Edge<object>> path;
             observer.TryGetPath(v3, out path);

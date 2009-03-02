@@ -55,18 +55,19 @@ namespace QuickGraph.Algorithms.Observers
             get { return this._finishTimes; }
         }
 
-        public void Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
+        public IDisposable Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
             algorithm.DiscoverVertex+=new VertexAction<TVertex>(DiscoverVertex);
             if (this._finishTimes != null)
                 algorithm.FinishVertex+=new VertexAction<TVertex>(FinishVertex);
-        }
 
-        public void Detach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
-        {
-            algorithm.DiscoverVertex -= new VertexAction<TVertex>(DiscoverVertex);
-            if (this._finishTimes != null)
-                algorithm.FinishVertex -= new VertexAction<TVertex>(FinishVertex);
+            return new DisposableAction(
+                () =>
+                {
+                    algorithm.DiscoverVertex -= new VertexAction<TVertex>(DiscoverVertex);
+                    if (this._finishTimes != null)
+                        algorithm.FinishVertex -= new VertexAction<TVertex>(FinishVertex);
+                });
         }
 
         void DiscoverVertex(TVertex v)

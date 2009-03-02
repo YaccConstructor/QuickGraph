@@ -41,7 +41,7 @@ namespace QuickGraph.Perf
                 e => distances[e]
                 );
             var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algo, predecessors))
+            using (predecessors.Attach(algo))
                 algo.Compute(root);
         }
     }

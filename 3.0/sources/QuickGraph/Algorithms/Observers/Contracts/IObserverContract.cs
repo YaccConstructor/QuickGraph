@@ -7,14 +7,12 @@ namespace QuickGraph.Algorithms.Observers.Contracts
     sealed class IObserverContract<TAlgorithm>
         : IObserver<TAlgorithm>
     {
-        void IObserver<TAlgorithm>.Attach(TAlgorithm algorithm)
+        IDisposable IObserver<TAlgorithm>.Attach(TAlgorithm algorithm)
         {
             Contract.Requires(algorithm != null);
-        }
+            Contract.Ensures(Contract.Result<IDisposable>() != null);
 
-        void IObserver<TAlgorithm>.Detach(TAlgorithm algorithm)
-        {
-            Contract.Requires(algorithm != null);
+            return default(IDisposable);
         }
     }
 }

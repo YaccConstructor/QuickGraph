@@ -53,22 +53,17 @@ namespace QuickGraph.Algorithms.Observers
             }
         }
 
-        public void Attach(IEdgePredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
+        public IDisposable Attach(IEdgePredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            if (algorithm == null)
-                throw new ArgumentNullException("algorithm");
+            algorithm.DiscoverTreeEdge += new EdgeEdgeAction<TVertex, TEdge>(this.DiscoverTreeEdge);
+            algorithm.FinishEdge += new EdgeAction<TVertex, TEdge>(this.FinishEdge);
 
-            algorithm.DiscoverTreeEdge +=new EdgeEdgeAction<TVertex,TEdge>(this.DiscoverTreeEdge);
-            algorithm.FinishEdge +=new EdgeAction<TVertex,TEdge>(this.FinishEdge);
-        }
-
-        public void Detach(IEdgePredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
-        {
-            if (algorithm == null)
-                throw new ArgumentNullException("algorithm");
-
-            algorithm.DiscoverTreeEdge -= new EdgeEdgeAction<TVertex, TEdge>(this.DiscoverTreeEdge);
-            algorithm.FinishEdge -= new EdgeAction<TVertex, TEdge>(this.FinishEdge);
+            return new DisposableAction(
+                () =>
+                {
+                    algorithm.DiscoverTreeEdge -= new EdgeEdgeAction<TVertex, TEdge>(this.DiscoverTreeEdge);
+                    algorithm.FinishEdge -= new EdgeAction<TVertex, TEdge>(this.FinishEdge);
+                });
         }
 
         public ICollection<TEdge> Path(TEdge se)

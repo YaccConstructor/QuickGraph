@@ -50,7 +50,7 @@ this
 
             var algo = new BreadthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algo, predecessorRecorder))
+            using (predecessorRecorder.Attach(algo))
                 algo.Compute(root);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
@@ -75,7 +75,7 @@ this
 
             var algo = new DepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algo, predecessorRecorder))
+            using (predecessorRecorder.Attach(algo))
                 algo.Compute(root);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
@@ -117,7 +117,7 @@ this
 
             var algo = new CyclePoppingRandomTreeAlgorithm<TVertex, TEdge>(visitedGraph, edgeChain);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using(ObserverScope.Create(algo, predecessorRecorder))
+            using(predecessorRecorder.Attach(algo))
                 algo.Compute(root);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
@@ -144,7 +144,7 @@ this
 
             var algorithm = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
             var predecessorRecorder = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algorithm, predecessorRecorder))
+            using (predecessorRecorder.Attach(algorithm))
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
@@ -172,7 +172,7 @@ this
 
             var algorithm = new AStarShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights, costHeuristic);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algorithm, predecessorRecorder))
+            using (predecessorRecorder.Attach(algorithm))
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
@@ -198,7 +198,7 @@ this
 
             var algorithm = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algorithm, predecessorRecorder))
+            using (predecessorRecorder.Attach(algorithm))
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
@@ -224,7 +224,7 @@ this
 
             var algorithm = new BellmanFordShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algorithm, predecessorRecorder))
+            using (predecessorRecorder.Attach(algorithm))
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
@@ -250,7 +250,7 @@ this
 
             var algorithm = new DagShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, edgeWeights);
             var predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algorithm, predecessorRecorder))
+            using (predecessorRecorder.Attach(algorithm))
                 algorithm.Compute(source);
 
             var predecessors = predecessorRecorder.VertexPredecessors;
@@ -412,7 +412,7 @@ this
         {
             var dfs = new UndirectedDepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
             var vis = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using(ObserverScope.Create(dfs, vis))
+            using(vis.Attach(dfs))
                 dfs.Compute();
 
             foreach (var predecessor in vis.VertexPredecessors)
@@ -447,7 +447,7 @@ this
         {
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
             var vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(dfs, vis))
+            using (vis.Attach(dfs))
                 dfs.Compute();
 
             foreach (var predecessor in vis.VertexPredecessors)
@@ -959,7 +959,7 @@ this
             var distanceRelaxer = PrimRelaxer.Instance;
             var dijkstra = new UndirectedDijkstraShortestPathAlgorithm<TVertex, TEdge>(visitedGraph, weights, distanceRelaxer);
             var edgeRecorder = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(dijkstra, edgeRecorder))
+            using (edgeRecorder.Attach(dijkstra))
                 dijkstra.Compute();
 
             return edgeRecorder.VertexPredecessors.Values;
@@ -1010,7 +1010,7 @@ this
 
             var kruskal = new KruskalMinimumSpanningTreeAlgorithm<TVertex, TEdge>(visitedGraph, weights);
             var edgeRecorder = new EdgeRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(kruskal, edgeRecorder))
+            using (edgeRecorder.Attach(kruskal))
                 kruskal.Compute();
 
             return edgeRecorder.Edges;

@@ -51,7 +51,7 @@ namespace QuickGraph.Tests.Algorithms
             var lca = g.OfflineLeastCommonAncestorTarjan(root, pairs);
             var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(g);
-            using(ObserverScope.Create(dfs, predecessors))
+            using(predecessors.Attach(dfs))
                 dfs.Compute(root);
 
             TVertex ancestor;

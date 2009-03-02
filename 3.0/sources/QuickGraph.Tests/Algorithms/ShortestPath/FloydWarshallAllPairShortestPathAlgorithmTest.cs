@@ -139,7 +139,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             {
                 var dijkstra = shortestPathAlgorithmFactory(g, distances); // new DijkstraShortestPathAlgorithm<TVertex, TEdge>(g, distances);
                 var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-                using (ObserverScope.Create<ITreeBuilderAlgorithm<TVertex, TEdge>>(dijkstra, predecessors))
+                using (predecessors.Attach(dijkstra))
                     dijkstra.Compute(source);
 
                 TryFunc<TVertex, IEnumerable<TEdge>> dijkstraPaths = predecessors.TryGetPath;

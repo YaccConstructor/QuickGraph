@@ -27,7 +27,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             {
                 var walker = new RandomWalkAlgorithm<TVertex, TEdge>(g);
                 var vis = new EdgeRecorderObserver<TVertex, TEdge>();
-                using(ObserverScope.Create(walker, vis))
+                using(vis.Attach(walker))
                     walker.Generate(v);
             }
         }

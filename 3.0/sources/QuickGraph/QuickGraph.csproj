@@ -185,6 +185,7 @@
     <Compile Include="Algorithms\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\KruskalMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\Observers\Contracts\IObserverContract.cs" />
+    <Compile Include="Algorithms\Observers\DisposableAction.cs" />
     <Compile Include="Algorithms\Observers\UndirectedVertexDistanceRecorderObserver.cs" />
     <Compile Include="Algorithms\Observers\UndirectedVertexPredecessorRecorderObserver.cs" />
     <Compile Include="Algorithms\Observers\VertexPredecessorPathRecorderObserver.cs" />
@@ -215,7 +216,6 @@
     <Compile Include="Algorithms\MaximumFlow\MultiSourceSinkGraphAugmentorAlgorithm.cs" />
     <Compile Include="Algorithms\MaximumFlow\ReverseEdgeAugmentorAlgorithm.cs" />
     <Compile Include="Algorithms\Observers\IObserver.cs" />
-    <Compile Include="Algorithms\Observers\ObserverUtility.cs" />
     <Compile Include="Algorithms\Observers\VertexRecorderObserver.cs" />
     <Compile Include="Algorithms\PageRankAlgorithm.cs" />
     <Compile Include="Algorithms\RandomGraphFactory.cs" />

@@ -47,9 +47,8 @@ namespace QuickGraph.Algorithms.RandomWalks
                 walker.EdgeChain = new NormalizedMarkovEdgeChain<TVertex, TEdge>();
 
                 var vis = new EdgeRecorderObserver<TVertex, TEdge>();
-                vis.Attach(walker);
-                walker.Generate(root);
-                vis.Detach(walker);
+                using(vis.Attach(walker))
+                    walker.Generate(root);
             }
         }
 

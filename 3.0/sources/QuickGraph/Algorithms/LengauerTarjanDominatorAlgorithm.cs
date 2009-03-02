@@ -46,9 +46,9 @@ namespace QuickGraph.Algorithms
 
             // phase 1: DFS over the graph and record vertex indices
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(this, this.VisitedGraph);
-            using (ObserverScope.Create(dfs, new TimeStampObserver(stamps)))
-            using (ObserverScope.Create(dfs, new VertexTimeStamperObserver<TVertex, TEdge>(timeStamps)))
-            using (ObserverScope.Create(dfs, new VertexPredecessorRecorderObserver<TVertex, TEdge>(predecessors)))
+            using (new TimeStampObserver(stamps).Attach(dfs))
+            using (new VertexTimeStamperObserver<TVertex, TEdge>(timeStamps).Attach(dfs))
+            using (new VertexPredecessorRecorderObserver<TVertex, TEdge>(predecessors).Attach(dfs))
                 dfs.Compute();
 
             if (cancelManager.IsCancelling) return;
@@ -109,14 +109,12 @@ namespace QuickGraph.Algorithms
                 this.Vertices = vertices;
             }
 
-            public void Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
+            public IDisposable Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
             {
                 algorithm.DiscoverVertex += new VertexAction<TVertex>(algorithm_DiscoverVertex);
-            }
-
-            public void Detach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
-            {
-                algorithm.DiscoverVertex -= new VertexAction<TVertex>(algorithm_DiscoverVertex);
+                return new DisposableAction(
+                    () => algorithm.DiscoverVertex -= new VertexAction<TVertex>(algorithm_DiscoverVertex)
+                    );
             }
 
             void algorithm_DiscoverVertex(TVertex v)

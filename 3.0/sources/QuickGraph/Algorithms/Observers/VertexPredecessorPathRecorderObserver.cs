@@ -42,16 +42,16 @@ namespace QuickGraph.Algorithms.Observers
             get { return this.endPathVertices; }
         }
 
-        public void Attach(IVertexPredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
+        public IDisposable Attach(IVertexPredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.TreeEdge+=new EdgeAction<TVertex,TEdge>(TreeEdge);
-            algorithm.FinishVertex+=new VertexAction<TVertex>(FinishVertex);
-        }
-
-        public void Detach(IVertexPredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
-        {
-            algorithm.TreeEdge -= new EdgeAction<TVertex, TEdge>(TreeEdge);
-            algorithm.FinishVertex -= new VertexAction<TVertex>(FinishVertex);
+            algorithm.TreeEdge += new EdgeAction<TVertex, TEdge>(TreeEdge);
+            algorithm.FinishVertex += new VertexAction<TVertex>(FinishVertex);
+            return new DisposableAction(
+                () =>
+                {
+                    algorithm.TreeEdge -= new EdgeAction<TVertex, TEdge>(TreeEdge);
+                    algorithm.FinishVertex -= new VertexAction<TVertex>(FinishVertex);
+                });
         }
 
         void TreeEdge(TEdge e)

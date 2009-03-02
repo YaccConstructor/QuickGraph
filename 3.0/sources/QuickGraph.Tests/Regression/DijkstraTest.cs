@@ -108,7 +108,7 @@ namespace QuickGraph.Tests.Regression {
 
             // Attach a Vertex Predecessor Recorder Observer to give us the paths
             var predecessorObserver = new VertexPredecessorRecorderObserver<string, Edge<string>>();
-            using (ObserverScope.Create(dijkstra, predecessorObserver)) {
+            using (predecessorObserver.Attach(dijkstra)) {
                 // Run the algorithm with A set to be the source
                 dijkstra.Compute("A");
             }

@@ -64,7 +64,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             where TEdge : IEdge<TVertex>
         {
             var edgeRecorder = new EdgeRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algorithm, edgeRecorder))
+            using (edgeRecorder.Attach(algorithm))
                 algorithm.Compute();
 
             Console.WriteLine("tree cost: {0}", edgeRecorder.Edges.Count);

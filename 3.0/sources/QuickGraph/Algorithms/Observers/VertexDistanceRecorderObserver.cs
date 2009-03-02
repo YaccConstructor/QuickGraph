@@ -52,14 +52,12 @@ namespace QuickGraph.Algorithms.Observers
             get { return this.distances; }
         }
 
-        public void Attach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
+        public IDisposable Attach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
             algorithm.TreeEdge += new EdgeAction<TVertex, TEdge>(this.TreeEdge);
-        }
-
-        public void Detach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
-        {
-            algorithm.TreeEdge -= new EdgeAction<TVertex, TEdge>(this.TreeEdge);
+            return new DisposableAction(
+                () => algorithm.TreeEdge -= new EdgeAction<TVertex, TEdge>(this.TreeEdge)
+                );
         }
 
         private void TreeEdge(TEdge edge)

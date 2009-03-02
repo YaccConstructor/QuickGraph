@@ -13,7 +13,13 @@ namespace QuickGraph.Algorithms.Observers
     [ContractClass(typeof(Contracts.IObserverContract<>))]
     public interface IObserver<TAlgorithm>
     {
-        void Attach(TAlgorithm algorithm);
-        void Detach(TAlgorithm algorithm);
+        /// <summary>
+        /// Attaches to the algorithm events
+        /// and returns a disposable object that can be used
+        /// to detach from the events
+        /// </summary>
+        /// <param name="algorithm"></param>
+        /// <returns></returns>
+        IDisposable Attach(TAlgorithm algorithm);
     }
 }

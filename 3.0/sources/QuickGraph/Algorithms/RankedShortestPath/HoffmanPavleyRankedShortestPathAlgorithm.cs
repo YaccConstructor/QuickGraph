@@ -178,8 +178,8 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             var distancesObserser = new VertexDistanceRecorderObserver<TVertex, ReversedEdge<TVertex, TEdge>>(reversedEdgeWeight);
             var shortestpath = new DijkstraShortestPathAlgorithm<TVertex, ReversedEdge<TVertex, TEdge>>(
                 this, reversedGraph, reversedEdgeWeight, this.DistanceRelaxer);
-            using (ObserverScope.Create(shortestpath, successorsObserver))
-            using (ObserverScope.Create(shortestpath, distancesObserser))
+            using (successorsObserver.Attach(shortestpath))
+            using (distancesObserser.Attach(shortestpath))
                 shortestpath.Compute(goal);
 
             successors = new Dictionary<TVertex, TEdge>();

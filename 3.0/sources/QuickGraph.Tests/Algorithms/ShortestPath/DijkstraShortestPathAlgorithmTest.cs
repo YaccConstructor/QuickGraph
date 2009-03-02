@@ -43,7 +43,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 e => distances[e]
                 );
             var predecessors = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (ObserverScope.Create(algo, predecessors))
+            using (predecessors.Attach(algo))
                 algo.Compute(root);
 
             Verify(algo, predecessors);
