@@ -121,9 +121,9 @@ namespace QuickGraph.Serialization
         /// <typeparam name="TEdge"></typeparam>
         /// <typeparam name="TGraph"></typeparam>
         /// <param name="doc">input xml document</param>
-        /// <param name="graphXPath">xpath expression to the graph node. The first node is considered</param>
-        /// <param name="verticesXPath">xpath expression from the graph node to the vertex nodes.</param>
-        /// <param name="edgesXPath">xpath expression from the graph node to the edge nodes.</param>
+        /// <param name="graphPredicate">predicate that returns a value indicating if the current xml node is a graph. The first match is considered</param>
+        /// <param name="vertexPredicate">predicate that returns a value indicating if the current xml node is a vertex.</param>
+        /// <param name="edgePredicate">predicate that returns a value indicating if the current xml node is an edge.</param>
         /// <param name="graphFactory">delegate that instantiate the empty graph instance, given the graph node</param>
         /// <param name="vertexFactory">delegate that instantiate a vertex instance, given the vertex node</param>
         /// <param name="edgeFactory">delegate that instantiate an edge instance, given the edge node</param>
@@ -196,9 +196,9 @@ this
         /// <typeparam name="TEdge"></typeparam>
         /// <typeparam name="TGraph"></typeparam>
         /// <param name="doc">input xml document</param>
-        /// <param name="graphXPath">xpath expression to the graph node. The first node is considered</param>
-        /// <param name="verticesXPath">xpath expression from the graph node to the vertex nodes.</param>
-        /// <param name="edgesXPath">xpath expression from the graph node to the edge nodes.</param>
+        /// <param name="graphElementName">name of the xml node holding graph information. The first node is considered</param>
+        /// <param name="vertexElementName">name of the xml node holding vertex information</param>
+        /// <param name="edgeElementName">name of the xml node holding edge information</param>
         /// <param name="graphFactory">delegate that instantiate the empty graph instance, given the graph node</param>
         /// <param name="vertexFactory">delegate that instantiate a vertex instance, given the vertex node</param>
         /// <param name="edgeFactory">delegate that instantiate an edge instance, given the edge node</param>

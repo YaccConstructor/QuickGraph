@@ -12,10 +12,11 @@ namespace QuickGraph.Petri
 	/// Usually represented by an arrow.
 	/// </para>
 	/// </remarks>
-	public interface IArc<Token>  : IEdge<IPetriVertex>
+	public interface IArc<Token>  
+        : IEdge<IPetriVertex>
 	{
 		/// <summary>
-		/// Gets or sets a value indicating if the <see cref="IArc"/>
+		/// Gets a value indicating if the <see cref="IArc"/>
 		/// instance is a <strong>input arc.</strong>
 		/// </summary>
 		/// <remarks>
@@ -28,15 +29,12 @@ namespace QuickGraph.Petri
 		bool IsInputArc {get;}
 
 		/// <summary>
-		/// Gets or sets the <see cref="IPlace"/> instance attached to the
+		/// Gets the <see cref="IPlace"/> instance attached to the
 		/// <see cref="IArc"/>.
 		/// </summary>
 		/// <value>
 		/// The <see cref="IPlace"/> attached to the <see cref="IArc"/>.
 		/// </value>
-		/// <exception cref="ArgumentNullException">
-		/// set property, value is a null reference (Nothing in Visual Basic).
-		/// </exception>
 		IPlace<Token> Place {get;}
 
 		/// <summary>
@@ -46,9 +44,6 @@ namespace QuickGraph.Petri
 		/// <value>
 		/// The <see cref="ITransition"/> attached to the <see cref="IArc"/>.
 		/// </value>
-		/// <exception cref="ArgumentNullException">
-		/// set property, value is a null reference (Nothing in Visual Basic).
-		/// </exception>
 		ITransition<Token> Transition{get;}
 
 		/// <summary>
