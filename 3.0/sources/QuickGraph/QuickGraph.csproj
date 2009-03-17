@@ -314,6 +314,7 @@
     <Compile Include="EdgeIdentity.cs" />
     <Compile Include="EdgePredicate.cs" />
     <Compile Include="Enumerable.cs" />
+    <Compile Include="EquatableEdge.cs" />
     <Compile Include="FuncDelegates.cs" />
     <Compile Include="GraphExtensions.cs" />
     <Compile Include="HashCodeHelper.cs" />
