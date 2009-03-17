@@ -1,19 +1,31 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
 
 namespace QuickGraph.Petri
 {
     [Serializable]
-    public sealed class PetriNet<Token> : IMutablePetriNet<Token>
+    public sealed class PetriNet<Token> 
+        : IMutablePetriNet<Token>
+        , ICloneable
     {
-        private List<IPlace<Token>> places = new List<IPlace<Token>>();
-        private List<ITransition<Token>> transitions = new List<ITransition<Token>>();
-        private List<IArc<Token>> arcs = new List<IArc<Token>>();
-        private PetriGraph<Token> graph = new PetriGraph<Token>();      
+        private readonly List<IPlace<Token>> places = new List<IPlace<Token>>();
+        private readonly List<ITransition<Token>> transitions = new List<ITransition<Token>>();
+        private readonly List<IArc<Token>> arcs = new List<IArc<Token>>();
+        private readonly PetriGraph<Token> graph = new PetriGraph<Token>();      
 
 		public PetriNet()
 		{}
+
+        private PetriNet(PetriNet<Token> other)
+        {
+            this.places.AddRange(other.places);
+            this.transitions.AddRange(other.transitions);
+            this.arcs.AddRange(other.arcs);
+            this.graph = new PetriGraph<Token>();
+            this.graph.AddVerticesAndEdgeRange(other.graph.Edges);
+        }
 
 		public IPetriGraph<Token> Graph
 		{
@@ -99,6 +111,17 @@ namespace QuickGraph.Petri
 			}
 			return sw.ToString();
 		}
+
+
+        public PetriNet<Token> Clone()
+        {
+            return new PetriNet<Token>(this);
+        }
+
+        object ICloneable.Clone()
+        {
+            return this.Clone();
+        }
 
 	}
 }
