@@ -113,5 +113,44 @@ namespace QuickGraph.Algorithms
                       ++j;
             }
         }
+
+
+        public static void Create<TVertex, TEdge>(
+            IMutableUndirectedGraph<TVertex, TEdge> g,
+            VertexFactory<TVertex> vertexFactory,
+            EdgeFactory<TVertex, TEdge> edgeFactory,
+            Random rnd,
+            int vertexCount,
+            int edgeCount,
+            bool selfEdges
+            ) where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(g != null);
+            Contract.Requires(vertexFactory != null);
+            Contract.Requires(edgeFactory != null);
+            Contract.Requires(rnd != null);
+            Contract.Requires(vertexCount > 0);
+            Contract.Requires(edgeCount >= 0);
+
+            TVertex[] vertices = new TVertex[vertexCount];
+            for (int i = 0; i < vertexCount; ++i)
+                g.AddVertex(vertices[i] = vertexFactory());
+
+            TVertex a;
+            TVertex b;
+            int j = 0;
+            while (j < edgeCount)
+            {
+                a = vertices[rnd.Next(vertexCount)];
+                do
+                {
+                    b = vertices[rnd.Next(vertexCount)];
+                }
+                while (selfEdges == false && a.Equals(b));
+
+                if (g.AddEdge(edgeFactory(a, b)))
+                    ++j;
+            }
+        }
     }
 }
