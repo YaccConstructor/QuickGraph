@@ -28,7 +28,7 @@ namespace QuickGraph.Tests.Serialization
                 );
 
             var ug2 = XmlReader.Create("repro12273.xml").DeserializeFromXml(
-                "graph", "node", "edge",
+                "graph", "node", "edge", "",
                 reader => new UndirectedGraph<string, TaggedEdge<string, double>>(),
                 reader => reader.GetAttribute("id"),
                 reader => new TaggedEdge<string, double>(

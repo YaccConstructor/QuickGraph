@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using QuickGraph.Contracts;
 
 namespace QuickGraph
 {
-    [ContractClass(typeof(IEdgeListGraph<,>))]
+    [ContractClass(typeof(IEdgeListGraphContract<,>))]
     public interface IEdgeListGraph<TVertex, TEdge> : 
         IGraph<TVertex, TEdge>,
         IEdgeSet<TVertex, TEdge>,

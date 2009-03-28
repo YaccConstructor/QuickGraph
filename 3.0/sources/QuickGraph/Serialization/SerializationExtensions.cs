@@ -115,7 +115,7 @@ namespace QuickGraph.Serialization
         }
 
         /// <summary>
-        /// Deserializes a graph from a generic xml stream, using an <see cref="XPathDocument"/>.
+        /// Deserializes a graph from a generic xml stream, using an <see cref="XmlReader"/>.
         /// </summary>
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
@@ -211,6 +211,7 @@ this
             string graphElementName,
             string vertexElementName,
             string edgeElementName,
+            string namespaceUri,
             Func<XmlReader, TGraph> graphFactory,
             Func<XmlReader, TVertex> vertexFactory,
             Func<XmlReader, TEdge> edgeFactory
@@ -228,13 +229,68 @@ this
 
             return DeserializeFromXml(
                 reader,
-                r => r.Name == graphElementName,
-                r => r.Name == vertexElementName,
-                r => r.Name == edgeElementName,
+                r => r.Name == graphElementName && r.NamespaceURI == namespaceUri,
+                r => r.Name == vertexElementName && r.NamespaceURI == namespaceUri,
+                r => r.Name == edgeElementName && r.NamespaceURI == namespaceUri,
                 graphFactory,
                 vertexFactory,
                 edgeFactory
                 );
+        }
+
+        /// <summary>
+        /// Seserializes a graph to a generic xml stream, using an <see cref="XmlWriter"/>.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TGraph"></typeparam>
+        /// <param name="graphFactory">delegate that writes the empty graph instance</param>
+        /// <param name="vertexFactory">delegate that writes a vertex instance</param>
+        /// <param name="edgeFactory">delegate that writes an edge instance</param>
+        /// <returns></returns>
+        public static void SeserializeToXml<TVertex, TEdge, TGraph>(
+#if !NET20
+this 
+#endif
+            XmlWriter writer,
+            TGraph graph,
+            VertexIdentity<TVertex> vertexIdentity,
+            EdgeIdentity<TVertex, TEdge> edgeIdentity,
+            string graphElementName,
+            string vertexElementName,
+            string edgeElementName,
+            string namespaceUri,
+            Action<XmlWriter, TGraph> writeGraphAttributes,
+            Action<XmlWriter, TVertex> writeVertexAttributes,
+            Action<XmlWriter, TEdge> writeEdgeAttributes
+            )
+            where TGraph : IVertexAndEdgeListGraph<TVertex, TEdge>
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(writer != null);
+
+            writer.WriteStartElement(graphElementName, namespaceUri);
+            if (writeGraphAttributes != null)
+                writeGraphAttributes(writer, graph);
+            foreach (var vertex in graph.Vertices)
+            {
+                writer.WriteStartElement(vertexElementName, namespaceUri);
+                writer.WriteAttributeString("id", namespaceUri, vertexIdentity(vertex));
+                if (writeVertexAttributes != null)
+                    writeVertexAttributes(writer, vertex);
+                writer.WriteEndElement();
+            }
+            foreach (var edge in graph.Edges)
+            {
+                writer.WriteStartElement(edgeElementName, namespaceUri);
+                writer.WriteAttributeString("id", namespaceUri, edgeIdentity(edge));
+                writer.WriteAttributeString("source", namespaceUri, vertexIdentity(edge.Source));
+                writer.WriteAttributeString("target", namespaceUri, vertexIdentity(edge.Target));
+                if (writeEdgeAttributes != null)
+                    writeEdgeAttributes(writer, edge);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
         }
     }
 }
