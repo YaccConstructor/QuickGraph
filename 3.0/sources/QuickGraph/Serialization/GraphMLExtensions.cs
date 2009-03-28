@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Schema;
 using System.Diagnostics.Contracts;
+using QuickGraph.Algorithms;
 
 namespace QuickGraph.Serialization
 {
@@ -26,6 +27,36 @@ namespace QuickGraph.Serialization
 
             var serializer = new GraphMLSerializer<TVertex, TEdge,TGraph>();
             serializer.Serialize(writer, graph, vertexIdentities, edgeIdentities);
+        }
+
+        public static void SerializeToGraphML<TVertex, TEdge, TGraph>(
+#if !NET20
+this 
+#endif
+            TGraph graph,
+            XmlWriter writer)
+            where TEdge : IEdge<TVertex>
+            where TGraph : IEdgeListGraph<TVertex, TEdge>
+        {
+            Contract.Requires(graph != null);
+            Contract.Requires(writer != null);
+
+            var vertexIds = new Dictionary<TVertex, string>(graph.VertexCount);
+            foreach (var vertex in graph.Vertices)
+                vertexIds.Add(vertex, vertexIds.Count.ToString());
+            var vertexIdentity = AlgorithmExtensions.GetIndexer<VertexIdentity<TVertex>, TVertex, string>(vertexIds);
+
+            var edgeIds = new Dictionary<TEdge, string>(graph.EdgeCount);
+            foreach (var edge in graph.Edges)
+                edgeIds.Add(edge, edgeIds.Count.ToString());
+            var edgeIdentity = AlgorithmExtensions.GetIndexer<EdgeIdentity<TVertex, TEdge>, TEdge, string>(edgeIds);
+
+            SerializeToGraphML<TVertex, TEdge, TGraph>(
+                graph,
+                writer,
+                vertexIdentity,
+                edgeIdentity
+                );
         }
 
         public static void DeserializeFromGraphML<TVertex, TEdge,TGraph>(

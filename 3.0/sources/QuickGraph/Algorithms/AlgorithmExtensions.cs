@@ -26,6 +26,22 @@ namespace QuickGraph.Algorithms
         /// <typeparam name="TValue"></typeparam>
         /// <param name="dictionary"></param>
         /// <returns></returns>
+        public static TDelegate GetIndexer<TDelegate, TKey, TValue>(Dictionary<TKey, TValue> dictionary)
+        {
+            Contract.Requires(dictionary != null);
+            Contract.Ensures(Contract.Result<TDelegate>() != null);
+
+            var method = dictionary.GetType().GetProperty("Item").GetGetMethod();
+            return (TDelegate)(object)Delegate.CreateDelegate(typeof(TDelegate), dictionary, method, true);
+        }
+
+        /// <summary>
+        /// Returns the method that implement the access indexer.
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dictionary"></param>
+        /// <returns></returns>
         public static Func<TKey, TValue> GetIndexer<TKey, TValue>(Dictionary<TKey, TValue> dictionary)
         {
             Contract.Requires(dictionary != null);
