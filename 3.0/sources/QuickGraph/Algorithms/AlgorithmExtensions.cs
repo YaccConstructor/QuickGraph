@@ -51,6 +51,82 @@ namespace QuickGraph.Algorithms
             return (Func<TKey, TValue>)Delegate.CreateDelegate(typeof(Func<TKey, TValue>), dictionary, method, true);
         }
 
+        /// <summary>
+        /// Gets the vertex identity.
+        /// </summary>
+        /// <remarks>
+        /// Returns more efficient methods for primitive types,
+        /// otherwise builds a dictionary
+        /// </remarks>
+        /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+        /// <param name="graph">The graph.</param>
+        /// <returns></returns>
+        public static VertexIdentity<TVertex> GetVertexIdentity<TVertex>(
+#if !NET20
+this 
+#endif
+            IVertexSet<TVertex> graph)
+        {
+            Contract.Requires(graph != null);
+
+            // simpler identity for primitive types
+            switch(Type.GetTypeCode(typeof(TVertex)))
+            {
+                case TypeCode.String:
+                case TypeCode.Boolean:
+                case TypeCode.Byte:
+                case TypeCode.Char:
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.SByte:
+                case TypeCode.Single:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                    return (v) => v.ToString();
+            }
+
+            // create dictionary
+            var ids = new Dictionary<TVertex, string>(graph.VertexCount);
+            return v =>
+                {
+                    string id;
+                    if (!ids.TryGetValue(v, out id))
+                        ids[v] = id = ids.Count.ToString();
+                    return id;
+                };
+        }
+
+        /// <summary>
+        /// Gets the edge identity.
+        /// </summary>
+        /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+        /// <typeparam name="TEdge">The type of the edge.</typeparam>
+        /// <param name="graph">The graph.</param>
+        /// <returns></returns>
+        public static EdgeIdentity<TVertex, TEdge> GetEdgeIdentity<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IEdgeSet<TVertex, TEdge> graph)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(graph != null);
+
+            // create dictionary
+            var ids = new Dictionary<TEdge, string>(graph.EdgeCount);
+            return e =>
+            {
+                string id;
+                if (!ids.TryGetValue(e, out id))
+                    ids[e] = id = ids.Count.ToString();
+                return id;
+            };
+        }
+
         public static TryFunc<TVertex, IEnumerable<TEdge>> TreeBreadthFirstSearch<TVertex, TEdge>(
 #if !NET20
 this 
@@ -76,6 +152,14 @@ this
             };
         }
 
+        /// <summary>
+        /// Computes a depth first tree.
+        /// </summary>
+        /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+        /// <typeparam name="TEdge">The type of the edge.</typeparam>
+        /// <param name="visitedGraph">The visited graph.</param>
+        /// <param name="root">The root.</param>
+        /// <returns></returns>
         public static TryFunc<TVertex, IEnumerable<TEdge>> TreeDepthFirstSearch<TVertex, TEdge>(
 #if !NET20
 this 

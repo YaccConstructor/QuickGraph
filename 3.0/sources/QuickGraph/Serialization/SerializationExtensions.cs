@@ -241,13 +241,20 @@ this
         /// <summary>
         /// Seserializes a graph to a generic xml stream, using an <see cref="XmlWriter"/>.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
-        /// <typeparam name="TGraph"></typeparam>
-        /// <param name="graphFactory">delegate that writes the empty graph instance</param>
-        /// <param name="vertexFactory">delegate that writes a vertex instance</param>
-        /// <param name="edgeFactory">delegate that writes an edge instance</param>
-        /// <returns></returns>
+        /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+        /// <typeparam name="TEdge">The type of the edge.</typeparam>
+        /// <typeparam name="TGraph">The type of the graph.</typeparam>
+        /// <param name="writer">The writer.</param>
+        /// <param name="graph">The graph.</param>
+        /// <param name="vertexIdentity">The vertex identity.</param>
+        /// <param name="edgeIdentity">The edge identity.</param>
+        /// <param name="graphElementName">Name of the graph element.</param>
+        /// <param name="vertexElementName">Name of the vertex element.</param>
+        /// <param name="edgeElementName">Name of the edge element.</param>
+        /// <param name="namespaceUri">The namespace URI (optional).</param>
+        /// <param name="writeGraphAttributes">The write graph attributes (optional).</param>
+        /// <param name="writeVertexAttributes">The write vertex attributes (optional).</param>
+        /// <param name="writeEdgeAttributes">The write edge attributes (optional).</param>
         public static void SeserializeToXml<TVertex, TEdge, TGraph>(
 #if !NET20
 this 
@@ -268,6 +275,12 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(writer != null);
+            Contract.Requires(graph != null);
+            Contract.Requires(vertexIdentity != null);
+            Contract.Requires(edgeIdentity != null);
+            Contract.Requires(!String.IsNullOrEmpty(graphElementName));
+            Contract.Requires(!String.IsNullOrEmpty(vertexElementName));
+            Contract.Requires(!String.IsNullOrEmpty(edgeElementName));
 
             writer.WriteStartElement(graphElementName, namespaceUri);
             if (writeGraphAttributes != null)

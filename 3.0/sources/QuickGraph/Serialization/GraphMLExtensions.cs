@@ -41,15 +41,8 @@ this
             Contract.Requires(graph != null);
             Contract.Requires(writer != null);
 
-            var vertexIds = new Dictionary<TVertex, string>(graph.VertexCount);
-            foreach (var vertex in graph.Vertices)
-                vertexIds.Add(vertex, vertexIds.Count.ToString());
-            var vertexIdentity = AlgorithmExtensions.GetIndexer<VertexIdentity<TVertex>, TVertex, string>(vertexIds);
-
-            var edgeIds = new Dictionary<TEdge, string>(graph.EdgeCount);
-            foreach (var edge in graph.Edges)
-                edgeIds.Add(edge, edgeIds.Count.ToString());
-            var edgeIdentity = AlgorithmExtensions.GetIndexer<EdgeIdentity<TVertex, TEdge>, TEdge, string>(edgeIds);
+            var vertexIdentity = AlgorithmExtensions.GetVertexIdentity<TVertex>(graph);
+            var edgeIdentity = AlgorithmExtensions.GetEdgeIdentity<TVertex, TEdge>(graph);
 
             SerializeToGraphML<TVertex, TEdge, TGraph>(
                 graph,
