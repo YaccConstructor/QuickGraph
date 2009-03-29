@@ -225,9 +225,12 @@ namespace QuickGraph.Algorithms.ShortestPath
             var relaxer = this.DistanceRelaxer;
             foreach (var e in this.VisitedGraph.Edges)
             {
+                var edgeWeight = Weights(e);
+                if (edgeWeight < 0)
+                    throw new InvalidOperationException("non negative edge weight");
                 if (relaxer.Compare(
                         relaxer.Combine(
-                            this.Distances[e.Source], Weights(e)),
+                            this.Distances[e.Source], edgeWeight),
                             this.Distances[e.Target]
                         )
                     )
