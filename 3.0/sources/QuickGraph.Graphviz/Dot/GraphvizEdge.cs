@@ -133,6 +133,10 @@ namespace QuickGraph.Graphviz.Dot
             {
                 dic["weight"] = this.Weight;
             }
+            if (this.HeadPort != null)
+                dic["headport"] = this.HeadPort;
+            if (this.TailPort != null)
+                dic["tailport"] = this.TailPort;
             return this.GenerateDot(dic);
         }
 
@@ -356,6 +360,9 @@ namespace QuickGraph.Graphviz.Dot
                 this.weight = value;
             }
         }
+
+        public string HeadPort { get; set; }
+        public string TailPort {get;set;}
     }
 }
 
