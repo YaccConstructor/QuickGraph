@@ -388,6 +388,7 @@
     <Compile Include="IMutableVertexListGraph.cs" />
     <Compile Include="IVertexAndEdgeListGraph.cs" />
     <Compile Include="QuickGraphException.cs" />
+    <Compile Include="SEdge.cs" />
     <Compile Include="Serialization\GraphMLDeserializer.cs" />
     <Compile Include="Serialization\GraphMLXmlResolver.cs" />
     <Compile Include="Serialization\SerializationExtensions.cs" />

@@ -51,12 +51,13 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             }
         }
 
-        protected void AddComputedShortestPath(IEnumerable<TEdge> path)
+        protected void AddComputedShortestPath(List<TEdge> path)
         {
             Contract.Requires(path != null);
             Contract.Requires(Contract.ForAll(path, e => e != null));
 
-            this.computedShortestPaths.Add(new List<TEdge>(path).ToArray());
+            var pathArray = path.ToArray();
+            this.computedShortestPaths.Add(pathArray);
         }
 
         public IDistanceRelaxer DistanceRelaxer
