@@ -6,7 +6,7 @@ using QuickGraph.Algorithms.Services;
 using System.Diagnostics.Contracts;
 using System.Diagnostics;
 
-namespace QuickGraph.Algorithms
+namespace QuickGraph.Algorithms.ConnectedComponents
 {
     [Serializable]
     public sealed class WeaklyConnectedComponentsAlgorithm<TVertex,TEdge> :

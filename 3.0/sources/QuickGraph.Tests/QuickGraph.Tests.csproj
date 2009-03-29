@@ -269,7 +269,7 @@
     <Compile Include="Algorithms\TopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />
-    <Compile Include="Algorithms\WeaklyConnectedComponentsAlgorithmTest.cs" />
+    <Compile Include="Algorithms\ConnectedComponents\WeaklyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="AssemblyContextTest.cs" />
     <Compile Include="Benchmark.cs" />
     <Compile Include="Collections\BinaryHeapTest.cs" />
@@ -4226,9 +4226,6 @@
     <None Include="GraphML\repro12359.graphml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Algorithms\ConnectedComponents\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

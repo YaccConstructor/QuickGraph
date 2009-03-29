@@ -5,8 +5,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Serialization;
 using System.Diagnostics.Contracts;
 using System.Diagnostics;
+using QuickGraph.Algorithms.ConnectedComponents;
 
-namespace QuickGraph.Algorithms
+namespace QuickGraph.Algorithms.ConnectedComponents
 {
     [TestClass, PexClass]
     public partial class WeaklyConnectedComponentsAlgorithmTest
