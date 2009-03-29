@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 
 using QuickGraph.Algorithms.Search;
-using System.Diagnostics.Contracts;
 
-namespace QuickGraph.Algorithms
+namespace QuickGraph.Algorithms.TopologicalSort
 {
     [Serializable]
-    public sealed class UndirectedTopologicalSortAlgorithm<TVertex, TEdge>
-        : AlgorithmBase<IUndirectedGraph<TVertex, TEdge>>
+    public sealed class TopologicalSortAlgorithm<TVertex,TEdge> :
+        AlgorithmBase<IVertexListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        private IList<TVertex> vertices;
+        private IList<TVertex> vertices = new List<TVertex>();
         private bool allowCyclicGraph = false;
 
-        public UndirectedTopologicalSortAlgorithm(IUndirectedGraph<TVertex, TEdge> g)
-            : this(g, new List<TVertex>())
-        { }
+        public TopologicalSortAlgorithm(IVertexListGraph<TVertex,TEdge> g)
+            :this(g, new List<TVertex>())
+        {}
 
-        public UndirectedTopologicalSortAlgorithm(
-            IUndirectedGraph<TVertex, TEdge> g,
+        public TopologicalSortAlgorithm(
+            IVertexListGraph<TVertex,TEdge> g, 
             IList<TVertex> vertices)
-            : base(g)
+            :base(g)
         {
-            Contract.Requires(vertices != null);
+            if (vertices == null)
+                throw new ArgumentNullException("vertices");
 
             this.vertices = vertices;
         }
@@ -39,10 +39,9 @@ namespace QuickGraph.Algorithms
         public bool AllowCyclicGraph
         {
             get { return this.allowCyclicGraph; }
-            set { this.allowCyclicGraph = value; }
         }
 
-        private void BackEdge(object sender, UndirectedEdgeEventArgs<TVertex, TEdge> a)
+        private void BackEdge(TEdge args)
         {
             if (!this.AllowCyclicGraph)
                 throw new NonAcyclicGraphException();
@@ -55,15 +54,15 @@ namespace QuickGraph.Algorithms
 
         protected override void InternalCompute()
         {
-            UndirectedDepthFirstSearchAlgorithm<TVertex, TEdge> dfs = null;
+            DepthFirstSearchAlgorithm<TVertex, TEdge> dfs = null;
             try
             {
-                dfs = new UndirectedDepthFirstSearchAlgorithm<TVertex, TEdge>(
-                    this,
-                    VisitedGraph,
+                dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(
+                    this, 
+                    this.VisitedGraph,
                     new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount)
                     );
-                dfs.BackEdge += new UndirectedEdgeAction<TVertex, TEdge>(this.BackEdge);
+                dfs.BackEdge += new EdgeAction<TVertex, TEdge>(this.BackEdge);
                 dfs.FinishVertex += new VertexAction<TVertex>(this.FinishVertex);
 
                 dfs.Compute();
@@ -72,7 +71,7 @@ namespace QuickGraph.Algorithms
             {
                 if (dfs != null)
                 {
-                    dfs.BackEdge -= new UndirectedEdgeAction<TVertex, TEdge>(this.BackEdge);
+                    dfs.BackEdge -= new EdgeAction<TVertex, TEdge>(this.BackEdge);
                     dfs.FinishVertex -= new VertexAction<TVertex>(this.FinishVertex);
                 }
             }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using QuickGraph.Collections;
 using System.Diagnostics.Contracts;
 
-namespace QuickGraph.Algorithms
+namespace QuickGraph.Algorithms.TopologicalSort
 {
     [Serializable]
     public sealed class SourceFirstTopologicalSortAlgorithm<TVertex, TEdge> :

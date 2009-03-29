@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Pex.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Serialization;
+using QuickGraph.Algorithms.TopologicalSort;
 
 namespace QuickGraph.Algorithms
 {

@@ -14,6 +14,7 @@ using QuickGraph.Algorithms.RankedShortestPath;
 using System.Reflection;
 using QuickGraph.Algorithms.ConnectedComponents;
 using System.Diagnostics;
+using QuickGraph.Algorithms.TopologicalSort;
 
 namespace QuickGraph.Algorithms
 {

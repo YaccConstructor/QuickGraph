@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using QuickGraph.Collections;
 
-namespace QuickGraph.Algorithms
+namespace QuickGraph.Algorithms.TopologicalSort
 {
     [Serializable]
     public sealed class UndirectedFirstTopologicalSortAlgorithm<TVertex, TEdge> :
