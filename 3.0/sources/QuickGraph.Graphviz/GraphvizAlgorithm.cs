@@ -170,7 +170,11 @@ namespace QuickGraph.Graphviz
             foreach(TVertex v in this.VisitedGraph.Vertices)
                 this.vertexIds.Add(v,i++);
 
-            Output.WriteLine("digraph G {");
+            if (this.VisitedGraph.IsDirected)
+                this.Output.Write("digraph");
+            else
+                this.Output.Write("graph");
+            this.Output.WriteLine(" G {");
 
             String gf = GraphFormat.ToDot();
             if (gf.Length > 0)
