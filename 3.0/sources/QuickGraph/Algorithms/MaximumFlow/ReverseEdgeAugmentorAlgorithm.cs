@@ -7,6 +7,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 {
     [Serializable]
     public sealed class ReversedEdgeAugmentorAlgorithm<TVertex, TEdge>
+        : IDisposable
         where TEdge : IEdge<TVertex>
     {
         private readonly IMutableVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph;
@@ -152,6 +153,12 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 if (redge.Target.Equals(edge.Source))
                     return redge;
             return default(TEdge);
+        }
+
+        void IDisposable.Dispose()
+        {
+            if(this.Augmented)
+                this.RemoveReversedEdges();
         }
     }
 }

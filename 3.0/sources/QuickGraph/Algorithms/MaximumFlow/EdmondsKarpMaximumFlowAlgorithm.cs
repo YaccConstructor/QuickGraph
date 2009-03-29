@@ -102,8 +102,13 @@ namespace QuickGraph.Algorithms.MaximumFlow
 
             var g = this.VisitedGraph;
             foreach(var u in g.Vertices)
-				foreach(var e in g.OutEdges(u))
-					this.ResidualCapacities[e] = this.Capacities(e);   			
+                foreach (var e in g.OutEdges(u))
+                {
+                    var capacity = this.Capacities(e);
+                    if (capacity < 0)
+                        throw new InvalidOperationException("negative edge capacity");
+                    this.ResidualCapacities[e] = capacity;
+                }
     
 			this.VertexColors[Sink] = GraphColor.Gray;
 			while (this.VertexColors[Sink] != GraphColor.White)
@@ -111,10 +116,10 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 var vis = new VertexPredecessorRecorderObserver<TVertex,TEdge>(
                     this.Predecessors
 					);
-				var Q = new QuickGraph.Collections.Queue<TVertex>();
+				var queue = new QuickGraph.Collections.Queue<TVertex>();
 				var bfs = new BreadthFirstSearchAlgorithm<TVertex,TEdge>(
 					this.ResidualGraph,
-					Q,
+					queue,
 					this.VertexColors
 					);
                 using (vis.Attach(bfs))

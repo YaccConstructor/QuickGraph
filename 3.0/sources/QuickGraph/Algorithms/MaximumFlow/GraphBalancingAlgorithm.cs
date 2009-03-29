@@ -5,7 +5,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Algorithms.MaximumFlow
 {
     [Serializable]
-    public class GraphBalancerAlgorithm<TVertex, TEdge>
+    public sealed class GraphBalancerAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private IMutableBidirectionalGraph<TVertex,TEdge> visitedGraph;
@@ -37,20 +37,13 @@ namespace QuickGraph.Algorithms.MaximumFlow
             EdgeFactory<TVertex,TEdge> edgeFactory
             )
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
-            if (vertexFactory==null)
-                throw new ArgumentNullException("vertexFactory");
-            if (edgeFactory==null)
-                throw new ArgumentNullException("edgeFactory");
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (!visitedGraph.ContainsVertex(source))
-                throw new ArgumentException("source is not part of the graph");
-            if (sink == null)
-                throw new ArgumentNullException("sink");
-            if (!visitedGraph.ContainsVertex(sink))
-                throw new ArgumentException("sink is not part of the graph");
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(vertexFactory != null);
+            Contract.Requires(edgeFactory != null);
+            Contract.Requires(source != null);
+            Contract.Requires(visitedGraph.ContainsVertex(source));
+            Contract.Requires(sink != null);
+            Contract.Requires(visitedGraph.ContainsVertex(sink));
 
             this.visitedGraph = visitedGraph;
             this.vertexFactory = vertexFactory;
@@ -75,22 +68,14 @@ namespace QuickGraph.Algorithms.MaximumFlow
             TVertex sink,
             IDictionary<TEdge,double> capacities)
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
-            if (vertexFactory==null)
-                throw new ArgumentNullException("vertexFactory");
-            if (edgeFactory==null)
-                throw new ArgumentNullException("edgeFactory");
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (!visitedGraph.ContainsVertex(source))
-                throw new ArgumentException("source is not part of the graph");
-            if (sink == null)
-                throw new ArgumentNullException("sink");
-            if (!visitedGraph.ContainsVertex(sink))
-                throw new ArgumentException("sink is not part of the graph");
-            if (capacities == null)
-                throw new ArgumentNullException("capacities");
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(vertexFactory != null);
+            Contract.Requires(edgeFactory != null);
+            Contract.Requires(source != null);
+            Contract.Requires(visitedGraph.ContainsVertex(source));
+            Contract.Requires(sink != null);
+            Contract.Requires(visitedGraph.ContainsVertex(sink));
+            Contract.Requires(capacities != null);
 
             this.visitedGraph = visitedGraph;
             this.source = source;

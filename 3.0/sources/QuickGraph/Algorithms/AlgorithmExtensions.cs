@@ -15,6 +15,7 @@ using System.Reflection;
 using QuickGraph.Algorithms.ConnectedComponents;
 using System.Diagnostics;
 using QuickGraph.Algorithms.TopologicalSort;
+using QuickGraph.Algorithms.MaximumFlow;
 
 namespace QuickGraph.Algorithms
 {
@@ -1156,6 +1157,47 @@ this
             {
                 return ancestors.TryGetValue(pair, out value);
             };
+        }
+
+        /// <summary>
+        /// Computes the Edmonds-Karp maximums flow 
+        /// for a graph with positive capacities and
+        /// flows.
+        /// </summary>
+        /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+        /// <typeparam name="TEdge">The type of the edge.</typeparam>
+        /// <param name="visitedGraph">The visited graph.</param>
+        /// <param name="edgeCapacities">The edge capacities.</param>
+        /// <param name="source">The source.</param>
+        /// <param name="sink">The sink.</param>
+        /// <param name="flowPredecessors">The flow predecessors.</param>
+        /// <returns></returns>
+        public static double MaximumFlowEdmondsKarp<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> edgeCapacities,
+            TVertex source,
+            TVertex sink,
+            IDictionary<TVertex, TEdge> flowPredecessors
+            )
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(edgeCapacities != null);
+            Contract.Requires(source != null);
+            Contract.Requires(sink != null);
+
+            // compute maxflow
+            var flow = new EdmondsKarpMaximumFlowAlgorithm<TVertex, TEdge>(
+                visitedGraph,
+                edgeCapacities,
+                new Dictionary<TEdge, TEdge>()
+                );
+            flow.Compute(source, sink);
+            flowPredecessors = flow.Predecessors;
+            return flow.MaxFlow;
         }
     }
 }
