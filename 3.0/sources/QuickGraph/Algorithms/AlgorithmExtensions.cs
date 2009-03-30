@@ -1180,7 +1180,7 @@ this
             Func<TEdge, double> edgeCapacities,
             TVertex source,
             TVertex sink,
-            IDictionary<TVertex, TEdge> flowPredecessors
+            out IDictionary<TVertex, TEdge> flowPredecessors
             )
             where TEdge : IEdge<TVertex>
         {

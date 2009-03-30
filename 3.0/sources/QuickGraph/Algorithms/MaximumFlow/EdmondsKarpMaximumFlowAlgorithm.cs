@@ -87,8 +87,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
 		}
     
 		/// <summary>
-		/// Computes the maximum flow between <paramref name="src"/> and
-		/// <paramref name="sink"/>
+		/// Computes the maximum flow between Source and Sink.
 		/// </summary>
 		/// <param name="src"></param>
 		/// <param name="sink"></param>
