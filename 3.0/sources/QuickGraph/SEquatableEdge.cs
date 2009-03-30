@@ -12,8 +12,9 @@ namespace QuickGraph
     [Serializable]
     [DebuggerDisplay("{Source}->{Target}")]
     [StructLayout(LayoutKind.Auto)]
-    public struct SEdge<TVertex>
+    public struct SEquatableEdge<TVertex>
         : IEdge<TVertex>
+        , IEquatable<SEquatableEdge<TVertex>>
     {
         private readonly TVertex source;
         private readonly TVertex target;
@@ -23,7 +24,7 @@ namespace QuickGraph
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="target">The target.</param>
-        public SEdge(TVertex source, TVertex target)
+        public SEquatableEdge(TVertex source, TVertex target)
         {
             Contract.Requires(source != null);
             Contract.Requires(target != null);
@@ -68,6 +69,45 @@ namespace QuickGraph
         public override string ToString()
         {
             return this.Source + "->" + this.Target;
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>
+        /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+        /// </returns>
+        public bool Equals(SEquatableEdge<TVertex> other)
+        {
+            return
+                this.source.Equals(other.source) &&
+                this.target.Equals(other.target);
+        }
+
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">Another object to compare to.</param>
+        /// <returns>
+        /// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            return
+                obj is SEquatableEdge<TVertex> &&
+                this.Equals((SEquatableEdge<TVertex>)obj);
+        }
+
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A 32-bit signed integer that is the hash code for this instance.
+        /// </returns>
+        public override int GetHashCode()
+        {
+            return HashCodeHelper.Combine(this.source.GetHashCode(), this.target.GetHashCode());
         }
     }
 }
