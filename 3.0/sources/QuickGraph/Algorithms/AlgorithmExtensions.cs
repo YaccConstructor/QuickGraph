@@ -884,10 +884,8 @@ this
             VertexPredicate<TVertex> vertexPredicate
             ) where TEdge : IEdge<TVertex>
         {
-            if (visitedGraph == null)
-                throw new ArgumentNullException("visitedGraph");
-            if (vertexPredicate == null)
-                throw new ArgumentNullException("vertexPredicate");
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(vertexPredicate != null);
 
             var condensated = new BidirectionalGraph<TVertex, MergedEdge<TVertex, TEdge>>();
             var condensator = new EdgeMergeCondensationGraphAlgorithm<TVertex, TEdge>(
