@@ -2,13 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.Cliques
 {
     // under construction
     class BronKerboshMaximumCliqueAlgorithm<TVertex, TEdge>
         : MaximumCliqueAlgorithmBase<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
     {
+        protected BronKerboshMaximumCliqueAlgorithm(
+            IAlgorithmComponent host, 
+            IUndirectedGraph<TVertex, TEdge> visitedGraph)
+            : base(host, visitedGraph)
+        {}
+
+        protected BronKerboshMaximumCliqueAlgorithm(
+            IUndirectedGraph<TVertex, TEdge> visitedGraph)
+            : base(visitedGraph)
+        {}
+
         protected override void InternalCompute()
         {
             // the currently growing clique;
