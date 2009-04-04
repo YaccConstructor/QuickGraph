@@ -277,7 +277,6 @@
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\WeaklyConnectedComponentsAlgorithmTest.cs" />
-    <Compile Include="AssemblyContextTest.cs" />
     <Compile Include="Benchmark.cs" />
     <Compile Include="Collections\BinaryHeapTest.cs" />
     <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Constructor.g.cs">
@@ -336,11 +335,58 @@
     </Compile>
     <Compile Include="Data\StoreTest.cs" />
     <Compile Include="DegreeTest.cs" />
+    <Compile Include="EdgeEventArgsTVertexTEdgeTest.cs" />
+    <Compile Include="EdgeExtensionsTest.cs" />
+    <Compile Include="EdgeExtensionsTest.GetOtherVertex.g.cs">
+      <DependentUpon>EdgeExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeExtensionsTest.HasCycles.g.cs">
+      <DependentUpon>EdgeExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeExtensionsTest.IsAdjacent.g.cs">
+      <DependentUpon>EdgeExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeExtensionsTest.IsPath.g.cs">
+      <DependentUpon>EdgeExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeExtensionsTest.IsPathWithoutCycles.g.cs">
+      <DependentUpon>EdgeExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeExtensionsTest.IsPredecessor.g.cs">
+      <DependentUpon>EdgeExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeExtensionsTest.IsSelfEdge.g.cs">
+      <DependentUpon>EdgeExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeExtensionsTest.ToVertexPair.g.cs">
+      <DependentUpon>EdgeExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeExtensionsTest.TryGetPath.g.cs">
+      <DependentUpon>EdgeExtensionsTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="EdgeListGraphInvariant.cs" />
+    <Compile Include="EdgeListGraphTVertexTEdgeTest.cs" />
+    <Compile Include="EdgeTVertexTest.Constructor.g.cs">
+      <DependentUpon>EdgeTVertexTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeTVertexTest.cs" />
+    <Compile Include="EdgeTVertexTest.SourceGet.g.cs">
+      <DependentUpon>EdgeTVertexTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeTVertexTest.TargetGet.g.cs">
+      <DependentUpon>EdgeTVertexTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeTVertexTest.ToString.g.cs">
+      <DependentUpon>EdgeTVertexTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EdgeTVertexTest.VertexTypeGet.g.cs">
+      <DependentUpon>EdgeTVertexTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Factories\AdjacencyGraphFactory.cs" />
     <Compile Include="Factories\EdgeFactory.cs" />
     <Compile Include="Factories\FibonacciHeapFactory.cs" />
     <Compile Include="Factories\ForestDisjointSetFactory.cs" />
+    <Compile Include="Factories\UndirectedGraphFactory.cs" />
     <Compile Include="GraphConsoleSerializer.cs" />
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />
     <Compile Include="Properties\PexAssemblyInfo.cs" />
@@ -351,6 +397,13 @@
     <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest.cs" />
     <Compile Include="Serialization\SystemSerializationTest.cs" />
     <Compile Include="Serialization\XmlSerializationTest.cs" />
+    <Compile Include="TaggedEdgeTVertexTTagTest.Constructor.g.cs">
+      <DependentUpon>TaggedEdgeTVertexTTagTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TaggedEdgeTVertexTTagTest.cs" />
+    <Compile Include="TaggedEdgeTVertexTTagTest.TagGetSet.g.cs">
+      <DependentUpon>TaggedEdgeTVertexTTagTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="UndirectedGraphInvariant.cs" />
     <Compile Include="UndirectedGraphTVertexTEdgeTest.cs" />
   </ItemGroup>

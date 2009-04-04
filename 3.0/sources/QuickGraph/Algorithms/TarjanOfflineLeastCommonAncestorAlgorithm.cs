@@ -99,7 +99,7 @@ namespace QuickGraph.Algorithms
                 {
                     foreach (var e in gpair.OutEdges(v))
                         if (dfs.VertexColors[e.Target] == GraphColor.Black)
-                            this.ancestors[EdgeExtensions.ToVertexPair(e)] = vancestors[disjointSet.FindSet(e.Target)];
+                            this.ancestors[EdgeExtensions.ToVertexPair<TVertex, SEdge<TVertex>>(e)] = vancestors[disjointSet.FindSet(e.Target)];
                 };
 
             // go!

@@ -19,10 +19,11 @@ namespace QuickGraph
 #if !NET20
 this 
 #endif
-            IEdge<TVertex> edge)
+            TEdge edge)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edge != null);
+            Contract.Ensures(Contract.Result<bool>() == (edge.Source.Equals(edge.Target)));
 
             return edge.Source.Equals(edge.Target);
         }
@@ -72,6 +73,9 @@ this
         {
             Contract.Requires(edge != null);
             Contract.Requires(vertex != null);
+            //Contract.Ensures(Contract.Result<bool>() ==
+            //    (edge.Source.Equals(vertex) || edge.Target.Equals(vertex))
+            //    );
 
             return edge.Source.Equals(vertex) 
                 || edge.Target.Equals(vertex);
@@ -86,6 +90,8 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(path != null);
+            Contract.Requires(Contract.ForAll(path, e => e != null));
+
             bool first = true;
             TVertex lastTarget = default(TVertex);
             foreach (var edge in path)
@@ -115,13 +121,16 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(path != null);
+            Contract.Requires(Contract.ForAll(path, e => e != null));
 
-            Dictionary<TVertex, int> vertices = new Dictionary<TVertex, int>();
+            var vertices = new Dictionary<TVertex, int>();
             bool first = true;
             foreach (var edge in path)
             {
                 if (first)
                 {
+                    if (edge.Source.Equals(edge.Target)) // self-edge
+                        return true;
                     vertices.Add(edge.Source, 0);
                     vertices.Add(edge.Target, 0);
                     first = false;
@@ -146,8 +155,10 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(path != null);
+            Contract.Requires(Contract.ForAll(path, e => e != null));
+            Contract.Requires(IsPath<TVertex, TEdge>(path));
 
-            Dictionary<TVertex, int> vertices = new Dictionary<TVertex, int>();
+            var vertices = new Dictionary<TVertex, int>();
             bool first = true;
             TVertex lastTarget = default(TVertex);
             foreach (var edge in path)
@@ -155,6 +166,8 @@ this
                 if (first)
                 {
                     lastTarget = edge.Target;
+                    if (IsSelfEdge<TVertex, TEdge>(edge)) 
+                        return false;
                     vertices.Add(edge.Source, 0);
                     vertices.Add(lastTarget, 0);
                     first = false;
@@ -180,13 +193,16 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <param name="edge"></param>
         /// <returns></returns>
-        public static VertexPair<TVertex> ToVertexPair<TVertex>(
+        public static VertexPair<TVertex> ToVertexPair<TVertex, TEdge>(
 #if !NET20
 this 
 #endif            
-            IEdge<TVertex> edge)
+            TEdge edge)
+            where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edge != null);
+            Contract.Ensures(Contract.Result<VertexPair<TVertex>>().Source.Equals(edge.Source));
+            Contract.Ensures(Contract.Result<VertexPair<TVertex>>().Target.Equals(edge.Target));
 
             return new VertexPair<TVertex>(edge.Source, edge.Target);
         }

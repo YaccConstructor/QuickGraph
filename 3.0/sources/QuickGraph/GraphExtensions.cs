@@ -283,7 +283,7 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <param name="vertexPairs"></param>
         /// <returns></returns>
-        public static AdjacencyGraph<TVertex, Edge<TVertex>> ToAdjacencyGraph<TVertex>(
+        public static AdjacencyGraph<TVertex, SEdge<TVertex>> ToAdjacencyGraph<TVertex>(
 #if !NET20
 this 
 #endif
@@ -291,7 +291,26 @@ this
         {
             Contract.Requires(vertexPairs != null);
 
-            var g = new AdjacencyGraph<TVertex, Edge<TVertex>>();
+            var g = new AdjacencyGraph<TVertex, SEdge<TVertex>>();
+            AddVertexPairRange<TVertex>(g, vertexPairs);
+            return g;
+        }
+
+        /// <summary>
+        /// Converts a sequence of vertex pairs into an bidirectional graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <param name="vertexPairs"></param>
+        /// <returns></returns>
+        public static BidirectionalGraph<TVertex, SEdge<TVertex>> ToBidirectionalGraph<TVertex>(
+#if !NET20
+this 
+#endif
+            IEnumerable<VertexPair<TVertex>> vertexPairs)
+        {
+            Contract.Requires(vertexPairs != null);
+
+            var g = new BidirectionalGraph<TVertex, SEdge<TVertex>>();
             AddVertexPairRange(g, vertexPairs);
             return g;
         }
@@ -302,7 +321,7 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <param name="vertexPairs"></param>
         /// <returns></returns>
-        public static BidirectionalGraph<TVertex, Edge<TVertex>> ToBidirectionalGraph<TVertex>(
+        public static UndirectedGraph<TVertex, SEdge<TVertex>> ToUndirectedGraph<TVertex>(
 #if !NET20
 this 
 #endif
@@ -310,26 +329,7 @@ this
         {
             Contract.Requires(vertexPairs != null);
 
-            var g = new BidirectionalGraph<TVertex, Edge<TVertex>>();
-            AddVertexPairRange(g, vertexPairs);
-            return g;
-        }
-
-        /// <summary>
-        /// Converts a sequence of vertex pairs into an bidirectional graph
-        /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <param name="vertexPairs"></param>
-        /// <returns></returns>
-        public static UndirectedGraph<TVertex, Edge<TVertex>> ToUndirectedGraph<TVertex>(
-#if !NET20
-this 
-#endif
-            IEnumerable<VertexPair<TVertex>> vertexPairs)
-        {
-            Contract.Requires(vertexPairs != null);
-
-            var g = new UndirectedGraph<TVertex, Edge<TVertex>>();
+            var g = new UndirectedGraph<TVertex, SEdge<TVertex>>();
             AddVertexPairRange(g, vertexPairs);
             return g;
         }
@@ -344,13 +344,13 @@ this
 #if !NET20
 this 
 #endif
-            IMutableVertexAndEdgeSet<TVertex, Edge<TVertex>> graph,
+            IMutableVertexAndEdgeSet<TVertex, SEdge<TVertex>> graph,
             IEnumerable<VertexPair<TVertex>> vertexPairs)
         {
             Contract.Requires(graph != null);
             Contract.Requires(vertexPairs != null);
             foreach (var pair in vertexPairs)
-                graph.AddVerticesAndEdge(new Edge<TVertex>(pair.Source, pair.Target));
+                graph.AddVerticesAndEdge(new SEdge<TVertex>(pair.Source, pair.Target));
         }        
     }
 }

@@ -25,6 +25,8 @@ namespace QuickGraph
         {
             Contract.Requires(source != null);
             Contract.Requires(target != null);
+            Contract.Ensures(this.source.Equals(source));
+            Contract.Ensures(this.target.Equals(target));
 
             this.source = source;
             this.target = target;
@@ -36,7 +38,11 @@ namespace QuickGraph
         /// <value>The type of the vertex.</value>
         public static Type VertexType
         {
-            get { return typeof(TVertex); }
+            get
+            {
+                Contract.Ensures(Contract.Result<Type>() != null);
+                return typeof(TVertex);
+            }
         }
 
         /// <summary>
