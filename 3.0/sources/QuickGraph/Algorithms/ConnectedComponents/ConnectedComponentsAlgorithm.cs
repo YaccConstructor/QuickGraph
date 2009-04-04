@@ -9,7 +9,7 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 {
     [Serializable]
     public sealed class ConnectedComponentsAlgorithm<TVertex, TEdge> :
-        RootedAlgorithmBase<TVertex,IUndirectedGraph<TVertex, TEdge>>,
+        AlgorithmBase<IUndirectedGraph<TVertex, TEdge>>,
         IConnectedComponentAlgorithm<TVertex,TEdge,IUndirectedGraph<TVertex,TEdge>>
         where TEdge : IEdge<TVertex>
     {
@@ -57,14 +57,19 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 
         private void DiscoverVertex(TVertex v)
         {
-            Components[v] = this.componentCount;
+            this.Components[v] = this.componentCount;
         }
 
         protected override void InternalCompute()
         {
-            this.componentCount = -1;
             this.components.Clear();
+            if (this.VisitedGraph.VertexCount == 0)
+            {
+                this.componentCount = 0;
+                return;
+            }
 
+            this.componentCount = -1;
             UndirectedDepthFirstSearchAlgorithm<TVertex, TEdge> dfs = null;
             try
             {
@@ -76,21 +81,7 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 
                 dfs.StartVertex += new VertexAction<TVertex>(this.StartVertex);
                 dfs.DiscoverVertex += new VertexAction<TVertex>(this.DiscoverVertex);
-
-                if (this.VisitedGraph.VertexCount != 0)
-                {
-                    TVertex rootVertex;
-                    if (!this.TryGetRootVertex(out rootVertex))
-                    {
-                        foreach (var v in this.VisitedGraph.Vertices)
-                        {
-                            rootVertex = v;
-                            break;
-                        }
-                    }
-                    dfs.Compute(rootVertex);
-                }
-
+                dfs.Compute();
                 ++this.componentCount;
             }
             finally

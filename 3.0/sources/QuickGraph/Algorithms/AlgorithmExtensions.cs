@@ -702,16 +702,14 @@ this
             this 
 #endif
             IUndirectedGraph<TVertex, TEdge> g,
-            TVertex startVertex,
             IDictionary<TVertex,int> components)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(g != null);
             Contract.Requires(components != null);
-            Contract.Requires(GraphContract.InVertexSet(g, startVertex));
 
             var conn = new ConnectedComponentsAlgorithm<TVertex,TEdge>(g, components);
-            conn.Compute(startVertex);
+            conn.Compute();
             return conn.ComponentCount;
         }
 

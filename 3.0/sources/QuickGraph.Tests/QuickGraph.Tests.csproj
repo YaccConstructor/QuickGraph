@@ -247,6 +247,7 @@
     </Compile>
     <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\WeaklyConnectedCondensationGraphTest.cs" />
+    <Compile Include="Algorithms\ConnectedComponents\ConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\IncrementalConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTest.cs" />
@@ -365,10 +366,6 @@
     <ProjectReference Include="..\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
       <Project>{595D6322-637A-4A36-97F1-D53F3F9ECEA7}</Project>
       <Name>QuickGraph.Graphviz</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QuickGraph.Msagl\QuickGraph.Msagl.csproj">
-      <Project>{7E57B699-79C9-4FDF-89FC-D98BD8DDAFF6}</Project>
-      <Name>QuickGraph.Msagl</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
       <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
