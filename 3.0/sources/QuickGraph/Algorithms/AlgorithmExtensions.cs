@@ -1128,13 +1128,13 @@ this
         /// <param name="root"></param>
         /// <param name="pairs"></param>
         /// <returns></returns>
-        public static TryFunc<VertexPair<TVertex>, TVertex> OfflineLeastCommonAncestorTarjan<TVertex, TEdge>(
+        public static TryFunc<SEquatableEdge<TVertex>, TVertex> OfflineLeastCommonAncestorTarjan<TVertex, TEdge>(
 #if !NET20
 this 
 #endif
             IVertexListGraph<TVertex, TEdge> visitedGraph,
             TVertex root,
-            IEnumerable<VertexPair<TVertex>> pairs
+            IEnumerable<SEquatableEdge<TVertex>> pairs
             )
             where TEdge : IEdge<TVertex>
         {
@@ -1149,7 +1149,7 @@ this
             algo.Compute(root, pairs);
             var ancestors = algo.Ancestors;
 
-            return delegate(VertexPair<TVertex> pair, out TVertex value)
+            return delegate(SEquatableEdge<TVertex> pair, out TVertex value)
             {
                 return ancestors.TryGetValue(pair, out value);
             };

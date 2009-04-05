@@ -25,9 +25,9 @@ namespace QuickGraph.Algorithms
         : RootedAlgorithmBase<TVertex , IVertexListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        private VertexPair<TVertex>[] pairs;
-        private readonly Dictionary<VertexPair<TVertex>, TVertex> ancestors =
-            new Dictionary<VertexPair<TVertex>, TVertex>();
+        private SEquatableEdge<TVertex>[] pairs;
+        private readonly Dictionary<SEquatableEdge<TVertex>, TVertex> ancestors =
+            new Dictionary<SEquatableEdge<TVertex>, TVertex>();
 
         public TarjanOfflineLeastCommonAncestorAlgorithm(
             IVertexListGraph<TVertex, TEdge> visitedGraph)
@@ -40,20 +40,20 @@ namespace QuickGraph.Algorithms
             : base(host, visitedGraph)
         { }
 
-        public bool TryGetVertexPairs(out IEnumerable<VertexPair<TVertex>> pairs)
+        public bool TryGetVertexPairs(out IEnumerable<SEquatableEdge<TVertex>> pairs)
         {
             pairs = this.pairs;
             return pairs!=null;
         }
 
-        public void SetVertexPairs(IEnumerable<VertexPair<TVertex>> pairs)
+        public void SetVertexPairs(IEnumerable<SEquatableEdge<TVertex>> pairs)
         {
             Contract.Requires(pairs != null);
 
-            this.pairs = new List<VertexPair<TVertex>>(pairs).ToArray();
+            this.pairs = new List<SEquatableEdge<TVertex>>(pairs).ToArray();
         }
 
-        public void Compute(TVertex root, IEnumerable<VertexPair<TVertex>> pairs)
+        public void Compute(TVertex root, IEnumerable<SEquatableEdge<TVertex>> pairs)
         {
             Contract.Requires(root != null);
             Contract.Requires(pairs != null);
@@ -62,7 +62,7 @@ namespace QuickGraph.Algorithms
             this.Compute(root);
         }
 
-        public IDictionary<VertexPair<TVertex>, TVertex> Ancestors
+        public IDictionary<SEquatableEdge<TVertex>, TVertex> Ancestors
         {
             get { return this.ancestors; }
         }

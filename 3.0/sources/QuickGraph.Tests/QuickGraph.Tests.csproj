@@ -388,6 +388,13 @@
     <Compile Include="Factories\ForestDisjointSetFactory.cs" />
     <Compile Include="Factories\UndirectedGraphFactory.cs" />
     <Compile Include="GraphConsoleSerializer.cs" />
+    <Compile Include="GraphExtensionsTest.AddVertexPairRange.g.cs">
+      <DependentUpon>GraphExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GraphExtensionsTest.cs" />
+    <Compile Include="GraphExtensionsTest.ToAdjacencyGraph.g.cs">
+      <DependentUpon>GraphExtensionsTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />
     <Compile Include="Properties\PexAssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

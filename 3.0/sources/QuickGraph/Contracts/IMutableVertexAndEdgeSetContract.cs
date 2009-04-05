@@ -28,7 +28,10 @@ namespace QuickGraph.Contracts
             Contract.Requires(edges != null);
             Contract.Requires(Contract.ForAll(edges, edge => edge != null));
             Contract.Ensures(Contract.ForAll(edges, edge => ithis.ContainsEdge(edge)));
-            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(edges, edge => !ithis.ContainsEdge(edge))));
+            Contract.Ensures(
+                Contract.Result<int>() == 
+                Contract.OldValue(Enumerable.Count(edges, edge => !ithis.ContainsEdge(edge)))
+                );
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + Contract.Result<int>());
 
             return default(int);

@@ -193,7 +193,7 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <param name="edge"></param>
         /// <returns></returns>
-        public static VertexPair<TVertex> ToVertexPair<TVertex, TEdge>(
+        public static SEquatableEdge<TVertex> ToVertexPair<TVertex, TEdge>(
 #if !NET20
 this 
 #endif            
@@ -201,10 +201,10 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edge != null);
-            Contract.Ensures(Contract.Result<VertexPair<TVertex>>().Source.Equals(edge.Source));
-            Contract.Ensures(Contract.Result<VertexPair<TVertex>>().Target.Equals(edge.Target));
+            Contract.Ensures(Contract.Result<SEquatableEdge<TVertex>>().Source.Equals(edge.Source));
+            Contract.Ensures(Contract.Result<SEquatableEdge<TVertex>>().Target.Equals(edge.Target));
 
-            return new VertexPair<TVertex>(edge.Source, edge.Target);
+            return SEquatableEdge<TVertex>.FromEdge<TEdge>(edge);
         }
 
         /// <summary>

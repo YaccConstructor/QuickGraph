@@ -291,7 +291,7 @@
     <Compile Include="Collections\SoftHeap.cs" />
     <Compile Include="Collections\VertexEdgeDictionary.cs" />
     <Compile Include="Collections\VertexList.cs" />
-    <Compile Include="Collections\VertexPair.cs" />
+    <Compile Include="SEquatableEdge.cs" />
     <Compile Include="Contracts\Collections\IDisjointSetContract.cs" />
     <Compile Include="Contracts\Contracts.cs" />
     <Compile Include="Contracts\IEdgeListGraphContract.cs" />
@@ -395,7 +395,6 @@
     <Compile Include="IVertexAndEdgeListGraph.cs" />
     <Compile Include="QuickGraphException.cs" />
     <Compile Include="SEdge.cs" />
-    <Compile Include="SEquatableEdge.cs" />
     <Compile Include="Serialization\GraphMLDeserializer.cs" />
     <Compile Include="Serialization\GraphMLXmlResolver.cs" />
     <Compile Include="Serialization\SerializationExtensions.cs" />

@@ -20,7 +20,7 @@ namespace QuickGraph.Algorithms.ShortestPath
     {
         private readonly Func<TEdge, double> weights;
         private readonly IDistanceRelaxer distanceRelaxer;
-        private readonly Dictionary<VertexPair<TVertex>, VertexData> data;
+        private readonly Dictionary<SEquatableEdge<TVertex>, VertexData> data;
 
         struct VertexData
         {
@@ -84,7 +84,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             this.weights = weights;
             this.distanceRelaxer = distanceRelaxer;
-            this.data = new Dictionary<VertexPair<TVertex>, VertexData>();
+            this.data = new Dictionary<SEquatableEdge<TVertex>, VertexData>();
         }
 
         public FloydWarshallAllShortestPathAlgorithm(
@@ -98,7 +98,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             this.weights =weights;
             this.distanceRelaxer = distanceRelaxer;
-            this.data = new Dictionary<VertexPair<TVertex>, VertexData>();
+            this.data = new Dictionary<SEquatableEdge<TVertex>, VertexData>();
         }
 
         public FloydWarshallAllShortestPathAlgorithm(
@@ -114,7 +114,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             Contract.Requires(target != null);
 
             VertexData value;
-            if (this.data.TryGetValue(new VertexPair<TVertex>(source, target), out value))
+            if (this.data.TryGetValue(new SEquatableEdge<TVertex>(source, target), out value))
             {
                 cost = value.Distance;
                 return true;
@@ -146,8 +146,8 @@ namespace QuickGraph.Algorithms.ShortestPath
 #endif
 
             var edges = new EdgeList<TVertex, TEdge>();
-            var todo = new Stack<VertexPair<TVertex>>();
-            todo.Push(new VertexPair<TVertex>(source, target));
+            var todo = new Stack<SEquatableEdge<TVertex>>();
+            todo.Push(new SEquatableEdge<TVertex>(source, target));
             while (todo.Count > 0)
             {
                 var current = todo.Pop();
@@ -166,8 +166,8 @@ namespace QuickGraph.Algorithms.ShortestPath
 #if DEBUG
                             Contract.Assert(set.Add(intermediate));
 #endif
-                            todo.Push(new VertexPair<TVertex>(intermediate, current.Target));
-                            todo.Push(new VertexPair<TVertex>(current.Source, intermediate));
+                            todo.Push(new SEquatableEdge<TVertex>(intermediate, current.Target));
+                            todo.Push(new SEquatableEdge<TVertex>(current.Source, intermediate));
                         }
                         else
                         {
@@ -204,7 +204,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             // walk each edge and add entry in cost dictionary
             foreach (var edge in edges)
             {
-                var ij = VertexPair<TVertex>.FromEdge<TEdge>(edge);
+                var ij = SEquatableEdge<TVertex>.FromEdge<TEdge>(edge);
                 var cost = this.weights(edge);
                 VertexData value;
                 if (!data.TryGetValue(ij, out value))
@@ -216,7 +216,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             // walk each vertices and make sure cost self-cost 0
             foreach (var v in vertices)
-                data[new VertexPair<TVertex>(v, v)] = new VertexData(0, default(TEdge));
+                data[new SEquatableEdge<TVertex>(v, v)] = new VertexData(0, default(TEdge));
 
             if (cancelManager.IsCancelling) return;
 
@@ -226,18 +226,18 @@ namespace QuickGraph.Algorithms.ShortestPath
                 if (cancelManager.IsCancelling) return;
                 foreach (var vi in vertices)
                 {
-                    var ik = new VertexPair<TVertex>(vi, vk);
+                    var ik = new SEquatableEdge<TVertex>(vi, vk);
                     VertexData pathik;
                     if(data.TryGetValue(ik, out pathik))
                         foreach (var vj in vertices)
                         {
-                            var kj = new VertexPair<TVertex>(vk, vj);
+                            var kj = new SEquatableEdge<TVertex>(vk, vj);
 
                             VertexData pathkj;
                             if (data.TryGetValue(kj, out pathkj))
                             {
                                 double combined = this.distanceRelaxer.Combine(pathik.Distance, pathkj.Distance);
-                                var ij = new VertexPair<TVertex>(vi, vj);
+                                var ij = new SEquatableEdge<TVertex>(vi, vj);
                                 VertexData pathij;
                                 if (data.TryGetValue(ij, out pathij))
                                 {
@@ -254,7 +254,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             // check negative cycles
             foreach (var vi in vertices)
             {
-                var ii = new VertexPair<TVertex>(vi, vi);
+                var ii = new SEquatableEdge<TVertex>(vi, vi);
                 VertexData value;
                 if (data.TryGetValue(ii, out value) &&
                     value.Distance < 0)

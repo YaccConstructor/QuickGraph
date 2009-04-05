@@ -287,7 +287,7 @@ this
 #if !NET20
 this 
 #endif
-            IEnumerable<VertexPair<TVertex>> vertexPairs)
+            IEnumerable<SEquatableEdge<TVertex>> vertexPairs)
         {
             Contract.Requires(vertexPairs != null);
 
@@ -306,7 +306,7 @@ this
 #if !NET20
 this 
 #endif
-            IEnumerable<VertexPair<TVertex>> vertexPairs)
+            IEnumerable<SEquatableEdge<TVertex>> vertexPairs)
         {
             Contract.Requires(vertexPairs != null);
 
@@ -325,7 +325,7 @@ this
 #if !NET20
 this 
 #endif
-            IEnumerable<VertexPair<TVertex>> vertexPairs)
+            IEnumerable<SEquatableEdge<TVertex>> vertexPairs)
         {
             Contract.Requires(vertexPairs != null);
 
@@ -345,7 +345,7 @@ this
 this 
 #endif
             IMutableVertexAndEdgeSet<TVertex, SEdge<TVertex>> graph,
-            IEnumerable<VertexPair<TVertex>> vertexPairs)
+            IEnumerable<SEquatableEdge<TVertex>> vertexPairs)
         {
             Contract.Requires(graph != null);
             Contract.Requires(vertexPairs != null);

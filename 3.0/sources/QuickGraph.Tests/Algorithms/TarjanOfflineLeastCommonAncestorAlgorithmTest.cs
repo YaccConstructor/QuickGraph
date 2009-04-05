@@ -22,11 +22,11 @@ namespace QuickGraph.Tests.Algorithms
             {
                 if (g.VertexCount == 0) continue;
 
-                var pairs = new List<VertexPair<string>>();
+                var pairs = new List<SEquatableEdge<string>>();
                 foreach(var v in g.Vertices)
                     foreach(var w in g.Vertices)
                         if (!v.Equals(w))
-                            pairs.Add(new VertexPair<string>(v,w));
+                            pairs.Add(new SEquatableEdge<string>(v,w));
 
                 int count = 0;
                 foreach (var root in g.Vertices)
@@ -44,7 +44,7 @@ namespace QuickGraph.Tests.Algorithms
         public void TarjanOfflineLeastCommonAncestorAlgorithm<TVertex, TEdge>(
             [PexAssumeNotNull]IVertexListGraph<TVertex, TEdge> g,
             [PexAssumeNotNull]TVertex root,
-            [PexAssumeNotNull]VertexPair<TVertex>[] pairs
+            [PexAssumeNotNull]SEquatableEdge<TVertex>[] pairs
             )
             where TEdge : IEdge<TVertex>
         {
