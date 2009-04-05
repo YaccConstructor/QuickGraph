@@ -5,7 +5,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Collections
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class BinaryQueue<TVertex, TDistance> : 
         IQueue<TVertex>
     {

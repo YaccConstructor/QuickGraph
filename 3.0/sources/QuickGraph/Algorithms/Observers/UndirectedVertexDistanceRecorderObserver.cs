@@ -10,7 +10,9 @@ namespace QuickGraph.Algorithms.Observers
     /// </summary>
     /// <typeparam name="Vertex"></typeparam>
     /// <typeparam name="Edge"></typeparam>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class UndirectedVertexDistanceRecorderObserver<TVertex, TEdge> 
         : IObserver<IUndirectedTreeBuilderAlgorithm<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>

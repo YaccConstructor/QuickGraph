@@ -5,7 +5,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
     public sealed class ReversedBidirectionalGraph<TVertex, TEdge> : 
         IBidirectionalGraph<TVertex,ReversedEdge<TVertex,TEdge>>

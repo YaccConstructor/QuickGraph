@@ -3,7 +3,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
+#if !SILVERLIGHT
 	[Serializable]
+#endif
     public class TaggedEdge<TVertex,TTag> 
         : Edge<TVertex>
     {

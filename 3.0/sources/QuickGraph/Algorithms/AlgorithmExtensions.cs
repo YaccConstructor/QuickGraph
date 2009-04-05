@@ -798,24 +798,28 @@ this
             this 
 #endif
             IVertexAndEdgeListGraph<TVertex, TEdge> g,
+            Func<TVertex, TVertex> vertexCloner,
+            Func<TEdge, TVertex, TVertex, TEdge> edgeCloner,
             IMutableVertexAndEdgeSet<TVertex, TEdge> clone)
-            where TVertex : ICloneable
-            where TEdge : ICloneableEdge<TVertex>
+            where TEdge : IEdge<TVertex>
         {
             Contract.Requires(g != null);
+            Contract.Requires(vertexCloner != null);
+            Contract.Requires(edgeCloner != null);
             Contract.Requires(clone != null);
 
             var vertexClones = new Dictionary<TVertex, TVertex>(g.VertexCount);
             foreach (var v in g.Vertices)
             {
-                var vc = (TVertex)v.Clone();
+                var vc = vertexCloner(v);
                 clone.AddVertex(vc);
                 vertexClones.Add(v, vc);
             }
 
             foreach (var edge in g.Edges)
             {
-                var ec = (TEdge)edge.Clone(
+                var ec = edgeCloner(
+                    edge,
                     vertexClones[edge.Source],
                     vertexClones[edge.Target]);
                 clone.AddEdge(ec);

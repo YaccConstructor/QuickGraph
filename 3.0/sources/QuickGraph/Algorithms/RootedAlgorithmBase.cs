@@ -4,7 +4,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public abstract class RootedAlgorithmBase<TVertex,TGraph> 
         : AlgorithmBase<TGraph>
     {

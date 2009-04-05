@@ -6,19 +6,20 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Contracts
 {
-    [ContractClassFor(typeof(ICloneableEdge<>))]
-    sealed class ICloneableEdgeContract<TVertex>
-        : ICloneableEdge<TVertex>
+    [ContractClassFor(typeof(ICloneableEdge<,>))]
+    sealed class ICloneableEdgeContract<TVertex, TEdge>
+        : ICloneableEdge<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
-        ICloneableEdge<TVertex> ICloneableEdge<TVertex>.Clone(TVertex source, TVertex target)
+        TEdge ICloneableEdge<TVertex, TEdge>.Clone(TVertex source, TVertex target)
         {
             Contract.Requires(source != null);
             Contract.Requires(target != null);
-            Contract.Ensures(Contract.Result<ICloneableEdge<TVertex>>() != null);
-            Contract.Ensures(Contract.Result<ICloneableEdge<TVertex>>().Source.Equals(source));
-            Contract.Ensures(Contract.Result<ICloneableEdge<TVertex>>().Target.Equals(target));
+            Contract.Ensures(Contract.Result<TEdge>() != null);
+            Contract.Ensures(Contract.Result<TEdge>().Source.Equals(source));
+            Contract.Ensures(Contract.Result<TEdge>().Target.Equals(target));
 
-            return default(ICloneableEdge<TVertex>);
+            return default(TEdge);
         }
 
         #region IEdge<TVertex> Members

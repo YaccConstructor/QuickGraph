@@ -31,40 +31,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Tests", "QuickGr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Perf", "QuickGraph.Perf\QuickGraph.Perf.csproj", "{2C35D329-D1F8-4862-8DA2-F2D27E8D4DB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Silverlight", "QuickGraph.Silverlight\QuickGraph.Silverlight.csproj", "{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}"
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs03.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = QuickGraph\\QuickGraph.csproj
-		SccProjectName1 = QuickGraph
-		SccLocalPath1 = QuickGraph
-		SccProjectUniqueName2 = QuickGraph.Glee\\QuickGraph.Glee.csproj
-		SccProjectName2 = QuickGraph.Glee
-		SccLocalPath2 = QuickGraph.Glee
-		SccProjectUniqueName3 = QuickGraph.Graphviz\\QuickGraph.Graphviz.csproj
-		SccProjectName3 = QuickGraph.Graphviz
-		SccLocalPath3 = QuickGraph.Graphviz
-		SccProjectUniqueName4 = QuickGraph.Data\\QuickGraph.Data.csproj
-		SccProjectName4 = QuickGraph.Data
-		SccLocalPath4 = QuickGraph.Data
-		SccProjectUniqueName5 = QuickGraph.Msagl\\QuickGraph.Msagl.csproj
-		SccProjectName5 = QuickGraph.Msagl
-		SccLocalPath5 = QuickGraph.Msagl
-		SccProjectUniqueName6 = Reflector.QuickGraph\\Reflector.QuickGraph.csproj
-		SccProjectName6 = Reflector.QuickGraph
-		SccLocalPath6 = Reflector.QuickGraph
-		SccProjectUniqueName7 = QuickGraph.SeeIt\\QuickGraph.SeeIt.csproj
-		SccProjectName7 = QuickGraph.SeeIt
-		SccLocalPath7 = QuickGraph.SeeIt
-		SccProjectUniqueName8 = QuickGraph.Tests\\QuickGraph.Tests.csproj
-		SccProjectName8 = QuickGraph.Tests
-		SccLocalPath8 = QuickGraph.Tests
-		SccProjectUniqueName9 = QuickGraph.Perf\\QuickGraph.Perf.csproj
-		SccProjectName9 = QuickGraph.Perf
-		SccLocalPath9 = QuickGraph.Perf
-	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = QuickGraph.vsmdi
 	EndGlobalSection
@@ -146,8 +115,49 @@ Global
 		{2C35D329-D1F8-4862-8DA2-F2D27E8D4DB7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2C35D329-D1F8-4862-8DA2-F2D27E8D4DB7}.Release20|Any CPU.ActiveCfg = Release|Any CPU
 		{2C35D329-D1F8-4862-8DA2-F2D27E8D4DB7}.Release20|Any CPU.Build.0 = Release|Any CPU
+		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.DebugContracts|Any CPU.ActiveCfg = Debug|Any CPU
+		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.DebugContracts|Any CPU.Build.0 = Debug|Any CPU
+		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.Release20|Any CPU.ActiveCfg = Release|Any CPU
+		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.Release20|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 10
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs03.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = QuickGraph\\QuickGraph.csproj
+		SccProjectName1 = QuickGraph
+		SccLocalPath1 = QuickGraph
+		SccProjectUniqueName2 = QuickGraph.Glee\\QuickGraph.Glee.csproj
+		SccProjectName2 = QuickGraph.Glee
+		SccLocalPath2 = QuickGraph.Glee
+		SccProjectUniqueName3 = QuickGraph.Graphviz\\QuickGraph.Graphviz.csproj
+		SccProjectName3 = QuickGraph.Graphviz
+		SccLocalPath3 = QuickGraph.Graphviz
+		SccProjectUniqueName4 = QuickGraph.Data\\QuickGraph.Data.csproj
+		SccProjectName4 = QuickGraph.Data
+		SccLocalPath4 = QuickGraph.Data
+		SccProjectUniqueName5 = QuickGraph.Msagl\\QuickGraph.Msagl.csproj
+		SccProjectName5 = QuickGraph.Msagl
+		SccLocalPath5 = QuickGraph.Msagl
+		SccProjectUniqueName6 = Reflector.QuickGraph\\Reflector.QuickGraph.csproj
+		SccProjectName6 = Reflector.QuickGraph
+		SccLocalPath6 = Reflector.QuickGraph
+		SccProjectUniqueName7 = QuickGraph.SeeIt\\QuickGraph.SeeIt.csproj
+		SccProjectName7 = QuickGraph.SeeIt
+		SccLocalPath7 = QuickGraph.SeeIt
+		SccProjectUniqueName8 = QuickGraph.Tests\\QuickGraph.Tests.csproj
+		SccProjectName8 = QuickGraph.Tests
+		SccLocalPath8 = QuickGraph.Tests
+		SccProjectUniqueName9 = QuickGraph.Perf\\QuickGraph.Perf.csproj
+		SccProjectName9 = QuickGraph.Perf
+		SccLocalPath9 = QuickGraph.Perf
 	EndGlobalSection
 EndGlobal

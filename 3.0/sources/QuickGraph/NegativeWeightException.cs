@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace QuickGraph
 {
-    [global::System.Serializable]
+#if !SILVERLIGHT
+    [System.Serializable]
+#endif
     public class NegativeWeightException 
         : QuickGraphException
     {
         public NegativeWeightException() { }
         public NegativeWeightException(string message) : base(message) { }
         public NegativeWeightException(string message, Exception inner) : base(message, inner) { }
+#if !SILVERLIGHT
         protected NegativeWeightException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context)
             : base(info, context) { }
+#endif
     }
 }

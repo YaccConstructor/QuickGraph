@@ -7,7 +7,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.ConnectedComponents
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class ConnectedComponentsAlgorithm<TVertex, TEdge> :
         AlgorithmBase<IUndirectedGraph<TVertex, TEdge>>,
         IConnectedComponentAlgorithm<TVertex,TEdge,IUndirectedGraph<TVertex,TEdge>>

@@ -5,11 +5,15 @@ using System.Runtime.Serialization;
 
 namespace QuickGraph.Collections
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class VertexEdgeDictionary<TVertex,TEdge>
         : Dictionary<TVertex, EdgeList<TVertex, TEdge>>
+#if !SILVERLIGHT
         , ICloneable
         , ISerializable
+#endif
         where TEdge : IEdge<TVertex>
     {
         public VertexEdgeDictionary() { }
@@ -17,9 +21,11 @@ namespace QuickGraph.Collections
             : base(capacity)
         { }
 
+#if !SILVERLIGHT
         public VertexEdgeDictionary(
             SerializationInfo info, StreamingContext context) 
             : base(info, context) { }
+#endif
 
         public VertexEdgeDictionary<TVertex, TEdge> Clone()
         {
@@ -29,9 +35,11 @@ namespace QuickGraph.Collections
             return clone;
         }
 
+#if !SILVERLIGHT
         object ICloneable.Clone()
         {
             return this.Clone();
         }
+#endif
     }
 }

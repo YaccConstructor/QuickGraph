@@ -6,12 +6,16 @@ using QuickGraph.Contracts;
 
 namespace QuickGraph
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
     public class BidirectionalMatrixGraph<TEdge> 
         : IBidirectionalGraph<int, TEdge>
         , IMutableEdgeListGraph<int, TEdge>
+#if !SILVERLIGHT
         , ICloneable
+#endif
         where TEdge : IEdge<int>
     {
         private readonly int vertexCount;
@@ -441,10 +445,12 @@ namespace QuickGraph
                 );
         }
 
+#if !SILVERLIGHT
         object ICloneable.Clone()
         {
             return this.Clone();
         }
+#endif
         #endregion
     }
 }

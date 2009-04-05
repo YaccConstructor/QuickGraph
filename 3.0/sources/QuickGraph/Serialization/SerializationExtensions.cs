@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Diagnostics.Contracts;
-using System.Xml.XPath;
 using System.Xml;
+#if !SILVERLIGHT
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.XPath;
+#endif
 
 namespace QuickGraph.Serialization
 {
     public static class SerializationExtensions
     {
+#if !SILVERLIGHT
         /// <summary>
         /// Serializes the graph to the stream using the .Net serialization binary format.
         /// </summary>
@@ -33,7 +36,9 @@ namespace QuickGraph.Serialization
             var formatter = new BinaryFormatter();
             formatter.Serialize(stream, graph);
         }
+#endif
 
+#if !SILVERLIGHT
         /// <summary>
         /// Deserializes a graph instance from a stream that was serialized using the .Net serialization binary format.
         /// </summary>
@@ -57,7 +62,9 @@ namespace QuickGraph.Serialization
             var result = formatter.Deserialize(stream);
             return (TGraph)result;
         }
+#endif
 
+#if !SILVERLIGHT
         /// <summary>
         /// Deserializes a graph from a generic xml stream, using an <see cref="XPathDocument"/>.
         /// </summary>
@@ -113,7 +120,7 @@ namespace QuickGraph.Serialization
 
             return g;
         }
-
+#endif
         /// <summary>
         /// Deserializes a graph from a generic xml stream, using an <see cref="XmlReader"/>.
         /// </summary>

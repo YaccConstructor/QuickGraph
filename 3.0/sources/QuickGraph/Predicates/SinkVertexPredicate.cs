@@ -2,7 +2,9 @@
 
 namespace QuickGraph.Predicates
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class SinkVertexPredicate<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {

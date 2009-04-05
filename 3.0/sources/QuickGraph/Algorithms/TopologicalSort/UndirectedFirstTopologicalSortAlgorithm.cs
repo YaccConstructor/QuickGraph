@@ -5,7 +5,9 @@ using QuickGraph.Collections;
 
 namespace QuickGraph.Algorithms.TopologicalSort
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class UndirectedFirstTopologicalSortAlgorithm<TVertex, TEdge> :
         AlgorithmBase<IUndirectedGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>

@@ -8,8 +8,10 @@ using System.Diagnostics;
 
 namespace QuickGraph.Algorithms.ConnectedComponents
 {
+#if !SILVERLIGHT
     [Serializable]
-    public sealed class WeaklyConnectedComponentsAlgorithm<TVertex,TEdge> :
+#endif
+    public sealed class WeaklyConnectedComponentsAlgorithm<TVertex, TEdge> :
         AlgorithmBase<IVertexListGraph<TVertex,TEdge>>,
         IConnectedComponentAlgorithm<TVertex,TEdge,IVertexListGraph<TVertex,TEdge>>
         where TEdge : IEdge<TVertex>

@@ -7,7 +7,9 @@ namespace QuickGraph.Algorithms.MaximumFlow
     /// <summary>
     /// Abstract base class for maximum flow algorithms.
     /// </summary>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public abstract class MaximumFlowAlgorithm<TVertex, TEdge> :
         AlgorithmBase<IVertexListGraph<TVertex, TEdge>>,
         IVertexColorizerAlgorithm<TVertex,TEdge>

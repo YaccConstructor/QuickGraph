@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !SILVERLIGHT
+using System;
 using System.Collections.Generic;
 
 namespace QuickGraph.Algorithms.Exploration
@@ -11,3 +12,4 @@ namespace QuickGraph.Algorithms.Exploration
         IEnumerable<TEdge> Apply(TVertex source);
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !SILVERLIGHT
+using System;
 using System.Collections.Generic;
 
 using QuickGraph.Predicates;
@@ -7,9 +8,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Exploration
 {
-    public sealed class CloneableVertexGraphExplorerAlgorithm<TVertex,TEdge> :
-        RootedAlgorithmBase<TVertex, IMutableVertexAndEdgeSet<TVertex, TEdge>>,
-        ITreeBuilderAlgorithm<TVertex,TEdge>
+    public sealed class CloneableVertexGraphExplorerAlgorithm<TVertex,TEdge> 
+        : RootedAlgorithmBase<TVertex, IMutableVertexAndEdgeSet<TVertex, TEdge>>
+        , ITreeBuilderAlgorithm<TVertex,TEdge>
         where TVertex : ICloneable, IComparable<TVertex>
         where TEdge : IEdge<TVertex>
     {
@@ -222,3 +223,4 @@ namespace QuickGraph.Algorithms.Exploration
         }
     }
 }
+#endif

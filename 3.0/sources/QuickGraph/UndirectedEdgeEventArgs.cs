@@ -5,7 +5,9 @@ using System.Text;
 
 namespace QuickGraph
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class UndirectedEdgeEventArgs<TVertex, TEdge>
         : EdgeEventArgs<TVertex, TEdge>
         where TEdge : IEdge<TVertex>

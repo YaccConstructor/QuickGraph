@@ -86,7 +86,10 @@ namespace QuickGraph.Collections
 
         public TValue[] ToValueArray()
         {
-            return Array.ConvertAll(this.items, kv => kv.Value);
+            var values = new TValue[this.items.Length];
+            for (int i = 0; i < values.Length; ++i)
+                values[i] = this.items[i].Value;
+            return values;
         }
 
         private void ResizeArray()

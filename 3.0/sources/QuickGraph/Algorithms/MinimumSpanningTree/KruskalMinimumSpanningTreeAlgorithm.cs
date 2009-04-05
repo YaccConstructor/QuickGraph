@@ -7,8 +7,10 @@ using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.MinimumSpanningTree
 {
+#if !SILVERLIGHT
     [Serializable]
-    public sealed class KruskalMinimumSpanningTreeAlgorithm<TVertex,TEdge> 
+#endif
+    public sealed class KruskalMinimumSpanningTreeAlgorithm<TVertex, TEdge> 
         : AlgorithmBase<IUndirectedGraph<TVertex,TEdge>>
         , IMinimumSpanningTreeAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>

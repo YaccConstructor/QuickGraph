@@ -3,7 +3,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Predicates
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class FilteredGraph<TVertex, TEdge, TGraph> : IGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
         where TGraph : IGraph<TVertex,TEdge>

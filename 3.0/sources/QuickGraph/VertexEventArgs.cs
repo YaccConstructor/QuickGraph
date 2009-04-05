@@ -3,7 +3,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public abstract class VertexEventArgs<TVertex> : EventArgs
     {
         private readonly TVertex vertex;

@@ -4,7 +4,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Predicates
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class FilteredImplicitGraph<TVertex, TEdge, TGraph> 
         : FilteredImplicitVertexSet<TVertex, TEdge, TGraph>
         , IImplicitGraph<TVertex, TEdge>

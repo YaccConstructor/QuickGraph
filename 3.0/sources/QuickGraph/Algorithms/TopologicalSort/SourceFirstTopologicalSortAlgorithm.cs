@@ -6,7 +6,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.TopologicalSort
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class SourceFirstTopologicalSortAlgorithm<TVertex, TEdge> :
         AlgorithmBase<IVertexAndEdgeListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>

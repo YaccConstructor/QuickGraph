@@ -9,18 +9,22 @@ using System.Linq;
 
 namespace QuickGraph
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
-    public class BidirectionalGraph<TVertex, TEdge> :
-        IVertexAndEdgeListGraph<TVertex, TEdge>,
-        IEdgeListAndIncidenceGraph<TVertex, TEdge>,
-        IMutableEdgeListGraph<TVertex, TEdge>,
-        IMutableIncidenceGraph<TVertex, TEdge>,
-        IMutableVertexListGraph<TVertex, TEdge>,
-        IBidirectionalGraph<TVertex,TEdge>,
-        IMutableBidirectionalGraph<TVertex,TEdge>,
-        IMutableVertexAndEdgeListGraph<TVertex, TEdge>,
-        ICloneable
+    public class BidirectionalGraph<TVertex, TEdge> 
+        : IVertexAndEdgeListGraph<TVertex, TEdge>
+        , IEdgeListAndIncidenceGraph<TVertex, TEdge>
+        , IMutableEdgeListGraph<TVertex, TEdge>
+        , IMutableIncidenceGraph<TVertex, TEdge>
+        , IMutableVertexListGraph<TVertex, TEdge>
+        , IBidirectionalGraph<TVertex,TEdge>
+        , IMutableBidirectionalGraph<TVertex,TEdge>
+        , IMutableVertexAndEdgeListGraph<TVertex, TEdge>
+#if !SILVERLIGHT
+        , ICloneable
+#endif
         where TEdge : IEdge<TVertex>
     {
         private readonly bool isDirected = true;
@@ -609,10 +613,12 @@ namespace QuickGraph
                 );
         }
         
+#if !SILVERLIGHT
         object ICloneable.Clone()
         {
             return this.Clone();
         }
+#endif
         #endregion
     }
 }

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace QuickGraph.Predicates
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public class FilteredIncidenceGraph<TVertex, TEdge, TGraph> 
         : FilteredImplicitGraph<TVertex,TEdge,TGraph>
         , IIncidenceGraph<TVertex,TEdge>

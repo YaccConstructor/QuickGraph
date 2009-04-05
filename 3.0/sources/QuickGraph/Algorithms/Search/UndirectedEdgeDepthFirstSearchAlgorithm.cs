@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace ModelDriven.Graph.Algorithms.Search
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class UndirectedEdgeDepthFirstSearchAlgorithm<Vertex, Edge> :
         RootedAlgorithmBase<Vertex, IUndirectedGraph<Vertex, Edge>>,
         IEdgeColorizerAlgorithm<Vertex, Edge>,

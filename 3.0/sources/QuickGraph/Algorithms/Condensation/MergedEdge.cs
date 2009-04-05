@@ -4,7 +4,9 @@ using QuickGraph.Collections;
 
 namespace QuickGraph.Algorithms.Condensation
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class MergedEdge<TVertex, TEdge> : Edge<TVertex>
         where TEdge : IEdge<TVertex>
     {

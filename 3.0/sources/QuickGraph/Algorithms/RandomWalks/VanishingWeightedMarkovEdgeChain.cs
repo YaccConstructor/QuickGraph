@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 namespace QuickGraph.Algorithms.RandomWalks
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class VanishingWeightedMarkovEdgeChain<TVertex, TEdge> :
         WeightedMarkovEdgeChainBase<TVertex,TEdge>
         where TEdge : IEdge<TVertex>

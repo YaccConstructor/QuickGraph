@@ -70,9 +70,11 @@ this
             Contract.Requires(edgeFactory != null);
 
             var settings = new XmlReaderSettings();
+#if !SILVERLIGHT
             settings.ProhibitDtd = false;
-            settings.XmlResolver = new GraphMLXmlResolver();
             settings.ValidationFlags = XmlSchemaValidationFlags.None;
+#endif
+            settings.XmlResolver = new GraphMLXmlResolver();
 
             using(var xreader = XmlReader.Create(reader, settings))
                 DeserializeFromGraphML<TVertex, TEdge,TGraph>(graph, xreader, vertexFactory, edgeFactory);
@@ -99,6 +101,7 @@ this
             serializer.Deserialize(reader, graph, vertexFactory, edgeFactory);
         }
 
+#if !SILVERLIGHT
         public static void DeserializeAndValidateFromGraphML<TVertex, TEdge,TGraph>(
 #if !NET20
             this 
@@ -151,5 +154,6 @@ this
             if(e.Severity == XmlSeverityType.Error)
                 throw new InvalidOperationException(e.Message);
         }
+#endif
     }
 }

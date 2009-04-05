@@ -5,7 +5,9 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Predicates
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class FilteredUndirectedGraph<TVertex,TEdge,TGraph> :
         FilteredGraph<TVertex,TEdge,TGraph>,
         IUndirectedGraph<TVertex,TEdge>

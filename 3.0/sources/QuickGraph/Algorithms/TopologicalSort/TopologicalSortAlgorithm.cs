@@ -5,7 +5,9 @@ using QuickGraph.Algorithms.Search;
 
 namespace QuickGraph.Algorithms.TopologicalSort
 {
+#if !SILVERLIGHT
     [Serializable]
+#endif
     public sealed class TopologicalSortAlgorithm<TVertex,TEdge> :
         AlgorithmBase<IVertexListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>

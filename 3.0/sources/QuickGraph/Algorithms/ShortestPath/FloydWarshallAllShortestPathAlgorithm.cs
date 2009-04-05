@@ -140,7 +140,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 return false;
             }
 
-#if DEBUG
+#if DEBUG && !SILVERLIGHT
             var set = new HashSet<TVertex>();
             set.Add(source); set.Add(target);
 #endif
@@ -163,7 +163,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                         TVertex intermediate;
                         if (data.TryGetPredecessor(out intermediate))
                         {
-#if DEBUG
+#if DEBUG && !SILVERLIGHT
                             Contract.Assert(set.Add(intermediate));
 #endif
                             todo.Push(new SEquatableEdge<TVertex>(intermediate, current.Target));

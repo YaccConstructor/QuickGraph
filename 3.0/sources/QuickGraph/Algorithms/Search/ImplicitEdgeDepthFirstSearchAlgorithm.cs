@@ -16,8 +16,10 @@ namespace QuickGraph.Algorithms.Search
     ///     idref="gross98graphtheory"
     ///     chapter="4.2"
     ///     />
+#if !SILVERLIGHT
     [Serializable]
-    public sealed class ImplicitEdgeDepthFirstSearchAlgorithm<TVertex,TEdge> :
+#endif
+    public sealed class ImplicitEdgeDepthFirstSearchAlgorithm<TVertex, TEdge> :
         RootedAlgorithmBase<TVertex,IIncidenceGraph<TVertex,TEdge>>,
         ITreeBuilderAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>

@@ -13,7 +13,9 @@ namespace QuickGraph
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>
+#if !SILVERLIGHT
     [Serializable]
+#endif
     [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
     public class AdjacencyGraph<TVertex,TEdge> 
         : IVertexAndEdgeListGraph<TVertex,TEdge>
@@ -22,7 +24,9 @@ namespace QuickGraph
         , IMutableIncidenceGraph<TVertex,TEdge>
         , IMutableVertexListGraph<TVertex,TEdge>
         , IMutableVertexAndEdgeListGraph<TVertex,TEdge>
+#if !SILVERLIGHT
         , ICloneable
+#endif
         where TEdge : IEdge<TVertex>
     {
         private readonly bool isDirected = true;
@@ -513,11 +517,12 @@ namespace QuickGraph
                 );
         }
         
-        [Pure]
+#if !SILVERLIGHT
         object ICloneable.Clone()
         {
             return this.Clone();
         }
+#endif
         #endregion
     }
 }
