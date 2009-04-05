@@ -196,7 +196,6 @@
     <Compile Include="Algorithms\Observers\UndirectedVertexPredecessorRecorderObserver.cs" />
     <Compile Include="Algorithms\Observers\VertexPredecessorPathRecorderObserver.cs" />
     <Compile Include="Algorithms\RankedShortestPath\HoffmanPavleyRankedShortestPathAlgorithm.cs" />
-    <Compile Include="Algorithms\RankedShortestPath\MartinPascoalSantosRankedShortestPath.cs" />
     <Compile Include="Algorithms\RankedShortestPath\RankedShortestPathAlgorithmBase.cs" />
     <Compile Include="Algorithms\Search\UndirectedDepthFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmComponent.cs" />

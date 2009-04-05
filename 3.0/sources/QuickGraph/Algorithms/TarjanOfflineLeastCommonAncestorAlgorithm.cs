@@ -21,7 +21,7 @@ namespace QuickGraph.Algorithms
     /// </remarks>
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>
-    sealed class TarjanOfflineLeastCommonAncestorAlgorithm<TVertex, TEdge>
+    public sealed class TarjanOfflineLeastCommonAncestorAlgorithm<TVertex, TEdge>
         : RootedAlgorithmBase<TVertex , IVertexListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
