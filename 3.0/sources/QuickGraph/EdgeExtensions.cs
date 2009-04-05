@@ -204,7 +204,7 @@ this
             Contract.Ensures(Contract.Result<SEquatableEdge<TVertex>>().Source.Equals(edge.Source));
             Contract.Ensures(Contract.Result<SEquatableEdge<TVertex>>().Target.Equals(edge.Target));
 
-            return SEquatableEdge<TVertex>.FromEdge<TEdge>(edge);
+            return new SEquatableEdge<TVertex>(edge.Source, edge.Target);
         }
 
         /// <summary>
