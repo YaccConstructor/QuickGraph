@@ -90,7 +90,7 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(path != null);
-            Contract.Requires(Contract.ForAll(path, e => e != null));
+            Contract.Requires(typeof(TEdge).IsValueType || Contract.ForAll(path, e => e != null));
 
             bool first = true;
             TVertex lastTarget = default(TVertex);
@@ -121,7 +121,7 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(path != null);
-            Contract.Requires(Contract.ForAll(path, e => e != null));
+            Contract.Requires(typeof(TEdge).IsValueType || Contract.ForAll(path, e => e != null));
 
             var vertices = new Dictionary<TVertex, int>();
             bool first = true;
@@ -155,7 +155,7 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(path != null);
-            Contract.Requires(Contract.ForAll(path, e => e != null));
+            Contract.Requires(typeof(TEdge).IsValueType || Contract.ForAll(path, e => e != null));
             Contract.Requires(IsPath<TVertex, TEdge>(path));
 
             var vertices = new Dictionary<TVertex, int>();
@@ -220,15 +220,19 @@ this
 #if !NET20
 this 
 #endif            
-            IDictionary<TVertex, TEdge> predecessors, TVertex root, TVertex vertex)
+            IDictionary<TVertex, TEdge> predecessors, 
+            TVertex root, 
+            TVertex vertex)
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(predecessors != null);
             Contract.Requires(root != null);
             Contract.Requires(vertex != null);
+            Contract.Requires(
+                typeof(TEdge).IsValueType || 
+                Contract.ForAll(predecessors.Values, e => e != null));
 
             var current = vertex;
-
             if (root.Equals(current)) 
                 return true;
 
@@ -266,15 +270,27 @@ this
         {
             Contract.Requires(predecessors != null);
             Contract.Requires(v != null);
+            Contract.Requires(
+                typeof(TEdge).IsValueType ||
+                Contract.ForAll(predecessors.Values, e => e != null));
+            Contract.Ensures(
+                !Contract.Result<bool>() ||
+                (Contract.ValueAtReturn<IEnumerable<TEdge>>(out result) != null &&
+                 (typeof(TEdge).IsValueType ||
+                 Contract.ForAll(
+                    Contract.ValueAtReturn<IEnumerable<TEdge>>(out result),
+                    e => e != null))
+                )
+            );
 
             var path = new List<TEdge>();
 
             TVertex vc = v;
-            TEdge e;
-            while (predecessors.TryGetValue(vc, out e))
+            TEdge edge;
+            while (predecessors.TryGetValue(vc, out edge))
             {
-                path.Add(e);
-                vc = GetOtherVertex(e, vc);
+                path.Add(edge);
+                vc = GetOtherVertex(edge, vc);
             }
 
             if (path.Count > 0)
