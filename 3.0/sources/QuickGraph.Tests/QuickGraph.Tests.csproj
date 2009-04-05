@@ -388,11 +388,20 @@
     <Compile Include="Factories\ForestDisjointSetFactory.cs" />
     <Compile Include="Factories\UndirectedGraphFactory.cs" />
     <Compile Include="GraphConsoleSerializer.cs" />
-    <Compile Include="GraphExtensionsTest.AddVertexPairRange.g.cs">
-      <DependentUpon>GraphExtensionsTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="GraphExtensionsTest.cs" />
     <Compile Include="GraphExtensionsTest.ToAdjacencyGraph.g.cs">
+      <DependentUpon>GraphExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GraphExtensionsTest.ToAdjacencyGraph01.g.cs">
+      <DependentUpon>GraphExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GraphExtensionsTest.ToAdjacencyGraph02.g.cs">
+      <DependentUpon>GraphExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GraphExtensionsTest.ToAdjacencyGraph03.g.cs">
+      <DependentUpon>GraphExtensionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GraphExtensionsTest.ToAdjacencyGraph04.g.cs">
       <DependentUpon>GraphExtensionsTest.cs</DependentUpon>
     </Compile>
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />

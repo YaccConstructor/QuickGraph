@@ -8,9 +8,9 @@ namespace QuickGraph
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>
     [ContractClass(typeof(IMutableBidirectionalGraphContract<,>))]
-    public interface IMutableBidirectionalGraph<TVertex,TEdge> :
-        IMutableVertexAndEdgeListGraph<TVertex,TEdge>,
-        IBidirectionalGraph<TVertex,TEdge>
+    public interface IMutableBidirectionalGraph<TVertex,TEdge> 
+        : IMutableVertexAndEdgeListGraph<TVertex,TEdge>
+        , IBidirectionalGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
         /// <summary>
