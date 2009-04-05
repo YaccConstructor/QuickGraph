@@ -426,6 +426,9 @@
     <Compile Include="..\QuickGraph\Collections\VertexList.cs">
       <Link>Collections\VertexList.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\CompressedSparseRowGraph.cs">
+      <Link>CompressedSparseRowGraph.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Contracts\Collections\IDisjointSetContract.cs">
       <Link>Contracts\Collections\IDisjointSetContract.cs</Link>
     </Compile>

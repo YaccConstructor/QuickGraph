@@ -333,5 +333,24 @@ this
             g.AddVerticesAndEdgeRange(vertexPairs);
             return g;
         }
+
+        /// <summary>
+        /// Creates an immutable compressed row graph representation of the visited graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="visitedGraph"></param>
+        /// <returns></returns>
+        public static CompressedSparseRowGraph<TVertex> ToCompressedRowGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+
+            return CompressedSparseRowGraph<TVertex>.FromGraph(visitedGraph);
+        }
     }
 }

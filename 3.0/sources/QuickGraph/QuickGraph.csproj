@@ -290,6 +290,7 @@
     <Compile Include="Collections\SoftHeap.cs" />
     <Compile Include="Collections\VertexEdgeDictionary.cs" />
     <Compile Include="Collections\VertexList.cs" />
+    <Compile Include="CompressedSparseRowGraph.cs" />
     <Compile Include="SEquatableEdge.cs" />
     <Compile Include="Contracts\Collections\IDisjointSetContract.cs" />
     <Compile Include="Contracts\Contracts.cs" />
