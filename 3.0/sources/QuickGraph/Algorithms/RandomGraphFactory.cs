@@ -92,8 +92,12 @@ namespace QuickGraph.Algorithms
             Contract.Requires(rnd != null);
             Contract.Requires(vertexCount > 0);
             Contract.Requires(edgeCount >= 0);
+            Contract.Requires(
+                !(!g.AllowParallelEdges && !selfEdges) ||
+                edgeCount <= vertexCount * (vertexCount -1) // directed graph
+                );
 
-            TVertex[] vertices = new TVertex[vertexCount];
+            var vertices = new TVertex[vertexCount];
             for (int i = 0; i < vertexCount; ++i)
                 g.AddVertex(vertices[i] = vertexFactory());
 
@@ -131,8 +135,12 @@ namespace QuickGraph.Algorithms
             Contract.Requires(rnd != null);
             Contract.Requires(vertexCount > 0);
             Contract.Requires(edgeCount >= 0);
+            Contract.Requires(
+                !(!g.AllowParallelEdges && !selfEdges) ||
+                edgeCount <= vertexCount * (vertexCount - 1) / 2
+                );
 
-            TVertex[] vertices = new TVertex[vertexCount];
+            var vertices = new TVertex[vertexCount];
             for (int i = 0; i < vertexCount; ++i)
                 g.AddVertex(vertices[i] = vertexFactory());
 
