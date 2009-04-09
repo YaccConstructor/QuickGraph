@@ -16,7 +16,7 @@ namespace QuickGraph.Tests.Serialization
         public void DeserializeFromXml()
         {
             var doc = new XPathDocument("repro12273.xml");
-            var ug = doc.DeserializeFromXml(
+            var ug = SerializationExtensions.DeserializeFromXml(doc,
                 "graph", "node", "edge",
                 nav => new UndirectedGraph<string, TaggedEdge<string, double>>(),
                 nav => nav.GetAttribute("id", ""),
@@ -27,7 +27,8 @@ namespace QuickGraph.Tests.Serialization
                     )
                 );
 
-            var ug2 = XmlReader.Create("repro12273.xml").DeserializeFromXml(
+            var ug2 = SerializationExtensions.DeserializeFromXml(
+                XmlReader.Create("repro12273.xml"),
                 "graph", "node", "edge", "",
                 reader => new UndirectedGraph<string, TaggedEdge<string, double>>(),
                 reader => reader.GetAttribute("id"),
