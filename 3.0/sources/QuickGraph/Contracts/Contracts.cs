@@ -5,6 +5,11 @@ using System.Text;
 
 namespace System.Diagnostics.Contracts
 {
+    internal sealed class ContractException : Exception
+    {
+        public ContractException(string message) : base(message) { }
+    }
+
     internal static class Contract
     {
         // Events
@@ -75,7 +80,7 @@ namespace System.Diagnostics.Contracts
                     return;
             }
 
-            throw new ArgumentException(message);
+            throw new ContractException(message);
         }
 
         public static bool ForAll<T>(Predicate<T> predicate)
