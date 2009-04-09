@@ -31,7 +31,7 @@ namespace QuickGraph.Msagl
             this.vertexIds.Add(v, id);
             Node node = (Node)this.MsaglGraph.AddNode(id);
             node.Attr.Shape = Shape.Box;
-            node.Label.Text = this.GetVertexLabel(id, v);
+            node.Attr.Label = this.GetVertexLabel(id, v);
             return node;
         }
 
@@ -51,7 +51,7 @@ namespace QuickGraph.Msagl
                 this.vertexIds[e.Source],
                 this.vertexIds[e.Target]
                 );
-            edge.LabelText = this.GetEdgeLabel(e);
+            edge.Attr.Label = this.GetEdgeLabel(e);
             return edge;
         }
 
