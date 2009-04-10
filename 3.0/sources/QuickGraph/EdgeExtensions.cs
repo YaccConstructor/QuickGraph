@@ -307,6 +307,23 @@ this
         }
 
         /// <summary>
+        /// Returns the most efficient comporer for the particular type of TEdge.
+        /// If TEdge implements IUndirectedEdge, then only the (source,target) pair
+        /// has to be compared; if not, (source, target) and (target, source) have to be compared.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <returns></returns>
+        public static EdgeEqualityComporer<TVertex, TEdge> GetUndirectedVertexEquality<TVertex, TEdge>()
+            where TEdge : IEdge<TVertex>
+        {
+            if (typeof(IUndirectedEdge<TVertex>).IsAssignableFrom(typeof(TEdge)))
+                return new EdgeEqualityComporer<TVertex, TEdge>(SortedVertexEquality<TVertex, TEdge>);
+            else
+                return new EdgeEqualityComporer<TVertex, TEdge>(UndirectedVertexEquality<TVertex, TEdge>);
+        }
+
+        /// <summary>
         /// Gets a value indicating if the vertices of edge match (source, target) or
         /// (target, source)
         /// </summary>
@@ -350,11 +367,11 @@ TEdge edge,
             TVertex source,
             TVertex target)
             where TEdge : IEdge<TVertex>
-            where TVertex : IComparable<TVertex>
         {
             Contract.Requires(edge != null);
             Contract.Requires(source != null);
             Contract.Requires(target != null);
+            Contract.Requires(Comparer<TVertex>.Default.Compare(source, target) <= 0);
 
             return edge.Source.Equals(source) && edge.Target.Equals(target);
         }

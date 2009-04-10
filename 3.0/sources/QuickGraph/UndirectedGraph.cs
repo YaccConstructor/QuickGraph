@@ -34,7 +34,7 @@ namespace QuickGraph
         }
 
         public UndirectedGraph(bool allowParallelEdges)
-            :this(allowParallelEdges, new EdgeEqualityComporer<TVertex, TEdge>(EdgeExtensions.UndirectedVertexEquality<TVertex, TEdge>))
+            :this(allowParallelEdges, EdgeExtensions.GetUndirectedVertexEquality<TVertex, TEdge>())
         {
             this.allowParallelEdges = allowParallelEdges;
         }

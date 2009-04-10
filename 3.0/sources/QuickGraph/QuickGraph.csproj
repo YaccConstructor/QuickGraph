@@ -291,6 +291,10 @@
     <Compile Include="Collections\VertexEdgeDictionary.cs" />
     <Compile Include="Collections\VertexList.cs" />
     <Compile Include="CompressedSparseRowGraph.cs" />
+    <Compile Include="Contracts\IUndirectedEdgeContract.cs" />
+    <Compile Include="SEquatableUndirectedEdge.cs" />
+    <Compile Include="UndirectedEdge.cs" />
+    <Compile Include="IUndirectedEdge.cs" />
     <Compile Include="SEquatableEdge.cs" />
     <Compile Include="Contracts\Collections\IDisjointSetContract.cs" />
     <Compile Include="Contracts\Contracts.cs" />
@@ -398,6 +402,7 @@
     <Compile Include="Serialization\GraphMLDeserializer.cs" />
     <Compile Include="Serialization\GraphMLXmlResolver.cs" />
     <Compile Include="Serialization\SerializationExtensions.cs" />
+    <Compile Include="SUndirectedEdge.cs" />
     <Compile Include="TryFuncDelegates.cs" />
     <Compile Include="UndirectedEdgeEventArgs.cs" />
     <Compile Include="VertexFactory.cs" />
