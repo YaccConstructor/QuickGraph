@@ -305,5 +305,58 @@ this
                 return false;
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating if the vertices of edge match (source, target) or
+        /// (target, source)
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="edge"></param>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static bool UndirectedVertexEquality<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            TEdge edge,
+            TVertex source,
+            TVertex target)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(edge != null);
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
+
+            return (edge.Source.Equals(source) && edge.Target.Equals(target)) ||
+                (edge.Target.Equals(source) && edge.Source.Equals(target));
+        }
+
+        /// <summary>
+        /// Gets a value indicating if the vertices of edge match (source, target)
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="edge"></param>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static bool SortedVertexEquality<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+TEdge edge,
+            TVertex source,
+            TVertex target)
+            where TEdge : IEdge<TVertex>
+            where TVertex : IComparable<TVertex>
+        {
+            Contract.Requires(edge != null);
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
+
+            return edge.Source.Equals(source) && edge.Target.Equals(target);
+        }
     }
 }

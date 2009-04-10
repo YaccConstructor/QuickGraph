@@ -7,6 +7,9 @@ using QuickGraph.Collections;
 
 namespace QuickGraph
 {
+    public delegate bool EdgeEqualityComporer<TVertex, TEdge>(TEdge edge, TVertex source, TVertex target)
+        where TEdge : IEdge<TVertex>;
+
 #if !SILVERLIGHT
     [Serializable]
 #endif
@@ -18,16 +21,31 @@ namespace QuickGraph
         private readonly bool allowParallelEdges = true;
         private readonly VertexEdgeDictionary<TVertex, TEdge> adjacentEdges =
             new VertexEdgeDictionary<TVertex, TEdge>();
+        private readonly EdgeEqualityComporer<TVertex, TEdge> edgeEqualityComparer;
         private int edgeCount = 0;
         private int edgeCapacity = 4;
+
+        public UndirectedGraph(bool allowParallelEdges, EdgeEqualityComporer<TVertex, TEdge> edgeEqualityComparer)
+        {
+            Contract.Requires(edgeEqualityComparer != null);
+
+            this.allowParallelEdges = allowParallelEdges;
+            this.edgeEqualityComparer = edgeEqualityComparer;
+        }
+
+        public UndirectedGraph(bool allowParallelEdges)
+            :this(allowParallelEdges, new EdgeEqualityComporer<TVertex, TEdge>(EdgeExtensions.UndirectedVertexEquality<TVertex, TEdge>))
+        {
+            this.allowParallelEdges = allowParallelEdges;
+        }
 
         public UndirectedGraph()
             :this(true)
         {}
 
-        public UndirectedGraph(bool allowParallelEdges)
+        public EdgeEqualityComporer<TVertex, TEdge> EdgeEqualityComparer
         {
-            this.allowParallelEdges = allowParallelEdges;
+            get { return this.edgeEqualityComparer;}
         }
 
         public int EdgeCapacity
@@ -182,8 +200,7 @@ namespace QuickGraph
         {
             foreach(var edge in this.AdjacentEdges(source))
             {
-                if ((edge.Source.Equals(source) && edge.Target.Equals(target)) ||
-                    (edge.Target.Equals(source) && edge.Source.Equals(target)))
+                if (this.edgeEqualityComparer(edge, source, target))
                     return true;
             }
             return false;
@@ -226,7 +243,7 @@ namespace QuickGraph
 
             if (!this.AllowParallelEdges)
             {
-                if (ContainsEdge(sourceEdges, edge))
+                if (this.ContainsEdgeBetweenVertices(sourceEdges, edge))
                     return false;
             }
 
@@ -253,7 +270,7 @@ namespace QuickGraph
             var sourceEdges = this.adjacentEdges[edge.Source];
             if (!this.AllowParallelEdges)
             {
-                if (ContainsEdge(sourceEdges, edge))
+                if (this.ContainsEdgeBetweenVertices(sourceEdges, edge))
                     return false;
             }
             var targetEdges = this.adjacentEdges[edge.Target];
@@ -362,18 +379,21 @@ namespace QuickGraph
         [Pure]
         public bool ContainsEdge(TEdge edge)
         {
-            var edges = this.Edges;
-            return ContainsEdge(edges, edge);
+            foreach (var e in this.Edges)
+                if (e.Equals(edge))
+                    return true;
+            return false;
         }
 
-        private static bool ContainsEdge(IEnumerable<TEdge> edges, TEdge edge)
+        private bool ContainsEdgeBetweenVertices(IEnumerable<TEdge> edges, TEdge edge)
         {
             Contract.Requires(edges != null);
             Contract.Requires(edge != null);
 
+            var source = edge.Source;
+            var target= edge.Target;
             foreach (var e in edges)
-                if (e.Source.Equals(edge.Source) && e.Target.Equals(edge.Target) ||
-                    e.Target.Equals(edge.Source) && e.Source.Equals(edge.Target))
+                if (this.EdgeEqualityComparer(e,source, target))
                     return true;
             return false;
         }
