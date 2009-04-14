@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
@@ -9,6 +10,10 @@ namespace QuickGraph
     /// An equatable edge implementation
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
+#if !SILVERLIGHT
+    [Serializable]
+#endif
+    [DebuggerDisplay("{Source}->{Target}")]
     public class EquatableEdge<TVertex> 
         : Edge<TVertex>
         , IEquatable<EquatableEdge<TVertex>>
