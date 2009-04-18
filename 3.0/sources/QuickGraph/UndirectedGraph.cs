@@ -7,7 +7,7 @@ using QuickGraph.Collections;
 
 namespace QuickGraph
 {
-    public delegate bool EdgeEqualityComporer<TVertex, TEdge>(TEdge edge, TVertex source, TVertex target)
+    public delegate bool EdgeEqualityComparer<TVertex, TEdge>(TEdge edge, TVertex source, TVertex target)
         where TEdge : IEdge<TVertex>;
 
 #if !SILVERLIGHT
@@ -21,11 +21,11 @@ namespace QuickGraph
         private readonly bool allowParallelEdges = true;
         private readonly VertexEdgeDictionary<TVertex, TEdge> adjacentEdges =
             new VertexEdgeDictionary<TVertex, TEdge>();
-        private readonly EdgeEqualityComporer<TVertex, TEdge> edgeEqualityComparer;
+        private readonly EdgeEqualityComparer<TVertex, TEdge> edgeEqualityComparer;
         private int edgeCount = 0;
         private int edgeCapacity = 4;
 
-        public UndirectedGraph(bool allowParallelEdges, EdgeEqualityComporer<TVertex, TEdge> edgeEqualityComparer)
+        public UndirectedGraph(bool allowParallelEdges, EdgeEqualityComparer<TVertex, TEdge> edgeEqualityComparer)
         {
             Contract.Requires(edgeEqualityComparer != null);
 
@@ -43,7 +43,7 @@ namespace QuickGraph
             :this(true)
         {}
 
-        public EdgeEqualityComporer<TVertex, TEdge> EdgeEqualityComparer
+        public EdgeEqualityComparer<TVertex, TEdge> EdgeEqualityComparer
         {
             get { return this.edgeEqualityComparer;}
         }

@@ -495,6 +495,9 @@
     <Compile Include="..\QuickGraph\Contracts\IMutableVertexSetContract.cs">
       <Link>Contracts\IMutableVertexSetContract.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\Contracts\IUndirectedEdgeContract.cs">
+      <Link>Contracts\IUndirectedEdgeContract.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Contracts\IUndirectedGraphContract.cs">
       <Link>Contracts\IUndirectedGraphContract.cs</Link>
     </Compile>
@@ -617,6 +620,9 @@
     </Compile>
     <Compile Include="..\QuickGraph\IMutableVertexSet.cs">
       <Link>IMutableVertexSet.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\IUndirectedEdge.cs">
+      <Link>IUndirectedEdge.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\IUndirectedGraph.cs">
       <Link>IUndirectedGraph.cs</Link>

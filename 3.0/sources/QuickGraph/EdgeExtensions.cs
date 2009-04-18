@@ -314,13 +314,13 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <returns></returns>
-        public static EdgeEqualityComporer<TVertex, TEdge> GetUndirectedVertexEquality<TVertex, TEdge>()
+        public static EdgeEqualityComparer<TVertex, TEdge> GetUndirectedVertexEquality<TVertex, TEdge>()
             where TEdge : IEdge<TVertex>
         {
             if (typeof(IUndirectedEdge<TVertex>).IsAssignableFrom(typeof(TEdge)))
-                return new EdgeEqualityComporer<TVertex, TEdge>(SortedVertexEquality<TVertex, TEdge>);
+                return new EdgeEqualityComparer<TVertex, TEdge>(SortedVertexEquality<TVertex, TEdge>);
             else
-                return new EdgeEqualityComporer<TVertex, TEdge>(UndirectedVertexEquality<TVertex, TEdge>);
+                return new EdgeEqualityComparer<TVertex, TEdge>(UndirectedVertexEquality<TVertex, TEdge>);
         }
 
         /// <summary>
