@@ -5,12 +5,12 @@ using QuickGraph.Algorithms.Condensation;
 namespace QuickGraph.Graphviz
 {
     public class CondensatedGraphRenderer<TVertex,TEdge,TGraph> :
-        GraphRendererBase<TGraph, CondensatedEdge<TVertex, TEdge, TGraph>>
+        GraphRendererBase<TGraph, CondensedEdge<TVertex, TEdge, TGraph>>
         where TEdge : IEdge<TVertex>
         where TGraph : IMutableVertexAndEdgeListGraph<TVertex, TEdge>, new()
     {
         public CondensatedGraphRenderer(
-            IVertexAndEdgeListGraph<TGraph, CondensatedEdge<TVertex, TEdge, TGraph>> visitedGraph)
+            IVertexAndEdgeListGraph<TGraph, CondensedEdge<TVertex, TEdge, TGraph>> visitedGraph)
             :base(visitedGraph)
         {}
 
@@ -18,7 +18,7 @@ namespace QuickGraph.Graphviz
         {
             base.Initialize();
             this.Graphviz.FormatVertex+=new FormatVertexEventHandler<TGraph>(Graphviz_FormatVertex);
-            this.Graphviz.FormatEdge += new FormatEdgeAction<TGraph, CondensatedEdge<TVertex, TEdge, TGraph>>(Graphviz_FormatEdge);
+            this.Graphviz.FormatEdge += new FormatEdgeAction<TGraph, CondensedEdge<TVertex, TEdge, TGraph>>(Graphviz_FormatEdge);
         }
 
 
@@ -33,7 +33,7 @@ namespace QuickGraph.Graphviz
             e.VertexFormatter.Label = this.Graphviz.Escape(sw.ToString());
         }
 
-        void Graphviz_FormatEdge(object sender, FormatEdgeEventArgs<TGraph, CondensatedEdge<TVertex, TEdge, TGraph>> e)
+        void Graphviz_FormatEdge(object sender, FormatEdgeEventArgs<TGraph, CondensedEdge<TVertex, TEdge, TGraph>> e)
         {
             StringWriter sw = new StringWriter();
             sw.WriteLine("{0}", e.Edge.Edges.Count);

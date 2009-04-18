@@ -93,11 +93,11 @@
     <Compile Include="..\QuickGraph\Algorithms\ComputationState.cs">
       <Link>Algorithms\ComputationState.cs</Link>
     </Compile>
-    <Compile Include="..\QuickGraph\Algorithms\Condensation\CondensatedEdge.cs">
-      <Link>Algorithms\Condensation\CondensatedEdge.cs</Link>
-    </Compile>
     <Compile Include="..\QuickGraph\Algorithms\Condensation\CondensationGraphAlgorithm.cs">
       <Link>Algorithms\Condensation\CondensationGraphAlgorithm.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\Algorithms\Condensation\CondensedEdge.cs">
+      <Link>Algorithms\Condensation\CondensedEdge.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Algorithms\Condensation\EdgeMergeCondensationGraphAlgorithm.cs">
       <Link>Algorithms\Condensation\EdgeMergeCondensationGraphAlgorithm.cs</Link>

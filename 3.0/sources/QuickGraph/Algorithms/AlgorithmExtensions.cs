@@ -834,7 +834,7 @@ this
         /// <typeparam name="TGraph"></typeparam>
         /// <param name="g"></param>
         /// <returns></returns>
-        public static IMutableBidirectionalGraph<TGraph,CondensatedEdge<TVertex, TEdge,TGraph>> 
+        public static IMutableBidirectionalGraph<TGraph,CondensedEdge<TVertex, TEdge,TGraph>> 
             CondensateStronglyConnected<TVertex, TEdge, TGraph>(
 #if !NET20
             this 
@@ -848,7 +848,7 @@ this
 
             var condensator = new CondensationGraphAlgorithm<TVertex, TEdge, TGraph>(g);
             condensator.Compute();
-            return condensator.CondensatedGraph;
+            return condensator.CondensedGraph;
         }
 
         /// <summary>
@@ -859,7 +859,7 @@ this
         /// <typeparam name="TGraph"></typeparam>
         /// <param name="g"></param>
         /// <returns></returns>
-        public static IMutableBidirectionalGraph<TGraph, CondensatedEdge<TVertex, TEdge, TGraph>>
+        public static IMutableBidirectionalGraph<TGraph, CondensedEdge<TVertex, TEdge, TGraph>>
             CondensateWeaklyConnected<TVertex, TEdge, TGraph>(
 #if !NET20
 this 
@@ -874,7 +874,7 @@ this
             var condensator = new CondensationGraphAlgorithm<TVertex, TEdge, TGraph>(g);
             condensator.StronglyConnected = false;
             condensator.Compute();
-            return condensator.CondensatedGraph;
+            return condensator.CondensedGraph;
         }
 
         public static IMutableBidirectionalGraph<TVertex, MergedEdge<TVertex, TEdge>>

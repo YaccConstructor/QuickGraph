@@ -14,8 +14,8 @@ namespace QuickGraph.Algorithms.Condensation
 
         private IMutableBidirectionalGraph<
             TGraph,
-            CondensatedEdge<TVertex, TEdge, TGraph>
-            > condensatedGraph;
+            CondensedEdge<TVertex, TEdge, TGraph>
+            > condensedGraph;
 
         public CondensationGraphAlgorithm(IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
             :base(visitedGraph)
@@ -23,10 +23,10 @@ namespace QuickGraph.Algorithms.Condensation
 
         public IMutableBidirectionalGraph<
             TGraph,
-            CondensatedEdge<TVertex, TEdge,TGraph>
-            > CondensatedGraph
+            CondensedEdge<TVertex, TEdge,TGraph>
+            > CondensedGraph
         {
-            get { return this.condensatedGraph; }
+            get { return this.condensedGraph; }
         }
 
         public bool StronglyConnected
@@ -38,9 +38,9 @@ namespace QuickGraph.Algorithms.Condensation
         protected override void InternalCompute()
         {
             // create condensated graph
-            this.condensatedGraph = new BidirectionalGraph<
+            this.condensedGraph = new BidirectionalGraph<
                 TGraph,
-                CondensatedEdge<TVertex, TEdge, TGraph>
+                CondensedEdge<TVertex, TEdge, TGraph>
                 >(false);
             if (this.VisitedGraph.VertexCount == 0)
                 return;
@@ -58,7 +58,7 @@ namespace QuickGraph.Algorithms.Condensation
             {
                 TGraph v = new TGraph();
                 condensatedVertices.Add(i, v);
-                this.condensatedGraph.AddVertex(v);
+                this.condensedGraph.AddVertex(v);
             }
 
             // addingvertices
@@ -69,7 +69,7 @@ namespace QuickGraph.Algorithms.Condensation
             if (cancelManager.IsCancelling) return;
 
             // condensated edges
-            var condensatedEdges = new Dictionary<EdgeKey, CondensatedEdge<TVertex, TEdge, TGraph>>(componentCount);
+            var condensatedEdges = new Dictionary<EdgeKey, CondensedEdge<TVertex, TEdge, TGraph>>(componentCount);
 
             // iterate over edges and condensate graph
             foreach (var edge in this.VisitedGraph.Edges)
@@ -89,12 +89,12 @@ namespace QuickGraph.Algorithms.Condensation
                 var targets = condensatedVertices[targetID];
                 // at last add edge
                 var edgeKey = new EdgeKey(sourceID, targetID);
-                CondensatedEdge<TVertex, TEdge, TGraph> condensatedEdge;
+                CondensedEdge<TVertex, TEdge, TGraph> condensatedEdge;
                 if (!condensatedEdges.TryGetValue(edgeKey, out condensatedEdge))
                 {
-                    condensatedEdge = new CondensatedEdge<TVertex, TEdge, TGraph>(sources, targets);
+                    condensatedEdge = new CondensedEdge<TVertex, TEdge, TGraph>(sources, targets);
                     condensatedEdges.Add(edgeKey, condensatedEdge);
-                    this.condensatedGraph.AddEdge(condensatedEdge);
+                    this.condensedGraph.AddEdge(condensatedEdge);
                 }
                 condensatedEdge.Edges.Add(edge);
             }

@@ -179,7 +179,7 @@
     <Compile Include="Algorithms\Cliques\MaximumCliqueAlgorithmBase.cs" />
     <Compile Include="Algorithms\ComputationState.cs" />
     <Compile Include="Algorithms\Condensation\CondensationGraphAlgorithm.cs" />
-    <Compile Include="Algorithms\Condensation\CondensatedEdge.cs" />
+    <Compile Include="Algorithms\Condensation\CondensedEdge.cs" />
     <Compile Include="Algorithms\Condensation\MergedEdge.cs" />
     <Compile Include="Algorithms\ConnectedComponents\ConnectedComponentsAlgorithm.cs" />
     <Compile Include="Algorithms\ConnectedComponents\IncrementalConnectedComponentsAlgorithm.cs" />
