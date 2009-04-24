@@ -7,11 +7,11 @@ namespace QuickGraph.Predicates
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class FilteredBidirectionalGraph<TVertex, TEdge, TGraph> :
-        FilteredVertexListGraph<TVertex, TEdge, TGraph>,
-        IBidirectionalGraph<TVertex, TEdge>
+    public class FilteredBidirectionalGraph<TVertex, TEdge, TGraph> 
+        : FilteredVertexListGraph<TVertex, TEdge, TGraph>
+        , IBidirectionalGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
-        where TGraph : IVertexAndEdgeListGraph<TVertex, TEdge>
+        where TGraph : IBidirectionalGraph<TVertex, TEdge>
     {
         public FilteredBidirectionalGraph(
             TGraph baseGraph,
@@ -31,8 +31,8 @@ namespace QuickGraph.Predicates
         public int InDegree(TVertex v)
         {
             int count = 0;
-            foreach (var edge in this.InEdges(v))
-                if (TestEdge(edge))
+            foreach (var edge in this.BaseGraph.InEdges(v))
+                if (this.TestEdge(edge))
                     count++;
             return count;
         }
@@ -40,8 +40,8 @@ namespace QuickGraph.Predicates
         [Pure]
         public IEnumerable<TEdge> InEdges(TVertex v)
         {
-            foreach (var edge in this.InEdges(v))
-                if (TestEdge(edge))
+            foreach (var edge in this.BaseGraph.InEdges(v))
+                if (this.TestEdge(edge))
                     yield return edge;
         }
 
@@ -102,7 +102,7 @@ namespace QuickGraph.Predicates
         [Pure]
         public bool ContainsEdge(TEdge edge)
         {
-            if (!TestEdge(edge))
+            if (!this.TestEdge(edge))
                 return false;
             return this.BaseGraph.ContainsEdge(edge);
         }
