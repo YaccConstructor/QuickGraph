@@ -732,6 +732,9 @@
     <Compile Include="..\QuickGraph\SReversedEdge.cs">
       <Link>SReversedEdge.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\STaggedEdge.cs">
+      <Link>STaggedEdge.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\TaggedEdge.cs">
       <Link>TaggedEdge.cs</Link>
     </Compile>

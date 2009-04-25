@@ -293,6 +293,7 @@
     <Compile Include="CompressedSparseRowGraph.cs" />
     <Compile Include="Contracts\IUndirectedEdgeContract.cs" />
     <Compile Include="SEquatableUndirectedEdge.cs" />
+    <Compile Include="STaggedEdge.cs" />
     <Compile Include="UndirectedEdge.cs" />
     <Compile Include="IUndirectedEdge.cs" />
     <Compile Include="SEquatableEdge.cs" />
