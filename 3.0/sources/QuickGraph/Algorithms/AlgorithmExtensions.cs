@@ -31,6 +31,7 @@ namespace QuickGraph.Algorithms
         public static TDelegate GetIndexer<TDelegate, TKey, TValue>(Dictionary<TKey, TValue> dictionary)
         {
             Contract.Requires(dictionary != null);
+            Contract.Requires(typeof(Delegate).IsAssignableFrom(typeof(TDelegate)));
             Contract.Ensures(Contract.Result<TDelegate>() != null);
 
             var method = dictionary.GetType().GetProperty("Item").GetGetMethod();

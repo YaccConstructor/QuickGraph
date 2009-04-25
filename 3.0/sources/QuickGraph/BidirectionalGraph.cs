@@ -280,7 +280,9 @@ namespace QuickGraph
         [Pure]
         public bool ContainsEdge(TEdge edge)
         {
-            return this.vertexOutEdges[edge.Source].Contains(edge);
+            EdgeList<TVertex, TEdge> outEdges;
+            return this.vertexOutEdges.TryGetValue(edge.Source, out outEdges) &&
+                outEdges.Contains(edge);
         }
 
         public virtual bool AddVertex(TVertex v)

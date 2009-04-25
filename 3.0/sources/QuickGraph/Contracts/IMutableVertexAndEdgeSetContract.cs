@@ -16,7 +16,7 @@ namespace QuickGraph.Contracts
             IMutableVertexAndEdgeSet<TVertex, TEdge> ithis = this;
             Contract.Requires(edge != null);
             Contract.Ensures(ithis.ContainsEdge(edge));
-            Contract.Ensures(Contract.Result<bool>() == Contract.OldValue(!ithis.ContainsEdge(edge)));
+            Contract.Ensures(ithis.AllowParallelEdges || Contract.Result<bool>() == Contract.OldValue(!ithis.ContainsEdge(edge)));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + (Contract.Result<bool>() ? 1 : 0));
 
             return default(bool);
@@ -30,7 +30,12 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.ForAll(edges, edge => ithis.ContainsEdge(edge)));
             Contract.Ensures(
                 Contract.Result<int>() == 
-                Contract.OldValue(Enumerable.Count(edges, edge => !ithis.ContainsEdge(edge)))
+                Contract.OldValue(
+                    Enumerable.Count(
+                        edges, 
+                        edge => !ithis.ContainsEdge(edge)
+                        )
+                    )
                 );
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + Contract.Result<int>());
 

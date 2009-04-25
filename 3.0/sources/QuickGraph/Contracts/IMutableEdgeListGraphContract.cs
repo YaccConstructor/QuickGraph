@@ -18,7 +18,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(ithis.ContainsVertex(e.Source));
             Contract.Requires(ithis.ContainsVertex(e.Target));
             Contract.Ensures(ithis.ContainsEdge(e));
-            Contract.Ensures(Contract.Result<bool>() == Contract.OldValue(!ithis.ContainsEdge(e)));
+            Contract.Ensures(ithis.AllowParallelEdges || Contract.Result<bool>() == Contract.OldValue(!ithis.ContainsEdge(e)));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + (Contract.Result<bool>() ? 1 : 0));
 
             return default(bool);
