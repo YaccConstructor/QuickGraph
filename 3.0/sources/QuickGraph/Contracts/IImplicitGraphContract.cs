@@ -41,7 +41,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(v != null);
             Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Contract.Result<IEnumerable<TEdge>>() != null);
-            Contract.Ensures(Contract.ForAll(ithis.OutEdges(v),e => e.Source.Equals(v)));
+            Contract.Ensures(Contract.ForAll(Contract.Result<IEnumerable<TEdge>>(), e => e.Source.Equals(v)));
 
             return default(IEnumerable<TEdge>);
         }
@@ -51,7 +51,10 @@ namespace QuickGraph.Contracts
         {
             IImplicitGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(v != null);
-            Contract.Ensures(Contract.Result<bool>() == (Contract.ValueAtReturn(out edges) != null));
+            Contract.Ensures(!Contract.Result<bool>() || 
+                (Contract.ValueAtReturn(out edges) != null && 
+                 Contract.ForAll(Contract.ValueAtReturn(out edges), e => e.Source.Equals(v)))
+                );
 
             edges = null;
             return default(bool);
