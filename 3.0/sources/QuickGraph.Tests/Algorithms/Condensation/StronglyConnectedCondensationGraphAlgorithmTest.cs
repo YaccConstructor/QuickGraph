@@ -33,7 +33,7 @@ namespace QuickGraph.Algorithms.Condensation
 
         private void CheckVertexCount<TVertex, TEdge>(
             IVertexAndEdgeListGraph<TVertex, TEdge> g,
-            IMutableBidirectionalGraph<AdjacencyGraph<TVertex, TEdge>, CondensatedEdge<TVertex, TEdge, AdjacencyGraph<TVertex, TEdge>>> cg)
+            IMutableBidirectionalGraph<AdjacencyGraph<TVertex, TEdge>, CondensedEdge<TVertex, TEdge, AdjacencyGraph<TVertex, TEdge>>> cg)
             where TEdge : IEdge<TVertex>
         {
             int count = 0;
@@ -44,7 +44,7 @@ namespace QuickGraph.Algorithms.Condensation
 
         private void CheckEdgeCount<TVertex, TEdge>(
             IVertexAndEdgeListGraph<TVertex, TEdge> g,
-            IMutableBidirectionalGraph<AdjacencyGraph<TVertex, TEdge>, CondensatedEdge<TVertex, TEdge, AdjacencyGraph<TVertex, TEdge>>> cg)
+            IMutableBidirectionalGraph<AdjacencyGraph<TVertex, TEdge>, CondensedEdge<TVertex, TEdge, AdjacencyGraph<TVertex, TEdge>>> cg)
             where TEdge : IEdge<TVertex>
         {
             // check edge count
@@ -59,7 +59,7 @@ namespace QuickGraph.Algorithms.Condensation
 
         private void CheckComponentCount<TVertex, TEdge>(
             IVertexAndEdgeListGraph<TVertex, TEdge> g,
-            IMutableBidirectionalGraph<AdjacencyGraph<TVertex, TEdge>, CondensatedEdge<TVertex, TEdge, AdjacencyGraph<TVertex, TEdge>>> cg)
+            IMutableBidirectionalGraph<AdjacencyGraph<TVertex, TEdge>, CondensedEdge<TVertex, TEdge, AdjacencyGraph<TVertex, TEdge>>> cg)
             where TEdge : IEdge<TVertex>
         {
             // check number of vertices = number of storngly connected components
@@ -70,7 +70,7 @@ namespace QuickGraph.Algorithms.Condensation
 
         private void CheckDAG<TVertex, TEdge>(
             IVertexAndEdgeListGraph<TVertex, TEdge> g,
-            IMutableBidirectionalGraph<AdjacencyGraph<TVertex, TEdge>, CondensatedEdge<TVertex, TEdge, AdjacencyGraph<TVertex, TEdge>>> cg)
+            IMutableBidirectionalGraph<AdjacencyGraph<TVertex, TEdge>, CondensedEdge<TVertex, TEdge, AdjacencyGraph<TVertex, TEdge>>> cg)
             where TEdge : IEdge<TVertex>
         {
             // check it's a dag

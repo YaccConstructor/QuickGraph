@@ -173,10 +173,10 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             out IDictionary<TVertex, double> distances)
         {
             var reversedGraph = new ReversedBidirectionalGraph<TVertex, TEdge>(this.VisitedGraph);
-            var successorsObserver = new VertexPredecessorRecorderObserver<TVertex, ReversedEdge<TVertex, TEdge>>();
-            Func<ReversedEdge<TVertex, TEdge>, double> reversedEdgeWeight = e => this.edgeWeights(e.OriginalEdge);
-            var distancesObserser = new VertexDistanceRecorderObserver<TVertex, ReversedEdge<TVertex, TEdge>>(reversedEdgeWeight);
-            var shortestpath = new DijkstraShortestPathAlgorithm<TVertex, ReversedEdge<TVertex, TEdge>>(
+            var successorsObserver = new VertexPredecessorRecorderObserver<TVertex, SReversedEdge<TVertex, TEdge>>();
+            Func<SReversedEdge<TVertex, TEdge>, double> reversedEdgeWeight = e => this.edgeWeights(e.OriginalEdge);
+            var distancesObserser = new VertexDistanceRecorderObserver<TVertex, SReversedEdge<TVertex, TEdge>>(reversedEdgeWeight);
+            var shortestpath = new DijkstraShortestPathAlgorithm<TVertex, SReversedEdge<TVertex, TEdge>>(
                 this, reversedGraph, reversedEdgeWeight, this.DistanceRelaxer);
             using (successorsObserver.Attach(shortestpath))
             using (distancesObserser.Attach(shortestpath))

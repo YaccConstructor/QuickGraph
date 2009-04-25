@@ -699,9 +699,6 @@
     <Compile Include="..\QuickGraph\ReversedBidirectionalListGraph.cs">
       <Link>ReversedBidirectionalListGraph.cs</Link>
     </Compile>
-    <Compile Include="..\QuickGraph\ReversedEdge.cs">
-      <Link>ReversedEdge.cs</Link>
-    </Compile>
     <Compile Include="..\QuickGraph\RootVertexNotSpecifiedException.cs">
       <Link>RootVertexNotSpecifiedException.cs</Link>
     </Compile>
@@ -731,6 +728,9 @@
     </Compile>
     <Compile Include="..\QuickGraph\Serialization\SerializerBase.cs">
       <Link>Serialization\SerializerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\SReversedEdge.cs">
+      <Link>SReversedEdge.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\TaggedEdge.cs">
       <Link>TaggedEdge.cs</Link>

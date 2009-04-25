@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 		QuickGraph.Perf1.psess = QuickGraph.Perf1.psess
 		QuickGraph.vsmdi = QuickGraph.vsmdi
+		QuickGraph1.vsmdi = QuickGraph1.vsmdi
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.SeeIt", "QuickGraph.SeeIt\QuickGraph.SeeIt.csproj", "{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}"
@@ -37,27 +38,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "All", "All\All.csproj", "{0
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 2
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs03.codeplex.com/
-		SccProjectUniqueName0 = QuickGraph.Msagl\\QuickGraph.Msagl.csproj
-		SccProjectName0 = QuickGraph.Msagl
+		SccTeamFoundationServer = 
+		SccProjectUniqueName0 = QuickGraph.SeeIt\\QuickGraph.SeeIt.csproj
 		SccAuxPath0 = https://tfs03.codeplex.com
-		SccLocalPath0 = QuickGraph.Msagl
+		SccLocalPath0 = QuickGraph.SeeIt
 		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName1 = QuickGraph.SeeIt\\QuickGraph.SeeIt.csproj
-		SccProjectName1 = QuickGraph.SeeIt
+		SccProjectUniqueName1 = QuickGraph.Perf\\QuickGraph.Perf.csproj
 		SccAuxPath1 = https://tfs03.codeplex.com
-		SccLocalPath1 = QuickGraph.SeeIt
+		SccLocalPath1 = QuickGraph.Perf
 		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName2 = QuickGraph.Perf\\QuickGraph.Perf.csproj
-		SccProjectName2 = QuickGraph.Perf
-		SccAuxPath2 = https://tfs03.codeplex.com
-		SccLocalPath2 = QuickGraph.Perf
-		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = QuickGraph.vsmdi
+		CategoryFile = QuickGraph1.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -415,7 +415,7 @@
     <Compile Include="Predicates\SinkVertexPredicate.cs" />
     <Compile Include="Algorithms\ConnectedComponents\StronglyConnectedComponentAlgorithm.cs" />
     <Compile Include="QuickGraphResourceManager.cs" />
-    <Compile Include="ReversedEdge.cs" />
+    <Compile Include="SReversedEdge.cs" />
     <Compile Include="ReversedBidirectionalListGraph.cs" />
     <Compile Include="RootVertexNotSpecifiedException.cs" />
     <Compile Include="Serialization\GraphMLExtensions.cs" />

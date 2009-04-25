@@ -375,5 +375,22 @@ TEdge edge,
 
             return edge.Source.Equals(source) && edge.Target.Equals(target);
         }
+
+        /// <summary>
+        /// Returns a reversed edge enumeration
+        /// </summary>
+        /// <param name="edges"></param>
+        /// <returns></returns>
+        public static IEnumerable<SReversedEdge<TVertex, TEdge>> ReverseEdges<TVertex, TEdge>(IEnumerable<TEdge> edges)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(edges != null);
+            Contract.Requires(Contract.ForAll(edges, e => e != null));
+            Contract.Ensures(Contract.Result<IEnumerable<SReversedEdge<TVertex, TEdge>>>() != null);
+
+            foreach (var edge in edges)
+                yield return new SReversedEdge<TVertex, TEdge>(edge);
+        }
+
     }
 }

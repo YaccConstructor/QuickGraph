@@ -38,9 +38,8 @@ namespace QuickGraph.Contracts
         IEnumerable<TEdge> IImplicitGraph<TVertex, TEdge>.OutEdges(TVertex v)
         {
             IImplicitGraph<TVertex, TEdge> ithis = this;
-            IEnumerable<TEdge> edges;
             Contract.Requires(v != null);
-            Contract.Requires(ithis.TryGetOutEdges(v, out edges));
+            Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Contract.Result<IEnumerable<TEdge>>() != null);
             Contract.Ensures(Contract.ForAll(ithis.OutEdges(v),e => e.Source.Equals(v)));
 

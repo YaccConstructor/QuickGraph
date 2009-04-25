@@ -1,17 +1,27 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using System.Runtime.InteropServices;
 
 namespace QuickGraph
 {
+    /// <summary>
+    /// A reversed edge
+    /// </summary>
+    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TEdge"></typeparam>
+#if !SILVERLIGHT
+    [Serializable]
+#endif
+    [StructLayout(LayoutKind.Auto)]
     [DebuggerDisplay("{Source}<-{Target}")]
-    public class ReversedEdge<TVertex, TEdge> : 
-        IEdge<TVertex>, 
-        IEquatable<ReversedEdge<TVertex, TEdge>>
+    public struct SReversedEdge<TVertex, TEdge> 
+        : IEdge<TVertex>
+        , IEquatable<SReversedEdge<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private readonly TEdge originalEdge;
-        public ReversedEdge(TEdge originalEdge)
+        public SReversedEdge(TEdge originalEdge)
         {
             Contract.Requires(originalEdge != null);
 
@@ -34,18 +44,18 @@ namespace QuickGraph
         }
         
         [Pure]
-        public override bool  Equals(object obj)
+        public override bool Equals(object obj)
         {
-            if (!(obj is ReversedEdge<TVertex, TEdge>))
+            if (!(obj is SReversedEdge<TVertex, TEdge>))
                 return false;
 
-            return Equals((ReversedEdge<TVertex, TEdge>)obj);
+            return Equals((SReversedEdge<TVertex, TEdge>)obj);
         }
 
         [Pure]
         public override int GetHashCode()
         {
-            return this.OriginalEdge.GetHashCode();
+            return this.OriginalEdge.GetHashCode() ^ 16777619;
         }
 
         [Pure]
@@ -55,7 +65,7 @@ namespace QuickGraph
         }
 
         [Pure]
-        public bool Equals(ReversedEdge<TVertex, TEdge> other)
+        public bool Equals(SReversedEdge<TVertex, TEdge> other)
         {
             return this.OriginalEdge.Equals(other.OriginalEdge);
         }

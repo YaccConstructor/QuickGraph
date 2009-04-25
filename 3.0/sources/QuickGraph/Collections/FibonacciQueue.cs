@@ -30,7 +30,8 @@ namespace QuickGraph.Collections
             Comparison<TDistance> distanceComparison
             )
         {
-            Contract.Requires(valueCount == Enumerable.Count(values));
+            Contract.Requires(valueCount >= 0);
+            Contract.Requires(valueCount == 0 || (values != null && valueCount == Enumerable.Count(values)));
             Contract.Requires(distances != null);
             Contract.Requires(distanceComparison != null);
 
