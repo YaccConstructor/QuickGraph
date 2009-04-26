@@ -294,6 +294,8 @@
     <Compile Include="Collections\VertexList.cs" />
     <Compile Include="CompressedSparseRowGraph.cs" />
     <Compile Include="Contracts\IUndirectedEdgeContract.cs" />
+    <Compile Include="TaggedUndirectedEdge.cs" />
+    <Compile Include="STaggedUndirectedEdge.cs" />
     <Compile Include="ITagged.cs" />
     <Compile Include="SEquatableUndirectedEdge.cs" />
     <Compile Include="STaggedEdge.cs" />

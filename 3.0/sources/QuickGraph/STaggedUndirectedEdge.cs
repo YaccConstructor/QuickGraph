@@ -13,20 +13,22 @@ namespace QuickGraph
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    [DebuggerDisplay(EdgeExtensions.UndirectedEdgeFormatString)]
+    [DebuggerDisplay(EdgeExtensions.TaggedUndirectedEdgeFormatString)]
     [StructLayout(LayoutKind.Auto)]
-    public struct SUndirectedEdge<TVertex>
+    public struct SUndirectedTaggedEdge<TVertex, TTag>
         : IUndirectedEdge<TVertex>
+        , ITagged<TTag>
     {
         private readonly TVertex source;
         private readonly TVertex target;
+        private TTag tag;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SUndirectedEdge&lt;TVertex&gt;"/> class.
+        /// Initializes a new instance of the <see cref="SUndirectedTaggedEdge&lt;TVertex&gt;"/> class.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="target">The target.</param>
-        public SUndirectedEdge(TVertex source, TVertex target)
+        public SUndirectedTaggedEdge(TVertex source, TVertex target, TTag tag)
         {
             Contract.Requires(source != null);
             Contract.Requires(target != null);
@@ -36,6 +38,7 @@ namespace QuickGraph
 
             this.source = source;
             this.target = target;
+            this.tag = tag;
         }
 
         /// <summary>
@@ -65,9 +68,32 @@ namespace QuickGraph
         public override string ToString()
         {
             return String.Format(
-                EdgeExtensions.UndirectedEdgeFormatString, 
-                this.Source, 
-                this.Target);
+                EdgeExtensions.TaggedUndirectedEdgeFormatString,
+                this.Source,
+                this.Target,
+                this.Tag);
+        }
+
+        public event EventHandler TagChanged;
+
+        void OnTagChanged(EventArgs e)
+        {
+            var eh = this.TagChanged;
+            if (eh != null)
+                eh(this, e);
+        }
+
+        public TTag Tag
+        {
+            get { return this.tag; }
+            set
+            {
+                if (!object.Equals(this.tag, value))
+                {
+                    this.tag = value;
+                    this.OnTagChanged(EventArgs.Empty);
+                }
+            }
         }
     }
 }

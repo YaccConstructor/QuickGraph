@@ -14,7 +14,7 @@ namespace QuickGraph
     [Serializable]
 #endif
     [StructLayout(LayoutKind.Auto)]
-    [DebuggerDisplay("{Source}->{Target}:{Tag}")]
+    [DebuggerDisplay(EdgeExtensions.TaggedEdgeFormatString)]
     public struct STaggedEquatableEdge<TVertex, TTag>
         : IEdge<TVertex>
         , IEquatable<STaggedEquatableEdge<TVertex, TTag>>
@@ -75,7 +75,10 @@ namespace QuickGraph
         /// </returns>
         public override string ToString()
         {
-            return this.Source + "->" + this.Target;
+            return String.Format(
+                EdgeExtensions.EdgeFormatString,
+                this.Source,
+                this.Target);
         }
 
         /// <summary>

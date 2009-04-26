@@ -741,17 +741,26 @@
     <Compile Include="..\QuickGraph\STaggedEquatableEdge.cs">
       <Link>STaggedEquatableEdge.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\STaggedUndirectedEdge.cs">
+      <Link>STaggedUndirectedEdge.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\TaggedEdge.cs">
       <Link>TaggedEdge.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\TaggedEquatableEdge.cs">
       <Link>TaggedEquatableEdge.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\TaggedUndirectedEdge.cs">
+      <Link>TaggedUndirectedEdge.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\TryFuncDelegates.cs">
       <Link>TryFuncDelegates.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\UndirectedBidirectionalGraph.cs">
       <Link>UndirectedBidirectionalGraph.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\UndirectedEdge.cs">
+      <Link>UndirectedEdge.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\UndirectedEdgeEventArgs.cs">
       <Link>UndirectedEdgeEventArgs.cs</Link>

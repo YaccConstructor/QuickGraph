@@ -13,7 +13,7 @@ namespace QuickGraph
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    [DebuggerDisplay("{Source}<->{Target}")]
+    [DebuggerDisplay(EdgeExtensions.UndirectedEdgeFormatString)]
     [StructLayout(LayoutKind.Auto)]
     public struct SEquatableUndirectedEdge<TVertex>
         : IUndirectedEdge<TVertex>
@@ -65,7 +65,10 @@ namespace QuickGraph
         /// </returns>
         public override string ToString()
         {
-            return this.Source + "<->" + this.Target;
+            return String.Format(
+                EdgeExtensions.UndirectedEdgeFormatString,
+                this.Source,
+                this.Target);
         }
 
         /// <summary>

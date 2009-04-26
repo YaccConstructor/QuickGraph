@@ -65,5 +65,17 @@ namespace QuickGraph
                 }
             }
         }
+
+        /// <summary>
+        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+        /// </returns>
+        public override string ToString()
+        {
+            return String.Format("{0}->{1}:{2}", this.Source, this.Target, this.Tag);
+        }
+
     }
 }

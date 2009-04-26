@@ -12,7 +12,7 @@ namespace QuickGraph
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    [DebuggerDisplay("{Source}->{Target}")]
+    [DebuggerDisplay(EdgeExtensions.EdgeFormatString)]
     [StructLayout(LayoutKind.Auto)]
     public struct SEdge<TVertex>
         : IEdge<TVertex>
@@ -62,7 +62,10 @@ namespace QuickGraph
         /// </returns>
         public override string ToString()
         {
-            return this.Source + "->" + this.Target;
+            return String.Format(
+                EdgeExtensions.EdgeFormatString,
+                this.Source,
+                this.Target);
         }
     }
 }
