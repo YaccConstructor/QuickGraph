@@ -738,8 +738,14 @@
     <Compile Include="..\QuickGraph\STaggedEdge.cs">
       <Link>STaggedEdge.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\STaggedEquatableEdge.cs">
+      <Link>STaggedEquatableEdge.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\TaggedEdge.cs">
       <Link>TaggedEdge.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\TaggedEquatableEdge.cs">
+      <Link>TaggedEquatableEdge.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\TryFuncDelegates.cs">
       <Link>TryFuncDelegates.cs</Link>

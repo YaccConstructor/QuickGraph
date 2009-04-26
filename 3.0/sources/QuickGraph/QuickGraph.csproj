@@ -297,6 +297,8 @@
     <Compile Include="ITagged.cs" />
     <Compile Include="SEquatableUndirectedEdge.cs" />
     <Compile Include="STaggedEdge.cs" />
+    <Compile Include="STaggedEquatableEdge.cs" />
+    <Compile Include="TaggedEquatableEdge.cs" />
     <Compile Include="UndirectedEdge.cs" />
     <Compile Include="IUndirectedEdge.cs" />
     <Compile Include="SEquatableEdge.cs" />
