@@ -8,6 +8,7 @@ namespace QuickGraph
 #endif
     public class TaggedEdge<TVertex,TTag> 
         : Edge<TVertex>
+        , ITagged<TTag>
     {
         private TTag tag;
 

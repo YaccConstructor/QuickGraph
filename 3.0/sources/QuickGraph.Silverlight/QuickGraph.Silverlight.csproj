@@ -621,6 +621,9 @@
     <Compile Include="..\QuickGraph\IMutableVertexSet.cs">
       <Link>IMutableVertexSet.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\ITagged.cs">
+      <Link>ITagged.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\IUndirectedEdge.cs">
       <Link>IUndirectedEdge.cs</Link>
     </Compile>

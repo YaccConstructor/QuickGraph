@@ -15,6 +15,7 @@ namespace QuickGraph
     [StructLayout(LayoutKind.Auto)]
     public struct STaggedEdge<TVertex, TTag>
         : IEdge<TVertex>
+        , ITagged<TTag>
     {
         readonly TVertex source;
         readonly TVertex target;
