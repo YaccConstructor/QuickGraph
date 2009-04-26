@@ -76,11 +76,6 @@ namespace QuickGraph
             set { this.edgeCapacity = value; }
         }
 
-        public static Type VertexType
-        {
-            get { return typeof(TVertex); }
-        }
-
         public static Type EdgeType
         {
             get { return typeof(TEdge); }

@@ -59,12 +59,6 @@ namespace QuickGraph
             }
         }
 
-        public static Type VertexType
-        {
-            [Pure]
-            get { return typeof(TVertex); }
-        }
-
         public static Type EdgeType
         {
             [Pure]

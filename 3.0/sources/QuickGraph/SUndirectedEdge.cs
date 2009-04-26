@@ -39,15 +39,6 @@ namespace QuickGraph
         }
 
         /// <summary>
-        /// Gets the type of the vertex.
-        /// </summary>
-        /// <value>The type of the vertex.</value>
-        public static Type VertexType
-        {
-            get { return typeof(TVertex); }
-        }
-
-        /// <summary>
         /// Gets the source vertex
         /// </summary>
         /// <value></value>
