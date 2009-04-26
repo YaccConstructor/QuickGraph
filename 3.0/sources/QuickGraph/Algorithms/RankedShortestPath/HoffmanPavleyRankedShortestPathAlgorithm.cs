@@ -7,6 +7,7 @@ using QuickGraph.Algorithms.Services;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.ShortestPath;
 using QuickGraph.Collections;
+using System.Diagnostics;
 
 namespace QuickGraph.Algorithms.RankedShortestPath
 {
@@ -205,10 +206,10 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             Contract.Requires(EdgeExtensions.IsAdjacent<TVertex, TEdge>(path[0], root));
             Contract.Requires(0 <= startEdge && startEdge < path.Length);
 
-            int iedge = 0;
             TVertex previousVertex = root;
             double previousWeight = 0;
-            for (; iedge < path.Length; ++iedge)
+            var pathVertices = new Dictionary<TVertex, int>(path.Length);
+            for (int iedge = 0; iedge < path.Length; ++iedge)
             {
                 var edge = path[iedge];
                 if (iedge >= startEdge)
@@ -218,11 +219,20 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                         path, 
                         iedge, 
                         previousVertex, 
-                        previousWeight);
+                        previousWeight,
+                        pathVertices
+                        );
 
                 // update counter
                 previousVertex = edge.Target;
                 previousWeight += this.edgeWeights(edge);
+
+                // detection of loops
+                if (iedge == 0)
+                    pathVertices[edge.Source] = 0;
+                if (pathVertices.ContainsKey(edge.Target)) // entering a loop
+                    break;
+                pathVertices[edge.Target] = 0;
             }
         }
 
@@ -232,7 +242,9 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             TEdge[] path, 
             int iedge, 
             TVertex previousVertex, 
-            double previousWeight)
+            double previousWeight,
+            Dictionary<TVertex, int> pathVertices
+            )
         {
             Contract.Requires(queue != null);
             Contract.Requires(distances != null);
@@ -241,8 +253,12 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             var edge = path[iedge];
             foreach (var deviationEdge in this.VisitedGraph.OutEdges(previousVertex))
             {
+                // skip self edges,
+                // skip equal edges,
+                // skip any edge obviously creating a loop
                 if (deviationEdge.Equals(edge) ||
-                    EdgeExtensions.IsSelfEdge<TVertex, TEdge>(deviationEdge)) continue;
+                    EdgeExtensions.IsSelfEdge<TVertex, TEdge>(deviationEdge) ||
+                    pathVertices.ContainsKey(edge.Target)) continue;
 
                 var atarget = deviationEdge.Target;
                 double adistance;
@@ -258,7 +274,8 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                             );
 
                     var deviation = new DeviationPath(
-                        path, iedge,
+                        path, 
+                        iedge,
                         deviationEdge,
                         deviationWeight
                         );
@@ -286,6 +303,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             }
         }
 
+        [DebuggerDisplay("Weight = {Weight}, Index = {DeviationIndex}, Edge = {DeviationEdge}")]
         struct DeviationPath
         {
             public readonly TEdge[] ParentPath;

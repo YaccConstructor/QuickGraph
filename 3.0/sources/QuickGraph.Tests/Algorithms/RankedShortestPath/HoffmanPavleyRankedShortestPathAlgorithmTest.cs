@@ -109,7 +109,7 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
             )
             where TEdge : IEdge<TVertex>
         {
-            GraphConsoleSerializer.DisplayGraph((IEdgeListGraph<TVertex, TEdge>)g);
+            //GraphConsoleSerializer.DisplayGraph((IEdgeListGraph<TVertex, TEdge>)g);
 
             PexAssert.TrueForAll(g.Edges, edgeWeights.ContainsKey);
 
