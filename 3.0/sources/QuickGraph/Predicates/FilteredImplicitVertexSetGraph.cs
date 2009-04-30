@@ -23,9 +23,9 @@ namespace QuickGraph.Predicates
         [Pure]
         public bool ContainsVertex(TVertex vertex)
         {
-            if (!this.VertexPredicate(vertex))
-                return false;
-            return this.BaseGraph.ContainsVertex(vertex);
+            return
+                this.VertexPredicate(vertex) &&
+                this.BaseGraph.ContainsVertex(vertex);
         }
     }
 }
