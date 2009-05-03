@@ -40,8 +40,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             )
             :base(host, visitedGraph)
         {
-            if (edgeChain == null)
-                throw new ArgumentNullException("edgeChain");
+            Contract.Requires(edgeChain != null);
             this.edgeChain = edgeChain;
         }
 
@@ -80,6 +79,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
             set
             {
+                Contract.Requires(value != null);
                 this.rnd = value;
             }
         }
@@ -184,8 +184,9 @@ namespace QuickGraph.Algorithms.RandomWalks
 
         public void RandomTreeWithRoot(TVertex root)
         {
-            if (root == null)
-                throw new ArgumentNullException("root");
+            Contract.Requires(root != null);
+            Contract.Requires(this.VisitedGraph.ContainsVertex(root));
+
             this.SetRootVertex(root);
             this.Compute();
         }
@@ -196,38 +197,47 @@ namespace QuickGraph.Algorithms.RandomWalks
             if (!this.TryGetRootVertex(out rootVertex))
                 throw new InvalidOperationException("RootVertex not specified");
 
+            var cancelManager = this.Services.CancelManager;
             // process root
             ClearTree(rootVertex);
             SetInTree(rootVertex);
 
-            TVertex u;
             foreach (var i in this.VisitedGraph.Vertices)
             {
-                u = i;
-
+                if (cancelManager.IsCancelling) break;
                 // first pass exploring
-                while (u != null && NotInTree(u))
                 {
-                    Tree(u, RandomSuccessor(u));
-                    u = NextInTree(u);
+                    TVertex u = i;
+
+                    while (u != null && NotInTree(u))
+                    {
+                        Tree(u, RandomSuccessor(u));
+                        u = NextInTree(u);
+                    }
                 }
 
                 // second pass, coloring
-                u = i;
-                while (u != null && NotInTree(u))
                 {
-                    SetInTree(u);
-                    u = NextInTree(u);
+                    TVertex u = i;
+                    while (u != null && NotInTree(u))
+                    {
+                        SetInTree(u);
+                        u = NextInTree(u);
+                    }
                 }
             }
         }
 
         public void RandomTree()
         {
+            var cancelManager = this.Services.CancelManager;
+
             double eps = 1;
             bool success;
             do
             {
+                if (cancelManager.IsCancelling) break;
+
                 eps /= 2;
                 success = Attempt(eps);
             } while (!success);
@@ -237,36 +247,42 @@ namespace QuickGraph.Algorithms.RandomWalks
         {
             Initialize();
             int numRoots = 0;
+            var cancelManager = this.Services.CancelManager;
 
-            TVertex u;
             foreach (var i in this.VisitedGraph.Vertices)
             {
-                u = i;
+                if (cancelManager.IsCancelling) break;
 
                 // first pass exploring
-                while (u != null && NotInTree(u))
                 {
-                    if (Chance(eps))
+                    var u = i;
+
+                    while (u != null && NotInTree(u))
                     {
-                        ClearTree(u);
-                        SetInTree(u);
-                        ++numRoots;
-                        if (numRoots > 1)
-                            return false;
-                    }
-                    else
-                    {
-                        Tree(u, RandomSuccessor(u));
-                        u = NextInTree(u);
+                        if (Chance(eps))
+                        {
+                            ClearTree(u);
+                            SetInTree(u);
+                            ++numRoots;
+                            if (numRoots > 1)
+                                return false;
+                        }
+                        else
+                        {
+                            Tree(u, RandomSuccessor(u));
+                            u = NextInTree(u);
+                        }
                     }
                 }
 
                 // second pass, coloring
-                u = i;
-                while (u != null && NotInTree(u))
                 {
-                    SetInTree(u);
-                    u = NextInTree(u);
+                    var u = i;
+                    while (u != null && NotInTree(u))
+                    {
+                        SetInTree(u);
+                        u = NextInTree(u);
+                    }
                 }
             }
             return true;
