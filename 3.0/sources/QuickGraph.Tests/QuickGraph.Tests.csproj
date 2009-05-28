@@ -277,6 +277,7 @@
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\WeaklyConnectedComponentsAlgorithmTest.cs" />
+    <Compile Include="ArrayAdjacencyGraphTVertexTEdgeTest.cs" />
     <Compile Include="Benchmark.cs" />
     <Compile Include="Collections\BinaryHeapTest.cs" />
     <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Constructor.g.cs">
@@ -383,6 +384,7 @@
       <DependentUpon>EdgeTVertexTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Factories\AdjacencyGraphFactory.cs" />
+    <Compile Include="Factories\ArrayAdjacencyGraphFactory.cs" />
     <Compile Include="Factories\EdgeFactory.cs" />
     <Compile Include="Factories\FibonacciHeapFactory.cs" />
     <Compile Include="Factories\ForestDisjointSetFactory.cs" />

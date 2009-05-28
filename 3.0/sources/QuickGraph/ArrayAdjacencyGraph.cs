@@ -41,13 +41,13 @@ namespace QuickGraph
             Contract.Requires(edges != null);
             Contract.Requires(typeof(TEdge).IsValueType || Contract.ForAll(edges, e => e != null));
             Contract.Requires(vertexIndices != null);
+#if CONTRACTS_BUG
             Contract.Requires(Contract.ForAll(edges, 
                 e =>
-                    0 <= vertexIndices(e.Source) && 
-                    vertexIndices(e.Source) < vertexCount &&
-                    0 <= vertexIndices(e.Target) && 
-                    vertexIndices(e.Target) < vertexCount)
+                    0 <= vertexIndices(e.Source) && vertexIndices(e.Source) < vertexCount &&
+                    0 <= vertexIndices(e.Target) && vertexIndices(e.Target) < vertexCount)
                     );
+#endif
 
             this.vertexCount = vertexCount;
             this.vertexIndices = vertexIndices;
