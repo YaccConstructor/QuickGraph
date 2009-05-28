@@ -279,6 +279,7 @@
     <Compile Include="Algorithms\TopologicalSort\UndirectedFirstTopologicalSortAlgorithm.cs" />
     <Compile Include="Algorithms\TopologicalSort\UndirectedTopologicalSortAlgorithm.cs" />
     <Compile Include="Algorithms\ConnectedComponents\WeaklyConnectedComponentsAlgorithm.cs" />
+    <Compile Include="ArrayAdjacencyGraph.cs" />
     <Compile Include="BidirectionAdapterGraph.cs" />
     <Compile Include="Collections\BinaryHeap.cs" />
     <Compile Include="Collections\ForestDisjointSet.cs" />
@@ -435,6 +436,7 @@
     <Compile Include="UndirectedGraph.cs" />
     <Compile Include="VertexEventArgs.cs" />
     <Compile Include="VertexIdentity.cs" />
+    <Compile Include="VertexIndexer.cs" />
     <Compile Include="VertexPredicate.cs" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>

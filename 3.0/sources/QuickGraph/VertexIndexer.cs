@@ -7,5 +7,5 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph
 {
     [Pure]
-    public delegate string VertexIdentity<TVertex>(TVertex v);
+    public delegate int VertexIndexer<TVertex>(TVertex v);
 }

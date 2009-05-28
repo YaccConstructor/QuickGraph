@@ -375,6 +375,9 @@
     <Compile Include="..\QuickGraph\Algorithms\TopologicalSort\UndirectedTopologicalSortAlgorithm.cs">
       <Link>Algorithms\TopologicalSort\UndirectedTopologicalSortAlgorithm.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\ArrayAdjacencyGraph.cs">
+      <Link>ArrayAdjacencyGraph.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\BidirectionAdapterGraph.cs">
       <Link>BidirectionAdapterGraph.cs</Link>
     </Compile>
@@ -776,6 +779,9 @@
     </Compile>
     <Compile Include="..\QuickGraph\VertexIdentity.cs">
       <Link>VertexIdentity.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\VertexIndexer.cs">
+      <Link>VertexIndexer.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\VertexPredicate.cs">
       <Link>VertexPredicate.cs</Link>
