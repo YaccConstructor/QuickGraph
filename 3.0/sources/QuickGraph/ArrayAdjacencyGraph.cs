@@ -54,6 +54,8 @@ namespace QuickGraph
             this.edgeStartIndices = new int[vertexCount + 1];
             this.outEdges = edges;
 
+            // order out edges with respect to source
+            Array.Sort(this.outEdges, (l, r) => vertexIndices(l.Source).CompareTo(vertexIndices(r.Source)));
             // first compute the number of out-edges per vertex
             foreach (var edge in edges)
                 this.edgeStartIndices[this.vertexIndices(edge.Source)]++;            
@@ -67,9 +69,6 @@ namespace QuickGraph
             }
             Contract.Assert(counter == edges.Length);
             this.edgeStartIndices[this.edgeStartIndices.Length - 1] = edges.Length;
-
-            // order out edges with respect to source
-            Array.Sort(this.outEdges, (l, r) => vertexIndices(l.Source).CompareTo(vertexIndices(l.Target)));
         }
 
         /// <summary>
