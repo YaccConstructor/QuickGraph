@@ -7,31 +7,31 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph
 {
     /// <summary>
-    /// A functional implicit undirected graph
+    /// A delegate-based incidence graph
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class DelegateUndirectedGraph<TVertex, TEdge>
-        : DelegateImplicitUndirectedGraph<TVertex, TEdge>
-        , IUndirectedGraph<TVertex, TEdge>
+    public class DelegateVertexListGraph<TVertex, TEdge>
+        : DelegateIncidenceGraph<TVertex, TEdge>
+        , IVertexAndEdgeListGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         readonly IEnumerable<TVertex> vertices;
 
-        public DelegateUndirectedGraph(
-             IEnumerable<TVertex> vertices,
-             TryFunc<TVertex, IEnumerable<TEdge>> tryGetAdjacentEdges,
-             bool allowParallelEdges)
-            : base(tryGetAdjacentEdges, allowParallelEdges)
+        public DelegateVertexListGraph(
+            IEnumerable<TVertex> vertices,
+            TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges,
+            bool allowParallelEdges)
+            : base(tryGetOutEdges, allowParallelEdges)
         {
             Contract.Requires(vertices != null);
             Contract.Requires(Contract.ForAll(vertices, v =>
             {
                 IEnumerable<TEdge> edges;
-                return tryGetAdjacentEdges(v, out edges);
+                return tryGetOutEdges(v, out edges);
             }));
 
             this.vertices = vertices;
@@ -47,11 +47,14 @@ namespace QuickGraph
             }
         }
 
+        int vertexCount = -1;
         public int VertexCount
         {
             get
             {
-                return Enumerable.Count(this.vertices);
+                if (this.vertexCount < 0)
+                    this.vertexCount = Enumerable.Count(this.vertices);
+                return this.vertexCount;
             }
         }
 
@@ -64,39 +67,44 @@ namespace QuickGraph
         {
             get {
                 foreach (var vertex in this.vertices)
-                    foreach (var edge in this.AdjacentEdges(vertex))
+                    foreach (var edge in this.OutEdges(vertex))
                         return false;
                 return true;
             }
         }
 
-        int vertexCount = -1;
+        int edgeCount = -1;
         public int EdgeCount
         {
             get
             {
-                if (this.vertexCount < 0)
-                    this.vertexCount = Enumerable.Count(this.Edges);
-                return this.vertexCount;
+                if (this.edgeCount < 0)
+                {
+                    int count = 0;
+                    foreach (var vertex in this.vertices)
+                        foreach (var edge in this.OutEdges(vertex))
+                            count++;
+                    this.edgeCount = count;
+                }
+                return this.edgeCount;
             }
         }
 
         public IEnumerable<TEdge> Edges
         {
-            get 
+            get
             {
                 foreach (var vertex in this.vertices)
-                    foreach (var edge in this.AdjacentEdges(vertex))
-                        if (edge.Source.Equals(vertex))
-                            yield return edge;
+                    foreach (var edge in this.OutEdges(vertex))
+                        yield return edge;
             }
         }
 
         public bool ContainsEdge(TEdge edge)
         {
             IEnumerable<TEdge> edges;
-            if (this.TryGetAdjacentEdges(edge.Source, out edges))
-                foreach (var e in edges)
+            if (this.TryGetOutEdges(edge.Source, out edges))
+                foreach(var e in edges)
                     if (e.Equals(edge))
                         return true;
             return false;

@@ -7,9 +7,9 @@ namespace QuickGraph
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>
-    public interface IVertexAndEdgeListGraph<TVertex,TEdge> :
-        IVertexListGraph<TVertex,TEdge>,
-        IEdgeListGraph<TVertex,TEdge>
+    public interface IVertexAndEdgeListGraph<TVertex,TEdge> 
+        : IVertexListGraph<TVertex,TEdge>
+        , IEdgeListGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {}
 }

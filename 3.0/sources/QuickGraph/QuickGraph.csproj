@@ -297,8 +297,11 @@
     <Compile Include="Contracts\IImplicitUndirectedGraphContract.cs" />
     <Compile Include="Contracts\IUndirectedEdgeContract.cs" />
     <Compile Include="ArrayUndirectedGraph.cs" />
+    <Compile Include="DelegateImplicitUndirectedGraph.cs" />
+    <Compile Include="DelegateIncidenceGraph.cs" />
     <Compile Include="DelegateUndirectedGraph.cs" />
     <Compile Include="DelegateImplicitGraph.cs" />
+    <Compile Include="DelegateVertexListGraph.cs" />
     <Compile Include="IImplicitUndirectedGraph.cs" />
     <Compile Include="TaggedUndirectedEdge.cs" />
     <Compile Include="STaggedUndirectedEdge.cs" />

@@ -522,8 +522,17 @@
     <Compile Include="..\QuickGraph\DelegateImplicitGraph.cs">
       <Link>DelegateImplicitGraph.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\DelegateImplicitUndirectedGraph.cs">
+      <Link>DelegateImplicitUndirectedGraph.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\DelegateIncidenceGraph.cs">
+      <Link>DelegateIncidenceGraph.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\DelegateUndirectedGraph.cs">
       <Link>DelegateUndirectedGraph.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\DelegateVertexListGraph.cs">
+      <Link>DelegateVertexListGraph.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Edge.cs">
       <Link>Edge.cs</Link>
