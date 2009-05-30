@@ -14,6 +14,39 @@ namespace QuickGraph
     public static class GraphExtensions
     {
         /// <summary>
+        /// Wraps a dictionary into a vertex and edge list graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dictionary"></param>
+        /// <param name="keyValueToOutEdges"></param>
+        /// <returns></returns>
+        public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToVertexAndEdgeListGraph<TVertex, TEdge, TValue>(
+            IDictionary<TVertex, TValue> dictionary,
+            Converter<KeyValuePair<TVertex,TValue>, IEnumerable<TEdge>> keyValueToOutEdges
+            )
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(dictionary != null);
+            Contract.Requires(keyValueToOutEdges != null);
+
+            return new DelegateVertexAndEdgeListGraph<TVertex, TEdge>(
+                dictionary.Keys,
+                delegate(TVertex key, out IEnumerable<TEdge> edges) {
+                    TValue value;
+                    if (dictionary.TryGetValue(key, out value))
+                    {
+                        edges = keyValueToOutEdges(new KeyValuePair<TVertex, TValue>(key, value));
+                        return true;
+                    }
+
+                    edges = null;
+                    return false;
+                });
+        }
+
+        /// <summary>
         /// Creates an instance of DelegateIncidenceGraph.
         /// </summary>
         /// <typeparam name="TVertex"></typeparam>
