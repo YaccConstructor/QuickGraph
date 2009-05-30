@@ -32,6 +32,11 @@ namespace QuickGraph
             this.allowParallelEdges = allowParallelEdges;
         }
 
+        public TryFunc<TVertex, IEnumerable<TEdge>> TryGetOutEdgesFunc
+        {
+            get { return this.tryGetOutEdges; }
+        }
+
         public bool IsOutEdgesEmpty(TVertex v)
         {
             foreach (var edge in this.OutEdges(v))
