@@ -531,8 +531,8 @@
     <Compile Include="..\QuickGraph\DelegateUndirectedGraph.cs">
       <Link>DelegateUndirectedGraph.cs</Link>
     </Compile>
-    <Compile Include="..\QuickGraph\DelegateVertexListGraph.cs">
-      <Link>DelegateVertexListGraph.cs</Link>
+    <Compile Include="..\QuickGraph\DelegateVertexAndEdgeListGraph.cs">
+      <Link>DelegateVertexAndEdgeListGraph.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Edge.cs">
       <Link>Edge.cs</Link>

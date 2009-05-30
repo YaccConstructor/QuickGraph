@@ -301,7 +301,7 @@
     <Compile Include="DelegateIncidenceGraph.cs" />
     <Compile Include="DelegateUndirectedGraph.cs" />
     <Compile Include="DelegateImplicitGraph.cs" />
-    <Compile Include="DelegateVertexListGraph.cs" />
+    <Compile Include="DelegateVertexAndEdgeListGraph.cs" />
     <Compile Include="IImplicitUndirectedGraph.cs" />
     <Compile Include="TaggedUndirectedEdge.cs" />
     <Compile Include="STaggedUndirectedEdge.cs" />

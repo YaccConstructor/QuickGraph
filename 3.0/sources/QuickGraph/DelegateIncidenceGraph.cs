@@ -19,9 +19,8 @@ namespace QuickGraph
         where TEdge : IEdge<TVertex>
     {
         public DelegateIncidenceGraph(
-            TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges,
-            bool allowParallelEdges)
-            :base(tryGetOutEdges, allowParallelEdges) {}
+            TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges)
+            :base(tryGetOutEdges) {}
 
         public bool ContainsEdge(TVertex source, TVertex target)
         {

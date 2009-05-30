@@ -20,16 +20,13 @@ namespace QuickGraph
         where TEdge : IEdge<TVertex>
     {
         readonly TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges;
-        readonly bool allowParallelEdges;
 
         public DelegateImplicitGraph(
-            TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges,
-            bool allowParallelEdges)
+            TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges)
         {
             Contract.Requires(tryGetOutEdges != null);
 
             this.tryGetOutEdges = tryGetOutEdges;
-            this.allowParallelEdges = allowParallelEdges;
         }
 
         public TryFunc<TVertex, IEnumerable<TEdge>> TryGetOutEdgesFunc
@@ -74,7 +71,7 @@ namespace QuickGraph
 
         public bool AllowParallelEdges
         {
-            get { return this.allowParallelEdges; }
+            get { return true; }
         }
 
         public bool ContainsVertex(TVertex vertex)

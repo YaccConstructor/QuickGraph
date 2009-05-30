@@ -14,18 +14,17 @@ namespace QuickGraph
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class DelegateVertexListGraph<TVertex, TEdge>
+    public class DelegateVertexAndEdgeListGraph<TVertex, TEdge>
         : DelegateIncidenceGraph<TVertex, TEdge>
         , IVertexAndEdgeListGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         readonly IEnumerable<TVertex> vertices;
 
-        public DelegateVertexListGraph(
+        public DelegateVertexAndEdgeListGraph(
             IEnumerable<TVertex> vertices,
-            TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges,
-            bool allowParallelEdges)
-            : base(tryGetOutEdges, allowParallelEdges)
+            TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges)
+            : base(tryGetOutEdges)
         {
             Contract.Requires(vertices != null);
             Contract.Requires(Contract.ForAll(vertices, v =>

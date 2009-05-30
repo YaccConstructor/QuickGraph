@@ -14,6 +14,50 @@ namespace QuickGraph
     public static class GraphExtensions
     {
         /// <summary>
+        /// Creates an instance of DelegateIncidenceGraph.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="tryGetOutEdges"></param>
+        /// <returns></returns>
+        public static DelegateIncidenceGraph<TVertex, TEdge> ToDelegateIncidenceGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(tryGetOutEdges != null);
+            return new DelegateIncidenceGraph<TVertex, TEdge>(tryGetOutEdges);
+        }
+
+        /// <summary>
+        /// Creates an instance of DelegateIncidenceGraph.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="tryGetOutEdges"></param>
+        /// <returns></returns>
+        public static DelegateIncidenceGraph<TVertex, TEdge> ToDelegateVertexAndEdgeListGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IEnumerable<TVertex> vertices,
+            TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(vertices != null);
+            Contract.Requires(tryGetOutEdges != null);
+            Contract.Requires(Contract.ForAll(vertices, v =>
+            {
+                IEnumerable<TEdge> edges;
+                return tryGetOutEdges(v, out edges);
+            }));
+
+            return new DelegateVertexAndEdgeListGraph<TVertex, TEdge>(vertices, tryGetOutEdges);
+        }
+
+        /// <summary>
         /// Creates an immutable array adjacency graph from the input graph
         /// </summary>
         /// <typeparam name="TVertex"></typeparam>
