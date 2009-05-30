@@ -549,6 +549,9 @@
     <Compile Include="..\QuickGraph\FuncDelegates.cs">
       <Link>FuncDelegates.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\FunctionalImplicitGraph.cs">
+      <Link>FunctionalImplicitGraph.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\GraphColor.cs">
       <Link>GraphColor.cs</Link>
     </Compile>

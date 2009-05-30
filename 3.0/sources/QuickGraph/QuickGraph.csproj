@@ -296,6 +296,7 @@
     <Compile Include="CompressedSparseRowGraph.cs" />
     <Compile Include="Contracts\IUndirectedEdgeContract.cs" />
     <Compile Include="ArrayUndirectedGraph.cs" />
+    <Compile Include="FunctionalImplicitGraph.cs" />
     <Compile Include="TaggedUndirectedEdge.cs" />
     <Compile Include="STaggedUndirectedEdge.cs" />
     <Compile Include="ITagged.cs" />

@@ -13,7 +13,7 @@ namespace QuickGraph
    [ContractClass(typeof(IImplicitGraphContract<,>))]
    public interface IImplicitGraph<TVertex,TEdge> 
         : IGraph<TVertex,TEdge>
-       , IImplicitVertexSet<TVertex>
+        , IImplicitVertexSet<TVertex>
         where TEdge : IEdge<TVertex>
     {
         /// <summary>
