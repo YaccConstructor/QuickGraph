@@ -179,33 +179,33 @@ namespace QuickGraph.Contracts
 
         #endregion
 
-        #region IUndirectedGraph<TVertex,TEdge> Members
+        #region IImplicitUndirectedGraph<TVertex,TEdge> Members
         [Pure] // InterfacePureBug
-        IEnumerable<TEdge> IUndirectedGraph<TVertex, TEdge>.AdjacentEdges(TVertex v)
+        IEnumerable<TEdge> IImplicitUndirectedGraph<TVertex, TEdge>.AdjacentEdges(TVertex v)
         {
             throw new NotImplementedException();
         }
 
         [Pure] // InterfacePureBug
-        int IUndirectedGraph<TVertex, TEdge>.AdjacentDegree(TVertex v)
+        int IImplicitUndirectedGraph<TVertex, TEdge>.AdjacentDegree(TVertex v)
         {
             throw new NotImplementedException();
         }
 
         [Pure] // InterfacePureBug
-        bool IUndirectedGraph<TVertex, TEdge>.IsAdjacentEdgesEmpty(TVertex v)
+        bool IImplicitUndirectedGraph<TVertex, TEdge>.IsAdjacentEdgesEmpty(TVertex v)
         {
             throw new NotImplementedException();
         }
 
         [Pure] // InterfacePureBug
-        TEdge IUndirectedGraph<TVertex, TEdge>.AdjacentEdge(TVertex v, int index)
+        TEdge IImplicitUndirectedGraph<TVertex, TEdge>.AdjacentEdge(TVertex v, int index)
         {
             throw new NotImplementedException();
         }
 
         [Pure] // InterfacePureBug
-        bool IUndirectedGraph<TVertex, TEdge>.ContainsEdge(TVertex source, TVertex target)
+        bool IImplicitUndirectedGraph<TVertex, TEdge>.ContainsEdge(TVertex source, TVertex target)
         {
             throw new NotImplementedException();
         }

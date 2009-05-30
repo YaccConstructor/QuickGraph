@@ -471,6 +471,9 @@
     <Compile Include="..\QuickGraph\Contracts\IImplicitGraphContract.cs">
       <Link>Contracts\IImplicitGraphContract.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\Contracts\IImplicitUndirectedGraphContract.cs">
+      <Link>Contracts\IImplicitUndirectedGraphContract.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Contracts\IImplicitVertexSetContract.cs">
       <Link>Contracts\IImplicitVertexSetContract.cs</Link>
     </Compile>
@@ -516,6 +519,12 @@
     <Compile Include="..\QuickGraph\CreateVertexDelegate.cs">
       <Link>CreateVertexDelegate.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\DelegateImplicitGraph.cs">
+      <Link>DelegateImplicitGraph.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\DelegateUndirectedGraph.cs">
+      <Link>DelegateUndirectedGraph.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Edge.cs">
       <Link>Edge.cs</Link>
     </Compile>
@@ -548,9 +557,6 @@
     </Compile>
     <Compile Include="..\QuickGraph\FuncDelegates.cs">
       <Link>FuncDelegates.cs</Link>
-    </Compile>
-    <Compile Include="..\QuickGraph\FunctionalImplicitGraph.cs">
-      <Link>FunctionalImplicitGraph.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\GraphColor.cs">
       <Link>GraphColor.cs</Link>
@@ -596,6 +602,9 @@
     </Compile>
     <Compile Include="..\QuickGraph\IImplicitGraph.cs">
       <Link>IImplicitGraph.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\IImplicitUndirectedGraph.cs">
+      <Link>IImplicitUndirectedGraph.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\IImplicitVertexSet.cs">
       <Link>IImplicitVertexSet.cs</Link>

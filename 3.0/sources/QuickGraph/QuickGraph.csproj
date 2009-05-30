@@ -294,9 +294,12 @@
     <Compile Include="Collections\VertexEdgeDictionary.cs" />
     <Compile Include="Collections\VertexList.cs" />
     <Compile Include="CompressedSparseRowGraph.cs" />
+    <Compile Include="Contracts\IImplicitUndirectedGraphContract.cs" />
     <Compile Include="Contracts\IUndirectedEdgeContract.cs" />
     <Compile Include="ArrayUndirectedGraph.cs" />
-    <Compile Include="FunctionalImplicitGraph.cs" />
+    <Compile Include="DelegateUndirectedGraph.cs" />
+    <Compile Include="DelegateImplicitGraph.cs" />
+    <Compile Include="IImplicitUndirectedGraph.cs" />
     <Compile Include="TaggedUndirectedEdge.cs" />
     <Compile Include="STaggedUndirectedEdge.cs" />
     <Compile Include="ITagged.cs" />

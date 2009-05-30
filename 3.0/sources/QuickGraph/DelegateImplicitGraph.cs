@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics.Contracts;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
     /// <summary>
-    /// A functional implicit graph
+    /// A delegate-based implicit graph
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>
 #if !SILVERLIGHT
     [Serializable]
 #endif
-//    [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
-    public class FunctionalImplicitGraph<TVertex, TEdge>
+    public class DelegateImplicitGraph<TVertex, TEdge>
         : IImplicitGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         readonly TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges;
         readonly bool allowParallelEdges;
 
-        public FunctionalImplicitGraph(
+        public DelegateImplicitGraph(
             TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges,
             bool allowParallelEdges)
         {
