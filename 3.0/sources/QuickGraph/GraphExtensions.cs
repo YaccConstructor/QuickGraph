@@ -23,6 +23,26 @@ namespace QuickGraph
         /// <param name="keyValueToOutEdges"></param>
         /// <returns></returns>
         public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToVertexAndEdgeListGraph<TVertex, TEdge, TValue>(
+            IDictionary<TVertex, TValue> dictionary)
+            where TEdge : IEdge<TVertex>
+            where TValue : IEnumerable<TEdge>
+        {
+            Contract.Requires(dictionary != null);
+            Contract.Requires(Contract.ForAll(dictionary.Values, v => v != null));
+
+            return ToVertexAndEdgeListGraph<TVertex, TEdge, TValue>(dictionary, kv => kv.Value);
+        }
+
+        /// <summary>
+        /// Wraps a dictionary into a vertex and edge list graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dictionary"></param>
+        /// <param name="keyValueToOutEdges"></param>
+        /// <returns></returns>
+        public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToVertexAndEdgeListGraph<TVertex, TEdge, TValue>(
             IDictionary<TVertex, TValue> dictionary,
             Converter<KeyValuePair<TVertex,TValue>, IEnumerable<TEdge>> keyValueToOutEdges
             )
