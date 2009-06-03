@@ -24,7 +24,7 @@ namespace QuickGraph
         /// <returns></returns>
         public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToVertexAndEdgeListGraph<TVertex, TEdge, TValue>(
             IDictionary<TVertex, TValue> dictionary)
-            where TEdge : IEdge<TVertex>
+            where TEdge : IEdge<TVertex>, IEquatable<TEdge>
             where TValue : IEnumerable<TEdge>
         {
             Contract.Requires(dictionary != null);
@@ -46,7 +46,7 @@ namespace QuickGraph
             IDictionary<TVertex, TValue> dictionary,
             Converter<KeyValuePair<TVertex,TValue>, IEnumerable<TEdge>> keyValueToOutEdges
             )
-            where TEdge : IEdge<TVertex>
+            where TEdge : IEdge<TVertex>, IEquatable<TEdge>
         {
             Contract.Requires(dictionary != null);
             Contract.Requires(keyValueToOutEdges != null);
@@ -78,7 +78,7 @@ namespace QuickGraph
 this 
 #endif
             TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges)
-            where TEdge : IEdge<TVertex>
+            where TEdge : IEdge<TVertex>, IEquatable<TEdge>
         {
             Contract.Requires(tryGetOutEdges != null);
             return new DelegateIncidenceGraph<TVertex, TEdge>(tryGetOutEdges);
@@ -97,7 +97,7 @@ this
 #endif
             IEnumerable<TVertex> vertices,
             TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges)
-            where TEdge : IEdge<TVertex>
+            where TEdge : IEdge<TVertex>, IEquatable<TEdge>
         {
             Contract.Requires(vertices != null);
             Contract.Requires(tryGetOutEdges != null);

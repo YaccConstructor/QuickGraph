@@ -17,7 +17,7 @@ namespace QuickGraph
 #endif
     public class DelegateImplicitGraph<TVertex, TEdge>
         : IImplicitGraph<TVertex, TEdge>
-        where TEdge : IEdge<TVertex>
+        where TEdge : IEdge<TVertex>, IEquatable<TEdge>
     {
         readonly TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges;
 

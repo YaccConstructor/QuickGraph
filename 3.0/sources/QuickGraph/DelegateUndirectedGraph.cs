@@ -17,7 +17,7 @@ namespace QuickGraph
     public class DelegateUndirectedGraph<TVertex, TEdge>
         : DelegateImplicitUndirectedGraph<TVertex, TEdge>
         , IUndirectedGraph<TVertex, TEdge>
-        where TEdge : IEdge<TVertex>
+        where TEdge : IEdge<TVertex>, IEquatable<TEdge>
     {
         readonly IEnumerable<TVertex> vertices;
 

@@ -17,7 +17,7 @@ namespace QuickGraph
     public class DelegateVertexAndEdgeListGraph<TVertex, TEdge>
         : DelegateIncidenceGraph<TVertex, TEdge>
         , IVertexAndEdgeListGraph<TVertex, TEdge>
-        where TEdge : IEdge<TVertex>
+        where TEdge : IEdge<TVertex>, IEquatable<TEdge>
     {
         readonly IEnumerable<TVertex> vertices;
 

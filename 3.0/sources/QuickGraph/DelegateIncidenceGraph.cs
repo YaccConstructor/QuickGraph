@@ -16,7 +16,7 @@ namespace QuickGraph
     public class DelegateIncidenceGraph<TVertex, TEdge>
         : DelegateImplicitGraph<TVertex, TEdge>
         , IIncidenceGraph<TVertex, TEdge>
-        where TEdge : IEdge<TVertex>
+        where TEdge : IEdge<TVertex>, IEquatable<TEdge>
     {
         public DelegateIncidenceGraph(
             TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges)

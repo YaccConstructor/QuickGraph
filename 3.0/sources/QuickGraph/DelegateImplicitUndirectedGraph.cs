@@ -16,7 +16,7 @@ namespace QuickGraph
 #endif
     public class DelegateImplicitUndirectedGraph<TVertex, TEdge>
         : IImplicitUndirectedGraph<TVertex, TEdge>
-        where TEdge : IEdge<TVertex>
+        where TEdge : IEdge<TVertex>, IEquatable<TEdge>
     {
         readonly TryFunc<TVertex, IEnumerable<TEdge>> tryGetAdjacentEdges;
         readonly bool allowParallelEdges;
