@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using QuickGraph.Algorithms.Services;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
@@ -149,26 +150,32 @@ namespace QuickGraph.Algorithms.RandomWalks
             OnFinishVertex(u);
         }
 
-        private TEdge RandomSuccessor(TVertex u)
+        private bool TryGetSuccessor(Dictionary<TEdge, int> visited, TVertex u, out TEdge successor)
         {
-            return this.EdgeChain.Successor(this.VisitedGraph, u);
+            var outEdges = this.VisitedGraph.OutEdges(u);
+            var edges = Enumerable.Where(outEdges, e => !visited.ContainsKey(e));
+            return this.EdgeChain.TryGetSuccessor(edges, u, out successor);
         }
 
         private void Tree(TVertex u, TEdge next)
         {
+            Contract.Requires(next != null);
+
             this.successors[u] = next;
-            if (next == null)
-                return;
             OnTreeEdge(next);
         }
 
-        private TVertex NextInTree(TVertex u)
+        private bool TryGetNextInTree(TVertex u, out TVertex next)
         {
-            TEdge next = this.successors[u];
-            if (next == null)
-                return default(TVertex);
-            else
-                return next.Target;
+            TEdge nextEdge;
+            if (this.successors.TryGetValue(u, out nextEdge))
+            {
+                next = nextEdge.Target;
+                return true;
+            }
+
+            next = default(TVertex);
+            return false;
         }
 
         private bool Chance(double eps)
@@ -207,22 +214,27 @@ namespace QuickGraph.Algorithms.RandomWalks
                 if (cancelManager.IsCancelling) break;
                 // first pass exploring
                 {
+                    var visited = new Dictionary<TEdge, int>();
                     TVertex u = i;
-
-                    while (u != null && NotInTree(u))
+                    TEdge successor;
+                    while (NotInTree(u) &&
+                           this.TryGetSuccessor(visited, u, out successor))
                     {
-                        Tree(u, RandomSuccessor(u));
-                        u = NextInTree(u);
+                        visited[successor] = 0;
+                        Tree(u, successor);
+                        if (!this.TryGetNextInTree(u, out u))
+                            break;
                     }
                 }
 
                 // second pass, coloring
                 {
                     TVertex u = i;
-                    while (u != null && NotInTree(u))
+                    while (NotInTree(u))
                     {
                         SetInTree(u);
-                        u = NextInTree(u);
+                        if (!this.TryGetNextInTree(u, out u))
+                            break;
                     }
                 }
             }
@@ -255,9 +267,10 @@ namespace QuickGraph.Algorithms.RandomWalks
 
                 // first pass exploring
                 {
+                    var visited = new Dictionary<TEdge, int>();
+                    TEdge successor;
                     var u = i;
-
-                    while (u != null && NotInTree(u))
+                    while (NotInTree(u))
                     {
                         if (Chance(eps))
                         {
@@ -269,8 +282,12 @@ namespace QuickGraph.Algorithms.RandomWalks
                         }
                         else
                         {
-                            Tree(u, RandomSuccessor(u));
-                            u = NextInTree(u);
+                            if (!this.TryGetSuccessor(visited, u, out successor))
+                                break;
+                            visited[successor] = 0;
+                            Tree(u, successor);
+                            if (!this.TryGetNextInTree(u, out u))
+                                break;
                         }
                     }
                 }
@@ -278,10 +295,11 @@ namespace QuickGraph.Algorithms.RandomWalks
                 // second pass, coloring
                 {
                     var u = i;
-                    while (u != null && NotInTree(u))
+                    while (NotInTree(u))
                     {
                         SetInTree(u);
-                        u = NextInTree(u);
+                        if (!this.TryGetNextInTree(u, out u))
+                            break;
                     }
                 }
             }

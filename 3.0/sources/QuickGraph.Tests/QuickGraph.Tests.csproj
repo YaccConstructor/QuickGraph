@@ -414,6 +414,7 @@
     <Compile Include="Regression\ShortestPathBellmanFordTest.cs" />
     <Compile Include="Serialization\GraphMLSerializerTest.cs" />
     <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest.cs" />
+    <Compile Include="Serialization\Repro13428.cs" />
     <Compile Include="Serialization\SystemSerializationTest.cs" />
     <Compile Include="Serialization\XmlSerializationTest.cs" />
     <Compile Include="TaggedEdgeTVertexTTagTest.Constructor.g.cs">

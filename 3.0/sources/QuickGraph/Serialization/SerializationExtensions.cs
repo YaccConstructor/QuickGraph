@@ -7,6 +7,7 @@ using System.Xml;
 #if !SILVERLIGHT
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.XPath;
+using System.Xml.Serialization;
 #endif
 
 namespace QuickGraph.Serialization

@@ -88,9 +88,9 @@ namespace QuickGraph.Algorithms.RandomWalks
                 this.TreeEdge(e);
         }
 
-        private TEdge Successor(TVertex u)
+        private bool TryGetSuccessor(TVertex u, out TEdge successor)
         {
-            return this.EdgeChain.Successor(this.VisitedGraph, u);
+            return this.EdgeChain.TryGetSuccessor(this.VisitedGraph, u, out successor);
         }
 
         public void Generate(TVertex root)
@@ -110,9 +110,8 @@ namespace QuickGraph.Algorithms.RandomWalks
             TVertex v = root;
 
             OnStartVertex(root);
-            while (count < walkCount)
+            while (count < walkCount && this.TryGetSuccessor(v, out e))
             {
-                e = Successor(v);
                 // if dead end stop
                 if (e==null)
                     break;

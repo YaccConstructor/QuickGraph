@@ -37,6 +37,13 @@ namespace QuickGraph.Tests.Regression
             var test1 = new HoffmanPavleyRankedShortestPathAlgorithm<int, TaggedEdge<int, int>>(mvGraph2, E => 1.0);
             test1.ShortestPathCount = 5;
             test1.Compute(5, 2);
+            Console.WriteLine("path: {0}", test1.ComputedShortestPathCount);
+            foreach (var path in test1.ComputedShortestPaths)
+            {
+                foreach(var edge in path)
+                    Console.Write(edge + ":");
+                Console.WriteLine();
+            }
         }
     }
 }

@@ -33,28 +33,64 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
 		}
 
-        public override TEdge Successor(IImplicitGraph<TVertex,TEdge> g, TVertex u)
+        public override bool TryGetSuccessor(IImplicitGraph<TVertex,TEdge> g, TVertex u, out TEdge successor)
         {
-            if (g.IsOutEdgesEmpty(u))
-                return default(TEdge);
-            // get outweight
-            double outWeight = GetOutWeight(g, u);
-            // get succesor
-            TEdge s = Successor(g,u,this.Rand.NextDouble() * outWeight);
-
-			// update probabilities
-			this.Weights[s]*=this.Factor;
-
-            // normalize
-            foreach(TEdge e in g.OutEdges(u))
+            if (!g.IsOutEdgesEmpty(u))
             {
-                checked
+                // get outweight
+                double outWeight = GetOutWeight(g, u);
+                // get succesor
+                TEdge s;
+                if (this.TryGetSuccessor(g, u, this.Rand.NextDouble() * outWeight, out s))
                 {
-                    this.Weights[e]/=outWeight;
+                    // update probabilities
+                    this.Weights[s] *= this.Factor;
+
+                    // normalize
+                    foreach (TEdge e in g.OutEdges(u))
+                    {
+                        checked
+                        {
+                            this.Weights[e] /= outWeight;
+                        }
+                    }
+
+                    successor = s;
+                    return true;
                 }
             }
 
-			return s;
+            successor = default(TEdge);
+            return false;
 		}
-	}
+
+        public override bool TryGetSuccessor(IEnumerable<TEdge> edges, TVertex u, out TEdge successor)
+        {
+            // get outweight
+            double outWeight = this.GetWeights(edges);
+            // get succesor
+            TEdge s;
+            if (this.TryGetSuccessor(edges, this.Rand.NextDouble() * outWeight, out s))
+            {
+                // update probabilities
+                this.Weights[s] *= this.Factor;
+
+                // normalize
+                foreach (var e in edges)
+                {
+                    checked
+                    {
+                        this.Weights[e] /= outWeight;
+                    }
+                }
+
+
+                successor = s;
+                return true;
+            }
+
+            successor = default(TEdge);
+            return false;
+        }
+    }
 }
