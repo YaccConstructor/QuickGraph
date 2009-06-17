@@ -7,6 +7,7 @@ namespace QuickGraph.Graphviz.Dot
 
     public class GraphvizGraph
     {
+        private string name = "G";
         private Color backgroundColor = Color.White;
         private GraphvizClusterMode clusterRank = GraphvizClusterMode.Local;
         private string comment = null;
@@ -218,6 +219,12 @@ namespace QuickGraph.Graphviz.Dot
         public override string ToString()
         {
             return this.ToDot();
+        }
+
+        public string Name
+        {
+            get { return this.name; }
+            set { this.name = value; }
         }
 
         public Color BackgroundColor

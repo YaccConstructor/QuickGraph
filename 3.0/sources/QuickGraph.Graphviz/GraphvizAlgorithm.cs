@@ -3,6 +3,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using QuickGraph.Graphviz.Dot;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Graphviz
 {
@@ -29,10 +30,9 @@ namespace QuickGraph.Graphviz
             GraphvizImageType imageType
             )
         {
-            if (g == null)
-                throw new ArgumentNullException("g");
-            if (path == null)
-                throw new ArgumentNullException("path");
+            Contract.Requires(g != null);
+            Contract.Requires(!String.IsNullOrEmpty(path));
+
             this.visitedGraph = g;
             this.imageType = imageType;
             this.graphFormat = new GraphvizGraph();
@@ -156,25 +156,22 @@ namespace QuickGraph.Graphviz
 
         public string Generate(IDotEngine dot, string outputFileName)
         {
-            if (dot == null)
-                throw new ArgumentNullException("dot");
-            if (outputFileName == null)
-                throw new ArgumentNullException("outputFileName");
+            Contract.Requires(dot != null);
+            Contract.Requires(!String.IsNullOrEmpty(outputFileName));
 
             this.vertexIds.Clear();
-
             this.output = new StringWriter();
-
             // build vertex id map
             int i=0;
             foreach(TVertex v in this.VisitedGraph.Vertices)
                 this.vertexIds.Add(v,i++);
 
             if (this.VisitedGraph.IsDirected)
-                this.Output.Write("digraph");
+                this.Output.Write("digraph ");
             else
-                this.Output.Write("graph");
-            this.Output.WriteLine(" G {");
+                this.Output.Write("graph ");
+            this.Output.Write(this.GraphFormat.Name);
+            this.Output.WriteLine(" {");
 
             String gf = GraphFormat.ToDot();
             if (gf.Length > 0)
@@ -187,10 +184,10 @@ namespace QuickGraph.Graphviz
                 Output.WriteLine("edge [{0}];", ef);
 
             // initialize vertex map
-            IDictionary<TVertex,GraphColor> colors = new Dictionary<TVertex,GraphColor>();
+            var colors = new Dictionary<TVertex,GraphColor>();
             foreach (var v in VisitedGraph.Vertices)
                 colors[v] = GraphColor.White;
-            IDictionary<TEdge, GraphColor> edgeColors = new Dictionary<TEdge, GraphColor>();
+            var edgeColors = new Dictionary<TEdge, GraphColor>();
             foreach (var e in VisitedGraph.Edges)
                 edgeColors[e] = GraphColor.White;
 
@@ -206,6 +203,9 @@ namespace QuickGraph.Graphviz
             IDictionary<TVertex,GraphColor> colors,
             IEnumerable<TVertex> vertices)
         {
+            Contract.Requires(colors != null);
+            Contract.Requires(vertices != null);
+
             foreach (var v in vertices)
             {
                 if (colors[v] == GraphColor.White)
@@ -220,6 +220,9 @@ namespace QuickGraph.Graphviz
             IDictionary<TEdge,GraphColor> edgeColors,
             IEnumerable<TEdge> edges)
         {
+            Contract.Requires(edgeColors != null);
+            Contract.Requires(edges != null);
+
             foreach (var e in edges)
             {
                 if (edgeColors[e] != GraphColor.White)
