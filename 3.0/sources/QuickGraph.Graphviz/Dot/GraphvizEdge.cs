@@ -25,6 +25,7 @@ namespace QuickGraph.Graphviz.Dot
         private string tooltip = null;
         private string url = null;
         private double weight = 1;
+        private int length = 1;
 
         internal string GenerateDot(Hashtable pairs)
         {
@@ -137,6 +138,8 @@ namespace QuickGraph.Graphviz.Dot
                 dic["headport"] = this.HeadPort;
             if (this.TailPort != null)
                 dic["tailport"] = this.TailPort;
+            if (this.length != 1)
+                dic["len"] = this.length;
             return this.GenerateDot(dic);
         }
 
@@ -363,6 +366,12 @@ namespace QuickGraph.Graphviz.Dot
 
         public string HeadPort { get; set; }
         public string TailPort {get;set;}
+
+        public int Length
+        {
+            get { return this.length; }
+            set { this.length = value; }
+        }
     }
 }
 
