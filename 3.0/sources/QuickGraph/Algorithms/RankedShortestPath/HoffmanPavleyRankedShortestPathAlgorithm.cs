@@ -95,14 +95,17 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             IDictionary<TVertex, TEdge> successors;
             IDictionary<TVertex, double> distances;
             this.ComputeMinimumTree(goal, out successors, out distances);
+
             if (cancelManager.IsCancelling) return;
 
             var queue = new FibonacciQueue<DeviationPath, double>(dp => dp.Weight);
+            var vertexCount = this.VisitedGraph.VertexCount;
 
             // first shortest path
             this.EnqueueFirstShortestPath(queue, successors, distances, root);
 
-            while (queue.Count > 0 && this.ComputedShortestPathCount < this.ShortestPathCount)
+            while (queue.Count > 0 && 
+                this.ComputedShortestPathCount < this.ShortestPathCount)
             {
                 if (cancelManager.IsCancelling) return;
 
@@ -124,14 +127,15 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                     this.AddComputedShortestPath(path);
 
                 // append new deviation paths
-                this.EnqueueDeviationPaths(
-                    queue,
-                    root,
-                    successors,
-                    distances,
-                    path.ToArray(),
-                    startEdge
-                    );
+                if (path.Count < vertexCount)
+                    this.EnqueueDeviationPaths(
+                        queue,
+                        root,
+                        successors,
+                        distances,
+                        path.ToArray(),
+                        startEdge
+                        );
             }
         }
 
@@ -173,12 +177,17 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             out IDictionary<TVertex, TEdge> successors, 
             out IDictionary<TVertex, double> distances)
         {
-            var reversedGraph = new ReversedBidirectionalGraph<TVertex, TEdge>(this.VisitedGraph);
-            var successorsObserver = new VertexPredecessorRecorderObserver<TVertex, SReversedEdge<TVertex, TEdge>>();
-            Func<SReversedEdge<TVertex, TEdge>, double> reversedEdgeWeight = e => this.edgeWeights(e.OriginalEdge);
-            var distancesObserser = new VertexDistanceRecorderObserver<TVertex, SReversedEdge<TVertex, TEdge>>(reversedEdgeWeight);
-            var shortestpath = new DijkstraShortestPathAlgorithm<TVertex, SReversedEdge<TVertex, TEdge>>(
-                this, reversedGraph, reversedEdgeWeight, this.DistanceRelaxer);
+            var reversedGraph = 
+                new ReversedBidirectionalGraph<TVertex, TEdge>(this.VisitedGraph);
+            var successorsObserver = 
+                new VertexPredecessorRecorderObserver<TVertex, SReversedEdge<TVertex, TEdge>>();
+            Func<SReversedEdge<TVertex, TEdge>, double> reversedEdgeWeight = 
+                e => this.edgeWeights(e.OriginalEdge);
+            var distancesObserser = 
+                new VertexDistanceRecorderObserver<TVertex, SReversedEdge<TVertex, TEdge>>(reversedEdgeWeight);
+            var shortestpath = 
+                new DijkstraShortestPathAlgorithm<TVertex, SReversedEdge<TVertex, TEdge>>(
+                    this, reversedGraph, reversedEdgeWeight, this.DistanceRelaxer);
             using (successorsObserver.Attach(shortestpath))
             using (distancesObserser.Attach(shortestpath))
                 shortestpath.Compute(goal);
@@ -230,7 +239,8 @@ namespace QuickGraph.Algorithms.RankedShortestPath
                 // detection of loops
                 if (iedge == 0)
                     pathVertices[edge.Source] = 0;
-                if (pathVertices.ContainsKey(edge.Target)) // entering a loop
+                // we should really allow only one key
+                if (pathVertices.ContainsKey(edge.Target))
                     break;
                 pathVertices[edge.Target] = 0;
             }
@@ -255,12 +265,12 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             {
                 // skip self edges,
                 // skip equal edges,
-                // skip any edge obviously creating a loop
                 if (deviationEdge.Equals(edge) ||
-                    EdgeExtensions.IsSelfEdge<TVertex, TEdge>(deviationEdge) ||
-                    pathVertices.ContainsKey(edge.Target)) continue;
+                    EdgeExtensions.IsSelfEdge<TVertex, TEdge>(deviationEdge)) continue;
 
+                // any edge obviously creating a loop
                 var atarget = deviationEdge.Target;
+
                 double adistance;
                 if (distances.TryGetValue(atarget, out adistance))
                 {
@@ -310,6 +320,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             public readonly int DeviationIndex;
             public readonly TEdge DeviationEdge;
             public readonly double Weight;
+
             public DeviationPath(
                 TEdge[] parentPath, 
                 int deviationIndex,
@@ -329,7 +340,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
 
             public override string ToString()
             {
-                return String.Format("{0} at {1}", this.Weight, this.DeviationEdge);
+                return String.Format("{0} at {1} {2}", this.Weight, this.DeviationEdge);
             }
         }
     }
