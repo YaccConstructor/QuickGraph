@@ -26,8 +26,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		QuickGraph1.vsmdi = QuickGraph1.vsmdi
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.SeeIt", "QuickGraph.SeeIt\QuickGraph.SeeIt.csproj", "{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Tests", "QuickGraph.Tests\QuickGraph.Tests.csproj", "{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Perf", "QuickGraph.Perf\QuickGraph.Perf.csproj", "{2C35D329-D1F8-4862-8DA2-F2D27E8D4DB7}"
@@ -37,19 +35,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "All", "All\All.csproj", "{0C5AD831-C7DB-471B-AD55-28601C6FEA8F}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = 
-		SccProjectUniqueName0 = QuickGraph.SeeIt\\QuickGraph.SeeIt.csproj
-		SccAuxPath0 = https://tfs03.codeplex.com
-		SccLocalPath0 = QuickGraph.SeeIt
-		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName1 = QuickGraph.Perf\\QuickGraph.Perf.csproj
-		SccAuxPath1 = https://tfs03.codeplex.com
-		SccLocalPath1 = QuickGraph.Perf
-		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = QuickGraph1.vsmdi
 	EndGlobalSection
@@ -108,14 +93,6 @@ Global
 		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Release20|Any CPU.ActiveCfg = Release20|Any CPU
 		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Release20|Any CPU.Build.0 = Release20|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.DebugContracts|Any CPU.ActiveCfg = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.DebugContracts|Any CPU.Build.0 = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release20|Any CPU.ActiveCfg = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release20|Any CPU.Build.0 = Release|Any CPU
 		{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}.DebugContracts|Any CPU.ActiveCfg = DebugContracts|Any CPU
