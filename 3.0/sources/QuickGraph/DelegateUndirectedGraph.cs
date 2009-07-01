@@ -41,6 +41,10 @@ namespace QuickGraph
         {
             get
             {
+                // shortcut
+                if (this.vertexCount > -1)
+                    return this.vertexCount > 0;
+                // count
                 foreach (var vertex in this.vertices)
                     return false;
                 return true;

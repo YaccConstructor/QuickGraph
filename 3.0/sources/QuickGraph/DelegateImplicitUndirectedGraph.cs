@@ -52,7 +52,7 @@ namespace QuickGraph
         {
             IEnumerable<TEdge> result;
             if (!this.tryGetAdjacentEdges(v, out result))
-                throw new ArgumentOutOfRangeException("v");
+                return Enumerable.Empty<TEdge>();
             return result;
         }
 

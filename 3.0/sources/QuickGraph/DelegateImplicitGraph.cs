@@ -49,8 +49,8 @@ namespace QuickGraph
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
             IEnumerable<TEdge> result;
-            if(!this.tryGetOutEdges(v, out result))
-                throw new ArgumentOutOfRangeException("v");
+            if (!this.tryGetOutEdges(v, out result))
+                return Enumerable.Empty<TEdge>();
             return result;
         }
 
