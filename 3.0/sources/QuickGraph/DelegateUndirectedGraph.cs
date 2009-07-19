@@ -72,7 +72,7 @@ namespace QuickGraph
         {
             get {
                 if (this._vertexCount == 0 || 
-                    this._edgeCount == 0) 
+                    this._edgeCount == 0)
                     return true; // no vertices or no edges.
 
                 foreach (var vertex in this.vertices)

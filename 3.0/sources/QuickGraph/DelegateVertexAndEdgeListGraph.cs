@@ -20,6 +20,8 @@ namespace QuickGraph
         where TEdge : IEdge<TVertex>, IEquatable<TEdge>
     {
         readonly IEnumerable<TVertex> vertices;
+        int _vertexCount = -1;
+        int _edgeCount = -1;
 
         public DelegateVertexAndEdgeListGraph(
             IEnumerable<TVertex> vertices,
@@ -41,8 +43,8 @@ namespace QuickGraph
             get
             {
                 // shortcut if count is already computed
-                if (this.vertexCount > -1)
-                    return this.vertexCount == 0;
+                if (this._vertexCount > -1)
+                    return this._vertexCount == 0;
 
                 foreach (var vertex in this.vertices)
                     return false;
@@ -50,14 +52,13 @@ namespace QuickGraph
             }
         }
 
-        int vertexCount = -1;
         public int VertexCount
         {
             get
             {
-                if (this.vertexCount < 0)
-                    this.vertexCount = Enumerable.Count(this.vertices);
-                return this.vertexCount;
+                if (this._vertexCount < 0)
+                    this._vertexCount = Enumerable.Count(this.vertices);
+                return this._vertexCount;
             }
         }
 
@@ -71,8 +72,8 @@ namespace QuickGraph
             get 
             {
                 // shortcut if edges is already computed
-                if (this.edgeCount > -1)
-                    return this.edgeCount == 0;
+                if (this._edgeCount > -1)
+                    return this._edgeCount == 0;
 
                 foreach (var vertex in this.vertices)
                     foreach (var edge in this.OutEdges(vertex))
@@ -81,20 +82,13 @@ namespace QuickGraph
             }
         }
 
-        int edgeCount = -1;
         public int EdgeCount
         {
             get
             {
-                if (this.edgeCount < 0)
-                {
-                    int count = 0;
-                    foreach (var vertex in this.vertices)
-                        foreach (var edge in this.OutEdges(vertex))
-                            count++;
-                    this.edgeCount = count;
-                }
-                return this.edgeCount;
+                if (this._edgeCount < 0)
+                    this._edgeCount = Enumerable.Count(this.Edges);
+                return this._edgeCount;
             }
         }
 
