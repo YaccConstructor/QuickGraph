@@ -9,7 +9,7 @@ namespace QuickGraph.Collections
     [Serializable]
 #endif
     public sealed class BinaryQueue<TVertex, TDistance> : 
-        IQueue<TVertex>
+        IPriorityQueue<TVertex>
     {
         private readonly Func<TVertex, TDistance> distances;
         private readonly BinaryHeap<TDistance, TVertex> heap;
