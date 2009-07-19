@@ -14,6 +14,9 @@ namespace QuickGraph.Predicates
         where TEdge : IEdge<TVertex>
         where TGraph : IUndirectedGraph<TVertex,TEdge>
     {
+        private readonly EdgeEqualityComparer<TVertex,TEdge> edgeEqualityComparer = 
+            EdgeExtensions.GetUndirectedVertexEquality<TVertex, TEdge>();
+
         public FilteredUndirectedGraph(
             TGraph baseGraph,
             VertexPredicate<TVertex> vertexPredicate,
@@ -21,6 +24,14 @@ namespace QuickGraph.Predicates
             )
             : base(baseGraph, vertexPredicate, edgePredicate)
         { }
+
+        public EdgeEqualityComparer<TVertex, TEdge> EdgeEqualityComparer
+        {
+            get
+            {
+                return this.edgeEqualityComparer;
+            }
+        }
 
         [Pure]
         public IEnumerable<TEdge> AdjacentEdges(TVertex v)
@@ -69,24 +80,33 @@ namespace QuickGraph.Predicates
             throw new IndexOutOfRangeException();
         }
 
+        public bool TryGetEdge(TVertex source, TVertex target, out TEdge edge)
+        {
+            if (this.VertexPredicate(source) &&
+                this.VertexPredicate(target))
+            {
+                // we need to find the edge
+                foreach (var e in this.Edges)
+                {
+                    if (this.edgeEqualityComparer(e, source, target)
+                        && this.EdgePredicate(e))
+                    {
+                        edge = e;
+                        return true;
+                    }
+                }
+            }
+
+
+            edge = default(TEdge);
+            return false;
+        }
+
         [Pure]
         public bool ContainsEdge(TVertex source, TVertex target)
         {
-            if (!this.VertexPredicate(source))
-                return false;
-            if (!this.VertexPredicate(target))
-                return false;
-            if (!this.BaseGraph.ContainsEdge(source, target))
-                return false;
-            // we need to find the edge
-            foreach (var edge in this.Edges)
-            {
-                if (edge.Source.Equals(source) && edge.Target.Equals(target)
-                    && this.EdgePredicate(edge))
-                    return true;
-            }
-
-            return false;
+            TEdge edge;
+            return this.TryGetEdge(source, target, out edge);
         }
 
         public bool IsEdgesEmpty

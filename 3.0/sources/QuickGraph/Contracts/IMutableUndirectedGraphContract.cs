@@ -180,36 +180,44 @@ namespace QuickGraph.Contracts
         #endregion
 
         #region IImplicitUndirectedGraph<TVertex,TEdge> Members
-        [Pure] // InterfacePureBug
+        [Pure]
+        EdgeEqualityComparer<TVertex, TEdge> IImplicitUndirectedGraph<TVertex, TEdge>.EdgeEqualityComparer
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         IEnumerable<TEdge> IImplicitUndirectedGraph<TVertex, TEdge>.AdjacentEdges(TVertex v)
         {
             throw new NotImplementedException();
         }
 
-        [Pure] // InterfacePureBug
         int IImplicitUndirectedGraph<TVertex, TEdge>.AdjacentDegree(TVertex v)
         {
             throw new NotImplementedException();
         }
 
-        [Pure] // InterfacePureBug
         bool IImplicitUndirectedGraph<TVertex, TEdge>.IsAdjacentEdgesEmpty(TVertex v)
         {
             throw new NotImplementedException();
         }
 
-        [Pure] // InterfacePureBug
         TEdge IImplicitUndirectedGraph<TVertex, TEdge>.AdjacentEdge(TVertex v, int index)
         {
             throw new NotImplementedException();
         }
 
-        [Pure] // InterfacePureBug
         bool IImplicitUndirectedGraph<TVertex, TEdge>.ContainsEdge(TVertex source, TVertex target)
         {
             throw new NotImplementedException();
         }
 
+        bool IImplicitUndirectedGraph<TVertex, TEdge>.TryGetEdge(TVertex source, TVertex target, out TEdge edge)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region IMutableVertexAndEdgeSet<TVertex,TEdge> Members

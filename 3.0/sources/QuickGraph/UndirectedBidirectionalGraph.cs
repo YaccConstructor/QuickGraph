@@ -15,12 +15,22 @@ namespace QuickGraph
         where TEdge : IEdge<TVertex>
     {
         private readonly IBidirectionalGraph<TVertex, TEdge> visitedGraph;
+        private readonly EdgeEqualityComparer<TVertex, TEdge> edgeEqualityComparer =
+            EdgeExtensions.GetUndirectedVertexEquality<TVertex, TEdge>();
 
         public UndirectedBidirectionalGraph(IBidirectionalGraph<TVertex, TEdge> visitedGraph)
         {
             Contract.Requires(visitedGraph != null);
 
             this.visitedGraph = visitedGraph;
+        }
+
+        public EdgeEqualityComparer<TVertex, TEdge> EdgeEqualityComparer
+        {
+            get
+            {
+                return this.edgeEqualityComparer;
+            }
         }
 
         public IBidirectionalGraph<TVertex, TEdge> VisitedGraph
@@ -69,6 +79,10 @@ namespace QuickGraph
             throw new NotSupportedException();
         }
 
+        public bool TryGetEdge(TVertex source, TVertex target, out TEdge edge)
+        {
+            throw new NotSupportedException();
+        }
         #endregion
 
         #region IVertexSet<Vertex,Edge> Members

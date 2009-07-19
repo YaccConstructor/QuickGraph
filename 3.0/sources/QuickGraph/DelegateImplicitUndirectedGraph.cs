@@ -20,6 +20,8 @@ namespace QuickGraph
     {
         readonly TryFunc<TVertex, IEnumerable<TEdge>> tryGetAdjacentEdges;
         readonly bool allowParallelEdges;
+        readonly EdgeEqualityComparer<TVertex, TEdge> edgeEquality =
+            EdgeExtensions.GetUndirectedVertexEquality<TVertex, TEdge>();
 
         public DelegateImplicitUndirectedGraph(
             TryFunc<TVertex, IEnumerable<TEdge>> tryGetAdjacenyEdges,
@@ -29,6 +31,11 @@ namespace QuickGraph
 
             this.tryGetAdjacentEdges = tryGetAdjacenyEdges;
             this.allowParallelEdges = allowParallelEdges;
+        }
+
+        public EdgeEqualityComparer<TVertex, TEdge> EdgeEqualityComparer
+        {
+            get { return this.edgeEquality; }
         }
 
         public TryFunc<TVertex, IEnumerable<TEdge>> TryGetAdjacencyEdgesFunc
@@ -83,14 +90,25 @@ namespace QuickGraph
                 this.tryGetAdjacentEdges(vertex, out edges);
         }
 
-        public bool ContainsEdge(TVertex source, TVertex target)
+        public bool TryGetEdge(TVertex source, TVertex target, out TEdge edge)
         {
             IEnumerable<TEdge> edges;
             if (this.TryGetAdjacentEdges(source, out edges))
-                foreach (var edge in edges)
-                    if (EdgeExtensions.GetOtherVertex(edge, source).Equals(target))
+                foreach (var e in edges)
+                    if (this.edgeEquality(e, source, target))
+                    {
+                        edge = e;
                         return true;
+                    }
+
+            edge = default(TEdge);
             return false;
+        }
+
+        public bool ContainsEdge(TVertex source, TVertex target)
+        {
+            TEdge edge;
+            return this.TryGetEdge(source, target, out edge);
         }
     }
 }

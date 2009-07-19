@@ -77,6 +77,14 @@ namespace QuickGraph.Contracts
         #endregion
 
         #region IImplicitUndirectedGraph<TVertex,TEdge> Members
+        [Pure]
+        EdgeEqualityComparer<TVertex, TEdge> IImplicitUndirectedGraph<TVertex, TEdge>.EdgeEqualityComparer
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         IEnumerable<TEdge> IImplicitUndirectedGraph<TVertex, TEdge>.AdjacentEdges(TVertex v)
         {
@@ -103,6 +111,11 @@ namespace QuickGraph.Contracts
             throw new NotImplementedException();
         }
 
+        [Pure]
+        bool IImplicitUndirectedGraph<TVertex, TEdge>.TryGetEdge(TVertex source, TVertex target, out TEdge edge)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

@@ -20,6 +20,8 @@ namespace QuickGraph
         where TEdge : IEdge<TVertex>, IEquatable<TEdge>
     {
         readonly IEnumerable<TVertex> vertices;
+        int _vertexCount = -1;
+        int _edgeCount = -1;
 
         public DelegateUndirectedGraph(
              IEnumerable<TVertex> vertices,
@@ -42,8 +44,8 @@ namespace QuickGraph
             get
             {
                 // shortcut
-                if (this.vertexCount > -1)
-                    return this.vertexCount > 0;
+                if (this._vertexCount > -1)
+                    return this._vertexCount == 0;
                 // count
                 foreach (var vertex in this.vertices)
                     return false;
@@ -55,7 +57,9 @@ namespace QuickGraph
         {
             get
             {
-                return Enumerable.Count(this.vertices);
+                if (this._vertexCount < 0)
+                    this._vertexCount = Enumerable.Count(this.vertices);
+                return this._vertexCount;
             }
         }
 
@@ -67,6 +71,10 @@ namespace QuickGraph
         public bool IsEdgesEmpty
         {
             get {
+                if (this._vertexCount == 0 || 
+                    this._edgeCount == 0) 
+                    return true; // no vertices or no edges.
+
                 foreach (var vertex in this.vertices)
                     foreach (var edge in this.AdjacentEdges(vertex))
                         return false;
@@ -74,14 +82,13 @@ namespace QuickGraph
             }
         }
 
-        int vertexCount = -1;
         public int EdgeCount
         {
             get
             {
-                if (this.vertexCount < 0)
-                    this.vertexCount = Enumerable.Count(this.Edges);
-                return this.vertexCount;
+                if (this._edgeCount < 0)
+                    this._edgeCount = Enumerable.Count(this.Edges);
+                return this._edgeCount;
             }
         }
 

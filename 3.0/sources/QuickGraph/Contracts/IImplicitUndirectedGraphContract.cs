@@ -14,6 +14,16 @@ namespace QuickGraph.Contracts
     {
         #region IImplicitUndirectedGraph<TVertex,TEdge> Members
         [Pure]
+        EdgeEqualityComparer<TVertex, TEdge> IImplicitUndirectedGraph<TVertex, TEdge>.EdgeEqualityComparer
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<EdgeEqualityComparer<TVertex, TEdge>>() != null);
+                return null;
+            }
+        }
+
+        [Pure]
         IEnumerable<TEdge> IImplicitUndirectedGraph<TVertex, TEdge>.AdjacentEdges(TVertex v)
         {
             IImplicitUndirectedGraph<TVertex, TEdge> ithis = this;
@@ -67,6 +77,17 @@ namespace QuickGraph.Contracts
                 || Contract.Result<TEdge>().Target.Equals(v));
 
             return default(TEdge);
+        }
+
+        [Pure]
+        bool IImplicitUndirectedGraph<TVertex, TEdge>.TryGetEdge(TVertex source, TVertex target, out TEdge edge)
+        {
+            IImplicitUndirectedGraph<TVertex, TEdge> ithis = this;
+            Contract.Requires(source != null);
+            Contract.Requires(target != null);
+
+            edge = default(TEdge);
+            return default(bool);
         }
 
         [Pure]

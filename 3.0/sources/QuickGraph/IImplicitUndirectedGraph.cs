@@ -12,6 +12,9 @@ namespace QuickGraph
         where TEdge : IEdge<TVertex>
     {
         [Pure]
+        EdgeEqualityComparer<TVertex, TEdge> EdgeEqualityComparer { get; }
+
+        [Pure]
         IEnumerable<TEdge> AdjacentEdges(TVertex v);
 
         [Pure]
@@ -22,6 +25,9 @@ namespace QuickGraph
 
         [Pure]
         TEdge AdjacentEdge(TVertex v, int index);
+
+        [Pure]
+        bool TryGetEdge(TVertex source, TVertex target, out TEdge edge);
 
         [Pure]
         bool ContainsEdge(TVertex source, TVertex target);

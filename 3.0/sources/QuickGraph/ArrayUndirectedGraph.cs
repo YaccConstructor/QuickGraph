@@ -21,6 +21,8 @@ namespace QuickGraph
         : IUndirectedGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
+        readonly EdgeEqualityComparer<TVertex, TEdge> edgeEqualityComparer =
+            EdgeExtensions.GetUndirectedVertexEquality<TVertex, TEdge>();
         readonly VertexIndexer<TVertex> vertexIndices;
         readonly int vertexCount;
         readonly int[] sourceEdgeStartIndices;
@@ -105,6 +107,15 @@ namespace QuickGraph
                 }
                 Contract.Assert(targetIndex == this.targetEdgeStartIndices.Length);
                 Contract.Assert(targetEdgeIndex == this.targetEdgeFirstVertexOffsets.Length);
+            }
+        }
+
+
+        public EdgeEqualityComparer<TVertex, TEdge> EdgeEqualityComparer
+        {
+            get
+            {
+                return this.edgeEqualityComparer;
             }
         }
 
@@ -219,8 +230,14 @@ namespace QuickGraph
 
         public bool ContainsEdge(TVertex source, TVertex target)
         {
-            return false;
+            throw new NotImplementedException();
         }
+
+        public bool TryGetEdge(TVertex source, TVertex target, out TEdge edge)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

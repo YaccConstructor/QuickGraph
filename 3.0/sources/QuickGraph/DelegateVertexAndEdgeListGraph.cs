@@ -42,7 +42,7 @@ namespace QuickGraph
             {
                 // shortcut if count is already computed
                 if (this.vertexCount > -1)
-                    return this.vertexCount > 0;
+                    return this.vertexCount == 0;
 
                 foreach (var vertex in this.vertices)
                     return false;
@@ -72,7 +72,7 @@ namespace QuickGraph
             {
                 // shortcut if edges is already computed
                 if (this.edgeCount > -1)
-                    return this.edgeCount > 0;
+                    return this.edgeCount == 0;
 
                 foreach (var vertex in this.vertices)
                     foreach (var edge in this.OutEdges(vertex))

@@ -67,7 +67,7 @@ namespace QuickGraph.Algorithms.ConnectedComponents
                 v => 0 <= this.Components[v] && this.Components[v] < this.ComponentCount));
 
             // shortcut for empty graph
-            if (this.VisitedGraph.VertexCount == 0)
+            if (this.VisitedGraph.IsVerticesEmpty)
                 return;
 
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(this.VisitedGraph);

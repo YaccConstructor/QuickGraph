@@ -194,16 +194,26 @@ namespace QuickGraph
         #endregion
 
         #region IUndirectedGraph<Vertex,Edge> Members
+        public bool TryGetEdge(TVertex source, TVertex target, out TEdge edge)
+        {
+            foreach (var e in this.AdjacentEdges(source))
+            {
+                if (this.edgeEqualityComparer(e, source, target))
+                {
+                    edge = e;
+                    return true;
+                }
+            }
+
+            edge = default(TEdge);
+            return false;
+        }
 
         [Pure]
         public bool ContainsEdge(TVertex source, TVertex target)
         {
-            foreach(var edge in this.AdjacentEdges(source))
-            {
-                if (this.edgeEqualityComparer(edge, source, target))
-                    return true;
-            }
-            return false;
+            TEdge edge;
+            return this.TryGetEdge(source, target, out edge);
         }
 
         [Pure]
