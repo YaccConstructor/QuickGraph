@@ -9,6 +9,58 @@ namespace System.Linq
     public static class Enumerable
     {
         [Pure]
+        public static IEnumerable<T> Where<T>(IEnumerable<T> values, Predicate<T> predicate)
+        {
+            Contract.Requires(values != null);
+            Contract.Requires(predicate != null);
+            foreach (var value in values)
+                if (predicate(value))
+                    yield return value;
+        }
+
+        [Pure]
+        public static IEnumerable<T> Empty<T>()
+        {
+            return new EmptyEnumerator<T>();
+        }
+
+        struct EmptyEnumerator<T> 
+            : IEnumerable<T>
+            , IEnumerator<T>
+        {
+            public IEnumerator<T> GetEnumerator()
+            {
+                return this;
+            }
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return this.GetEnumerator();
+            }
+
+            public T Current
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            public void Dispose()
+            {}
+
+            object System.Collections.IEnumerator.Current
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            public bool MoveNext()
+            {
+                return false;
+            }
+
+            public void Reset()
+            {}
+        }
+
+        [Pure]
         public static T[] ToArray<T>(IEnumerable<T> values)
         {
             Contract.Requires(values != null);
