@@ -92,7 +92,7 @@ namespace QuickGraph
             get { return this.vertexEdges.Count; }
         }
 
-        public IEnumerable<TVertex> Vertices
+        public virtual IEnumerable<TVertex> Vertices
         {
             [Pure]
             get { return this.vertexEdges.Keys; }
@@ -117,13 +117,13 @@ namespace QuickGraph
         }
 
         [Pure]
-        public IEnumerable<TEdge> OutEdges(TVertex v)
+        public virtual IEnumerable<TEdge> OutEdges(TVertex v)
         {
             return this.vertexEdges[v];
         }
 
         [Pure]
-        public bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
+        public virtual bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
             EdgeList<TVertex, TEdge> list;
             if (this.vertexEdges.TryGetValue(v, out list))
@@ -177,7 +177,7 @@ namespace QuickGraph
         /// Gets the edges.
         /// </summary>
         /// <value>The edges.</value>
-        public IEnumerable<TEdge> Edges
+        public virtual IEnumerable<TEdge> Edges
         {
             [Pure]
             get
@@ -233,7 +233,7 @@ namespace QuickGraph
         }
 
         [Pure]
-        public bool TryGetEdges(
+        public virtual bool TryGetEdges(
             TVertex source,
             TVertex target,
             out IEnumerable<TEdge> edges)
