@@ -31,6 +31,7 @@ namespace QuickGraph.Graphviz.Dot
         private string topLabel = null;
         private string url = null;
         private double z = -1;
+        private System.Drawing.Point? position;
 
         internal string GenerateDot(Hashtable pairs)
         {
@@ -161,6 +162,11 @@ namespace QuickGraph.Graphviz.Dot
             {
                 pairs["z"] = this.Z;
             }
+            if (this.position.HasValue)
+            {
+                var p = this.position.Value;
+                pairs["pos"] = String.Format("{0},{1}!", p.X, p.Y);
+            }
             if (((this.Style == GraphvizVertexStyle.Diagonals) || (this.Shape == GraphvizVertexShape.MCircle)) || ((this.Shape == GraphvizVertexShape.MDiamond) || (this.Shape == GraphvizVertexShape.MSquare)))
             {
                 if (this.TopLabel != null)
@@ -193,6 +199,12 @@ namespace QuickGraph.Graphviz.Dot
         public override string ToString()
         {
             return this.ToDot();
+        }
+
+        public System.Drawing.Point? Position
+        {
+            get { return this.position; }
+            set { this.position = value; }
         }
 
         public string BottomLabel
