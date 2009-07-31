@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using QuickGraph.Graphviz.Dot;
 using System.IO;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Graphviz
 {
@@ -13,7 +14,14 @@ namespace QuickGraph.Graphviz
     {
         public string Run(GraphvizImageType imageType, string dot, string outputFileName)
         {
-            string output = outputFileName + ".dot";
+            Contract.Requires(!String.IsNullOrEmpty(dot));
+            Contract.Requires(!String.IsNullOrEmpty(outputFileName));
+            Contract.Ensures(!String.IsNullOrEmpty(Contract.Result<string>()));
+
+            string output = outputFileName;
+            if (!output.EndsWith(".dot", StringComparison.InvariantCultureIgnoreCase))
+                output = output + ".dot";
+
             File.WriteAllText(output, dot);
             return output;
         }
