@@ -178,11 +178,16 @@ namespace QuickGraph.Collections
         public FibonacciHeapCell<TPriority, TValue> Parent;
         public FibonacciHeapCell<TPriority, TValue> Next;
         public FibonacciHeapCell<TPriority, TValue> Previous;
+
+        public KeyValuePair<TPriority, TValue> ToKeyValuePair()
+        {
+            return new KeyValuePair<TPriority, TValue>(this.Priority, this.Value);
+        }
     }
 
     [DebuggerDisplay("Count = {Count}")]
     public sealed class FibonacciHeap<TPriority, TValue> 
-        : IEnumerable<FibonacciHeapCell<TPriority, TValue>>
+        : IEnumerable<KeyValuePair<TPriority, TValue>>
     {
         public FibonacciHeap()
             : this(HeapDirection.Increasing, Comparer<TPriority>.Default.Compare)
@@ -570,7 +575,7 @@ namespace QuickGraph.Collections
             count += other.Count;
         }
 
-        public IEnumerator<FibonacciHeapCell<TPriority, TValue>> GetEnumerator()
+        public IEnumerator<KeyValuePair<TPriority, TValue>> GetEnumerator()
         {
             var tempHeap = new FibonacciHeap<TPriority, TValue>(this.Direction, this.priorityComparsion);
             var nodeStack = new Stack<FibonacciHeapCell<TPriority, TValue>>();
@@ -584,15 +589,15 @@ namespace QuickGraph.Collections
             }
             while (!tempHeap.IsEmpty)
             {
-                yield return tempHeap.Top;
+                yield return tempHeap.Top.ToKeyValuePair();
                 tempHeap.Dequeue();
             }
         }
-        public IEnumerable<FibonacciHeapCell<TPriority, TValue>> GetDestructiveEnumerator()
+        public IEnumerable<KeyValuePair<TPriority, TValue>> GetDestructiveEnumerator()
         {
             while (!this.IsEmpty)
             {
-                yield return this.Top;
+                yield return this.Top.ToKeyValuePair();
                 this.Dequeue();
             }
         }

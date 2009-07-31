@@ -141,13 +141,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue > value.Priority)
+                if (lastValue > value.Key)
                 {
-                    Assert.Fail("Heap condition has been violated: {0} > {1}", lastValue, value.Priority);
+                    Assert.Fail("Heap condition has been violated: {0} > {1}", lastValue, value.Key);
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -169,13 +169,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue < value.Priority)
+                if (lastValue < value.Key)
                 {
                     Assert.Fail("Heap condition has been violated");
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -198,13 +198,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue > value.Priority)
+                if (lastValue > value.Key)
                 {
                     Assert.Fail("Heap condition has been violated");
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -227,13 +227,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue > value.Priority)
+                if (lastValue > value.Key)
                 {
                     Assert.Fail("Heap condition has been violated");
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -256,13 +256,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue < value.Priority)
+                if (lastValue < value.Key)
                 {
                     Assert.Fail("Heap condition has been violated");
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -285,13 +285,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue < value.Priority)
+                if (lastValue < value.Key)
                 {
                     Assert.Fail("Heap condition has been violated");
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -314,13 +314,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue < value.Priority)
+                if (lastValue < value.Key)
                 {
                     Assert.Fail("Heap condition has been violated");
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -347,13 +347,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue > value.Priority)
+                if (lastValue > value.Key)
                 {
                     Assert.Fail("Heap condition has been violated");
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -380,13 +380,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue > value.Priority)
+                if (lastValue > value.Key)
                 {
-                    Assert.Fail("Heap condition has been violated: {0} > {1}", lastValue, value.Priority);
+                    Assert.Fail("Heap condition has been violated: {0} > {1}", lastValue, value.Key);
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -412,11 +412,11 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                Assert.IsFalse(lastValue > value.Priority, "Heap condition has been violated");
+                Assert.IsFalse(lastValue > value.Key, "Heap condition has been violated");
                 Assert.AreNotEqual(DeletedCell, value, "Found item that was deleted");
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -437,13 +437,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue > value.Priority)
+                if (lastValue > value.Key)
                 {
                     Assert.Fail("Heap condition has been violated");
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -467,13 +467,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue > value.Priority)
+                if (lastValue > value.Key)
                 {
                     Assert.Fail("Heap condition has been violated");
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -509,13 +509,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue > value.Priority)
+                if (lastValue > value.Key)
                 {
                     Assert.Fail("Heap condition has been violated");
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
@@ -550,13 +550,13 @@ namespace QuickGraph.Tests.Collections
             {
                 if (lastValue == null)
                 {
-                    lastValue = value.Priority;
+                    lastValue = value.Key;
                 }
-                if (lastValue > value.Priority)
+                if (lastValue > value.Key)
                 {
                     Assert.Fail("Heap condition has been violated");
                 }
-                lastValue = value.Priority;
+                lastValue = value.Key;
                 count--;
             }
             Assert.AreEqual(count, 0, "Not all elements enqueued were dequeued");
