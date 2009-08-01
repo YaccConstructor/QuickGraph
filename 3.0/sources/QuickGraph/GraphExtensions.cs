@@ -23,6 +23,9 @@ namespace QuickGraph
         /// <param name="keyValueToOutEdges"></param>
         /// <returns></returns>
         public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToVertexAndEdgeListGraph<TVertex, TEdge, TValue>(
+#if !NET20
+this 
+#endif
             IDictionary<TVertex, TValue> dictionary)
             where TEdge : IEdge<TVertex>, IEquatable<TEdge>
             where TValue : IEnumerable<TEdge>
@@ -43,6 +46,9 @@ namespace QuickGraph
         /// <param name="keyValueToOutEdges"></param>
         /// <returns></returns>
         public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToVertexAndEdgeListGraph<TVertex, TEdge, TValue>(
+#if !NET20
+this 
+#endif
             IDictionary<TVertex, TValue> dictionary,
             Converter<KeyValuePair<TVertex,TValue>, IEnumerable<TEdge>> keyValueToOutEdges
             )
