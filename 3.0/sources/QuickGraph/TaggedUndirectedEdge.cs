@@ -21,10 +21,11 @@ namespace QuickGraph
         private TTag tag;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaggedUndirectedEdge&lt;TVertex&gt;"/> class.
+        /// Initializes a new instance of the <see cref="TaggedUndirectedEdge&lt;TVertex, TTag&gt;"/> class.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="target">The target.</param>
+        /// <param name="tag">the tag</param>
         public TaggedUndirectedEdge(TVertex source, TVertex target, TTag tag)
             :base(source, target)
         {

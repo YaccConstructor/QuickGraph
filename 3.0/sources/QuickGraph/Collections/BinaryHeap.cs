@@ -9,7 +9,6 @@ namespace QuickGraph.Collections
     /// <summary>
     /// Binary heap
     /// </summary>
-    /// <typeparam name="TValue"></typeparam>
     /// <remarks>
     /// Indexing rules:
     /// 
@@ -20,6 +19,8 @@ namespace QuickGraph.Collections
     /// Reference:
     /// http://dotnetslackers.com/Community/files/folders/data-structures-and-algorithms/entry28722.aspx
     /// </remarks>
+    /// <typeparam name="TValue">type of the value</typeparam>
+    /// <typeparam name="TPriority">type of the priority metric</typeparam>
     [DebuggerDisplay("Count = {Count}")]
     public class BinaryHeap<TPriority, TValue> :
         IEnumerable<KeyValuePair<TPriority, TValue>>

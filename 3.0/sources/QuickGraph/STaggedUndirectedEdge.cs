@@ -9,7 +9,8 @@ namespace QuickGraph
     /// <summary>
     /// An struct based <see cref="IUndirectedEdge&lt;TVertex&gt;"/> implementation.
     /// </summary>
-    /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    /// <typeparam name="TVertex">type of the vertex.</typeparam>
+    /// <typeparam name="TTag">type of the tag</typeparam>
 #if !SILVERLIGHT
     [Serializable]
 #endif
@@ -24,10 +25,11 @@ namespace QuickGraph
         private TTag tag;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SUndirectedTaggedEdge&lt;TVertex&gt;"/> class.
+        /// Initializes a new instance of the <see cref="SUndirectedTaggedEdge&lt;TVertex, TTag&gt;"/> class.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="target">The target.</param>
+        /// <param name="tag">The tag.</param>
         public SUndirectedTaggedEdge(TVertex source, TVertex target, TTag tag)
         {
             Contract.Requires(source != null);

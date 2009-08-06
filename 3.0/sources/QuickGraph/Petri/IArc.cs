@@ -3,9 +3,9 @@ using System;
 namespace QuickGraph.Petri
 {
 	/// <summary>
-	/// A directed edge of a net which may connect a <see cref="IPlace"/>
-	/// to a <see cref="ITransition"/> or a <see cref="ITransition"/> to
-	/// a <see cref="IPlace"/>.
+	/// A directed edge of a net which may connect a <see cref="IPlace&lt;Token&gt;"/>
+	/// to a <see cref="ITransition&lt;Token&gt;"/> or a <see cref="ITransition&lt;Token&gt;"/> to
+	/// a <see cref="IPlace&lt;Token&gt;"/>.
 	/// </summary>
 	/// <remarks>
 	/// <para>
@@ -16,33 +16,33 @@ namespace QuickGraph.Petri
         : IEdge<IPetriVertex>
 	{
 		/// <summary>
-		/// Gets a value indicating if the <see cref="IArc"/>
+		/// Gets a value indicating if the <see cref="IArc&lt;Token&gt;"/>
 		/// instance is a <strong>input arc.</strong>
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// An arc that leads from an input <see cref="IPlace"/> to a
-		/// <see cref="ITransition"/> is called an <em>Input Arc</em> of
+		/// An arc that leads from an input <see cref="IPlace&lt;Token&gt;"/> to a
+		/// <see cref="ITransition&lt;Token&gt;"/> is called an <em>Input Arc</em> of
 		/// the transition.
 		/// </para>
 		/// </remarks>
 		bool IsInputArc {get;}
 
 		/// <summary>
-		/// Gets the <see cref="IPlace"/> instance attached to the
-		/// <see cref="IArc"/>.
+		/// Gets the <see cref="IPlace&lt;Token&gt;"/> instance attached to the
+		/// <see cref="IArc&lt;Token&gt;"/>.
 		/// </summary>
 		/// <value>
-		/// The <see cref="IPlace"/> attached to the <see cref="IArc"/>.
+		/// The <see cref="IPlace&lt;Token&gt;"/> attached to the <see cref="IArc&lt;Token&gt;"/>.
 		/// </value>
 		IPlace<Token> Place {get;}
 
 		/// <summary>
-		/// Gets or sets the <see cref="ITransition"/> instance attached to the
-		/// <see cref="IArc"/>.
+		/// Gets or sets the <see cref="ITransition&lt;Token&gt;"/> instance attached to the
+		/// <see cref="IArc&lt;Token&gt;"/>.
 		/// </summary>
 		/// <value>
-		/// The <see cref="ITransition"/> attached to the <see cref="IArc"/>.
+		/// The <see cref="ITransition&lt;Token&gt;"/> attached to the <see cref="IArc&lt;Token&gt;"/>.
 		/// </value>
 		ITransition<Token> Transition{get;}
 
@@ -50,7 +50,7 @@ namespace QuickGraph.Petri
 		/// Gets or sets the arc annotation.
 		/// </summary>
 		/// <value>
-		/// The <see cref="IExpression"/> annotation instance.
+		/// The <see cref="IExpression&lt;Token&gt;"/> annotation instance.
 		/// </value>
 		/// <remarks>
 		/// <para>
@@ -58,7 +58,7 @@ namespace QuickGraph.Petri
 		/// used to annotate the arc. The expression evaluates over the type
 		/// of the arc's associated place.
 		/// </para>
-		/// </summary>
+        /// </remarks>
 		/// <exception cref="ArgumentNullException">
 		/// set property, value is a null reference (Nothing in Visual Basic).
 		/// </exception>

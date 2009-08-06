@@ -92,8 +92,6 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 		/// <summary>
 		/// Used internally
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="args"></param>
 		private void FinishVertex(TVertex v)
 		{
             var roots = this.Roots;

@@ -30,7 +30,8 @@ namespace QuickGraph.Algorithms
         /// <summary>
         /// Construct an eulerian trail builder
         /// </summary>
-        /// <param name="g"></param>
+        /// <param name="host"></param>
+        /// <param name="visitedGraph"></param>
         public EulerianTrailAlgorithm(
             IAlgorithmComponent host,
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph)
@@ -247,7 +248,7 @@ namespace QuickGraph.Algorithms
         /// <summary>
         /// Adds temporary edges to the graph to make all vertex even.
         /// </summary>
-        /// <param name="g"></param>
+        /// <param name="edgeFactory"></param>
         /// <returns></returns>
         public List<TEdge> AddTemporaryEdges(EdgeFactory<TVertex,TEdge> edgeFactory)
         {
@@ -332,7 +333,6 @@ namespace QuickGraph.Algorithms
         /// <summary>
         /// Removes temporary edges
         /// </summary>
-        /// <param name="g"></param>
         public void RemoveTemporaryEdges()
         {
             // remove from graph
@@ -395,7 +395,7 @@ namespace QuickGraph.Algorithms
         /// added to the trail collection. The shortest path between the 
         /// start vertex <paramref name="s"/> and the target vertex of the
         /// temporary edge is then used to start the new trail. This shortest
-        /// path is computed using the <see cref="BreadthFirstSearchAlgorithm"/>.
+        /// path is computed using the BreadthFirstSearchAlgorithm.
         /// </para>
         /// </remarks>
         /// <param name="s">start vertex</param>

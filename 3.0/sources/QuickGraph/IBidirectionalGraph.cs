@@ -65,7 +65,7 @@ namespace QuickGraph
         /// the sum of the out-degree and in-degree of <paramref name="v"/>.
         /// </summary>
         /// <param name="v">The vertex</param>
-        /// <returns>The sum of <see cref="OutDegree"/> and <see cref="InDegree"/> of <paramref name="v"/></returns>
+        /// <returns>The sum of OutDegree and InDegree of <paramref name="v"/></returns>
         [Pure]
         int Degree(TVertex v);
     }

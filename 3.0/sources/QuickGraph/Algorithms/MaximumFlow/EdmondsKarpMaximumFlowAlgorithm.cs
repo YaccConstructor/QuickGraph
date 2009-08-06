@@ -14,8 +14,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
     /// for directed graph with positive capacities and
     /// flows.
     /// </summary>
-    /// <typeparam name="Vertex"></typeparam>
-    /// <typeparam name="Edge"></typeparam>
+    /// <typeparam name="TVertex">type of a vertex</typeparam>
+    /// <typeparam name="TEdge">type of an edge</typeparam>
 #if !SILVERLIGHT
     [Serializable]
 #endif
@@ -91,8 +91,6 @@ namespace QuickGraph.Algorithms.MaximumFlow
 		/// <summary>
 		/// Computes the maximum flow between Source and Sink.
 		/// </summary>
-		/// <param name="src"></param>
-		/// <param name="sink"></param>
 		/// <returns></returns>
 		protected override void InternalCompute()
 		{

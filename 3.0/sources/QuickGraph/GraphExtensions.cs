@@ -20,7 +20,6 @@ namespace QuickGraph
         /// <typeparam name="TEdge"></typeparam>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="dictionary"></param>
-        /// <param name="keyValueToOutEdges"></param>
         /// <returns></returns>
         public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToVertexAndEdgeListGraph<TVertex, TEdge, TValue>(
 #if !NET20
@@ -93,6 +92,7 @@ this
         /// <summary>
         /// Creates an instance of DelegateIncidenceGraph.
         /// </summary>
+        /// <param name="vertices"></param>
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <param name="tryGetOutEdges"></param>
@@ -180,7 +180,6 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <param name="edges"></param>
-        /// <param name="allowParralelEdges"></param>
         /// <returns></returns>
         public static UndirectedGraph<TVertex, TEdge> ToUndirectedGraph<TVertex, TEdge>(
 #if !NET20

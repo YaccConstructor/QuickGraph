@@ -24,6 +24,7 @@ namespace QuickGraph.Algorithms
         /// <summary>
         /// Returns the method that implement the access indexer.
         /// </summary>
+        /// <typeparam name="TDelegate"></typeparam>
         /// <typeparam name="TKey"></typeparam>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="dictionary"></param>
@@ -592,6 +593,7 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <param name="visitedGraph"></param>
+        /// <param name="vertices"></param>
         /// <returns></returns>
         /// <exception cref="NonAcyclicGraphException">the input graph
         /// has a cycle</exception>
@@ -642,6 +644,7 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <param name="visitedGraph"></param>
+        /// <param name="vertices"></param>
         /// <returns></returns>
         /// <exception cref="NonAcyclicGraphException">the input graph
         /// has a cycle</exception>
@@ -695,7 +698,6 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <param name="g"></param>
-        /// <param name="startVertex"></param>
         /// <param name="components"></param>
         /// <returns>number of components</returns>
         public static int ConnectedComponents<TVertex, TEdge>(
@@ -793,6 +795,8 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <param name="g"></param>
+        /// <param name="vertexCloner"></param>
+        /// <param name="edgeCloner"></param>
         /// <param name="clone"></param>
         public static void Clone<TVertex,TEdge>(
 #if !NET20

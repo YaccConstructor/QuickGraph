@@ -39,7 +39,7 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <param name="edge">must not be a self-edge</param>
-        /// <param name="source"></param>
+        /// <param name="vertex"></param>
         /// <returns></returns>
         [Pure]
         public static TVertex GetOtherVertex<TVertex, TEdge>(
@@ -196,6 +196,7 @@ this
         /// Creates a vertex pair (source, target) from the edge
         /// </summary>
         /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
         /// <param name="edge"></param>
         /// <returns></returns>
         public static SEquatableEdge<TVertex> ToVertexPair<TVertex, TEdge>(

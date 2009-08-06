@@ -15,26 +15,26 @@ namespace  QuickGraph.Petri
 	public interface IPetriNet<Token>
     {
 		/// <summary>
-		/// Gets a collection of <see cref="IPlace"/> instances.
+		/// Gets a collection of <see cref="IPlace&lt;Token&gt;"/> instances.
 		/// </summary>
 		/// <value>
-		/// A collection of <see cref="IPlace"/> instances.
+		/// A collection of <see cref="IPlace&lt;Token&gt;"/> instances.
 		/// </value>
 		IList<IPlace<Token>> Places {get;}
 
 		/// <summary>
-		/// Gets a collection of <see cref="ITransition"/> instances.
+		/// Gets a collection of <see cref="ITransition&lt;Token&gt;"/> instances.
 		/// </summary>
 		/// <value>
-		/// A collection of <see cref="ITransition"/> instances.
+		/// A collection of <see cref="ITransition&lt;Token&gt;"/> instances.
 		/// </value>
         IList<ITransition<Token>> Transitions { get;}
 
         /// <summary>
-		/// Gets a collection of <see cref="IArc"/> instances.
+		/// Gets a collection of <see cref="IArc&lt;Token&gt;"/> instances.
 		/// </summary>
 		/// <value>
-		/// A collection of <see cref="IArc"/> instances.
+		/// A collection of <see cref="IArc&lt;Token&gt;"/> instances.
 		/// </value>
         IList<IArc<Token>> Arcs { get;}
 

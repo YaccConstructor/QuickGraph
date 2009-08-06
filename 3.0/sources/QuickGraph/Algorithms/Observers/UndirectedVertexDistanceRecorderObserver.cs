@@ -8,8 +8,8 @@ namespace QuickGraph.Algorithms.Observers
     /// <summary>
     /// A distance recorder for undirected tree builder algorithms
     /// </summary>
-    /// <typeparam name="Vertex"></typeparam>
-    /// <typeparam name="Edge"></typeparam>
+    /// <typeparam name="TVertex">type of a vertex</typeparam>
+    /// <typeparam name="TEdge">type of an edge</typeparam>
 #if !SILVERLIGHT
     [Serializable]
 #endif

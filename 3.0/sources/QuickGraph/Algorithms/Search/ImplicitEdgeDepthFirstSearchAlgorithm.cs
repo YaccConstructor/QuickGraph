@@ -39,7 +39,6 @@ namespace QuickGraph.Algorithms.Search
         {}
 
         /// <summary>
-        /// <summary>
         /// Gets the vertex color map
         /// </summary>
         /// <value>

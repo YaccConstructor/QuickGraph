@@ -24,8 +24,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Data", "QuickGra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Msagl", "QuickGraph.Msagl\QuickGraph.Msagl.csproj", "{7E57B699-79C9-4FDF-89FC-D98BD8DDAFF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reflector.QuickGraph", "Reflector.QuickGraph\Reflector.QuickGraph.csproj", "{7D06D43B-EE95-4800-874F-9D5330C86D96}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Tests", "QuickGraph.Tests\QuickGraph.Tests.csproj", "{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Perf", "QuickGraph.Perf\QuickGraph.Perf.csproj", "{2C35D329-D1F8-4862-8DA2-F2D27E8D4DB7}"
@@ -85,13 +83,6 @@ Global
 		{7E57B699-79C9-4FDF-89FC-D98BD8DDAFF6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E57B699-79C9-4FDF-89FC-D98BD8DDAFF6}.Release20|Any CPU.ActiveCfg = Release20|Any CPU
 		{7E57B699-79C9-4FDF-89FC-D98BD8DDAFF6}.Release20|Any CPU.Build.0 = Release20|Any CPU
-		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D06D43B-EE95-4800-874F-9D5330C86D96}.DebugContracts|Any CPU.ActiveCfg = DebugContracts|Any CPU
-		{7D06D43B-EE95-4800-874F-9D5330C86D96}.DebugContracts|Any CPU.Build.0 = DebugContracts|Any CPU
-		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D06D43B-EE95-4800-874F-9D5330C86D96}.Release20|Any CPU.ActiveCfg = Release20|Any CPU
 		{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}.DebugContracts|Any CPU.ActiveCfg = DebugContracts|Any CPU

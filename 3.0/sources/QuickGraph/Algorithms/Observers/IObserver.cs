@@ -6,7 +6,7 @@ namespace QuickGraph.Algorithms.Observers
     /// <summary>
     /// An algorithm observer
     /// </summary>
-    /// <typeparam name="Algorithm"></typeparam>
+    /// <typeparam name="TAlgorithm">type of the algorithm</typeparam>
     /// <reference-ref
     ///     id="gof02designpatterns"
     ///     />

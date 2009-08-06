@@ -13,8 +13,8 @@ namespace QuickGraph.Algorithms.ShortestPath
     /// Dijkstra single-source shortest path algorithm for directed graph
     /// with positive distance.
     /// </summary>
-    /// <typeparam name="Vertex"></typeparam>
-    /// <typeparam name="Edge"></typeparam>
+    /// <typeparam name="TVertex">type of a vertex</typeparam>
+    /// <typeparam name="TEdge">type of an edge</typeparam>
     /// <reference-ref
     ///     idref="lawler01combinatorial"
     ///     />

@@ -101,6 +101,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// Raises the <see cref="TreeEdge"/> event.
         /// </summary>
         /// <param name="e">edge that raised the event</param>
+        /// <param name="reversed"></param>
         protected virtual void OnTreeEdge(TEdge e, bool reversed)
         {
             var eh = this.TreeEdge;

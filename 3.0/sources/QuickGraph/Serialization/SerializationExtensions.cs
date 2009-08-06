@@ -128,7 +128,7 @@ namespace QuickGraph.Serialization
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <typeparam name="TGraph"></typeparam>
-        /// <param name="doc">input xml document</param>
+        /// <param name="reader">input xml document</param>
         /// <param name="graphPredicate">predicate that returns a value indicating if the current xml node is a graph. The first match is considered</param>
         /// <param name="vertexPredicate">predicate that returns a value indicating if the current xml node is a vertex.</param>
         /// <param name="edgePredicate">predicate that returns a value indicating if the current xml node is an edge.</param>
@@ -203,7 +203,8 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <typeparam name="TGraph"></typeparam>
-        /// <param name="doc">input xml document</param>
+        /// <param name="reader">input xml document</param>
+        /// <param name="namespaceUri">xml namespace</param>
         /// <param name="graphElementName">name of the xml node holding graph information. The first node is considered</param>
         /// <param name="vertexElementName">name of the xml node holding vertex information</param>
         /// <param name="edgeElementName">name of the xml node holding edge information</param>

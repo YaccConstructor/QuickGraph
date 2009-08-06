@@ -7,7 +7,8 @@ namespace QuickGraph
     /// <summary>
     /// A cloneable edge
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TVertex">type of the vertex</typeparam>
+    /// <typeparam name="TEdge">type of the edge</typeparam>
     [ContractClass(typeof(ICloneableEdgeContract<,>))]
     public interface ICloneableEdge<TVertex, TEdge> 
         : IEdge<TVertex>

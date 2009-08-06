@@ -8,8 +8,8 @@ namespace QuickGraph.Algorithms.Search
     /// <summary>
     /// A depth first search algorithm for directed graph
     /// </summary>
-    /// <typeparam name="Vertex"></typeparam>
-    /// <typeparam name="Edge"></typeparam>
+    /// <typeparam name="TVertex">type of a vertex</typeparam>
+    /// <typeparam name="TEdge">type of an edge</typeparam>
     /// <reference-ref
     ///     idref="gross98graphtheory"
     ///     chapter="4.2"
@@ -55,7 +55,6 @@ namespace QuickGraph.Algorithms.Search
         /// </summary>
         /// <param name="host">algorithm host</param>
         /// <param name="visitedGraph">visited graph</param>
-        /// <param name="colors">vertex color map</param>
         public DepthFirstSearchAlgorithm(
             IAlgorithmComponent host,
             IVertexListGraph<TVertex, TEdge> visitedGraph
