@@ -96,7 +96,7 @@ namespace QuickGraph
             get { return this.vertexOutEdges.Count; }
         }
 
-        public IEnumerable<TVertex> Vertices
+        public virtual IEnumerable<TVertex> Vertices
         {
             [Pure]
             get { return this.vertexOutEdges.Keys; }
@@ -203,7 +203,7 @@ namespace QuickGraph
             }
         }
 
-        public IEnumerable<TEdge> Edges
+        public virtual IEnumerable<TEdge> Edges
         {
             get
             {

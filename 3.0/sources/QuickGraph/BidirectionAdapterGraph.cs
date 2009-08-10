@@ -155,7 +155,7 @@ namespace QuickGraph
             get { return this.baseGraph.VertexCount; }
         }
 
-        public IEnumerable<TVertex> Vertices
+        public virtual IEnumerable<TVertex> Vertices
         {
             get { return this.baseGraph.Vertices; }
         }
@@ -176,7 +176,7 @@ namespace QuickGraph
             get { return this.baseGraph.EdgeCount; }
         }
 
-        public IEnumerable<TEdge> Edges
+        public virtual IEnumerable<TEdge> Edges
         {
             get { return this.baseGraph.Edges; }
         }

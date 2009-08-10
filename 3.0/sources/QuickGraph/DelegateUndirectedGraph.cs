@@ -63,7 +63,7 @@ namespace QuickGraph
             }
         }
 
-        public IEnumerable<TVertex> Vertices
+        public virtual IEnumerable<TVertex> Vertices
         {
             get { return this.vertices; }
         }
@@ -92,7 +92,7 @@ namespace QuickGraph
             }
         }
 
-        public IEnumerable<TEdge> Edges
+        public virtual IEnumerable<TEdge> Edges
         {
             get 
             {
