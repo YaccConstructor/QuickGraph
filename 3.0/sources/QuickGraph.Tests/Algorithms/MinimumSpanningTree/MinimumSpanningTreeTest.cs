@@ -188,7 +188,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                         default: ov = null; break;
                     }
                     return ov != null;
-                }, true);
+                });
             var cost = CompareRoot(g);
             Assert.AreEqual(9, cost);
         }

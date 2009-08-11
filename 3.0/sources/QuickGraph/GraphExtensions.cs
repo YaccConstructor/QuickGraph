@@ -188,8 +188,7 @@ this
 this 
 #endif
             IEnumerable<TVertex> vertices,
-            TryFunc<TVertex, IEnumerable<TEdge>> tryGetAdjacentEdges,
-            bool allowParralelEdges)
+            TryFunc<TVertex, IEnumerable<TEdge>> tryGetAdjacentEdges)
             where TEdge : IEdge<TVertex>, IEquatable<TEdge>
         {
             Contract.Requires(vertices != null);
@@ -200,7 +199,7 @@ this
                 return tryGetAdjacentEdges(v, out edges);
             }));
 
-            return new DelegateUndirectedGraph<TVertex, TEdge>(vertices, tryGetAdjacentEdges, allowParralelEdges);
+            return new DelegateUndirectedGraph<TVertex, TEdge>(vertices, tryGetAdjacentEdges, true);
         }
 
         /// <summary>
