@@ -97,7 +97,7 @@ this
         /// <typeparam name="TEdge"></typeparam>
         /// <param name="tryGetOutEdges"></param>
         /// <returns></returns>
-        public static DelegateIncidenceGraph<TVertex, TEdge> ToDelegateVertexAndEdgeListGraph<TVertex, TEdge>(
+        public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToDelegateVertexAndEdgeListGraph<TVertex, TEdge>(
 #if !NET20
 this 
 #endif
@@ -114,6 +114,93 @@ this
             }));
 
             return new DelegateVertexAndEdgeListGraph<TVertex, TEdge>(vertices, tryGetOutEdges);
+        }
+
+        /// <summary>
+        /// Wraps a dictionary into an undirected list graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dictionary"></param>
+        /// <returns></returns>
+        public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToDelegateUndirectedGraph<TVertex, TEdge, TValue>(
+#if !NET20
+this 
+#endif
+            IDictionary<TVertex, TValue> dictionary)
+            where TEdge : IEdge<TVertex>, IEquatable<TEdge>
+            where TValue : IEnumerable<TEdge>
+        {
+            Contract.Requires(dictionary != null);
+            Contract.Requires(Contract.ForAll(dictionary.Values, v => v != null));
+
+            return ToDelegateUndirectedGraph<TVertex, TEdge, TValue>(dictionary, kv => kv.Value);
+        }
+
+        /// <summary>
+        /// Wraps a dictionary into an undirected graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dictionary"></param>
+        /// <param name="keyValueToOutEdges"></param>
+        /// <returns></returns>
+        public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToDelegateUndirectedGraph<TVertex, TEdge, TValue>(
+#if !NET20
+this 
+#endif
+            IDictionary<TVertex, TValue> dictionary,
+            Converter<KeyValuePair<TVertex, TValue>, IEnumerable<TEdge>> keyValueToOutEdges
+            )
+            where TEdge : IEdge<TVertex>, IEquatable<TEdge>
+        {
+            Contract.Requires(dictionary != null);
+            Contract.Requires(keyValueToOutEdges != null);
+
+            return new DelegateVertexAndEdgeListGraph<TVertex, TEdge>(
+                dictionary.Keys,
+                delegate(TVertex key, out IEnumerable<TEdge> edges)
+                {
+                    TValue value;
+                    if (dictionary.TryGetValue(key, out value))
+                    {
+                        edges = keyValueToOutEdges(new KeyValuePair<TVertex, TValue>(key, value));
+                        return true;
+                    }
+
+                    edges = null;
+                    return false;
+                });
+        }
+
+        /// <summary>
+        /// Creates an instance of DelegateIncidenceGraph.
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="tryGetAdjacentEdges"></param>
+        /// <returns></returns>
+        public static DelegateUndirectedGraph<TVertex, TEdge> ToDelegateUndirectedGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IEnumerable<TVertex> vertices,
+            TryFunc<TVertex, IEnumerable<TEdge>> tryGetAdjacentEdges,
+            bool allowParralelEdges)
+            where TEdge : IEdge<TVertex>, IEquatable<TEdge>
+        {
+            Contract.Requires(vertices != null);
+            Contract.Requires(tryGetAdjacentEdges != null);
+            Contract.Requires(Contract.ForAll(vertices, v =>
+            {
+                IEnumerable<TEdge> edges;
+                return tryGetAdjacentEdges(v, out edges);
+            }));
+
+            return new DelegateUndirectedGraph<TVertex, TEdge>(vertices, tryGetAdjacentEdges, allowParralelEdges);
         }
 
         /// <summary>

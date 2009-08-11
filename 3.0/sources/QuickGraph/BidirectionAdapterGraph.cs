@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics.Contracts;
 using QuickGraph.Collections;
+using System.Diagnostics;
 
 namespace QuickGraph
 {
@@ -12,7 +13,11 @@ namespace QuickGraph
     /// </summary>
     /// <typeparam name="TVertex"></typeparam>
     /// <typeparam name="TEdge"></typeparam>
-    sealed class BidirectionAdapterGraph<TVertex, TEdge>
+#if !SILVERLIGHT
+    [Serializable]
+#endif
+    [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
+    public class BidirectionAdapterGraph<TVertex, TEdge>
         : IBidirectionalGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
@@ -155,7 +160,7 @@ namespace QuickGraph
             get { return this.baseGraph.VertexCount; }
         }
 
-        public virtual IEnumerable<TVertex> Vertices
+        public IEnumerable<TVertex> Vertices
         {
             get { return this.baseGraph.Vertices; }
         }
