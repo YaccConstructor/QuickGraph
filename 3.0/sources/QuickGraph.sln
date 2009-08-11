@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{6EC5788D-DB36-4094-AB0F-A9E2C0F56B62}"
 	ProjectSection(SolutionItems) = preProject
-		ccnet.config.xml = ccnet.config.xml
+		Build\ccnet.config = Build\ccnet.config
+		Build\ccnet.server.config = Build\ccnet.server.config
+		Build\quickgraph.build = Build\quickgraph.build
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D81E7BA-91B1-473B-B9BB-4DECB1825F66}"

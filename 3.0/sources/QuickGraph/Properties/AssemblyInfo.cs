@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("QuickGraph")]
 [assembly: AssemblyDescription("Generic Graph Data Strutures and Algorithms for .NET")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Jonathan de Halleux")]
+[assembly: AssemblyCompany("Jonathan Peli de Halleux")]
 [assembly: AssemblyProduct("")]
 [assembly: AssemblyCopyright("Copyright http://quickgraph.codeplex.com/")]
 [assembly: AssemblyTrademark("")]
