@@ -1185,7 +1185,7 @@ this
             Func<TEdge, double> edgeCapacities,
             TVertex source,
             TVertex sink,
-            out IDictionary<TVertex, TEdge> flowPredecessors
+            out TryFunc<TVertex, TEdge> flowPredecessors
             )
             where TEdge : IEdge<TVertex>
         {
@@ -1201,7 +1201,7 @@ this
                 new Dictionary<TEdge, TEdge>()
                 );
             flow.Compute(source, sink);
-            flowPredecessors = flow.Predecessors;
+            flowPredecessors = flow.Predecessors.TryGetValue;
             return flow.MaxFlow;
         }
     }
