@@ -124,6 +124,8 @@ namespace QuickGraph.Algorithms.Search
         public event VertexAction<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
         {
+            Contract.Requires(v != null);
+
             var eh = this.InitializeVertex;
             if (eh != null)
                 eh(v);
@@ -132,7 +134,19 @@ namespace QuickGraph.Algorithms.Search
         public event VertexAction<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
+            Contract.Requires(v != null);
+
             var eh = this.StartVertex;
+            if (eh != null)
+                eh(v);
+        }
+
+        public event VertexAction<TVertex> VertexMaxDepthReached;
+        private void OnVertexMaxDepthReached(TVertex v)
+        {
+            Contract.Requires(v != null);
+
+            var eh = this.VertexMaxDepthReached;
             if (eh != null)
                 eh(v);
         }
@@ -225,14 +239,21 @@ namespace QuickGraph.Algorithms.Search
 
         struct SearchFrame
         {
+            public readonly TEdge SourceEdge;
             public readonly TVertex Vertex;
             public readonly IEnumerator<TEdge> Edges;
             public readonly int Depth;
-            public SearchFrame(TVertex vertex, IEnumerator<TEdge> edges, int depth)
+            public SearchFrame(
+                TEdge sourceEdge,                
+                TVertex vertex, 
+                IEnumerator<TEdge> edges, 
+                int depth)
             {
                 Contract.Requires(vertex != null);
                 Contract.Requires(edges != null);
                 Contract.Requires(depth >= 0);
+
+                this.SourceEdge = sourceEdge;
                 this.Vertex = vertex;
                 this.Edges = edges;
                 this.Depth = depth;
@@ -250,7 +271,7 @@ namespace QuickGraph.Algorithms.Search
 
             var cancelManager = this.Services.CancelManager;
             var enumerable = oee(this.VisitedGraph.AdjacentEdges(root));
-            todo.Push(new SearchFrame(root, enumerable.GetEnumerator(), 0));
+            todo.Push(new SearchFrame(default(TEdge), root, enumerable.GetEnumerator(), 0));
             while (todo.Count > 0)
             {
                 if (cancelManager.IsCancelling) return;
@@ -258,9 +279,11 @@ namespace QuickGraph.Algorithms.Search
                 var frame = todo.Pop();
                 var u = frame.Vertex;
                 var depth = frame.Depth;
+                var sourceEdge = frame.SourceEdge;
 
                 if (depth > this.MaxDepth)
                 {
+                    this.OnVertexMaxDepthReached(u);
                     this.VertexColors[u] = GraphColor.Black;
                     this.OnFinishVertex(u);
                     continue;
@@ -271,6 +294,7 @@ namespace QuickGraph.Algorithms.Search
                 {
                     TEdge e = edges.Current;
                     if (cancelManager.IsCancelling) return;
+                    if (e.Equals(sourceEdge)) continue;
 
                     this.OnExamineEdge(e);
                     bool reversed = e.Target.Equals(u);
@@ -280,9 +304,9 @@ namespace QuickGraph.Algorithms.Search
                     {
                         case GraphColor.White:
                             this.OnTreeEdge(e, reversed);
-                            todo.Push(new SearchFrame(u, edges, frame.Depth + 1));
+                            todo.Push(new SearchFrame(e, u, edges, frame.Depth + 1));
                             u = v;
-                            edges = this.VisitedGraph.AdjacentEdges(u).GetEnumerator();
+                            edges = oee(this.VisitedGraph.AdjacentEdges(u)).GetEnumerator();
                             this.VertexColors[u] = GraphColor.Gray;
                             this.OnDiscoverVertex(u);
                             break;
