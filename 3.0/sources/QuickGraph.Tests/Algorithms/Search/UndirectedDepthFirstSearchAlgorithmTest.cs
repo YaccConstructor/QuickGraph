@@ -8,7 +8,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Algorithms.Search
 {
     [TestClass]
-    public class UndirectedDepthFirstAlgorithmSearchTest
+    public partial class UndirectedDepthFirstAlgorithmSearchTest
     {
         private static bool IsDescendant<TVertex>(
             Dictionary<TVertex,TVertex> parents,
@@ -61,7 +61,7 @@ namespace QuickGraph.Algorithms.Search
                 discoverTimes[args] = time++;
             };
 
-            dfs.ExamineEdge += args =>
+            dfs.ExamineEdge += (sender, args) =>
             {
                 Assert.AreEqual(dfs.VertexColors[args.Source], GraphColor.Gray);
             };
