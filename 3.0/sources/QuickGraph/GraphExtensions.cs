@@ -210,31 +210,12 @@ this
         /// <param name="graph"></param>
         /// <returns></returns>
         public static ArrayAdjacencyGraph<TVertex, TEdge> ToArrayAdjacencyGraph<TVertex, TEdge>(
-            IEdgeListGraph<TVertex, TEdge> graph
+            IVertexAndEdgeListGraph<TVertex, TEdge> graph
             )
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(graph != null);
-
-            var vertexCount = graph.VertexCount;
-            var vertexIndices = new Dictionary<TVertex, int>(vertexCount);
-            {
-                int i = 0;
-                foreach (var vertex in graph.Vertices)
-                    vertexIndices[vertex] = i++;
-            }
-            TEdge[] edges = new TEdge[graph.EdgeCount];
-            {
-                int i = 0;
-                foreach (var edge in graph.Edges)
-                    edges[i++] = edge;
-            }
-
-            return new ArrayAdjacencyGraph<TVertex, TEdge>(
-                vertexCount, 
-                edges,
-                AlgorithmExtensions.GetIndexer<VertexIndexer<TVertex>, TVertex, int>(vertexIndices)
-                );
+            return new ArrayAdjacencyGraph<TVertex, TEdge>(graph);
         }
 
         /// <summary>

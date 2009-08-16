@@ -24,80 +24,34 @@ namespace QuickGraph
 #endif
         where TEdge : IEdge<TVertex>
     {
-        readonly VertexIndexer<TVertex> vertexIndices;
-        readonly int vertexCount;
-        readonly int[] edgeStartIndices;
-        readonly TEdge[] outEdges;
+        readonly Dictionary<TVertex, TEdge[]> vertexOutEdges;
+        readonly int edgeCount;
+
+        public ArrayAdjacencyGraph(
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph
+            )
+        {
+            Contract.Requires(visitedGraph != null);
+            this.vertexOutEdges = new Dictionary<TVertex, TEdge[]>(visitedGraph.VertexCount);
+            this.edgeCount = visitedGraph.EdgeCount;
+            foreach (var vertex in visitedGraph.Vertices)
+            {
+                var outEdges = new List<TEdge>(visitedGraph.OutEdges(vertex));
+                this.vertexOutEdges.Add(vertex, outEdges.ToArray());
+            }
+        }
 
         private ArrayAdjacencyGraph(
-            VertexIndexer<TVertex> vertexIndices,
-            int vertexCount,
-            int[] edgeStartIndices,
-            TEdge[] outEdges)
+            Dictionary<TVertex, TEdge[]> vertexOutEdges,
+            int edgeCount
+            )
         {
-            Contract.Requires(vertexIndices != null);
-            Contract.Requires(vertexCount >= 0);
-            Contract.Requires(edgeStartIndices != null);
-            Contract.Requires(edgeStartIndices.Length == vertexCount + 1);
-            Contract.Requires(outEdges != null);
+            Contract.Requires(vertexOutEdges != null);
+            Contract.Requires(edgeCount >= 0);
+            Contract.Requires(edgeCount == Enumerable.Sum(vertexOutEdges, kv => (kv.Value == null) ? 0 : kv.Value.Length));
 
-            this.vertexIndices = vertexIndices;
-            this.vertexCount = vertexCount;
-            this.edgeStartIndices = edgeStartIndices;
-            this.outEdges = outEdges;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the array adjacency graph.
-        /// </summary>
-        /// <param name="vertexCount">The number of vertices</param>
-        /// <param name="edges">Array containing the edges. This array is stored and modified as is in the graph. No copy is made.</param>
-        /// <param name="vertexIndices">A mapping from vertices to [0, vertexCount) range</param>
-        public ArrayAdjacencyGraph(            
-            int vertexCount,
-            TEdge[] edges,
-            VertexIndexer<TVertex> vertexIndices)
-        {
-            Contract.Requires(vertexCount >= 0);
-            Contract.Requires(edges != null);
-            Contract.Requires(typeof(TEdge).IsValueType || Contract.ForAll(edges, e => e != null));
-            Contract.Requires(vertexIndices != null);
-#if CONTRACTS_BUG
-            Contract.Requires(Contract.ForAll(edges, 
-                e =>
-                    0 <= vertexIndices(e.Source) && vertexIndices(e.Source) < vertexCount &&
-                    0 <= vertexIndices(e.Target) && vertexIndices(e.Target) < vertexCount)
-                    );
-#endif
-
-            this.vertexCount = vertexCount;
-            this.vertexIndices = vertexIndices;
-            this.edgeStartIndices = new int[vertexCount + 1];
-            this.outEdges = edges;
-
-            // order out edges with respect to source
-            Array.Sort(this.outEdges, (l, r) => vertexIndices(l.Source).CompareTo(vertexIndices(r.Source)));
-            // first compute the number of out-edges per vertex
-            foreach (var edge in edges)
-                this.edgeStartIndices[this.vertexIndices(edge.Source)]++;            
-            // patch with the edge start indices
-            int counter = 0;
-            for (int i = 0; i < this.edgeStartIndices.Length; i++)
-            {
-                int temp = counter;
-                counter += this.edgeStartIndices[i];
-                this.edgeStartIndices[i] = temp;
-            }
-            Contract.Assert(counter == edges.Length);
-            this.edgeStartIndices[this.edgeStartIndices.Length - 1] = edges.Length;
-        }
-
-        /// <summary>
-        /// Gets the delegate used to map vertices to array indexes
-        /// </summary>
-        public VertexIndexer<TVertex> Indexer
-        {
-            get { return this.vertexIndices; }
+            this.vertexOutEdges = vertexOutEdges;
+            this.edgeCount = edgeCount;
         }
 
         #region IIncidenceGraph<TVertex,TEdge> Members
@@ -109,50 +63,40 @@ namespace QuickGraph
 
         public bool TryGetEdges(TVertex source, TVertex target, out IEnumerable<TEdge> edges)
         {
-            int sourceIndex = this.vertexIndices(source);
-            if (0 <= sourceIndex && sourceIndex < this.vertexCount)
+            TEdge[] es;
+            if (this.vertexOutEdges.TryGetValue(source, out es))
             {
-                int targetIndex = this.vertexIndices(target);
-                if (0 <= targetIndex && targetIndex < this.vertexCount)
+                List<TEdge> _edges = null;
+                for (int i = 0; i < es.Length; i++)
                 {
-                    int endIndex = this.edgeStartIndices[sourceIndex + 1];
-
-                    edges = this.GetEdges(sourceIndex, endIndex - sourceIndex);
-                    return true;
+                    if (es[i].Target.Equals(target))
+                    {
+                        if (_edges == null)
+                            _edges = new List<TEdge>(es.Length - i);
+                        _edges.Add(es[i]);
+                    }
                 }
+
+                edges = _edges;
+                return edges != null;
             }
 
             edges = null;
             return false;
         }
 
-        private IEnumerable<TEdge> GetEdges(int startIndex, int endIndex)
-        {
-            Contract.Requires(0 <= startIndex);
-            Contract.Requires(startIndex <= endIndex);
-            Contract.Requires(endIndex < this.outEdges.Length);
-
-            for (int i = startIndex; i < endIndex; ++i)
-                yield return this.outEdges[i];
-        }
-
         public bool TryGetEdge(TVertex source, TVertex target, out TEdge edge)
         {
-            int sourceIndex = this.vertexIndices(source);
-            if (0 <= sourceIndex && sourceIndex < this.vertexCount)
+            TEdge[] edges;
+            if (this.vertexOutEdges.TryGetValue(source, out edges) &&
+                edges != null)
             {
-                int targetIndex = this.vertexIndices(target);
-                if (0 <= targetIndex && targetIndex < this.vertexCount)
+                for (int i = 0; i < edges.Length; i++)
                 {
-                    int endIndex = this.edgeStartIndices[sourceIndex + 1];
-                    for (int i = sourceIndex; i < endIndex; ++i)
+                    if (edges[i].Target.Equals(target))
                     {
-                        var e = this.outEdges[this.edgeStartIndices[i]];
-                        if (e.Target.Equals(target))
-                        {
-                            edge = e;
-                            return true;
-                        }
+                        edge = edges[i];
+                        return true;
                     }
                 }
             }
@@ -171,28 +115,31 @@ namespace QuickGraph
 
         public int OutDegree(TVertex v)
         {
-            int index = this.vertexIndices(v);
-            return this.edgeStartIndices[index + 1] - this.edgeStartIndices[index];
+            TEdge[] edges;
+            if (this.vertexOutEdges.TryGetValue(v, out edges) &&
+                edges != null)
+                return edges.Length;
+            return 0;
         }
 
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
-            int index = this.vertexIndices(v);
-            return this.GetEdges(this.edgeStartIndices[index], this.edgeStartIndices[index + 1]);
+            TEdge[] edges;
+            if (this.vertexOutEdges.TryGetValue(v, out edges) &&
+                edges != null)
+                return edges;
+
+            return Enumerable.Empty<TEdge>();
         }
 
         public bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
-            int sourceIndex = this.vertexIndices(v);
-            if (0 <= sourceIndex && sourceIndex < this.vertexCount)
+            TEdge[] aedges;
+            if (this.vertexOutEdges.TryGetValue(v, out aedges) &&
+                aedges != null)
             {
-                int start = this.edgeStartIndices[sourceIndex];
-                int end = this.edgeStartIndices[sourceIndex + 1];
-                if (end - start > 0)
-                {
-                    edges = this.GetEdges(start, end);
-                    return true;
-                }
+                edges = aedges;
+                return true;
             }
 
             edges = null;
@@ -201,12 +148,11 @@ namespace QuickGraph
 
         public TEdge OutEdge(TVertex v, int index)
         {
-            int vindex = this.vertexIndices(v);
-            return this.outEdges[this.edgeStartIndices[vindex] + index];
+            return this.vertexOutEdges[v][index];
         }
         #endregion
 
-        #region IGraph<TVertex,TEdge> Members\
+        #region IGraph<TVertex,TEdge> Members
         public bool IsDirected
         {
             get { return true; }
@@ -221,33 +167,26 @@ namespace QuickGraph
         #region IImplicitVertexSet<TVertex> Members
         public bool ContainsVertex(TVertex vertex)
         {
-            var index = this.vertexIndices(vertex);
-            return 0 <= index && index < this.vertexCount;
+            return this.vertexOutEdges.ContainsKey(vertex);
         }
         #endregion
 
         #region IVertexSet<TVertex> Members
         public bool IsVerticesEmpty
         {
-            get { return this.vertexCount == 0; }
+            get { return this.vertexOutEdges.Count == 0; }
         }
 
         public int VertexCount
         {
-            get { return this.vertexCount; }
+            get { return this.vertexOutEdges.Count; }
         }
 
         public IEnumerable<TVertex> Vertices
         {
             get 
             {
-                for (int i = 0; i < this.edgeStartIndices.Length - 1; i++)
-                {
-                    int startIndex = this.edgeStartIndices[i];
-                    int endIndex = this.edgeStartIndices[i + 1];
-                    if (endIndex - startIndex > 0)
-                        yield return this.outEdges[startIndex].Source;
-                }
+                return this.vertexOutEdges.Keys;
             }
         }
         #endregion
@@ -255,48 +194,45 @@ namespace QuickGraph
         #region IEdgeSet<TVertex,TEdge> Members
         public bool IsEdgesEmpty
         {
-            get { return this.outEdges.Length == 0; }
+            get { return this.edgeCount == 0; }
         }
 
         public int EdgeCount
         {
-            get { return this.outEdges.Length; }
+            get { return this.edgeCount; }
         }
 
         public IEnumerable<TEdge> Edges
         {
-            get { return this.outEdges; }
+            get             
+            { 
+                foreach(var edges in this.vertexOutEdges.Values)
+                    if (edges != null)
+                        for (int i = 0; i < edges.Length; i++)
+                            yield return edges[i];
+            }
         }
 
         public bool ContainsEdge(TEdge edge)
         {
-            var sourceIndex = this.vertexIndices(edge.Source);
-            if (0 <= sourceIndex && sourceIndex < this.edgeStartIndices.Length - 1)
-            {
-                int startIndex = this.edgeStartIndices[sourceIndex];
-                int endIndex = this.edgeStartIndices[sourceIndex + 1];
-                for (int i = startIndex; i < endIndex; ++i)
-                    if (this.outEdges.Equals(edge))
+            TEdge[] edges;
+            if (this.vertexOutEdges.TryGetValue(edge.Source, out edges) &&
+                edges != null)
+                for (int i = 0; i < edges.Length; i++)
+                    if (edges[i].Equals(edge))
                         return true;
-            }
-
             return false;
         }
         #endregion
 
         #region ICloneable Members
         /// <summary>
-        /// Gets a deep clone of this graph instance
+        /// Returns self since this class is immutable
         /// </summary>
         /// <returns></returns>
         public ArrayAdjacencyGraph<TVertex, TEdge> Clone()
         {
-            return new ArrayAdjacencyGraph<TVertex, TEdge>(
-                this.vertexIndices,
-                this.vertexCount,
-                (int[])this.edgeStartIndices.Clone(),
-                (TEdge[])this.outEdges.Clone()
-                );
+            return this;
         }
 
 #if !SILVERLIGHT
