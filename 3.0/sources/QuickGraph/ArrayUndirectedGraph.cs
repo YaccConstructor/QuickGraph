@@ -17,7 +17,7 @@ namespace QuickGraph
     [Serializable]
 #endif
     [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
-    internal sealed class ArrayUndirectedGraph<TVertex, TEdge>
+    public sealed class ArrayUndirectedGraph<TVertex, TEdge>
         : IUndirectedGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
@@ -127,7 +127,7 @@ namespace QuickGraph
             get { return this.vertexIndices; }
         }
 
-        #region IGraph<TVertex,TEdge> Members\
+        #region IGraph<TVertex,TEdge> Members
         public bool IsDirected
         {
             get { return true; }
@@ -197,7 +197,7 @@ namespace QuickGraph
                 int startIndex = this.sourceEdgeStartIndices[sourceIndex];
                 int endIndex = this.sourceEdgeStartIndices[sourceIndex + 1];
                 for (int i = startIndex; i < endIndex; ++i)
-                    if (this.edges.Equals(edge))
+                    if (this.edges[i].Equals(edge))
                         return true;
             }
 
@@ -208,7 +208,22 @@ namespace QuickGraph
         #region IUndirectedGraph<TVertex,TEdge> Members
         public IEnumerable<TEdge> AdjacentEdges(TVertex v)
         {
-            return null;
+            var sourceIndex = this.vertexIndices(v);
+            // iterating source edges
+            {
+                int startIndex = this.sourceEdgeStartIndices[sourceIndex];
+                int endIndex = this.sourceEdgeStartIndices[sourceIndex + 1];
+                for (int i = startIndex; i < endIndex; ++i)
+                    yield return this.edges[i];
+            }
+
+            // iterating target edges
+            {
+                int startIndex = this.targetEdgeStartIndices[sourceIndex];
+                int endIndex = this.targetEdgeStartIndices[sourceIndex + 1];
+                for (int i = startIndex; i < endIndex; ++i)
+                    yield return this.edges[this.targetEdgeFirstVertexOffsets[i]];
+            }
         }
 
         public int AdjacentDegree(TVertex v)
@@ -225,17 +240,48 @@ namespace QuickGraph
 
         public TEdge AdjacentEdge(TVertex v, int index)
         {
-            throw new NotImplementedException();
+            var sourceIndex = this.vertexIndices(v);
+            var i = index;
+            // iterating source edges
+            {
+                int startIndex = this.sourceEdgeStartIndices[sourceIndex];
+                int endIndex = this.sourceEdgeStartIndices[sourceIndex + 1];
+                if (index < endIndex - startIndex)
+                    return this.edges[startIndex + i];
+
+                i -= endIndex - startIndex;
+                Contract.Assert(i > 0);
+            }
+
+            // iterating target edges
+            {
+                int startIndex = this.targetEdgeStartIndices[sourceIndex];
+                int endIndex = this.targetEdgeStartIndices[sourceIndex + 1];
+                
+                return this.edges[this.targetEdgeFirstVertexOffsets[startIndex + i]];
+            }
         }
 
         public bool ContainsEdge(TVertex source, TVertex target)
         {
-            throw new NotImplementedException();
+            TEdge edge;
+            return this.TryGetEdge(source, target, out edge);
         }
 
         public bool TryGetEdge(TVertex source, TVertex target, out TEdge edge)
         {
-            throw new NotImplementedException();
+            foreach (var e in this.AdjacentEdges(source))
+            {
+                var t = EdgeExtensions.GetOtherVertex(e, source);
+                if (t.Equals(target))
+                {
+                    edge = e;
+                    return true;
+                }
+            }
+
+            edge = default(TEdge);
+            return false;
         }
 
         #endregion

@@ -3,8 +3,8 @@ using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
-    public sealed class MultiSourceSinkGraphAugmentorAlgorithm<TVertex, TEdge> :
-        GraphAugmentorAlgorithmBase<TVertex, TEdge, IMutableBidirectionalGraph<TVertex, TEdge>>
+    public sealed class MultiSourceSinkGraphAugmentorAlgorithm<TVertex, TEdge> 
+        : GraphAugmentorAlgorithmBase<TVertex, TEdge, IMutableBidirectionalGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         public MultiSourceSinkGraphAugmentorAlgorithm(

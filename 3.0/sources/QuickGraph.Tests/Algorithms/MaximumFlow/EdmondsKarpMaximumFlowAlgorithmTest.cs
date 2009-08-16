@@ -30,7 +30,7 @@ namespace QuickGraph.Tests.Algorithms.MaximumFlow
             foreach (var v in g.Vertices)
                 foreach (var w in g.Vertices)
                 {
-                    IDictionary<TVertex, TEdge> flowPredecessors;
+                    TryFunc<TVertex, TEdge> flowPredecessors;
                     var flow = AlgorithmExtensions.MaximumFlowEdmondsKarp<TVertex, TEdge>(
                         g,
                         e => 1,
