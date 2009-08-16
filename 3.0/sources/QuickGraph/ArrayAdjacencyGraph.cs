@@ -19,12 +19,33 @@ namespace QuickGraph
     [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
     public sealed class ArrayAdjacencyGraph<TVertex, TEdge>
         : IVertexAndEdgeListGraph<TVertex, TEdge>
+#if !SILVERLIGHT
+        , ICloneable
+#endif
         where TEdge : IEdge<TVertex>
     {
         readonly VertexIndexer<TVertex> vertexIndices;
         readonly int vertexCount;
         readonly int[] edgeStartIndices;
         readonly TEdge[] outEdges;
+
+        private ArrayAdjacencyGraph(
+            VertexIndexer<TVertex> vertexIndices,
+            int vertexCount,
+            int[] edgeStartIndices,
+            TEdge[] outEdges)
+        {
+            Contract.Requires(vertexIndices != null);
+            Contract.Requires(vertexCount >= 0);
+            Contract.Requires(edgeStartIndices != null);
+            Contract.Requires(edgeStartIndices.Length == vertexCount + 1);
+            Contract.Requires(outEdges != null);
+
+            this.vertexIndices = vertexIndices;
+            this.vertexCount = vertexCount;
+            this.edgeStartIndices = edgeStartIndices;
+            this.outEdges = outEdges;
+        }
 
         /// <summary>
         /// Initializes a new instance of the array adjacency graph.
@@ -261,6 +282,29 @@ namespace QuickGraph
 
             return false;
         }
+        #endregion
+
+        #region ICloneable Members
+        /// <summary>
+        /// Gets a deep clone of this graph instance
+        /// </summary>
+        /// <returns></returns>
+        public ArrayAdjacencyGraph<TVertex, TEdge> Clone()
+        {
+            return new ArrayAdjacencyGraph<TVertex, TEdge>(
+                this.vertexIndices,
+                this.vertexCount,
+                (int[])this.edgeStartIndices.Clone(),
+                (TEdge[])this.outEdges.Clone()
+                );
+        }
+
+#if !SILVERLIGHT
+        object ICloneable.Clone()
+        {
+            return this.Clone();
+        }
+#endif
         #endregion
     }
 }
