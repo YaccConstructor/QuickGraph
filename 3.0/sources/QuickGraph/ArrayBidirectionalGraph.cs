@@ -27,14 +27,15 @@ namespace QuickGraph
         readonly Dictionary<TVertex, InOutEdges> vertexEdges;
         readonly int edgeCount;
 
+        [Serializable]
         struct InOutEdges
         {
             private readonly TEdge[] _outEdges;
             private readonly TEdge[] _inEdges;
             public InOutEdges(TEdge[] outEdges, TEdge[] inEdges)
             {
-                this._outEdges = outEdges.Length > 0 ? outEdges : null;
-                this._inEdges = inEdges.Length > 0 ? inEdges : null;
+                this._outEdges = outEdges != null && outEdges.Length > 0 ? outEdges : null;
+                this._inEdges = inEdges != null && inEdges.Length > 0 ? inEdges : null;
             }
             public bool TryGetOutEdges(out TEdge[] edges)
             {
@@ -48,18 +49,24 @@ namespace QuickGraph
             }
         }
 
+        /// <summary>
+        /// Constructs a new ArrayBidirectionalGraph instance from a 
+        /// IBidirectionalGraph instance
+        /// </summary>
+        /// <param name="visitedGraph"></param>
         public ArrayBidirectionalGraph(
             IBidirectionalGraph<TVertex, TEdge> visitedGraph
             )
         {
             Contract.Requires(visitedGraph != null);
+
             this.vertexEdges = new Dictionary<TVertex, InOutEdges>(visitedGraph.VertexCount);
             this.edgeCount = visitedGraph.EdgeCount;
             foreach (var vertex in visitedGraph.Vertices)
             {
-                var outEdges = new List<TEdge>(visitedGraph.OutEdges(vertex));
-                var inEdges = new List<TEdge>(visitedGraph.InEdges(vertex));
-                this.vertexEdges.Add(vertex, new InOutEdges(outEdges.ToArray(), inEdges.ToArray()));
+                var outEdges = Enumerable.ToArray(visitedGraph.OutEdges(vertex));
+                var inEdges = Enumerable.ToArray(visitedGraph.InEdges(vertex));
+                this.vertexEdges.Add(vertex, new InOutEdges(outEdges, inEdges));
             }
         }
 

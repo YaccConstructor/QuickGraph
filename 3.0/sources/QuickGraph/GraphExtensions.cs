@@ -210,12 +210,36 @@ this
         /// <param name="graph"></param>
         /// <returns></returns>
         public static ArrayAdjacencyGraph<TVertex, TEdge> ToArrayAdjacencyGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
             IVertexAndEdgeListGraph<TVertex, TEdge> graph
             )
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(graph != null);
+
             return new ArrayAdjacencyGraph<TVertex, TEdge>(graph);
+        }
+
+        /// <summary>
+        /// Creates an immutable array adjacency graph from the input graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="graph"></param>
+        /// <returns></returns>
+        public static ArrayBidirectionalGraph<TVertex, TEdge> ToArrayAdjacencyGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IBidirectionalGraph<TVertex, TEdge> graph
+            )
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(graph != null);
+
+            return new ArrayBidirectionalGraph<TVertex, TEdge>(graph);
         }
 
         /// <summary>
