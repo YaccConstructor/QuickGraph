@@ -316,6 +316,7 @@
     <Compile Include="Contracts\IImplicitUndirectedGraphContract.cs" />
     <Compile Include="Contracts\IUndirectedEdgeContract.cs" />
     <Compile Include="ArrayUndirectedGraph.cs" />
+    <Compile Include="ArrayBidirectionalGraph.cs" />
     <Compile Include="DelegateImplicitUndirectedGraph.cs" />
     <Compile Include="DelegateIncidenceGraph.cs" />
     <Compile Include="DelegateUndirectedGraph.cs" />
