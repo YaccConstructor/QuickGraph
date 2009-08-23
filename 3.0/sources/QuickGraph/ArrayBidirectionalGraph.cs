@@ -27,7 +27,9 @@ namespace QuickGraph
         readonly Dictionary<TVertex, InOutEdges> vertexEdges;
         readonly int edgeCount;
 
+#if !SILVERLIGHT
         [Serializable]
+#endif
         struct InOutEdges
         {
             private readonly TEdge[] _outEdges;
