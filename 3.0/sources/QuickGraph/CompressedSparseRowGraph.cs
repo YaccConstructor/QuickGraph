@@ -24,6 +24,9 @@ namespace QuickGraph
         , ICloneable
 #endif
     {
+#if !SILVERLIGHT
+        [Serializable]
+#endif
         struct Range
         {
             public readonly int Start;
