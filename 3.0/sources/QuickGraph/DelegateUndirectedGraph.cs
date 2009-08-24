@@ -30,12 +30,13 @@ namespace QuickGraph
             : base(tryGetAdjacentEdges, allowParallelEdges)
         {
             Contract.Requires(vertices != null);
+#if CONTRACTS_BUG
             Contract.Requires(Contract.ForAll(vertices, v =>
             {
                 IEnumerable<TEdge> edges;
                 return tryGetAdjacentEdges(v, out edges);
             }));
-
+#endif
             this.vertices = vertices;
         }
 

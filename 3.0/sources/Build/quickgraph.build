@@ -23,8 +23,10 @@
     <MetadataSolution>$(RootDirectory)\QuickGraph.sln</MetadataSolution>
 
     <BinDirectory>$(RootDirectory)\bin</BinDirectory>
-    <BinDebugDirectory>$(BinDirectory)\debug</BinDebugDirectory>
-    <BinReleaseDirectory>$(BinDirectory)\release</BinReleaseDirectory>
+    <BinDebugDirectory>$(BinDirectory)\Debug</BinDebugDirectory>
+    <BinDebugContractsDirectory>$(BinDirectory)\DebugContracts</BinDebugContractsDirectory>
+    <BinReleaseDirectory>$(BinDirectory)\Release</BinReleaseDirectory>
+    <BinRelease20Directory>$(BinDirectory)\Release20</BinRelease20Directory>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -118,6 +120,12 @@ using System.Reflection;
       Targets="Clean;Build"
       Properties="
         Configuration=Release
+      " />
+    <MSBuild
+      Projects="$(MetadataSolution)"
+      Targets="Clean;Build"
+      Properties="
+        Configuration=Release20
       " />
   </Target>
 
