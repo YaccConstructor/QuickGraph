@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using QuickGraph.Collections;
+using QuickGraph.Algorithms.Services;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -20,6 +21,19 @@ namespace QuickGraph.Algorithms.Search
     {
         private TVertex targetVertex;
         private bool hasTargetVertex;
+
+        public BestFirstFrontierSearchAlgorithm(
+            IAlgorithmComponent host,
+            IImplicitGraph<TVertex, TEdge> visitedGraph)
+            : base(host, visitedGraph)
+        {
+        }
+
+        public BestFirstFrontierSearchAlgorithm(
+            IImplicitGraph<TVertex, TEdge> visitedGraph)
+            :this(null, visitedGraph)
+        {
+        }
 
         public bool TryGetTargetVertex(out TVertex targetVertex)
         {

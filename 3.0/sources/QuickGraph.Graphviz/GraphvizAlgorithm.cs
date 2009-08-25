@@ -7,7 +7,12 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Graphviz
 {
-    public sealed class GraphvizAlgorithm<TVertex,TEdge>
+    /// <summary>
+    /// An algorithm that renders a graph to the Graphviz DOT format.
+    /// </summary>
+    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TEdge"></typeparam>
+    public class GraphvizAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
         private readonly static Regex writeLineReplace = new Regex("\n", RegexOptions.Compiled | RegexOptions.Multiline);
