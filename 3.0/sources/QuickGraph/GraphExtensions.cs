@@ -223,13 +223,13 @@ this
         }
 
         /// <summary>
-        /// Creates an immutable array adjacency graph from the input graph
+        /// Creates an immutable array bidirectional graph from the input graph
         /// </summary>
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <param name="graph"></param>
         /// <returns></returns>
-        public static ArrayBidirectionalGraph<TVertex, TEdge> ToArrayAdjacencyGraph<TVertex, TEdge>(
+        public static ArrayBidirectionalGraph<TVertex, TEdge> ToArrayBidirectionalGraph<TVertex, TEdge>(
 #if !NET20
 this 
 #endif
@@ -240,6 +240,26 @@ this
             Contract.Requires(graph != null);
 
             return new ArrayBidirectionalGraph<TVertex, TEdge>(graph);
+        }
+
+        /// <summary>
+        /// Creates an immutable array undirected graph from the input graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="graph"></param>
+        /// <returns></returns>
+        public static ArrayUndirectedGraph<TVertex, TEdge> ToArrayUndirectedGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IUndirectedGraph<TVertex, TEdge> graph
+            )
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(graph != null);
+
+            return new ArrayUndirectedGraph<TVertex, TEdge>(graph);
         }
 
         /// <summary>

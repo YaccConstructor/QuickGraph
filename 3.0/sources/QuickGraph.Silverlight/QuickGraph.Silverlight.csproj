@@ -484,6 +484,9 @@
     <Compile Include="..\QuickGraph\ArrayBidirectionalGraph.cs">
       <Link>ArrayBidirectionalGraph.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\ArrayUndirectedGraph.cs">
+      <Link>ArrayUndirectedGraph.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\BidirectionAdapterGraph.cs">
       <Link>BidirectionAdapterGraph.cs</Link>
     </Compile>
