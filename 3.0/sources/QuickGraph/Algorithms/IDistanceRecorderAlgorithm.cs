@@ -2,6 +2,11 @@
 
 namespace QuickGraph.Algorithms
 {
+    /// <summary>
+    /// An algorithm that exposes events to compute a distance map between vertices
+    /// </summary>
+    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TEdge"></typeparam>
     public interface IDistanceRecorderAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
