@@ -92,6 +92,44 @@ this
         /// <summary>
         /// Creates an instance of DelegateIncidenceGraph.
         /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="getOutEdges"></param>
+        /// <returns></returns>
+        public static DelegateIncidenceGraph<TVertex, TEdge> ToDelegateIncidenceGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            Func<TVertex, IEnumerable<TEdge>> getOutEdges)
+            where TEdge : IEdge<TVertex>, IEquatable<TEdge>
+        {
+            Contract.Requires(getOutEdges != null);
+
+            return ToDelegateIncidenceGraph(ToTryFunc(getOutEdges));
+        }
+
+        /// <summary>
+        /// Converts a Func that returns a reference type into a tryfunc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static TryFunc<T, TResult> ToTryFunc<T, TResult>(Func<T, TResult> func)
+            where TResult : class
+        {
+            Contract.Requires(func != null);
+
+            return (T value, out TResult result) =>
+            {
+                result = func(value);
+                return result != null;
+            };
+        }
+
+        /// <summary>
+        /// Creates an instance of DelegateIncidenceGraph.
+        /// </summary>
         /// <param name="vertices"></param>
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
@@ -114,6 +152,28 @@ this
             }));
 
             return new DelegateVertexAndEdgeListGraph<TVertex, TEdge>(vertices, tryGetOutEdges);
+        }
+
+        /// <summary>
+        /// Creates an instance of DelegateIncidenceGraph.
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="getOutEdges"></param>
+        /// <returns></returns>
+        public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToDelegateVertexAndEdgeListGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IEnumerable<TVertex> vertices,
+            Func<TVertex, IEnumerable<TEdge>> getOutEdges)
+            where TEdge : IEdge<TVertex>, IEquatable<TEdge>
+        {
+            Contract.Requires(vertices != null); 
+            Contract.Requires(getOutEdges != null);
+
+            return ToDelegateVertexAndEdgeListGraph(vertices, ToTryFunc(getOutEdges));
         }
 
         /// <summary>
@@ -200,6 +260,31 @@ this
             }));
 
             return new DelegateUndirectedGraph<TVertex, TEdge>(vertices, tryGetAdjacentEdges, true);
+        }
+
+        /// <summary>
+        /// Creates an instance of DelegateIncidenceGraph.
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="getAdjacentEdges"></param>
+        /// <returns></returns>
+        public static DelegateUndirectedGraph<TVertex, TEdge> ToDelegateUndirectedGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            IEnumerable<TVertex> vertices,
+            Func<TVertex, IEnumerable<TEdge>> getAdjacentEdges)
+            where TEdge : IEdge<TVertex>, IEquatable<TEdge>
+        {
+            Contract.Requires(vertices != null);
+            Contract.Requires(getAdjacentEdges != null);
+
+            return ToDelegateUndirectedGraph(
+                vertices,
+                ToTryFunc(getAdjacentEdges)
+                );
         }
 
         /// <summary>
