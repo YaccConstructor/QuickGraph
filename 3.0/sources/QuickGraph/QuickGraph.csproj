@@ -254,6 +254,7 @@
     <Compile Include="Algorithms\Observers\VertexPredecessorPathRecorderObserver.cs" />
     <Compile Include="Algorithms\RankedShortestPath\HoffmanPavleyRankedShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\RankedShortestPath\RankedShortestPathAlgorithmBase.cs" />
+    <Compile Include="Algorithms\Search\BestFirstFrontierSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Search\UndirectedDepthFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmComponent.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmServices.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -47,8 +48,7 @@ namespace QuickGraph.Algorithms.Search
             )
             :base(host, visitedGraph)
         {
-            if (colors == null)
-                throw new ArgumentNullException("VertexColors");
+            Contract.Requires(colors != null);
 
             this.colors = colors;
         }
@@ -84,8 +84,9 @@ namespace QuickGraph.Algorithms.Search
         public event VertexAction<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
-            if (StartVertex != null)
-                StartVertex(v);
+            var eh = this.StartVertex;
+            if (eh != null)
+                eh(v);
         }
 
         public event EdgeAction<TVertex, TEdge> StartEdge;
@@ -114,8 +115,9 @@ namespace QuickGraph.Algorithms.Search
         public event EdgeAction<TVertex, TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
-            if (TreeEdge != null)
-                TreeEdge(e);
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(e);
         }
 
         public event EdgeAction<TVertex, TEdge> BackEdge;
@@ -180,8 +182,6 @@ namespace QuickGraph.Algorithms.Search
 
         protected override void Initialize()
         {
-            base.Initialize();
-
             // put all vertex to white
             var cancelManager = this.Services.CancelManager;
             foreach (var e in VisitedGraph.Edges)

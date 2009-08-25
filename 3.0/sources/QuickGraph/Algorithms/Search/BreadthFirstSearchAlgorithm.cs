@@ -15,15 +15,12 @@ namespace QuickGraph.Algorithms.Search
     ///     idref="gross98graphtheory"
     ///     chapter="4.2"
     ///     />
-#if !SILVERLIGHT
-    [Serializable]
-#endif
-    public sealed class BreadthFirstSearchAlgorithm<TVertex, TEdge> :
-        RootedAlgorithmBase<TVertex, IVertexListGraph<TVertex, TEdge>>,
-        IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>,
-        IDistanceRecorderAlgorithm<TVertex,TEdge>,
-        IVertexColorizerAlgorithm<TVertex,TEdge>,
-        ITreeBuilderAlgorithm<TVertex, TEdge>
+    public sealed class BreadthFirstSearchAlgorithm<TVertex, TEdge> 
+        : RootedAlgorithmBase<TVertex, IVertexListGraph<TVertex, TEdge>>
+        , IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>
+        , IDistanceRecorderAlgorithm<TVertex,TEdge>
+        , IVertexColorizerAlgorithm<TVertex,TEdge>
+        , ITreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private IDictionary<TVertex, GraphColor> vertexColors;
