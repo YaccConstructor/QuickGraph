@@ -48,17 +48,21 @@ namespace QuickGraph.Data
 
             var v = e.Vertex;
             var format = e.VertexFormatter;
+            format.Shape = GraphvizVertexShape.Record;
 
             // creating a record with a title and a list of columns.
             var title = new GraphvizRecordCell() {
                  Text = v.TableName
             };
             var sb = new StringBuilder();
+            bool first = true;
             foreach (DataColumn column in v.Columns)
             {
+                if (first) first = false;
+                else
+                    sb.AppendLine();             
                 sb.AppendFormat("+ {0} : {1}", column.ColumnName, column.DataType.Name);
                 if (column.Unique) sb.Append(" unique");
-                sb.AppendLine();
             }
             var columns = new GraphvizRecordCell()
             {

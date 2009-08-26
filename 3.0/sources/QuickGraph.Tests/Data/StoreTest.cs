@@ -13,7 +13,7 @@ namespace QuickGraph.Tests.Data
     public class StoreTest
     {
         [TestMethod]
-        public void TopologicalSortofTables()
+        public void DataSetTopologicalSortofTables()
         {
             // typed dataset
             var store = new Store();
@@ -23,5 +23,16 @@ namespace QuickGraph.Tests.Data
             foreach(var table in g.TopologicalSort().Reverse())
                 Console.WriteLine(table.TableName);
         }
+        [TestMethod]
+        public void DataSetGraphviz()
+        {
+            // typed dataset
+            var store = new Store();
+            // extract the graph
+            var g = store.ToGraph();
+            // rendering to dot
+            Console.WriteLine(g.ToGraphviz());
+        }
+
     }
 }

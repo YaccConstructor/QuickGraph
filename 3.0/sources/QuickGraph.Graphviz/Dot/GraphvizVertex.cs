@@ -4,6 +4,7 @@ namespace QuickGraph.Graphviz.Dot
     using System.Collections;
     using System.Drawing;
     using System.IO;
+    using System.Collections.Generic;
 
     public class GraphvizVertex
     {
@@ -33,11 +34,11 @@ namespace QuickGraph.Graphviz.Dot
         private double z = -1;
         private System.Drawing.Point? position;
 
-        internal string GenerateDot(Hashtable pairs)
+        internal string GenerateDot(Dictionary<string, object> pairs)
         {
             bool flag = false;
-            StringWriter writer = new StringWriter();
-            foreach (DictionaryEntry entry in pairs)
+            var writer = new StringWriter();
+            foreach (var entry in pairs)
             {
                 if (flag)
                 {
@@ -49,38 +50,38 @@ namespace QuickGraph.Graphviz.Dot
                 }
                 if (entry.Value is string)
                 {
-                    writer.Write("{0}=\"{1}\"", entry.Key.ToString(), entry.Value.ToString());
+                    writer.Write("{0}=\"{1}\"", entry.Key, entry.Value.ToString());
                     continue;
                 }
                 if (entry.Value is GraphvizVertexShape)
                 {
-                    writer.Write("{0}={1}", entry.Key.ToString(), ((GraphvizVertexShape) entry.Value).ToString().ToLower());
+                    writer.Write("{0}={1}", entry.Key, ((GraphvizVertexShape) entry.Value).ToString().ToLower());
                     continue;
                 }
                 if (entry.Value is GraphvizVertexStyle)
                 {
-                    writer.Write("{0}={1}", entry.Key.ToString(), ((GraphvizVertexStyle) entry.Value).ToString().ToLower());
+                    writer.Write("{0}={1}", entry.Key, ((GraphvizVertexStyle) entry.Value).ToString().ToLower());
                     continue;
                 }
                 if (entry.Value is Color)
                 {
                     Color color = (Color) entry.Value;
-                    writer.Write("{0}=\"#{1}{2}{3}{4}\"", new object[] { entry.Key.ToString(), color.R.ToString("x2").ToUpper(), color.G.ToString("x2").ToUpper(), color.B.ToString("x2").ToUpper(), color.A.ToString("x2").ToUpper() });
+                    writer.Write("{0}=\"#{1}{2}{3}{4}\"", entry.Key, color.R.ToString("x2").ToUpper(), color.G.ToString("x2").ToUpper(), color.B.ToString("x2").ToUpper(), color.A.ToString("x2").ToUpper());
                     continue;
                 }
                 if (entry.Value is GraphvizRecord)
                 {
-                    writer.WriteLine("{0}=\"{1}\"", entry.Key.ToString(), ((GraphvizRecord) entry.Value).ToDot());
+                    writer.WriteLine("{0}=\"{1}\"", entry.Key, ((GraphvizRecord) entry.Value).ToDot());
                     continue;
                 }
-                writer.Write(" {0}={1}", entry.Key.ToString(), entry.Value.ToString().ToLower());
+                writer.Write(" {0}={1}", entry.Key, entry.Value.ToString().ToLower());
             }
             return writer.ToString();
         }
 
         public string ToDot()
         {
-            Hashtable pairs = new Hashtable();
+            var pairs = new Dictionary<string, object>();
             if (this.Font != null)
             {
                 pairs["fontname"] = this.Font.Name;
@@ -193,6 +194,7 @@ namespace QuickGraph.Graphviz.Dot
                     pairs["distorsion"] = this.Distorsion;
                 }
             }
+
             return this.GenerateDot(pairs);
         }
 

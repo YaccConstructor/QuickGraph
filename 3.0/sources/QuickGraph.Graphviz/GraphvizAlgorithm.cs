@@ -159,17 +159,14 @@ namespace QuickGraph.Graphviz
             }
         }
 
-        public string Generate(IDotEngine dot, string outputFileName)
+        public string Generate()
         {
-            Contract.Requires(dot != null);
-            Contract.Requires(!String.IsNullOrEmpty(outputFileName));
-
             this.vertexIds.Clear();
             this.output = new StringWriter();
             // build vertex id map
-            int i=0;
-            foreach(TVertex v in this.VisitedGraph.Vertices)
-                this.vertexIds.Add(v,i++);
+            int i = 0;
+            foreach (TVertex v in this.VisitedGraph.Vertices)
+                this.vertexIds.Add(v, i++);
 
             if (this.VisitedGraph.IsDirected)
                 this.Output.Write("digraph ");
@@ -189,7 +186,7 @@ namespace QuickGraph.Graphviz
                 Output.WriteLine("edge [{0}];", ef);
 
             // initialize vertex map
-            var colors = new Dictionary<TVertex,GraphColor>();
+            var colors = new Dictionary<TVertex, GraphColor>();
             foreach (var v in VisitedGraph.Vertices)
                 colors[v] = GraphColor.White;
             var edgeColors = new Dictionary<TEdge, GraphColor>();
@@ -200,7 +197,15 @@ namespace QuickGraph.Graphviz
             WriteEdges(edgeColors, VisitedGraph.Edges);
 
             Output.WriteLine("}");
+            return Output.ToString();
+        }
 
+        public string Generate(IDotEngine dot, string outputFileName)
+        {
+            Contract.Requires(dot != null);
+            Contract.Requires(!String.IsNullOrEmpty(outputFileName));
+
+            var output = this.Generate();
             return dot.Run(ImageType, Output.ToString(), outputFileName);
         }
 
