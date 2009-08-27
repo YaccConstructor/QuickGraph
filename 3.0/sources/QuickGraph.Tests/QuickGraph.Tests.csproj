@@ -455,7 +455,6 @@
     </Compile>
     <Compile Include="UndirectedGraphInvariant.cs" />
     <Compile Include="UndirectedGraphTVertexTEdgeTest.cs" />
-    <Compile Include="WikiSamples.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickGraph.Data\QuickGraph.Data.csproj">
