@@ -4,12 +4,12 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Graphviz
 {
-    public sealed class FormatEdgeEventArgs<V,E> : EdgeEventArgs<V,E>
-        where E : IEdge<V>
+    public sealed class FormatEdgeEventArgs<TVertex,TEdge> : EdgeEventArgs<TVertex,TEdge>
+        where TEdge : IEdge<TVertex>
     {
         private readonly GraphvizEdge edgeFormatter;
 
-        public FormatEdgeEventArgs(GraphvizEdge edgeFormatter, E e)
+        public FormatEdgeEventArgs(GraphvizEdge edgeFormatter, TEdge e)
 			: base(e)
         {
             Contract.Requires(edgeFormatter != null);
