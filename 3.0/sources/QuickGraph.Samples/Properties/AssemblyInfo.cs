@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("QuickGraph.Samples")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft IT")]
 [assembly: AssemblyProduct("QuickGraph.Samples")]
-[assembly: AssemblyCopyright("Copyright © Microsoft IT 2009")]
+[assembly: AssemblyCompany("http://quickgraph.codeplex.com")]
+[assembly: AssemblyCopyright("Copyright © Jonathan de Halleux")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
