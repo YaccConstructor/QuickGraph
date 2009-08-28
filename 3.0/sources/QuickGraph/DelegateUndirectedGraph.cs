@@ -9,8 +9,8 @@ namespace QuickGraph
     /// <summary>
     /// A functional implicit undirected graph
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
-    /// <typeparam name="TEdge"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
+    /// <typeparam name="TEdge">type of the edges</typeparam>
 #if !SILVERLIGHT
     [Serializable]
 #endif

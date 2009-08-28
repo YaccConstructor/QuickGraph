@@ -20,8 +20,8 @@ namespace QuickGraph.Serialization
     /// <summary>
     /// A base class that creates a proxy to a graph that is xml serializable
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
-    /// <typeparam name="TEdge"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
+    /// <typeparam name="TEdge">type of the edges</typeparam>
     /// <typeparam name="TGraph"></typeparam>
     [XmlRoot("graph")]
     public class XmlSerializableGraph<TVertex, TEdge, TGraph>

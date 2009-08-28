@@ -11,7 +11,7 @@ namespace QuickGraph
     /// Directed graph representation using a Compressed Sparse Row representation
     /// (http://www.cs.utk.edu/~dongarra/etemplates/node373.html)
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
 #if !SILVERLIGHT
     [Serializable]
 #endif

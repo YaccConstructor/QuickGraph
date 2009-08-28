@@ -7,7 +7,7 @@ namespace QuickGraph
     /// <summary>
     /// An equatable, tagged, edge
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
     /// <typeparam name="TTag"></typeparam>
 #if !SILVERLIGHT
     [Serializable]

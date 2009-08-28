@@ -6,8 +6,8 @@ namespace QuickGraph
     /// A graph with vertices of type <typeparamref name="TVertex"/>
     /// and edges of type <typeparamref name="TEdge"/>
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
-    /// <typeparam name="TEdge"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
+    /// <typeparam name="TEdge">type of the edges</typeparam>
     public interface IGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {

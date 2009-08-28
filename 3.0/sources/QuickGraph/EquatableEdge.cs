@@ -9,7 +9,7 @@ namespace QuickGraph
     /// <summary>
     /// An equatable edge implementation
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
 #if !SILVERLIGHT
     [Serializable]
 #endif

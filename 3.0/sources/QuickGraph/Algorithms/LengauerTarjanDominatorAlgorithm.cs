@@ -17,8 +17,8 @@ namespace QuickGraph.Algorithms
     /// A fast algorithm for finding dominators in a flowgraph
     /// ACM Transactions on Programming Language and Systems, 1(1):121-141, 1979. 
     /// </remarks>
-    /// <typeparam name="TVertex"></typeparam>
-    /// <typeparam name="TEdge"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
+    /// <typeparam name="TEdge">type of the edges</typeparam>
     class LengauerTarjanDominatorAlgorithm<TVertex, TEdge>
         : RootedAlgorithmBase<TVertex, IBidirectionalGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>

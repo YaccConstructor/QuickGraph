@@ -9,7 +9,7 @@ namespace QuickGraph
     /// <summary>
     /// A set of vertices
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
     [ContractClass(typeof(IVertexSetContract<>))]
     public interface IVertexSet<TVertex>
         : IImplicitVertexSet<TVertex>

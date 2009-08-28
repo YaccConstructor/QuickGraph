@@ -15,8 +15,8 @@ namespace QuickGraph
         /// <summary>
         /// Gets a value indicating if the edge is a self edge.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="edge"></param>
         /// <returns></returns>
         [Pure]
@@ -36,8 +36,8 @@ this
         /// <summary>
         /// Given a source vertex, returns the other vertex in the edge
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="edge">must not be a self-edge</param>
         /// <param name="vertex"></param>
         /// <returns></returns>
@@ -63,8 +63,8 @@ this
         /// Gets a value indicating if <paramref name="vertex"/> is adjacent to <paramref name="edge"/>
         /// (is the source or target).
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="edge"></param>
         /// <param name="vertex"></param>
         /// <returns></returns>
@@ -195,8 +195,8 @@ this
         /// <summary>
         /// Creates a vertex pair (source, target) from the edge
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="edge"></param>
         /// <returns></returns>
         public static SEquatableEdge<TVertex> ToVertexPair<TVertex, TEdge>(
@@ -216,8 +216,8 @@ this
         /// <summary>
         /// Checks that <paramref name="root"/> is a predecessor of <paramref name="vertex"/>
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="predecessors"></param>
         /// <param name="root"></param>
         /// <param name="vertex"></param>
@@ -259,8 +259,8 @@ this
         /// <summary>
         /// Tries to get the predecessor path, if reachable.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="predecessors"></param>
         /// <param name="v"></param>
         /// <param name="result"></param>
@@ -317,8 +317,8 @@ this
         /// If TEdge implements IUndirectedEdge, then only the (source,target) pair
         /// has to be compared; if not, (source, target) and (target, source) have to be compared.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <returns></returns>
         public static EdgeEqualityComparer<TVertex, TEdge> GetUndirectedVertexEquality<TVertex, TEdge>()
             where TEdge : IEdge<TVertex>
@@ -333,8 +333,8 @@ this
         /// Gets a value indicating if the vertices of edge match (source, target) or
         /// (target, source)
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="edge"></param>
         /// <param name="source"></param>
         /// <param name="target"></param>
@@ -359,8 +359,8 @@ this
         /// <summary>
         /// Gets a value indicating if the vertices of edge match (source, target)
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="edge"></param>
         /// <param name="source"></param>
         /// <param name="target"></param>

@@ -16,8 +16,8 @@ namespace QuickGraph
         /// <summary>
         /// Wraps a dictionary into a vertex and edge list graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="dictionary"></param>
         /// <returns></returns>
@@ -38,8 +38,8 @@ this
         /// <summary>
         /// Wraps a dictionary into a vertex and edge list graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="dictionary"></param>
         /// <param name="keyValueToOutEdges"></param>
@@ -74,8 +74,8 @@ this
         /// <summary>
         /// Creates an instance of DelegateIncidenceGraph.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="tryGetOutEdges"></param>
         /// <returns></returns>
         public static DelegateIncidenceGraph<TVertex, TEdge> ToDelegateIncidenceGraph<TVertex, TEdge>(
@@ -92,8 +92,8 @@ this
         /// <summary>
         /// Creates an instance of DelegateIncidenceGraph.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="getOutEdges"></param>
         /// <returns></returns>
         public static DelegateIncidenceGraph<TVertex, TEdge> ToDelegateIncidenceGraph<TVertex, TEdge>(
@@ -131,8 +131,8 @@ this
         /// Creates an instance of DelegateIncidenceGraph.
         /// </summary>
         /// <param name="vertices"></param>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="tryGetOutEdges"></param>
         /// <returns></returns>
         public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToDelegateVertexAndEdgeListGraph<TVertex, TEdge>(
@@ -158,8 +158,8 @@ this
         /// Creates an instance of DelegateIncidenceGraph.
         /// </summary>
         /// <param name="vertices"></param>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="getOutEdges"></param>
         /// <returns></returns>
         public static DelegateVertexAndEdgeListGraph<TVertex, TEdge> ToDelegateVertexAndEdgeListGraph<TVertex, TEdge>(
@@ -179,8 +179,8 @@ this
         /// <summary>
         /// Wraps a dictionary into an undirected list graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="dictionary"></param>
         /// <returns></returns>
@@ -201,8 +201,8 @@ this
         /// <summary>
         /// Wraps a dictionary into an undirected graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="dictionary"></param>
         /// <param name="keyValueToOutEdges"></param>
@@ -239,8 +239,8 @@ this
         /// Creates an instance of DelegateIncidenceGraph.
         /// </summary>
         /// <param name="vertices"></param>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="tryGetAdjacentEdges"></param>
         /// <returns></returns>
         public static DelegateUndirectedGraph<TVertex, TEdge> ToDelegateUndirectedGraph<TVertex, TEdge>(
@@ -266,8 +266,8 @@ this
         /// Creates an instance of DelegateIncidenceGraph.
         /// </summary>
         /// <param name="vertices"></param>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="getAdjacentEdges"></param>
         /// <returns></returns>
         public static DelegateUndirectedGraph<TVertex, TEdge> ToDelegateUndirectedGraph<TVertex, TEdge>(
@@ -290,8 +290,8 @@ this
         /// <summary>
         /// Creates an immutable array adjacency graph from the input graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="graph"></param>
         /// <returns></returns>
         public static ArrayAdjacencyGraph<TVertex, TEdge> ToArrayAdjacencyGraph<TVertex, TEdge>(
@@ -310,8 +310,8 @@ this
         /// <summary>
         /// Creates an immutable array bidirectional graph from the input graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="graph"></param>
         /// <returns></returns>
         public static ArrayBidirectionalGraph<TVertex, TEdge> ToArrayBidirectionalGraph<TVertex, TEdge>(
@@ -330,8 +330,8 @@ this
         /// <summary>
         /// Creates an immutable array undirected graph from the input graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="graph"></param>
         /// <returns></returns>
         public static ArrayUndirectedGraph<TVertex, TEdge> ToArrayUndirectedGraph<TVertex, TEdge>(
@@ -350,8 +350,8 @@ this
         /// <summary>
         /// Wraps a adjacency graph (out-edge only) into a bidirectional graph.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="graph"></param>
         /// <returns></returns>
         public static IBidirectionalGraph<TVertex, TEdge> ToBidirectionalGraph<TVertex, TEdge>(
@@ -373,8 +373,8 @@ this
         /// <summary>
         /// Converts a sequence of edges into an undirected graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="edges"></param>
         /// <returns></returns>
         public static UndirectedGraph<TVertex, TEdge> ToUndirectedGraph<TVertex, TEdge>(
@@ -393,8 +393,8 @@ this
         /// <summary>
         /// Converts a sequence of edges into an undirected graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="edges"></param>
         /// <param name="allowParralelEdges"></param>
         /// <returns></returns>
@@ -615,7 +615,7 @@ this
         /// <summary>
         /// Converts a sequence of vertex pairs into an adjancency graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
         /// <param name="vertexPairs"></param>
         /// <returns></returns>
         public static AdjacencyGraph<TVertex, SEquatableEdge<TVertex>> ToAdjacencyGraph<TVertex>(
@@ -634,7 +634,7 @@ this
         /// <summary>
         /// Converts a sequence of vertex pairs into an bidirectional graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
         /// <param name="vertexPairs"></param>
         /// <returns></returns>
         public static BidirectionalGraph<TVertex, SEquatableEdge<TVertex>> ToBidirectionalGraph<TVertex>(
@@ -653,7 +653,7 @@ this
         /// <summary>
         /// Converts a sequence of vertex pairs into an bidirectional graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
         /// <param name="vertexPairs"></param>
         /// <returns></returns>
         public static UndirectedGraph<TVertex, SEquatableEdge<TVertex>> ToUndirectedGraph<TVertex>(
@@ -672,8 +672,8 @@ this
         /// <summary>
         /// Creates an immutable compressed row graph representation of the visited graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         public static CompressedSparseRowGraph<TVertex> ToCompressedRowGraph<TVertex, TEdge>(

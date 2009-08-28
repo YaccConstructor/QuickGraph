@@ -8,7 +8,7 @@ namespace QuickGraph
     /// <summary>
     /// A tagged edge as value type.
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
     /// <typeparam name="TTag"></typeparam>
 #if !SILVERLIGHT
     [Serializable]

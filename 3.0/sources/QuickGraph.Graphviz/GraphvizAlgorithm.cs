@@ -10,8 +10,8 @@ namespace QuickGraph.Graphviz
     /// <summary>
     /// An algorithm that renders a graph to the Graphviz DOT format.
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
-    /// <typeparam name="TEdge"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
+    /// <typeparam name="TEdge">type of the edges</typeparam>
     public class GraphvizAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {

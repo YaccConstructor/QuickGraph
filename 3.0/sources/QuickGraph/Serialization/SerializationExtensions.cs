@@ -18,8 +18,8 @@ namespace QuickGraph.Serialization
         /// <summary>
         /// Serializes the graph to the stream using the .Net serialization binary format.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="graph"></param>
         /// <param name="stream"></param>
         public static void SerializeToBinary<TVertex, TEdge>(
@@ -43,8 +43,8 @@ namespace QuickGraph.Serialization
         /// <summary>
         /// Deserializes a graph instance from a stream that was serialized using the .Net serialization binary format.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <typeparam name="TGraph"></typeparam>
         /// <param name="stream"></param>
         /// <returns></returns>
@@ -69,8 +69,8 @@ namespace QuickGraph.Serialization
         /// <summary>
         /// Deserializes a graph from a generic xml stream, using an <see cref="XPathDocument"/>.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <typeparam name="TGraph"></typeparam>
         /// <param name="doc">input xml document</param>
         /// <param name="graphXPath">xpath expression to the graph node. The first node is considered</param>
@@ -125,8 +125,8 @@ namespace QuickGraph.Serialization
         /// <summary>
         /// Deserializes a graph from a generic xml stream, using an <see cref="XmlReader"/>.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <typeparam name="TGraph"></typeparam>
         /// <param name="reader">input xml document</param>
         /// <param name="graphPredicate">predicate that returns a value indicating if the current xml node is a graph. The first match is considered</param>
@@ -200,8 +200,8 @@ this
         /// <summary>
         /// Deserializes a graph from a generic xml stream, using an <see cref="XPathDocument"/>.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <typeparam name="TGraph"></typeparam>
         /// <param name="reader">input xml document</param>
         /// <param name="namespaceUri">xml namespace</param>

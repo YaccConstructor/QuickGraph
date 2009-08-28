@@ -13,8 +13,8 @@ namespace QuickGraph.Algorithms.Search
     /// <remarks>
     /// Algorithm from Frontier Search, Korkf, Zhand, Thayer, Hohwald.
     /// </remarks>
-    /// <typeparam name="TVertex"></typeparam>
-    /// <typeparam name="TEdge"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
+    /// <typeparam name="TEdge">type of the edges</typeparam>
     internal sealed class BestFirstFrontierSearchAlgorithm<TVertex, TEdge>
         : RootedAlgorithmBase<TVertex, IImplicitGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>

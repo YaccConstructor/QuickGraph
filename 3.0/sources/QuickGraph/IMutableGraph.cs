@@ -7,8 +7,8 @@ namespace QuickGraph
     /// <summary>
     /// A mutable graph instance
     /// </summary>
-    /// <typeparam name="TVertex"></typeparam>
-    /// <typeparam name="TEdge"></typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
+    /// <typeparam name="TEdge">type of the edges</typeparam>
     [ContractClass(typeof(IMutableGraphContract<,>))]
     public interface IMutableGraph<TVertex,TEdge> 
         : IGraph<TVertex,TEdge>

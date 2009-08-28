@@ -371,8 +371,8 @@ this
         /// Computes the k-shortest path from <paramref name="source"/>
         /// <paramref name="target"/> using Hoffman-Pavley algorithm.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <param name="edgeWeights"></param>
         /// <param name="source"></param>
@@ -408,8 +408,8 @@ this
         /// <summary>
         /// Gets the list of sink vertices
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         public static IEnumerable<TVertex> Sinks<TVertex, TEdge>(
@@ -437,8 +437,8 @@ this
         /// <summary>
         /// Gets the list of root vertices
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
@@ -465,8 +465,8 @@ this
         /// <summary>
         /// Gets the list of isolated vertices (no incoming or outcoming vertices)
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         public static IEnumerable<TVertex> IsolatedVertices<TVertex, TEdge>(
@@ -493,8 +493,8 @@ this
         /// <summary>
         /// Gets the list of root  vertices
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
@@ -529,8 +529,8 @@ this
         /// <summary>
         /// Gets the list of roots
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
@@ -565,8 +565,8 @@ this
         /// Creates a topological sort of a undirected
         /// acyclic graph.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         /// <exception cref="NonAcyclicGraphException">the input graph
@@ -590,8 +590,8 @@ this
         /// Creates a topological sort of a undirected
         /// acyclic graph.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <param name="vertices"></param>
         /// <returns></returns>
@@ -617,8 +617,8 @@ this
         /// Creates a topological sort of a directed
         /// acyclic graph.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <returns></returns>
         /// <exception cref="NonAcyclicGraphException">the input graph
@@ -641,8 +641,8 @@ this
         /// Creates a topological sort of a directed
         /// acyclic graph.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <param name="vertices"></param>
         /// <returns></returns>
@@ -695,8 +695,8 @@ this
         /// <summary>
         /// Computes the connected components of a graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="g"></param>
         /// <param name="components"></param>
         /// <returns>number of components</returns>
@@ -721,8 +721,8 @@ this
         /// Each call to the delegate re-computes the component dictionary. The returned dictionary
         /// is shared accross multiple calls of the method.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="g"></param>
         /// <returns></returns>
         public static Func<KeyValuePair<int, IDictionary<TVertex, int>>> IncrementalConnectedComponents<TVertex, TEdge>(
@@ -743,8 +743,8 @@ this
         /// <summary>
         /// Computes the weakly connected components of a graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="g"></param>
         /// <param name="components"></param>
         /// <returns>number of components</returns>
@@ -767,8 +767,8 @@ this
         /// <summary>
         /// Computes the strongly connected components of a graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="g"></param>
         /// <param name="components"></param>
         /// <returns>number of components</returns>
@@ -792,8 +792,8 @@ this
         /// <summary>
         /// Clones a graph to another graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="g"></param>
         /// <param name="vertexCloner"></param>
         /// <param name="edgeCloner"></param>
@@ -834,8 +834,8 @@ this
         /// <summary>
         /// Condensates the strongly connected components of a directed graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <typeparam name="TGraph"></typeparam>
         /// <param name="g"></param>
         /// <returns></returns>
@@ -859,8 +859,8 @@ this
         /// <summary>
         /// Condensates the weakly connected components of a graph
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <typeparam name="TGraph"></typeparam>
         /// <param name="g"></param>
         /// <returns></returns>
@@ -947,8 +947,8 @@ this
         /// <remarks>
         /// Performs a depth first search to look for cycles.
         /// </remarks>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="g"></param>
         /// <returns></returns>
         public static bool IsDirectedAcyclicGraph<TVertex, TEdge>(
@@ -994,8 +994,8 @@ this
         /// Given a edge cost map, computes 
         /// the predecessor cost.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="predecessors"></param>
         /// <param name="edgeCosts"></param>
         /// <param name="target"></param>
@@ -1044,8 +1044,8 @@ this
         /// Computes the minimum spanning tree using Prim's algorithm.
         /// Prim's algorithm is simply implemented by calling Dijkstra shortest path.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <param name="weights"></param>
         /// <returns></returns>
@@ -1096,8 +1096,8 @@ this
         /// <summary>
         /// Computes the minimum spanning tree using Kruskal's algorithm.
         /// </summary>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <param name="weights"></param>
         /// <returns></returns>
@@ -1131,8 +1131,8 @@ this
         /// Reference:
         /// Gabow, H. N. and Tarjan, R. E. 1983. A linear-time algorithm for a special case of disjoint set union. In Proceedings of the Fifteenth Annual ACM Symposium on theory of Computing STOC '83. ACM, New York, NY, 246-251. DOI= http://doi.acm.org/10.1145/800061.808753 
         /// </remarks>
-        /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="visitedGraph"></param>
         /// <param name="root"></param>
         /// <param name="pairs"></param>
