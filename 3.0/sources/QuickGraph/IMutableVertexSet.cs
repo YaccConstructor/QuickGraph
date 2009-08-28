@@ -5,6 +5,10 @@ using QuickGraph.Contracts;
 
 namespace QuickGraph
 {
+    /// <summary>
+    /// A mutable vertex set
+    /// </summary>
+    /// <typeparam name="TVertex"></typeparam>
     [ContractClass(typeof(IMutableVertexSetContract<>))]
     public interface IMutableVertexSet<TVertex>
         : IVertexSet<TVertex>

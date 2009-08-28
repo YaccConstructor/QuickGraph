@@ -14,6 +14,9 @@ namespace QuickGraph
         : IGraph<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
+        /// <summary>
+        /// Clears the vertex and edges
+        /// </summary>
         void Clear();
     }
 }

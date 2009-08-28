@@ -7,6 +7,11 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
+    /// <summary>
+    /// A mutable vertex and edge set
+    /// </summary>
+    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TEdge"></typeparam>
     [ContractClass(typeof(IMutableVertexAndEdgeSetContract<,>))]
     public interface IMutableVertexAndEdgeSet<TVertex,TEdge>
         : IEdgeListGraph<TVertex, TEdge>

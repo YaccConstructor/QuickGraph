@@ -5,6 +5,11 @@ using QuickGraph.Contracts;
 
 namespace QuickGraph
 {
+    /// <summary>
+    /// A mutable indirect graph
+    /// </summary>
+    /// <typeparam name="TVertex"></typeparam>
+    /// <typeparam name="TEdge"></typeparam>
     [ContractClass(typeof(IMutableUndirectedGraphContract<,>))]
     public interface IMutableUndirectedGraph<TVertex,TEdge> 
         : IMutableEdgeListGraph<TVertex,TEdge>
