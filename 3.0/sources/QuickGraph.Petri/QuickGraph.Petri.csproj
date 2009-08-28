@@ -158,23 +158,23 @@
     <Compile Include="..\version.cs">
       <Link>Properties\version.cs</Link>
     </Compile>
-    <Compile Include="Petri2\AllwaysTrueConditionExpression.cs" />
-    <Compile Include="Petri2\Arc.cs" />
-    <Compile Include="Petri2\IArc.cs" />
-    <Compile Include="Petri2\IConditionExpression.cs" />
-    <Compile Include="Petri2\IdentityExpression.cs" />
-    <Compile Include="Petri2\IExpression.cs" />
-    <Compile Include="Petri2\IMutablePetriNet.cs" />
-    <Compile Include="Petri2\IPetriGraph.cs" />
-    <Compile Include="Petri2\IPetriNet.cs" />
-    <Compile Include="Petri2\IPetriVertex.cs" />
-    <Compile Include="Petri2\IPlace.cs" />
-    <Compile Include="Petri2\ITransition.cs" />
-    <Compile Include="Petri2\PetriGraph.cs" />
-    <Compile Include="Petri2\PetriNet.cs" />
-    <Compile Include="Petri2\PetriNetSimulator.cs" />
-    <Compile Include="Petri2\Place.cs" />
-    <Compile Include="Petri2\Transition.cs" />
+    <Compile Include="AllwaysTrueConditionExpression.cs" />
+    <Compile Include="Arc.cs" />
+    <Compile Include="IArc.cs" />
+    <Compile Include="IConditionExpression.cs" />
+    <Compile Include="IdentityExpression.cs" />
+    <Compile Include="IExpression.cs" />
+    <Compile Include="IMutablePetriNet.cs" />
+    <Compile Include="IPetriGraph.cs" />
+    <Compile Include="IPetriNet.cs" />
+    <Compile Include="IPetriVertex.cs" />
+    <Compile Include="IPlace.cs" />
+    <Compile Include="ITransition.cs" />
+    <Compile Include="PetriGraph.cs" />
+    <Compile Include="PetriNet.cs" />
+    <Compile Include="PetriNetSimulator.cs" />
+    <Compile Include="Place.cs" />
+    <Compile Include="Transition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
