@@ -6,7 +6,7 @@ namespace QuickGraph
     /// <summary>
     /// A directed edge
     /// </summary>
-    /// <typeparam name="TVertex">The vertex type</typeparam>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
     [ContractClass(typeof(IEdgeContract<>))]
     public interface IEdge<TVertex>
     {
