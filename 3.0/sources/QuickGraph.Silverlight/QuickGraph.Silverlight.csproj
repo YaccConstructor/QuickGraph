@@ -160,6 +160,20 @@
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
     <NoConfig>true</NoConfig>
+    <CodeContractsFromLibrary>True</CodeContractsFromLibrary>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugContractsWithBugs|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugContractsWithBugs\</OutputPath>
+    <DefineConstants>CONTRACTS_FULL;TRACE;DEBUG;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <NoConfig>true</NoConfig>
+    <CodeContractsFromLibrary>True</CodeContractsFromLibrary>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Contracts" Condition="'$(CodeContractsFromLibrary)' == 'True'" />
