@@ -137,9 +137,9 @@ namespace QuickGraph.Graphviz
             Output.Write("{0} ", this.vertexIds[v]);
             if (FormatVertex != null)
             {
-                GraphvizVertex gv = new GraphvizVertex();
+                var gv = new GraphvizVertex();
                 gv.Label = v.ToString();
-                FormatVertex(this, new FormatVertexEventArgs<TVertex>(gv, v));
+                FormatVertex(this, new FormatVertexEventArgs<TVertex>(v, gv));
 
                 string s = gv.ToDot();
                 if (s.Length != 0)
@@ -153,8 +153,8 @@ namespace QuickGraph.Graphviz
         {
             if (FormatEdge != null)
             {
-                GraphvizEdge ev = new GraphvizEdge();
-                FormatEdge(this, new FormatEdgeEventArgs<TVertex,TEdge>(ev, e));
+                var ev = new GraphvizEdge();
+                FormatEdge(this, new FormatEdgeEventArgs<TVertex,TEdge>(e, ev));
                 Output.Write(" {0}", ev.ToDot());
             }
         }

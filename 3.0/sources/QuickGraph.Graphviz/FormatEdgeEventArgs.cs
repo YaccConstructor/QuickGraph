@@ -10,7 +10,7 @@ namespace QuickGraph.Graphviz
     {
         private readonly GraphvizEdge edgeFormatter;
 
-        public FormatEdgeEventArgs(GraphvizEdge edgeFormatter, TEdge e)
+        internal FormatEdgeEventArgs(TEdge e, GraphvizEdge edgeFormatter)
 			: base(e)
         {
             Contract.Requires(edgeFormatter != null);

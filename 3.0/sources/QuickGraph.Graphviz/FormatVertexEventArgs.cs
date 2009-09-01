@@ -9,7 +9,7 @@ namespace QuickGraph.Graphviz
     {
         private readonly GraphvizVertex vertexFormatter;
 
-        public FormatVertexEventArgs(GraphvizVertex vertexFormatter, TVertex v)
+        internal FormatVertexEventArgs(TVertex v, GraphvizVertex vertexFormatter)
 			: base(v)
         {
             Contract.Requires(vertexFormatter != null);
