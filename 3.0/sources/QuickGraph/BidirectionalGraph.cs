@@ -9,6 +9,13 @@ using System.Linq;
 
 namespace QuickGraph
 {
+    /// <summary>
+    /// A mutable directed graph data structure efficient for sparse
+    /// graph representation where out-edge and in-edges need to be enumerated. Requires
+    /// twice as much memory as the adjacency graph.
+    /// </summary>
+    /// <typeparam name="TVertex">type of the vertices</typeparam>
+    /// <typeparam name="TEdge">type of the edges</typeparam>
 #if !SILVERLIGHT
     [Serializable]
 #endif

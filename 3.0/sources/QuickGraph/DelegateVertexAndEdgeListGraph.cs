@@ -29,13 +29,11 @@ namespace QuickGraph
             : base(tryGetOutEdges)
         {
             Contract.Requires(vertices != null);
-#if CONTRACTS_BUG
             Contract.Requires(Contract.ForAll(vertices, v =>
             {
                 IEnumerable<TEdge> edges;
                 return tryGetOutEdges(v, out edges);
             }));
-#endif
             this.vertices = vertices;
         }
 

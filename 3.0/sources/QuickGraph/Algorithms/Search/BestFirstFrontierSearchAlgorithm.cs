@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using QuickGraph.Collections;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -50,6 +51,34 @@ namespace QuickGraph.Algorithms.Search
             }
         }
 
+        struct Operator
+        {
+            public readonly TEdge Edge;
+            public bool Used;
+
+            public Operator(TEdge edge)
+            {
+                Contract.Requires(edge != null);
+
+                this.Edge = edge;
+                this.Used = false;
+            }
+        }
+
+        struct Node
+        {
+            public readonly TVertex Vertex;
+            public readonly Operator[] Operators;
+            public Node(TVertex vertex, IEnumerable<TEdge> edges)
+            {
+                Contract.Requires(vertex != null); 
+                Contract.Requires(edges != null);
+
+                this.Vertex = vertex;
+                this.Operators = Array.ConvertAll(Enumerable.ToArray(edges), e => new Operator(e));
+            }
+        }
+
         protected override void InternalCompute()
         {
             TVertex root;
@@ -57,7 +86,14 @@ namespace QuickGraph.Algorithms.Search
                 throw new RootVertexNotSpecifiedException();
 
             var cancelManager = this.Services.CancelManager;
+            var queue = new BinaryHeap<double, Node>();
+            var g = this.VisitedGraph;
 
+            queue.Add(0, new Node(root, g.OutEdges(root)));
+            while (queue.Count > 0)
+            {
+                var node = queue.RemoveMinimum();
+            }
         }
     }
 }

@@ -4,7 +4,8 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Graphviz
 {
-    public sealed class FormatEdgeEventArgs<TVertex,TEdge> : EdgeEventArgs<TVertex,TEdge>
+    public sealed class FormatEdgeEventArgs<TVertex,TEdge> 
+        : EdgeEventArgs<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
         private readonly GraphvizEdge edgeFormatter;

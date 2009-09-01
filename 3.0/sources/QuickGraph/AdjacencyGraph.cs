@@ -8,7 +8,7 @@ using QuickGraph.Collections;
 namespace QuickGraph
 {
     /// <summary>
-    /// A directed graph data structure efficient for sparse
+    /// A mutable directed graph data structure efficient for sparse
     /// graph representation where out-edge need to be enumerated only.
     /// </summary>
     /// <typeparam name="TVertex">type of the vertices</typeparam>
