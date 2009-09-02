@@ -64,6 +64,9 @@
     <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
     <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
     <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <DefineConstants>
+    </DefineConstants>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugContractsWithBugs|AnyCPU' ">
     <OutputPath>bin\DebugContractsWithBugs\</OutputPath>

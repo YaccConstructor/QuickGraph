@@ -13,7 +13,9 @@ namespace QuickGraph.Graphviz
         internal FormatEdgeEventArgs(TEdge e, GraphvizEdge edgeFormatter)
 			: base(e)
         {
+#if CONTRACTS_BUG
             Contract.Requires(edgeFormatter != null);
+#endif
             this.edgeFormatter = edgeFormatter;
         }
 

@@ -12,8 +12,9 @@ namespace QuickGraph.Graphviz
         internal FormatVertexEventArgs(TVertex v, GraphvizVertex vertexFormatter)
 			: base(v)
         {
+#if CONTRACTS_BUG
             Contract.Requires(vertexFormatter != null);
-
+#endif
             this.vertexFormatter = vertexFormatter;
         }
 
