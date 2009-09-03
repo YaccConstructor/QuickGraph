@@ -37,7 +37,7 @@
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <PresentationStyle>vs2005</PresentationStyle>
     <NamingMethod>MemberName</NamingMethod>
-    <SyntaxFilters>CSharp, VisualBasic</SyntaxFilters>
+    <SyntaxFilters>CSharp</SyntaxFilters>
     <ShowFeedbackControl>False</ShowFeedbackControl>
     <BinaryTOC>True</BinaryTOC>
     <IncludeFavorites>False</IncludeFavorites>
