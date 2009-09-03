@@ -14,10 +14,6 @@ namespace QuickGraph.Graphviz
     {
         public string Run(GraphvizImageType imageType, string dot, string outputFileName)
         {
-            Contract.Requires(!String.IsNullOrEmpty(dot));
-            Contract.Requires(!String.IsNullOrEmpty(outputFileName));
-            Contract.Ensures(!String.IsNullOrEmpty(Contract.Result<string>()));
-
             string output = outputFileName;
             if (!output.EndsWith(".dot", StringComparison.InvariantCultureIgnoreCase))
                 output = output + ".dot";

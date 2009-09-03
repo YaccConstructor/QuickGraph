@@ -364,6 +364,11 @@ namespace QuickGraph
             return this.AddEdge(e);
         }
 
+        /// <summary>
+        /// Adds a range of edges to the graph
+        /// </summary>
+        /// <param name="edges"></param>
+        /// <returns>the count edges that were added</returns>
         public int AddVerticesAndEdgeRange(IEnumerable<TEdge> edges)
         {
             int count = 0;
@@ -373,6 +378,11 @@ namespace QuickGraph
             return count;
         }
 
+        /// <summary>
+        /// Adds the edge to the graph
+        /// </summary>
+        /// <param name="e">the edge to add</param>
+        /// <returns>true if the edge was added; false if it was already part of the graph</returns>
         public virtual bool AddEdge(TEdge e)
         {
             if (!this.AllowParallelEdges)

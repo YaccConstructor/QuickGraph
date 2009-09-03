@@ -212,7 +212,7 @@ namespace QuickGraph.Collections
         }
 
         [ContractInvariantMethod]
-        public void ObjectInvariant()
+        void ObjectInvariant()
         {
             Contract.Invariant(this.items != null);
             Contract.Invariant(

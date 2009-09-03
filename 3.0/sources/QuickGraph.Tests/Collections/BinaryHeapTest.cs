@@ -15,7 +15,6 @@ namespace QuickGraph.Collections
         public static BinaryHeap<int, int> Create(int capacity)
         {
             var heap = new BinaryHeap<int, int>(capacity, (i, j) => i.CompareTo(j));
-            heap.ObjectInvariant();
             return heap;
         }
     }
@@ -39,7 +38,6 @@ namespace QuickGraph.Collections
             Assert.IsTrue(target.Capacity >= 0);
             Assert.IsTrue(target.Count >= 0);
             Assert.IsTrue(target.Count <= target.Capacity);
-            target.ObjectInvariant();
         }
 
         [TestMethod]
