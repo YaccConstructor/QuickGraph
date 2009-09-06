@@ -34,13 +34,14 @@ namespace QuickGraph.Contracts
         {
             IMutableEdgeListGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(edges != null);
-            Contract.Requires(Contract.ForAll(edges, e =>
-                e != null &&
-                ithis.ContainsVertex(e.Source) &&
-                ithis.ContainsVertex(e.Target)
+            Contract.Requires(typeof(TEdge).IsValueType || Contract.ForAll(edges, edge => edge != null));
+            Contract.Requires(Contract.ForAll(edges, edge =>
+                ithis.ContainsVertex(edge.Source) &&
+                ithis.ContainsVertex(edge.Target)
                 ));
-            Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(edges, e => !ithis.ContainsEdge(e))));
-            Contract.Ensures(Contract.ForAll(edges, e => ithis.ContainsEdge(e)));
+            Contract.Ensures(Contract.ForAll(edges, edge => ithis.ContainsEdge(edge)), "all edge from edges belong to the graph");
+            Contract.Ensures(
+                Contract.Result<int>() == Contract.OldValue(Enumerable.Count(edges, edge => !ithis.ContainsEdge(edge))));
             Contract.Ensures(ithis.EdgeCount == Contract.OldValue(ithis.EdgeCount) + Contract.Result<int>());
 
             return default(int);
