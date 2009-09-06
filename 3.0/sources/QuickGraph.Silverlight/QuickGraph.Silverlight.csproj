@@ -600,6 +600,9 @@
     <Compile Include="..\QuickGraph\Contracts\IBidirectionalGraphContract.cs">
       <Link>Contracts\IBidirectionalGraphContract.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\Contracts\IBidirectionalIncidenceGraphContract.cs">
+      <Link>Contracts\IBidirectionalIncidenceGraphContract.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Contracts\ICloneableEdgeContract.cs">
       <Link>Contracts\ICloneableEdgeContract.cs</Link>
     </Compile>
@@ -666,6 +669,9 @@
     <Compile Include="..\QuickGraph\CreateVertexDelegate.cs">
       <Link>CreateVertexDelegate.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\DelegateBidirectionalIncidenceGraph.cs">
+      <Link>DelegateBidirectionalIncidenceGraph.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\DelegateImplicitGraph.cs">
       <Link>DelegateImplicitGraph.cs</Link>
     </Compile>
@@ -725,6 +731,9 @@
     </Compile>
     <Compile Include="..\QuickGraph\IBidirectionalGraph.cs">
       <Link>IBidirectionalGraph.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\IBidirectionalIncidenceGraph.cs">
+      <Link>IBidirectionalIncidenceGraph.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\ICloneableEdge.cs">
       <Link>ICloneableEdge.cs</Link>

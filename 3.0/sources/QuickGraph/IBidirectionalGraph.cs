@@ -14,7 +14,7 @@ namespace QuickGraph
     [ContractClass(typeof(IBidirectionalGraphContract<,>))]
     public interface IBidirectionalGraph<TVertex,TEdge> 
         : IVertexAndEdgeListGraph<TVertex,TEdge>
-        , IBidirectionalImplicitGraph<TVertex, TEdge>
+        , IBidirectionalIncidenceGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
     }

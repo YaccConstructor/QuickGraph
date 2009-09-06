@@ -18,7 +18,7 @@ namespace QuickGraph.Algorithms.Search
     /// <typeparam name="TVertex">type of the vertices</typeparam>
     /// <typeparam name="TEdge">type of the edges</typeparam>
     internal sealed class BestFirstFrontierSearchAlgorithm<TVertex, TEdge>
-        : RootedAlgorithmBase<TVertex, IBidirectionalImplicitGraph<TVertex, TEdge>>
+        : RootedAlgorithmBase<TVertex, IBidirectionalIncidenceGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private readonly Func<TEdge, double> edgeWeights;
@@ -28,7 +28,7 @@ namespace QuickGraph.Algorithms.Search
 
         public BestFirstFrontierSearchAlgorithm(
             IAlgorithmComponent host,
-            IBidirectionalImplicitGraph<TVertex, TEdge> visitedGraph,
+            IBidirectionalIncidenceGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights,
             IDistanceRelaxer distanceRelaxer)
             : base(host, visitedGraph)

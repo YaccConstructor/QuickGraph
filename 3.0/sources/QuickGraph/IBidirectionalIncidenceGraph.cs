@@ -11,9 +11,9 @@ namespace QuickGraph
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
     /// <typeparam name="TEdge">The type of the edge.</typeparam>
-    [ContractClass(typeof(IBidirectionalImplicitGraphContract<,>))]
-    public interface IBidirectionalImplicitGraph<TVertex, TEdge>
-        : IImplicitGraph<TVertex, TEdge>
+    [ContractClass(typeof(IBidirectionalIncidenceGraphContract<,>))]
+    public interface IBidirectionalIncidenceGraph<TVertex, TEdge>
+        : IIncidenceGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         /// <summary>

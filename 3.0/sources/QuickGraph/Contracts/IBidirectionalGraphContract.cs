@@ -127,32 +127,32 @@ namespace QuickGraph.Contracts
 
         #region IBidirectionalImplicitGraph<TVertex,TEdge> Members
 
-        bool IBidirectionalImplicitGraph<TVertex, TEdge>.IsInEdgesEmpty(TVertex v)
+        bool IBidirectionalIncidenceGraph<TVertex, TEdge>.IsInEdgesEmpty(TVertex v)
         {
             throw new NotImplementedException();
         }
 
-        int IBidirectionalImplicitGraph<TVertex, TEdge>.InDegree(TVertex v)
+        int IBidirectionalIncidenceGraph<TVertex, TEdge>.InDegree(TVertex v)
         {
             throw new NotImplementedException();
         }
 
-        IEnumerable<TEdge> IBidirectionalImplicitGraph<TVertex, TEdge>.InEdges(TVertex v)
+        IEnumerable<TEdge> IBidirectionalIncidenceGraph<TVertex, TEdge>.InEdges(TVertex v)
         {
             throw new NotImplementedException();
         }
 
-        bool IBidirectionalImplicitGraph<TVertex, TEdge>.TryGetInEdges(TVertex v, out IEnumerable<TEdge> edges)
+        bool IBidirectionalIncidenceGraph<TVertex, TEdge>.TryGetInEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
             throw new NotImplementedException();
         }
 
-        TEdge IBidirectionalImplicitGraph<TVertex, TEdge>.InEdge(TVertex v, int index)
+        TEdge IBidirectionalIncidenceGraph<TVertex, TEdge>.InEdge(TVertex v, int index)
         {
             throw new NotImplementedException();
         }
 
-        int IBidirectionalImplicitGraph<TVertex, TEdge>.Degree(TVertex v)
+        int IBidirectionalIncidenceGraph<TVertex, TEdge>.Degree(TVertex v)
         {
             throw new NotImplementedException();
         }

@@ -14,14 +14,14 @@ namespace QuickGraph
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public class DelegateBidirectionalImplicitGraph<TVertex, TEdge>
-        : DelegateImplicitGraph<TVertex, TEdge>
-        , IBidirectionalImplicitGraph<TVertex, TEdge>
+    public class DelegateBidirectionalIncidenceGraph<TVertex, TEdge>
+        : DelegateIncidenceGraph<TVertex, TEdge>
+        , IBidirectionalIncidenceGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>, IEquatable<TEdge>
     {
         readonly TryFunc<TVertex, IEnumerable<TEdge>> tryGetInEdges;
 
-        public DelegateBidirectionalImplicitGraph(
+        public DelegateBidirectionalIncidenceGraph(
             TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges,
             TryFunc<TVertex, IEnumerable<TEdge>> tryGetInEdges)
             :base(tryGetOutEdges)

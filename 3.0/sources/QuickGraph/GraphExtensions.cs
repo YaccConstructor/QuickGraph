@@ -94,6 +94,28 @@ this
         /// </summary>
         /// <typeparam name="TVertex">type of the vertices</typeparam>
         /// <typeparam name="TEdge">type of the edges</typeparam>
+        /// <param name="tryGetOutEdges"></param>
+        /// <param name="tryGetInEdges"></param>
+        /// <returns></returns>
+        public static DelegateBidirectionalIncidenceGraph<TVertex, TEdge> ToDelegateBidirectionalIncidenceGraph<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+            TryFunc<TVertex, IEnumerable<TEdge>> tryGetOutEdges,
+            TryFunc<TVertex, IEnumerable<TEdge>> tryGetInEdges)
+            where TEdge : IEdge<TVertex>, IEquatable<TEdge>
+        {
+            Contract.Requires(tryGetOutEdges != null);
+            Contract.Requires(tryGetInEdges != null);
+
+            return new DelegateBidirectionalIncidenceGraph<TVertex, TEdge>(tryGetOutEdges, tryGetInEdges);
+        }
+
+        /// <summary>
+        /// Creates an instance of DelegateIncidenceGraph.
+        /// </summary>
+        /// <typeparam name="TVertex">type of the vertices</typeparam>
+        /// <typeparam name="TEdge">type of the edges</typeparam>
         /// <param name="getOutEdges"></param>
         /// <returns></returns>
         public static DelegateIncidenceGraph<TVertex, TEdge> ToDelegateIncidenceGraph<TVertex, TEdge>(
