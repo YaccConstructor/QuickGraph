@@ -12,7 +12,7 @@ namespace QuickGraph
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    [DebuggerDisplay(EdgeExtensions.EdgeFormatString)]
+    [DebuggerDisplay(EdgeExtensions.DebuggerDisplayEdgeFormatString)]
     [StructLayout(LayoutKind.Auto)]
     public struct SEdge<TVertex>
         : IEdge<TVertex>

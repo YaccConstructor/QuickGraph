@@ -7,6 +7,8 @@ using Microsoft.Pex.Framework;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms;
 using QuickGraph.Serialization;
+using QuickGraph.Algorithms.Observers;
+using QuickGraph.Algorithms.ShortestPath;
 
 namespace QuickGraph.Tests.Algorithms.Search
 {
@@ -37,10 +39,48 @@ namespace QuickGraph.Tests.Algorithms.Search
         [PexMethod]
         public void RunSearch<TVertex, TEdge>(
             [PexAssumeNotNull]IBidirectionalGraph<TVertex, TEdge> g)
-            where TEdge: IEdge<TVertex>
+            where TEdge : IEdge<TVertex>
         {
             if (g.VertexCount == 0) return;
 
+            Func<TEdge, double> edgeWeights = e => 1;
+            var distanceRelaxer = ShortestDistanceRelaxer.Instance;
+
+            var search = new BestFirstFrontierSearchAlgorithm<TVertex, TEdge>(
+                null,
+                g,
+                edgeWeights,
+                distanceRelaxer);
+            var root = Enumerable.First(g.Vertices);
+            var target = Enumerable.Last(g.Vertices);
+            var recorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+
+            using (recorder.Attach(search))
+                search.Compute(root, target);
+
+            foreach (var kv in recorder.VertexPredecessors)
+                Console.WriteLine("{0}: {1}", kv.Key, kv.Value);
+        }
+
+        [TestMethod]
+        public void CompareBestFirstFrontierSearchAllGraphs()
+        {
+            foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
+            {
+                if (g.VertexCount == 0) continue;
+
+                var root = g.Vertices.First();
+                foreach(var v in g.Vertices)
+                    CompareSearch(g, root, v);
+            }
+        }
+
+        [PexMethod]
+        public void CompareSearch<TVertex, TEdge>(
+            [PexAssumeNotNull]IBidirectionalGraph<TVertex, TEdge> g,
+            TVertex root, TVertex target)
+            where TEdge: IEdge<TVertex>
+        {
             Func<TEdge, double> edgeWeights = e => 1;
             var distanceRelaxer = ShortestDistanceRelaxer.Instance;
 
@@ -49,10 +89,19 @@ namespace QuickGraph.Tests.Algorithms.Search
                 g, 
                 edgeWeights, 
                 distanceRelaxer);
-            var root = Enumerable.First(g.Vertices);
-            var target = Enumerable.Last(g.Vertices);
+            var recorder = new VertexDistanceRecorderObserver<TVertex, TEdge>(edgeWeights);
+            using(recorder.Attach(search))
+                search.Compute(root, target);
 
-            search.Compute(root, target);
+            var dijkstra = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(g, edgeWeights, distanceRelaxer);
+            var dijRecorder = new VertexDistanceRecorderObserver<TVertex, TEdge>(edgeWeights);
+            using (dijRecorder.Attach(dijkstra))
+                dijkstra.Compute(root);
+
+            var fvp = recorder.Distances;
+            var dvp = dijRecorder.Distances;
+            if (fvp.ContainsKey(target))
+                Assert.AreEqual(dvp[target], fvp[target]);
         }
     }
 }

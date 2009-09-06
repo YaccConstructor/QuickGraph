@@ -12,7 +12,7 @@ namespace QuickGraph
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    [DebuggerDisplay(EdgeExtensions.UndirectedEdgeFormatString)]
+    [DebuggerDisplay(EdgeExtensions.DebuggerDisplayUndirectedEdgeFormatString)]
     public class UndirectedEdge<TVertex> 
         : IUndirectedEdge<TVertex>
     {

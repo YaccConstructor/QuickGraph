@@ -7,10 +7,14 @@ namespace QuickGraph
 {
     public static class EdgeExtensions
     {
-        public const string EdgeFormatString = "{Source}->{Target}";
-        public const string TaggedEdgeFormatString = "{Source}->{Target}:{Tag}";
-        public const string UndirectedEdgeFormatString = "{Source}<->{Target}";
-        public const string TaggedUndirectedEdgeFormatString = "{Source}<->{Target}:{Tag}";
+        public const string DebuggerDisplayEdgeFormatString = "{Source}->{Target}";
+        public const string DebuggerDisplayTaggedEdgeFormatString = "{Source}->{Target}:{Tag}";
+        public const string DebuggerDisplayUndirectedEdgeFormatString = "{Source}<->{Target}";
+        public const string DebuggerDisplayTaggedUndirectedEdgeFormatString = "{Source}<->{Target}:{Tag}";
+        public const string EdgeFormatString = "{0}->{1}";
+        public const string TaggedEdgeFormatString = "{0}->{1}:{2}";
+        public const string UndirectedEdgeFormatString = "{0}<->{1}";
+        public const string TaggedUndirectedEdgeFormatString = "{0}<->{1}:{2}";
 
         /// <summary>
         /// Gets a value indicating if the edge is a self edge.

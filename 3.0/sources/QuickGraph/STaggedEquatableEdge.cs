@@ -14,7 +14,7 @@ namespace QuickGraph
     [Serializable]
 #endif
     [StructLayout(LayoutKind.Auto)]
-    [DebuggerDisplay(EdgeExtensions.TaggedEdgeFormatString)]
+    [DebuggerDisplay(EdgeExtensions.DebuggerDisplayTaggedEdgeFormatString)]
     public struct STaggedEquatableEdge<TVertex, TTag>
         : IEdge<TVertex>
         , IEquatable<STaggedEquatableEdge<TVertex, TTag>>

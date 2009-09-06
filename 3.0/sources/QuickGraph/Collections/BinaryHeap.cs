@@ -177,7 +177,7 @@ namespace QuickGraph.Collections
             return -1;
         }
 
-        public void MinimumUpdate(TPriority priority, TValue value)
+        public bool MinimumUpdate(TPriority priority, TValue value)
         {
             // find index
             for (int i = 0; i < this.count; i++)
@@ -188,13 +188,15 @@ namespace QuickGraph.Collections
                     {
                         this.RemoveAt(i);
                         this.Add(priority, value);
+                        return true;
                     }
-                    return;
+                    return false;
                 }
             }
 
             // not in collection
             this.Add(priority, value);
+            return true;
         }
 
         public void Update(TPriority priority, TValue value)

@@ -14,7 +14,7 @@ namespace QuickGraph
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    [DebuggerDisplay(EdgeExtensions.TaggedUndirectedEdgeFormatString)]
+    [DebuggerDisplay(EdgeExtensions.DebuggerDisplayTaggedUndirectedEdgeFormatString)]
     [StructLayout(LayoutKind.Auto)]
     public struct SUndirectedTaggedEdge<TVertex, TTag>
         : IUndirectedEdge<TVertex>

@@ -19,6 +19,7 @@ namespace QuickGraph.Algorithms.Search
     /// <typeparam name="TEdge">type of the edges</typeparam>
     public sealed class BestFirstFrontierSearchAlgorithm<TVertex, TEdge>
         : RootedSearchAlgorithmBase<TVertex, IBidirectionalIncidenceGraph<TVertex, TEdge>>
+        , ITreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private readonly Func<TEdge, double> edgeWeights;
@@ -91,7 +92,8 @@ namespace QuickGraph.Algorithms.Search
                         // else save on open on the copy of n' with lowest cose. Mark as used all operators
                         // mak as used in any of the copies
                         operators[edge] = GraphColor.Gray;
-                        open.MinimumUpdate(ncost, edge.Target);
+                        if (open.MinimumUpdate(ncost, edge.Target))
+                            this.OnTreeEdge(edge);
                     }
                 }
                 // (6) in a directed graph, generate each predecessor node n via an unused operator
@@ -108,5 +110,15 @@ namespace QuickGraph.Algorithms.Search
                 }
             }
         }
+
+        #region ITreeBuilderAlgorithm<TVertex,TEdge> Members
+        public event EdgeAction<TVertex, TEdge> TreeEdge;
+        private void OnTreeEdge(TEdge edge)
+        {
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(edge);
+        }
+        #endregion
     }
 }
