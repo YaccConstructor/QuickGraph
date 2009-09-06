@@ -177,15 +177,33 @@ namespace QuickGraph.Collections
             return -1;
         }
 
+        public void MinimumUpdate(TPriority priority, TValue value)
+        {
+            // find index
+            for (int i = 0; i < this.count; i++)
+            {
+                if (object.Equals(value, this.items[i].Value))
+                {
+                    if( this.priorityComparsion(priority, this.items[i].Key) <= 0)
+                    {
+                        this.RemoveAt(i);
+                        this.Add(priority, value);
+                    }
+                    return;
+                }
+            }
+
+            // not in collection
+            this.Add(priority, value);
+        }
+
         public void Update(TPriority priority, TValue value)
         {
             // find index
             var index = this.IndexOf(value);
-            if (index < 0)
-                throw new InvalidOperationException("value was not found in the heap");
-
-            // remove and add
-            this.RemoveAt(index);
+            // remove if needed
+            if (index > -1)
+                this.RemoveAt(index);
             this.Add(priority, value);
         }
 
@@ -297,5 +315,6 @@ namespace QuickGraph.Collections
             return this.GetEnumerator();
         }
         #endregion
+
     }
 }

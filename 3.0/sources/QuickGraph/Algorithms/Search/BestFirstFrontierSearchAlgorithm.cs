@@ -53,7 +53,7 @@ namespace QuickGraph.Algorithms.Search
             var g = this.VisitedGraph;
 
             // (1) Place the initial node on Open, with all its operators marked unused.
-            open.Add(this.distanceRelaxer.InitialDistance, root);
+            open.Add(0, root);
             foreach (var edge in g.OutEdges(root))
                 operators.Add(edge, GraphColor.White);
 
@@ -74,36 +74,37 @@ namespace QuickGraph.Algorithms.Search
                 // (5) else, expand node n, 
                 // genarting all successors n' reachable via unused legal operators
                 // compute their cost and delete node n
-                var neighbors = new List<KeyValuePair<double, TEdge>>();
                 foreach (var edge in g.OutEdges(n))
                 {
-                    if (operators[edge] == GraphColor.White)
+                    if (EdgeExtensions.IsSelfEdge<TVertex, TEdge>(edge)) 
+                        continue; // skip self-edges
+
+                    GraphColor edgeColor;
+                    if (!operators.TryGetValue(edge, out edgeColor) ||
+                        edgeColor == GraphColor.White)
                     {
                         var weight = this.edgeWeights(edge);
                         var ncost = this.distanceRelaxer.Combine(cost, weight);
-                        neighbors.Add(new KeyValuePair<double, TEdge>(ncost, edge));
+
+                        // (7) foreach neighboring node of n' mark the operator from n to n' as used
+                        // (8) for each node n', if there is no copy of n' in open addit
+                        // else save on open on the copy of n' with lowest cose. Mark as used all operators
+                        // mak as used in any of the copies
+                        operators[edge] = GraphColor.Gray;
+                        open.MinimumUpdate(ncost, edge.Target);
                     }
                 }
-                // delete node n
-                foreach (var edge in g.OutEdges(n))
-                    operators.Remove(edge);
-                foreach (var edge in g.InEdges(n))
-                    operators.Remove(edge);
-
                 // (6) in a directed graph, generate each predecessor node n via an unused operator
                 // and create dummy nodes for each with costs of infinity
                 foreach (var edge in g.InEdges(n))
-                    if (operators[edge] == GraphColor.White)
-                        open.Add(double.PositiveInfinity, edge.Source);
-
-                // (7) foreach neighboring node of n' mark the operator from n to n' as used
-                // (8) for each node n', if there is no copy of n' in open addit
-                // else save on open on the copy of n' with lowest cose. Mark as used all operators
-                // mak as used in any of the copies
-                foreach (var neighbor in neighbors)
                 {
-                    operators[neighbor.Value] = GraphColor.Gray;
-                    open.Update(neighbor.Key, neighbor.Value.Target);
+                    GraphColor edgeColor;
+                    if (!operators.TryGetValue(edge, out edgeColor))
+                        edgeColor = GraphColor.White;
+                    if (edgeColor == GraphColor.White)
+                        open.Add(double.PositiveInfinity, edge.Source);
+                    // delete node n
+                    operators.Remove(edge);
                 }
             }
         }
