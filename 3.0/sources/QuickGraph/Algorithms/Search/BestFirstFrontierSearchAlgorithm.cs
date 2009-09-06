@@ -17,14 +17,12 @@ namespace QuickGraph.Algorithms.Search
     /// </remarks>
     /// <typeparam name="TVertex">type of the vertices</typeparam>
     /// <typeparam name="TEdge">type of the edges</typeparam>
-    internal sealed class BestFirstFrontierSearchAlgorithm<TVertex, TEdge>
-        : RootedAlgorithmBase<TVertex, IBidirectionalIncidenceGraph<TVertex, TEdge>>
+    public sealed class BestFirstFrontierSearchAlgorithm<TVertex, TEdge>
+        : RootedSearchAlgorithmBase<TVertex, IBidirectionalIncidenceGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private readonly Func<TEdge, double> edgeWeights;
         private readonly IDistanceRelaxer distanceRelaxer;
-        private TVertex _targetVertex;
-        private bool hasTargetVertex;
 
         public BestFirstFrontierSearchAlgorithm(
             IAlgorithmComponent host,
@@ -40,29 +38,14 @@ namespace QuickGraph.Algorithms.Search
             this.distanceRelaxer = distanceRelaxer;
         }
 
-        public bool TryGetTargetVertex(out TVertex targetVertex)
-        {
-            targetVertex = this._targetVertex;
-            return this.hasTargetVertex;
-        }
-
-        public TVertex TargetVertex
-        {
-            set
-            {
-                this._targetVertex = value;
-                this.hasTargetVertex = this._targetVertex != null;
-            }
-        }
-
         protected override void InternalCompute()
         {
             TVertex root;
             if (!this.TryGetRootVertex(out root))
-                throw new RootVertexNotSpecifiedException();
-            TVertex target;
-            if (!this.TryGetTargetVertex(out target))
-                throw new InvalidOperationException("target vertex not specified");
+                throw new InvalidOperationException("root vertex not set");
+            TVertex goal;
+            if (!this.TryGetGoalVertex(out goal))
+                throw new InvalidOperationException("goal vertex not set");
 
             var cancelManager = this.Services.CancelManager;
             var open = new BinaryHeap<double, TVertex>();
@@ -85,11 +68,12 @@ namespace QuickGraph.Algorithms.Search
                     break; // not found
 
                 // (4) if node n is a goal node, terminate with success
-                if (n.Equals(target))
+                if (n.Equals(goal))
                     break;
 
-                // (5) else, expand node n, genearting all successors n' reachable via unused legal operators
-                //, compute their cost and delete node n
+                // (5) else, expand node n, 
+                // genarting all successors n' reachable via unused legal operators
+                // compute their cost and delete node n
                 var neighbors = new List<KeyValuePair<double, TEdge>>();
                 foreach (var edge in g.OutEdges(n))
                 {
@@ -112,8 +96,15 @@ namespace QuickGraph.Algorithms.Search
                     if (operators[edge] == GraphColor.White)
                         open.Add(double.PositiveInfinity, edge.Source);
 
-                // (7) foreach neighboring node of n' mark the operator from n' to n' as used
-                // 
+                // (7) foreach neighboring node of n' mark the operator from n to n' as used
+                // (8) for each node n', if there is no copy of n' in open addit
+                // else save on open on the copy of n' with lowest cose. Mark as used all operators
+                // mak as used in any of the copies
+                foreach (var neighbor in neighbors)
+                {
+                    operators[neighbor.Value] = GraphColor.Gray;
+                    open.Update(neighbor.Key, neighbor.Value.Target);
+                }
             }
         }
     }

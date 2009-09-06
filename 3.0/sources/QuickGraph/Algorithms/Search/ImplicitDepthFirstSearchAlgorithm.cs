@@ -190,7 +190,7 @@ namespace QuickGraph.Algorithms.Search
         {
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
-                throw new RootVertexNotSpecifiedException();
+                throw new InvalidOperationException("root vertex not set");
 
             this.Initialize();
             this.Visit(rootVertex, 0);

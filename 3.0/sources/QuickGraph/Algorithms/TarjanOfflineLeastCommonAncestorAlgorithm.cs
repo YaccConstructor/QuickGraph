@@ -79,7 +79,7 @@ namespace QuickGraph.Algorithms
 
             TVertex root;
             if (!this.TryGetRootVertex(out root))
-                throw new RootVertexNotSpecifiedException();
+                throw new InvalidOperationException("root vertex not set");
             if (this.pairs == null)
                 throw new InvalidProgramException("pairs not set");
 

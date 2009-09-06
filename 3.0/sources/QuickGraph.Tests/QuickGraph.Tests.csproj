@@ -293,6 +293,7 @@
     <Compile Include="Algorithms\RandomWalks\EdgeChainTest.cs" />
     <Compile Include="Algorithms\RandomWalks\RandomWalkAlgorithmTest.cs" />
     <Compile Include="Algorithms\RankedShortestPath\HoffmanPavleyRankedShortestPathAlgorithmTest.cs" />
+    <Compile Include="Algorithms\Search\BestFirstFrontierSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\BidirectionalDepthFirstSearchAlgorithmTest.cs" />
     <Compile Include="Algorithms\Search\BreadthFirstSearchAlgirthmTest.cs" />
     <Compile Include="Algorithms\Search\UndirectedDepthFirstSearchAlgorithmTest.cs" />

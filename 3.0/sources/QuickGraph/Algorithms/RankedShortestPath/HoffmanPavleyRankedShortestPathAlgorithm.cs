@@ -86,10 +86,10 @@ namespace QuickGraph.Algorithms.RankedShortestPath
             var cancelManager = this.Services.CancelManager;
             TVertex root;
             if (!this.TryGetRootVertex(out root))
-                throw new RootVertexNotSpecifiedException();
+                throw new InvalidOperationException("root vertex not set");
             TVertex goal;
             if (!this.TryGetGoalVertex(out goal))
-                throw new RootVertexNotSpecifiedException();
+                throw new InvalidOperationException("goal vertex not set");
 
             // start by building the minimum tree starting from the goal vertex.
             IDictionary<TVertex, TEdge> successors;

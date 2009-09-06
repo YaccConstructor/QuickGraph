@@ -267,6 +267,12 @@
     <Compile Include="..\QuickGraph\Algorithms\Contracts\IComputationContract.cs">
       <Link>Algorithms\Contracts\IComputationContract.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\Algorithms\CriticalDistanceRelaxer.cs">
+      <Link>Algorithms\CriticalDistanceRelaxer.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\Algorithms\EdgeDistanceRelaxer.cs">
+      <Link>Algorithms\EdgeDistanceRelaxer.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Algorithms\EulerianTrailAlgorithm.cs">
       <Link>Algorithms\EulerianTrailAlgorithm.cs</Link>
     </Compile>
@@ -290,6 +296,9 @@
     </Compile>
     <Compile Include="..\QuickGraph\Algorithms\IDistanceRecorderAlgorithm.cs">
       <Link>Algorithms\IDistanceRecorderAlgorithm.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\Algorithms\IDistanceRelaxer.cs">
+      <Link>Algorithms\IDistanceRelaxer.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Algorithms\IEdgeColorizerAlgorithm.cs">
       <Link>Algorithms\IEdgeColorizerAlgorithm.cs</Link>
@@ -432,6 +441,9 @@
     <Compile Include="..\QuickGraph\Algorithms\RootedAlgorithmBase.cs">
       <Link>Algorithms\RootedAlgorithmBase.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\Algorithms\RootedSearchAlgorithmBase.cs">
+      <Link>Algorithms\RootedSearchAlgorithmBase.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Algorithms\Search\BidirectionalDepthFirstSearchAlgorithm.cs">
       <Link>Algorithms\Search\BidirectionalDepthFirstSearchAlgorithm.cs</Link>
     </Compile>
@@ -468,14 +480,14 @@
     <Compile Include="..\QuickGraph\Algorithms\Services\IService.cs">
       <Link>Algorithms\Services\IService.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\Algorithms\ShortestDistanceRelaxer.cs">
+      <Link>Algorithms\ShortestDistanceRelaxer.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Algorithms\ShortestPath\AStartShortestPathAlgorithm.cs">
       <Link>Algorithms\ShortestPath\AStartShortestPathAlgorithm.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Algorithms\ShortestPath\BellmanFordShortestPathAlgorithm.cs">
       <Link>Algorithms\ShortestPath\BellmanFordShortestPathAlgorithm.cs</Link>
-    </Compile>
-    <Compile Include="..\QuickGraph\Algorithms\ShortestPath\CriticalDistanceRelaxer.cs">
-      <Link>Algorithms\ShortestPath\CriticalDistanceRelaxer.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Algorithms\ShortestPath\DagShortestPathAlgorithm.cs">
       <Link>Algorithms\ShortestPath\DagShortestPathAlgorithm.cs</Link>
@@ -483,17 +495,8 @@
     <Compile Include="..\QuickGraph\Algorithms\ShortestPath\DijkstraShortestPathAlgorithm.cs">
       <Link>Algorithms\ShortestPath\DijkstraShortestPathAlgorithm.cs</Link>
     </Compile>
-    <Compile Include="..\QuickGraph\Algorithms\ShortestPath\EdgeDistanceRelaxer.cs">
-      <Link>Algorithms\ShortestPath\EdgeDistanceRelaxer.cs</Link>
-    </Compile>
     <Compile Include="..\QuickGraph\Algorithms\ShortestPath\FloydWarshallAllShortestPathAlgorithm.cs">
       <Link>Algorithms\ShortestPath\FloydWarshallAllShortestPathAlgorithm.cs</Link>
-    </Compile>
-    <Compile Include="..\QuickGraph\Algorithms\ShortestPath\IDistanceRelaxer.cs">
-      <Link>Algorithms\ShortestPath\IDistanceRelaxer.cs</Link>
-    </Compile>
-    <Compile Include="..\QuickGraph\Algorithms\ShortestPath\ShortestDistanceRelaxer.cs">
-      <Link>Algorithms\ShortestPath\ShortestDistanceRelaxer.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Algorithms\ShortestPath\ShortestPathAlgorithmBase.cs">
       <Link>Algorithms\ShortestPath\ShortestPathAlgorithmBase.cs</Link>
@@ -884,9 +887,6 @@
     </Compile>
     <Compile Include="..\QuickGraph\ReversedBidirectionalListGraph.cs">
       <Link>ReversedBidirectionalListGraph.cs</Link>
-    </Compile>
-    <Compile Include="..\QuickGraph\RootVertexNotSpecifiedException.cs">
-      <Link>RootVertexNotSpecifiedException.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\SEdge.cs">
       <Link>SEdge.cs</Link>

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace QuickGraph.Algorithms.ShortestPath
+namespace QuickGraph.Algorithms
 {
     public sealed class ShortestDistanceRelaxer 
         : IDistanceRelaxer

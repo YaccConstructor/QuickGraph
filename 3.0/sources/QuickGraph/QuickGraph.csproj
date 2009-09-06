@@ -294,6 +294,7 @@
     <Compile Include="Algorithms\Observers\VertexPredecessorPathRecorderObserver.cs" />
     <Compile Include="Algorithms\RankedShortestPath\HoffmanPavleyRankedShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\RankedShortestPath\RankedShortestPathAlgorithmBase.cs" />
+    <Compile Include="Algorithms\RootedSearchAlgorithmBase.cs" />
     <Compile Include="Algorithms\Search\BestFirstFrontierSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Search\UndirectedDepthFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Services\IAlgorithmComponent.cs" />
@@ -352,16 +353,16 @@
     <Compile Include="Algorithms\Services\IService.cs" />
     <Compile Include="Algorithms\ShortestPath\AStartShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\ShortestPath\BellmanFordShortestPathAlgorithm.cs" />
-    <Compile Include="Algorithms\ShortestPath\EdgeDistanceRelaxer.cs" />
+    <Compile Include="Algorithms\EdgeDistanceRelaxer.cs" />
     <Compile Include="Algorithms\ShortestPath\UndirectedShortestPathAlgorithmBase.cs" />
-    <Compile Include="Algorithms\ShortestPath\CriticalDistanceRelaxer.cs" />
+    <Compile Include="Algorithms\CriticalDistanceRelaxer.cs" />
     <Compile Include="Algorithms\ShortestPath\DagShortestPathAlgorithm.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\ShortestPath\FloydWarshallAllShortestPathAlgorithm.cs" />
-    <Compile Include="Algorithms\ShortestPath\IDistanceRelaxer.cs" />
-    <Compile Include="Algorithms\ShortestPath\ShortestDistanceRelaxer.cs" />
+    <Compile Include="Algorithms\IDistanceRelaxer.cs" />
+    <Compile Include="Algorithms\ShortestDistanceRelaxer.cs" />
     <Compile Include="Algorithms\ShortestPath\ShortestPathAlgorithmBase.cs" />
     <Compile Include="Algorithms\ShortestPath\UndirectedDijkstraShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\TopologicalSort\SourceFirstTopologicalSortAlgorithm.cs" />
@@ -518,7 +519,6 @@
     <Compile Include="QuickGraphResourceManager.cs" />
     <Compile Include="SReversedEdge.cs" />
     <Compile Include="ReversedBidirectionalListGraph.cs" />
-    <Compile Include="RootVertexNotSpecifiedException.cs" />
     <Compile Include="Serialization\GraphMLExtensions.cs" />
     <Compile Include="Serialization\GraphMLSerializer.cs" />
     <Compile Include="Serialization\SerializationHelper.cs" />
