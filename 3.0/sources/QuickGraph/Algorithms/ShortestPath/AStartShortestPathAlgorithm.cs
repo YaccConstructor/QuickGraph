@@ -95,7 +95,6 @@ namespace QuickGraph.Algorithms.ShortestPath
             if (decreased)
             {
                 this.OnTreeEdge(args);
-                this.AssertHeap();
             }
             else
                 this.OnEdgeNotRelaxed(args);
@@ -111,7 +110,6 @@ namespace QuickGraph.Algorithms.ShortestPath
             {
                 this.costs[target] = this.DistanceRelaxer.Combine(distance, this.costHeuristic(target));
                 this.vertexQueue.Update(target);
-                this.AssertHeap();
                 this.OnTreeEdge(e);
             }
             else
@@ -131,7 +129,6 @@ namespace QuickGraph.Algorithms.ShortestPath
                 this.OnTreeEdge(e);
                 this.costs[target] = this.DistanceRelaxer.Combine(distance, this.costHeuristic(target));
                 this.vertexQueue.Enqueue(target);
-                this.AssertHeap();
                 this.VertexColors[target] = GraphColor.Gray;
             }
             else
@@ -154,7 +151,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 this.Distances.Add(u, initialDistance);
                 this.costs.Add(u, initialDistance);
             }
-            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.costs);
+            this.vertexQueue = new FibonacciQueue<TVertex, double>(this.costs, this.DistanceRelaxer.Compare);
         }
 
         protected override void InternalCompute()
@@ -181,17 +178,6 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.ComputeNoInit(rootVertex);
         }
 
-        [Conditional("DEBUG")]
-        private void AssertHeap()
-        {
-            if (this.vertexQueue.Count == 0) return;
-            var top = this.vertexQueue.Peek();
-            var vertices = this.vertexQueue.ToArray();
-            for (int i = 1; i < vertices.Length; ++i)
-                if (this.Distances[top] > this.Distances[vertices[i]])
-                    Contract.Assert(false);
-        }
-
         public void ComputeNoInit(TVertex s)
         {
             BreadthFirstSearchAlgorithm<TVertex, TEdge> bfs = null;
@@ -209,9 +195,6 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.DiscoverVertex += this.DiscoverVertex;
                 bfs.StartVertex += this.StartVertex;
                 bfs.ExamineEdge += this.ExamineEdge;
-#if DEBUG
-                bfs.ExamineEdge += e => this.AssertHeap();
-#endif
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 
