@@ -87,8 +87,8 @@ namespace QuickGraph.Algorithms.Search
                         continue; // skip self-edges
 
                     GraphColor edgeColor;
-                    if (!operators.TryGetValue(edge, out edgeColor) ||
-                        edgeColor == GraphColor.White)
+                    bool hasColor = operators.TryGetValue(edge, out edgeColor);
+                    if (!hasColor || edgeColor == GraphColor.White)
                     {
                         var weight = this.edgeWeights(edge);
                         var ncost = this.distanceRelaxer.Combine(cost, weight);
@@ -100,6 +100,12 @@ namespace QuickGraph.Algorithms.Search
                         operators[edge] = GraphColor.Gray;
                         if (open.MinimumUpdate(ncost, edge.Target))
                             this.OnTreeEdge(edge);
+                    }
+                    else if (hasColor)
+                    {
+                        Contract.Assume(edgeColor == GraphColor.Gray);
+                        // edge already seen, remove it
+                        operators.Remove(edge);
                     }
                 }
 
