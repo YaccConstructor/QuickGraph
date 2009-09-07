@@ -52,6 +52,7 @@ this
                 );
         }
 
+#if !SILVERLIGHT
         public static void DeserializeFromGraphML<TVertex, TEdge,TGraph>(
 #if !NET20
             this 
@@ -101,7 +102,6 @@ this
             serializer.Deserialize(reader, graph, vertexFactory, edgeFactory);
         }
 
-#if !SILVERLIGHT
         public static void DeserializeAndValidateFromGraphML<TVertex, TEdge,TGraph>(
 #if !NET20
             this 
