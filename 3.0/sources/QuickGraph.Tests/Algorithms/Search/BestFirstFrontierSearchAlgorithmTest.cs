@@ -59,7 +59,11 @@ namespace QuickGraph.Tests.Algorithms.Search
                 search.Compute(root, target);
 
             if (recorder.VertexPredecessors.ContainsKey(target))
+            {
                 Console.WriteLine("cost: {0}", recorder.VertexPredecessors[target]);
+                IEnumerable<TEdge> path;
+                Assert.IsTrue(recorder.TryGetPath(target, out path));
+            }
 #if DEBUG
             Console.WriteLine("operator max count: {0}", search.OperatorMaxCount);
 #endif
@@ -78,7 +82,7 @@ namespace QuickGraph.Tests.Algorithms.Search
                         CompareSearch(g, root, v);
             }
         }
-
+        
         [PexMethod]
         public void CompareSearch<TVertex, TEdge>(
             [PexAssumeNotNull]IBidirectionalGraph<TVertex, TEdge> g,
