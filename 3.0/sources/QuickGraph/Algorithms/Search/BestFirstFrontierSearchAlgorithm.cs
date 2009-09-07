@@ -48,6 +48,12 @@ namespace QuickGraph.Algorithms.Search
             if (!this.TryGetGoalVertex(out goal))
                 throw new InvalidOperationException("goal vertex not set");
 
+            if (root.Equals(goal))
+            {
+                this.OnGoalReached();
+                return; // found it
+            }
+
             var cancelManager = this.Services.CancelManager;
             var open = new BinaryHeap<double, TVertex>();
             var operators = new Dictionary<TEdge, GraphColor>();
@@ -67,7 +73,10 @@ namespace QuickGraph.Algorithms.Search
 
                 // (4) if node n is a goal node, terminate with success
                 if (n.Equals(goal))
-                    break;
+                {
+                    this.OnGoalReached();
+                    return;
+                }
 
                 // (5) else, expand node n, 
                 // genarting all successors n' reachable via unused legal operators
@@ -93,6 +102,11 @@ namespace QuickGraph.Algorithms.Search
                             this.OnTreeEdge(edge);
                     }
                 }
+
+#if DEBUG
+                this.operatorMaxCount = Math.Max(this.operatorMaxCount, operators.Count);
+#endif
+
                 // (6) in a directed graph, generate each predecessor node n via an unused operator
                 // and create dummy nodes for each with costs of infinity
                 foreach (var edge in g.InEdges(n))
@@ -105,10 +119,16 @@ namespace QuickGraph.Algorithms.Search
                         operators.Remove(edge);
                     }
                 }
-
-
             }
         }
+
+#if DEBUG
+        int operatorMaxCount = -1;
+        public int OperatorMaxCount
+        {
+            get { return this.operatorMaxCount; }
+        }
+#endif
 
         #region ITreeBuilderAlgorithm<TVertex,TEdge> Members
         public event EdgeAction<TVertex, TEdge> TreeEdge;

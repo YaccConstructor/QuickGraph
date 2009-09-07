@@ -58,8 +58,11 @@ namespace QuickGraph.Tests.Algorithms.Search
             using (recorder.Attach(search))
                 search.Compute(root, target);
 
-            foreach (var kv in recorder.VertexPredecessors)
-                Console.WriteLine("{0}: {1}", kv.Key, kv.Value);
+            if (recorder.VertexPredecessors.ContainsKey(target))
+                Console.WriteLine("cost: {0}", recorder.VertexPredecessors[target]);
+#if DEBUG
+            Console.WriteLine("operator max count: {0}", search.OperatorMaxCount);
+#endif
         }
 
         [TestMethod]
@@ -71,7 +74,8 @@ namespace QuickGraph.Tests.Algorithms.Search
 
                 var root = g.Vertices.First();
                 foreach(var v in g.Vertices)
-                    CompareSearch(g, root, v);
+                    if(!root.Equals(v))
+                        CompareSearch(g, root, v);
             }
         }
 
@@ -100,8 +104,12 @@ namespace QuickGraph.Tests.Algorithms.Search
 
             var fvp = recorder.Distances;
             var dvp = dijRecorder.Distances;
-            if (fvp.ContainsKey(target))
+            double cost;
+            if (dvp.TryGetValue(target, out cost))
+            {
+                Assert.IsTrue(fvp.ContainsKey(target), "target {0} not found, should be {1}", target, cost);
                 Assert.AreEqual(dvp[target], fvp[target]);
+            }
         }
     }
 }

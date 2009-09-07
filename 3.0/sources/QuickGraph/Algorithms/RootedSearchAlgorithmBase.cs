@@ -50,6 +50,14 @@ namespace QuickGraph.Algorithms
             this.hasGoalVertex = false;
         }
 
+        public event EventHandler GoalReached;
+        protected virtual void OnGoalReached()
+        {
+            var eh = this.GoalReached;
+            if (eh != null)
+                eh(this, EventArgs.Empty);
+        }
+
         public event EventHandler GoalVertexChanged;
         protected virtual void OnGoalVertexChanged(EventArgs e)
         {
