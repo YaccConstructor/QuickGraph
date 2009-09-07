@@ -64,9 +64,6 @@ namespace QuickGraph.Algorithms.Search
                 var entry = open.RemoveMinimum();
                 var cost = entry.Key;
                 var n = entry.Value;
-                // (2) if there are no nodes on open with finite cost, terminate with failure
-                if (double.IsPositiveInfinity(cost))
-                    break; // not found
 
                 // (4) if node n is a goal node, terminate with success
                 if (n.Equals(goal))
@@ -101,13 +98,15 @@ namespace QuickGraph.Algorithms.Search
                 foreach (var edge in g.InEdges(n))
                 {
                     GraphColor edgeColor;
-                    if (!operators.TryGetValue(edge, out edgeColor))
-                        edgeColor = GraphColor.White;
-                    if (edgeColor == GraphColor.White)
-                        open.Add(double.PositiveInfinity, edge.Source);
-                    // delete node n
-                    operators.Remove(edge);
+                    if (operators.TryGetValue(edge, out edgeColor) &&
+                        edgeColor == GraphColor.Gray)
+                    {
+                        // delete node n
+                        operators.Remove(edge);
+                    }
                 }
+
+
             }
         }
 
