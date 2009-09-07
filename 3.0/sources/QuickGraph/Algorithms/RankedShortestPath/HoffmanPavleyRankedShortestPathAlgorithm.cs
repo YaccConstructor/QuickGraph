@@ -32,7 +32,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
         public HoffmanPavleyRankedShortestPathAlgorithm(
             IBidirectionalGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeWeights)
-            : this(null, visitedGraph, edgeWeights, ShortestDistanceRelaxer.Instance)
+            : this(null, visitedGraph, edgeWeights, DistanceRelaxers.ShortestDistance)
         { }
 
         public HoffmanPavleyRankedShortestPathAlgorithm(

@@ -21,11 +21,11 @@ namespace QuickGraph.Algorithms.ShortestPath
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public sealed class AStarShortestPathAlgorithm<TVertex, TEdge> :
-        ShortestPathAlgorithmBase<TVertex, TEdge, IVertexListGraph<TVertex, TEdge>>,
-        IVertexColorizerAlgorithm<TVertex, TEdge>,
-        IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>,
-        IDistanceRecorderAlgorithm<TVertex, TEdge>
+    public sealed class AStarShortestPathAlgorithm<TVertex, TEdge> 
+        : ShortestPathAlgorithmBase<TVertex, TEdge, IVertexListGraph<TVertex, TEdge>>
+        , IVertexColorizerAlgorithm<TVertex, TEdge>
+        , IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>
+        , IDistanceRecorderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private FibonacciQueue<TVertex, double> vertexQueue;
@@ -37,7 +37,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             Func<TEdge, double> weights,
             Func<TVertex, double> costHeuristic
             )
-            : this(visitedGraph, weights, costHeuristic, ShortestDistanceRelaxer.Instance)
+            : this(visitedGraph, weights, costHeuristic, DistanceRelaxers.ShortestDistance)
         { }
 
         public AStarShortestPathAlgorithm(

@@ -104,7 +104,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         public FloydWarshallAllShortestPathAlgorithm(
             IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> weights)
-            : this(visitedGraph, weights, ShortestDistanceRelaxer.Instance)
+            : this(visitedGraph, weights, DistanceRelaxers.ShortestDistance)
         {
         }
 
@@ -142,7 +142,8 @@ namespace QuickGraph.Algorithms.ShortestPath
 
 #if DEBUG && !SILVERLIGHT
             var set = new HashSet<TVertex>();
-            set.Add(source); set.Add(target);
+            set.Add(source); 
+            set.Add(target);
 #endif
 
             var edges = new EdgeList<TVertex, TEdge>();
@@ -241,7 +242,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                                 VertexData pathij;
                                 if (data.TryGetValue(ij, out pathij))
                                 {
-                                    if (this.distanceRelaxer.Compare(combined, pathij.Distance))
+                                    if (this.distanceRelaxer.Compare(combined, pathij.Distance) < 0)
                                         data[ij] = new VertexData(combined, vk);
                                 }
                                 else

@@ -4,10 +4,10 @@ using System.Text;
 
 namespace QuickGraph.Algorithms
 {
-    public interface IDistanceRelaxer
+    public interface IDistanceRelaxer 
+        : IComparer<double>
     {
         double InitialDistance { get;}
-        bool Compare(double a, double b);
         double Combine(double distance, double weight);
     }
 }

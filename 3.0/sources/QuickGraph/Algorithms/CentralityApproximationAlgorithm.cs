@@ -30,7 +30,7 @@ namespace QuickGraph.Algorithms
             this.dijkstra = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(
                 this.VisitedGraph,
                 distances,
-                ShortestDistanceRelaxer.Instance
+                DistanceRelaxers.ShortestDistance
                 );
             this.predecessorRecorder = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
             this.predecessorRecorder.Attach(this.dijkstra);

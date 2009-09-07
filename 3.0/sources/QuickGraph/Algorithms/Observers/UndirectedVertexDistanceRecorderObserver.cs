@@ -22,7 +22,7 @@ namespace QuickGraph.Algorithms.Observers
         private readonly IDictionary<TVertex, double> distances;
 
         public UndirectedVertexDistanceRecorderObserver(Func<TEdge, double> edgeWeights)
-            : this(edgeWeights, EdgeDistanceRelaxer.Instance, new Dictionary<TVertex, double>())
+            : this(edgeWeights, DistanceRelaxers.EdgeShortestDistance, new Dictionary<TVertex, double>())
         {}
 
         public UndirectedVertexDistanceRecorderObserver(

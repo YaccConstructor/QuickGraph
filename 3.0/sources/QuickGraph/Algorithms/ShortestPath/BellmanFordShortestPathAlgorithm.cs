@@ -38,7 +38,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> weights
             )
-            : this(visitedGraph, weights, ShortestDistanceRelaxer.Instance)
+            : this(visitedGraph, weights, DistanceRelaxers.ShortestDistance)
         { }
 
         public BellmanFordShortestPathAlgorithm(
@@ -232,7 +232,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                         relaxer.Combine(
                             this.Distances[e.Source], edgeWeight),
                             this.Distances[e.Target]
-                        )
+                        ) < 0
                     )
                 {
                     this.OnEdgeMinimized(e);

@@ -56,7 +56,7 @@ namespace QuickGraph.Algorithms.Search
             }
 
             var cancelManager = this.Services.CancelManager;
-            var open = new BinaryHeap<double, TVertex>();
+            var open = new BinaryHeap<double, TVertex>(this.distanceRelaxer.Compare);
             var operators = new Dictionary<TEdge, GraphColor>();
             var g = this.VisitedGraph;
 

@@ -31,7 +31,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             IVertexListGraph<TVertex, TEdge> g,
             Func<TEdge, double> weights
             )
-            : this(g, weights, ShortestDistanceRelaxer.Instance)
+            : this(g, weights, DistanceRelaxers.ShortestDistance)
         { }
 
         public DagShortestPathAlgorithm(

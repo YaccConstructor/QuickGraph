@@ -282,6 +282,7 @@
     <Compile Include="Algorithms\ConnectedComponents\IncrementalConnectedComponentsAlgorithm.cs" />
     <Compile Include="Algorithms\Contracts\IAlgorithmContract.cs" />
     <Compile Include="Algorithms\Contracts\IComputationContract.cs" />
+    <Compile Include="Algorithms\DistanceRelaxers.cs" />
     <Compile Include="Algorithms\IUndirectedVertexPredecessorRecorderAlgorithm.cs" />
     <Compile Include="Algorithms\IUndirectedTreeBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\LengauerTarjanDominatorAlgorithm.cs" />
@@ -353,16 +354,13 @@
     <Compile Include="Algorithms\Services\IService.cs" />
     <Compile Include="Algorithms\ShortestPath\AStartShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\ShortestPath\BellmanFordShortestPathAlgorithm.cs" />
-    <Compile Include="Algorithms\EdgeDistanceRelaxer.cs" />
     <Compile Include="Algorithms\ShortestPath\UndirectedShortestPathAlgorithmBase.cs" />
-    <Compile Include="Algorithms\CriticalDistanceRelaxer.cs" />
     <Compile Include="Algorithms\ShortestPath\DagShortestPathAlgorithm.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\ShortestPath\FloydWarshallAllShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\IDistanceRelaxer.cs" />
-    <Compile Include="Algorithms\ShortestDistanceRelaxer.cs" />
     <Compile Include="Algorithms\ShortestPath\ShortestPathAlgorithmBase.cs" />
     <Compile Include="Algorithms\ShortestPath\UndirectedDijkstraShortestPathAlgorithm.cs" />
     <Compile Include="Algorithms\TopologicalSort\SourceFirstTopologicalSortAlgorithm.cs" />

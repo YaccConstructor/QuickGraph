@@ -44,7 +44,7 @@ namespace QuickGraph.Tests.Algorithms.Search
             if (g.VertexCount == 0) return;
 
             Func<TEdge, double> edgeWeights = e => 1;
-            var distanceRelaxer = ShortestDistanceRelaxer.Instance;
+            var distanceRelaxer = DistanceRelaxers.ShortestDistance;
 
             var search = new BestFirstFrontierSearchAlgorithm<TVertex, TEdge>(
                 null,
@@ -90,7 +90,7 @@ namespace QuickGraph.Tests.Algorithms.Search
             where TEdge: IEdge<TVertex>
         {
             Func<TEdge, double> edgeWeights = e => 1;
-            var distanceRelaxer = ShortestDistanceRelaxer.Instance;
+            var distanceRelaxer = DistanceRelaxers.ShortestDistance;
 
             var search = new BestFirstFrontierSearchAlgorithm<TVertex, TEdge>(
                 null, 

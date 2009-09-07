@@ -1082,9 +1082,9 @@ this
                 get { return double.MaxValue; }
             }
 
-            public bool Compare(double a, double b)
+            public int Compare(double a, double b)
             {
-                return a < b;
+                return a.CompareTo(b);
             }
 
             public double Combine(double distance, double weight)

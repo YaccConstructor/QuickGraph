@@ -267,11 +267,8 @@
     <Compile Include="..\QuickGraph\Algorithms\Contracts\IComputationContract.cs">
       <Link>Algorithms\Contracts\IComputationContract.cs</Link>
     </Compile>
-    <Compile Include="..\QuickGraph\Algorithms\CriticalDistanceRelaxer.cs">
-      <Link>Algorithms\CriticalDistanceRelaxer.cs</Link>
-    </Compile>
-    <Compile Include="..\QuickGraph\Algorithms\EdgeDistanceRelaxer.cs">
-      <Link>Algorithms\EdgeDistanceRelaxer.cs</Link>
+    <Compile Include="..\QuickGraph\Algorithms\DistanceRelaxers.cs">
+      <Link>Algorithms\DistanceRelaxers.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Algorithms\EulerianTrailAlgorithm.cs">
       <Link>Algorithms\EulerianTrailAlgorithm.cs</Link>
@@ -479,9 +476,6 @@
     </Compile>
     <Compile Include="..\QuickGraph\Algorithms\Services\IService.cs">
       <Link>Algorithms\Services\IService.cs</Link>
-    </Compile>
-    <Compile Include="..\QuickGraph\Algorithms\ShortestDistanceRelaxer.cs">
-      <Link>Algorithms\ShortestDistanceRelaxer.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Algorithms\ShortestPath\AStartShortestPathAlgorithm.cs">
       <Link>Algorithms\ShortestPath\AStartShortestPathAlgorithm.cs</Link>

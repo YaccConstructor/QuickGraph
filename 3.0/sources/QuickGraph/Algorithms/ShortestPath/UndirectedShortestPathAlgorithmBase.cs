@@ -26,7 +26,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             IUndirectedGraph<TVertex,TEdge> visitedGraph,
             Func<TEdge, double> weights
             )
-            :this(host, visitedGraph, weights, ShortestDistanceRelaxer.Instance)
+            :this(host, visitedGraph, weights, DistanceRelaxers.ShortestDistance)
         {}
 
         protected UndirectedShortestPathAlgorithmBase(
@@ -125,7 +125,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             var relaxer = this.DistanceRelaxer;
             var duwe = relaxer.Combine(du, we);
-            if (relaxer.Compare(duwe, dv))
+            if (relaxer.Compare(duwe, dv) < 0)
             {
                 this.distances[target] = duwe;
                 return true;

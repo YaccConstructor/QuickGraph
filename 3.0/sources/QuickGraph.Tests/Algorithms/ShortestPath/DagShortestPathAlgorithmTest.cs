@@ -17,7 +17,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             // is this a dag ?
             bool isDag = AlgorithmExtensions.IsDirectedAcyclicGraph(g);
 
-            var relaxer = ShortestDistanceRelaxer.Instance;
+            var relaxer = DistanceRelaxers.ShortestDistance;
             var vertices = new List<TVertex>(g.Vertices);
             foreach (var root in vertices)
             {
@@ -55,7 +55,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             // is this a dag ?
             bool isDag = g.IsDirectedAcyclicGraph();
 
-            var relaxer = CriticalDistanceRelaxer.Instance;
+            var relaxer = DistanceRelaxers.CriticalDistance;
             var vertices = new List<TVertex>(g.Vertices);
             foreach (var root in vertices)
             {

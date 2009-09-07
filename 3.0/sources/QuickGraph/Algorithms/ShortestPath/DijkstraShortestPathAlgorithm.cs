@@ -33,7 +33,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         public DijkstraShortestPathAlgorithm(
             IVertexListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> weights)
-            : this(visitedGraph, weights, ShortestDistanceRelaxer.Instance)
+            : this(visitedGraph, weights, DistanceRelaxers.ShortestDistance)
         { }
 
         public DijkstraShortestPathAlgorithm(

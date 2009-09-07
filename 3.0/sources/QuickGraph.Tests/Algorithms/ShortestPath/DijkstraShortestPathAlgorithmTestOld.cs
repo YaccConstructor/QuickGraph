@@ -161,21 +161,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 // Run the algorithm with A set to be the source
                 algo.Compute("A");
 
-            path = new List<string>();
-            PopulatePath("E");
-
             Assert.IsTrue(algo.Distances["E"] == 74);
-            path.Reverse();
-
-            Console.WriteLine(String.Join(" -> ", path.ToArray()));
-        }
-
-        void PopulatePath(string vertex)
-        {
-            path.Add(vertex);
-            if (vertex == "A")
-                return;
-            PopulatePath(predecessorObserver.VertexPredecessors[vertex].Source);
         }
     }
 

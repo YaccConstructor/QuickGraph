@@ -14,7 +14,8 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
     [TestClass]
     public class BoostFloydWarshallTest
     {
-        public static AdjacencyGraph<char, Edge<char>> CreateGraph(Dictionary<Edge<char>, double> distances)
+        public static AdjacencyGraph<char, Edge<char>> CreateGraph(
+            Dictionary<Edge<char>, double> distances)
         {
             var g = new AdjacencyGraph<char, Edge<char>>();
 
