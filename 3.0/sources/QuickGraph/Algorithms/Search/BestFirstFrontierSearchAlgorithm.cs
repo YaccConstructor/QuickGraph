@@ -10,7 +10,7 @@ using QuickGraph.Algorithms.ShortestPath;
 namespace QuickGraph.Algorithms.Search
 {
     /// <summary>
-    /// NOT FINISHED
+    /// Best first frontier search
     /// </summary>
     /// <remarks>
     /// Algorithm from Frontier Search, Korkf, Zhand, Thayer, Hohwald.
@@ -48,6 +48,7 @@ namespace QuickGraph.Algorithms.Search
             if (!this.TryGetGoalVertex(out goal))
                 throw new InvalidOperationException("goal vertex not set");
 
+            // little shortcut
             if (root.Equals(goal))
             {
                 this.OnGoalReached();
@@ -66,6 +67,8 @@ namespace QuickGraph.Algorithms.Search
 
             while (open.Count > 0)
             {
+                if (cancelManager.IsCancelling) return;
+
                 // (3) Else, choose an Open node n of lowest cost for expansion
                 var entry = open.RemoveMinimum();
                 var cost = entry.Key;
