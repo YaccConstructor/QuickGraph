@@ -14,7 +14,8 @@ namespace QuickGraph.Tests
         [TestMethod]
         public void ShortestPath()
         {
-            IVertexAndEdgeListGraph<int, Edge<int>> cities = new AdjacencyGraph<int, Edge<int>>(); // a graph of cities
+            var cities = new AdjacencyGraph<int, Edge<int>>(); // a graph of cities
+            cities.AddVerticesAndEdge(new Edge<int>(0, 1));
             Func<Edge<int>, double> cityDistances = e => e.Target + e.Source ; // a delegate that gives the distance between cities
 
             int sourceCity = 0; // starting city

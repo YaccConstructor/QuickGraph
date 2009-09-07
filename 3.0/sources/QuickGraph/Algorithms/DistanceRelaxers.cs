@@ -21,7 +21,7 @@ namespace QuickGraph.Algorithms
 
             public int Compare(double a, double b)
             {
-                return -a.CompareTo(b);
+                return a.CompareTo(b);
             }
 
             public double Combine(double distance, double weight)
@@ -44,7 +44,7 @@ namespace QuickGraph.Algorithms
 
             public int Compare(double a, double b)
             {
-                return a.CompareTo(b);
+                return -a.CompareTo(b);
             }
 
             public double Combine(double distance, double weight)
@@ -66,7 +66,7 @@ namespace QuickGraph.Algorithms
 
             public int Compare(double a, double b)
             {
-                return -a.CompareTo(b);
+                return a.CompareTo(b);
             }
 
             public double Combine(double distance, double weight)

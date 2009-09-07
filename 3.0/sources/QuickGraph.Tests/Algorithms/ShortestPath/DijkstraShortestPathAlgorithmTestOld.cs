@@ -185,11 +185,11 @@ namespace QuickGraph.Algorithms.ShortestPath
             AddEdge(g, distances, 'E', 'A', 1);
             AddEdge(g, distances, 'E', 'B', 1);
 
-            var dijkstra = new DijkstraShortestPathAlgorithm<char, Edge<char>>(g, e => distances[e]);
+            var dijkstra = new DijkstraShortestPathAlgorithm<char, Edge<char>>(g, AlgorithmExtensions.GetIndexer(distances));
             var predecessors = new VertexPredecessorRecorderObserver<char, Edge<char>>();
 
-            predecessors.Attach(dijkstra);
-            dijkstra.Compute('A');
+            using(predecessors.Attach(dijkstra))
+                dijkstra.Compute('A');
 
             Assert.AreEqual(0, dijkstra.Distances['A']);
             Assert.AreEqual(6, dijkstra.Distances['B']);

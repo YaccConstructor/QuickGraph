@@ -12,7 +12,7 @@ namespace QuickGraph.Serialization
     /// from embedded resources.
     /// </summary>
     public sealed class GraphMLXmlResolver 
-        : XmlResolver
+        : XmlUrlResolver
     {
         public const string GraphMLNamespace = "http://graphml.graphdrawing.org/xmlns";
 
@@ -36,8 +36,7 @@ namespace QuickGraph.Serialization
             else if (absoluteUri.AbsoluteUri == "http://graphml.graphdrawing.org/xmlns/1.0/graphml-structure.xsd")
                 return typeof(GraphExtensions).Assembly.GetManifestResourceStream(typeof(GraphMLExtensions), "graphml-structure.xsd");
 
-            Contract.Assert(false, "unexpected resolved document + " + absoluteUri.AbsoluteUri);
-            return null;
+            return base.GetEntity(absoluteUri, role, ofObjectToReturn);
         }
     }
 }
