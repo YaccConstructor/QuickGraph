@@ -58,6 +58,14 @@
       <ProjName>QuickGraph.Perf</ProjName>
     </ProjBinary>
   </Binaries>
+  <Reports>
+    <Report>
+      <Path>C:\codeplex\quickgraph\3.0\sources\QuickGraphPerf090907(1).vsp</Path>
+    </Report>
+    <Report>
+      <Path>C:\codeplex\quickgraph\3.0\sources\QuickGraphPerf090907(2).vsp</Path>
+    </Report>
+  </Reports>
   <Launches>
     <ProjBinary>
       <Path>:PB:{2C35D329-D1F8-4862-8DA2-F2D27E8D4DB7}|QuickGraph.Perf\QuickGraph.Perf.csproj</Path>
