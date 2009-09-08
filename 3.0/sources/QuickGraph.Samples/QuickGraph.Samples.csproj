@@ -119,6 +119,7 @@
       <Link>Properties\version.cs</Link>
     </Compile>
     <Compile Include="GraphCreation.cs" />
+    <Compile Include="GraphvizSamples.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WikiSamples.cs" />
   </ItemGroup>
@@ -126,6 +127,10 @@
     <ProjectReference Include="..\QuickGraph.Data\QuickGraph.Data.csproj">
       <Project>{960C14D1-EDBD-40E5-8AE6-25E311551B87}</Project>
       <Name>QuickGraph.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
+      <Project>{595D6322-637A-4A36-97F1-D53F3F9ECEA7}</Project>
+      <Name>QuickGraph.Graphviz</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
       <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>

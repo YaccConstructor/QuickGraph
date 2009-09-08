@@ -24,6 +24,7 @@
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -214,6 +215,9 @@
   <ItemGroup>
     <Reference Include="Microsoft.Contracts" Condition="$(CodeContractsFromLibrary) == 'True'" />
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
@@ -259,6 +263,7 @@
     <Compile Include="FormatVertexEventArgs.cs" />
     <Compile Include="GraphRendererBase.cs" />
     <Compile Include="GraphvizAlgorithm.cs" />
+    <Compile Include="GraphvizExtensions.cs" />
     <Compile Include="IDotEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SvgHtmlWrapper.cs" />

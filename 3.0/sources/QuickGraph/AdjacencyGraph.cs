@@ -88,13 +88,11 @@ namespace QuickGraph
 
         public int VertexCount
         {
-            [Pure]
             get { return this.vertexEdges.Count; }
         }
 
         public virtual IEnumerable<TVertex> Vertices
         {
-            [Pure]
             get { return this.vertexEdges.Keys; }
         }
 
@@ -104,25 +102,21 @@ namespace QuickGraph
             return this.vertexEdges.ContainsKey(v);
         }
 
-        [Pure]
         public bool IsOutEdgesEmpty(TVertex v)
         {
             return this.vertexEdges[v].Count == 0;
         }
 
-        [Pure]
         public int OutDegree(TVertex v)
         {
             return this.vertexEdges[v].Count;
         }
 
-        [Pure]
         public virtual IEnumerable<TEdge> OutEdges(TVertex v)
         {
             return this.vertexEdges[v];
         }
 
-        [Pure]
         public virtual bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
             EdgeList<TVertex, TEdge> list;
@@ -136,7 +130,6 @@ namespace QuickGraph
             return false;
         }
 
-        [Pure]
         public TEdge OutEdge(TVertex v, int index)
         {
             return this.vertexEdges[v][index];
@@ -160,7 +153,6 @@ namespace QuickGraph
         /// <value>The edge count.</value>
         public int EdgeCount
         {
-            [Pure]
             get 
             {
                 return this.edgeCount; 

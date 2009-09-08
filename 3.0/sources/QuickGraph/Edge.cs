@@ -27,8 +27,8 @@ namespace QuickGraph
         {
             Contract.Requires(source != null);
             Contract.Requires(target != null);
-            Contract.Ensures(this.source.Equals(source));
-            Contract.Ensures(this.target.Equals(target));
+            Contract.Ensures(this.Source.Equals(source));
+            Contract.Ensures(this.Target.Equals(target));
 
             this.source = source;
             this.target = target;
