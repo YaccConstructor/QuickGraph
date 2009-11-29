@@ -38,17 +38,9 @@ namespace QuickGraph.Tests.Algorithms
         [PexMethod]
         public void Roots<T>(IVertexAndEdgeListGraph<T, Edge<T>> g)
         {
-            var roots = g.Roots().ToList();
-            var notRoots = new HashSet<T>();
+            var roots = new HashSet<T>(g.Roots());
             foreach (var edge in g.Edges)
-                notRoots.Add(edge.Target);
-
-            Console.WriteLine("{0} roots:", roots.Count);
-            foreach(var root in roots)
-                Console.WriteLine(root);
-            Assert.AreEqual(g.VertexCount - notRoots.Count, roots.Count);
-            foreach (var v in g.Vertices)
-                Assert.AreEqual(notRoots.Contains(v), !roots.Contains(v));
+                Assert.IsFalse(roots.Contains(edge.Target));
         }
     }
 }
