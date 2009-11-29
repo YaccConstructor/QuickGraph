@@ -29,8 +29,7 @@ namespace QuickGraph.Algorithms.Observers
         public VertexPredecessorPathRecorderObserver(
             IDictionary<TVertex, TEdge> vertexPredecessors)
         {
-            if (vertexPredecessors == null)
-                throw new ArgumentNullException("vertexPredecessors");
+            Contract.Requires(vertexPredecessors != null);
             this.vertexPredecessors = vertexPredecessors;
         }
 

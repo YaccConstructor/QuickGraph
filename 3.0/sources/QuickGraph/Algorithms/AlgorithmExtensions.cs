@@ -491,42 +491,6 @@ this
         }
 
         /// <summary>
-        /// Gets the list of root  vertices
-        /// </summary>
-        /// <typeparam name="TVertex">type of the vertices</typeparam>
-        /// <typeparam name="TEdge">type of the edges</typeparam>
-        /// <param name="visitedGraph"></param>
-        /// <returns></returns>
-        public static IEnumerable<TVertex> Roots<TVertex, TEdge>(
-#if !NET20
-this 
-#endif
-            IUndirectedGraph<TVertex, TEdge> visitedGraph)
-            where TEdge : IEdge<TVertex>
-        {
-            Contract.Requires(visitedGraph != null);
-
-            return RootsIterator<TVertex, TEdge>(visitedGraph);
-        }
-
-        [DebuggerHidden]
-        private static IEnumerable<TVertex> RootsIterator<TVertex, TEdge>(
-            IUndirectedGraph<TVertex, TEdge> visitedGraph)
-            where TEdge : IEdge<TVertex>
-        {
-            var dfs = new UndirectedDepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
-            var vis = new UndirectedVertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using(vis.Attach(dfs))
-                dfs.Compute();
-
-            foreach (var predecessor in vis.VertexPredecessors)
-            {
-                if (predecessor.Value.Equals(default(TEdge)))
-                    yield return predecessor.Key;
-            }
-        }
-
-        /// <summary>
         /// Gets the list of roots
         /// </summary>
         /// <typeparam name="TVertex">type of the vertices</typeparam>
@@ -549,15 +513,16 @@ this
             IVertexListGraph<TVertex,TEdge> visitedGraph)
             where TEdge : IEdge<TVertex>
         {
+            var notRoots = new Dictionary<TVertex, bool>(visitedGraph.VertexCount);
             var dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(visitedGraph);
-            var vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
-            using (vis.Attach(dfs))
-                dfs.Compute();
+            dfs.ExamineEdge += e => notRoots[e.Target] = false;
+            dfs.Compute();
 
-            foreach (var predecessor in vis.VertexPredecessors)
+            foreach(var vertex in visitedGraph.Vertices)
             {
-                if (object.Equals(predecessor.Value, default(TEdge)))
-                    yield return predecessor.Key;
+                bool value;
+                if (!notRoots.TryGetValue(vertex, out value))
+                    yield return vertex;
             }
         }
 

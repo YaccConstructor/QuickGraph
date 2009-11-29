@@ -169,14 +169,8 @@ namespace QuickGraph.Algorithms.Search
         {
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
-            {
-                // enqueue all roots
-                foreach (var root in AlgorithmExtensions.Roots(this.VisitedGraph))
-                    this.EnqueueRoot(root);
-            }
-            else
-                this.EnqueueRoot(rootVertex);
-
+                throw new InvalidOperationException("missing root vertex");
+            this.EnqueueRoot(rootVertex);
             this.FlushVisitQueue();
         }
 
