@@ -9,16 +9,15 @@ using QuickGraph.Serialization.DirectedGraphML;
 
 namespace QuickGraph.Serialization
 {
-    public sealed class DirectedGraphMLAlgorithm<TVertex, TEdge, TGraph>
-        : AlgorithmBase<TGraph>
+    public sealed class DirectedGraphMLAlgorithm<TVertex, TEdge>
+        : AlgorithmBase<IVertexAndEdgeListGraph<TVertex,TEdge>>
         where TEdge : IEdge<TVertex>
-        where TGraph : IVertexAndEdgeListGraph<TVertex, TEdge>
     {
         readonly VertexIdentity<TVertex> vertexIds;
         DirectedGraph directedGraph;
 
         public DirectedGraphMLAlgorithm(
-            TGraph visitedGraph, 
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph, 
             VertexIdentity<TVertex> vertexIds)
             :base(visitedGraph)
         {

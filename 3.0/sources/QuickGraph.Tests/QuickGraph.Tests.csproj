@@ -451,6 +451,7 @@
     <Compile Include="Regression\DijkstraTest.cs" />
     <Compile Include="Regression\HoffmanPavleyTest.cs" />
     <Compile Include="Regression\ShortestPathBellmanFordTest.cs" />
+    <Compile Include="Serialization\DirectedGraphMLExtensionsTest.cs" />
     <Compile Include="Serialization\GraphMLSerializerTest.cs" />
     <Compile Include="Serialization\GraphMLSerializerWithArgumentsTest.cs" />
     <Compile Include="Serialization\Repro13428.cs" />
