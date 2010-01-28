@@ -310,6 +310,38 @@ this
         }
 
         /// <summary>
+        /// Converts a jagged array of sources and targets into a graph
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <typeparam name="TEdge"></typeparam>
+        /// <param name="edges"></param>
+        /// <returns></returns>
+        public static AdjacencyGraph<TVertex, SEquatableEdge<TVertex>>
+            ToAdjacencyGraph<TVertex>(
+#if !NET20
+this 
+#endif
+            TVertex[][] edges
+            )
+        {
+            Contract.Requires(edges != null);
+            Contract.Requires(edges.Length == 2);
+            Contract.Requires(edges[0] != null);
+            Contract.Requires(edges[1] != null);
+            Contract.Requires(edges[0].Length == edges[1].Length);
+            Contract.Ensures(Contract.Result<IVertexAndEdgeListGraph<TVertex, SEquatableEdge<TVertex>>>() != null);
+
+            var sources = edges[0];
+            var targets = edges[1];
+            int n = sources.Length;
+            var edgePairs = new List<SEquatableEdge<TVertex>>(n);
+            for (int i = 0; i < n; ++i)
+                edgePairs.Add(new SEquatableEdge<TVertex>(sources[i], targets[i]));
+
+            return ToAdjacencyGraph(edgePairs);
+        }
+
+        /// <summary>
         /// Creates an immutable array adjacency graph from the input graph
         /// </summary>
         /// <typeparam name="TVertex">type of the vertices</typeparam>

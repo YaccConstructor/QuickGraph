@@ -13,16 +13,19 @@ namespace QuickGraph.Serialization
         : AlgorithmBase<IVertexAndEdgeListGraph<TVertex,TEdge>>
         where TEdge : IEdge<TVertex>
     {
-        readonly VertexIdentity<TVertex> vertexIds;
+        readonly VertexIdentity<TVertex> vertexIdentities;
+        readonly EdgeIdentity<TVertex, TEdge> edgeIdentities;
         DirectedGraph directedGraph;
 
         public DirectedGraphMLAlgorithm(
-            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph, 
-            VertexIdentity<TVertex> vertexIds)
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            VertexIdentity<TVertex> vertexIdentities,
+            EdgeIdentity<TVertex, TEdge> edgeIdentities)
             :base(visitedGraph)
         {
-            Contract.Requires(vertexIds != null);
-            this.vertexIds = vertexIds;
+            Contract.Requires(vertexIdentities != null);
+            this.vertexIdentities = vertexIdentities;
+            this.edgeIdentities = edgeIdentities;
         }
 
         public DirectedGraph DirectedGraph
@@ -32,11 +35,15 @@ namespace QuickGraph.Serialization
 
         protected override void InternalCompute()
         {
+            var cancelManager = this.Services.CancelManager;
             this.directedGraph = new DirectedGraph();
+
             var nodes = new List<DirectedGraphNode>(this.VisitedGraph.VertexCount);
             foreach (var vertex in this.VisitedGraph.Vertices)
             {
-                var node = new DirectedGraphNode { Id = this.vertexIds(vertex) };
+                if (cancelManager.IsCancelling) return;
+
+                var node = new DirectedGraphNode { Id = this.vertexIdentities(vertex) };
                 this.OnFormatNode(vertex, node);
                 nodes.Add(node);
             }
@@ -45,15 +52,32 @@ namespace QuickGraph.Serialization
             var links = new List<DirectedGraphLink>(this.VisitedGraph.EdgeCount);
             foreach (var edge in this.VisitedGraph.Edges)
             {
+                if (cancelManager.IsCancelling) return;
+
                 var link = new DirectedGraphLink
                 {
-                    Source = this.vertexIds(edge.Source),
-                    Target = this.vertexIds(edge.Target)
+                    Label = this.edgeIdentities(edge),
+                    Source = this.vertexIdentities(edge.Source),
+                    Target = this.vertexIdentities(edge.Target)
                 };
                 this.OnFormatEdge(edge, link);
                 links.Add(link);
             }
             this.directedGraph.Links = links.ToArray();
+
+            this.OnFormatGraph();
+        }
+
+        /// <summary>
+        /// Raised when the graph is about to be returned
+        /// </summary>
+        public event Action<IVertexAndEdgeListGraph<TVertex, TEdge>, DirectedGraph> FormatGraph;
+
+        private void OnFormatGraph()
+        {
+            var eh = this.FormatGraph;
+            if (eh != null)
+                eh(this.VisitedGraph, this.DirectedGraph);
         }
 
         /// <summary>
