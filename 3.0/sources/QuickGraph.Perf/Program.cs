@@ -24,7 +24,6 @@ namespace QuickGraph.Perf
             var distances = new Dictionary<Edge<string>, double>(g.EdgeCount);
             foreach (var e in g.Edges)
                 distances[e] = g.OutDegree(e.Source) + 1;
-            int i = 0;
             var root = Enumerable.First(g.Vertices);
             foreach (var v in g.Vertices)
             {

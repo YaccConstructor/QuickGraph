@@ -98,7 +98,7 @@ namespace QuickGraph.Algorithms
         }
 
         class TimeStampObserver
-            : IObserver<IVertexTimeStamperAlgorithm<TVertex, TEdge>>
+            : QuickGraph.Algorithms.Observers.IObserver<IVertexTimeStamperAlgorithm<TVertex, TEdge>>
 
         {
             public readonly List<TVertex> Vertices;

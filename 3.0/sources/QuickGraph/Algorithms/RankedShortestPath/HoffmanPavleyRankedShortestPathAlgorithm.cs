@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Diagnostics.Contracts;
 using QuickGraph.Algorithms.Services;
@@ -8,6 +7,7 @@ using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.ShortestPath;
 using QuickGraph.Collections;
 using System.Diagnostics;
+using System.Linq;
 
 namespace QuickGraph.Algorithms.RankedShortestPath
 {

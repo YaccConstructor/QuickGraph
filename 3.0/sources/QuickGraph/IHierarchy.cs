@@ -14,7 +14,7 @@ namespace QuickGraph
         TVertex Root { get;}
 
         /// <summary>
-        /// Gets the parent <typeparamref name="Vertex"/> of <paramref name="vertex"/>
+        /// Gets the parent <typeparamref name="TVertex"/> of <paramref name="vertex"/>
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
