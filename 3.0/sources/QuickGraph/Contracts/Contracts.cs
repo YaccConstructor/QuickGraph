@@ -8,7 +8,7 @@ namespace System.Diagnostics.Contracts
     /// <summary>
     /// Methods to express preconditions, postconditions and invariants.
     /// </summary>
-    public static class Contract
+    internal static class Contract
     {
         public static event EventHandler<ContractFailedEventArgs> ContractFailed;
 
@@ -286,13 +286,13 @@ namespace System.Diagnostics.Contracts
     }
 
     [AttributeUsage(AttributeTargets.Delegate | AttributeTargets.Parameter | AttributeTargets.Event | AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Class, AllowMultiple = false, Inherited = true), Conditional("CONTRACTS_PRECONDITIONS"), Conditional("CONTRACTS_FULL")]
-    public sealed class PureAttribute : Attribute
+    internal sealed class PureAttribute : Attribute
     { }
 
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public enum ContractFailureKind
+    internal enum ContractFailureKind
     {
         Precondition,
         Postcondition,
@@ -305,7 +305,7 @@ namespace System.Diagnostics.Contracts
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public sealed class ContractFailedEventArgs
+    internal sealed class ContractFailedEventArgs
         : EventArgs
     {
         // Fields
@@ -350,13 +350,13 @@ namespace System.Diagnostics.Contracts
     }
 
     [Conditional("CONTRACTS_FULL"), AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public sealed class ContractInvariantMethodAttribute
+    internal sealed class ContractInvariantMethodAttribute
         : Attribute
     {
     }
 
     [Conditional("CONTRACTS_FULL"), AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public sealed class ContractClassForAttribute
+    internal sealed class ContractClassForAttribute
         : Attribute
     {
         public Type TypeContractsAreFor { get; private set; }
@@ -369,7 +369,7 @@ namespace System.Diagnostics.Contracts
     }
 
     [Conditional("CONTRACTS_FULL"), AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public sealed class ContractClassAttribute
+    internal sealed class ContractClassAttribute
         : Attribute
     {
         public Type TypeContainingContracts { get; private set; }
@@ -382,7 +382,7 @@ namespace System.Diagnostics.Contracts
     }
 
     [AttributeUsage(AttributeTargets.Field), Conditional("CONTRACTS_FULL")]
-    public sealed class ContractPublicPropertyNameAttribute : Attribute
+    internal sealed class ContractPublicPropertyNameAttribute : Attribute
     {
         // Methods
         public ContractPublicPropertyNameAttribute(string name)
@@ -397,13 +397,13 @@ namespace System.Diagnostics.Contracts
     }
 
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
-    public sealed class ContractRuntimeIgnoredAttribute : Attribute { }
+    internal sealed class ContractRuntimeIgnoredAttribute : Attribute { }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
-    public sealed class ContractReferenceAssemblyAttribute : Attribute { }
+    internal sealed class ContractReferenceAssemblyAttribute : Attribute { }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
-    public sealed class ContractVerificationAttribute : Attribute
+    internal sealed class ContractVerificationAttribute : Attribute
     {
         public ContractVerificationAttribute(bool value) { this.Value = value; }
         public bool Value { get; private set; }

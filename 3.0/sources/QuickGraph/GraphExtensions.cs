@@ -329,7 +329,7 @@ this
             Contract.Requires(edges[0] != null);
             Contract.Requires(edges[1] != null);
             Contract.Requires(edges[0].Length == edges[1].Length);
-            Contract.Ensures(Contract.Result<IVertexAndEdgeListGraph<TVertex, SEquatableEdge<TVertex>>>() != null);
+            Contract.Ensures(Contract.Result<AdjacencyGraph<TVertex, SEquatableEdge<TVertex>>>() != null);
 
             var sources = edges[0];
             var targets = edges[1];
