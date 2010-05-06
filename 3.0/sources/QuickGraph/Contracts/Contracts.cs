@@ -142,6 +142,7 @@ namespace System.Diagnostics.Contracts
         /// <param name="collection">the collection</param>
         /// <param name="predicate">the predicate</param>
         /// <returns>true if any element evaluates predicate to true</returns>
+        [Pure]
         public static bool Exists<T>(IEnumerable<T> collection, Predicate<T> predicate)
         {
             //Contract.Requires<ArgumentNullException>(collection != null);
@@ -168,6 +169,7 @@ namespace System.Diagnostics.Contracts
         /// <param name="exclusiveUpperBound">the exclusive upper bound</param>
         /// <param name="predicate">a method that evaluates an index to a boolean value</param>
         /// <returns>true if predicate returns true for any integer starting from inclusiveLowerBound to exclusiveUpperBound - 1.</returns>
+        [Pure]
         public static bool Exists(int inclusiveLowerBound, int exclusiveUpperBound, Predicate<int> predicate)
         {
             //Contract.Requires<ArgumentOutOfRangeException>(inclusiveLowerBound <= exclusiveUpperBound);
@@ -202,17 +204,20 @@ namespace System.Diagnostics.Contracts
             throw new ContractException(message, failureKind);
         }
 
+        [Pure]
         public static bool ForAll<T>(IEnumerable<T> collection, Predicate<T> predicate)
         {
             return false;
         }
 
+        [Pure]
         public static bool ForAll(int inclusiveLowerBound, int exclusiveUpperBound, Predicate<int> predicate)
         {
             return false;
         }
 
         [Conditional("CONTRACTS_FULL")]
+        [Pure]
         public static void Invariant(bool condition)
         {
             if (!condition)
@@ -220,6 +225,7 @@ namespace System.Diagnostics.Contracts
         }
 
         [Conditional("CONTRACTS_FULL")]
+        [Pure]
         public static void Invariant(bool condition, string message)
         {
             if (!condition)
