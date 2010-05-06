@@ -7,9 +7,8 @@ using System.Linq;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IImplicitUndirectedGraph<,>))]
-    class IImplicitUndirectedGraphContract<TVertex, TEdge> 
-        : IGraphContract<TVertex, TEdge>
-        , IImplicitUndirectedGraph<TVertex, TEdge>
+    abstract class IImplicitUndirectedGraphContract<TVertex, TEdge> 
+        : IImplicitUndirectedGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         #region IImplicitUndirectedGraph<TVertex,TEdge> Members
@@ -108,6 +107,18 @@ namespace QuickGraph.Contracts
         {
             throw new NotImplementedException();
         }
+        #endregion
+
+        #region IGraph<TVertex,TEdge> Members
+
+        public bool IsDirected {
+          get { throw new NotImplementedException(); }
+        }
+
+        public bool AllowParallelEdges {
+          get { throw new NotImplementedException(); }
+        }
+
         #endregion
     }
 }

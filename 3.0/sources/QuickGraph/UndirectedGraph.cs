@@ -165,7 +165,7 @@ namespace QuickGraph
         }
 
         [ContractInvariantMethod]
-        protected void ObjectInvariant()
+        void ObjectInvariant()
         {
             Contract.Invariant(this.edgeCount >= 0);
         }

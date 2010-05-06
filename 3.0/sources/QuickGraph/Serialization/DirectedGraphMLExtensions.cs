@@ -33,9 +33,8 @@ namespace QuickGraph.Serialization
         /// <summary>
         /// Writes the dgml data structure to the xml writer
         /// </summary>
-        /// <typeparam name="?"></typeparam>
+        /// <param name="fileName"/>
         /// <param name="graph"></param>
-        /// <param name="writer"></param>
         public static void WriteXml(
 #if !NET20
 this 
@@ -52,7 +51,6 @@ this
         /// <summary>
         /// Writes the dgml data structure to the xml writer
         /// </summary>
-        /// <typeparam name="?"></typeparam>
         /// <param name="graph"></param>
         /// <param name="writer"></param>
         public static void WriteXml(
@@ -71,7 +69,6 @@ this
         /// <summary>
         /// Writes the dgml data structure to the xml writer
         /// </summary>
-        /// <typeparam name="?"></typeparam>
         /// <param name="graph"></param>
         /// <param name="stream"></param>
         public static void WriteXml(
@@ -90,7 +87,6 @@ this
         /// <summary>
         /// Writes the dgml data structure to the xml writer
         /// </summary>
-        /// <typeparam name="?"></typeparam>
         /// <param name="graph"></param>
         /// <param name="writer"></param>
         public static void WriteXml(
@@ -136,6 +132,7 @@ this
         /// <typeparam name="TVertex"></typeparam>
         /// <typeparam name="TEdge"></typeparam>
         /// <param name="visitedGraph"></param>
+        /// <param name="vertexColors"></param>
         /// <returns></returns>
         public static DirectedGraph ToDirectedGraphML<TVertex, TEdge>(
 #if !NET20

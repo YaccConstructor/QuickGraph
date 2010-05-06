@@ -144,9 +144,12 @@ namespace System.Diagnostics.Contracts
         /// <returns>true if any element evaluates predicate to true</returns>
         public static bool Exists<T>(IEnumerable<T> collection, Predicate<T> predicate)
         {
-            Contract.Requires<ArgumentNullException>(collection != null);
-            Contract.Requires<ArgumentNullException>(predicate != null);
-
+            //Contract.Requires<ArgumentNullException>(collection != null);
+            //Contract.Requires<ArgumentNullException>(predicate != null);
+            // because this assembly is built in custom validation mode (no rewriter in release), we must use legacy-if-then throw
+            if (collection == null) throw new ArgumentNullException("collection", "collection != null");
+            if (predicate == null) throw new ArgumentNullException("predicate", "predicate != null");
+            Contract.EndContractBlock();
             foreach (var local in collection)
             {
                 if (predicate(local))
@@ -167,8 +170,11 @@ namespace System.Diagnostics.Contracts
         /// <returns>true if predicate returns true for any integer starting from inclusiveLowerBound to exclusiveUpperBound - 1.</returns>
         public static bool Exists(int inclusiveLowerBound, int exclusiveUpperBound, Predicate<int> predicate)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(inclusiveLowerBound <= exclusiveUpperBound);
-            Contract.Requires<ArgumentNullException>(predicate != null);
+            //Contract.Requires<ArgumentOutOfRangeException>(inclusiveLowerBound <= exclusiveUpperBound);
+            //Contract.Requires<ArgumentNullException>(predicate != null);
+            if (inclusiveLowerBound > exclusiveUpperBound) throw new ArgumentOutOfRangeException("inclusiveLowerBound <= exclusiveUpperBound");
+            if (predicate == null) throw new ArgumentNullException("predicate", "prediate != null");
+            Contract.EndContractBlock();
 
             for (int i = inclusiveLowerBound; i < exclusiveUpperBound; i++)
             {
@@ -362,7 +368,8 @@ namespace System.Diagnostics.Contracts
         public Type TypeContractsAreFor { get; private set; }
         public ContractClassForAttribute(Type type)
         {
-            Contract.Requires<ArgumentNullException>(type != null);
+            if (type == null) throw new ArgumentNullException("type", "type != null");
+            Contract.EndContractBlock();
 
             this.TypeContractsAreFor = type;
         }
@@ -375,7 +382,8 @@ namespace System.Diagnostics.Contracts
         public Type TypeContainingContracts { get; private set; }
         public ContractClassAttribute(Type type)
         {
-            Contract.Requires<ArgumentNullException>(type != null);
+            if (type == null) throw new ArgumentNullException("type", "type != null");
+            Contract.EndContractBlock();
 
             this.TypeContainingContracts = type;
         }
@@ -387,7 +395,8 @@ namespace System.Diagnostics.Contracts
         // Methods
         public ContractPublicPropertyNameAttribute(string name)
         {
-            Contract.Requires<ArgumentNullException>(!String.IsNullOrEmpty(name));
+            if (String.IsNullOrEmpty(name)) throw new ArgumentException("!String.IsNullOrEmpty(name)");
+            Contract.EndContractBlock();
 
             this.Name = name;
         }

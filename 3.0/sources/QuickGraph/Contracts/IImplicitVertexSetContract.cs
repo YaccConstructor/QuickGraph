@@ -6,7 +6,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IImplicitVertexSet<>))]
-    class IImplicitVertexSetContract<TVertex>
+    abstract class IImplicitVertexSetContract<TVertex>
         : IImplicitVertexSet<TVertex>
     {
         [Pure]

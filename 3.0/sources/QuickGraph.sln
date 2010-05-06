@@ -43,6 +43,28 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Petri", "QuickGraph.Petri\QuickGraph.Petri.csproj", "{6C49E8BF-82F4-40D0-AB49-8EA8A655A989}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs03.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = QuickGraph\\QuickGraph.csproj
+		SccProjectTopLevelParentUniqueName1 = QuickGraph.sln
+		SccProjectName1 = QuickGraph
+		SccLocalPath1 = QuickGraph
+		SccProjectUniqueName2 = QuickGraph.Graphviz\\QuickGraph.Graphviz.csproj
+		SccProjectTopLevelParentUniqueName2 = QuickGraph.sln
+		SccProjectName2 = QuickGraph.Graphviz
+		SccLocalPath2 = QuickGraph.Graphviz
+		SccProjectUniqueName3 = QuickGraph.Data\\QuickGraph.Data.csproj
+		SccProjectTopLevelParentUniqueName3 = QuickGraph.sln
+		SccProjectName3 = QuickGraph.Data
+		SccLocalPath3 = QuickGraph.Data
+		SccProjectUniqueName4 = QuickGraph.Samples\\QuickGraph.Samples.csproj
+		SccProjectTopLevelParentUniqueName4 = QuickGraph.sln
+		SccProjectName4 = QuickGraph.Samples
+		SccLocalPath4 = QuickGraph.Samples
+	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = QuickGraph1.vsmdi
 	EndGlobalSection
@@ -74,7 +96,8 @@ Global
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.DebugContracts|Any CPU.ActiveCfg = DebugContracts|Any CPU
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.DebugContracts|Any CPU.Build.0 = DebugContracts|Any CPU
-		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.DebugContractsNoTools|Any CPU.ActiveCfg = DebugContracts|Any CPU
+		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.DebugContractsNoTools|Any CPU.ActiveCfg = DebugContractsNoTools|Any CPU
+		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.DebugContractsNoTools|Any CPU.Build.0 = DebugContractsNoTools|Any CPU
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.DebugContractsWithBugs|Any CPU.ActiveCfg = DebugContractsWithBugs|Any CPU
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.DebugContractsWithBugs|Any CPU.Build.0 = DebugContractsWithBugs|Any CPU
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -87,7 +110,8 @@ Global
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.DebugContracts|Any CPU.ActiveCfg = DebugContracts|Any CPU
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.DebugContracts|Any CPU.Build.0 = DebugContracts|Any CPU
-		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.DebugContractsNoTools|Any CPU.ActiveCfg = DebugContracts|Any CPU
+		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.DebugContractsNoTools|Any CPU.ActiveCfg = DebugContractsNoTools|Any CPU
+		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.DebugContractsNoTools|Any CPU.Build.0 = DebugContractsNoTools|Any CPU
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.DebugContractsWithBugs|Any CPU.ActiveCfg = DebugContractsWithBugs|Any CPU
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.DebugContractsWithBugs|Any CPU.Build.0 = DebugContractsWithBugs|Any CPU
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -145,9 +169,7 @@ Global
 		{8836CFAC-D2B0-47A5-9A91-03A2218BF6FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8836CFAC-D2B0-47A5-9A91-03A2218BF6FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8836CFAC-D2B0-47A5-9A91-03A2218BF6FD}.DebugContracts|Any CPU.ActiveCfg = DebugContracts|Any CPU
-		{8836CFAC-D2B0-47A5-9A91-03A2218BF6FD}.DebugContracts|Any CPU.Build.0 = DebugContracts|Any CPU
 		{8836CFAC-D2B0-47A5-9A91-03A2218BF6FD}.DebugContractsNoTools|Any CPU.ActiveCfg = DebugContractsNoTools|Any CPU
-		{8836CFAC-D2B0-47A5-9A91-03A2218BF6FD}.DebugContractsNoTools|Any CPU.Build.0 = DebugContractsNoTools|Any CPU
 		{8836CFAC-D2B0-47A5-9A91-03A2218BF6FD}.DebugContractsWithBugs|Any CPU.ActiveCfg = DebugContractsWithBugs|Any CPU
 		{8836CFAC-D2B0-47A5-9A91-03A2218BF6FD}.DebugContractsWithBugs|Any CPU.Build.0 = DebugContractsWithBugs|Any CPU
 		{8836CFAC-D2B0-47A5-9A91-03A2218BF6FD}.Release|Any CPU.ActiveCfg = Release|Any CPU

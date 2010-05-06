@@ -6,9 +6,8 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IIncidenceGraph<,>))]
-    sealed class IIncidenceGraphContract<TVertex, TEdge>
-        : IImplicitGraphContract<TVertex, TEdge>
-        , IIncidenceGraph<TVertex, TEdge>
+    abstract class IIncidenceGraphContract<TVertex, TEdge>
+        : IIncidenceGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         bool IIncidenceGraph<TVertex, TEdge>.ContainsEdge(TVertex source, TVertex target)
@@ -51,5 +50,49 @@ namespace QuickGraph.Contracts
             edge = default(TEdge);
             return default(bool);
         }
+
+        #region IImplicitGraph<TVertex,TEdge> Members
+
+        public bool IsOutEdgesEmpty(TVertex v) {
+          throw new NotImplementedException();
+        }
+
+        public int OutDegree(TVertex v) {
+          throw new NotImplementedException();
+        }
+
+        public IEnumerable<TEdge> OutEdges(TVertex v) {
+          throw new NotImplementedException();
+        }
+
+        public bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges) {
+          throw new NotImplementedException();
+        }
+
+        public TEdge OutEdge(TVertex v, int index) {
+          throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IGraph<TVertex,TEdge> Members
+
+        public bool IsDirected {
+          get { throw new NotImplementedException(); }
+        }
+
+        public bool AllowParallelEdges {
+          get { throw new NotImplementedException(); }
+        }
+
+        #endregion
+
+        #region IImplicitVertexSet<TVertex> Members
+
+        public bool ContainsVertex(TVertex vertex) {
+          throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

@@ -313,7 +313,6 @@ this
         /// Converts a jagged array of sources and targets into a graph
         /// </summary>
         /// <typeparam name="TVertex"></typeparam>
-        /// <typeparam name="TEdge"></typeparam>
         /// <param name="edges"></param>
         /// <returns></returns>
         public static AdjacencyGraph<TVertex, SEquatableEdge<TVertex>>

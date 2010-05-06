@@ -498,7 +498,7 @@ namespace QuickGraph
         }
 
         [ContractInvariantMethod]
-        protected void ObjectInvariant()
+        void ObjectInvariant()
         {
             Contract.Invariant(this.edgeCount >= 0);
             Contract.Invariant(Enumerable.Sum(this.vertexInEdges.Values, ie => ie.Count) == this.edgeCount);

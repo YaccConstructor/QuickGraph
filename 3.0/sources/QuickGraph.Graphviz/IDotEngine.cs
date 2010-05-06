@@ -16,7 +16,7 @@ namespace QuickGraph.Graphviz
     }
 
     [ContractClassFor(typeof(IDotEngine))]
-    sealed class IDotEngineContract
+    abstract class IDotEngineContract
         : IDotEngine
     {
         #region IDotEngine Members

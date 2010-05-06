@@ -24,7 +24,7 @@ namespace QuickGraph
         TVertex GetParent(TVertex vertex);
 
         /// <summary>
-        /// Gets the parent <typeparamref name="Edge"/> of <paramref name="vertex"/>
+        /// Gets the parent <typeparamref name="TEdge"/> of <paramref name="vertex"/>
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
@@ -85,8 +85,8 @@ namespace QuickGraph
         bool IsInnerNode(TVertex vertex);
 
         /// <summary>
-        /// Gets the collection of children <typeparamref name="Edge"/>
-        /// from <paramref name="Vertex"/>
+        /// Gets the collection of children <typeparamref name="TEdge"/>
+        /// from <paramref name="vertex"/>
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
@@ -94,8 +94,8 @@ namespace QuickGraph
 
 
         /// <summary>
-        /// Gets the collection of children <typeparamref name="Vertex"/>
-        /// from <paramref name="Vertex"/>
+        /// Gets the collection of children <typeparamref name="TVertex"/>
+        /// from <paramref name="vertex"/>
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>

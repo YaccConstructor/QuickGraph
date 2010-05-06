@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Algorithms.Contracts
 {
     [ContractClassFor(typeof(IAlgorithm<>))]
-    sealed class IAlgorithmContract<TGraph>
+    abstract class IAlgorithmContract<TGraph>
         : IAlgorithm<TGraph>
     {
         #region IAlgorithm<TGraph> Members

@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Collections.Contracts
 {
     [ContractClassFor(typeof(IDisjointSet<>))]
-    class IDisjointSetContract<T>
+    abstract class IDisjointSetContract<T>
         : IDisjointSet<T>
     {
         int IDisjointSet<T>.SetCount
@@ -27,7 +27,7 @@ namespace QuickGraph.Collections.Contracts
         }
 
         [ContractInvariantMethod]
-        protected void ObjectInvariant()
+        void ObjectInvariant()
         {
             IDisjointSet<T> ithis = this;
             Contract.Invariant(0 <= ithis.SetCount);

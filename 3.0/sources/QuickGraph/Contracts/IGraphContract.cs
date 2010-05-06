@@ -5,7 +5,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IGraph<,>))]
-    class IGraphContract<TVertex, TEdge>
+    abstract class IGraphContract<TVertex, TEdge>
         : IGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {

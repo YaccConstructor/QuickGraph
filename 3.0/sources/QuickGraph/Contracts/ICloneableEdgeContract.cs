@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(ICloneableEdge<,>))]
-    sealed class ICloneableEdgeContract<TVertex, TEdge>
+    abstract class ICloneableEdgeContract<TVertex, TEdge>
         : ICloneableEdge<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {

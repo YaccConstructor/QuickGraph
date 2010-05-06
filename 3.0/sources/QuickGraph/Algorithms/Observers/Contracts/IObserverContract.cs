@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Algorithms.Observers.Contracts
 {
     [ContractClassFor(typeof(IObserver<>))]
-    sealed class IObserverContract<TAlgorithm>
+    abstract class IObserverContract<TAlgorithm>
         : IObserver<TAlgorithm>
     {
         IDisposable IObserver<TAlgorithm>.Attach(TAlgorithm algorithm)

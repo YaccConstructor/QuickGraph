@@ -4,9 +4,8 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IEdgeListGraph<,>))]
-    class IEdgeListGraphContract<TVertex, TEdge>
-        : IVertexSetContract<TVertex>
-        , IEdgeListGraph<TVertex, TEdge>
+    abstract class IEdgeListGraphContract<TVertex, TEdge>
+        : IEdgeListGraph<TVertex, TEdge>
       where TEdge : IEdge<TVertex>  
     {
         #region IGraph<TVertex,TEdge> Members
@@ -44,6 +43,30 @@ namespace QuickGraph.Contracts
         {
             throw new NotImplementedException();
         }
+        #endregion
+
+        #region IVertexSet<TVertex> Members
+
+        public bool IsVerticesEmpty {
+          get { throw new NotImplementedException(); }
+        }
+
+        public int VertexCount {
+          get { throw new NotImplementedException(); }
+        }
+
+        public System.Collections.Generic.IEnumerable<TVertex> Vertices {
+          get { throw new NotImplementedException(); }
+        }
+
+        #endregion
+
+        #region IImplicitVertexSet<TVertex> Members
+
+        public bool ContainsVertex(TVertex vertex) {
+          throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IEdgeSet<,>))]
-    sealed class IEdgeSetContract<TVertex, TEdge> 
+    abstract class IEdgeSetContract<TVertex, TEdge> 
         : IEdgeSet<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {

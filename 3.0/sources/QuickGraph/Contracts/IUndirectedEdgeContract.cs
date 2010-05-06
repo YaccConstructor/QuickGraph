@@ -5,15 +5,26 @@ using System.Collections.Generic;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IUndirectedEdge<>))]
-    class IUndirectedEdgeContract<TVertex>
-        : IEdgeContract<TVertex>
-        , IUndirectedEdge<TVertex>
+    abstract class IUndirectedEdgeContract<TVertex>
+        : IUndirectedEdge<TVertex>
     {
         [ContractInvariantMethod]
-        protected void IUndirectedEdgeInvariant()
+        void IUndirectedEdgeInvariant()
         {
             IUndirectedEdge<TVertex> ithis = this;
             Contract.Invariant(Comparer<TVertex>.Default.Compare(ithis.Source, ithis.Target) <= 0);
         }
+
+        #region IEdge<TVertex> Members
+
+        public TVertex Source {
+          get { throw new NotImplementedException(); }
+        }
+
+        public TVertex Target {
+          get { throw new NotImplementedException(); }
+        }
+
+        #endregion
     }
 }

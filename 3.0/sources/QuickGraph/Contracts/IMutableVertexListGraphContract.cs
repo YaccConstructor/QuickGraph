@@ -6,7 +6,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IMutableVertexListGraph<,>))]
-    class IMutableVertexListGraphContract<TVertex, TEdge>
+    abstract class IMutableVertexListGraphContract<TVertex, TEdge>
         : IMutableVertexListGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {

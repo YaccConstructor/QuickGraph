@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Algorithms.Contracts
 {
     [ContractClassFor(typeof(IComputation))]
-    sealed class IComputationContract
+    abstract class IComputationContract
         : IComputation
     {
         #region IComputation Members

@@ -5,11 +5,11 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IEdge<>))]
-    class IEdgeContract<TVertex>
+    abstract class IEdgeContract<TVertex>
         : IEdge<TVertex>
     {
         [ContractInvariantMethod]
-        public void IEdgeInvariant()
+        void IEdgeInvariant()
         {
             IEdge<TVertex> ithis = this;
             Contract.Invariant(ithis.Source != null);

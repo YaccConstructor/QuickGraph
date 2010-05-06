@@ -172,7 +172,7 @@ namespace QuickGraph.Collections
         }
 
         [ContractInvariantMethod]
-        protected void ObjectInvariant()
+        void ObjectInvariant()
         {
             Contract.Invariant(this.setCount >= 0);
             Contract.Invariant(this.setCount <= this.elements.Count);

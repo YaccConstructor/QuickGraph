@@ -6,7 +6,7 @@ using System.Linq;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IMutableEdgeListGraph<,>))]
-    sealed class IMutableEdgeListGraphContract<TVertex, TEdge>
+    abstract class IMutableEdgeListGraphContract<TVertex, TEdge>
         : IMutableEdgeListGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {

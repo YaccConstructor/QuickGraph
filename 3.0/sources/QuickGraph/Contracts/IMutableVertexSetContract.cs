@@ -7,9 +7,8 @@ using System.Linq;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IMutableVertexSet<>))]
-    class IMutableVertexSetContract<TVertex>
-        : IVertexSetContract<TVertex>
-        , IMutableVertexSet<TVertex>
+    abstract class IMutableVertexSetContract<TVertex>
+        : IMutableVertexSet<TVertex>
     {
         #region IMutableVertexSet<TVertex> Members
 
@@ -67,6 +66,30 @@ namespace QuickGraph.Contracts
             Contract.Ensures(ithis.VertexCount == Contract.OldValue(ithis.VertexCount) - Contract.Result<int>());
 
             return default(int);
+        }
+
+        #endregion
+
+        #region IVertexSet<TVertex> Members
+
+        public bool IsVerticesEmpty {
+          get { throw new NotImplementedException(); }
+        }
+
+        public int VertexCount {
+          get { throw new NotImplementedException(); }
+        }
+
+        public IEnumerable<TVertex> Vertices {
+          get { throw new NotImplementedException(); }
+        }
+
+        #endregion
+
+        #region IImplicitVertexSet<TVertex> Members
+
+        public bool ContainsVertex(TVertex vertex) {
+          throw new NotImplementedException();
         }
 
         #endregion

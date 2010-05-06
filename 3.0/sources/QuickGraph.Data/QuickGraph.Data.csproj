@@ -10,14 +10,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuickGraph.Data</RootNamespace>
     <AssemblyName>QuickGraph.Data</AssemblyName>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -104,7 +100,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugContracts|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\DebugContracts\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL;INLINED_CONTRACTS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL;CONTRACTS_FULL;INLINED_CONTRACTS</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
@@ -159,7 +155,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugContractsNoTools|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\DebugContractsNoTools\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;INLINED_CONTRACTS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;INLINED_CONTRACTS;CONTRACTS_FULL;CONTRACTS_FULL;INLINED_CONTRACTS</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>

@@ -7,7 +7,7 @@ using System.Linq;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IMutableIncidenceGraph<,>))]
-    sealed class IMutableIncidenceGraphContract<TVertex, TEdge>
+    abstract class IMutableIncidenceGraphContract<TVertex, TEdge>
         : IMutableIncidenceGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {

@@ -7,9 +7,8 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Contracts
 {
     [ContractClassFor(typeof(IUndirectedGraph<,>))]
-    class IUndirectedGraphContract<TVertex, TEdge>
-        : IEdgeListGraphContract<TVertex,TEdge>
-        , IUndirectedGraph<TVertex, TEdge>
+    abstract class IUndirectedGraphContract<TVertex, TEdge>
+        : IUndirectedGraph<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         #region IVertexSet<TVertex> Members
