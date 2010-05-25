@@ -54,7 +54,7 @@ namespace QuickGraph.Algorithms.RankedShortestPath
         protected void AddComputedShortestPath(List<TEdge> path)
         {
             Contract.Requires(path != null);
-            Contract.Requires(Contract.ForAll(path, e => e != null));
+            Contract.Requires(Enumerable.All(path, e => e != null));
 
             var pathArray = path.ToArray();
             this.computedShortestPaths.Add(pathArray);

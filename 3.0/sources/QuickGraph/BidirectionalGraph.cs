@@ -503,8 +503,8 @@ namespace QuickGraph
             Contract.Invariant(this.edgeCount >= 0);
             Contract.Invariant(Enumerable.Sum(this.vertexInEdges.Values, ie => ie.Count) == this.edgeCount);
             Contract.Invariant(this.vertexInEdges.Count == this.vertexOutEdges.Count);
-            Contract.Invariant(Contract.ForAll(this.vertexInEdges, kv => this.vertexOutEdges.ContainsKey(kv.Key)));
-            Contract.Invariant(Contract.ForAll(this.vertexOutEdges, kv => this.vertexInEdges.ContainsKey(kv.Key)));
+            Contract.Invariant(Enumerable.All(this.vertexInEdges, kv => this.vertexOutEdges.ContainsKey(kv.Key)));
+            Contract.Invariant(Enumerable.All(this.vertexOutEdges, kv => this.vertexInEdges.ContainsKey(kv.Key)));
         }
 
         public void ClearInEdges(TVertex v)

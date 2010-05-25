@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Collections;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace QuickGraph.Collections
 {
@@ -209,6 +210,7 @@ namespace QuickGraph.Collections
             this.Add(priority, value);
         }
 
+        [Pure]
         private bool Less(int i, int j)
         {
             Contract.Requires(
@@ -239,7 +241,7 @@ namespace QuickGraph.Collections
                 this.count > -1 &
                 this.count <= this.items.Length);
             Contract.Invariant(
-                Contract.ForAll(0, this.count, index =>
+                EnumerableContract.All(0, this.count, index =>
                 {
                     var left = 2 * index + 1;
                     var right = 2 * index + 2;

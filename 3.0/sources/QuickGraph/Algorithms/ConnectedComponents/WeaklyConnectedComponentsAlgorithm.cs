@@ -5,6 +5,7 @@ using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.Services;
 using System.Diagnostics.Contracts;
 using System.Diagnostics;
+using System.Linq;
 
 namespace QuickGraph.Algorithms.ConnectedComponents
 {
@@ -63,7 +64,7 @@ namespace QuickGraph.Algorithms.ConnectedComponents
         protected override void  InternalCompute()
         {
             Contract.Ensures(0 <= this.ComponentCount && this.ComponentCount <= this.VisitedGraph.VertexCount);
-            Contract.Ensures(Contract.ForAll(this.VisitedGraph.Vertices,
+            Contract.Ensures(Enumerable.All(this.VisitedGraph.Vertices,
                 v => 0 <= this.Components[v] && this.Components[v] < this.ComponentCount));
 
             // shortcut for empty graph

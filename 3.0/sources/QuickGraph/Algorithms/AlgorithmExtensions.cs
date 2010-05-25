@@ -1116,8 +1116,8 @@ this
             Contract.Requires(root != null);
             Contract.Requires(pairs != null);
             Contract.Requires(visitedGraph.ContainsVertex(root));
-            Contract.Requires(Contract.ForAll(pairs, p => visitedGraph.ContainsVertex(p.Source)));
-            Contract.Requires(Contract.ForAll(pairs, p => visitedGraph.ContainsVertex(p.Target)));
+            Contract.Requires(Enumerable.All(pairs, p => visitedGraph.ContainsVertex(p.Source)));
+            Contract.Requires(Enumerable.All(pairs, p => visitedGraph.ContainsVertex(p.Target)));
 
             var algo = new TarjanOfflineLeastCommonAncestorAlgorithm<TVertex, TEdge>(visitedGraph);
             algo.Compute(root, pairs);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using QuickGraph.Collections;
+using System.Linq;
 
 namespace QuickGraph
 {
@@ -99,7 +100,7 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(path != null);
-            Contract.Requires(typeof(TEdge).IsValueType || Contract.ForAll(path, e => e != null));
+            Contract.Requires(typeof(TEdge).IsValueType || Enumerable.All(path, e => e != null));
 
             bool first = true;
             TVertex lastTarget = default(TVertex);
@@ -130,7 +131,7 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(path != null);
-            Contract.Requires(typeof(TEdge).IsValueType || Contract.ForAll(path, e => e != null));
+            Contract.Requires(typeof(TEdge).IsValueType || Enumerable.All(path, e => e != null));
 
             var vertices = new Dictionary<TVertex, int>();
             bool first = true;
@@ -164,7 +165,7 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(path != null);
-            Contract.Requires(typeof(TEdge).IsValueType || Contract.ForAll(path, e => e != null));
+            Contract.Requires(typeof(TEdge).IsValueType || Enumerable.All(path, e => e != null));
             Contract.Requires(IsPath<TVertex, TEdge>(path));
 
             var vertices = new Dictionary<TVertex, int>();
@@ -240,7 +241,7 @@ this
             Contract.Requires(vertex != null);
             Contract.Requires(
                 typeof(TEdge).IsValueType || 
-                Contract.ForAll(predecessors.Values, e => e != null));
+                Enumerable.All(predecessors.Values, e => e != null));
 
             var current = vertex;
             if (root.Equals(current)) 
@@ -282,12 +283,12 @@ this
             Contract.Requires(v != null);
             Contract.Requires(
                 typeof(TEdge).IsValueType ||
-                Contract.ForAll(predecessors.Values, e => e != null));
+                Enumerable.All(predecessors.Values, e => e != null));
             Contract.Ensures(
                 !Contract.Result<bool>() ||
                 (Contract.ValueAtReturn<IEnumerable<TEdge>>(out result) != null &&
                  (typeof(TEdge).IsValueType ||
-                 Contract.ForAll(
+                 Enumerable.All(
                     Contract.ValueAtReturn<IEnumerable<TEdge>>(out result),
                     e => e != null))
                 )
@@ -395,7 +396,7 @@ TEdge edge,
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edges != null);
-            Contract.Requires(Contract.ForAll(edges, e => e != null));
+            Contract.Requires(Enumerable.All(edges, e => e != null));
             Contract.Ensures(Contract.Result<IEnumerable<SReversedEdge<TVertex, TEdge>>>() != null);
 
             foreach (var edge in edges)

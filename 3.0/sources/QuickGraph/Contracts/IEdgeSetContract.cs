@@ -38,7 +38,7 @@ namespace QuickGraph.Contracts
             get 
             {
                 Contract.Ensures(Contract.Result<IEnumerable<TEdge>>() != null);
-                Contract.Ensures(Contract.ForAll<TEdge>(Contract.Result<IEnumerable<TEdge>>(), e => e != null));
+                Contract.Ensures(Enumerable.All<TEdge>(Contract.Result<IEnumerable<TEdge>>(), e => e != null));
 
                 return default(IEnumerable<TEdge>);            
             }

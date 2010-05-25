@@ -21,7 +21,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(vertex != null);
             Contract.Requires(predicate != null);
             Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(ithis.AdjacentEdges(vertex), e => predicate(e))));
-            Contract.Ensures(Contract.ForAll(ithis.AdjacentEdges(vertex), v => !predicate(v)));
+            Contract.Ensures(Enumerable.All(ithis.AdjacentEdges(vertex), v => !predicate(v)));
 
             return default(int);
         }

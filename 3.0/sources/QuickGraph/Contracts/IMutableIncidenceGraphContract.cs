@@ -22,7 +22,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(ithis.ContainsVertex(v));
             Contract.Requires(predicate != null);
             Contract.Ensures(Contract.Result<int>() == Contract.OldValue(Enumerable.Count(ithis.OutEdges(v), ve => predicate(ve))));
-            Contract.Ensures(Contract.ForAll(ithis.OutEdges(v), ve => !predicate(ve)));
+            Contract.Ensures(Enumerable.All(ithis.OutEdges(v), ve => !predicate(ve)));
 
             return default(int);
         }

@@ -41,7 +41,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(v != null);
             Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Contract.Result<IEnumerable<TEdge>>() != null);
-            Contract.Ensures(Contract.ForAll(
+            Contract.Ensures(Enumerable.All(
                 Contract.Result<IEnumerable<TEdge>>(), 
                 edge => edge != null && edge.Target.Equals(v)
                 )
@@ -59,7 +59,7 @@ namespace QuickGraph.Contracts
             Contract.Ensures(Contract.Result<bool>() == ithis.ContainsVertex(v));
             Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out edges) != null);
             Contract.Ensures(!Contract.Result<bool>() || 
-                Contract.ForAll(
+                Enumerable.All(
                 Contract.ValueAtReturn<IEnumerable<TEdge>>(out edges),
                 edge => edge != null && edge.Target.Equals(v)
                 )

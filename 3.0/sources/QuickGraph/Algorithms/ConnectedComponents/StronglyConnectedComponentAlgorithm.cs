@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using QuickGraph.Algorithms.Search;
 using QuickGraph.Algorithms.Services;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace QuickGraph.Algorithms.ConnectedComponents
 {
@@ -134,9 +135,9 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 		protected override void InternalCompute()
 		{
             Contract.Ensures(this.ComponentCount > 0);
-            Contract.Ensures(Contract.ForAll(this.VisitedGraph.Vertices, v => this.Components.ContainsKey(v)));
+            Contract.Ensures(Enumerable.All(this.VisitedGraph.Vertices, v => this.Components.ContainsKey(v)));
             Contract.Ensures(this.VisitedGraph.VertexCount == this.Components.Count);
-            Contract.Ensures(Contract.ForAll(this.Components.Values, c => c <= this.ComponentCount));
+            Contract.Ensures(Enumerable.All(this.Components.Values, c => c <= this.ComponentCount));
 
 			this.Components.Clear();
 			this.Roots.Clear();

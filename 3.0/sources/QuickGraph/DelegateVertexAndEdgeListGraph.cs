@@ -29,7 +29,7 @@ namespace QuickGraph
             : base(tryGetOutEdges)
         {
             Contract.Requires(vertices != null);
-            Contract.Requires(Contract.ForAll(vertices, v =>
+            Contract.Requires(Enumerable.All(vertices, v =>
             {
                 IEnumerable<TEdge> edges;
                 return tryGetOutEdges(v, out edges);

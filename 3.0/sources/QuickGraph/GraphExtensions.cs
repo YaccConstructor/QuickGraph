@@ -30,7 +30,7 @@ this
             where TValue : IEnumerable<TEdge>
         {
             Contract.Requires(dictionary != null);
-            Contract.Requires(Contract.ForAll(dictionary.Values, v => v != null));
+            Contract.Requires(Enumerable.All(dictionary.Values, v => v != null));
 
             return ToVertexAndEdgeListGraph<TVertex, TEdge, TValue>(dictionary, kv => kv.Value);
         }
@@ -167,7 +167,7 @@ this
         {
             Contract.Requires(vertices != null);
             Contract.Requires(tryGetOutEdges != null);
-            Contract.Requires(Contract.ForAll(vertices, v =>
+            Contract.Requires(Enumerable.All(vertices, v =>
             {
                 IEnumerable<TEdge> edges;
                 return tryGetOutEdges(v, out edges);
@@ -215,7 +215,7 @@ this
             where TValue : IEnumerable<TEdge>
         {
             Contract.Requires(dictionary != null);
-            Contract.Requires(Contract.ForAll(dictionary.Values, v => v != null));
+            Contract.Requires(Enumerable.All(dictionary.Values, v => v != null));
 
             return ToDelegateUndirectedGraph<TVertex, TEdge, TValue>(dictionary, kv => kv.Value);
         }
@@ -275,7 +275,7 @@ this
         {
             Contract.Requires(vertices != null);
             Contract.Requires(tryGetAdjacentEdges != null);
-            Contract.Requires(Contract.ForAll(vertices, v =>
+            Contract.Requires(Enumerable.All(vertices, v =>
             {
                 IEnumerable<TEdge> edges;
                 return tryGetAdjacentEdges(v, out edges);
@@ -438,7 +438,7 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edges != null);
-            Contract.Requires(Contract.ForAll(edges, e => e != null));
+            Contract.Requires(Enumerable.All(edges, e => e != null));
 
             return ToUndirectedGraph<TVertex, TEdge>(edges, true);
         }
@@ -460,7 +460,7 @@ this
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(edges != null);
-            Contract.Requires(Contract.ForAll(edges, e => e != null));
+            Contract.Requires(Enumerable.All(edges, e => e != null));
 
             var g = new UndirectedGraph<TVertex, TEdge>(allowParralelEdges);
             g.AddVerticesAndEdgeRange(edges);

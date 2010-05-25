@@ -30,7 +30,7 @@ namespace QuickGraph.Contracts
             Contract.Requires(ithis.ContainsVertex(v));
             Contract.Ensures(Contract.Result<IEnumerable<TEdge>>() != null);
             Contract.Ensures(
-                Contract.ForAll(
+                Enumerable.All(
                     Contract.Result<IEnumerable<TEdge>>(),
                     edge => 
                         edge != null && 
