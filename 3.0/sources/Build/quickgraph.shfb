@@ -1,6 +1,6 @@
 ﻿<project schemaVersion="1.6.0.7">
     <assemblies>
-        <assembly assemblyPath="..\bin\DebugContracts\QuickGraph.dll" xmlCommentsPath="..\bin\DebugContracts\QuickGraph.xml" commentsOnly="False" />
+        <assembly assemblyPath="..\bin\Release\QuickGraph.dll" xmlCommentsPath="..\bin\Release\QuickGraph.xml" commentsOnly="False" />
     </assemblies>
     <namespaceSummaries>
         <namespaceSummaryItem name="" isDocumented="False" />
@@ -26,10 +26,10 @@
         <namespaceSummaryItem name="QuickGraph.Serialization" isDocumented="True">Serialization algorithms</namespaceSummaryItem>
     </namespaceSummaries>
     <dependencies>
-        <dependencyItem depPath="..\..\..\..\..\Program Files\Microsoft\Contracts\PublicAssemblies\v3.5\Microsoft.Contracts.dll" />
+        <dependencyItem depPath="..\bin\Debug\Microsoft.Contracts.dll" />
     </dependencies>
     <ProjectSummary />
-    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter</MissingTags>
+    <MissingTags>AutoDocumentCtors</MissingTags>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
     <HtmlHelp1xCompilerPath path="" />
     <HtmlHelp2xCompilerPath path="" />
