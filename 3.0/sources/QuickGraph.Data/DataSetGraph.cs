@@ -19,7 +19,7 @@ namespace QuickGraph.Data
         {
             Contract.Requires(dataSet != null);
 
-            this.DataSet = dataSet;
+            this.dataSet = dataSet;
         }
     }
 }
