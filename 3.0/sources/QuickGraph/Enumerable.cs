@@ -9,6 +9,32 @@ namespace System.Linq
     public static class Enumerable
     {
         [Pure]
+        public static bool All<T>(IEnumerable<T> values, Predicate<T> predicate)
+        {
+            Contract.Requires(values != null);
+            Contract.Requires(predicate != null);
+
+            foreach (var value in values)
+                if (!predicate(value))
+                    return false;
+            return true;
+        }
+
+        [Pure]
+        public static int Count<T>(IEnumerable<T> values, Predicate<T> predicate)
+        {
+            Contract.Requires(values != null); 
+            Contract.Requires(predicate != null);
+            Contract.Ensures(Contract.Result<int>() >= 0);
+
+            int count = 0;
+            foreach (var value in values)
+                if (predicate(value))
+                    count++;
+            return count;
+        }
+
+        [Pure]
         public static IEnumerable<T> Where<T>(IEnumerable<T> values, Predicate<T> predicate)
         {
             Contract.Requires(values != null);
@@ -91,19 +117,6 @@ namespace System.Linq
                 if (count++ == index)
                     return element;
             throw new ArgumentOutOfRangeException("index");
-        }
-
-        [Pure]
-        public static int Count<T>(IEnumerable<T> elements, Predicate<T> filter)
-        {
-            Contract.Requires(elements != null);
-            Contract.Requires(filter != null);
-
-            int count = 0;
-            foreach (var element in elements)
-                if (filter(element))
-                    count++;
-            return count;
         }
 
         [Pure]
