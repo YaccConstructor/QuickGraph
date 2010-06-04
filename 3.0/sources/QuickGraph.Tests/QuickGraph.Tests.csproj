@@ -377,6 +377,9 @@
     </Compile>
     <Compile Include="Data\StoreTest.cs" />
     <Compile Include="DegreeTest.cs" />
+    <Compile Include="EdgeEventArgsTVertexTEdgeTest.Constructor.g.cs">
+      <DependentUpon>EdgeEventArgsTVertexTEdgeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="EdgeEventArgsTVertexTEdgeTest.cs" />
     <Compile Include="EdgeExtensionsTest.cs" />
     <Compile Include="EdgeExtensionsTest.GetOtherVertex.g.cs">

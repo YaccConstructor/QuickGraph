@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Collections
 {
-    public partial class BinaryHeapFactory
+    public static class BinaryHeapFactory
     {
         [PexFactoryMethod(typeof(BinaryHeap<int, int>))]
         public static BinaryHeap<int, int> Create(int capacity)

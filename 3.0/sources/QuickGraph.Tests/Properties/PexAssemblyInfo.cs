@@ -15,5 +15,5 @@ using QuickGraph;
     AcceptExceptionSubtypes = true)]
 
 [assembly: PexAllowedContractRequiresFailureAtTypeUnderTestSurface]
-[assembly: PexGenericArguments(typeof(int), typeof(Edge<int>))]
-[assembly: PexGenericArguments(typeof(int), typeof(SEdge<int>))]
+//[assembly: PexGenericArguments(typeof(int), typeof(Edge<int>))]
+//[assembly: PexGenericArguments(typeof(int), typeof(SEdge<int>))]
