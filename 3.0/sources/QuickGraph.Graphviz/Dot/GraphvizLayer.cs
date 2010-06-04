@@ -1,6 +1,7 @@
 namespace QuickGraph.Graphviz.Dot
 {
     using System;
+    using System.Diagnostics.Contracts;
 
     public class GraphvizLayer
     {
@@ -8,14 +9,8 @@ namespace QuickGraph.Graphviz.Dot
 
         public GraphvizLayer(string name)
         {
-            if ((name == null) || (name.Length == 0))
-            {
-                throw new ArgumentNullException("name");
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("name is empty");
-            }
+            Contract.Requires(!String.IsNullOrEmpty(name));
+            
             this.name = name;
         }
 
@@ -27,6 +22,7 @@ namespace QuickGraph.Graphviz.Dot
             }
             set
             {
+                Contract.Requires(!String.IsNullOrEmpty(value));
                 this.name = value;
             }
         }

@@ -35,20 +35,17 @@ namespace QuickGraph.Algorithms.ShortestPath
                 return !this.edgeStored;
             }
 
-            public bool TryGetEdge(out TEdge edge)
+            public bool TryGetEdge(out TEdge _edge)
             {
-
-                edge = this._edge;
+                _edge = this._edge;
                 return this.edgeStored;
             }
 
-            public VertexData(double distance, TEdge edge)
+            public VertexData(double distance, TEdge _edge)
             {
-                Contract.Requires(edge != null);
-
                 this.Distance = distance;
                 this._predecessor = default(TVertex);
-                this._edge = edge;
+                this._edge = _edge;
                 this.edgeStored = true;
             }
 
@@ -60,6 +57,12 @@ namespace QuickGraph.Algorithms.ShortestPath
                 this._predecessor = predecessor;
                 this._edge = default(TEdge);
                 this.edgeStored = false;
+            }
+
+            [ContractInvariantMethod]
+            void ObjectInvariant()
+            {
+                Contract.Invariant(this.edgeStored ? this._edge != null : this._predecessor != null);
             }
 
             public override string ToString()

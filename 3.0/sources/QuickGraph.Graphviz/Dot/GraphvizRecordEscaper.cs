@@ -2,6 +2,7 @@ namespace QuickGraph.Graphviz.Dot
 {
     using System;
     using System.Text.RegularExpressions;
+    using System.Diagnostics.Contracts;
 
     public sealed class GraphvizRecordEscaper
     {
@@ -9,10 +10,8 @@ namespace QuickGraph.Graphviz.Dot
 
         public string Escape(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
+            Contract.Requires(text != null);
+
             return this.escapeRegExp.Replace(text, new System.Text.RegularExpressions.MatchEvaluator(this.MatchEvaluator));
         }
 

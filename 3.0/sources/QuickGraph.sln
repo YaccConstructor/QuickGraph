@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		QuickGraph1.vsmdi = QuickGraph1.vsmdi
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pex - Tests", "Pex - Tests", "{22937B93-4129-4F68-AB14-F7AFE020BA8F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{22937B93-4129-4F68-AB14-F7AFE020BA8F}"
 	ProjectSection(SolutionItems) = preProject
 		dgmlsample.dgml = dgmlsample.dgml
 	EndProjectSection

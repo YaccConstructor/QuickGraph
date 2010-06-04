@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using QuickGraph.Algorithms;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Data
 {
@@ -17,8 +18,7 @@ namespace QuickGraph.Data
             )
             : base(visitedGraph)
         {
-            if (dataSet == null)
-                throw new ArgumentNullException("dataSet");
+            Contract.Requires(dataSet != null);
 
             this.dataSet = dataSet;
         }

@@ -4,6 +4,7 @@ namespace QuickGraph.Graphviz.Dot
     using System.IO;
     using System.Reflection;
     using System.Collections.ObjectModel;
+    using System.Diagnostics.Contracts;
 
     public class GraphvizLayerCollection : Collection<GraphvizLayer>
     {
@@ -56,14 +57,8 @@ namespace QuickGraph.Graphviz.Dot
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("separator is null");
-                }
-                if (value.Length == 0)
-                {
-                    throw new ArgumentException("separator is empty");
-                }
+                Contract.Requires(!String.IsNullOrEmpty(value));
+
                 this.m_Separators = value;
             }
         }

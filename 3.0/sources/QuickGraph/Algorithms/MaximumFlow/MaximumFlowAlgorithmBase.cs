@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using QuickGraph.Algorithms.Services;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -32,11 +33,9 @@ namespace QuickGraph.Algorithms.MaximumFlow
             )
             :base(host, visitedGraph)
         {
-            if (capacities == null)
-                throw new ArgumentNullException("capacities");
-            if (reversedEdges == null)
-                throw new ArgumentNullException("reversedEdges");
-
+            Contract.Requires(capacities != null);
+            Contract.Requires(reversedEdges != null);
+            
             this.capacities = capacities;
             this.reversedEdges = reversedEdges;
 
@@ -95,8 +94,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
             get { return this.source; }
             set 
             {
-                if (value == null)
-                    throw new ArgumentNullException("source");
+                Contract.Requires(value != null);
                 this.source = value; 
             }
         }
@@ -106,8 +104,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
             get { return this.sink; }
             set 
             {
-                if (value == null)
-                    throw new ArgumentNullException("sink");
+                Contract.Requires(value != null);
+
                 this.sink = value; 
             }
         }

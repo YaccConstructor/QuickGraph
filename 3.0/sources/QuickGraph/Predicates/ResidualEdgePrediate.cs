@@ -12,9 +12,9 @@ namespace QuickGraph.Predicates
         public ResidualEdgePredicate(
             IDictionary<TEdge,double> residualCapacities)
 		{
-			if (residualCapacities == null)
-				throw new ArgumentNullException("residualCapacities");
-			this.residualCapacities = residualCapacities;
+            Contract.Requires(residualCapacities != null);
+
+            this.residualCapacities = residualCapacities;
 		}
 
 		public IDictionary<TEdge,double> ResidualCapacities

@@ -26,8 +26,8 @@ namespace QuickGraph.Algorithms.Observers
 
         public VertexRecorderObserver(IList<TVertex> vertices)
         {
-            if (vertices == null)
-                throw new ArgumentNullException("edges");
+            Contract.Requires(vertices != null);
+
             this.vertices = vertices;
         }
 

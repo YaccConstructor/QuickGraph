@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Observers
 {
@@ -30,10 +31,8 @@ namespace QuickGraph.Algorithms.Observers
             IList<TEdge> endPathEdges
             )
         {
-            if (edgePredecessors == null)
-                throw new ArgumentNullException("edgePredecessors");
-            if (endPathEdges == null)
-                throw new ArgumentNullException("endPathEdges");
+            Contract.Requires(edgePredecessors != null);
+            Contract.Requires(endPathEdges != null);
 
             this.edgePredecessors = edgePredecessors;
             this.endPathEdges = endPathEdges;

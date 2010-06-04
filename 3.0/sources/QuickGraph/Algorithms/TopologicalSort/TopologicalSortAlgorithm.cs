@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using QuickGraph.Algorithms.Search;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.TopologicalSort
 {
@@ -24,8 +25,7 @@ namespace QuickGraph.Algorithms.TopologicalSort
             IList<TVertex> vertices)
             :base(g)
         {
-            if (vertices == null)
-                throw new ArgumentNullException("vertices");
+            Contract.Requires(vertices != null);
 
             this.vertices = vertices;
         }

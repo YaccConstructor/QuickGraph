@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 namespace QuickGraph.Predicates
 {
 #if !SILVERLIGHT
@@ -15,10 +16,9 @@ namespace QuickGraph.Predicates
             IDictionary<TEdge, double> residualCapacities,
             IDictionary<TEdge, TEdge> reversedEdges)
         {
-            if (residualCapacities == null)
-                throw new ArgumentNullException("residualCapacities");
-            if (reversedEdges == null)
-                throw new ArgumentNullException("reversedEdges");
+            Contract.Requires(residualCapacities != null);
+            Contract.Requires(reversedEdges != null);
+            
             this.residualCapacities = residualCapacities;
             this.reversedEdges = reversedEdges;
         }
@@ -47,9 +47,7 @@ namespace QuickGraph.Predicates
 
         public bool Test(TEdge e)
         {
-            if (e == null)
-                throw new ArgumentNullException("e");
-
+            Contract.Requires(e != null);
             return 0 < this.residualCapacities[reversedEdges[e]];
         }
     }

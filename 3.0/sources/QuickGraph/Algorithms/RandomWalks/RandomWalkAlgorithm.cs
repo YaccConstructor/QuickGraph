@@ -49,8 +49,8 @@ namespace QuickGraph.Algorithms.RandomWalks
             }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("edgeChain");
+                Contract.Requires(value != null);
+
                 this.edgeChain = value;
             }
         }
@@ -95,15 +95,14 @@ namespace QuickGraph.Algorithms.RandomWalks
 
         public void Generate(TVertex root)
         {
-            if (root == null)
-                throw new ArgumentNullException("root");
+            Contract.Requires(root != null);
+
             Generate(root, 100);
         }
 
         public void Generate(TVertex root, int walkCount)
         {
-            if (root == null)
-                throw new ArgumentNullException("root");
+            Contract.Requires(root != null);
 
             int count = 0;
             TEdge e = default(TEdge);

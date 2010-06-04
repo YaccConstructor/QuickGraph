@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Condensation
 {
@@ -20,10 +21,8 @@ namespace QuickGraph.Algorithms.Condensation
             )
             :base(visitedGraph)
         {
-            if (condensatedGraph == null)
-                throw new ArgumentNullException("condensatedGraph");
-            if (vertexPredicate == null)
-                throw new ArgumentNullException("vertexPredicate");
+            Contract.Requires(condensatedGraph != null);
+            Contract.Requires(vertexPredicate != null);
 
             this.condensatedGraph = condensatedGraph;
             this.vertexPredicate = vertexPredicate;

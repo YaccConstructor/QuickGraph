@@ -82,8 +82,8 @@ namespace QuickGraph.Graphviz
             }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("graph");
+                Contract.Requires(value != null);
+
                 visitedGraph = value;
             }
         }

@@ -883,8 +883,7 @@ this
             IVertexAndEdgeListGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
         {
-            if (g == null)
-                throw new ArgumentNullException("g");
+            Contract.Requires(g != null);
 
             var counts = new Dictionary<TVertex,int>(g.VertexCount);
             foreach (var v in g.Vertices)

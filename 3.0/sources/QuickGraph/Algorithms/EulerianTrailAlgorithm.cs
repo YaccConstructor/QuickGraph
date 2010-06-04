@@ -160,8 +160,7 @@ namespace QuickGraph.Algorithms
         /// <returns>number of eulerian trails</returns>
         public static int ComputeEulerianPathCount(IVertexAndEdgeListGraph<TVertex,TEdge> g)
         {
-            if (g == null)
-                throw new ArgumentNullException("g");
+            Contract.Requires(g != null);
 
             if (g.EdgeCount < g.VertexCount)
                 return 0;
@@ -404,10 +403,9 @@ namespace QuickGraph.Algorithms
         /// <exception cref="Exception">Eulerian trail not computed yet.</exception>
         public ICollection<ICollection<TEdge>> Trails(TVertex s)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            Contract.Requires(s != null);
             if (this.Circuit.Count == 0)
-                throw new Exception("Circuit is empty");
+                throw new InvalidOperationException("Circuit is empty");
 
             // find the first edge in the circuit.
             int i = 0;

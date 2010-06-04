@@ -14,8 +14,8 @@ namespace QuickGraph.Algorithms.RandomWalks
         private IDictionary<TEdge, double> weights;
         public WeightedMarkovEdgeChainBase(IDictionary<TEdge, double> weights)
         {
-            if (weights == null)
-                throw new ArgumentNullException("weights");
+            Contract.Requires(weights != null);
+
             this.weights = weights;
         }
 

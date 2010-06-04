@@ -2,6 +2,7 @@ namespace QuickGraph.Graphviz.Dot
 {
     using System;
     using System.Collections;
+    using System.Diagnostics.Contracts;
 
     public class GraphvizEdgeExtremity
     {
@@ -26,10 +27,8 @@ namespace QuickGraph.Graphviz.Dot
 
         public void AddParameters(IDictionary dic)
         {
-            if (dic == null)
-            {
-                throw new ArgumentNullException("dic");
-            }
+            Contract.Requires(dic != null);
+            
             string text = null;
             if (this.IsHead)
             {

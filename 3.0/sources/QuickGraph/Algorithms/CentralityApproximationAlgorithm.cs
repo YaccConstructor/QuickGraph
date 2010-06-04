@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using QuickGraph.Algorithms.ShortestPath;
 using QuickGraph.Algorithms.Observers;
+using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms
 {
@@ -25,8 +26,8 @@ namespace QuickGraph.Algorithms
             )
             :base(visitedGraph)
         {
-            if (distances==null)
-                throw new ArgumentNullException("distances");
+            Contract.Requires(distances != null);
+
             this.dijkstra = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(
                 this.VisitedGraph,
                 distances,
