@@ -11,6 +11,7 @@ namespace QuickGraph.Algorithms.ShortestPath
     public partial class AStartShortestPathAlgorithmTest
     {
         [TestMethod]
+        [TestCategory(TestCategories.LongRunning)]
         public void AStartAll()
         {
             foreach (var g in TestGraphFactory.GetAdjacencyGraphs())

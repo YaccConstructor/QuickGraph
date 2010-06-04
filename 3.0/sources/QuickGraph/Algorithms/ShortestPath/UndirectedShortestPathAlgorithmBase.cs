@@ -116,7 +116,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             Contract.Requires(target != null);
             Contract.Requires(
                 (e.Source.Equals(source) && e.Target.Equals(target))
-                || (e.Source.Equals(target) && e.Target.Equals(target))
+                || (e.Source.Equals(target) && e.Target.Equals(source))
                 );
 
             double du = this.distances[source];

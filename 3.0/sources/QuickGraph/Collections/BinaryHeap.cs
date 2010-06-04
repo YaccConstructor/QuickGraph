@@ -23,8 +23,8 @@ namespace QuickGraph.Collections
     /// <typeparam name="TValue">type of the value</typeparam>
     /// <typeparam name="TPriority">type of the priority metric</typeparam>
     [DebuggerDisplay("Count = {Count}")]
-    public class BinaryHeap<TPriority, TValue> :
-        IEnumerable<KeyValuePair<TPriority, TValue>>
+    public class BinaryHeap<TPriority, TValue> 
+        : IEnumerable<KeyValuePair<TPriority, TValue>>
     {
         readonly Comparison<TPriority> priorityComparsion;
         KeyValuePair<TPriority, TValue>[] items;
@@ -233,6 +233,7 @@ namespace QuickGraph.Collections
             this.items[j] = kv;
         }
 
+#if DEEP_INVARIANT
         [ContractInvariantMethod]
         void ObjectInvariant()
         {
@@ -250,6 +251,7 @@ namespace QuickGraph.Collections
                 })
             );
         }
+#endif
 
         #region IEnumerable<KeyValuePair<TKey,TValue>> Members
         public IEnumerator<KeyValuePair<TPriority, TValue>> GetEnumerator()

@@ -14,6 +14,7 @@ namespace QuickGraph.Algorithms.ConnectedComponents
     public partial class ConnectedComponentsAlgorithmTest
     {
         [TestMethod]
+        [TestCategory(TestCategories.LongRunning)]
         public void ConnectedComponentsAll()
         {
             foreach (var g in TestGraphFactory.GetUndirectedGraphs())

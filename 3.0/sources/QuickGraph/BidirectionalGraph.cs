@@ -497,6 +497,7 @@ namespace QuickGraph
             outEdges.Clear();
         }
 
+#if DEEP_INVARIANT
         [ContractInvariantMethod]
         void ObjectInvariant()
         {
@@ -506,6 +507,7 @@ namespace QuickGraph
             Contract.Invariant(Enumerable.All(this.vertexInEdges, kv => this.vertexOutEdges.ContainsKey(kv.Key)));
             Contract.Invariant(Enumerable.All(this.vertexOutEdges, kv => this.vertexInEdges.ContainsKey(kv.Key)));
         }
+#endif
 
         public void ClearInEdges(TVertex v)
         {

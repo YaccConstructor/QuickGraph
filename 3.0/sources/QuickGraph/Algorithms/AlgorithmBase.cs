@@ -134,11 +134,9 @@ namespace QuickGraph.Algorithms
 
         protected void BeginComputation()
         {
+            Contract.Requires(this.State == ComputationState.NotRunning);
             lock (this.syncRoot)
             {
-                if (this.state != ComputationState.NotRunning)
-                    throw new InvalidOperationException();
-
                 this.state = ComputationState.Running;
                 this.Services.CancelManager.ResetCancel();
                 this.OnStarted(EventArgs.Empty);
@@ -148,6 +146,9 @@ namespace QuickGraph.Algorithms
 
         protected void EndComputation()
         {
+            Contract.Requires(
+                this.State == ComputationState.Running || 
+                this.State == ComputationState.Aborted);
             lock (this.syncRoot)
             {
                 switch (this.state)

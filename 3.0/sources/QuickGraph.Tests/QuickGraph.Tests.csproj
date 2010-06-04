@@ -466,6 +466,7 @@
     <Compile Include="TaggedEdgeTVertexTTagTest.TagGetSet.g.cs">
       <DependentUpon>TaggedEdgeTVertexTTagTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="TestCategories.cs" />
     <Compile Include="UndirectedGraphInvariant.cs" />
     <Compile Include="UndirectedGraphTVertexTEdgeTest.cs" />
   </ItemGroup>
