@@ -28,7 +28,6 @@ namespace QuickGraph.Contracts
             get { throw new NotImplementedException(); }
         }
 
-        [Pure] // InterfacePureBug
         bool IImplicitVertexSet<TVertex>.ContainsVertex(TVertex vertex)
         {
             throw new NotImplementedException();
@@ -67,7 +66,6 @@ namespace QuickGraph.Contracts
             get { throw new NotImplementedException(); }
         }
 
-        [Pure] // InterfacePureBug
         bool IEdgeSet<TVertex, TEdge>.ContainsEdge(TEdge edge)
         {
             throw new NotImplementedException();
@@ -110,7 +108,6 @@ namespace QuickGraph.Contracts
             throw new NotImplementedException();
         }
 
-        [Pure]
         bool IImplicitUndirectedGraph<TVertex, TEdge>.TryGetEdge(TVertex source, TVertex target, out TEdge edge)
         {
             throw new NotImplementedException();

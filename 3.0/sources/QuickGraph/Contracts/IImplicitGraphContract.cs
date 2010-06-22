@@ -71,7 +71,6 @@ namespace QuickGraph.Contracts
         }
 
         #region IImplicitVertexSet<TVertex> Members
-        [Pure]
         bool IImplicitVertexSet<TVertex>.ContainsVertex(TVertex vertex)
         {
             throw new NotImplementedException();

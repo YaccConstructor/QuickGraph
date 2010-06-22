@@ -38,7 +38,6 @@ namespace QuickGraph.Contracts
             get { throw new NotImplementedException(); }
         }
 
-        [Pure]
         bool IEdgeSet<TVertex, TEdge>.ContainsEdge(TEdge edge)
         {
             throw new NotImplementedException();
