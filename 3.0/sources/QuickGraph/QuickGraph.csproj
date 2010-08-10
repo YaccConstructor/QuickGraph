@@ -204,6 +204,7 @@
     <Compile Include="Algorithms\IUndirectedVertexPredecessorRecorderAlgorithm.cs" />
     <Compile Include="Algorithms\IUndirectedTreeBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\LengauerTarjanDominatorAlgorithm.cs" />
+    <Compile Include="Algorithms\MaximumFlow\BipartiteToMaximumFlowGraphAugmentorAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\KruskalMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\Observers\Contracts\IObserverContract.cs" />

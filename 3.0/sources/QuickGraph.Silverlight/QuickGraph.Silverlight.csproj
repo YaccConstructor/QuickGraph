@@ -262,6 +262,9 @@
     <Compile Include="..\QuickGraph\Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithm.cs">
       <Link>Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithm.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\Algorithms\MaximumFlow\BipartiteToMaximumFlowGraphAugmentorAlgorithm.cs">
+      <Link>Algorithms\MaximumFlow\BipartiteToMaximumFlowGraphAugmentorAlgorithm.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Algorithms\MaximumFlow\EdmondsKarpMaximumFlowAlgorithm.cs">
       <Link>Algorithms\MaximumFlow\EdmondsKarpMaximumFlowAlgorithm.cs</Link>
     </Compile>
@@ -941,6 +944,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Serialization\DirectedGraphML\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

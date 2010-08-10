@@ -22,7 +22,11 @@ namespace QuickGraph.Tests.Serialization
             edges.ToAdjacencyGraph()
                 .ToDirectedGraphML()
                 .WriteXml("simple.dgml");
-            Process.Start("simple.dgml");
+
+            if (Debugger.IsAttached)
+            { 
+                Process.Start("simple.dgml");
+            }
 
             edges.ToAdjacencyGraph()
                 .ToDirectedGraphML()

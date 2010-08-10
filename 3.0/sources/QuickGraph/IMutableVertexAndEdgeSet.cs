@@ -33,4 +33,5 @@ namespace QuickGraph
         /// <returns>the number of edges added.</returns>
         int AddVerticesAndEdgeRange(IEnumerable<TEdge> edges);
     }
+
 }

@@ -1145,11 +1145,12 @@ this
 #if !NET20
 this 
 #endif
-            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
             Func<TEdge, double> edgeCapacities,
             TVertex source,
             TVertex sink,
-            out TryFunc<TVertex, TEdge> flowPredecessors
+            out TryFunc<TVertex, TEdge> flowPredecessors,
+            EdgeFactory<TVertex, TEdge> edgeFactory
             )
             where TEdge : IEdge<TVertex>
         {
@@ -1157,12 +1158,15 @@ this
             Contract.Requires(edgeCapacities != null);
             Contract.Requires(source != null);
             Contract.Requires(sink != null);
+            Contract.Requires(!source.Equals(sink));
+
+           
 
             // compute maxflow
             var flow = new EdmondsKarpMaximumFlowAlgorithm<TVertex, TEdge>(
                 visitedGraph,
                 edgeCapacities,
-                new Dictionary<TEdge, TEdge>()
+                edgeFactory
                 );
             flow.Compute(source, sink);
             flowPredecessors = flow.Predecessors.TryGetValue;

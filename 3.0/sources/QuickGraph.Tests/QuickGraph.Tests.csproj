@@ -290,6 +290,7 @@
     <Compile Include="Algorithms\ConnectedComponents\ConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\IncrementalConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
+    <Compile Include="Algorithms\MaximumBipartiteMatchingAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\EdmondsKarpMaximumFlowAlgorithmTest.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\MinimumSpanningTreeTest.cs" />
@@ -470,6 +471,7 @@
       <DependentUpon>TaggedEdgeTVertexTTagTest.cs</DependentUpon>
     </Compile>
     <Compile Include="TestCategories.cs" />
+    <Compile Include="TestHelper.cs" />
     <Compile Include="UndirectedGraphInvariant.cs" />
     <Compile Include="UndirectedGraphTVertexTEdgeTest.cs" />
   </ItemGroup>

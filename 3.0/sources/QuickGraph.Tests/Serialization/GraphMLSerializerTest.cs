@@ -9,6 +9,7 @@ using QuickGraph.Collections;
 
 namespace QuickGraph.Serialization
 {
+
     public static class TestGraphFactory
     {
         public static IEnumerable<string> GetFileNames()
@@ -142,4 +143,6 @@ namespace QuickGraph.Serialization
             }
         }
     }
+
+
 }

@@ -80,14 +80,26 @@ namespace QuickGraph.Algorithms.MaximumFlow
             }
         }
 
-        private sealed class StringVertexFactory 
-        {
-            private int id = 0;
+    }
 
-            public string CreateVertex()
-            {
-                return "Super"+(++id).ToString();
-            }
+    public sealed class StringVertexFactory
+    {
+        private int id = 0;
+
+        public StringVertexFactory()
+            : this("Super")
+        { }
+
+        public StringVertexFactory(string prefix)
+        {
+            this.Prefix = prefix;
+        }
+
+        public string Prefix { get; set; }
+
+        public string CreateVertex()
+        {
+            return this.Prefix + (++id).ToString();
         }
     }
 }

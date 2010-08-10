@@ -24,20 +24,20 @@ namespace QuickGraph.Algorithms.MaximumFlow
         where TEdge : IEdge<TVertex>
     {
         public EdmondsKarpMaximumFlowAlgorithm(
-            IVertexListGraph<TVertex, TEdge> g,
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> g,
             Func<TEdge, double> capacities,
-            Dictionary<TEdge, TEdge> reversedEdges
+            EdgeFactory<TVertex, TEdge> edgeFactory
             )
-            : this(null, g, capacities, reversedEdges)
+            : this(null, g, capacities, edgeFactory)
         { }
 
 		public EdmondsKarpMaximumFlowAlgorithm(
             IAlgorithmComponent host,
-			IVertexListGraph<TVertex,TEdge> g,
+            IMutableVertexAndEdgeListGraph<TVertex, TEdge> g,
 			Func<TEdge,double> capacities,
-			Dictionary<TEdge,TEdge> reversedEdges
+            EdgeFactory<TVertex, TEdge> edgeFactory
 			)
-			: base(host, g,capacities,reversedEdges)
+            : base(host, g, capacities, edgeFactory)
 		{}
 	
 		private IVertexListGraph<TVertex,TEdge> ResidualGraph
@@ -55,6 +55,7 @@ namespace QuickGraph.Algorithms.MaximumFlow
     					);
 			}
 		}
+
 	
 		private void Augment(
 			TVertex source,
@@ -83,7 +84,10 @@ namespace QuickGraph.Algorithms.MaximumFlow
 			{
                 e = Predecessors[u];
                 ResidualCapacities[e] -= delta;
-                ResidualCapacities[ ReversedEdges[e] ] += delta;
+                if (ReversedEdges != null && ReversedEdges.ContainsKey(e))
+                {
+                    ResidualCapacities[ReversedEdges[e]] += delta;
+                }
 				u = e.Source;
 			} while (!u.Equals(source));
 		}
@@ -92,15 +96,19 @@ namespace QuickGraph.Algorithms.MaximumFlow
 		/// Computes the maximum flow between Source and Sink.
 		/// </summary>
 		/// <returns></returns>
-		protected override void InternalCompute()
-		{
-			if (this.Source==null)
-				throw new InvalidOperationException("Source is not specified");
-			if (this.Sink==null)
+        protected override void InternalCompute()
+        {
+            if (this.Source == null)
+                throw new InvalidOperationException("Source is not specified");
+            if (this.Sink == null)
                 throw new InvalidOperationException("Sink is not specified");
 
+
+            if (this.Services.CancelManager.IsCancelling)
+                return;
+
             var g = this.VisitedGraph;
-            foreach(var u in g.Vertices)
+            foreach (var u in g.Vertices)
                 foreach (var e in g.OutEdges(u))
                 {
                     var capacity = this.Capacities(e);
@@ -108,30 +116,33 @@ namespace QuickGraph.Algorithms.MaximumFlow
                         throw new InvalidOperationException("negative edge capacity");
                     this.ResidualCapacities[e] = capacity;
                 }
-    
-			this.VertexColors[Sink] = GraphColor.Gray;
-			while (this.VertexColors[Sink] != GraphColor.White)
-			{
-                var vis = new VertexPredecessorRecorderObserver<TVertex,TEdge>(
+
+            this.VertexColors[Sink] = GraphColor.Gray;
+            while (this.VertexColors[Sink] != GraphColor.White)
+            {
+                var vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>(
                     this.Predecessors
-					);
-				var queue = new QuickGraph.Collections.Queue<TVertex>();
-				var bfs = new BreadthFirstSearchAlgorithm<TVertex,TEdge>(
-					this.ResidualGraph,
-					queue,
-					this.VertexColors
-					);
+                    );
+                var queue = new QuickGraph.Collections.Queue<TVertex>();
+                var bfs = new BreadthFirstSearchAlgorithm<TVertex, TEdge>(
+                    this.ResidualGraph,
+                    queue,
+                    this.VertexColors
+                    );
                 using (vis.Attach(bfs))
                     bfs.Compute(this.Source);
 
                 if (this.VertexColors[this.Sink] != GraphColor.White)
-					this.Augment(this.Source, this.Sink);
-			} // while
+                    this.Augment(this.Source, this.Sink);
+            } // while
 
             this.MaxFlow = 0;
-            foreach(var e in g.OutEdges(Source))
-				this.MaxFlow += (this.Capacities(e) - this.ResidualCapacities[e]);
-		} 
+            foreach (var e in g.OutEdges(Source))
+                this.MaxFlow += (this.Capacities(e) - this.ResidualCapacities[e]);
+
+
+           
+        }
 	}
 
 }

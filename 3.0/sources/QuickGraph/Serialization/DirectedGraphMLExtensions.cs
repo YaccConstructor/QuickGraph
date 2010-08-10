@@ -8,6 +8,7 @@ using QuickGraph.Algorithms;
 using QuickGraph.Serialization.DirectedGraphML;
 using System.Xml.Serialization;
 using System.IO;
+using System.Diagnostics;
 
 namespace QuickGraph.Serialization
 {
@@ -235,6 +236,26 @@ this
             algorithm.Compute();
 
             return algorithm.DirectedGraph;
+        }
+
+
+        public static void OpenAsDGML<TVertex, TEdge>(
+#if !NET20
+this 
+#endif
+        IVertexAndEdgeListGraph<TVertex, TEdge> graph, string filename)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(graph != null);
+
+            if (filename == null) filename = "graph.dgml";
+
+            graph.ToDirectedGraphML().WriteXml(filename);
+
+            if (Debugger.IsAttached)
+            { 
+                Process.Start(filename);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics.Contracts;
@@ -340,6 +341,7 @@ this
             return ToAdjacencyGraph(edgePairs);
         }
 
+
         /// <summary>
         /// Creates an immutable array adjacency graph from the input graph
         /// </summary>
@@ -592,7 +594,7 @@ this
         }
 
         /// <summary>
-        /// Converts a set of ver.tices into an adjacency graph,
+        /// Converts a set of vertices into an adjacency graph,
         /// using an edge factory.
         /// </summary>
         /// <typeparam name="TVertex">The type of the vertex.</typeparam>
@@ -613,7 +615,7 @@ this
         }
 
         /// <summary>
-        /// Converts a set of ver.tices into a bidirectional graph,
+        /// Converts a set of vertices into a bidirectional graph,
         /// using an edge factory.
         /// </summary>
         /// <typeparam name="TVertex">The type of the vertex.</typeparam>
@@ -645,7 +647,7 @@ this
         }
 
         /// <summary>
-        /// Converts a set of ver.tices into a bidirectional graph,
+        /// Converts a set of vertices into a bidirectional graph,
         /// using an edge factory
         /// </summary>
         /// <typeparam name="TVertex">The type of the vertex.</typeparam>
