@@ -1,0 +1,7 @@
+*.vs10x
+*.dll
+obj/
+bin/
+Bin/
+*.suo
+TestResults/
