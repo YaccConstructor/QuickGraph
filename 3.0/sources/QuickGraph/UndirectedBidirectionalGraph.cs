@@ -76,12 +76,23 @@ namespace QuickGraph
         [Pure]
         public bool ContainsEdge(TVertex source, TVertex target)
         {
-            throw new NotSupportedException();
+            TEdge edge;
+            return this.TryGetEdge(source, target, out edge);
         }
 
         public bool TryGetEdge(TVertex source, TVertex target, out TEdge edge)
         {
-            throw new NotSupportedException();
+            foreach (var e in this.AdjacentEdges(source))
+            {
+                if (this.edgeEqualityComparer(e, source, target))
+                {
+                    edge = e;
+                    return true;
+                }
+            }
+
+            edge = default(TEdge);
+            return false;
         }
         #endregion
 
