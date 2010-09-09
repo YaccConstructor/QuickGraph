@@ -319,6 +319,7 @@
     <Compile Include="DelegateUndirectedGraph.cs" />
     <Compile Include="DelegateImplicitGraph.cs" />
     <Compile Include="DelegateVertexAndEdgeListGraph.cs" />
+    <Compile Include="EquateGraphs.cs" />
     <Compile Include="IBidirectionalIncidenceGraph.cs" />
     <Compile Include="IImplicitUndirectedGraph.cs" />
     <Compile Include="Serialization\DirectedGraphMLExtensions.cs" />
