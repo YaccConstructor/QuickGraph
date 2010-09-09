@@ -11,6 +11,54 @@ namespace QuickGraph.Serialization
 {
     public static class GraphMLExtensions
     {
+
+#if !SILVERLIGHT
+
+        // The following use of XmlWriter.Create fails in Silverlight.
+
+        public static void SerializeToGraphML<TVertex, TEdge, TGraph>(
+#if !NET20
+            this 
+#endif
+            TGraph graph,
+            string fileName,
+            VertexIdentity<TVertex> vertexIdentities,
+            EdgeIdentity<TVertex, TEdge> edgeIdentities)
+            where TEdge : IEdge<TVertex>
+            where TGraph : IEdgeListGraph<TVertex, TEdge>
+        {
+            Contract.Requires(fileName != null);
+            Contract.Requires(fileName.Length > 0);
+
+            var settings = new XmlWriterSettings() { Indent = true, IndentChars = "    " };
+            var writer = XmlWriter.Create(fileName, settings);
+            SerializeToGraphML<TVertex, TEdge, TGraph>(graph, writer, vertexIdentities, edgeIdentities);
+            writer.Flush();
+            writer.Close();
+        }
+
+        public static void SerializeToGraphML<TVertex, TEdge, TGraph>(
+#if !NET20
+            this 
+#endif
+            TGraph graph,
+            string fileName
+            )
+            where TEdge : IEdge<TVertex>
+            where TGraph : IEdgeListGraph<TVertex, TEdge>
+        {
+            Contract.Requires(fileName != null);
+            Contract.Requires(fileName.Length > 0);
+
+            var settings = new XmlWriterSettings() { Indent = true, IndentChars = "    " };
+            var writer = XmlWriter.Create(fileName, settings);
+            SerializeToGraphML<TVertex, TEdge, TGraph>(graph, writer);
+            writer.Flush();
+            writer.Close();
+        }
+
+#endif
+
         public static void SerializeToGraphML<TVertex, TEdge,TGraph>(
 #if !NET20
             this 
@@ -53,6 +101,26 @@ this
         }
 
 #if !SILVERLIGHT
+
+        public static void DeserializeFromGraphML<TVertex, TEdge,TGraph>(
+#if !NET20
+            this 
+#endif
+            TGraph graph,
+            string fileName,
+            IdentifiableVertexFactory<TVertex> vertexFactory,
+            IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
+            )
+            where TEdge : IEdge<TVertex>
+            where TGraph : IMutableVertexAndEdgeListGraph<TVertex, TEdge>
+        {
+            Contract.Requires(fileName != null);
+            Contract.Requires(fileName.Length > 0);
+
+            var reader = new StreamReader(fileName);
+            DeserializeFromGraphML<TVertex, TEdge,TGraph>(graph, reader, vertexFactory, edgeFactory);
+        }
+
         public static void DeserializeFromGraphML<TVertex, TEdge,TGraph>(
 #if !NET20
             this 
