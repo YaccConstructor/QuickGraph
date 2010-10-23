@@ -140,6 +140,9 @@ namespace QuickGraph.Serialization
                     ReadContentMethods.Add(typeof(float), typeof(XmlReader).GetMethod("ReadElementContentAsFloat", new Type[] { typeof(string), typeof(string) }));
                     ReadContentMethods.Add(typeof(double), typeof(XmlReader).GetMethod("ReadElementContentAsDouble", new Type[] { typeof(string), typeof(string) }));
                     ReadContentMethods.Add(typeof(string), typeof(XmlReader).GetMethod("ReadElementContentAsString", new Type[] { typeof(string), typeof(string) }));
+
+                    var readerExtensions = typeof(XmlReaderExtensions);
+                    ReadContentMethods.Add(typeof(int[]), readerExtensions.GetMethod("ReadElementContentAsIntArray"));
                 }
 
                 public static bool TryGetReadContentMethod(Type type, out MethodInfo method)
@@ -285,7 +288,9 @@ namespace QuickGraph.Serialization
                     gen.Emit(OpCodes.Ldarg_0); // reader
                     gen.Emit(OpCodes.Ldstr, "data");
                     gen.Emit(OpCodes.Ldarg_1); // namespace uri
-                    gen.EmitCall(OpCodes.Callvirt, readMethod, null);
+                    // TODO: rhishi: document.
+                    var opcode = readMethod.DeclaringType == typeof(XmlReaderExtensions) ? OpCodes.Call : OpCodes.Callvirt;
+                    gen.EmitCall(opcode, readMethod, null);
                     gen.EmitCall(OpCodes.Callvirt, setMethod, null);
 
                     // jump to do while

@@ -243,6 +243,22 @@ namespace QuickGraph.Serialization
                     this._double = value;
                 }
             }
+
+            int[] _intArray;
+            [XmlAttribute("v_intarray")]
+            public int[] IntArray
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._intArray;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._intArray = value;
+                }
+            }
         }
 
         public sealed class TestEdge : Edge<TestVertex>
@@ -322,7 +338,8 @@ namespace QuickGraph.Serialization
                 Long = 20,
                 Float = 25.0F,
                 Double = 30.0,
-                Bool = true
+                Bool = true,
+                IntArray = new int[] { 1, 2, 3 }
             };
 
             g.AddVertex(v);
@@ -371,6 +388,12 @@ namespace QuickGraph.Serialization
                     id => new TestVertex(id),
                     (source, target, id) => new TestEdge(source, target, id)
                     );
+            }
+
+            foreach (var v in newg.Vertices)
+            {
+                Console.Write("IntArray: ");
+                Console.WriteLine(v.IntArray);
             }
 
             string newxml;
