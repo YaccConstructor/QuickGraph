@@ -8,6 +8,7 @@ using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ComponentModel;
 using System.Linq;
+using QuickGraph.ArrayExtensions;
 
 namespace QuickGraph.Serialization
 {
@@ -22,12 +23,12 @@ namespace QuickGraph.Serialization
             [DefaultValue("bla")]
             public string String
             {
-                get 
+                get
                 {
                     Console.WriteLine(MethodInfo.GetCurrentMethod());
-                    return this._string; 
+                    return this._string;
                 }
-                set 
+                set
                 {
                     Console.WriteLine(MethodInfo.GetCurrentMethod());
                     this._string = value;
@@ -111,6 +112,115 @@ namespace QuickGraph.Serialization
                 {
                     Console.WriteLine(MethodInfo.GetCurrentMethod());
                     this._double = value;
+                }
+            }
+
+            string[] _stringarray;
+            [XmlAttribute("g_stringarray")]
+            public string[] StringArray
+            {
+                get 
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._stringarray; 
+                }
+                set 
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._stringarray = value;
+                }
+            }
+            int[] _intarray;
+            [XmlAttribute("g_intarray")]
+            public int[] IntArray
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._intarray;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._intarray = value;
+                }
+            }
+            long[] _longarray;
+            [XmlAttribute("g_longarray")]
+            public long[] LongArray
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._longarray;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._longarray = value;
+                }
+            }
+
+            bool[] _boolarray;
+            [XmlAttribute("g_boolarray")]
+            public bool[] BoolArray
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._boolarray;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._boolarray = value;
+                }
+            }
+
+            float[] _floatarray;
+            [XmlAttribute("g_floatarray")]
+            public float[] FloatArray
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._floatarray;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._floatarray = value;
+                }
+            }
+
+            double[] _doublearray;
+            [XmlAttribute("g_doublearray")]
+            public double[] DoubleArray
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._doublearray;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._doublearray = value;
+                }
+            }
+
+            [XmlAttribute("g_nullarray")]
+            public int[] NullArray
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return null;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    Assert.IsNull(value);
                 }
             }
         }
@@ -317,6 +427,13 @@ namespace QuickGraph.Serialization
             public float Float { get; set; }
         }
 
+        private static readonly bool[] BoolArray = new bool[] { true, false, true, true };
+        private static readonly int[] IntArray = new int[] { 2, 3, 45, 3, 44, -2, 3, 5, 99999999 };
+        private static readonly long[] LongArray = new long[] { 3, 4, 43, 999999999999999999L, 445, 55, 3, 98, 49789238740598170, 987459, 97239, 234245, 0, -2232 };
+        private static readonly float[] FloatArray = new float[] { 3.14159265F, 1.1F, 1, 23, -2, 987459, 97239, 234245, 0, -2232, 234.55345F };
+        private static readonly double[] DoubleArray = new double[] { 3.14159265, 1.1, 1, 23, -2, 987459, 97239, 234245, 0, -2232, 234.55345 };
+        private static readonly string[] StringArray = new string[] { "", "Quick", "", "brown", "fox", "jumps", "over", "the", "lazy", "dog", ".", "" };
+
         [TestMethod]
         public void WriteVertex()
         {
@@ -327,7 +444,14 @@ namespace QuickGraph.Serialization
                 Float = 2.0F,
                 Int = 10,
                 Long = 100,
-                String = "foo"
+                String = "foo",
+                BoolArray = BoolArray,
+                IntArray = IntArray,
+                LongArray = LongArray,
+                FloatArray = FloatArray,
+                DoubleArray = DoubleArray,
+                StringArray = StringArray,
+                NullArray = null
             };
 
             TestVertex v = new TestVertex("v1")
@@ -339,7 +463,7 @@ namespace QuickGraph.Serialization
                 Float = 25.0F,
                 Double = 30.0,
                 Bool = true,
-                IntArray = new int[] { 1, 2, 3 }
+                IntArray = new int[] {  1, 2, 3, 4 }
             };
 
             g.AddVertex(v);
@@ -350,6 +474,28 @@ namespace QuickGraph.Serialization
             Assert.AreEqual(g.Int, sg.Int);
             Assert.AreEqual(g.Long, sg.Long);
             Assert.AreEqual(g.String, sg.String);
+            Assert.IsTrue(g.BoolArray.ArrayEquals(sg.BoolArray));
+            Assert.IsTrue(g.IntArray.ArrayEquals(sg.IntArray));
+            Assert.IsTrue(g.LongArray.ArrayEquals(sg.LongArray));
+            Assert.IsTrue(g.StringArray.ArrayEquals(sg.StringArray));
+
+            var floatTolerance = 0.0001F;
+            var flags = new bool[FloatArray.Length];
+            for (int i = 0; i < FloatArray.Length; i++)
+            {
+                flags[i] = Math.Abs(g.FloatArray[i] - sg.FloatArray[i]) < floatTolerance;
+            }
+            Assert.IsTrue(flags.All(b => b));
+            Assert.IsTrue(g.FloatArray.ArrayEquals(sg.FloatArray, floatTolerance));
+
+            var doubleTolerance = 0.0001;
+            flags = new bool[FloatArray.Length];
+            for (int i = 0; i < FloatArray.Length; i++)
+            {
+                flags[i] = Math.Abs(g.FloatArray[i] - sg.FloatArray[i]) < doubleTolerance;
+            }
+            Assert.IsTrue(flags.All(b => b));
+            Assert.IsTrue(g.DoubleArray.ArrayEquals(sg.DoubleArray, 0.0001));
 
             var sv = Enumerable.First(sg.Vertices);
             Assert.AreEqual(sv.StringDefault, "bla");
@@ -359,6 +505,7 @@ namespace QuickGraph.Serialization
             Assert.AreEqual(v.Float, sv.Float);
             Assert.AreEqual(v.Double, sv.Double);
             Assert.AreEqual(v.Bool, sv.Bool);
+            Assert.IsTrue(v.IntArray.ArrayEquals(v.IntArray));
         }
 
         private TestGraph VerifySerialization(TestGraph g)
@@ -388,12 +535,6 @@ namespace QuickGraph.Serialization
                     id => new TestVertex(id),
                     (source, target, id) => new TestEdge(source, target, id)
                     );
-            }
-
-            foreach (var v in newg.Vertices)
-            {
-                Console.Write("IntArray: ");
-                Console.WriteLine(v.IntArray);
             }
 
             string newxml;

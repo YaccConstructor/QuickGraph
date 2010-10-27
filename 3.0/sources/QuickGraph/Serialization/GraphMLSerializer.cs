@@ -15,11 +15,44 @@ namespace QuickGraph.Serialization
 {
     public static class XmlWriterExtensions
     {
-        public static void WriteIntArray(XmlWriter xmlWriter, int[] value)
+        public static void WriteBooleanArray(XmlWriter xmlWriter, Boolean[] value)
         {
-            WriteArray<int>(xmlWriter, value);
+            WriteArray<Boolean>(xmlWriter, value);
         }
 
+        public static void WriteInt32Array(XmlWriter xmlWriter, Int32[] value)
+        {
+            WriteArray<Int32>(xmlWriter, value);
+        }
+
+        public static void WriteInt64Array(XmlWriter xmlWriter, Int64[] value)
+        {
+            WriteArray<Int64>(xmlWriter, value);
+        }
+        
+        public static void WriteSingleArray(XmlWriter xmlWriter, Single[] value)
+        {
+            WriteArray<Single>(xmlWriter, value);
+        }
+        
+        public static void WriteDoubleArray(XmlWriter xmlWriter, Double[] value)
+        {
+            WriteArray<Double>(xmlWriter, value);
+        }
+        
+        public static void WriteStringArray(XmlWriter xmlWriter, String[] value)
+        {
+            WriteArray<String>(xmlWriter, value);
+        }
+
+        /// <summary>
+        /// Writes an array as space separated values.  There is a space after every value, even the last one.
+        /// If array is null, it writes "null".  If array is empty, it writes empty string.  If array is a string array 
+        /// with only one element "null", then it writes "null ".
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xmlWriter"></param>
+        /// <param name="value"></param>
         public static void WriteArray<T>(XmlWriter xmlWriter, T[] value)
         {
             if (value == null)
@@ -36,32 +69,6 @@ namespace QuickGraph.Serialization
             var str = String.Join(" ", strArray);
             str += " ";
             xmlWriter.WriteString(str);
-        }
-    }
-
-    public static class XmlReaderExtensions
-    {
-        public static int[] ReadElementContentAsIntArray(XmlReader xmlReader, string localName, string namespaceURI)
-        {
-            return ReadElementContentAsArray(xmlReader, localName, namespaceURI, s => Convert.ToInt32(s));
-        }
-
-        public static T[] ReadElementContentAsArray<T>(XmlReader xmlReader, string localName, string namespaceURI,
-                                                        Func<string, T> stringToT)
-        {
-            var str = xmlReader.ReadElementContentAsString(localName, namespaceURI);
-
-            if (str == "null")
-                return null;
-
-            var strArray = str.Split(new char[1] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var array = new T[strArray.Length];
-            for (int i = 0; i < strArray.Length; i++)
-            {
-                array[i] = stringToT(strArray[i]);
-            }
-            return array;
         }
     }
 
@@ -194,7 +201,12 @@ namespace QuickGraph.Serialization
                     WriteValueMethods.Add(typeof(string), writer.GetMethod("WriteString", new Type[] { typeof(string) }));
 
                     var writerExtensions = typeof(XmlWriterExtensions);
-                    WriteValueMethods.Add(typeof(int[]), writerExtensions.GetMethod("WriteIntArray"));
+                    WriteValueMethods.Add(typeof(Boolean[]), writerExtensions.GetMethod("WriteBooleanArray"));
+                    WriteValueMethods.Add(typeof(Int32[]), writerExtensions.GetMethod("WriteInt32Array"));
+                    WriteValueMethods.Add(typeof(Int64[]), writerExtensions.GetMethod("WriteInt64Array"));
+                    WriteValueMethods.Add(typeof(Single[]), writerExtensions.GetMethod("WriteSingleArray"));
+                    WriteValueMethods.Add(typeof(Double[]), writerExtensions.GetMethod("WriteDoubleArray"));
+                    WriteValueMethods.Add(typeof(String[]), writerExtensions.GetMethod("WriteStringArray"));
                 }
 
                 public static bool TryGetWriteValueMethod(Type valueType, out MethodInfo method)
@@ -288,7 +300,8 @@ namespace QuickGraph.Serialization
                     gen.Emit(OpCodes.Ldarg_0);
                     gen.Emit(OpCodes.Ldarg_1);
                     gen.EmitCall(OpCodes.Callvirt, getMethod, null);
-                    // TODO: rhishi: document.
+                    // When reading scalar values we call member methods of XmlReader, while for array values 
+                    // we call our own static methods.  These two types of methods seem to need different opcode.
                     var opcode = writeValueMethod.DeclaringType == typeof(XmlWriterExtensions) ? OpCodes.Call : OpCodes.Callvirt;
                     gen.EmitCall(opcode, writeValueMethod, null);
 
@@ -460,16 +473,22 @@ namespace QuickGraph.Serialization
                     case TypeCode.Object:
                         if (t.IsArray)
                         {
+                            // Recognize arrays of certain simple types.  Typestring is still "string" for all arrays,
+                            // because GraphML schema doesn't have an array type.
                             var e = t.GetElementType();
-                            if (Type.GetTypeCode(e) == TypeCode.Object)
+                            switch(Type.GetTypeCode(e))
                             {
-                                throw new NotSupportedException("Array of objects is not supported by GraphML schema");
+                                case TypeCode.Boolean:
+                                case TypeCode.Int32:
+                                case TypeCode.Int64:
+                                case TypeCode.Single:
+                                case TypeCode.Double:
+                                case TypeCode.String:
+                                    break;
+                                default:
+                                    throw new NotSupportedException("This array element type is not supported by GraphML schema");
                             }
-                            var s = ConstructTypeCode(e);
-                            
-                            // TODO: rhishi: for now not being fussy about writing intarray or something.
-                            return "string";
-                            // return s + "array";
+                            return "string";                            
                         }
                         throw new NotSupportedException("Object type other than array is not supported by GraphML schema");
                     default:

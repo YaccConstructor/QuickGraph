@@ -12,6 +12,71 @@ using System.ComponentModel;
 
 namespace QuickGraph.Serialization
 {
+    public static class XmlReaderExtensions
+    {
+        public static Boolean[] ReadElementContentAsBooleanArray(XmlReader xmlReader, string localName, string namespaceURI)
+        {
+            return ReadElementContentAsArray(xmlReader, localName, namespaceURI, s => Convert.ToBoolean(s));
+        }
+
+        public static Int32[] ReadElementContentAsInt32Array(XmlReader xmlReader, string localName, string namespaceURI)
+        {
+            return ReadElementContentAsArray(xmlReader, localName, namespaceURI, s => Convert.ToInt32(s));
+        }
+
+        public static Int64[] ReadElementContentAsInt64Array(XmlReader xmlReader, string localName, string namespaceURI)
+        {
+            return ReadElementContentAsArray(xmlReader, localName, namespaceURI, s => Convert.ToInt64(s));
+        }
+
+        public static Single[] ReadElementContentAsSingleArray(XmlReader xmlReader, string localName, string namespaceURI)
+        {
+            return ReadElementContentAsArray(xmlReader, localName, namespaceURI, s => Convert.ToSingle(s));
+        }
+
+        public static Double[] ReadElementContentAsDoubleArray(XmlReader xmlReader, string localName, string namespaceURI)
+        {
+            return ReadElementContentAsArray(xmlReader, localName, namespaceURI, s => Convert.ToDouble(s));
+        }
+
+        public static String[] ReadElementContentAsStringArray(XmlReader xmlReader, string localName, string namespaceURI)
+        {
+            return ReadElementContentAsArray(xmlReader, localName, namespaceURI, s => s);
+        }
+
+        /// <summary>
+        /// TODO: rhishi: document.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xmlReader"></param>
+        /// <param name="localName"></param>
+        /// <param name="namespaceURI"></param>
+        /// <param name="stringToT"></param>
+        /// <returns></returns>
+        public static T[] ReadElementContentAsArray<T>(XmlReader xmlReader, string localName, string namespaceURI,
+                                                        Func<string, T> stringToT)
+        {
+            var str = xmlReader.ReadElementContentAsString(localName, namespaceURI);
+
+            if (str == "null")
+                return null;
+
+            if (str.Length > 0 && str[str.Length - 1] == ' ')
+            {
+                str = str.Remove(str.Length - 1);
+            }
+
+            var strArray = str.Split(new char[1] { ' ' });
+
+            var array = new T[strArray.Length];
+            for (int i = 0; i < strArray.Length; i++)
+            {
+                array[i] = stringToT(strArray[i]);
+            }
+            return array;
+        }
+    }
+
     /// <summary>
     /// A GraphML ( http://graphml.graphdrawing.org/ ) format deserializer.
     /// </summary>
@@ -142,7 +207,12 @@ namespace QuickGraph.Serialization
                     ReadContentMethods.Add(typeof(string), typeof(XmlReader).GetMethod("ReadElementContentAsString", new Type[] { typeof(string), typeof(string) }));
 
                     var readerExtensions = typeof(XmlReaderExtensions);
-                    ReadContentMethods.Add(typeof(int[]), readerExtensions.GetMethod("ReadElementContentAsIntArray"));
+                    ReadContentMethods.Add(typeof(Boolean[]), readerExtensions.GetMethod("ReadElementContentAsBooleanArray"));
+                    ReadContentMethods.Add(typeof(Int32[]), readerExtensions.GetMethod("ReadElementContentAsInt32Array"));
+                    ReadContentMethods.Add(typeof(Int64[]), readerExtensions.GetMethod("ReadElementContentAsInt64Array"));
+                    ReadContentMethods.Add(typeof(Single[]), readerExtensions.GetMethod("ReadElementContentAsSingleArray"));
+                    ReadContentMethods.Add(typeof(Double[]), readerExtensions.GetMethod("ReadElementContentAsDoubleArray"));
+                    ReadContentMethods.Add(typeof(String[]), readerExtensions.GetMethod("ReadElementContentAsStringArray"));
                 }
 
                 public static bool TryGetReadContentMethod(Type type, out MethodInfo method)
@@ -182,6 +252,10 @@ namespace QuickGraph.Serialization
                     var setMethod = property.GetSetMethod();
                     if (setMethod == null)
                         throw new InvalidOperationException("property " + property.Name + " is not settable");
+                    if (property.PropertyType.IsArray)
+                    {
+                        throw new NotImplementedException("Default values for array types are not implemented");
+                    }                    
                     var value = defaultValueAttribute.Value;
                     if (value != null &&
                         value.GetType() != property.PropertyType)
@@ -288,7 +362,8 @@ namespace QuickGraph.Serialization
                     gen.Emit(OpCodes.Ldarg_0); // reader
                     gen.Emit(OpCodes.Ldstr, "data");
                     gen.Emit(OpCodes.Ldarg_1); // namespace uri
-                    // TODO: rhishi: document.
+                    // When writing scalar values we call member methods of XmlReader, while for array values 
+                    // we call our own static methods.  These two types of methods seem to need different opcode.
                     var opcode = readMethod.DeclaringType == typeof(XmlReaderExtensions) ? OpCodes.Call : OpCodes.Callvirt;
                     gen.EmitCall(opcode, readMethod, null);
                     gen.EmitCall(OpCodes.Callvirt, setMethod, null);
