@@ -657,6 +657,58 @@ this
             topo.Compute(vertices);
         }
 
+        public static IEnumerable<TVertex> SourceFirstBidirectionalTopologicalSort<TVertex, TEdge>(
+#if !NET20
+            this
+#endif
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph,
+            TopologicalSortDirection direction)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+
+            var vertices = new List<TVertex>(visitedGraph.VertexCount);
+            SourceFirstBidirectionalTopologicalSort(visitedGraph, vertices, direction);
+            return vertices;
+        }
+
+        public static IEnumerable<TVertex> SourceFirstBidirectionalTopologicalSort<TVertex, TEdge>(
+#if !NET20
+            this 
+#endif
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph)
+            where TEdge : IEdge<TVertex>
+        {
+            return SourceFirstBidirectionalTopologicalSort(visitedGraph, TopologicalSortDirection.Forward);
+        }
+
+        public static void SourceFirstBidirectionalTopologicalSort<TVertex, TEdge>(
+#if !NET20
+            this 
+#endif
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph,
+            IList<TVertex> vertices,
+            TopologicalSortDirection direction)
+            where TEdge : IEdge<TVertex>
+        {
+            Contract.Requires(visitedGraph != null);
+            Contract.Requires(vertices != null);
+
+            var topo = new SourceFirstBidirectionalTopologicalSortAlgorithm<TVertex, TEdge>(visitedGraph, direction);
+            topo.Compute(vertices);
+        }
+
+        public static void SourceFirstBidirectionalTopologicalSort<TVertex, TEdge>(
+#if !NET20
+            this 
+#endif
+            IBidirectionalGraph<TVertex, TEdge> visitedGraph,
+            IList<TVertex> vertices)
+            where TEdge : IEdge<TVertex>
+        {
+            SourceFirstBidirectionalTopologicalSort(visitedGraph, vertices, TopologicalSortDirection.Forward);
+        }
+
         /// <summary>
         /// Computes the connected components of a graph
         /// </summary>

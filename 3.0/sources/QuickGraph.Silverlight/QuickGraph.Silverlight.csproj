@@ -436,6 +436,9 @@
     <Compile Include="..\QuickGraph\Algorithms\TarjanOfflineLeastCommonAncestorAlgorithm.cs">
       <Link>Algorithms\TarjanOfflineLeastCommonAncestorAlgorithm.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\Algorithms\TopologicalSort\SourceFirstBidirectionalTopologicalSortAlgorithm.cs">
+      <Link>Algorithms\TopologicalSort\SourceFirstBidirectionalTopologicalSortAlgorithm.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Algorithms\TopologicalSort\SourceFirstTopologicalSortAlgorithm.cs">
       <Link>Algorithms\TopologicalSort\SourceFirstTopologicalSortAlgorithm.cs</Link>
     </Compile>
