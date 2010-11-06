@@ -92,10 +92,6 @@
       <Project>{595D6322-637A-4A36-97F1-D53F3F9ECEA7}</Project>
       <Name>QuickGraph.Graphviz</Name>
     </ProjectReference>
-    <ProjectReference Include="..\QuickGraph.Petri\QuickGraph.Petri.csproj">
-      <Project>{6C49E8BF-82F4-40D0-AB49-8EA8A655A989}</Project>
-      <Name>QuickGraph.Petri</Name>
-    </ProjectReference>
     <ProjectReference Include="..\QuickGraph.Silverlight\QuickGraph.Silverlight.csproj">
       <Project>{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}</Project>
       <Name>QuickGraph.Silverlight</Name>
