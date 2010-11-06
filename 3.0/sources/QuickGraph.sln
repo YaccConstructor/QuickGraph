@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D81E7BA-91B1-473B-B9BB-4DECB1825F66}"
 	ProjectSection(SolutionItems) = preProject
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		nuspec.xsd = nuspec.xsd
+		quickgraph.nuspec = quickgraph.nuspec
 		QuickGraph.Perf1.psess = QuickGraph.Perf1.psess
 		QuickGraph.vsmdi = QuickGraph.vsmdi
 		QuickGraph1.vsmdi = QuickGraph1.vsmdi
@@ -44,9 +46,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Petri", "QuickGr
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs03.codeplex.com/
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = QuickGraph\\QuickGraph.csproj
 		SccProjectTopLevelParentUniqueName1 = QuickGraph.sln
@@ -64,6 +66,9 @@ Global
 		SccProjectTopLevelParentUniqueName4 = QuickGraph.sln
 		SccProjectName4 = QuickGraph.Samples
 		SccLocalPath4 = QuickGraph.Samples
+		SccProjectUniqueName5 = All\\All.csproj
+		SccProjectName5 = All
+		SccLocalPath5 = All
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = QuickGraph1.vsmdi
