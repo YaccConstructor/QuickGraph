@@ -15,11 +15,18 @@
     <language>en-US</language>    
   </metadata>
   <files>
-    <!-- quickgraph -->
     <!-- net3.5 -->
     <file src="QuickGraph\bin\Release\QuickGraph.dll" target="lib\net35" />
     <file src="QuickGraph\bin\Release\QuickGraph.xml" target="lib\net35" />
     <file src="QuickGraph\bin\Release\CodeContracts\QuickGraph.dll" target="lib\net35\CodeContracts" />
+
+    <file src="QuickGraph.Data\bin\Release\QuickGraph.Data.dll" target="lib\net35" />
+    <file src="QuickGraph.Data\bin\Release\QuickGraph.Data.xml" target="lib\net35" />
+    <file src="QuickGraph.Data\bin\Release\CodeContracts\QuickGraph.Data.dll" target="lib\net35\CodeContracts" />
+
+    <file src="QuickGraph.Graphviz\bin\Release\QuickGraph.Graphviz.dll" target="lib\net35" />
+    <file src="QuickGraph.Graphviz\bin\Release\QuickGraph.Graphviz.xml" target="lib\net35" />
+    <file src="QuickGraph.Graphviz\bin\Release\CodeContracts\QuickGraph.Graphviz.dll" target="lib\net35\CodeContracts" />
     <!-- silverlight-->
     <file src="QuickGraph.Silverlight\bin\Release\QuickGraph.dll" target="lib\sl3" />
     <file src="QuickGraph.Silverlight\bin\Release\QuickGraph.xml" target="lib\sl3" />
