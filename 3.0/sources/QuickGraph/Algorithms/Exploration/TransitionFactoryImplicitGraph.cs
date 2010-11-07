@@ -65,7 +65,7 @@ namespace QuickGraph.Algorithms.Exploration
         [Pure]
         public IEnumerable<TEdge> OutEdges(TVertex v)
         {
-            EdgeList<TVertex, TEdge> edges;
+            IEdgeList<TVertex, TEdge> edges;
             if (!this.vertedEdges.TryGetValue(v, out edges))
             {
                 edges = new EdgeList<TVertex, TEdge>();

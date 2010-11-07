@@ -106,9 +106,9 @@ namespace QuickGraph
             return true;
         }
 
-        private List<TEdge> AddAndReturnEdges(TVertex v)
+        private IEdgeList<TVertex, TEdge> AddAndReturnEdges(TVertex v)
         {
-            EdgeList<TVertex, TEdge> edges;
+            IEdgeList<TVertex, TEdge> edges;
             if (!this.adjacentEdges.TryGetValue(v, out edges))
                 this.adjacentEdges[v] = edges = this.EdgeCapacity < 0 
                     ? new EdgeList<TVertex, TEdge>() 
@@ -177,7 +177,7 @@ namespace QuickGraph
 
             foreach (var edge in edges)
             {
-                EdgeList<TVertex, TEdge> aEdges;
+                IEdgeList<TVertex, TEdge> aEdges;
                 if (this.adjacentEdges.TryGetValue(edge.Target, out aEdges))
                     aEdges.Remove(edge);
                 if (this.adjacentEdges.TryGetValue(edge.Source, out aEdges))

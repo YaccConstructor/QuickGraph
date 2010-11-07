@@ -302,12 +302,16 @@
     <Compile Include="Collections\FibonacciHeap.cs" />
     <Compile Include="Collections\FibonacciQueue.cs" />
     <Compile Include="Collections\IDisjointSet.cs" />
+    <Compile Include="Collections\IEdgeList.cs" />
     <Compile Include="Collections\IPriorityQueue.cs" />
     <Compile Include="Collections\IQueue.cs" />
+    <Compile Include="Collections\IVertexEdgeDictionary.cs" />
     <Compile Include="Collections\SoftHeap.cs" />
     <Compile Include="Collections\VertexEdgeDictionary.cs" />
     <Compile Include="Collections\VertexList.cs" />
     <Compile Include="CompressedSparseRowGraph.cs" />
+    <Compile Include="Contracts\Collections\IEdgeListContract.cs" />
+    <Compile Include="Contracts\Collections\IVertexEdgeDictionaryContract.cs" />
     <Compile Include="Contracts\IBidirectionalIncidenceGraphContract.cs" />
     <Compile Include="Contracts\IImplicitUndirectedGraphContract.cs" />
     <Compile Include="Contracts\IUndirectedEdgeContract.cs" />
