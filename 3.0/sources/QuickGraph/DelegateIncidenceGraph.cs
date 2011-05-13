@@ -41,8 +41,8 @@ namespace QuickGraph
                         result.Add(e);
                     }
 
-            edges = result.ToArray();
-            return result != null;
+            edges = result == null ? null : result.ToArray();
+            return edges != null;
         }
 
         public bool TryGetEdge(TVertex source, TVertex target, out TEdge edge)
