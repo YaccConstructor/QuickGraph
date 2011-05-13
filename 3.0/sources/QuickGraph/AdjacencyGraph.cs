@@ -389,8 +389,6 @@ namespace QuickGraph
         /// <returns>true if the edge was added; false if it was already part of the graph</returns>
         public virtual bool AddEdge(TEdge e)
         {
-            Contract.Requires(e != null);
-
             if (!this.AllowParallelEdges)
             {
                 if (this.ContainsEdge(e.Source, e.Target))

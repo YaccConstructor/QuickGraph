@@ -96,10 +96,6 @@
       <Project>{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}</Project>
       <Name>QuickGraph.Silverlight</Name>
     </ProjectReference>
-    <ProjectReference Include="..\QuickGraph.Tests\QuickGraph.Tests.csproj">
-      <Project>{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}</Project>
-      <Name>QuickGraph.Tests</Name>
-    </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
       <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
       <Name>QuickGraph</Name>
