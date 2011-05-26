@@ -67,22 +67,31 @@ namespace QuickGraph.Collections
 
         public void Add(TPriority priority, TValue value)
         {
+#if BINARY_HEAP_DEBUG
+            Console.WriteLine("Add({0}, {1})", priority, value);
+#endif
             this.version++;
             this.ResizeArray();
             this.items[this.count++] = new KeyValuePair<TPriority, TValue>(priority, value);
             this.MinHeapifyDown(this.count - 1);
+#if BINARY_HEAP_DEBUG
+            Console.WriteLine("Add: {0}", ToString2());
+#endif
         }
 
+        // TODO: MinHeapifyDown is really MinHeapifyUp.  Do the renaming
         private void MinHeapifyDown(int start)
         {
-            int i = start;
-            int j = (i - 1) / 2;
-            while (i > 0 &&
-                this.LessOrEqual(i, j))
+#if BINARY_HEAP_DEBUG
+            Console.WriteLine("MinHeapifyDown");
+#endif
+            int current = start;
+            int parent = (current - 1) / 2;
+            while (current > 0 && this.LessOrEqual(current, parent))
             {
-                this.Swap(i, j);
-                i = j;
-                j = (i - 1) / 2;
+                this.Swap(current, parent);
+                current = parent;
+                parent = (current - 1) / 2;
             }
         }
 
@@ -192,6 +201,9 @@ namespace QuickGraph.Collections
 
         public KeyValuePair<TPriority, TValue> RemoveMinimum()
         {
+#if BINARY_HEAP_DEBUG
+            Console.WriteLine("RemoveMinimum");
+#endif
             // shortcut for heap with 1 element.
             if (this.count == 1)
             {
@@ -300,6 +312,16 @@ namespace QuickGraph.Collections
             return this.priorityComparsion(this.items[i].Key, this.items[j].Key) <= 0;
         }
 
+        [Pure]
+        private bool Less(int i, int j)
+        {
+            Contract.Requires(
+                i >= 0 & i < this.count &
+                j >= 0 & j < this.count);
+
+            return this.priorityComparsion(this.items[i].Key, this.items[j].Key) < 0;
+        }
+
         private void Swap(int i, int j)
         {
             Contract.Requires(
@@ -325,8 +347,8 @@ namespace QuickGraph.Collections
                 {
                     var left = 2 * index + 1;
                     var right = 2 * index + 2;
-                    return  (left >= count || this.Less(index, left)) &&
-                            (right >= count || this.Less(index, right));
+                    return  (left >= count || this.LessOrEqual(index, left)) &&
+                            (right >= count || this.LessOrEqual(index, right));
                 })
             );
         }
