@@ -28,6 +28,15 @@ namespace QuickGraph.Algorithms
         }
 
         [TestMethod]
+        public void SortDCT8()
+        {
+            var g = TestGraphFactory.LoadGraph("DCT8.graphml");
+            var topo = new TopologicalSortAlgorithm<string, Edge<string>>(g);
+            Assert.IsFalse(topo.AllowCyclicGraph);
+            topo.Compute();
+        }
+
+        [TestMethod]
         public void OneTwo()
         {
             var graph = new AdjacencyGraph<int, Edge<int>>();
