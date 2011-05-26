@@ -45,5 +45,13 @@ namespace QuickGraph.Algorithms
             topo.Compute();
         }
 
+        [TestMethod]
+        public void SortDCT()
+        {
+            var g = TestGraphFactory.LoadBidirectionalGraph("DCT8.graphml");
+
+            var topo = new SourceFirstTopologicalSortAlgorithm<string, Edge<string>>(g);
+            topo.Compute();
+        }
     }
 }
