@@ -78,7 +78,7 @@ namespace QuickGraph.Collections
             int i = start;
             int j = (i - 1) / 2;
             while (i > 0 &&
-                this.Less(i, j))
+                this.LessOrEqual(i, j))
             {
                 this.Swap(i, j);
                 i = j;
@@ -92,6 +92,85 @@ namespace QuickGraph.Collections
             for (int i = 0; i < values.Length; ++i)
                 values[i] = this.items[i].Value;
             return values;
+        }
+
+        public KeyValuePair<TPriority, TValue>[] ToPriorityValueArray()
+        {
+            var array = new KeyValuePair<TPriority, TValue>[this.items.Length];
+            for (int i = 0; i < array.Length; ++i)
+                array[i] = this.items[i];
+            return array;
+        }
+
+        public bool IsConsistent()
+        {
+            int wrong = -1;
+
+            for (int i = 0; i < this.count; i++)
+            {
+                var l = 2 * i + 1;
+                var r = 2 * i + 2;
+                if (l < this.count && !this.LessOrEqual(i, l))
+                    wrong = i;
+                if (r < this.count && !this.LessOrEqual(i, r))
+                    wrong = i;
+            }
+
+            var correct = wrong == -1;
+            return correct;
+        }
+
+        private string EntryToString(int i)
+        {
+            if (i < 0 || i >= this.count)
+                return "null";
+
+            var kvp = this.items[i];
+            var k = kvp.Key;
+            var v = kvp.Value;
+
+            var str = "";
+            str += k.ToString();
+            str += " ";
+            str += v == null ? "null" : v.ToString();
+            return str;
+        }
+
+        public string ToString2()
+        {
+            var status = IsConsistent();
+            var str = status.ToString() + ": ";
+
+            for (int i = 0; i < this.items.Length; i++)
+            {
+                str += EntryToString(i);
+                str += ", ";
+            }
+            return str;
+        }
+
+        public string ToStringTree()
+        {
+            var status = IsConsistent();
+            var str = "Consistent? " + status.ToString();
+
+            for (int i = 0; i < this.count; i++)
+            {
+                var l = 2 * i + 1;
+                var r = 2 * i + 2;
+
+                var s = "index";
+                s += i.ToString();
+                s += ": ";
+                s += EntryToString(i);
+                s += " -> ";
+                s += EntryToString(l);
+                s += " and ";
+                s += EntryToString(r);
+
+                str += "\r\n" + s;
+            }
+            return str;
         }
 
         private void ResizeArray()
@@ -148,12 +227,12 @@ namespace QuickGraph.Collections
             var left = 2 * index + 1;
             var right = 2 * index + 2;
             while (
-                    (left < this.count - 1 && !this.Less(index, left)) ||
-                    (right < this.count - 1 && !this.Less(index, right))
+                    (left < this.count - 1 && !this.LessOrEqual(index, left)) ||
+                    (right < this.count - 1 && !this.LessOrEqual(index, right))
                    )
             {
                 if (right >= this.count - 1 ||
-                    this.Less(left, right))
+                    this.LessOrEqual(left, right))
                 {
                     this.Swap(left, index);
                     index = left;
@@ -211,7 +290,7 @@ namespace QuickGraph.Collections
         }
 
         [Pure]
-        private bool Less(int i, int j)
+        private bool LessOrEqual(int i, int j)
         {
             Contract.Requires(
                 i >= 0 & i < this.count &

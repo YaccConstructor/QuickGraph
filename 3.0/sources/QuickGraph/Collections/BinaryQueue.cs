@@ -66,5 +66,15 @@ namespace QuickGraph.Collections
         {
             return this.heap.ToValueArray();
         }
+
+        public KeyValuePair<TDistance, TVertex>[] ToArray2()
+        {
+            return heap.ToPriorityValueArray();
+        }
+
+        public string ToString2()
+        {
+            return heap.ToString2();
+        }
     }
 }
