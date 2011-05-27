@@ -87,7 +87,7 @@ namespace QuickGraph.Collections
 #endif
             int current = start;
             int parent = (current - 1) / 2;
-            while (current > 0 && this.LessOrEqual(current, parent))
+            while (current > 0 && this.Less(current, parent))
             {
                 this.Swap(current, parent);
                 current = parent;
@@ -204,17 +204,33 @@ namespace QuickGraph.Collections
 #if BINARY_HEAP_DEBUG
             Console.WriteLine("RemoveMinimum");
 #endif
+            if (this.count == 0)
+                throw new InvalidOperationException("heap is empty");
+
             // shortcut for heap with 1 element.
             if (this.count == 1)
             {
                 this.version++;
                 return this.items[--this.count];
             }
-            return this.RemoveAt(0);
+            this.Swap(0, this.count - 1);
+            this.count--;
+            this.MinHeapifyUp(0);
+            return this.items[this.count];
         }
 
+        /// <summary>
+        /// Removes element at a certain index.  
+        /// TODO: RemoveAt is wrong.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        [Obsolete("BinaryHeap.RemoveAt is wrong. Fix it before using it.")]
         public KeyValuePair<TPriority, TValue> RemoveAt(int index)
         {
+#if BINARY_HEAP_DEBUG
+            Console.WriteLine("RemoveAt({0})", index);
+#endif
             if (this.count == 0)
                 throw new InvalidOperationException("heap is empty");
             if (index < 0 | index >= this.count | index + this.count < this.count)
@@ -225,13 +241,11 @@ namespace QuickGraph.Collections
             if (this.count == 1)
                 return this.items[--this.count];
 
-            if (index < this.count - 1)
-            {
-                this.Swap(index, this.count - 1);
-                this.MinHeapifyUp(index);
-            }
+            this.Swap(index, this.count - 1);
+            this.count--;
+            this.MinHeapifyUp(index);
 
-            return this.items[--this.count];
+            return this.items[this.count];
         }
 
         // TODO: MinHeapifyUp is really MinHeapifyDown.  Do the renaming
@@ -245,9 +259,9 @@ namespace QuickGraph.Collections
                 var left = 2 * index + 1;
                 var right = 2 * index + 2;
                 var smallest = index;
-                if (left < this.count - 1 && this.Less(left, smallest))
+                if (left < this.count && this.Less(left, smallest))
                     smallest = left;
-                if (right < this.count - 1 && this.Less(right, smallest))
+                if (right < this.count && this.Less(right, smallest))
                     smallest = right;
                 
                 if (smallest == index)
@@ -271,18 +285,16 @@ namespace QuickGraph.Collections
         public bool MinimumUpdate(TPriority priority, TValue value)
         {
             // find index
-            for (int i = 0; i < this.count; i++)
+            var index = IndexOf(value);
+
+            if (index >= 0)
             {
-                if (object.Equals(value, this.items[i].Value))
+                if (this.priorityComparsion(priority, this.items[index].Key) <= 0)
                 {
-                    if( this.priorityComparsion(priority, this.items[i].Key) <= 0)
-                    {
-                        this.RemoveAt(i);
-                        this.Add(priority, value);
-                        return true;
-                    }
-                    return false;
+                    this.Update(priority, value);
+                    return true;
                 }
+                return false;
             }
 
             // not in collection
@@ -292,12 +304,28 @@ namespace QuickGraph.Collections
 
         public void Update(TPriority priority, TValue value)
         {
+#if BINARY_HEAP_DEBUG
+            Console.WriteLine("Update({0}, {1})", priority, value);
+#endif
             // find index
             var index = this.IndexOf(value);
-            // remove if needed
+            
+            // if it exists, update, else add
             if (index > -1)
-                this.RemoveAt(index);
-            this.Add(priority, value);
+            {
+                var neww = priority;
+                var oldd = this.items[index].Key;
+                this.items[index] = new KeyValuePair<TPriority,TValue>(neww, value);
+
+                if (this.priorityComparsion(neww, oldd) > 0)
+                    MinHeapifyUp(index);
+                else if (this.priorityComparsion(neww, oldd) < 0)
+                    MinHeapifyDown(index);
+            }
+            else
+            {
+                this.Add(priority, value);
+            }
         }
 
         [Pure]
