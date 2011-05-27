@@ -234,28 +234,27 @@ namespace QuickGraph.Collections
             return this.items[--this.count];
         }
 
+        // TODO: MinHeapifyUp is really MinHeapifyDown.  Do the renaming
         private void MinHeapifyUp(int index)
         {
-            var left = 2 * index + 1;
-            var right = 2 * index + 2;
-            while (
-                    (left < this.count - 1 && !this.LessOrEqual(index, left)) ||
-                    (right < this.count - 1 && !this.LessOrEqual(index, right))
-                   )
+#if BINARY_HEAP_DEBUG
+            Console.WriteLine("MinHeapifyUp");
+#endif
+            while (true)
             {
-                if (right >= this.count - 1 ||
-                    this.LessOrEqual(left, right))
-                {
-                    this.Swap(left, index);
-                    index = left;
-                }
-                else
-                {
-                    this.Swap(right, index);
-                    index = right;
-                }
-                left = 2 * index + 1;
-                right = 2 * index + 2;
+                var left = 2 * index + 1;
+                var right = 2 * index + 2;
+                var smallest = index;
+                if (left < this.count - 1 && this.Less(left, smallest))
+                    smallest = left;
+                if (right < this.count - 1 && this.Less(right, smallest))
+                    smallest = right;
+                
+                if (smallest == index)
+                    break;
+
+                this.Swap(smallest, index);
+                index = smallest;
             }
         }
 
@@ -326,8 +325,12 @@ namespace QuickGraph.Collections
         {
             Contract.Requires(
                 i >= 0 && i < this.count &&
-                j >= 0 && j < this.count &&
-                i != j);
+                j >= 0 && j < this.count);
+
+            if (i == j)
+            {
+                return;
+            }
 
             var kv = this.items[i];
             this.items[i] = this.items[j];
