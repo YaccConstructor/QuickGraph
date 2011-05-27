@@ -312,6 +312,7 @@
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTestOld.cs" />
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest.cs" />
     <Compile Include="Algorithms\ShortestPath\FloydWarshallAllPairShortestPathAlgorithmTest.cs" />
+    <Compile Include="Algorithms\SourceFirstBidirectionalTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\SourceFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\StronglyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\TarjanOfflineLeastCommonAncestorAlgorithmTest.cs" />
