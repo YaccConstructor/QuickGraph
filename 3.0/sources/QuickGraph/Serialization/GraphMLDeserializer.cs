@@ -213,6 +213,13 @@ namespace QuickGraph.Serialization
                     ReadContentMethods.Add(typeof(Single[]), readerExtensions.GetMethod("ReadElementContentAsSingleArray"));
                     ReadContentMethods.Add(typeof(Double[]), readerExtensions.GetMethod("ReadElementContentAsDoubleArray"));
                     ReadContentMethods.Add(typeof(String[]), readerExtensions.GetMethod("ReadElementContentAsStringArray"));
+
+                    ReadContentMethods.Add(typeof(IList<Boolean>), readerExtensions.GetMethod("ReadElementContentAsBooleanArray"));
+                    ReadContentMethods.Add(typeof(IList<Int32>), readerExtensions.GetMethod("ReadElementContentAsInt32Array"));
+                    ReadContentMethods.Add(typeof(IList<Int64>), readerExtensions.GetMethod("ReadElementContentAsInt64Array"));
+                    ReadContentMethods.Add(typeof(IList<Single>), readerExtensions.GetMethod("ReadElementContentAsSingleArray"));
+                    ReadContentMethods.Add(typeof(IList<Double>), readerExtensions.GetMethod("ReadElementContentAsDoubleArray"));
+                    ReadContentMethods.Add(typeof(IList<String>), readerExtensions.GetMethod("ReadElementContentAsStringArray"));
                 }
 
                 public static bool TryGetReadContentMethod(Type type, out MethodInfo method)

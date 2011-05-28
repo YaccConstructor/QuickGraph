@@ -8,7 +8,6 @@ using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ComponentModel;
 using System.Linq;
-using QuickGraph.ArrayExtensions;
 
 namespace QuickGraph.Serialization
 {
@@ -223,6 +222,104 @@ namespace QuickGraph.Serialization
                     Assert.IsNull(value);
                 }
             }
+
+            #region IList properties
+
+            IList<string> _stringilist;
+            [XmlAttribute("g_stringilist")]
+            public IList<string> StringIList
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._stringilist;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._stringilist = value;
+                }
+            }
+            IList<int> _intilist;
+            [XmlAttribute("g_intilist")]
+            public IList<int> IntIList
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._intilist;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._intilist = value;
+                }
+            }
+            IList<long> _longilist;
+            [XmlAttribute("g_longilist")]
+            public IList<long> LongIList
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._longilist;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._longilist = value;
+                }
+            }
+
+            IList<bool> _boolilist;
+            [XmlAttribute("g_boolilist")]
+            public IList<bool> BoolIList
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._boolilist;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._boolilist = value;
+                }
+            }
+
+            IList<float> _floatilist;
+            [XmlAttribute("g_floatilist")]
+            public IList<float> FloatIList
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._floatilist;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._floatilist = value;
+                }
+            }
+
+            IList<double> _doubleilist;
+            [XmlAttribute("g_doubleilist")]
+            public IList<double> DoubleIList
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._doubleilist;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._doubleilist = value;
+                }
+            }
+
+            #endregion
         }
 
         public sealed class TestVertex
@@ -369,6 +466,22 @@ namespace QuickGraph.Serialization
                     this._intArray = value;
                 }
             }
+
+            IList<int> _intIList;
+            [XmlAttribute("v_intilist")]
+            public IList<int> IntIList
+            {
+                get
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    return this._intIList;
+                }
+                set
+                {
+                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    this._intIList = value;
+                }
+            }
         }
 
         public sealed class TestEdge : Edge<TestVertex>
@@ -434,6 +547,13 @@ namespace QuickGraph.Serialization
         private static readonly double[] DoubleArray = new double[] { 3.14159265, 1.1, 1, 23, -2, 987459, 97239, 234245, 0, -2232, 234.55345 };
         private static readonly string[] StringArray = new string[] { "", "Quick", "", "brown", "fox", "jumps", "over", "the", "lazy", "dog", ".", "" };
 
+        private static readonly IList<bool> BoolIList = new bool[] { true, false, true, true };
+        private static readonly IList<int> IntIList = new int[] { 2, 3, 45, 3, 44, -2, 3, 5, 99999999 };
+        private static readonly IList<long> LongIList = new long[] { 3, 4, 43, 999999999999999999L, 445, 55, 3, 98, 49789238740598170, 987459, 97239, 234245, 0, -2232 };
+        private static readonly IList<float> FloatIList = new float[] { 3.14159265F, 1.1F, 1, 23, -2, 987459, 97239, 234245, 0, -2232, 234.55345F };
+        private static readonly IList<double> DoubleIList = new double[] { 3.14159265, 1.1, 1, 23, -2, 987459, 97239, 234245, 0, -2232, 234.55345 };
+        private static readonly IList<string> StringIList = new string[] { "", "Quick", "", "brown", "fox", "jumps", "over", "the", "lazy", "dog", ".", "" };
+        
         [TestMethod]
         public void WriteVertex()
         {
@@ -451,7 +571,14 @@ namespace QuickGraph.Serialization
                 FloatArray = FloatArray,
                 DoubleArray = DoubleArray,
                 StringArray = StringArray,
-                NullArray = null
+                NullArray = null,
+                BoolIList = BoolIList,
+                IntIList = IntIList,
+                LongIList = LongIList,
+                FloatIList = FloatIList,
+                DoubleIList = DoubleIList,
+                StringIList = StringIList,
+
             };
 
             TestVertex v = new TestVertex("v1")
@@ -463,7 +590,8 @@ namespace QuickGraph.Serialization
                 Float = 25.0F,
                 Double = 30.0,
                 Bool = true,
-                IntArray = new int[] {  1, 2, 3, 4 }
+                IntArray = new int[] { 1, 2, 3, 4 },
+                IntIList = new int[] { 4, 5, 6, 7 }
             };
 
             g.AddVertex(v);
@@ -474,28 +602,18 @@ namespace QuickGraph.Serialization
             Assert.AreEqual(g.Int, sg.Int);
             Assert.AreEqual(g.Long, sg.Long);
             Assert.AreEqual(g.String, sg.String);
-            Assert.IsTrue(g.BoolArray.ArrayEquals(sg.BoolArray));
-            Assert.IsTrue(g.IntArray.ArrayEquals(sg.IntArray));
-            Assert.IsTrue(g.LongArray.ArrayEquals(sg.LongArray));
-            Assert.IsTrue(g.StringArray.ArrayEquals(sg.StringArray));
-
-            var floatTolerance = 0.0001F;
-            var flags = new bool[FloatArray.Length];
-            for (int i = 0; i < FloatArray.Length; i++)
-            {
-                flags[i] = Math.Abs(g.FloatArray[i] - sg.FloatArray[i]) < floatTolerance;
-            }
-            Assert.IsTrue(flags.All(b => b));
-            Assert.IsTrue(g.FloatArray.ArrayEquals(sg.FloatArray, floatTolerance));
-
-            var doubleTolerance = 0.0001;
-            flags = new bool[FloatArray.Length];
-            for (int i = 0; i < FloatArray.Length; i++)
-            {
-                flags[i] = Math.Abs(g.FloatArray[i] - sg.FloatArray[i]) < doubleTolerance;
-            }
-            Assert.IsTrue(flags.All(b => b));
-            Assert.IsTrue(g.DoubleArray.ArrayEquals(sg.DoubleArray, 0.0001));
+            Assert.IsTrue(g.BoolArray.Equals1(sg.BoolArray));
+            Assert.IsTrue(g.IntArray.Equals1(sg.IntArray));
+            Assert.IsTrue(g.LongArray.Equals1(sg.LongArray));
+            Assert.IsTrue(g.StringArray.Equals1(sg.StringArray));
+            Assert.IsTrue(g.FloatArray.Equals1(sg.FloatArray, 0.001F));
+            Assert.IsTrue(g.DoubleArray.Equals1(sg.DoubleArray, 0.0001));
+            Assert.IsTrue(g.BoolIList.Equals1(sg.BoolIList));
+            Assert.IsTrue(g.IntIList.Equals1(sg.IntIList));
+            Assert.IsTrue(g.LongIList.Equals1(sg.LongIList));
+            Assert.IsTrue(g.StringIList.Equals1(sg.StringIList));
+            Assert.IsTrue(g.FloatIList.Equals1(sg.FloatIList, 0.001F));
+            Assert.IsTrue(g.DoubleIList.Equals1(sg.DoubleIList, 0.0001));
 
             var sv = Enumerable.First(sg.Vertices);
             Assert.AreEqual(sv.StringDefault, "bla");
@@ -505,7 +623,8 @@ namespace QuickGraph.Serialization
             Assert.AreEqual(v.Float, sv.Float);
             Assert.AreEqual(v.Double, sv.Double);
             Assert.AreEqual(v.Bool, sv.Bool);
-            Assert.IsTrue(v.IntArray.ArrayEquals(v.IntArray));
+            Assert.IsTrue(v.IntArray.Equals1(sv.IntArray));
+            Assert.IsTrue(v.IntIList.Equals1(sv.IntIList));
         }
 
         private TestGraph VerifySerialization(TestGraph g)
