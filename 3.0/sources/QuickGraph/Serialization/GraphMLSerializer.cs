@@ -499,7 +499,7 @@ namespace QuickGraph.Serialization
                 // because GraphML schema doesn't have an array type.
                 if (code == "object")
                 {
-                    var it = t.Name == "IList`1" ? t : t.GetInterface("IList`1");
+                    var it = t.Name == "IList`1" ? t : t.GetInterface("IList`1", false);
                     if (it != null && it.Name == "IList`1")
                     {
                         var e = it.GetGenericArguments()[0];
