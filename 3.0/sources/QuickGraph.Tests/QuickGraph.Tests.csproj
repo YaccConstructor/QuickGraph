@@ -476,6 +476,7 @@
     <Compile Include="TestHelper.cs" />
     <Compile Include="UndirectedBidirectionalGraphTest.cs" />
     <Compile Include="UndirectedGraphInvariant.cs" />
+    <Compile Include="UndirectedGraphTest.cs" />
     <Compile Include="UndirectedGraphTVertexTEdgeTest.cs" />
   </ItemGroup>
   <ItemGroup>

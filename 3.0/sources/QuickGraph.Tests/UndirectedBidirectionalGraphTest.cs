@@ -1,20 +1,17 @@
-﻿using QuickGraph;
+﻿using System;
+using System.Linq;
+using QuickGraph;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace QuickGraph.Tests
 {
-    
-    
     /// <summary>
-    ///This is a test class for UndirectedBidirectionalGraphTest and is intended
-    ///to contain all UndirectedBidirectionalGraphTest Unit Tests
+    ///This is a test class for UndirectedBidirectionalGraph and is intended
+    ///to contain all UndirectedBidirectionalGraph Unit Tests
     ///</summary>
     [TestClass()]
     public class UndirectedBidirectionalGraphTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -66,33 +63,6 @@ namespace QuickGraph.Tests
         [TestMethod()]
         public void ContainsEdgeTest()
         {
-            var u = new UndirectedGraph<int, SEquatableUndirectedEdge<int>>();
-            u.AddVerticesAndEdge(new SEquatableUndirectedEdge<int>(1, 2));
-            Assert.IsTrue(u.ContainsEdge(1, 2));
-
-            var failure = false;
-            try
-            {
-                u.ContainsEdge(2, 1);
-            } catch
-            {
-                failure = true;
-            }
-            Assert.IsTrue(failure);
-
-            Assert.IsTrue(u.ContainsEdge(new SEquatableUndirectedEdge<int>(1, 2)));
-
-            failure = false;
-            try
-            {
-                var e = new SEquatableUndirectedEdge<int>(2, 1);
-            }
-            catch
-            {
-                failure = true;
-            }
-            Assert.IsTrue(failure);
-
             var bd = new BidirectionalGraph<int, EquatableEdge<int>>();
             bd.AddVerticesAndEdge(new EquatableEdge<int>(1, 2));
 

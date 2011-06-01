@@ -31,7 +31,10 @@ namespace QuickGraph
         {
             Contract.Requires(source != null);
             Contract.Requires(target != null);
-            Contract.Requires(Comparer<TVertex>.Default.Compare(source, target) <= 0);
+            if (Comparer<TVertex>.Default.Compare(source, target) > 0)
+            {
+                throw new ArgumentException("source cannot be greater than target in SEquatableUndirectedEdge");
+            }
             Contract.Ensures(Contract.ValueAtReturn(out this).Source.Equals(source));
             Contract.Ensures(Contract.ValueAtReturn(out this).Target.Equals(target));
 
