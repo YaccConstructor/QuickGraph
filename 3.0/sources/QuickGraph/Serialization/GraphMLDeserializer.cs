@@ -45,7 +45,7 @@ namespace QuickGraph.Serialization
         }
 
         /// <summary>
-        /// TODO: rhishi: document.
+        /// Read contents of an XML element as an array of type T.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="xmlReader"></param>
