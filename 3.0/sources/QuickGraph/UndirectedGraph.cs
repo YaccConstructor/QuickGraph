@@ -203,6 +203,13 @@ namespace QuickGraph
         #region IUndirectedGraph<Vertex,Edge> Members
         public bool TryGetEdge(TVertex source, TVertex target, out TEdge edge)
         {
+            if (Comparer<TVertex>.Default.Compare(source, target) > 0)
+            {
+                var temp = source;
+                source = target;
+                target = temp;
+            }
+
             foreach (var e in this.AdjacentEdges(source))
             {
                 if (this.edgeEqualityComparer(e, source, target))
