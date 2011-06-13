@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
-          DefaultTargets="ContinuousBuild">
+          DefaultTargets="CreateCodeplexRelease">
   <UsingTask 
     TaskName="Microsoft.Cci.MsBuild.WriteFile" 
     AssemblyFile="Microsoft.Cci.MsBuild.dll" />
@@ -41,10 +41,6 @@
       <Name>Symbols</Name>
       <FileType>RuntimeBinary</FileType>
     </ZipSymbols>
-    <ZipSources  Include="$(BinCodePlexDirectory)\$(CodeplexProjectName)-$(BuildVersion)-sources.zip">
-      <Name>Source code drop</Name>
-      <FileType>SourceCode</FileType>
-    </ZipSources>
   </ItemGroup>
 
   <PropertyGroup>
@@ -138,6 +134,7 @@ using System.Reflection;
       <TestDebugAssembly Include="$(BinDebugDirectory)\*Tests.exe" />
     </ItemGroup>
     <Exec
+      Condition="@(TestDebugAssembly) != ''"
       WorkingDirectory="$(BinDebugDirectory)"
       Command="%(TestDebugAssembly.FileName)%(TestDebugAssembly.FileExtension) /xml ..\%(TestDebugAssembly.FileName).dbg.results.xml" />
   </Target>
@@ -147,28 +144,22 @@ using System.Reflection;
       <TestReleaseAssembly Include="$(BinReleaseDirectory)\*Tests.exe" />
     </ItemGroup>
     <Exec
+      Condition="@(TestReleaseAssembly) != ''"
       WorkingDirectory="$(BinReleaseDirectory)"
       Command="@(TestReleaseAssembly->'%(FileName).%(FileExtension)') /xml ..\@(TestReleaseAssembly->'%(FileName)').dbg.results.xml" />
   </Target>
 
   <Target Name="CreateReleaseZips">
     <ItemGroup>
-      <Assembly Include="
-      $(BinReleaseDirectory)\Microsoft.Cci.*.dll;
-      $(BinReleaseDirectory)\Microsoft.Cci.*.xml;
+      <Assemblies Include="
+      $(BinReleaseDirectory)\QuickGraph*.dll;
+      $(BinReleaseDirectory)\QuickGraph*.xml;
       " />
-      <Assembly Include="$(BinReleaseDirectory)\Microsoft.Cci.*.pdb" />
+      <Symbols Include="$(BinReleaseDirectory)\QuickGraph*.pdb" />
     </ItemGroup>
-    <Exec
-      Condition="$(CleanRootDirectory) != ''"
-      Command="svn update &quot;$(CleanRootDirectory)&quot;" />
-
     <MakeDir Directories="$(BinCodePlexDirectory)" />
     <Zip Files="@(Assemblies)" OutputFile="@(ZipBinaries)" />
     <Zip Files="@(Symbols)" OutputFile="@(ZipSymbols)" />
-    <Zip
-      Condition="$(CleanRootDirectory) != ''"
-      Directories="$(CleanRootDirectory)" OutputFile="@(ZipSources)" />
   </Target>
 
   <Target Name="TestNightly">
@@ -208,7 +199,6 @@ using System.Reflection;
       Username="$(CodeplexUser)"
       Password="$(CodeplexPassword)"
 	    />
-    <Message Text="YOU WILL NEED TO UPLOAD THE SOURCE MANUALLY FROM @(ZipSources)" />
   </Target>
   
 </Project>

@@ -9,6 +9,7 @@ namespace QuickGraph.Collections
 #endif
     public sealed class EdgeList<TVertex, TEdge>
         : List<TEdge>
+        , IEdgeList<TVertex, TEdge>
 #if !SILVERLIGHT
         , ICloneable
 #endif
@@ -28,6 +29,11 @@ namespace QuickGraph.Collections
         public EdgeList<TVertex, TEdge> Clone()
         {
             return new EdgeList<TVertex, TEdge>(this);
+        }
+
+        IEdgeList<TVertex, TEdge> IEdgeList<TVertex,TEdge>.Clone()
+        {
+            return this.Clone();
         }
 
 #if !SILVERLIGHT
