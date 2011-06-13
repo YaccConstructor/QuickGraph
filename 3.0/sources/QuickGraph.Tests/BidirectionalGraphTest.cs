@@ -63,22 +63,6 @@ namespace QuickGraph.Tests
         //
         #endregion
 
-
-        /// <summary>
-        ///A test for Clone
-        ///</summary>
-        public void CloneTestHelper<TVertex, TEdge>()
-
-            where TEdge : IEdge<TVertex>
-        {
-            BidirectionalGraph<TVertex, TEdge> target = new BidirectionalGraph<TVertex, TEdge>(); // TODO: Initialize to an appropriate value
-            BidirectionalGraph<TVertex, TEdge> expected = null; // TODO: Initialize to an appropriate value
-            BidirectionalGraph<TVertex, TEdge> actual;
-            actual = target.Clone();
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
         [TestMethod()]
         public void CloneTest()
         {

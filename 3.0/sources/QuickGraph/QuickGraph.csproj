@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -314,11 +314,14 @@
     <Compile Include="CompressedSparseRowGraph.cs" />
     <Compile Include="Contracts\Collections\IEdgeListContract.cs" />
     <Compile Include="Contracts\Collections\IVertexEdgeDictionaryContract.cs" />
+    <Compile Include="Contracts\ITermEdgeContract.cs" />
     <Compile Include="Contracts\IBidirectionalIncidenceGraphContract.cs" />
     <Compile Include="Contracts\IImplicitUndirectedGraphContract.cs" />
     <Compile Include="Contracts\IUndirectedEdgeContract.cs" />
     <Compile Include="ArrayUndirectedGraph.cs" />
     <Compile Include="ArrayBidirectionalGraph.cs" />
+    <Compile Include="EquatableTermEdge.cs" />
+    <Compile Include="TermEdge.cs" />
     <Compile Include="DelegateBidirectionalIncidenceGraph.cs" />
     <Compile Include="DelegateImplicitUndirectedGraph.cs" />
     <Compile Include="DelegateIncidenceGraph.cs" />
@@ -329,6 +332,7 @@
     <Compile Include="EquateGraphs.cs" />
     <Compile Include="IBidirectionalIncidenceGraph.cs" />
     <Compile Include="IImplicitUndirectedGraph.cs" />
+    <Compile Include="ITermEdge.cs" />
     <Compile Include="Serialization\DirectedGraphMLExtensions.cs" />
     <Compile Include="Serialization\DirectedGraphMLAlgorithm.cs" />
     <Compile Include="Serialization\DirectedGraphML\Dgml.cs" />

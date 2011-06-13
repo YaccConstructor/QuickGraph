@@ -63,10 +63,10 @@ namespace QuickGraph.Tests
         [TestMethod()]
         public void ContainsEdgeTest1()
         {
-            var u = new UndirectedGraph<int, SEquatableUndirectedEdge<int>>();
-            var e1 = new SEquatableUndirectedEdge<int>(1, 2);
-            var e2 = new SEquatableUndirectedEdge<int>(1, 2);
-            
+            var u = new UndirectedGraph<int, IEdge<int>>();
+            var e12 = new SEquatableUndirectedEdge<int>(1, 2);
+            var f12 = new SEquatableUndirectedEdge<int>(1, 2);
+                        
             bool exceptionOccurred = false;
             try
             {
@@ -78,39 +78,56 @@ namespace QuickGraph.Tests
             }
             Assert.IsTrue(exceptionOccurred);
 
-            u.AddVerticesAndEdge(e1);
+            u.AddVerticesAndEdge(e12);
 
-            Assert.AreEqual(1, u.AdjacentDegree(1));
-            Assert.AreEqual(1, u.AdjacentDegree(2));
-            Assert.AreEqual(1, u.AdjacentEdges(1).Count());
-            Assert.AreEqual(1, u.AdjacentEdges(2).Count());
-
-            Assert.IsTrue(u.ContainsEdge(e1));
-            Assert.IsTrue(u.ContainsEdge(e2));
-            Assert.IsTrue(u.ContainsEdge(1, 2));
-            Assert.IsTrue(u.ContainsEdge(2, 1));
-            Assert.IsFalse(u.ContainsEdge(1, 3));   
+            ContainsEdgeAssertions(u, e12, f12, null, null);
         }
 
         [TestMethod()]
         public void ContainsEdgeTest2()
         {
-            var u = new UndirectedGraph<int, EquatableEdge<int>>();
-            var e1 = new EquatableEdge<int>(1, 2);
-            var e2 = new EquatableEdge<int>(2, 1);
+            var u = new UndirectedGraph<int, IEdge<int>>();
+            var e12 = new EquatableEdge<int>(1, 2);
+            var f12 = new EquatableEdge<int>(1, 2);
+            var e21 = new EquatableEdge<int>(2, 1);
+            var f21 = new EquatableEdge<int>(2, 1);
 
-            u.AddVerticesAndEdge(e1);
+            u.AddVerticesAndEdge(e12);
 
-            Assert.AreEqual(1, u.AdjacentDegree(1));
-            Assert.AreEqual(1, u.AdjacentDegree(2));
-            Assert.AreEqual(1, u.AdjacentEdges(1).Count());
-            Assert.AreEqual(1, u.AdjacentEdges(2).Count());
+            ContainsEdgeAssertions(u, e12, f12, e21, f21);
+        }
 
-            Assert.IsTrue(u.ContainsEdge(e1));
-            Assert.IsFalse(u.ContainsEdge(e2));
-            Assert.IsTrue(u.ContainsEdge(1, 2));
-            Assert.IsTrue(u.ContainsEdge(2, 1));
-            Assert.IsFalse(u.ContainsEdge(1, 3));
+        public static void ContainsEdgeAssertions(IUndirectedGraph<int, IEdge<int>> g,
+            IEdge<int> e12,
+            IEdge<int> f12,
+            IEdge<int> e21,
+            IEdge<int> f21)
+        {
+            Assert.AreEqual(1, g.AdjacentDegree(1));
+            Assert.AreEqual(1, g.AdjacentDegree(2));
+            Assert.AreEqual(1, g.AdjacentEdges(1).Count());
+            Assert.AreEqual(1, g.AdjacentEdges(2).Count());
+
+            // e12 must be present in u, because we added it.
+            Assert.IsTrue(g.ContainsEdge(e12));
+
+            // f12 is also in u, because e12 == f12.
+            Assert.IsTrue(g.ContainsEdge(f12));
+
+            // e21 and f21 are not in u, because ContainsEdge has semantics that 
+            // if it returns true for an edge, that edge must be physically present in 
+            // the collection of edges inside u.
+            if (e21 != null) Assert.IsFalse(g.ContainsEdge(e21));
+            if (f21 != null) Assert.IsFalse(g.ContainsEdge(f21));
+
+            // there must be an edge between vertices 1, 2.
+            Assert.IsTrue(g.ContainsEdge(1, 2));
+
+            // there is also an edge between vertices 2, 1, because the graph is undirected.
+            Assert.IsTrue(g.ContainsEdge(2, 1));
+
+            // obviously no edge between vertices 1, 3, as vertex 3 is not even present in the graph.
+            Assert.IsFalse(g.ContainsEdge(1, 3));
         }
     }
 }
