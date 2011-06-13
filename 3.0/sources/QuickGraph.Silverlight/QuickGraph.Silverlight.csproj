@@ -43,6 +43,10 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -493,11 +497,17 @@
     <Compile Include="..\QuickGraph\Collections\IDisjointSet.cs">
       <Link>Collections\IDisjointSet.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\Collections\IEdgeList.cs">
+      <Link>Collections\IEdgeList.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Collections\IPriorityQueue.cs">
       <Link>Collections\IPriorityQueue.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Collections\IQueue.cs">
       <Link>Collections\IQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\Collections\IVertexEdgeDictionary.cs">
+      <Link>Collections\IVertexEdgeDictionary.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Collections\Queue.cs">
       <Link>Collections\Queue.cs</Link>
@@ -516,6 +526,12 @@
     </Compile>
     <Compile Include="..\QuickGraph\Contracts\Collections\IDisjointSetContract.cs">
       <Link>Contracts\Collections\IDisjointSetContract.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\Contracts\Collections\IEdgeListContract.cs">
+      <Link>Contracts\Collections\IEdgeListContract.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\Contracts\Collections\IVertexEdgeDictionaryContract.cs">
+      <Link>Contracts\Collections\IVertexEdgeDictionaryContract.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\Contracts\DummyContract.cs">
       <Link>Contracts\DummyContract.cs</Link>

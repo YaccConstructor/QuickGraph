@@ -36,10 +36,8 @@ namespace QuickGraph
     {
         private readonly bool isDirected = true;
         private readonly bool allowParallelEdges;
-        private readonly VertexEdgeDictionary<TVertex, TEdge> vertexOutEdges 
-            = new VertexEdgeDictionary<TVertex, TEdge>();
-        private readonly VertexEdgeDictionary<TVertex, TEdge> vertexInEdges 
-            = new VertexEdgeDictionary<TVertex, TEdge>();
+        private readonly IVertexEdgeDictionary<TVertex, TEdge> vertexOutEdges;
+        private readonly IVertexEdgeDictionary<TVertex, TEdge> vertexInEdges;
         private int edgeCount = 0;
         private int edgeCapacity = -1;
 
@@ -66,6 +64,17 @@ namespace QuickGraph
             }
         }
 
+        public BidirectionalGraph(
+            bool allowParallelEdges, 
+            int capacity, 
+            Func<int, IVertexEdgeDictionary<TVertex, TEdge>> vertexEdgesDictionaryFactory)
+        {
+            Contract.Requires(vertexEdgesDictionaryFactory != null);
+            this.allowParallelEdges = allowParallelEdges;
+            this.vertexInEdges = vertexEdgesDictionaryFactory(capacity);
+            this.vertexOutEdges = vertexEdgesDictionaryFactory(capacity);
+        }
+ 
         public static Type EdgeType
         {
             [Pure]
@@ -136,7 +145,7 @@ namespace QuickGraph
         [Pure]
         public bool TryGetInEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
-            EdgeList<TVertex, TEdge> list;
+            IEdgeList<TVertex, TEdge> list;
             if (this.vertexInEdges.TryGetValue(v, out list))
             {
                 edges = list;
@@ -150,7 +159,7 @@ namespace QuickGraph
         [Pure]
         public bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
-            EdgeList<TVertex, TEdge> list;
+            IEdgeList<TVertex, TEdge> list;
             if (this.vertexOutEdges.TryGetValue(v, out list))
             {
                 edges = list;
@@ -238,7 +247,7 @@ namespace QuickGraph
             TVertex target,
             out TEdge edge)
         {
-            EdgeList<TVertex, TEdge> edgeList;
+            IEdgeList<TVertex, TEdge> edgeList;
             if (this.vertexOutEdges.TryGetValue(source, out edgeList) &&
                 edgeList.Count > 0)
             {
@@ -261,7 +270,7 @@ namespace QuickGraph
             TVertex target,
             out IEnumerable<TEdge> edges)
         {
-            EdgeList<TVertex, TEdge> edgeList;
+            IEdgeList<TVertex, TEdge> edgeList;
             if (this.vertexOutEdges.TryGetValue(source, out edgeList))
             {
                 List<TEdge> list = new List<TEdge>(edgeList.Count);
@@ -281,7 +290,7 @@ namespace QuickGraph
         [Pure]
         public bool ContainsEdge(TEdge edge)
         {
-            EdgeList<TVertex, TEdge> outEdges;
+            IEdgeList<TVertex, TEdge> outEdges;
             return this.vertexOutEdges.TryGetValue(edge.Source, out outEdges) &&
                 outEdges.Contains(edge);
         }
@@ -606,8 +615,8 @@ namespace QuickGraph
 
 
         private BidirectionalGraph(
-            VertexEdgeDictionary<TVertex, TEdge> vertexInEdges,
-            VertexEdgeDictionary<TVertex, TEdge> vertexOutEdges,
+            IVertexEdgeDictionary<TVertex, TEdge> vertexInEdges,
+            IVertexEdgeDictionary<TVertex, TEdge> vertexOutEdges,
             int edgeCount,
             int edgeCapacity,
             bool allowParallelEdges

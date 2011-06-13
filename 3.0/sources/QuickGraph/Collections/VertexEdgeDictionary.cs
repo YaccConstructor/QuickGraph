@@ -9,7 +9,8 @@ namespace QuickGraph.Collections
     [Serializable]
 #endif
     public sealed class VertexEdgeDictionary<TVertex,TEdge>
-        : Dictionary<TVertex, EdgeList<TVertex, TEdge>>
+        : Dictionary<TVertex, IEdgeList<TVertex, TEdge>>
+        , IVertexEdgeDictionary<TVertex, TEdge>
 #if !SILVERLIGHT
         , ICloneable
         , ISerializable
@@ -33,6 +34,11 @@ namespace QuickGraph.Collections
             foreach (var kv in this)
                 clone.Add(kv.Key, kv.Value.Clone());
             return clone;
+        }
+
+        IVertexEdgeDictionary<TVertex, TEdge> IVertexEdgeDictionary<TVertex,TEdge>.Clone()
+        {
+            return this.Clone();
         }
 
 #if !SILVERLIGHT

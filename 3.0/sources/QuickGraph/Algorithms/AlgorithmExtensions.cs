@@ -19,26 +19,11 @@ using QuickGraph.Algorithms.MaximumFlow;
 
 namespace QuickGraph.Algorithms
 {
+    /// <summary>
+    /// Various extension methods to build algorithms
+    /// </summary>
     public static class AlgorithmExtensions
     {
-        /// <summary>
-        /// Returns the method that implement the access indexer.
-        /// </summary>
-        /// <typeparam name="TDelegate"></typeparam>
-        /// <typeparam name="TKey"></typeparam>
-        /// <typeparam name="TValue"></typeparam>
-        /// <param name="dictionary"></param>
-        /// <returns></returns>
-        public static TDelegate GetIndexer<TDelegate, TKey, TValue>(Dictionary<TKey, TValue> dictionary)
-        {
-            Contract.Requires(dictionary != null);
-            Contract.Requires(typeof(Delegate).IsAssignableFrom(typeof(TDelegate)));
-            Contract.Ensures(Contract.Result<TDelegate>() != null);
-
-            var method = dictionary.GetType().GetProperty("Item").GetGetMethod();
-            return (TDelegate)(object)Delegate.CreateDelegate(typeof(TDelegate), dictionary, method, true);
-        }
-
         /// <summary>
         /// Returns the method that implement the access indexer.
         /// </summary>
@@ -51,8 +36,12 @@ namespace QuickGraph.Algorithms
             Contract.Requires(dictionary != null);
             Contract.Ensures(Contract.Result<Func<TKey, TValue>>() != null);
 
+#if!SILVERLIGHT
             var method = dictionary.GetType().GetProperty("Item").GetGetMethod();
             return (Func<TKey, TValue>)Delegate.CreateDelegate(typeof(Func<TKey, TValue>), dictionary, method, true);
+#else
+            return key => dictionary[key];
+#endif
         }
 
         /// <summary>

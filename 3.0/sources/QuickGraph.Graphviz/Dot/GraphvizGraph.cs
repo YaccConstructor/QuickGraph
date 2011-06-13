@@ -29,7 +29,7 @@ namespace QuickGraph.Graphviz.Dot
         private int nsLimit1 = -1;
         private GraphvizOutputMode outputOrder = GraphvizOutputMode.BreadthFirst;
         private GraphvizPageDirection pageDirection = GraphvizPageDirection.BL;
-        private System.Drawing.Size pageSize = new System.Drawing.Size(0, 0);
+        private System.Drawing.SizeF pageSize = new System.Drawing.SizeF(0, 0);
         private double quantum = 0;
         private GraphvizRankDirection rankDirection = GraphvizRankDirection.TB;
         private double rankSeparation = 0.5;
@@ -38,7 +38,7 @@ namespace QuickGraph.Graphviz.Dot
         private int rotate = 0;
         private int samplePoints = 8;
         private int searchSize = 30;
-        private System.Drawing.Size size = new System.Drawing.Size(0, 0);
+        private System.Drawing.SizeF size = new System.Drawing.SizeF(0, 0);
         private string styleSheet = null;
         private string url = null;
 
@@ -159,7 +159,7 @@ namespace QuickGraph.Graphviz.Dot
             }
             if (!this.PageSize.IsEmpty)
             {
-                pairs["page"] = string.Format("({0},{1})", this.PageSize.Width, this.PageSize.Height);
+                pairs["page"] = string.Format("{0},{1}", this.PageSize.Width, this.PageSize.Height);
             }
             if (this.PageDirection != GraphvizPageDirection.BL)
             {
@@ -203,7 +203,7 @@ namespace QuickGraph.Graphviz.Dot
             }
             if (!this.Size.IsEmpty)
             {
-                pairs["size"] = string.Format("({0},{1})", this.Size.Width, this.Size.Height);
+                pairs["size"] = string.Format("{0},{1}", this.Size.Width, this.Size.Height);
             }
             if (this.StyleSheet != null)
             {
@@ -475,7 +475,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public System.Drawing.Size PageSize
+        public System.Drawing.SizeF PageSize
         {
             get
             {
@@ -583,7 +583,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public System.Drawing.Size Size
+        public System.Drawing.SizeF Size
         {
             get
             {

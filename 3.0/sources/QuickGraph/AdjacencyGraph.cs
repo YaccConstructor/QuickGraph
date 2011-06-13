@@ -31,11 +31,10 @@ namespace QuickGraph
     {
         private readonly bool isDirected = true;
         private readonly bool allowParallelEdges;
-        private readonly VertexEdgeDictionary<TVertex, TEdge> vertexEdges;
+        private readonly IVertexEdgeDictionary<TVertex, TEdge> vertexEdges;
         private int edgeCount = 0;
         private int edgeCapacity = -1;
 
-        #region Construction
         public AdjacencyGraph()
             :this(true)
         {}
@@ -60,7 +59,17 @@ namespace QuickGraph
             this.edgeCapacity = edgeCapacity;
         }
 
-        #endregion
+        public AdjacencyGraph(
+            bool allowParallelEdges, 
+            int capacity, 
+            int edgeCapacity,
+            Func<int, IVertexEdgeDictionary<TVertex, TEdge>> vertexEdgesDictionaryFactory)
+        {
+            Contract.Requires(vertexEdgesDictionaryFactory != null);
+            this.allowParallelEdges = allowParallelEdges;
+            this.vertexEdges = vertexEdgesDictionaryFactory(capacity);
+            this.edgeCapacity = edgeCapacity;
+        }
 
         public bool IsDirected
         {
@@ -122,7 +131,7 @@ namespace QuickGraph
 
         public virtual bool TryGetOutEdges(TVertex v, out IEnumerable<TEdge> edges)
         {
-            EdgeList<TVertex, TEdge> list;
+            IEdgeList<TVertex, TEdge> list;
             if (this.vertexEdges.TryGetValue(v, out list))
             {
                 edges = list;
@@ -198,7 +207,7 @@ namespace QuickGraph
         [Pure]
         public bool ContainsEdge(TEdge edge)
         {
-            EdgeList<TVertex, TEdge> edges;
+            IEdgeList<TVertex, TEdge> edges;
             return 
                 this.vertexEdges.TryGetValue(edge.Source, out edges) &&
                 edges.Contains(edge);
@@ -210,7 +219,7 @@ namespace QuickGraph
             TVertex target,
             out TEdge edge)
         {
-            EdgeList<TVertex, TEdge> edgeList;
+            IEdgeList<TVertex, TEdge> edgeList;
             if (this.vertexEdges.TryGetValue(source, out edgeList) &&
                 edgeList.Count > 0)
             {
@@ -233,7 +242,7 @@ namespace QuickGraph
             TVertex target,
             out IEnumerable<TEdge> edges)
         {
-            EdgeList<TVertex, TEdge> outEdges;
+            IEdgeList<TVertex, TEdge> outEdges;
             if (this.vertexEdges.TryGetValue(source, out outEdges))
             {
                 List<TEdge> list = new List<TEdge>(outEdges.Count);
@@ -380,8 +389,6 @@ namespace QuickGraph
         /// <returns>true if the edge was added; false if it was already part of the graph</returns>
         public virtual bool AddEdge(TEdge e)
         {
-            Contract.Requires(e != null);
-
             if (!this.AllowParallelEdges)
             {
                 if (this.ContainsEdge(e.Source, e.Target))
@@ -414,7 +421,7 @@ namespace QuickGraph
 
         public virtual bool RemoveEdge(TEdge e)
         {
-            EdgeList<TVertex, TEdge> edges;
+            IEdgeList<TVertex, TEdge> edges;
             if (this.vertexEdges.TryGetValue(e.Source, out edges) &&
                 edges.Remove(e))
             {
@@ -493,7 +500,7 @@ namespace QuickGraph
 
         #region ICloneable Members
         private AdjacencyGraph(
-            VertexEdgeDictionary<TVertex, TEdge> vertexEdges,
+            IVertexEdgeDictionary<TVertex, TEdge> vertexEdges,
             int edgeCount,
             int edgeCapacity,
             bool allowParallelEdges
