@@ -599,6 +599,9 @@
     <Compile Include="..\QuickGraph\Contracts\IMutableVertexSetContract.cs">
       <Link>Contracts\IMutableVertexSetContract.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\Contracts\ITermEdgeContract.cs">
+      <Link>ITermEdgeContract.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\Contracts\IUndirectedEdgeContract.cs">
       <Link>Contracts\IUndirectedEdgeContract.cs</Link>
     </Compile>
@@ -752,6 +755,12 @@
     <Compile Include="..\QuickGraph\ITagged.cs">
       <Link>ITagged.cs</Link>
     </Compile>
+    <Compile Include="..\QuickGraph\ITermBidirectionalGraph.cs">
+      <Link>ITermBidirectionalGraph.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\ITermEdge.cs">
+      <Link>ITermEdge.cs</Link>
+    </Compile>
     <Compile Include="..\QuickGraph\IUndirectedEdge.cs">
       <Link>IUndirectedEdge.cs</Link>
     </Compile>
@@ -877,6 +886,15 @@
     </Compile>
     <Compile Include="..\QuickGraph\TaggedUndirectedEdge.cs">
       <Link>TaggedUndirectedEdge.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\TermBidirectionalGraph.cs">
+      <Link>TermBidirectionalGraph.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\TermEdge.cs">
+      <Link>TermEdge.cs</Link>
+    </Compile>
+    <Compile Include="..\QuickGraph\TermEdgeList.cs">
+      <Link>TermEdgeList.cs</Link>
     </Compile>
     <Compile Include="..\QuickGraph\TryFuncDelegates.cs">
       <Link>TryFuncDelegates.cs</Link>
