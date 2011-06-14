@@ -6,3 +6,5 @@ Bin/
 *.suo
 TestResults/
 *.bak
+QuickGraph.5.1.TeamCity.user
+QuickGraph.sln.docstates
