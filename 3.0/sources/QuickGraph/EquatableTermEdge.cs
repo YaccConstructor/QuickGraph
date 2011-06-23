@@ -18,6 +18,10 @@ namespace QuickGraph
         : TermEdge<TVertex>
         , IEquatable<EquatableTermEdge<TVertex>>
     {
+        public EquatableTermEdge(TVertex source, TVertex target, int sourceTerminal, int targetTerminal)
+            : base(source, target, sourceTerminal, targetTerminal)
+        { }
+
         public EquatableTermEdge(TVertex source, TVertex target)
             : base(source, target)
         { }
