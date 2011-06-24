@@ -7,7 +7,8 @@ namespace QuickGraph
 {
     public class EquateGraphs
     {
-        public static bool Equate<V, E>(IVertexAndEdgeListGraph<V, E> g, IVertexAndEdgeListGraph<V, E> h)
+        public static bool Equate<V, E>(IVertexAndEdgeListGraph<V, E> g, IVertexAndEdgeListGraph<V, E> h,
+            IEqualityComparer<V> vertexEquality, IEqualityComparer<E> edgeEquality)
             where E : IEdge<V>
         {
             if (ReferenceEquals(g, null))
@@ -26,17 +27,23 @@ namespace QuickGraph
 
             foreach (var v in g.Vertices)
             {
-                if (!h.ContainsVertex(v))
+                if (!h.Vertices.Any(u => vertexEquality.Equals(u, v)))
                     return false;
             }
 
             foreach (var e in g.Edges)
             {
-                if (!h.ContainsEdge(e))
+                if (!h.Edges.Any(f => edgeEquality.Equals(e, f)))
                     return false;
             }
 
             return true;
+        }
+
+        public static bool Equate<V, E>(IVertexAndEdgeListGraph<V, E> g, IVertexAndEdgeListGraph<V, E> h)
+            where E : IEdge<V>
+        {
+            return Equate(g, h, EqualityComparer<V>.Default, EqualityComparer<E>.Default);
         }
     }
 }
