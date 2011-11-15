@@ -83,7 +83,7 @@ namespace QuickGraph
             int index = 0;
             foreach (var vertex in visitedGraph.Vertices)
             {
-                end = start + visitedGraph.OutDegree(vertex);
+                end = index + visitedGraph.OutDegree(vertex);
                 var range = new Range(start, end);
                 outEdgeStartRanges.Add(vertex, range);
                 foreach (var edge in visitedGraph.OutEdges(vertex))
@@ -211,11 +211,12 @@ namespace QuickGraph
 
         public bool TryGetOutEdges(TVertex v, out IEnumerable<SEquatableEdge<TVertex>> edges)
         {
-            var range = this.outEdgeStartRanges[v];
-            if (range.Length > 0)
+            Range range;
+            if (this.outEdgeStartRanges.TryGetValue(v, out range) &&
+                range.Length > 0)
             {
                 edges = this.OutEdges(v);
-                return false;
+                return true;
             }
 
             edges = null;
