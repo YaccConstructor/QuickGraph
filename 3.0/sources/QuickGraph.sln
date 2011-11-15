@@ -32,15 +32,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Graphviz", "Quic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Data", "QuickGraph.Data\QuickGraph.Data.csproj", "{960C14D1-EDBD-40E5-8AE6-25E311551B87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Silverlight", "QuickGraph.Silverlight\QuickGraph.Silverlight.csproj", "{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "All", "All\All.csproj", "{0C5AD831-C7DB-471B-AD55-28601C6FEA8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Samples", "QuickGraph.Samples\QuickGraph.Samples.csproj", "{8836CFAC-D2B0-47A5-9A91-03A2218BF6FD}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 7
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
@@ -63,10 +61,6 @@ Global
 		SccProjectUniqueName5 = All\\All.csproj
 		SccProjectName5 = All
 		SccLocalPath5 = All
-		SccProjectUniqueName6 = QuickGraph.Silverlight\\QuickGraph.Silverlight.csproj
-		SccProjectTopLevelParentUniqueName6 = QuickGraph.sln
-		SccProjectName6 = QuickGraph.Silverlight
-		SccLocalPath6 = QuickGraph.Silverlight
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = QuickGraph1.vsmdi
@@ -81,8 +75,8 @@ Global
 		{A9A5C115-0680-44B3-A87E-5ECF4C93814E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9A5C115-0680-44B3-A87E-5ECF4C93814E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9A5C115-0680-44B3-A87E-5ECF4C93814E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9A5C115-0680-44B3-A87E-5ECF4C93814E}.Release20|Any CPU.ActiveCfg = Release20|Any CPU
-		{A9A5C115-0680-44B3-A87E-5ECF4C93814E}.Release20|Any CPU.Build.0 = Release20|Any CPU
+		{A9A5C115-0680-44B3-A87E-5ECF4C93814E}.Release20|Any CPU.ActiveCfg = Release|Any CPU
+		{A9A5C115-0680-44B3-A87E-5ECF4C93814E}.Release20|Any CPU.Build.0 = Release|Any CPU
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -95,11 +89,6 @@ Global
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.Release|Any CPU.Build.0 = Release|Any CPU
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.Release20|Any CPU.ActiveCfg = Release20|Any CPU
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87}.Release20|Any CPU.Build.0 = Release20|Any CPU
-		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70}.Release20|Any CPU.ActiveCfg = Release|Any CPU
 		{0C5AD831-C7DB-471B-AD55-28601C6FEA8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0C5AD831-C7DB-471B-AD55-28601C6FEA8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C5AD831-C7DB-471B-AD55-28601C6FEA8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -118,7 +107,6 @@ Global
 		{A9A5C115-0680-44B3-A87E-5ECF4C93814E} = {7A2A3C07-B652-4759-AFC4-49378D764784}
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7} = {7A2A3C07-B652-4759-AFC4-49378D764784}
 		{960C14D1-EDBD-40E5-8AE6-25E311551B87} = {7A2A3C07-B652-4759-AFC4-49378D764784}
-		{58F715F1-269D-47F0-BFA6-A61DA6BA9C70} = {7A2A3C07-B652-4759-AFC4-49378D764784}
 		{8836CFAC-D2B0-47A5-9A91-03A2218BF6FD} = {7A2A3C07-B652-4759-AFC4-49378D764784}
 	EndGlobalSection
 EndGlobal
