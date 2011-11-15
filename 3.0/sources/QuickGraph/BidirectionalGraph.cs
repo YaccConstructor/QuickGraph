@@ -550,6 +550,15 @@ namespace QuickGraph
             this.vertexOutEdges.Clear();
             this.vertexInEdges.Clear();
             this.edgeCount = 0;
+            this.OnCleared(EventArgs.Empty);
+        }
+
+        public event EventHandler Cleared;
+        private void OnCleared(EventArgs e)
+        {
+            var eh = this.Cleared;
+            if (eh != null)
+                eh(this, e);
         }
 
         public void MergeVertex(TVertex v, EdgeFactory<TVertex, TEdge> edgeFactory)

@@ -154,6 +154,15 @@ namespace QuickGraph
             this.edges.Clear();
             foreach (var edge in edges.Keys)
                 this.OnEdgeRemoved(edge);
+            this.OnCleared(EventArgs.Empty);
+        }
+
+        public event EventHandler Cleared;
+        private void OnCleared(EventArgs e)
+        {
+            var eh = this.Cleared;
+            if (eh != null)
+                eh(this, e);
         }
 
         #region ICloneable Members

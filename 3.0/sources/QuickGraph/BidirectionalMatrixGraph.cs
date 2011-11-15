@@ -360,6 +360,15 @@ namespace QuickGraph
                 for(int j = 0;j<this.vertexCount;++j)
                     this.edges[i,j] = default(TEdge);
             this.edgeCount = 0;
+            this.OnCleared(EventArgs.Empty);
+        }
+
+        public event EventHandler Cleared;
+        private void OnCleared(EventArgs e)
+        {
+            var eh = this.Cleared;
+            if (eh != null)
+                eh(this, e);
         }
         #endregion
 

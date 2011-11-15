@@ -159,5 +159,8 @@ namespace QuickGraph.Contracts
         }
 
         #endregion
+
+
+        public event EventHandler Cleared;
     }
 }

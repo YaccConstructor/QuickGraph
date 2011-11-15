@@ -142,5 +142,12 @@ namespace QuickGraph.Contracts
             throw new NotImplementedException();
         }
         #endregion
+
+
+        event EventHandler IMutableGraph<TVertex, TEdge>.Cleared
+        {
+            add { throw new NotImplementedException(); }
+            remove { throw new NotImplementedException(); }
+        }
     }
 }

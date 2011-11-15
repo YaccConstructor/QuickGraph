@@ -18,5 +18,10 @@ namespace QuickGraph
         /// Clears the vertex and edges
         /// </summary>
         void Clear();
+
+        /// <summary>
+        /// Called when the graph vertices and edges have been cleared.
+        /// </summary>
+        event EventHandler Cleared;
     }
 }
