@@ -58,7 +58,6 @@ namespace QuickGraph.Algorithms.RankedShortestPath
 
             var pathArray = path.ToArray();
             this.computedShortestPaths.Add(pathArray);
-            Console.WriteLine("found shortest path {0}", path.Count);
         }
 
         public IDistanceRelaxer DistanceRelaxer
