@@ -119,7 +119,7 @@ namespace QuickGraph.Serialization
                 // check all nodes are loaded
                 var settings = new XmlReaderSettings();
                 settings.XmlResolver = new GraphMLXmlResolver();
-                settings.ProhibitDtd = false;
+                settings.DtdProcessing = DtdProcessing.Ignore;
                 settings.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.None;
                 using(var xreader = XmlReader.Create(graphmlFile, settings))
                 {
@@ -129,7 +129,7 @@ namespace QuickGraph.Serialization
                         string id = node.GetAttribute("id", "");
                         Assert.IsTrue(vertices.ContainsKey(id));
                     }
-                    Console.Write(", vertices ok");
+                    TestConsole.Write(", vertices ok");
 
                     // check all edges are loaded
                     foreach (XPathNavigator node in doc.CreateNavigator().Select("/graphml/graph/edge"))
@@ -138,7 +138,7 @@ namespace QuickGraph.Serialization
                         string target = node.GetAttribute("target", "");
                         Assert.IsTrue(g.ContainsEdge(vertices[source], vertices[target]));
                     }
-                    Console.Write(", edges ok");
+                    TestConsole.Write(", edges ok");
                 }
                 TestConsole.WriteLine();
             }

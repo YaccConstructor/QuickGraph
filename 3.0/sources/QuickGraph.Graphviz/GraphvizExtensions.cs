@@ -57,7 +57,7 @@ this
         /// Performs a layout .dot in an SVG (Scalable Vector Graphics) file
         /// by calling Agl through the http://rise4fun.com/ REST services.
         /// </summary>
-        /// <param name="dot">the dot graph</param>
+        /// <param name="graph">the dot graph</param>
         /// <returns>the svg graph</returns>
         public static string ToSvg<TVertex, TEdge>(
 #if !NET20
@@ -78,7 +78,8 @@ this
         /// Performs a layout .dot in an SVG (Scalable Vector Graphics) file
         /// by calling Agl through the http://rise4fun.com/ REST services.
         /// </summary>
-        /// <param name="dot">the dot graph</param>
+        /// <param name="graph">the dot graph</param>
+        /// <param name="initialization"></param>
         /// <returns>the svg graph</returns>
         public static string ToSvg<TVertex, TEdge>(
 #if !NET20
