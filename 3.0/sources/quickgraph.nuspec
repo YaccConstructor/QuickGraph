@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>QuickGraph</id>
-    <version>3.6.61119.2</version>
+    <version>3.6.61119.4</version>
     <authors>Jonathan Peli de Halleux</authors>
     <title>Generic graph data structures and algorithms for .NET</title>
     <summary>Generic graph data structures and algorithms for .NET</summary>
@@ -17,9 +17,9 @@
   </metadata>
   <files>
     <!-- net3.5 -->
-    <file src="QuickGraph\bin\Release\QuickGraph.dll" target="lib" />
-    <file src="QuickGraph\bin\Release\QuickGraph.xml" target="lib" />
-    <file src="QuickGraph\bin\Release\CodeContracts\QuickGraph.Contracts.dll" target="lib\CodeContracts" />
+    <file src="QuickGraph\bin\Release\QuickGraph.dll" target="lib\net4" />
+    <file src="QuickGraph\bin\Release\QuickGraph.xml" target="lib\net4" />
+    <file src="QuickGraph\bin\Release\CodeContracts\QuickGraph.Contracts.dll" target="lib\net4\CodeContracts" />
 
     <file src="QuickGraph.Serialization\bin\Release\QuickGraph.Serialization.dll" target="lib\net4" />
     <file src="QuickGraph.Serialization\bin\Release\QuickGraph.Serialization.xml" target="lib\net4" />
