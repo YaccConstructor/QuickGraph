@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>QuickGraph</id>
-    <version>3.6.61119.4</version>
+    <version>3.6.61119.5</version>
     <authors>Jonathan Peli de Halleux</authors>
     <title>Generic graph data structures and algorithms for .NET</title>
     <summary>Generic graph data structures and algorithms for .NET</summary>
