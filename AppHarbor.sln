@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Data", "3.0\sour
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Graphviz", "3.0\sources\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj", "{595D6322-637A-4A36-97F1-D53F3F9ECEA7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{60A06011-2818-4BCB-BF1B-C28137A7F50D}"
+	ProjectSection(SolutionItems) = preProject
+		3.0\sources\quickgraph.nuspec = 3.0\sources\quickgraph.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 5
