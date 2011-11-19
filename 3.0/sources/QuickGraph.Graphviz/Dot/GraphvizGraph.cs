@@ -29,7 +29,7 @@ namespace QuickGraph.Graphviz.Dot
         private int nsLimit1 = -1;
         private GraphvizOutputMode outputOrder = GraphvizOutputMode.BreadthFirst;
         private GraphvizPageDirection pageDirection = GraphvizPageDirection.BL;
-        private System.Drawing.SizeF pageSize = new System.Drawing.SizeF(0, 0);
+        private GraphvizSize pageSize = new GraphvizSize(0, 0);
         private double quantum = 0;
         private GraphvizRankDirection rankDirection = GraphvizRankDirection.TB;
         private double rankSeparation = 0.5;
@@ -38,7 +38,7 @@ namespace QuickGraph.Graphviz.Dot
         private int rotate = 0;
         private int samplePoints = 8;
         private int searchSize = 30;
-        private System.Drawing.SizeF size = new System.Drawing.SizeF(0, 0);
+        private GraphvizSize size = new GraphvizSize(0, 0);
         private string styleSheet = null;
         private string url = null;
 
@@ -475,7 +475,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public System.Drawing.SizeF PageSize
+        public GraphvizSize PageSize
         {
             get
             {
@@ -583,7 +583,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public System.Drawing.SizeF Size
+        public GraphvizSize Size
         {
             get
             {

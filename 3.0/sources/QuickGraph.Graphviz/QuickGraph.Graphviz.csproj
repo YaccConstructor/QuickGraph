@@ -163,7 +163,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
@@ -197,6 +196,7 @@
     <Compile Include="Dot\GraphvizRecordCell.cs" />
     <Compile Include="Dot\GraphvizRecordCellCollection.cs" />
     <Compile Include="Dot\GraphvizRecordEscaper.cs" />
+    <Compile Include="Dot\GraphvizSize.cs" />
     <Compile Include="Dot\GraphvizVertex.cs" />
     <Compile Include="Dot\GraphvizVertexShape.cs" />
     <Compile Include="Dot\GraphvizVertexStyle.cs" />
