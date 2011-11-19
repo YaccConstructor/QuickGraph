@@ -11,14 +11,10 @@
     <RootNamespace>QuickGraph.Tests</RootNamespace>
     <AssemblyName>QuickGraph.Tests</AssemblyName>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -471,6 +467,7 @@
       <DependentUpon>TaggedEdgeTVertexTTagTest.cs</DependentUpon>
     </Compile>
     <Compile Include="TestCategories.cs" />
+    <Compile Include="TestConsole.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="UndirectedGraphInvariant.cs" />
     <Compile Include="UndirectedGraphTVertexTEdgeTest.cs" />

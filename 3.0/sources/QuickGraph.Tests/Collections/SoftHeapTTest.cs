@@ -21,7 +21,7 @@ namespace QuickGraph.Collections
             PexAssume.IsTrue(keys.Length > 0);
 
             var target = new SoftHeap<int, int>(1/4.0, int.MaxValue);
-            Console.WriteLine("expected error rate: {0}", target.ErrorRate);
+            TestConsole.WriteLine("expected error rate: {0}", target.ErrorRate);
             foreach (var key in keys)
             {
                 var count = target.Count;
@@ -40,7 +40,7 @@ namespace QuickGraph.Collections
                 Assert.AreEqual(kv.Key + 1, kv.Value);
             }
 
-            Console.WriteLine("error rate: {0}", error / (double)keys.Length);
+            TestConsole.WriteLine("error rate: {0}", error / (double)keys.Length);
             Assert.IsTrue(error / (double)keys.Length <= target.ErrorRate);
         }
     }

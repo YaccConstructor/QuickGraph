@@ -72,7 +72,7 @@ this
 
             var settings = new XmlReaderSettings();
 #if !SILVERLIGHT
-            settings.DtdProcessing = DtdProcessing.Prohibit;
+            settings.DtdProcessing = DtdProcessing.Ignore;
             settings.ValidationFlags = XmlSchemaValidationFlags.None;
 #endif
             settings.XmlResolver = new GraphMLXmlResolver();

@@ -25,7 +25,7 @@ namespace QuickGraph.Algorithms
         {
             int index = 0;
             foreach (string v in topo.SortedVertices)
-                Console.WriteLine("{0}: {1}", index++, v);
+                TestConsole.WriteLine("{0}: {1}", index++, v);
         }
     }
 }

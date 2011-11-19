@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Xml.XPath;
 using System.Xml;
+using System.Threading.Tasks;
 
 namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
 {
@@ -22,8 +23,8 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         [TestMethod]
         public void KruskalMinimumSpanningTreeAll()
         {
-            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
-                Kruskal(g);
+            Parallel.ForEach(TestGraphFactory.GetUndirectedGraphs(), g =>
+                Kruskal(g));
         }
 
         [PexMethod]
@@ -41,8 +42,8 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         [TestMethod]
         public void PrimMinimumSpanningTreeAll()
         {
-            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
-                Prim(g);
+            Parallel.ForEach(TestGraphFactory.GetUndirectedGraphs(), g =>
+                Prim(g));
         }
 
         [PexMethod]
@@ -66,7 +67,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             using (edgeRecorder.Attach(algorithm))
                 algorithm.Compute();
 
-            Console.WriteLine("tree cost: {0}", edgeRecorder.Edges.Count);
+            TestConsole.WriteLine("tree cost: {0}", edgeRecorder.Edges.Count);
             AssertSpanningTree<TVertex, TEdge>(g, edgeRecorder.Edges);
         }
 
@@ -76,10 +77,10 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             where TEdge : IEdge<TVertex>
         {
             var spanned = new Dictionary<TVertex, TEdge>();
-            Console.WriteLine("tree:");
+            TestConsole.WriteLine("tree:");
             foreach (var e in tree)
             {
-                Console.WriteLine("\t{0}", e);
+                TestConsole.WriteLine("\t{0}", e);
                 spanned[e.Source] = spanned[e.Target] = default(TEdge);
             }
 
@@ -111,11 +112,11 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Count: {0} - {1}", left.Count, right.Count);
+                TestConsole.WriteLine("Count: {0} - {1}", left.Count, right.Count);
                 foreach (var kv in left)
                 {
                     TEdge e;
-                    Console.WriteLine(
+                    TestConsole.WriteLine(
                         "{0} - {1}", kv.Value, right.TryGetValue(kv.Key, out e) ? e.ToString() : "missing"  );
                 }
 
@@ -126,8 +127,8 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         [TestMethod]
         public void PrimKruskalMinimumSpanningTreeAll()
         {
-            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
-                this.CompareRoot(g);
+            Parallel.ForEach(TestGraphFactory.GetUndirectedGraphs(), g =>
+                this.CompareRoot(g));
         }
 
         [PexMethod]
@@ -143,13 +144,13 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
 
             var primCost = prim.Sum(e => distances[e]);
             var kruskalCost = kruskal.Sum(e => distances[e]);
-            Console.WriteLine("prim cost: {0}", primCost);
-            Console.WriteLine("kruskal cost: {0}", kruskalCost);
+            TestConsole.WriteLine("prim cost: {0}", primCost);
+            TestConsole.WriteLine("kruskal cost: {0}", kruskalCost);
             if (primCost != kruskalCost)
             {
                 GraphConsoleSerializer.DisplayGraph(g);
-                Console.WriteLine("prim: {0}", String.Join(", ", Array.ConvertAll(prim.ToArray(), e => e.ToString() + ':' + distances[e])));
-                Console.WriteLine("krus: {0}", String.Join(", ", Array.ConvertAll(kruskal.ToArray(), e => e.ToString() + ':' + distances[e])));
+                TestConsole.WriteLine("prim: {0}", String.Join(", ", Array.ConvertAll(prim.ToArray(), e => e.ToString() + ':' + distances[e])));
+                TestConsole.WriteLine("krus: {0}", String.Join(", ", Array.ConvertAll(kruskal.ToArray(), e => e.ToString() + ':' + distances[e])));
                 Assert.Fail("cost do not match");
             }
 
@@ -223,15 +224,15 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             //MsaglGraphExtensions.ShowMsaglGraph(ug);
             var prim = ug.MinimumSpanningTreePrim(e => e.Tag).ToList();
             var pcost = prim.Sum(e => e.Tag);
-            Console.WriteLine("prim cost {0}", pcost);
+            TestConsole.WriteLine("prim cost {0}", pcost);
             foreach(var e in prim)
-                Console.WriteLine(e);
+                TestConsole.WriteLine(e);
 
             var kruskal = ug.MinimumSpanningTreeKruskal(e => e.Tag).ToList();
             var kcost = kruskal.Sum(e => e.Tag);
-            Console.WriteLine("kruskal cost {0}", kcost);
+            TestConsole.WriteLine("kruskal cost {0}", kcost);
             foreach (var e in kruskal)
-                Console.WriteLine(e);
+                TestConsole.WriteLine(e);
 
             Assert.AreEqual(pcost, 63);
             Assert.AreEqual(pcost, kcost);

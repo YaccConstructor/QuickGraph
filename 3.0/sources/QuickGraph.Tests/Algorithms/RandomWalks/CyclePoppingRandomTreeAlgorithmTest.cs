@@ -3,6 +3,7 @@ using QuickGraph.Algorithms.RandomWalks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Serialization;
 using QuickGraph.Collections;
+using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
@@ -12,14 +13,14 @@ namespace QuickGraph.Algorithms.RandomWalks
         [TestMethod]
         public void CyclePoppingRandomTreeAll()
         {
-            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+            Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
             {
                 foreach (var v in g.Vertices)
                 {
                     var target = new CyclePoppingRandomTreeAlgorithm<string, Edge<string>>(g);
                     target.Compute(v);
                 }
-            }
+            });
         }
 
         [TestMethod]
@@ -56,7 +57,7 @@ namespace QuickGraph.Algorithms.RandomWalks
             var target = new CyclePoppingRandomTreeAlgorithm<int, SEquatableEdge<int>>(graph);
             target.Compute(2);
             foreach(var kv in target.Successors)
-                Console.WriteLine("{0}: {1}", kv.Key, kv.Value);
+                TestConsole.WriteLine("{0}: {1}", kv.Key, kv.Value);
         }
 
         [TestMethod]

@@ -18,6 +18,7 @@ namespace QuickGraph.Serialization
             list.AddRange(Directory.GetFiles(".", "g.*.graphml"));
             if (Directory.Exists("graphml"))
                 list.AddRange(Directory.GetFiles("graphml", "g.*.graphml"));
+            list.RemoveRange(10, list.Count - 10);
             return list;
         }
 
@@ -33,7 +34,7 @@ namespace QuickGraph.Serialization
 
         public static BidirectionalGraph<string, Edge<string>> LoadBidirectionalGraph(string graphmlFile)
         {
-            Console.WriteLine(graphmlFile);
+            TestConsole.WriteLine(graphmlFile);
             var g = new BidirectionalGraph<string, Edge<string>>();
             using (var reader = new StreamReader(graphmlFile))
             {
@@ -58,7 +59,7 @@ namespace QuickGraph.Serialization
 
         public static AdjacencyGraph<string, Edge<string>> LoadGraph(string graphmlFile)
         {
-            Console.WriteLine(graphmlFile);
+            TestConsole.WriteLine(graphmlFile);
             var g = new AdjacencyGraph<string, Edge<string>>();
             using (var reader = new StreamReader(graphmlFile))
             {
@@ -139,7 +140,7 @@ namespace QuickGraph.Serialization
                     }
                     Console.Write(", edges ok");
                 }
-                Console.WriteLine();
+                TestConsole.WriteLine();
             }
         }
     }

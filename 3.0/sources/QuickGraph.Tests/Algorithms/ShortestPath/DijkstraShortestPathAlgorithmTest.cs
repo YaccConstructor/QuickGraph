@@ -25,9 +25,11 @@ namespace QuickGraph.Algorithms.ShortestPath
         [TestMethod]
         public void DijkstraAll()
         {
-            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
-                foreach (var root in g.Vertices)
-                    this.Dijkstra(g, root);
+            System.Threading.Tasks.Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
+                {
+                    foreach (var root in g.Vertices)
+                        this.Dijkstra(g, root);
+                });
         }
 
         [PexMethod]

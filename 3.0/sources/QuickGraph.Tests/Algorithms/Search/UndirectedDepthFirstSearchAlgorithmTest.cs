@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Serialization;
 using Microsoft.Pex.Framework;
 using System.Diagnostics.Contracts;
+using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -32,8 +33,8 @@ namespace QuickGraph.Algorithms.Search
         [TestMethod]
         public void UndirectedDepthFirstSearchAll()
         {
-            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
-                this.UndirectedDepthFirstSearch(g);
+            Parallel.ForEach(TestGraphFactory.GetUndirectedGraphs(), g =>
+                this.UndirectedDepthFirstSearch(g));
         }
 
         [PexMethod]

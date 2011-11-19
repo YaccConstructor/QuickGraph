@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using QuickGraph.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Pex.Framework;
+using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -13,10 +14,12 @@ namespace QuickGraph.Algorithms.Search
         [TestMethod]
         public void BreadthFirstSearchAll()
         {
-            foreach(var g in TestGraphFactory.GetAdjacencyGraphs())
-                foreach(var v in g.Vertices)
-                    RunBfs(g,v);
-        }
+            Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
+                {
+                    foreach (var v in g.Vertices)
+                        RunBfs(g, v);
+                });
+         }
 
         [PexMethod]
         public void RunBfs<TVertex, TEdge>(IVertexAndEdgeListGraph<TVertex, TEdge> g, TVertex sourceVertex)

@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Pex.Framework;
 using QuickGraph.Serialization;
 using QuickGraph.Collections;
+using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms
 {
@@ -14,10 +15,10 @@ namespace QuickGraph.Algorithms
         [Ignore]
         public void EulerianTrailAll()
         {
-            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+            Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
             {
                 this.ComputeTrail(g, (s, t) => new Edge<string>(s, t));
-            }
+            });
         }
 
         [PexMethod]
@@ -44,13 +45,13 @@ namespace QuickGraph.Algorithms
             var trails = trail.Trails();
             trail.RemoveTemporaryEdges();
 
-            //Console.WriteLine("trails: {0}", trails.Count);
+            //TestConsole.WriteLine("trails: {0}", trails.Count);
             //int index = 0;
             //foreach (var t in trails)
             //{
-            //    Console.WriteLine("trail {0}", index++);
+            //    TestConsole.WriteLine("trail {0}", index++);
             //    foreach (Edge<string> edge in t)
-            //        Console.WriteLine("\t{0}", t);
+            //        TestConsole.WriteLine("\t{0}", t);
             //}
 
             // lets make sure all the edges are in the trail

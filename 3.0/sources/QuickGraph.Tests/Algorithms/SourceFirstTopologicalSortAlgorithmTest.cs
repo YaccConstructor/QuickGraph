@@ -12,8 +12,8 @@ namespace QuickGraph.Algorithms
         [TestMethod]
         public void SortAll()
         {
-            foreach(var g in TestGraphFactory.GetAdjacencyGraphs())
-                this.Sort(g);
+            System.Threading.Tasks.Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
+                this.Sort(g));
         }
 
         [PexMethod]

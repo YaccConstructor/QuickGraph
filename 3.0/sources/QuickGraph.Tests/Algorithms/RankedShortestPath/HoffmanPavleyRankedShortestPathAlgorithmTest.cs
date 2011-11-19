@@ -9,6 +9,7 @@ using QuickGraph.Algorithms.RankedShortestPath;
 using System.IO;
 using QuickGraph.Algorithms;
 using QuickGraph.Collections;
+using System.Threading.Tasks;
 
 namespace QuickGraph.Tests.Algorithms.RankedShortestPath
 {
@@ -18,22 +19,22 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
         [TestMethod]
         public void HoffmanPavleyRankedShortestPathAll()
         {
-            foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
+            Parallel.ForEach(TestGraphFactory.GetBidirectionalGraphs(), g =>
             {
-                if (g.VertexCount == 0) continue;
+                if (g.VertexCount == 0) return;
 
                 var weights = new Dictionary<Edge<string>, double>();
                 foreach (var e in g.Edges)
                     weights.Add(e, g.OutDegree(e.Source) + 1);
 
                 this.HoffmanPavleyRankedShortestPath(
-                    g, 
+                    g,
                     weights,
                     Enumerable.First(g.Vertices),
                     Enumerable.Last(g.Vertices),
                     g.VertexCount
-                    );                    
-            }
+                    );
+            });
         }
 
         [TestMethod]
@@ -120,7 +121,7 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
             double lastWeight = double.MinValue;
             foreach (var path in target.ComputedShortestPaths)
             {
-                Console.WriteLine("path: {0}", Enumerable.Sum(path, e => edgeWeights[e]));
+                TestConsole.WriteLine("path: {0}", Enumerable.Sum(path, e => edgeWeights[e]));
                 double weight = Enumerable.Sum(path, e => edgeWeights[e]);
                 Assert.IsTrue(lastWeight <= weight, "{0} <= {1}", lastWeight, weight);
                 Assert.AreEqual(rootVertex, Enumerable.First(path).Source);

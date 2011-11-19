@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Pex.Framework;
 using QuickGraph.Serialization;
 using QuickGraph.Collections;
+using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
@@ -12,8 +13,8 @@ namespace QuickGraph.Algorithms.MaximumFlow
         [TestMethod]
         public void AugmentAll()
         {
-            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
-                this.Augment(g);
+            Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
+                this.Augment(g));
         }
 
         [PexMethod]

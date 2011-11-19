@@ -24,12 +24,12 @@ namespace QuickGraph.Serialization
             {
                 get 
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._string; 
                 }
                 set 
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._string = value;
                 }
             }
@@ -40,12 +40,12 @@ namespace QuickGraph.Serialization
             {
                 get
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._int;
                 }
                 set
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._int = value;
                 }
             }
@@ -56,12 +56,12 @@ namespace QuickGraph.Serialization
             {
                 get
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._long;
                 }
                 set
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._long = value;
                 }
             }
@@ -72,12 +72,12 @@ namespace QuickGraph.Serialization
             {
                 get
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._bool;
                 }
                 set
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._bool = value;
                 }
             }
@@ -88,12 +88,12 @@ namespace QuickGraph.Serialization
             {
                 get
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._float;
                 }
                 set
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._float = value;
                 }
             }
@@ -104,12 +104,12 @@ namespace QuickGraph.Serialization
             {
                 get
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._double;
                 }
                 set
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._double = value;
                 }
             }
@@ -137,12 +137,12 @@ namespace QuickGraph.Serialization
             {
                 get
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._stringd;
                 }
                 set
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._stringd = value;
                 }
             }
@@ -154,12 +154,12 @@ namespace QuickGraph.Serialization
             {
                 get 
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._string; 
                 }
                 set 
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._string = value;
                 }
             }
@@ -170,12 +170,12 @@ namespace QuickGraph.Serialization
             {
                 get
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._int;
                 }
                 set
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._int = value;
                 }
             }
@@ -186,12 +186,12 @@ namespace QuickGraph.Serialization
             {
                 get
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._long;
                 }
                 set
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._long = value;
                 }
             }
@@ -202,12 +202,12 @@ namespace QuickGraph.Serialization
             {
                 get
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._bool;
                 }
                 set
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._bool = value;
                 }
             }
@@ -218,12 +218,12 @@ namespace QuickGraph.Serialization
             {
                 get
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._float;
                 }
                 set
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._float = value;
                 }
             }
@@ -234,12 +234,12 @@ namespace QuickGraph.Serialization
             {
                 get
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     return this._double;
                 }
                 set
                 {
-                    Console.WriteLine(MethodInfo.GetCurrentMethod());
+                    TestConsole.WriteLine(MethodInfo.GetCurrentMethod());
                     this._double = value;
                 }
             }
@@ -359,7 +359,7 @@ namespace QuickGraph.Serialization
                         );
 
                 xml = writer.ToString();
-                Console.WriteLine("serialized: " + xml);
+                TestConsole.WriteLine("serialized: " + xml);
             }
 
             TestGraph newg;
@@ -384,7 +384,7 @@ namespace QuickGraph.Serialization
                         v => v.ID,
                         e => e.ID);
                 newxml = writer.ToString();
-                Console.WriteLine("roundtrip: " + newxml);
+                TestConsole.WriteLine("roundtrip: " + newxml);
             }
 
             Assert.AreEqual(xml, newxml);

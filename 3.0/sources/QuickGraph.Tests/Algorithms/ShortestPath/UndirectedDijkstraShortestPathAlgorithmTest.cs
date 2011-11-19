@@ -13,7 +13,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         [TestMethod]
         public void UndirectedDijkstraAll()
         {
-            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
+            System.Threading.Tasks.Parallel.ForEach(TestGraphFactory.GetUndirectedGraphs(), g =>
             {
                 int cut = 0;
                 foreach (var root in g.Vertices)
@@ -22,7 +22,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                         break;
                     this.UndirectedDijkstra(g, root);
                 }
-            }
+            });
         }
 
         [PexMethod]

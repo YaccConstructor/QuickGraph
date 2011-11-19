@@ -31,7 +31,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                     }
                     catch (NonAcyclicGraphException)
                     {
-                        Console.WriteLine("NonAcyclicGraphException caught (as expected)");
+                        TestConsole.WriteLine("NonAcyclicGraphException caught (as expected)");
                     }
                 }
             }
@@ -40,11 +40,11 @@ namespace QuickGraph.Algorithms.ShortestPath
         [TestMethod]
         public void DagShortestPathAll()
         {
-            foreach(var g in TestGraphFactory.GetAdjacencyGraphs())
+            System.Threading.Tasks.Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
             {
                 this.Compute(g);
                 this.ComputeCriticalPath(g);
-            }
+            });
         }
 
         [PexMethod]
@@ -70,7 +70,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                     }
                     catch (NonAcyclicGraphException)
                     {
-                        Console.WriteLine("NonAcyclicGraphException caught (as expected)");
+                        TestConsole.WriteLine("NonAcyclicGraphException caught (as expected)");
                     }
                 }
             }

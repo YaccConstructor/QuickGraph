@@ -5,6 +5,7 @@ using QuickGraph.Algorithms.Observers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Pex.Framework;
 using QuickGraph.Serialization;
+using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
@@ -14,8 +15,8 @@ namespace QuickGraph.Algorithms.RandomWalks
         [TestMethod]
         public void GenerateAll()
         {
-            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
-                this.Generate(g);
+            Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
+                this.Generate(g));
         }
 
         [PexMethod]

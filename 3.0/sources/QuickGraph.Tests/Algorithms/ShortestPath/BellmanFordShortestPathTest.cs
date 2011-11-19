@@ -24,7 +24,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             {
                 IEnumerable<Edge<int>> es;
                 if (testPath(i, out es))
-                    Console.WriteLine("{0}: {1}", i, es.Count());
+                    TestConsole.WriteLine("{0}: {1}", i, es.Count());
             }
         }
     }
