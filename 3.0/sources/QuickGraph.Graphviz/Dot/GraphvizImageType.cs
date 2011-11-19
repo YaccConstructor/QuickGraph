@@ -5,47 +5,74 @@ namespace QuickGraph.Graphviz.Dot
 
     public enum GraphvizImageType
     {
-        [Description("Client-side imagemaps")]
+        /// <summary>
+        /// Client-side imagemaps
+        /// </summary>
         Cmap = 6,
-        [Description("Figure format")]
         Fig = 0,
-        [Description("Gd format")]
         Gd = 1,
-        [Description("Gd2 format")]
         Gd2 = 2,
-        [Description("GIF format")]
         Gif = 3,
-        [Description("HP-GL/2 format")]
+        /// <summary>
+        /// HP-GL/2 format
+        /// </summary>
         Hpgl = 4,
-        [Description("Server-side imagemaps")]
+        /// <summary>
+        /// Server-side imagemaps
+        /// </summary>
         Imap = 5,
-        [Description("JPEG format")]
         Jpeg = 7,
-        [Description("FrameMaker MIF format")]
+        /// <summary>
+        /// FrameMaker MIF format
+        /// </summary>
         Mif = 8,
-        [Description("MetaPost")]
+        /// <summary>
+        /// MetaPost
+        /// </summary>
         Mp = 9,
-        [Description("PCL format")]
+        /// <summary>
+        /// PCL format
+        /// </summary>
         Pcl = 10,
-        [Description("PIC format")]
+        /// <summary>
+        /// PIC format
+        /// </summary>
         Pic = 11,
-        [Description("plain text format")]
+        /// <summary>
+        /// plain text format
+        /// </summary>
         PlainText = 12,
-        [Description("Portable Network Graphics format")]
+        /// <summary>
+        /// Portable Network Graphics format
+        /// </summary>
         Png = 13,
-        [Description("Postscript")]
+        /// <summary>
+        /// Postscript
+        /// </summary>
         Ps = 14,
-        [Description("PostScript for PDF")]
+        /// <summary>
+        /// PostScript for PDF
+        /// </summary>
         Ps2 = 15,
-        [Description("Scalable Vector Graphics")]
+        /// <summary>
+        /// Scalable Vector Graphics
+        /// </summary>
         Svg = 0x10,
-        [Description("Scalable Vector Graphics, gzipped")]
+        /// <summary>
+        /// Scalable Vector Graphics, gzipped
+        /// </summary>
         Svgz = 0x11,
-        [Description("VRML")]
+        /// <summary>
+        /// VRML
+        /// </summary>
         Vrml = 0x12,
-        [Description("Visual Thought format")]
+        /// <summary>
+        /// Visual Thought format
+        /// </summary>
         Vtx = 0x13,
-        [Description("Wireless BitMap format")]
+        /// <summary>
+        /// Wireless BitMap format
+        /// </summary>
         Wbmp = 20
     }
 }

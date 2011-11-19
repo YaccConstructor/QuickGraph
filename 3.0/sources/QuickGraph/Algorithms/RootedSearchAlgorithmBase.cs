@@ -37,7 +37,7 @@ namespace QuickGraph.Algorithms
         {
             Contract.Requires(goalVertex != null);
 
-            bool changed = !Comparison<TVertex>.Equals(this._goalVertex, goalVertex);
+            bool changed = Comparer<TVertex>.Default.Compare(this._goalVertex, goalVertex) != 0;
             this._goalVertex = goalVertex;
             if (changed)
                 this.OnGoalVertexChanged(EventArgs.Empty);

@@ -3,6 +3,7 @@ namespace QuickGraph.Graphviz.Dot
     using System;
     using System.Collections;
     using System.IO;
+    using System.Collections.Generic;
 
     public class GraphvizEdge
     {
@@ -26,11 +27,11 @@ namespace QuickGraph.Graphviz.Dot
         private double weight = 1;
         private int length = 1;
 
-        internal string GenerateDot(Hashtable pairs)
+        internal string GenerateDot(Dictionary<string, object> pairs)
         {
             bool flag = false;
             StringWriter writer = new StringWriter();
-            foreach (DictionaryEntry entry in pairs)
+            foreach (var entry in pairs)
             {
                 if (flag)
                 {
@@ -68,7 +69,7 @@ namespace QuickGraph.Graphviz.Dot
 
         public string ToDot()
         {
-            Hashtable dic = new Hashtable();
+            var dic = new Dictionary<string, object>(StringComparer.Ordinal);
             if (this.Comment != null)
             {
                 dic["comment"] = this.Comment;

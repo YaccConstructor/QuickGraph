@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !SILVERLIGHT
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using QuickGraph.Graphviz.Dot;
@@ -20,7 +21,7 @@ namespace QuickGraph.Graphviz
        /// <returns></returns>
        public static string WrapSvg(string svgFileName)
        {
-           using (StreamReader reader = new StreamReader(svgFileName))
+           using (var reader = new StreamReader(svgFileName))
            {
                var size = ParseSize(reader.ReadToEnd());
                reader.Close();
@@ -44,7 +45,7 @@ namespace QuickGraph.Graphviz
        public static string DumpHtml(GraphvizSize size, string svgFileName)
        {
            string outputFile = String.Format("{0}.html",svgFileName);
-           using (StreamWriter html = new StreamWriter(outputFile))
+           using (var html = new StreamWriter(outputFile))
            {
                html.WriteLine("<html>");
                html.WriteLine("<body>");
@@ -63,3 +64,4 @@ namespace QuickGraph.Graphviz
        }
    }
 }
+#endif

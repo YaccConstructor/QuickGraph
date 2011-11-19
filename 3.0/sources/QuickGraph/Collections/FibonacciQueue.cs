@@ -29,7 +29,7 @@ namespace QuickGraph.Collections
             int valueCount,
             IEnumerable<TVertex> values,
             Func<TVertex, TDistance> distances,
-            Comparison<TDistance> distanceComparison
+            Func<TDistance, TDistance, int> distanceComparison
             )
         {
             Contract.Requires(valueCount >= 0);
@@ -55,7 +55,7 @@ namespace QuickGraph.Collections
 
         public FibonacciQueue(
             Dictionary<TVertex, TDistance> values,
-            Comparison<TDistance> distanceComparison
+            Func<TDistance, TDistance, int> distanceComparison
             )
         {
             Contract.Requires(values != null);

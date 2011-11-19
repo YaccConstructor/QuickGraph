@@ -26,7 +26,7 @@ namespace QuickGraph.Collections
     public class BinaryHeap<TPriority, TValue> 
         : IEnumerable<KeyValuePair<TPriority, TValue>>
     {
-        readonly Comparison<TPriority> priorityComparsion;
+        readonly Func<TPriority, TPriority, int> priorityComparsion;
         KeyValuePair<TPriority, TValue>[] items;
         int count;
         int version;
@@ -37,11 +37,11 @@ namespace QuickGraph.Collections
             : this(DefaultCapacity, Comparer<TPriority>.Default.Compare)
         { }
 
-        public BinaryHeap(Comparison<TPriority> priorityComparison)
+        public BinaryHeap(Func<TPriority, TPriority, int> priorityComparison)
             : this(DefaultCapacity, priorityComparison)
         { }
 
-        public BinaryHeap(int capacity, Comparison<TPriority> priorityComparison)
+        public BinaryHeap(int capacity, Func<TPriority, TPriority, int> priorityComparison)
         {
             Contract.Requires(capacity >= 0);
             Contract.Requires(priorityComparison != null);
@@ -50,7 +50,7 @@ namespace QuickGraph.Collections
             this.priorityComparsion = priorityComparison;
         }
 
-        public Comparison<TPriority> PriorityComparison
+        public Func<TPriority, TPriority, int> PriorityComparison
         {
             get { return this.priorityComparsion; }
         }

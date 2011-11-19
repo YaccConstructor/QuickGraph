@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+#if !SILVERLIGHT
 using System.Runtime.Serialization;
+#endif
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using QuickGraph.Contracts;

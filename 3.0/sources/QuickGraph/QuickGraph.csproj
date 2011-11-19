@@ -9,8 +9,6 @@
     <RootNamespace>QuickGraph</RootNamespace>
     <AssemblyName>QuickGraph</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SccProjectName>SAK</SccProjectName>
@@ -18,13 +16,14 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+    <TargetFrameworkProfile>Profile1</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
@@ -63,7 +62,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
@@ -107,10 +106,10 @@
     <AssemblyOriginatorKeyFile>quickgraph.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Contracts">
+      <HintPath>..\external\CodeContracts\Silverlight3\Microsoft.Contracts.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -263,10 +262,6 @@
     <Compile Include="DelegateVertexAndEdgeListGraph.cs" />
     <Compile Include="IBidirectionalIncidenceGraph.cs" />
     <Compile Include="IImplicitUndirectedGraph.cs" />
-    <Compile Include="Serialization\DirectedGraphMLExtensions.cs" />
-    <Compile Include="Serialization\DirectedGraphMLAlgorithm.cs" />
-    <Compile Include="Serialization\DirectedGraphML\Dgml.cs" />
-    <Compile Include="Serialization\XmlSerializableGraphBase.cs" />
     <Compile Include="TaggedUndirectedEdge.cs" />
     <Compile Include="STaggedUndirectedEdge.cs" />
     <Compile Include="ITagged.cs" />
@@ -362,9 +357,6 @@
     <Compile Include="IVertexAndEdgeListGraph.cs" />
     <Compile Include="QuickGraphException.cs" />
     <Compile Include="SEdge.cs" />
-    <Compile Include="Serialization\GraphMLDeserializer.cs" />
-    <Compile Include="Serialization\GraphMLXmlResolver.cs" />
-    <Compile Include="Serialization\SerializationExtensions.cs" />
     <Compile Include="SUndirectedEdge.cs" />
     <Compile Include="TryFuncDelegates.cs" />
     <Compile Include="UndirectedEdgeEventArgs.cs" />
@@ -379,10 +371,6 @@
     <Compile Include="Algorithms\ConnectedComponents\StronglyConnectedComponentAlgorithm.cs" />
     <Compile Include="SReversedEdge.cs" />
     <Compile Include="ReversedBidirectionalListGraph.cs" />
-    <Compile Include="Serialization\GraphMLExtensions.cs" />
-    <Compile Include="Serialization\GraphMLSerializer.cs" />
-    <Compile Include="Serialization\SerializationHelper.cs" />
-    <Compile Include="Serialization\SerializerBase.cs" />
     <Compile Include="TaggedEdge.cs" />
     <Compile Include="UndirectedBidirectionalGraph.cs" />
     <Compile Include="UndirectedGraph.cs" />
@@ -400,35 +388,10 @@
     <None Include="Algorithms\Cliques\ncliques.pdf" />
     <None Include="quickgraph.snk" />
     <None Include="Diagrams\TraversalInterfaces.cd" />
-    <EmbeddedResource Include="Serialization\graphml-structure.xsd" />
-    <EmbeddedResource Include="Serialization\graphml.dtd" />
-    <EmbeddedResource Include="Serialization\graphml.xsd" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.VisualBasic.PowerPacks.10.0">
-      <Visible>False</Visible>
-      <ProductName>Microsoft Visual Basic PowerPacks 10.0</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
   <ItemGroup />
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

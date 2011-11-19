@@ -50,7 +50,7 @@ this
 this 
 #endif
             IDictionary<TVertex, TValue> dictionary,
-            Converter<KeyValuePair<TVertex,TValue>, IEnumerable<TEdge>> keyValueToOutEdges
+            Func<KeyValuePair<TVertex,TValue>, IEnumerable<TEdge>> keyValueToOutEdges
             )
             where TEdge : IEdge<TVertex>, IEquatable<TEdge>
         {
@@ -235,7 +235,7 @@ this
 this 
 #endif
             IDictionary<TVertex, TValue> dictionary,
-            Converter<KeyValuePair<TVertex, TValue>, IEnumerable<TEdge>> keyValueToOutEdges
+            Func<KeyValuePair<TVertex, TValue>, IEnumerable<TEdge>> keyValueToOutEdges
             )
             where TEdge : IEdge<TVertex>, IEquatable<TEdge>
         {

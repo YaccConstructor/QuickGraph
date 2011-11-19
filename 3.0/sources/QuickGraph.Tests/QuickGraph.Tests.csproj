@@ -482,6 +482,10 @@
       <Project>{595D6322-637A-4A36-97F1-D53F3F9ECEA7}</Project>
       <Name>QuickGraph.Graphviz</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QuickGraph.Serialization\QuickGraph.Serialization.csproj">
+      <Project>{4D96C520-8EDA-49F0-9201-ED8BEE69B1FC}</Project>
+      <Name>QuickGraph.Serialization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
       <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
       <Name>QuickGraph</Name>

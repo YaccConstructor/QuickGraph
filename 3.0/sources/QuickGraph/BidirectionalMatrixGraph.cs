@@ -445,6 +445,7 @@ namespace QuickGraph
             this.edges = edges;
         }
 
+#if !SILVERLIGHT
         public BidirectionalMatrixGraph<TEdge> Clone()
         {
             return new BidirectionalMatrixGraph<TEdge>(
@@ -453,7 +454,8 @@ namespace QuickGraph
                 (TEdge[,])this.edges.Clone()
                 );
         }
-
+        
+#endif
 #if !SILVERLIGHT
         object ICloneable.Clone()
         {

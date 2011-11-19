@@ -1129,6 +1129,7 @@ this
         /// <param name="source">The source.</param>
         /// <param name="sink">The sink.</param>
         /// <param name="flowPredecessors">The flow predecessors.</param>
+        /// <param name="edgeFactory">the edge factory</param>
         /// <returns></returns>
         public static double MaximumFlowEdmondsKarp<TVertex, TEdge>(
 #if !NET20

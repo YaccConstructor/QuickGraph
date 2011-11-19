@@ -2,6 +2,7 @@ namespace QuickGraph.Graphviz.Dot
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
 
     public class GraphvizEdgeLabel
     {
@@ -12,7 +13,7 @@ namespace QuickGraph.Graphviz.Dot
         private GraphvizColor fontColor = GraphvizColor.Black;
         private string value = null;
 
-        public void AddParameters(IDictionary dic)
+        public void AddParameters(IDictionary<string, object> dic)
         {
             if (this.Value != null)
             {

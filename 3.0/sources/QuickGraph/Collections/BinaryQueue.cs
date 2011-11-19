@@ -22,7 +22,7 @@ namespace QuickGraph.Collections
 
 		public BinaryQueue(
             Func<TVertex, TDistance> distances,
-            Comparison<TDistance> distanceComparison
+            Func<TDistance, TDistance, int> distanceComparison
             )
 		{
             Contract.Requires(distances != null);

@@ -14,9 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		3.0\sources\quickgraph.nuspec = 3.0\sources\quickgraph.nuspec
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Serialization", "3.0\sources\QuickGraph.Serialization\QuickGraph.Serialization.csproj", "{4D96C520-8EDA-49F0-9201-ED8BEE69B1FC}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
@@ -32,6 +34,9 @@ Global
 		SccProjectUniqueName4 = 3.0\\sources\\QuickGraph.Graphviz\\QuickGraph.Graphviz.csproj
 		SccProjectName4 = 3.0/sources/QuickGraph.Graphviz
 		SccLocalPath4 = 3.0\\sources\\QuickGraph.Graphviz
+		SccProjectUniqueName5 = 3.0\\sources\\QuickGraph.Serialization\\QuickGraph.Serialization.csproj
+		SccProjectName5 = 3.0/sources/QuickGraph.Serialization
+		SccLocalPath5 = 3.0\\sources\\QuickGraph.Serialization
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +59,10 @@ Global
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D96C520-8EDA-49F0-9201-ED8BEE69B1FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D96C520-8EDA-49F0-9201-ED8BEE69B1FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D96C520-8EDA-49F0-9201-ED8BEE69B1FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D96C520-8EDA-49F0-9201-ED8BEE69B1FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -250,16 +250,7 @@ this
 
             if (filename == null) filename = "graph.dgml";
 
-#if NET20
             WriteXml(ToDirectedGraphML(graph), filename);
-#else
-            graph.ToDirectedGraphML().WriteXml(filename); 
-#endif
-
-            if (Debugger.IsAttached)
-            { 
-                Process.Start(filename);
-            }
         }
     }
 }

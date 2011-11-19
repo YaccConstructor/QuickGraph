@@ -241,12 +241,14 @@ namespace QuickGraph
             get { return false; }
         }
 
+#if !SILVERLIGHT
         public CompressedSparseRowGraph<TVertex> Clone()
         {
             var ranges = new Dictionary<TVertex, Range>(this.outEdgeStartRanges);
             var edges = (TVertex[])this.outEdges.Clone();
             return new CompressedSparseRowGraph<TVertex>(ranges, edges);
         }
+#endif
 
 #if !SILVERLIGHT
         object ICloneable.Clone()

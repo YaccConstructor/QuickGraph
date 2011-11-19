@@ -3,6 +3,7 @@ namespace QuickGraph.Graphviz.Dot
     using System;
     using System.Collections;
     using System.IO;
+    using System.Collections.Generic;
 
     public class GraphvizGraph
     {
@@ -41,11 +42,11 @@ namespace QuickGraph.Graphviz.Dot
         private string styleSheet = null;
         private string url = null;
 
-        internal string GenerateDot(Hashtable pairs)
+        internal string GenerateDot(Dictionary<string, object> pairs)
         {
             bool flag = false;
             StringWriter writer = new StringWriter();
-            foreach (DictionaryEntry entry in pairs)
+            foreach (var entry in pairs)
             {
                 if (flag)
                 {
@@ -78,7 +79,7 @@ namespace QuickGraph.Graphviz.Dot
 
         public string ToDot()
         {
-            Hashtable pairs = new Hashtable();
+            var pairs = new Dictionary<string, object>(StringComparer.Ordinal);
             if (this.Url != null)
             {
                 pairs["URL"] = this.Url;
