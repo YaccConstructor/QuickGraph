@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>QuickGraph</id>
-    <version>3.6.61119.5</version>
+    <version>3.6.61119.6</version>
     <authors>Jonathan Peli de Halleux</authors>
     <title>Generic graph data structures and algorithms for .NET</title>
     <summary>Generic graph data structures and algorithms for .NET</summary>
@@ -15,9 +15,14 @@
     <licenseUrl>http://quickgraph.codeplex.com/license</licenseUrl>
     <language>en-US</language>
     <tags>algorithms graph directed undirected dfs bfs graphviz graphml data structure</tags>
+    <references>
+      <reference file="QuickGraph.dll" />
+      <reference file="QuickGraph.Serialization.dll" />
+      <reference file="QuickGraph.Data.dll" />
+      <reference file="QuickGraph.Graphviz.dll" />
+    </references>
   </metadata>
   <files>
-    <!-- net3.5 -->
     <file src="QuickGraph\bin\Release\QuickGraph.dll" target="lib\net4" />
     <file src="QuickGraph\bin\Release\QuickGraph.xml" target="lib\net4" />
     <file src="QuickGraph\bin\Release\CodeContracts\QuickGraph.Contracts.dll" target="lib\net4\CodeContracts" />
