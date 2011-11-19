@@ -34,6 +34,7 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
                     Enumerable.Last(g.Vertices),
                     g.VertexCount
                     );
+
             });
         }
 
