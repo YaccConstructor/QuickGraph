@@ -65,7 +65,9 @@ namespace QuickGraph.Contracts
             IImplicitGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(v != null);
             Contract.Requires(ithis.ContainsVertex(v));
-            Contract.Ensures(Enumerable.Any(ithis.OutEdges(v), e => e.Equals(Contract.Result<TEdge>())));
+            Contract.Requires(index >= 0 && index < ithis.OutDegree(v));
+            Contract.Ensures(
+                Enumerable.ElementAt(ithis.OutEdges(v), index).Equals(Contract.Result<TEdge>()));
 
             return default(TEdge);
         }

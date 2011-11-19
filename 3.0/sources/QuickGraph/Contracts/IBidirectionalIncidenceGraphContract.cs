@@ -75,6 +75,7 @@ namespace QuickGraph.Contracts
             IBidirectionalIncidenceGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(v != null);
             Contract.Requires(ithis.ContainsVertex(v));
+            Contract.Requires(index >= 0 && index < ithis.InDegree(v));
             Contract.Ensures(Contract.Result<TEdge>().Equals(Enumerable.ElementAt(ithis.InEdges(v), index)));
 
             return default(TEdge);
