@@ -2,7 +2,6 @@ namespace QuickGraph.Graphviz.Dot
 {
     using System;
     using System.Collections;
-    using System.Drawing;
     using System.IO;
     using System.Collections.Generic;
 
@@ -11,10 +10,10 @@ namespace QuickGraph.Graphviz.Dot
         private string bottomLabel = null;
         private string comment = null;
         private double distorsion = 0;
-        private Color fillColor = Color.White;
+        private GraphvizColor fillColor = GraphvizColor.White;
         private bool fixedSize = false;
-        private System.Drawing.Font font = null;
-        private Color fontColor = Color.Black;
+        private GraphvizFont font = null;
+        private GraphvizColor fontColor = GraphvizColor.Black;
         private string group = null;
         private string label = null;
         private GraphvizLayer layer = null;
@@ -24,15 +23,15 @@ namespace QuickGraph.Graphviz.Dot
         private bool regular = false;
         private GraphvizVertexShape shape = GraphvizVertexShape.Unspecified;
         private int sides = 4;
-        private SizeF size = new SizeF(0f, 0f);
+        private GraphvizSizeF size = new GraphvizSizeF(0f, 0f);
         private double skew = 0;
-        private Color strokeColor = Color.Black;
+        private GraphvizColor strokeColor = GraphvizColor.Black;
         private GraphvizVertexStyle style = GraphvizVertexStyle.Unspecified;
         private string toolTip = null;
         private string topLabel = null;
         private string url = null;
         private double z = -1;
-        private System.Drawing.Point? position;
+        private GraphvizPoint position;
 
         internal string GenerateDot(Dictionary<string, object> pairs)
         {
@@ -63,9 +62,9 @@ namespace QuickGraph.Graphviz.Dot
                     writer.Write("{0}={1}", entry.Key, ((GraphvizVertexStyle) entry.Value).ToString().ToLower());
                     continue;
                 }
-                if (entry.Value is Color)
+                if (entry.Value is GraphvizColor)
                 {
-                    Color color = (Color) entry.Value;
+                    var color = (GraphvizColor) entry.Value;
                     writer.Write("{0}=\"#{1}{2}{3}{4}\"", entry.Key, color.R.ToString("x2").ToUpper(), color.G.ToString("x2").ToUpper(), color.B.ToString("x2").ToUpper(), color.A.ToString("x2").ToUpper());
                     continue;
                 }
@@ -87,7 +86,7 @@ namespace QuickGraph.Graphviz.Dot
                 pairs["fontname"] = this.Font.Name;
                 pairs["fontsize"] = this.Font.SizeInPoints;
             }
-            if (this.FontColor != Color.Black)
+            if (!this.FontColor.Equals(GraphvizColor.Black))
             {
                 pairs["fontcolor"] = this.FontColor;
             }
@@ -119,11 +118,11 @@ namespace QuickGraph.Graphviz.Dot
                     pairs["width"] = this.Size.Width;
                 }
             }
-            if (this.StrokeColor != Color.Black)
+            if (!this.StrokeColor.Equals(GraphvizColor.Black))
             {
                 pairs["color"] = this.StrokeColor;
             }
-            if (this.FillColor != Color.White)
+            if (!this.FillColor.Equals(GraphvizColor.White))
             {
                 pairs["fillcolor"] = this.FillColor;
             }
@@ -163,10 +162,9 @@ namespace QuickGraph.Graphviz.Dot
             {
                 pairs["z"] = this.Z;
             }
-            if (this.position.HasValue)
+            if (this.position != null)
             {
-                var p = this.position.Value;
-                pairs["pos"] = String.Format("{0},{1}!", p.X, p.Y);
+                pairs["pos"] = String.Format("{0},{1}!", this.position.X, this.position.Y);
             }
             if (((this.Style == GraphvizVertexStyle.Diagonals) || (this.Shape == GraphvizVertexShape.MCircle)) || ((this.Shape == GraphvizVertexShape.MDiamond) || (this.Shape == GraphvizVertexShape.MSquare)))
             {
@@ -203,7 +201,7 @@ namespace QuickGraph.Graphviz.Dot
             return this.ToDot();
         }
 
-        public System.Drawing.Point? Position
+        public GraphvizPoint Position
         {
             get { return this.position; }
             set { this.position = value; }
@@ -245,7 +243,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public Color FillColor
+        public GraphvizColor FillColor
         {
             get
             {
@@ -269,7 +267,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public System.Drawing.Font Font
+        public GraphvizFont Font
         {
             get
             {
@@ -281,7 +279,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public Color FontColor
+        public GraphvizColor FontColor
         {
             get
             {
@@ -401,7 +399,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public SizeF Size
+        public GraphvizSizeF Size
         {
             get
             {
@@ -425,7 +423,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public Color StrokeColor
+        public GraphvizColor StrokeColor
         {
             get
             {

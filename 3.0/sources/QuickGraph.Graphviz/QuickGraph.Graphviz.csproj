@@ -163,7 +163,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -177,11 +176,13 @@
     <Compile Include="Dot\GraphvizArrowFilling.cs" />
     <Compile Include="Dot\GraphvizArrowShape.cs" />
     <Compile Include="Dot\GraphvizClusterMode.cs" />
+    <Compile Include="Dot\GraphvizColor.cs" />
     <Compile Include="Dot\GraphvizEdge.cs" />
     <Compile Include="Dot\GraphvizEdgeDirection.cs" />
     <Compile Include="Dot\GraphvizEdgeExtremity.cs" />
     <Compile Include="Dot\GraphvizEdgeLabel.cs" />
     <Compile Include="Dot\GraphvizEdgeStyle.cs" />
+    <Compile Include="Dot\GraphvizFont.cs" />
     <Compile Include="Dot\GraphvizGraph.cs" />
     <Compile Include="Dot\GraphvizImageType.cs" />
     <Compile Include="Dot\GraphvizLabelJustification.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Dot\GraphvizLayerCollection.cs" />
     <Compile Include="Dot\GraphvizOutputMode.cs" />
     <Compile Include="Dot\GraphvizPageDirection.cs" />
+    <Compile Include="Dot\GraphvizPoint.cs" />
     <Compile Include="Dot\GraphvizRankDirection.cs" />
     <Compile Include="Dot\GraphvizRatioMode.cs" />
     <Compile Include="Dot\GraphvizRecord.cs" />

@@ -2,15 +2,14 @@ namespace QuickGraph.Graphviz.Dot
 {
     using System;
     using System.Collections;
-    using System.Drawing;
 
     public class GraphvizEdgeLabel
     {
         private double angle = -25;
         private double distance = 1;
         private bool @float = true;
-        private System.Drawing.Font font = null;
-        private Color fontColor = Color.Black;
+        private GraphvizFont font = null;
+        private GraphvizColor fontColor = GraphvizColor.Black;
         private string value = null;
 
         public void AddParameters(IDictionary dic)
@@ -74,7 +73,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public System.Drawing.Font Font
+        public GraphvizFont Font
         {
             get
             {
@@ -86,7 +85,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public Color FontColor
+        public GraphvizColor FontColor
         {
             get
             {

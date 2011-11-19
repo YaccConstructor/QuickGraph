@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
+using QuickGraph.Graphviz.Dot;
 
 namespace QuickGraph.Graphviz
 {
@@ -22,26 +22,26 @@ namespace QuickGraph.Graphviz
        {
            using (StreamReader reader = new StreamReader(svgFileName))
            {
-               Size size = ParseSize(reader.ReadToEnd());
+               var size = ParseSize(reader.ReadToEnd());
                reader.Close();
                return DumpHtml(size, svgFileName);
            }
        }
 
-       public static Size ParseSize(string svg)
+       public static GraphvizSize ParseSize(string svg)
        {
            Match m = sizeRegex.Match(svg);
            if (!m.Success)
-               return new Size(400, 400);
+               return new GraphvizSize(400, 400);
            else
            {
                int size = int.Parse(m.Groups["Width"].Value);
                int height = int.Parse(m.Groups["Height"].Value);
-               return new Size(size, height);
+               return new GraphvizSize(size, height);
            }
        }
 
-       public static string DumpHtml(Size size, string svgFileName)
+       public static string DumpHtml(GraphvizSize size, string svgFileName)
        {
            string outputFile = String.Format("{0}.html",svgFileName);
            using (StreamWriter html = new StreamWriter(outputFile))

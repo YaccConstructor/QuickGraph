@@ -2,15 +2,14 @@ namespace QuickGraph.Graphviz.Dot
 {
     using System;
     using System.Collections;
-    using System.Drawing;
     using System.IO;
 
     public class GraphvizEdge
     {
         private string comment = null;
         private GraphvizEdgeDirection dir = GraphvizEdgeDirection.Forward;
-        private System.Drawing.Font font = null;
-        private Color fontColor = Color.Black;
+        private GraphvizFont font = null;
+        private GraphvizColor fontGraphvizColor = GraphvizColor.Black;
         private GraphvizEdgeExtremity head = new GraphvizEdgeExtremity(true);
         private GraphvizArrow headArrow = null;
         private bool isConstrained = true;
@@ -18,7 +17,7 @@ namespace QuickGraph.Graphviz.Dot
         private GraphvizEdgeLabel label = new GraphvizEdgeLabel();
         private GraphvizLayer layer = null;
         private int minLength = 1;
-        private Color strokeColor = Color.Black;
+        private GraphvizColor strokeGraphvizColor = GraphvizColor.Black;
         private GraphvizEdgeStyle style = GraphvizEdgeStyle.Unspecified;
         private GraphvizEdgeExtremity tail = new GraphvizEdgeExtremity(false);
         private GraphvizArrow tailArrow = null;
@@ -56,10 +55,10 @@ namespace QuickGraph.Graphviz.Dot
                     writer.Write("{0}={1}", entry.Key.ToString(), ((GraphvizEdgeStyle) entry.Value).ToString().ToLower());
                     continue;
                 }
-                if (entry.Value is Color)
+                if (entry.Value is GraphvizColor)
                 {
-                    Color color = (Color) entry.Value;
-                    writer.Write("{0}=\"#{1}{2}{3}{4}\"", new object[] { entry.Key.ToString(), color.R.ToString("x2").ToUpper(), color.G.ToString("x2").ToUpper(), color.B.ToString("x2").ToUpper(), color.A.ToString("x2").ToUpper() });
+                    GraphvizColor GraphvizColor = (GraphvizColor) entry.Value;
+                    writer.Write("{0}=\"#{1}{2}{3}{4}\"", new object[] { entry.Key.ToString(), GraphvizColor.R.ToString("x2").ToUpper(), GraphvizColor.G.ToString("x2").ToUpper(), GraphvizColor.B.ToString("x2").ToUpper(), GraphvizColor.A.ToString("x2").ToUpper() });
                     continue;
                 }
                 writer.Write(" {0}={1}", entry.Key.ToString(), entry.Value.ToString().ToLower());
@@ -83,9 +82,9 @@ namespace QuickGraph.Graphviz.Dot
                 dic["fontname"] = this.Font.Name;
                 dic["fontsize"] = this.Font.SizeInPoints;
             }
-            if (this.FontColor != Color.Black)
+            if (!this.FontGraphvizColor.Equals(GraphvizColor.Black))
             {
-                dic["fontcolor"] = this.FontColor;
+                dic["fontGraphvizColor"] = this.FontGraphvizColor;
             }
             this.Head.AddParameters(dic);
             if (this.HeadArrow != null)
@@ -109,9 +108,9 @@ namespace QuickGraph.Graphviz.Dot
             {
                 dic["minlen"] = this.MinLength;
             }
-            if (this.StrokeColor != Color.Black)
+            if (!this.StrokeGraphvizColor.Equals(GraphvizColor.Black))
             {
-                dic["color"] = this.StrokeColor;
+                dic["GraphvizColor"] = this.StrokeGraphvizColor;
             }
             if (this.Style != GraphvizEdgeStyle.Unspecified)
             {
@@ -172,7 +171,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public System.Drawing.Font Font
+        public GraphvizFont Font
         {
             get
             {
@@ -184,15 +183,15 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public Color FontColor
+        public GraphvizColor FontGraphvizColor
         {
             get
             {
-                return this.fontColor;
+                return this.fontGraphvizColor;
             }
             set
             {
-                this.fontColor = value;
+                this.fontGraphvizColor = value;
             }
         }
 
@@ -280,15 +279,15 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public Color StrokeColor
+        public GraphvizColor StrokeGraphvizColor
         {
             get
             {
-                return this.strokeColor;
+                return this.strokeGraphvizColor;
             }
             set
             {
-                this.strokeColor = value;
+                this.strokeGraphvizColor = value;
             }
         }
 
