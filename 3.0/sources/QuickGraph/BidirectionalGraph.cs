@@ -47,21 +47,35 @@ namespace QuickGraph
 
         public BidirectionalGraph(bool allowParallelEdges)
             :this(allowParallelEdges,-1)
-        {}
+        {
+        }
 
         public BidirectionalGraph(bool allowParallelEdges, int vertexCapacity)
+            :this(allowParallelEdges, vertexCapacity, -1)
         {
+        }
+
+        public BidirectionalGraph(bool allowParallelEdges, int vertexCapacity, int edgeCapacity)
+            :this(allowParallelEdges, vertexCapacity, edgeCapacity, EqualityComparer<TVertex>.Default)
+        {
+        }
+
+        public BidirectionalGraph(bool allowParallelEdges, int vertexCapacity, int edgeCapacity, IEqualityComparer<TVertex> vertexComparer)
+        {
+            Contract.Requires(vertexComparer != null);
+
             this.allowParallelEdges = allowParallelEdges;
             if (vertexCapacity > -1)
             {
-                this.vertexInEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity);
-                this.vertexOutEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity);
+                this.vertexInEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity, vertexComparer);
+                this.vertexOutEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity, vertexComparer);
             }
             else
             {
-                this.vertexInEdges = new VertexEdgeDictionary<TVertex, TEdge>();
-                this.vertexOutEdges = new VertexEdgeDictionary<TVertex, TEdge>();
+                this.vertexInEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexComparer);
+                this.vertexOutEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexComparer);
             }
+            this.edgeCapacity = edgeCapacity;
         }
 
         public BidirectionalGraph(

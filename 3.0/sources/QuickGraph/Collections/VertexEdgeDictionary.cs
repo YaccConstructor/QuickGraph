@@ -21,6 +21,12 @@ namespace QuickGraph.Collections
         public VertexEdgeDictionary(int capacity)
             : base(capacity)
         { }
+        public VertexEdgeDictionary(IEqualityComparer<TVertex> vertexComparer)
+            : base(vertexComparer)
+        { }
+        public VertexEdgeDictionary(int capacity, IEqualityComparer<TVertex> vertexComparer)
+            : base(capacity, vertexComparer)
+        { }
 
 #if !SILVERLIGHT
         public VertexEdgeDictionary(

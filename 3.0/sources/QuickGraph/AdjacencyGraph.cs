@@ -44,18 +44,25 @@ namespace QuickGraph
         {
         }
 
-        public AdjacencyGraph(bool allowParallelEdges, int capacity)
-            :this(allowParallelEdges, capacity, -1)
+        public AdjacencyGraph(bool allowParallelEdges, int vertexCapacity)
+            :this(allowParallelEdges, vertexCapacity, -1)
         {
         }
 
-        public AdjacencyGraph(bool allowParallelEdges, int capacity, int edgeCapacity)
+        public AdjacencyGraph(bool allowParallelEdges, int vertexCapacity, int edgeCapacity)
+            :this(allowParallelEdges, vertexCapacity, edgeCapacity, EqualityComparer<TVertex>.Default)
         {
+        }
+
+        public AdjacencyGraph(bool allowParallelEdges, int vertexCapacity, int edgeCapacity, IEqualityComparer<TVertex> vertexComparer)
+        {
+            Contract.Requires(vertexComparer != null);
+
             this.allowParallelEdges = allowParallelEdges;
-            if (capacity > -1)
-                this.vertexEdges = new VertexEdgeDictionary<TVertex, TEdge>(capacity);
+            if (vertexCapacity > -1)
+                this.vertexEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity, vertexComparer);
             else
-                this.vertexEdges = new VertexEdgeDictionary<TVertex, TEdge>();
+                this.vertexEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexComparer);
             this.edgeCapacity = edgeCapacity;
         }
 

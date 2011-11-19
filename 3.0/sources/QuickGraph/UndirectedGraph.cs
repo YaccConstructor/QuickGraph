@@ -19,29 +19,42 @@ namespace QuickGraph
         where TEdge : IEdge<TVertex>
     {
         private readonly bool allowParallelEdges = true;
-        private readonly VertexEdgeDictionary<TVertex, TEdge> adjacentEdges =
-            new VertexEdgeDictionary<TVertex, TEdge>();
+        private readonly VertexEdgeDictionary<TVertex, TEdge> adjacentEdges;
         private readonly EdgeEqualityComparer<TVertex, TEdge> edgeEqualityComparer;
         private int edgeCount = 0;
         private int edgeCapacity = 4;
 
+        public UndirectedGraph()
+            : this(true)
+        { }
+
+        public UndirectedGraph(bool allowParallelEdges)
+            : this(allowParallelEdges, EdgeExtensions.GetUndirectedVertexEquality<TVertex, TEdge>())
+        {
+            this.allowParallelEdges = allowParallelEdges;
+        }
+
         public UndirectedGraph(bool allowParallelEdges, EdgeEqualityComparer<TVertex, TEdge> edgeEqualityComparer)
+            :this(allowParallelEdges, edgeEqualityComparer, -1)
+        {
+        }
+
+        public UndirectedGraph(bool allowParallelEdges, EdgeEqualityComparer<TVertex, TEdge> edgeEqualityComparer, int vertexCapacity)
+            : this(allowParallelEdges, edgeEqualityComparer, vertexCapacity, EqualityComparer<TVertex>.Default)
+        { }
+
+        public UndirectedGraph(bool allowParallelEdges, EdgeEqualityComparer<TVertex, TEdge> edgeEqualityComparer, int vertexCapacity, IEqualityComparer<TVertex> vertexComparer)
         {
             Contract.Requires(edgeEqualityComparer != null);
+            Contract.Requires(vertexComparer != null);
 
             this.allowParallelEdges = allowParallelEdges;
             this.edgeEqualityComparer = edgeEqualityComparer;
+            if (vertexCapacity > -1)
+                this.adjacentEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity, vertexComparer);
+            else
+                this.adjacentEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexComparer);
         }
-
-        public UndirectedGraph(bool allowParallelEdges)
-            :this(allowParallelEdges, EdgeExtensions.GetUndirectedVertexEquality<TVertex, TEdge>())
-        {
-            this.allowParallelEdges = allowParallelEdges;
-        }
-
-        public UndirectedGraph()
-            :this(true)
-        {}
 
         public EdgeEqualityComparer<TVertex, TEdge> EdgeEqualityComparer
         {
