@@ -26,26 +26,29 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             public readonly double Distance;
             readonly TVertex _predecessor;
+            readonly bool predecessorStored;
             readonly TEdge _edge;
             readonly bool edgeStored;
 
             public bool TryGetPredecessor(out TVertex predecessor)
             {
                 predecessor = this._predecessor;
-                return !this.edgeStored;
+                return this.predecessorStored;
             }
 
-            public bool TryGetEdge(out TEdge _edge)
+            public bool TryGetEdge(out TEdge edge)
             {
-                _edge = this._edge;
+                edge = this._edge;
                 return this.edgeStored;
             }
 
-            public VertexData(double distance, TEdge _edge)
+            public VertexData(double distance, TEdge edge)
             {
+                Contract.Requires(edge != null);
                 this.Distance = distance;
                 this._predecessor = default(TVertex);
-                this._edge = _edge;
+                this.predecessorStored = false;
+                this._edge = edge;
                 this.edgeStored = true;
             }
 
@@ -55,6 +58,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
                 this.Distance = distance;
                 this._predecessor = predecessor;
+                this.predecessorStored = true;
                 this._edge = default(TEdge);
                 this.edgeStored = false;
             }
@@ -62,7 +66,8 @@ namespace QuickGraph.Algorithms.ShortestPath
             [ContractInvariantMethod]
             void ObjectInvariant()
             {
-                Contract.Invariant(this.edgeStored ? this._edge != null : this._predecessor != null);
+                Contract.Invariant(!this.edgeStored || this._edge != null);
+                Contract.Invariant(!this.predecessorStored || this._predecessor != null);
             }
 
             public override string ToString()
@@ -220,7 +225,10 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             // walk each vertices and make sure cost self-cost 0
             foreach (var v in vertices)
-                data[new SEquatableEdge<TVertex>(v, v)] = new VertexData(0, default(TEdge));
+            {
+                var e = new SEquatableEdge<TVertex>(v, v);
+                data[e] = new VertexData();
+            }
 
             if (cancelManager.IsCancelling) return;
 
