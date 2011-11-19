@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Tests.Serialization
 {
+#if FALSE
     [TestClass]
     public class SystemSerializationTest
     {
@@ -80,4 +81,5 @@ namespace QuickGraph.Tests.Serialization
             //    Assert.IsTrue(result.ContainsEdge(e.Source, e.Target));
         }
     }
+#endif
 }

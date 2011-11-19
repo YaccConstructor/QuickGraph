@@ -16,57 +16,6 @@ namespace QuickGraph.Serialization
     {
 #if !SILVERLIGHT
         /// <summary>
-        /// Serializes the graph to the stream using the .Net serialization binary format.
-        /// </summary>
-        /// <typeparam name="TVertex">type of the vertices</typeparam>
-        /// <typeparam name="TEdge">type of the edges</typeparam>
-        /// <param name="graph"></param>
-        /// <param name="stream"></param>
-        public static void SerializeToBinary<TVertex, TEdge>(
-#if !NET20
-            this 
-#endif
-            IGraph<TVertex, TEdge> graph,
-            Stream stream)
-            where TEdge : IEdge<TVertex>
-        {            
-            Contract.Requires(graph != null);
-            Contract.Requires(stream != null);
-            Contract.Requires(stream.CanWrite);
-
-            var formatter = new BinaryFormatter();
-            formatter.Serialize(stream, graph);
-        }
-#endif
-
-#if !SILVERLIGHT
-        /// <summary>
-        /// Deserializes a graph instance from a stream that was serialized using the .Net serialization binary format.
-        /// </summary>
-        /// <typeparam name="TVertex">type of the vertices</typeparam>
-        /// <typeparam name="TEdge">type of the edges</typeparam>
-        /// <typeparam name="TGraph"></typeparam>
-        /// <param name="stream"></param>
-        /// <returns></returns>
-        public static TGraph DeserializeFromBinary<TVertex, TEdge, TGraph>(
-#if !NET20
-            this 
-#endif
-            Stream stream)
-            where TGraph : IGraph<TVertex, TEdge>
-            where TEdge : IEdge<TVertex>
-        {
-            Contract.Requires(stream != null);
-            Contract.Requires(stream.CanRead);
-
-            var formatter = new BinaryFormatter();
-            var result = formatter.Deserialize(stream);
-            return (TGraph)result;
-        }
-#endif
-
-#if !SILVERLIGHT
-        /// <summary>
         /// Deserializes a graph from a generic xml stream, using an <see cref="XPathDocument"/>.
         /// </summary>
         /// <typeparam name="TVertex">type of the vertices</typeparam>

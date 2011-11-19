@@ -134,27 +134,5 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
 
             return target.ComputedShortestPaths;
         }
-
-        [TestMethod]
-        [WorkItem(12288)]
-        [Ignore]
-        [Description("binary data outdated")]
-        public void Repro12288()
-        {
-            AdjacencyGraph<int, Edge<int>> g;
-            using (var stream = this.GetType().Assembly.GetManifestResourceStream(
-                "QuickGraph.Tests.Algorithms.RankedShortestPath.AdjacencyGraph.bin"))
-                g = stream.DeserializeFromBinary<int, Edge<int>, AdjacencyGraph<int, Edge<int>>>();
-
-            var g1 = g.ToBidirectionalGraph();
-
-            int Source = 1;
-            int Target = 2;
-
-            int pathCount = 5;
-            foreach (IEnumerable<Edge<int>> path in g1.RankedShortestPathHoffmanPavley(
-                e => 5, Source, Target, pathCount))
-            {}
-        }
     }
 }
