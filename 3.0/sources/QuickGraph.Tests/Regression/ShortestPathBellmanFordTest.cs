@@ -11,7 +11,6 @@ namespace QuickGraph.Tests.Regression
     public class ShortestPathBellmanFordTest
     {
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void Repro12901()
         {
             var graph = new BidirectionalGraph<int, Edge<int>>();

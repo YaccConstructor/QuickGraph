@@ -120,6 +120,9 @@ namespace QuickGraph.Algorithms.ShortestPath
 
             var source = e.Source;
             var target = e.Target;
+            if (source.Equals(target))
+                return false;
+
             double du = this.distances[source];
             double dv = this.distances[target];
             double we = this.Weights(e);

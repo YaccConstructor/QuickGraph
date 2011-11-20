@@ -18,7 +18,6 @@ namespace QuickGraph.Serialization
             list.AddRange(Directory.GetFiles(".", "g.*.graphml"));
             if (Directory.Exists("graphml"))
                 list.AddRange(Directory.GetFiles("graphml", "g.*.graphml"));
-            list.RemoveRange(10, list.Count - 10);
             return list;
         }
 
