@@ -1,0 +1,34 @@
+﻿{
+module DotParserProject.DotLexer
+
+let keywords =   
+    [   
+        "node", NODE;   
+        "edge", EDGE;   
+        "graph", GRAPH;   
+        "digraph", DIGRAPH;   
+        "subgraph", SUBGRAPH;   
+        "strict", STRICT;     
+    ] |> Map.ofList 
+}
+
+let digit = ['0'-'9']
+let whitespace = [' ' '\t' '\r' '\n' ';']
+let id = ['a'-'z' 'A'-'Z' '_'](['a'-'z' 'A'-'Z' '_' '0'-'9'])*|['-']?('.'['0'-'9']+|['0'-'9']+('.'['0'-'9']+)?)
+
+rule tokenize = parse
+| whitespace { tokenize lexbuf }
+| '[' { SQLBRACE <| lexeme lexbuf }
+| ']' { SQRBRACE <| lexeme lexbuf }
+| '{' { CURLBRACE <| lexeme lexbuf }
+| '}' { CURRBRACE <| lexeme lexbuf }
+| '=' { ASSIGN <| lexeme lexbuf }
+| ':' { COL <| lexeme lexbuf }
+| ',' { COMMA <| lexeme lexbuf }
+| "--" { EDGEOP <| lexeme lexbuf }
+| "->" { DIEDGEOP <| lexeme lexbuf }
+| id { match keywords.TryFind(lexeme lexbuf) with
+        | Some(keyword) -> keyword
+        | None -> ID <| lexeme lexbuf }
+| eof { RNGLR_EOF <| lexeme lexbuf }
+| _ { failwithf "unexpected input: %s" <| lexeme lexbuf }
