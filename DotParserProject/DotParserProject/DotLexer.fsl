@@ -17,11 +17,14 @@ let keywords =
 }
 
 let digit = ['0'-'9']
-let whitespace = [' ' '\t' '\r' '\n' ';'] // ???
-let id = ['a'-'z' 'A'-'Z' '_'](['a'-'z' 'A'-'Z' '_' '0'-'9'])*|['-']?('.'['0'-'9']+|['0'-'9']+('.'['0'-'9']+)?)
+let whitespace = [' ' '\t' '\r' ';']
+let separator = '\n'
+let id = ['a'-'z' 'A'-'Z' '_'](['a'-'z' 'A'-'Z' '_' '0'-'9'])*|['-']?('.'['0'-'9']+|['0'-'9']+('.'['0'-'9']+)?) // как сделать чтобы в id не было символов из compass
+let compass = "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "nw" | "c" | "_"
 
 rule tokenize = parse
 | whitespace { tokenize lexbuf }
+| separator { SEP <| lexeme lexbuf }
 | '[' { LSQBRACE <| lexeme lexbuf }
 | ']' { RSQBRACE <| lexeme lexbuf }
 | '{' { LCURBRACE <| lexeme lexbuf }
@@ -34,5 +37,6 @@ rule tokenize = parse
 | id { match keywords.TryFind(lexeme lexbuf) with
         | Some(keyword) -> keyword
         | None -> ID <| lexeme lexbuf }
+| compass { COMPASS <| lexeme lexbuf }
 | eof { RNGLR_EOF <| lexeme lexbuf }
 | _ { failwithf "unexpected input: %s" <| lexeme lexbuf }
