@@ -1,0 +1,27 @@
+﻿module DotGrammar
+
+graph : [ STRICT ] ( GRAPH | DIGRAPH ) [ ID ] LCURBRACE stmt_list RCURBRACE {}
+
+stmt_list : [ stmt [ stmt_list ] ] {} //точка с запятой отброшена (лексером). Исходный вариант: [ stmt [ ';' ] [ stmt_list ] ]
+
+stmt : node_stmt | edge_stmt | attr_stmt | ID ASSIGN ID | subgraph {}
+
+attr_stmt : ( GRAPH | NODE | EDGE) attr_list {}
+
+attr_list : LSQBRACE [ a_list ] RSQBRACE [ attr_list ] {}
+
+a_list : ID ASSIGN ID [ COMMA ] [ a_list ] {}
+
+edge_stmt : ( node_id | subgraph ) edgeRHS [ attr_list ] {}
+
+edgeRHS : edgeop ( node_id | subgraph) [ edgeRHS ] {}
+
+node_stmt : node_id [ attr_list ] {}
+
+node_id : ID [ port ] {}
+
+port : COL ID [ COL compass_pt ] | COL compass_pt {}
+
+subgraph : [ SUBGR [ ID ] ] LCURBRACE stmt_list RCURBRACE {}
+
+//compass_pt : ( n | ne | e | se | s | sw | w | nw | c | _) {}

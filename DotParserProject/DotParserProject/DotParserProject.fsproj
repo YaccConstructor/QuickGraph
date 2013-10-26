@@ -42,6 +42,7 @@
   <ItemGroup>
     <None Include="DotLexer.fsl" />
     <Compile Include="Program.fs" />
+    <None Include="DotGrammar.yrd" />
     <None Include="App.config" />
     <Content Include="FsYARD\YardFrontend.XML" />
     <None Include="FsYARD\YardFrontend.pdb" />

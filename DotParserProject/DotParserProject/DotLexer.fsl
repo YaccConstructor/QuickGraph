@@ -1,27 +1,31 @@
 ﻿{
 module DotParserProject.DotLexer
 
+//Как сделать независимым от регистра
+//что делать с разделом compass_pt
+//поддержка escaped quotes и HTML для ID
+
 let keywords =   
     [   
         "node", NODE;   
         "edge", EDGE;   
         "graph", GRAPH;   
         "digraph", DIGRAPH;   
-        "subgraph", SUBGRAPH;   
+        "subgraph", SUBGR;   
         "strict", STRICT;     
     ] |> Map.ofList 
 }
 
 let digit = ['0'-'9']
-let whitespace = [' ' '\t' '\r' '\n' ';']
+let whitespace = [' ' '\t' '\r' '\n' ';'] // ???
 let id = ['a'-'z' 'A'-'Z' '_'](['a'-'z' 'A'-'Z' '_' '0'-'9'])*|['-']?('.'['0'-'9']+|['0'-'9']+('.'['0'-'9']+)?)
 
 rule tokenize = parse
 | whitespace { tokenize lexbuf }
-| '[' { SQLBRACE <| lexeme lexbuf }
-| ']' { SQRBRACE <| lexeme lexbuf }
-| '{' { CURLBRACE <| lexeme lexbuf }
-| '}' { CURRBRACE <| lexeme lexbuf }
+| '[' { LSQBRACE <| lexeme lexbuf }
+| ']' { RSQBRACE <| lexeme lexbuf }
+| '{' { LCURBRACE <| lexeme lexbuf }
+| '}' { RCURBRACE <| lexeme lexbuf }
 | '=' { ASSIGN <| lexeme lexbuf }
 | ':' { COL <| lexeme lexbuf }
 | ',' { COMMA <| lexeme lexbuf }
