@@ -1,0 +1,17 @@
+digraph GSS {
+    rankdir=RL
+    0 [label="26"]
+    1 [label="112"]
+    2 [label="110"]
+    3 [label="31"]
+    4 [label="1"]
+    5 [label="0"]
+    4 -> 5 [label="eps action_opt"]
+    3 -> 4 [label="eps includes_or_options_or_tokens"]
+    2 -> 3 [label="eps unnamed_module_opt"]
+    1 -> 2 [label="module_header"]
+    0 -> 1 [label="UIDENT"]
+    {rank=same; 0}
+    {rank=same; 1}
+    {rank=same; 5 4 3 2}
+}

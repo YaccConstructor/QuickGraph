@@ -1,9 +1,12 @@
 ﻿{
 module DotParserProject.DotLexer
 
-//Как сделать независимым от регистра
-//что делать с разделом compass_pt
-//поддержка escaped quotes и HTML для ID
+open DotParserProject.DotParser
+open Microsoft.FSharp.Text.Lexing
+
+let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
+
+//Как сделать независимым от регистра Отв: в tryFind передать дот нет строку в лоуэр кейсе
 
 let keywords =   
     [   
@@ -20,7 +23,7 @@ let digit = ['0'-'9']
 let whitespace = [' ' '\t' '\r' ';']
 let separator = '\n'
 let id = ['a'-'z' 'A'-'Z' '_'](['a'-'z' 'A'-'Z' '_' '0'-'9'])*|['-']?('.'['0'-'9']+|['0'-'9']+('.'['0'-'9']+)?) // как сделать чтобы в id не было символов из compass
-let compass = "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "nw" | "c" | "_"
+//let compass = "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "nw" | "c" | "_"
 
 rule tokenize = parse
 | whitespace { tokenize lexbuf }
@@ -35,8 +38,7 @@ rule tokenize = parse
 | "--" { EDGEOP <| lexeme lexbuf }
 | "->" { DIEDGEOP <| lexeme lexbuf }
 | id { match keywords.TryFind(lexeme lexbuf) with
-        | Some(keyword) -> keyword
+        | Some(keyword) -> keyword <| lexeme lexbuf
         | None -> ID <| lexeme lexbuf }
-| compass { COMPASS <| lexeme lexbuf }
 | eof { RNGLR_EOF <| lexeme lexbuf }
 | _ { failwithf "unexpected input: %s" <| lexeme lexbuf }

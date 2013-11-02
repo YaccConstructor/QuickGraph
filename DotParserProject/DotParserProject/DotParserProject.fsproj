@@ -40,9 +40,13 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets" Condition=" Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')" />
   <ItemGroup>
-    <None Include="DotLexer.fsl" />
+    <FsYard Include="DotGrammar.yrd" />
+    <FsLex Include="DotLexer.fsl">
+      <OtherFlags>--unicode</OtherFlags>
+    </FsLex>
+    <Compile Include="DotParser.fs" />
+    <Compile Include="DotLexer.fs" />
     <Compile Include="Program.fs" />
-    <None Include="DotGrammar.yrd" />
     <None Include="App.config" />
     <Content Include="FsYARD\YardFrontend.XML" />
     <None Include="FsYARD\YardFrontend.pdb" />
@@ -80,6 +84,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FSharp.PowerPack">
+      <HintPath>C:\Program Files (x86)\FSharpPowerPack-4.0.0.0\bin\FSharp.PowerPack.dll</HintPath>
+    </Reference>
     <Reference Include="FSharpx.Core">
       <HintPath>..\packages\YC.FsYARD.0.1.5033.0\lib\FSharpx.Core.dll</HintPath>
       <Private>True</Private>
@@ -101,7 +108,12 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <PropertyGroup>
-    <PreBuildEvent>fslex "$(ProjectDir)DotLexer.fsl"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
