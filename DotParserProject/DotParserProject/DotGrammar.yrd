@@ -3,7 +3,7 @@
 }
 
 options {
-    translate = true
+    translate = false
     module = "DotParserProject.DotParser"
     infEpsPath = epsilons
     pos = uint64
