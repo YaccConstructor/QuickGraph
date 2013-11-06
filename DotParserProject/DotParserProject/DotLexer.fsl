@@ -6,7 +6,7 @@ open Microsoft.FSharp.Text.Lexing
 
 let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
 
-//Как сделать независимым от регистра Отв: в tryFind передать дот нет строку в лоуэр кейсе
+//Как сделать независимым от регистра Отв: в tryFind передать дот нет строку в lower case
 
 let keywords =   
     [   
