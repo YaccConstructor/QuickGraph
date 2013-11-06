@@ -1,0 +1,43 @@
+﻿tokens {
+    _ of string
+}
+
+options {
+    translate = false
+    module = "DotParserProject.DotParser"
+    infEpsPath = epsilons
+    pos = uint64
+}
+
+module DotGrammar
+
+[<Start>]
+graph : [ STRICT ] ( GRAPH | DIGRAPH ) [ id ] LCURBRACE stmt_list RCURBRACE {}
+
+stmt_list : [ stmt SEP [ stmt_list ] ] {}
+
+stmt : node_stmt | edge_stmt | attr_stmt | id ASSIGN id | subgraph {}
+
+attr_stmt : ( GRAPH | NODE | EDGE) attr_list {}
+
+attr_list : LSQBRACE [ a_list ] RSQBRACE [ attr_list ] {}
+
+a_list : id ASSIGN id [ COMMA ] [ a_list ] {}
+
+edge_stmt : ( node_id | subgraph ) edgeRHS [ attr_list ] {}
+
+edgeRHS : edge_operator ( node_id | subgraph) [ edgeRHS ] {}
+
+edge_operator : EDGEOP | DIEDGEOP
+
+node_stmt : node_id [ attr_list ] {}
+
+node_id : id [ port ] {}
+
+port : COL id [ COL compass_pt ] | COL compass_pt {}
+
+subgraph : [ SUBGR [ id ] ] LCURBRACE stmt_list RCURBRACE {}
+
+compass_pt : COMPASS {}
+
+id : ID {}
