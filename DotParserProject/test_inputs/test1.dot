@@ -1,0 +1,8 @@
+strict graph MyGraph {
+
+size = 15;
+node [col = b, tail = bp];
+A: ne [name = Anode]
+B: nextnode : se;
+a -- b -- c [name = Cnode]
+}

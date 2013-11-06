@@ -14,7 +14,7 @@ module DotGrammar
 [<Start>]
 graph : [ STRICT ] ( GRAPH | DIGRAPH ) [ id ] LCURBRACE stmt_list RCURBRACE {}
 
-stmt_list : [ stmt SEP [ stmt_list ] ] {}
+stmt_list : [ (SEP | stmt SEP) [ stmt_list ] ] {}
 
 stmt : node_stmt | edge_stmt | attr_stmt | id ASSIGN id | subgraph {}
 
@@ -34,10 +34,10 @@ node_stmt : node_id [ attr_list ] {}
 
 node_id : id [ port ] {}
 
-port : COL id [ COL compass_pt ] | COL compass_pt {}
+port : (COL id [ COL compass_pt ] | COL compass_pt) {}
 
 subgraph : [ SUBGR [ id ] ] LCURBRACE stmt_list RCURBRACE {}
 
-compass_pt : COMPASS {}
+compass_pt : ID {}
 
 id : ID {}

@@ -22,7 +22,7 @@ let keywords =
 let digit = ['0'-'9']
 let whitespace = [' ' '\t' '\r' ';']
 let separator = '\n'
-let id = ['a'-'z' 'A'-'Z' '_'](['a'-'z' 'A'-'Z' '_' '0'-'9'])*|['-']?('.'['0'-'9']+|['0'-'9']+('.'['0'-'9']+)?) // как сделать чтобы в id не было символов из compass
+let id_expressions = ['a'-'z' 'A'-'Z' '_'](['a'-'z' 'A'-'Z' '_' '0'-'9'])*|['-']?('.'['0'-'9']+|['0'-'9']+('.'['0'-'9']+)?)
 //let compass = "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "nw" | "c" | "_"
 
 rule tokenize = parse
@@ -37,7 +37,7 @@ rule tokenize = parse
 | ',' { COMMA <| lexeme lexbuf }
 | "--" { EDGEOP <| lexeme lexbuf }
 | "->" { DIEDGEOP <| lexeme lexbuf }
-| id { match keywords.TryFind(lexeme lexbuf) with
+| id_expressions { match keywords.TryFind(lexeme lexbuf) with
         | Some(keyword) -> keyword <| lexeme lexbuf
         | None -> ID <| lexeme lexbuf }
 | eof { RNGLR_EOF <| lexeme lexbuf }

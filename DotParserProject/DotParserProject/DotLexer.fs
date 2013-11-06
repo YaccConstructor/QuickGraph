@@ -7,7 +7,7 @@ open Microsoft.FSharp.Text.Lexing
 
 let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
 
-//Как сделать независимым от регистра Отв: в tryFind передать дот нет строку в лоуэр кейсе
+//Как сделать независимым от регистра Отв: в tryFind передать дот нет строку в lower case
 
 let keywords =   
     [   
@@ -142,7 +142,7 @@ and _fslex_tokenize  _fslex_state lexbuf =
           )
   | 11 -> ( 
 # 40 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
-                      match keywords.TryFind(lexeme lexbuf) with
+                                  match keywords.TryFind(lexeme lexbuf) with
                        | Some(keyword) -> keyword <| lexeme lexbuf
                        | None -> ID <| lexeme lexbuf 
 # 148 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
