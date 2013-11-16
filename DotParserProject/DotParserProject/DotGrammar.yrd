@@ -30,7 +30,7 @@ edgeRHS : edge_operator ( node_id | subgraph) [ edgeRHS ] {}
 
 edge_operator : EDGEOP | DIEDGEOP
 
-node_stmt : node_id [ attr_list ] {}
+node_stmt : n_id=node_id [ attr_list ] { let nstr = n_id }
 
 node_id : id [ port ] {}
 

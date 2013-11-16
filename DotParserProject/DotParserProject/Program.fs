@@ -22,14 +22,14 @@ match buildAst tokens with
     printfn "Error on position %d, token %A: %s" pos token msg
 | Success (ast, errors) ->
     ast.PrintAst()
-//    let args = {
-//        tokenToRange = fun _ -> Unchecked.defaultof<_>, Unchecked.defaultof<_>
-//        zeroPosition = Unchecked.defaultof<_>
-//        clearAST = false
-//        filterEpsilons = false
-//    }
-//    let result:List<double> = translate args ast errors
+    let args = {
+        tokenToRange = fun _ -> Unchecked.defaultof<_>, Unchecked.defaultof<_>
+        zeroPosition = Unchecked.defaultof<_>
+        clearAST = false
+        filterEpsilons = false
+    }
+    let result:List<double> = translate args ast errors
     //defaultAstToDot ast @"..\..\astFromSeq.dot"
-//    defaultAstToDot ast @"..\..\astFromDot.dot"
-//    printfn "%A" result
-let key = Console.ReadKey(true)
+    defaultAstToDot ast @"..\..\astFromDot.dot"
+    printfn "%A" result
+    Console.ReadKey(true) |> ignore
