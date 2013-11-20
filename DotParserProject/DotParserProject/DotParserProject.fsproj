@@ -56,7 +56,7 @@
   <PropertyGroup>
     <RLiterals>KW_%s</RLiterals>
     <OutFile>DotParser.fs</OutFile>
-    <NeedTranslate>false</NeedTranslate>
+    <NeedTranslate>true</NeedTranslate>
     <Token>string</Token>
     <Module>DotParserProject.DotParser</Module>
     <EpsilonPath>epsilons</EpsilonPath>
