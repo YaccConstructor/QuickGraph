@@ -10,8 +10,7 @@ open Yard.Generators.RNGLR.AST
 
 open DotParserProject.DotParser
 
-let src = "..\\..\\..\\test_inputs\\test2.dot"
-
+let src = "..\\..\\..\\test_inputs\\test3.dot"
 let tokens = 
     let lexbuf = Lexing.LexBuffer<_>.FromTextReader <| new System.IO.StreamReader(src)
     seq { while not lexbuf.IsPastEndOfStream do
@@ -21,15 +20,19 @@ match buildAst tokens with
 | Error (pos, token, msg, debugFuns, _) ->
     printfn "Error on position %d, token %A: %s" pos token msg
 | Success (ast, errors) ->
-    ast.PrintAst()
+    //ast.PrintAst()
     let args = {
         tokenToRange = fun _ -> Unchecked.defaultof<_>, Unchecked.defaultof<_>
         zeroPosition = Unchecked.defaultof<_>
         clearAST = false
         filterEpsilons = false
     }
-    let result:List<double> = translate args ast errors
+    
+    defaultAstToDot ast "ast.dot"
+    let result:list<list<string>> = translate args ast errors
+    vrt |> ResizeArray.iter (printfn "vrt = %A;")
+    printfn "result = %A" result
     //defaultAstToDot ast @"..\..\astFromSeq.dot"
-    defaultAstToDot ast @"..\..\astFromDot.dot"
-    printfn "%A" result
-    Console.ReadKey(true) |> ignore
+//    defaultAstToDot ast @"..\..\astFromDot.dot"
+//    printfn "%A" result
+let key = Console.ReadKey(true)
