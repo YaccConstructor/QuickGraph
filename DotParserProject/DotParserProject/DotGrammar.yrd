@@ -1,5 +1,7 @@
 ﻿{
-let vrt = new ResizeArray<string>()
+open System.Collections.Generic
+open ParsingFuncs
+let adj_list = new Dictionary<string, HashSet<string>>()
 }
 
 tokens {
@@ -13,46 +15,40 @@ options {
     pos = uint64
 }
 
-
 module DotGrammar
 
-
-
-list <item separator>:
-    { [] }
-  | hd=item tl=(separator i=item {i})* {hd::tl}
-
+list <item separator>: {[]} | hd=item tl=(separator i=item {string i})* {(string hd)::tl}
 
 [<Start>]
-graph : [ STRICT {1} ] ( GRAPH {1} | DIGRAPH {1}) [ id ] LCURBRACE x=stmt_list RCURBRACE SEP {x}
+graph : [ STRICT {1} ] ( GRAPH {1} | DIGRAPH {1}) [ id ] LCURBRACE x=stmt_list RCURBRACE SEP {}
 
-stmt_list : lst=(l=full_stmt SEP {l})* {List.concat lst }
+stmt_list : lst=(l=full_stmt SEP {l})* {}
 
 full_stmt : 
        node_stmt 
      | l = edge_stmt {l}
 	 | attr_stmt 
-	 | k=id ASSIGN v=id {[k + ":" + v]} 
+	 | k=id ASSIGN v=id {} 
 	 | subgraph 
 
-attr_stmt : (GRAPH {1} | NODE | EDGE) lst=attr_list {lst}
+attr_stmt : (GRAPH {1} | NODE | EDGE) lst=attr_list {}
 
-attr_list : l=(LSQBRACE l=a_list RSQBRACE {l})* {List.concat l}
+attr_list : l=(LSQBRACE l=a_list RSQBRACE {})* {}
 
-a_list : lst = list<(k=id ASSIGN v=id {(k + ":" + v)}) COMMA> {lst}
+a_list : lst=list<(k=id ASSIGN v=id {}) COMMA> {}
 
-edge_stmt : lst=list<(nId = node_id {[nId]} | subgraph ) edge_operator> l2=attr_list {(List.concat lst)@l2}
+edge_stmt : edges=list<(nodeID=node_id | subgraph) edge_operator> attr_list {ParsingFuncs.AddEdges adj_list edges}
 
 edge_operator : EDGEOP {1} | DIEDGEOP {1}
 
-node_stmt : nId=node_id l=attr_list {nId::l}
+node_stmt : nodeID=node_id l=attr_list {nodeID}
 
-node_id : {nodeId}=id [ port ] {nodeId }
+node_id : nodeID=id [ port ] {nodeID}
 
 port : (COL id [ COL compass_pt {1}] {1} | COL compass_pt {1}) {1}
 
-subgraph : [ SUBGR [ id ] {1}] LCURBRACE l=stmt_list RCURBRACE {l}
+subgraph : [ SUBGR [ id ] {1}] LCURBRACE l=stmt_list RCURBRACE {}
 
-compass_pt : i=ID { i }
+compass_pt : i=ID {}
 
-id : i=ID  { i }
+id : i=ID  {i}

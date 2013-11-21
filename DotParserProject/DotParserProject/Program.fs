@@ -9,6 +9,17 @@ open Yard.Generators.RNGLR.Parser
 open Yard.Generators.RNGLR.AST
 
 open DotParserProject.DotParser
+open System.Collections.Generic
+
+//my functions
+let PrintAdjList (adj_list: Dictionary<string, HashSet<string>>) =
+    for list in adj_list do
+        printf "%s : " list.Key
+        for vertice in list.Value do
+            printf "%s " vertice
+        printfn ""
+
+//not my)
 
 let src = "..\\..\\..\\test_inputs\\test3.dot"
 let tokens = 
@@ -29,10 +40,14 @@ match buildAst tokens with
     }
     
     defaultAstToDot ast "ast.dot"
-    let result:list<list<string>> = translate args ast errors
-    vrt |> ResizeArray.iter (printfn "vrt = %A;")
-    printfn "result = %A" result
-    //defaultAstToDot ast @"..\..\astFromSeq.dot"
+//    let result:list<list<string>> = translate args ast errors
+//    vrt |> ResizeArray.iter (printfn "vrt = %A;")
+//    printfn "result = %A" result
+//    defaultAstToDot ast @"..\..\astFromSeq.dot"
 //    defaultAstToDot ast @"..\..\astFromDot.dot"
 //    printfn "%A" result
+    translate args ast errors |> ignore
+    
+    PrintAdjList adj_list
+    
 let key = Console.ReadKey(true)

@@ -62,6 +62,7 @@
     <EpsilonPath>epsilons</EpsilonPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ParsingFunctions.fs" />
     <FsYard Include="DotGrammar.yrd" />
     <FsLex Include="DotLexer.fsl">
       <OtherFlags>--unicode</OtherFlags>
