@@ -2,7 +2,8 @@
 open System.Collections.Generic
 open DotParserProject.CollectDataFuncs
 
-let adj_list = new Dictionary<string, Dictionary<string, int>>()
+//containers for graph's data
+let vertices_lists = new ResizeArray<string list>()
 let graph_info = new Dictionary<string, string>()
 
 //constants
@@ -45,11 +46,14 @@ attr_list : l=(LSQBRACE l=a_list RSQBRACE {})* {}
 
 a_list : lst=list<(k=id ASSIGN v=id {}) COMMA> {}
 
-edge_stmt : edges=list<(nodeID=node_id {nodeID} | subgraph) edge_operator> attr_list {CollectDataFuncs.AddEdges adj_list edges}
+edge_stmt : edges=list<(nodeID=node_id {nodeID} | subgraph) edge_operator> attr_list 
+{vertices_lists.Add edges}
 
-edge_operator : op=(p=EDGEOP {p} | p=DIEDGEOP {p}) {CollectDataFuncs.AddInfo graph_info [op, ""]}
+edge_operator : op=(p=EDGEOP {p} | p=DIEDGEOP {p}) 
+{CollectDataFuncs.AddInfo graph_info [op, ""]}
 
-node_stmt : nodeID=node_id l=attr_list {nodeID}
+node_stmt : nodeID=node_id l=attr_list
+{vertices_lists.Add [nodeID]}
 
 node_id : nodeID=id [ port ] {nodeID}
 

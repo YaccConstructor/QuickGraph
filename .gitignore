@@ -154,3 +154,20 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+DotParserProject/DotParserProject/DotGrammar.yrd.orig
+DotParserProject/DotParserProject/DotParser.fs.orig
+DotParserProject/DotParserProject/Program.fs.orig
+DotParserProject/packages/QuickGraph.3.6.61119.7/QuickGraph.3.6.61119.7.nupkg
+DotParserProject/packages/QuickGraph.3.6.61119.7/QuickGraph.3.6.61119.7.nuspec
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/CodeContracts/QuickGraph.Contracts.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/CodeContracts/QuickGraph.Data.Contracts.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/CodeContracts/QuickGraph.Graphviz.Contracts.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/CodeContracts/QuickGraph.Serialization.Contracts.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Data.XML
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Data.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Graphviz.XML
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Graphviz.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Serialization.XML
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Serialization.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.XML
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.dll

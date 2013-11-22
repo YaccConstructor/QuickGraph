@@ -14,12 +14,12 @@ open System.Collections.Generic
 //open QuickGraph
 
 //my functions
-let PrintAdjList (adj_list: Dictionary<string, Dictionary<string, int>>) =
-    for list in adj_list do
-        printf "%s : " list.Key
-        for vertice in list.Value do
-            printf "%A " vertice
-        printfn ""
+//let PrintAdjList (adj_list: Dictionary<string, Dictionary<string, int>>) =
+//    for list in adj_list do
+//        printf "%s : " list.Key
+//        for vertice in list.Value do
+//            printf "%A " vertice
+//        printfn ""
 
 //not mine)
 
@@ -50,8 +50,12 @@ match buildAst tokens with
 //    printfn "%A" result
     translate args ast errors |> ignore
 
+//    PrintAdjList adj_list
+    printfn "General info:"
+    for entry in graph_info do printf "%A " entry
+    printfn "\nVertices lists:"
+    vertices_lists |> ResizeArray.iter (printfn "%A")
+
 //    CheckEdgeOperator graph_info
-    PrintAdjList adj_list
-    for e in graph_info do printf "%A " e
     
 let key = Console.ReadKey(true)
