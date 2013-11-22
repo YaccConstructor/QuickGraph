@@ -10,13 +10,14 @@ open Yard.Generators.RNGLR.AST
 
 open DotParserProject.DotParser
 open System.Collections.Generic
+open QuickGraph
 
 //my functions
-let PrintAdjList (adj_list: Dictionary<string, HashSet<string>>) =
+let PrintAdjList (adj_list: Dictionary<string, Dictionary<string, int>>) =
     for list in adj_list do
         printf "%s : " list.Key
         for vertice in list.Value do
-            printf "%s " vertice
+            printf "%A " vertice
         printfn ""
 
 //not my)
@@ -47,7 +48,6 @@ match buildAst tokens with
 //    defaultAstToDot ast @"..\..\astFromDot.dot"
 //    printfn "%A" result
     translate args ast errors |> ignore
-    
     PrintAdjList adj_list
     
 let key = Console.ReadKey(true)
