@@ -9,8 +9,9 @@ open Yard.Generators.RNGLR.Parser
 open Yard.Generators.RNGLR.AST
 
 open DotParserProject.DotParser
+open DotParserProject.ParsingFuncs
 open System.Collections.Generic
-open QuickGraph
+//open QuickGraph
 
 //my functions
 let PrintAdjList (adj_list: Dictionary<string, Dictionary<string, int>>) =
@@ -20,7 +21,7 @@ let PrintAdjList (adj_list: Dictionary<string, Dictionary<string, int>>) =
             printf "%A " vertice
         printfn ""
 
-//not my)
+//not mine)
 
 let src = "..\\..\\..\\test_inputs\\test3.dot"
 let tokens = 
@@ -48,6 +49,9 @@ match buildAst tokens with
 //    defaultAstToDot ast @"..\..\astFromDot.dot"
 //    printfn "%A" result
     translate args ast errors |> ignore
+
+//    CheckEdgeOperator graph_info
     PrintAdjList adj_list
+    for e in graph_info do printf "%A " e
     
 let key = Console.ReadKey(true)

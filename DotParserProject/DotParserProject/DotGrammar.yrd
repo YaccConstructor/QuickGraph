@@ -1,7 +1,14 @@
 ﻿{
 open System.Collections.Generic
-open ParsingFuncs
+open DotParserProject.CollectDataFuncs
+
 let adj_list = new Dictionary<string, Dictionary<string, int>>()
+let graph_info = new Dictionary<string, string>()
+
+//constants
+let type_key = "type"
+let strict_key = "is_strict"
+let name_key = "name"
 }
 
 tokens {
@@ -20,7 +27,8 @@ module DotGrammar
 list <item separator>: {[]} | hd=item tl=(separator i=item {i})* {hd::tl}
 
 [<Start>]
-graph : [ STRICT {1} ] ( GRAPH {1} | DIGRAPH {1}) [ id ] LCURBRACE x=stmt_list RCURBRACE SEP {}
+graph : s=[STRICT] g=(t=GRAPH {t} | t=DIGRAPH {t}) name=[id] LCURBRACE x=stmt_list RCURBRACE SEP 
+{CollectDataFuncs.AddInfo graph_info [strict_key, (Utils.OptToStr s); type_key, g; name_key, (Utils.OptToStr name)]}
 
 stmt_list : lst=(l=full_stmt SEP {l})* {}
 
@@ -37,9 +45,9 @@ attr_list : l=(LSQBRACE l=a_list RSQBRACE {})* {}
 
 a_list : lst=list<(k=id ASSIGN v=id {}) COMMA> {}
 
-edge_stmt : edges=list<(nodeID=node_id {nodeID} | subgraph) edge_operator> attr_list {ParsingFuncs.AddEdges adj_list edges}
+edge_stmt : edges=list<(nodeID=node_id {nodeID} | subgraph) edge_operator> attr_list {CollectDataFuncs.AddEdges adj_list edges}
 
-edge_operator : EDGEOP {1} | DIEDGEOP {1}
+edge_operator : op=(p=EDGEOP {p} | p=DIEDGEOP {p}) {CollectDataFuncs.AddInfo graph_info [op, ""]}
 
 node_stmt : nodeID=node_id l=attr_list {nodeID}
 
