@@ -17,7 +17,7 @@ options {
 
 module DotGrammar
 
-list <item separator>: {[]} | hd=item tl=(separator i=item {string i})* {(string hd)::tl}
+list <item separator>: {[]} | hd=item tl=(separator i=item {i})* {hd::tl}
 
 [<Start>]
 graph : [ STRICT {1} ] ( GRAPH {1} | DIGRAPH {1}) [ id ] LCURBRACE x=stmt_list RCURBRACE SEP {}
@@ -37,7 +37,7 @@ attr_list : l=(LSQBRACE l=a_list RSQBRACE {})* {}
 
 a_list : lst=list<(k=id ASSIGN v=id {}) COMMA> {}
 
-edge_stmt : edges=list<(nodeID=node_id | subgraph) edge_operator> attr_list {ParsingFuncs.AddEdges adj_list edges}
+edge_stmt : edges=list<(nodeID=node_id {nodeID} | subgraph) edge_operator> attr_list {ParsingFuncs.AddEdges adj_list edges}
 
 edge_operator : EDGEOP {1} | DIEDGEOP {1}
 
