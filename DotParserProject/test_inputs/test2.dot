@@ -5,10 +5,6 @@ main -> parse [weight=8];
 parse -> execute;
 main -> init [style=dotted];
 main -> cleanup;
-execute -> {
-make_string;
-printf
-}
 init -> make_string;
 edge [color=red];
 main -> printf [style=bold,label=100];

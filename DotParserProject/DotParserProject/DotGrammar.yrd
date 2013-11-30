@@ -5,6 +5,10 @@ open DotParserProject.CollectDataFuncs
 //containers for graph's data
 let vertices_lists = new ResizeArray<string list>()
 let graph_info = new Dictionary<string, string>()
+let vertices_attrs = new Dictionary<string, (string*string) list>()
+let edges_attrs = new Dictionary<string, (string*string) list>()
+let general_attrs = new Dictionary<string, (string*string) list>()
+let assign_stmt_list = new ResizeArray<string*string>()
 
 //constants
 let type_key = "type"
@@ -13,14 +17,14 @@ let name_key = "name"
 }
 
 tokens {
-    _ of string
+_ of string
 }
 
 options {
-    translate = true
-    module = "DotParserProject.DotParser"
-    infEpsPath = epsilons
-    pos = uint64
+translate = true
+module = "DotParserProject.DotParser"
+infEpsPath = epsilons
+pos = uint64
 }
 
 module DotGrammar
@@ -28,38 +32,40 @@ module DotGrammar
 list <item separator>: {[]} | hd=item tl=(separator i=item {i})* {hd::tl}
 
 [<Start>]
-graph : s=[STRICT] g=(t=GRAPH {t} | t=DIGRAPH {t}) name=[id] LCURBRACE x=stmt_list RCURBRACE SEP 
-{CollectDataFuncs.AddInfo graph_info [strict_key, (Utils.OptToStr s); type_key, g; name_key, (Utils.OptToStr name)]}
+graph : s=[STRICT] g=(t=GRAPH {t} | t=DIGRAPH {t}) name=[id] (SEP)* LCURBRACE x=stmt_list RCURBRACE (SEP)* 
+{CollectDataFuncs.addInfo graph_info [strict_key, (Utils.optToStr s); type_key, g; name_key, (Utils.optToStr name)]}
 
 stmt_list : lst=(l=full_stmt SEP {l})* {}
 
 full_stmt : 
-       node_stmt 
-     | l = edge_stmt {l}
-	 | attr_stmt 
-	 | k=id ASSIGN v=id {} 
-	 | subgraph 
+       ns=node_stmt {}
+     | l = edge_stmt {}
+	 | attr_s=attr_stmt {}
+	 | k=id ASSIGN v=id {assign_stmt_list.Add (k, v)}
+	 | sub=subgraph {}
 
-attr_stmt : (GRAPH {1} | NODE | EDGE) lst=attr_list {}
+attr_stmt : attr_name=(n=GRAPH {n} | n=NODE {n} | n=EDGE {n}) lst=attr_list
+{CollectDataFuncs.addAttribute attr_name lst general_attrs}
 
-attr_list : l=(LSQBRACE l=a_list RSQBRACE {})* {}
+attr_list : l=(LSQBRACE l=a_list RSQBRACE {l})* {List.concat l}
 
-a_list : lst=list<(k=id ASSIGN v=id {}) COMMA> {}
+a_list : lst=list<(k=id ASSIGN v=id {(k,v)}) COMMA> {lst}
 
-edge_stmt : edges=list<(nodeID=node_id {nodeID} | subgraph) edge_operator> attr_list 
-{vertices_lists.Add edges}
+edge_stmt : edges=list<(nodeID=node_id {nodeID} | subgraph) edge_operator> lst=attr_list 
+{CollectDataFuncs.stmtGetData edges lst vertices_lists edges_attrs}
 
 edge_operator : op=(p=EDGEOP {p} | p=DIEDGEOP {p}) 
-{CollectDataFuncs.AddInfo graph_info [op, ""]}
+{CollectDataFuncs.addInfo graph_info [op, ""]}
 
-node_stmt : nodeID=node_id l=attr_list
-{vertices_lists.Add [nodeID]}
+node_stmt : nodeID=node_id lst=attr_list
+{CollectDataFuncs.stmtGetData [nodeID] lst vertices_lists vertices_attrs}
 
-node_id : nodeID=id [ port ] {nodeID}
+node_id : nodeID=id [port]
+{nodeID}
 
-port : (COL id [ COL compass_pt {1}] {1} | COL compass_pt {1}) {1}
+port : (COL id [COL compass_pt {1}] {1} | COL compass_pt {1}) {1}
 
-subgraph : [ SUBGR [ id ] {1}] LCURBRACE l=stmt_list RCURBRACE {}
+subgraph : [SUBGR [id] {1}] LCURBRACE l=stmt_list RCURBRACE {l}
 
 compass_pt : i=ID {}
 

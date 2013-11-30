@@ -22,8 +22,22 @@ open System.Collections.Generic
 //    for n in nodes do AddNode adj_list n
 //    CreateEdges adj_list nodes
 
-let rec AddInfo(graph_info: Dictionary<string,string>) (info_list: list<string*string>) =
+let rec addInfo(graph_info: Dictionary<string,string>) (info_list: list<string*string>) =
     let new_info = info_list |> List.filter (fun (key,value) -> not (graph_info.ContainsKey key))
     new_info |> List.map graph_info.Add |> ignore
-//    Utils.Log ["Add info (list info)"; info_list.ToString()]
-//    Utils.Log ["Add info (new info)"; new_info.ToString()]
+
+let addAttribute key value (attrs:Dictionary<string, (string*string) list>) =
+    let contains_node = attrs.ContainsKey key
+    if not contains_node then 
+        attrs.Add (key, value)
+    else
+        attrs.[key] <- List.concat [attrs.[key]; value]
+
+let stmtGetData (elems_list: list<string>) 
+                (attr_list: list<string*string>) 
+                (vertices: ResizeArray<string list>) 
+                (attrs:Dictionary<string, (string*string) list>) = 
+    if not elems_list.IsEmpty then 
+        vertices.Add elems_list
+    if not attr_list.IsEmpty then
+        addAttribute (elems_list.ToString()) attr_list attrs

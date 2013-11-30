@@ -11,7 +11,7 @@ open Yard.Generators.RNGLR.AST
 open DotParserProject.DotParser
 open DotParserProject.ParsingFuncs
 open System.Collections.Generic
-//open QuickGraph
+open QuickGraph
 
 //my functions
 //let PrintAdjList (adj_list: Dictionary<string, Dictionary<string, int>>) =
@@ -23,7 +23,7 @@ open System.Collections.Generic
 
 //not mine)
 
-let src = "..\\..\\..\\test_inputs\\test3.dot"
+let src = "..\\..\\..\\test_inputs\\test2.dot"
 let tokens = 
     let lexbuf = Lexing.LexBuffer<_>.FromTextReader <| new System.IO.StreamReader(src)
     seq { while not lexbuf.IsPastEndOfStream do
@@ -43,19 +43,23 @@ match buildAst tokens with
     
     defaultAstToDot ast "ast.dot"
 //    let result:list<list<string>> = translate args ast errors
-//    vrt |> ResizeArray.iter (printfn "vrt = %A;")
 //    printfn "result = %A" result
 //    defaultAstToDot ast @"..\..\astFromSeq.dot"
 //    defaultAstToDot ast @"..\..\astFromDot.dot"
 //    printfn "%A" result
+    
     translate args ast errors |> ignore
-
-//    PrintAdjList adj_list
-    printfn "General info:"
-    for entry in graph_info do printf "%A " entry
-    printfn "\nVertices lists:"
-    vertices_lists |> ResizeArray.iter (printfn "%A")
-
+    printAllCollectedData
 //    CheckEdgeOperator graph_info
+
+    let g = new AdjacencyGraph<string, SEdge<string>>()
+    createAdjacencyGraph vertices_lists g |>ignore
+    printfn ""
+    for v in g.Vertices do
+        printf "%A " v
+    printfn ""
+    for e in g.Edges do
+        printfn "%A" e
+    printfn ""
     
 let key = Console.ReadKey(true)

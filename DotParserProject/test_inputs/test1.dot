@@ -1,8 +1,10 @@
-strict graph MyGraph {
-
-size = 15;
+strict graph test1_graph {
+graph [color = red]
 node [col = b, tail = bp];
-A: ne [name = Anode]
+A: ne [name = Anode, size=123,shape=rect]
 B: nextnode : se;
+edge [ size = 100500 ]
 a -- b -- c [name = Cnode]
+node [ shape=Triangle ];
+style=fashionable
 }
