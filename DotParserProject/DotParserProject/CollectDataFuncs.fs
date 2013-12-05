@@ -22,7 +22,7 @@ open System.Collections.Generic
 //    for n in nodes do AddNode adj_list n
 //    CreateEdges adj_list nodes
 
-let rec addInfo(graph_info: Dictionary<string,string>) (info_list: list<string*string>) =
+let addInfo(graph_info: Dictionary<string,string>) (info_list: list<string*string>) =
     let new_info = info_list |> List.filter (fun (key,value) -> not (graph_info.ContainsKey key))
     new_info |> List.map graph_info.Add |> ignore
 

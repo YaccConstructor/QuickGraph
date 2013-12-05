@@ -13,7 +13,7 @@ open DotParserProject.ParsingFuncs
 open System.Collections.Generic
 open QuickGraph
 
-let src = "..\\..\\..\\test_inputs\\test5.dot"
+let src = "..\\..\\..\\test_inputs\\test2.dot"
 let tokens = 
     let lexbuf = Lexing.LexBuffer<_>.FromTextReader <| new System.IO.StreamReader(src)
     seq { while not lexbuf.IsPastEndOfStream do

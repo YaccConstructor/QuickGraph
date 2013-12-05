@@ -1,6 +1,6 @@
 ﻿{
 open System.Collections.Generic
-open DotParserProject.CollectDataFuncs
+open DotParserProject.GraphDataContainer
 
 //containers for graph's data
 let vertices_lists = new ResizeArray<string list>()
@@ -9,6 +9,10 @@ let vertices_attrs = new Dictionary<string, (string*string) list>()
 let edges_attrs = new Dictionary<string, (string*string) list>()
 let general_attrs = new Dictionary<string, (string*string) list>()
 let assign_stmt_list = new ResizeArray<string*string>()
+
+//array of GraphDataContainer
+let graphs = new ResizeArray<GraphDataContainer>()
+graphs.Add(new GraphDataContainer())
 
 //constants
 let type_key = "type"
@@ -29,44 +33,44 @@ pos = uint64
 
 module DotGrammar
 
-list <item separator>: {[]} | hd=item tl=(separator i=item {i})* {hd::tl}
+list <item separator>: { [] } | hd=item tl=(separator i=item { i })* { hd::tl }
 
 [<Start>]
-graph : s=[STRICT] g=(t=GRAPH {t} | t=DIGRAPH {t}) name=[id] (SEP)* LCURBRACE x=stmt_list RCURBRACE (SEP)* 
-{CollectDataFuncs.addInfo graph_info [strict_key, (Utils.optToStr s); type_key, g; name_key, (Utils.optToStr name)]}
+graph : s=[STRICT] g=(t=GRAPH {t} | t=DIGRAPH {t}) name=[id] (SEP)* LCURBRACE x=stmt_list<<(graphs.[0])>> RCURBRACE (SEP)* 
+{ graphs.[0].AddGeneralInfo [strict_key, (Utils.optToStr s); type_key, g; name_key, (Utils.optToStr name)] }
 
-stmt_list : lst=(l=full_stmt SEP {l})* {}
+stmt_list<<(gr:GraphDataContainer)>> : lst=(l=full_stmt<<gr>> SEP {l})* {}
 
-full_stmt : 
-       ns=node_stmt {}
-     | l = edge_stmt {}
-	 | attr_s=attr_stmt {}
-	 | k=id ASSIGN v=id {assign_stmt_list.Add (k, v)}
-	 | sub=subgraph {}
+full_stmt<<(gr2:GraphDataContainer)>>: 
+       ns=node_stmt<<gr2>> {}
+     | l = edge_stmt<<gr2>> {}
+	 | attr_s=attr_stmt<<gr2>> {}
+	 | k=id ASSIGN v=id { gr2.AddAssignStmt k v }
+	 | sub=subgraph<<(new GraphDataContainer())>> {}
 
-attr_stmt : attr_name=(n=GRAPH {n} | n=NODE {n} | n=EDGE {n}) lst=attr_list
-{CollectDataFuncs.addAttribute attr_name lst general_attrs}
+attr_stmt<<(gr3:GraphDataContainer)>> : attr_name=(n=GRAPH {n} | n=NODE {n} | n=EDGE {n}) lst=attr_list
+{ gr3.AddGeneralAttrs attr_name lst }
 
-attr_list : l=(LSQBRACE l=a_list RSQBRACE {l})* {List.concat l}
+attr_list : l=(LSQBRACE l=a_list RSQBRACE {l})* { List.concat l }
 
-a_list : lst=list<(k=id ASSIGN v=id {(k,v)}) COMMA> {lst}
+a_list : lst=list<(k=id ASSIGN v=id {(k,v)}) COMMA> { lst }
 
-edge_stmt : edges=list<(nodeID=node_id {nodeID} | subgraph) edge_operator> lst=attr_list 
-{CollectDataFuncs.stmtGetData edges lst vertices_lists edges_attrs}
+edge_stmt<<(gr4:GraphDataContainer)>> : edges=list<(nodeID=node_id { nodeID } | sub=subgraph<<(new GraphDataContainer())>> { sub }) (edge_operator<<gr4>>) > lst=attr_list 
+{ gr4.AddEdgeStmtData edges lst }
 
-edge_operator : op=(p=EDGEOP {p} | p=DIEDGEOP {p}) 
-{CollectDataFuncs.addInfo graph_info [op, ""]}
+edge_operator<<(gr5:GraphDataContainer)>> : op=(p=EDGEOP {p} | p=DIEDGEOP {p}) 
+{ gr5.AddGeneralInfo [(op, "")] }
 
-node_stmt : nodeID=node_id lst=attr_list
-{CollectDataFuncs.stmtGetData [nodeID] lst vertices_lists vertices_attrs}
+node_stmt<<(gr6:GraphDataContainer)>> : nodeID=node_id lst=attr_list
+{ gr6.AddNodeStmtData [nodeID] lst }
 
 node_id : nodeID=id [port]
-{nodeID}
+{ nodeID }
 
 port : (COL id [COL compass_pt {1}] {1} | COL compass_pt {1}) {1}
 
-subgraph : [SUBGR [id] {1}] LCURBRACE l=stmt_list RCURBRACE {l}
+subgraph<<(gr7:GraphDataContainer)>> : [SUBGR [id] {1}] LCURBRACE l=stmt_list<<gr7>> RCURBRACE { "tmp_subgr_name" }
 
 compass_pt : i=ID {}
 
-id : i=ID {i}
+id : i=ID { i }
