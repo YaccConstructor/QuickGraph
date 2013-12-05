@@ -63,6 +63,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Utils.fs" />
+    <Compile Include="GraphDataContainer.fs" />
     <Compile Include="CollectDataFuncs.fs" />
     <FsYard Include="DotGrammar.yrd" />
     <FsLex Include="DotLexer.fsl">

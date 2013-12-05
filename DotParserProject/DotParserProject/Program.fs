@@ -13,17 +13,7 @@ open DotParserProject.ParsingFuncs
 open System.Collections.Generic
 open QuickGraph
 
-//my functions
-//let PrintAdjList (adj_list: Dictionary<string, Dictionary<string, int>>) =
-//    for list in adj_list do
-//        printf "%s : " list.Key
-//        for vertice in list.Value do
-//            printf "%A " vertice
-//        printfn ""
-
-//not mine)
-
-let src = "..\\..\\..\\test_inputs\\test2.dot"
+let src = "..\\..\\..\\test_inputs\\test5.dot"
 let tokens = 
     let lexbuf = Lexing.LexBuffer<_>.FromTextReader <| new System.IO.StreamReader(src)
     seq { while not lexbuf.IsPastEndOfStream do
@@ -49,11 +39,12 @@ match buildAst tokens with
 //    printfn "%A" result
     
     translate args ast errors |> ignore
-    printAllCollectedData
+    allCollectedDataToFile()
+    printAllCollectedData()
 //    CheckEdgeOperator graph_info
 
     let g = new AdjacencyGraph<string, SEdge<string>>()
-    createAdjacencyGraph vertices_lists g |>ignore
+    createAdjacencyGraph vertices_lists g |> ignore
     printfn ""
     for v in g.Vertices do
         printf "%A " v
@@ -61,5 +52,16 @@ match buildAst tokens with
     for e in g.Edges do
         printfn "%A" e
     printfn ""
+    
+    let quickgraph_vert = "..\\..\\..\\test_output\\quickgraph_vert.txt"
+    let quickgraph_edges = "..\\..\\..\\test_output\\quickgraph_edges.txt"
+    let outp = File.CreateText quickgraph_vert
+    let outp2 = File.CreateText quickgraph_edges 
+    for v in g.Vertices do
+        outp.WriteLine v
+    for e in g.Edges do
+        outp2.WriteLine e
+    outp.Close()
+    outp2.Close()
     
 let key = Console.ReadKey(true)
