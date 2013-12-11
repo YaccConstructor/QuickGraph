@@ -13,7 +13,7 @@ open DotParserProject.ParsingFuncs
 open System.Collections.Generic
 open QuickGraph
 
-let src = "..\\..\\..\\test_inputs\\test2.dot"
+let src = "..\\..\\..\\test_inputs\\test4.dot"
 let tokens = 
     let lexbuf = Lexing.LexBuffer<_>.FromTextReader <| new System.IO.StreamReader(src)
     seq { while not lexbuf.IsPastEndOfStream do
@@ -39,29 +39,30 @@ match buildAst tokens with
 //    printfn "%A" result
     
     translate args ast errors |> ignore
-    allCollectedDataToFile()
-    printAllCollectedData()
-//    CheckEdgeOperator graph_info
 
     let g = new AdjacencyGraph<string, SEdge<string>>()
-    createAdjacencyGraph vertices_lists g |> ignore
-    printfn ""
-    for v in g.Vertices do
-        printf "%A " v
-    printfn ""
-    for e in g.Edges do
-        printfn "%A" e
-    printfn ""
+//    printfn ""
+//    for v in g.Vertices do
+//        printf "%A " v
+//    printfn ""
+//    for e in g.Edges do
+//        printfn "%A" e
+//    printfn ""
     
-    let quickgraph_vert = "..\\..\\..\\test_output\\quickgraph_vert.txt"
-    let quickgraph_edges = "..\\..\\..\\test_output\\quickgraph_edges.txt"
-    let outp = File.CreateText quickgraph_vert
-    let outp2 = File.CreateText quickgraph_edges 
-    for v in g.Vertices do
-        outp.WriteLine v
-    for e in g.Edges do
-        outp2.WriteLine e
-    outp.Close()
-    outp2.Close()
+//    let quickgraph_vert = "..\\..\\..\\test_output\\quickgraph_vert.txt"
+//    let quickgraph_edges = "..\\..\\..\\test_output\\quickgraph_edges.txt"
+//    let outp = File.CreateText quickgraph_vert
+//    let outp2 = File.CreateText quickgraph_edges 
+//    for v in g.Vertices do
+//        outp.WriteLine v
+//    for e in g.Edges do
+//        outp2.WriteLine e
+//    outp.Close()
+//    outp2.Close()
+    graphs.[0].ToFiles()
+    for gr in graphs do
+        gr.PrintAllCollectedData()
+        printfn "---------------------------------------------------------"
+    printfn "Completed"
     
 let key = Console.ReadKey(true)

@@ -2,14 +2,6 @@
 open System.Collections.Generic
 open DotParserProject.GraphDataContainer
 
-//containers for graph's data
-let vertices_lists = new ResizeArray<string list>()
-let graph_info = new Dictionary<string, string>()
-let vertices_attrs = new Dictionary<string, (string*string) list>()
-let edges_attrs = new Dictionary<string, (string*string) list>()
-let general_attrs = new Dictionary<string, (string*string) list>()
-let assign_stmt_list = new ResizeArray<string*string>()
-
 //array of GraphDataContainer
 let graphs = new ResizeArray<GraphDataContainer>()
 graphs.Add(new GraphDataContainer())
@@ -55,14 +47,9 @@ attr_list : l=(LSQBRACE l=a_list RSQBRACE {l})* { List.concat l }
 
 a_list : lst=list<(k=id ASSIGN v=id {(k,v)}) COMMA> { lst }
 
-
-
 edge_stmt<<(gr4:GraphDataContainer)>> : 
-    edges=list<(nodeID=node_id { nodeID } | sub=subgraph<<(new GraphDataContainer())>> { sub })
-			   (l=edge_operator{l})
-			  >
-    lst=attr_list 
-{ gr4.AddEdgeStmtData edges lst } 
+edges=list<(nodeID=node_id { nodeID } | sub=subgraph<<(new GraphDataContainer())>> { sub }) (l=edge_operator{l})> lst=attr_list 
+{ gr4.AddEdgeStmtData edges lst }
 
 edge_operator : op=(p=EDGEOP {p} | p=DIEDGEOP {p}) 
 { op }
@@ -75,7 +62,8 @@ node_id : nodeID=id [port]
 
 port : (COL id [COL compass_pt {1}] {1} | COL compass_pt {1}) {1}
 
-subgraph<<(gr7:GraphDataContainer)>> : [SUBGR [id] {1}] LCURBRACE l=stmt_list<<gr7>> RCURBRACE { "tmp_subgr_name" }
+subgraph<<(gr7:GraphDataContainer)>> : n=[SUBGR i=[id] {i}] LCURBRACE l=stmt_list<<gr7>> RCURBRACE 
+{ Utils.addSubgraphToArray n gr7 graphs }
 
 compass_pt : i=ID {}
 

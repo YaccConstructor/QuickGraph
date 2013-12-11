@@ -21,9 +21,9 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DocumentationFile>bin\Debug\DotParserProject.XML</DocumentationFile>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -62,9 +62,8 @@
     <EpsilonPath>epsilons</EpsilonPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Utils.fs" />
-    <Compile Include="CollectDataFuncs.fs" />
     <Compile Include="GraphDataContainer.fs" />
+    <Compile Include="Utils.fs" />
     <FsYard Include="DotGrammar.yrd" />
     <FsLex Include="DotLexer.fsl">
       <OtherFlags>--unicode</OtherFlags>
@@ -156,6 +155,10 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
