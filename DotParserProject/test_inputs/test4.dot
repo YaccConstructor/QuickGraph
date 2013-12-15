@@ -2,7 +2,7 @@ digraph G
 {
 1 -> 2;
 2 -> 3 ;
-3 -> subgraph GGG{
+subgraph GGG{
 11 -> 55
 }
 1 -> 11

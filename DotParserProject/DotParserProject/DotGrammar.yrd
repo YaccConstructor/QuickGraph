@@ -51,7 +51,7 @@ edge_stmt<<(gr4:GraphDataContainer)>> :
 edges=list<(nodeID=node_id { nodeID } | sub=subgraph<<(new GraphDataContainer())>> { sub }) (l=edge_operator{l})> lst=attr_list 
 { gr4.AddEdgeStmtData edges lst }
 
-edge_operator : op=(p=EDGEOP {p} | p=DIEDGEOP {p}) 
+edge_operator : op=(p=EDGEOP {p} | p=DIEDGEOP {p})
 { op }
 
 node_stmt<<(gr6:GraphDataContainer)>> : nodeID=node_id lst=attr_list
