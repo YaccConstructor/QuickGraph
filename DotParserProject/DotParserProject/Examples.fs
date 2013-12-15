@@ -14,9 +14,9 @@ let example0() =
         printfn "---------------------------------------------------------"
 
 let example1() =
-    let input = "..\\..\\..\\test_inputs\\test4.dot"
+    let input = "..\\..\\..\\test_inputs\\test1.dot"
     let graphs = DotLangParser.parse input
-    let main_graph = graphs.[1]
+    let main_graph = graphs.[0]
 
     match main_graph.IsStrict() with
     | true -> printfn "Input graph is strict"
@@ -71,7 +71,7 @@ let example4() =
     let graphs = DotLangParser.parse input
     let main_graph = graphs.[0]
 
-    let handler v1 v2 (tags: list<string*string>) =
+    let taggedHandler v1 v2 (tags: list<string*string>) =
         match tags.Length with
         | 0 ->
             new STaggedEdge<string, string>(v1, v2, "_no_tag_")
@@ -79,7 +79,7 @@ let example4() =
             let _, tag = tags.[0]
             new STaggedEdge<string, string>(v1, v2, tag)
 
-    let edges_array = main_graph.GetTaggedEdgeArray handler
+    let edges_array = main_graph.GetTaggedEdgeArray taggedHandler
     let my_graph = edges_array.ToAdjacencyGraph<string, STaggedEdge<string, string>>()
     for v in my_graph.Vertices do
         printf "%A " v

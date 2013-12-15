@@ -6,9 +6,9 @@ open Examples
 //main program
 
 //example0()
-example1()
+//example1()
 //example2()
 //example3()
-//example4()
+example4()
 
 let key = Console.ReadKey(true)

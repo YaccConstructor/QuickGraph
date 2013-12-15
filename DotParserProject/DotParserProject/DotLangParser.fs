@@ -23,6 +23,6 @@ let parse (input_file: string) =
             clearAST = false
             filterEpsilons = false
         }
-        defaultAstToDot ast "ast.dot"    
+        defaultAstToDot ast "ast.dot"
         translate args ast errors |> ignore
         graphs
