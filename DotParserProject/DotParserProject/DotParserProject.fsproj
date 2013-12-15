@@ -70,6 +70,8 @@
     </FsLex>
     <Compile Include="DotParser.fs" />
     <Compile Include="DotLexer.fs" />
+    <Compile Include="DotLangParser.fs" />
+    <Compile Include="Examples.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <Content Include="FsYARD\YardFrontend.XML" />

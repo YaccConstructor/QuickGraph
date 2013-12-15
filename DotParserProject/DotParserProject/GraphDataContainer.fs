@@ -45,20 +45,29 @@ type GraphDataContainer = class
         x.assign_stmt_list.Add (key, value) |> ignore 
 
     //methods to get collected data
-    member x.GraphName = x.graph_info.Item "name"
-    member x.IsStrict = (x.graph_info.Item "is_strict").Equals "strict"
-    member x.Type = x.graph_info.Item "type"
-    member x.GraphAttributes = x.general_attrs.Item "graph"
-    member x.NodeAttributes = x.general_attrs.Item "node"
-    member x.EdgeAttributes = x.general_attrs.Item "edge"
+    member x.GraphName() = x.graph_info.Item "name"
+    member x.IsStrict() = (x.graph_info.Item "is_strict").Equals "strict"
+    member x.Type() = x.graph_info.Item "type"
+
+    member x.GraphAttributes() =
+        if x.general_attrs.ContainsKey "graph" then x.general_attrs.Item "graph" else []
+    member x.NodeAttributes() = 
+        if x.general_attrs.ContainsKey "node" then x.general_attrs.Item "node" else []
+    member x.EdgeAttributes() = 
+        if x.general_attrs.ContainsKey "edge" then x.general_attrs.Item "edge" else []
+
+    member x.AssignStatements() = x.assign_stmt_list.ToArray()
 
     member x.VerticeTags vertice_name =
         match x.vertices_attrs.ContainsKey vertice_name with
         | true -> x.vertices_attrs.Item vertice_name
         | false -> []
 
-    member x.AssignStatements =
-        x.assign_stmt_list.ToArray()
+    member x.GetVerticeArray() =
+        let lists = seq {for i in 0 .. (ResizeArray.length x.vertices_lists) - 1 do
+                                yield x.vertices_lists.Item i}
+        let seq_with_duplicates = Seq.concat lists
+        List.ofSeq (Seq.distinct seq_with_duplicates)
 
     member x.GetEdgeArray handler =
         let WalkWithHandler lst = x.WalkEdges handler lst [||]
@@ -112,7 +121,21 @@ type GraphDataContainer = class
         | true -> true
         | false -> false
     
-    // methods to debug)
+    member x.PrintAllCollectedData() =
+        printfn "\nGeneral info:"
+        for entry in x.graph_info do printf "%A " entry
+        printfn "\n\nGeneral attributes:"
+        for entry in x.general_attrs do printfn "%A: %A" entry.Key entry.Value
+        printfn "\nVertices lists:"
+        x.vertices_lists |> ResizeArray.iter (printfn "%A")
+        printfn "\nVertices attributes:"
+        for entry in x.vertices_attrs do printfn "%A: %A" entry.Key entry.Value
+        printfn "\nEdges attributes:"
+        for entry in x.edges_attrs do printfn "%A: %A" entry.Key entry.Value
+        printfn "\nAssign statements:"
+        x.assign_stmt_list |> ResizeArray.iter (printfn "%A")
+
+    // debugging method)
     member x.ToFiles() =
         let f_general_info = "..\\..\\..\\test_output\\collected_data_gen_info.txt"
         let f_vert = "..\\..\\..\\test_output\\collected_data_vertices.txt"
@@ -139,18 +162,4 @@ type GraphDataContainer = class
         out_vert_attrs.Close()
         out_edges.Close()
         out_assign.Close()
-
-    member x.PrintAllCollectedData() =
-        printfn "\nGeneral info:"
-        for entry in x.graph_info do printf "%A " entry
-        printfn "\n\nGeneral attributes:"
-        for entry in x.general_attrs do printfn "%A: %A" entry.Key entry.Value
-        printfn "\nVertices lists:"
-        x.vertices_lists |> ResizeArray.iter (printfn "%A")
-        printfn "\nVertices attributes:"
-        for entry in x.vertices_attrs do printfn "%A: %A" entry.Key entry.Value
-        printfn "\nEdges attributes:"
-        for entry in x.edges_attrs do printfn "%A: %A" entry.Key entry.Value
-        printfn "\nAssign statements:"
-        x.assign_stmt_list |> ResizeArray.iter (printfn "%A")
 end

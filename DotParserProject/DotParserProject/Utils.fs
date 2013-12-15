@@ -22,4 +22,4 @@ let addSubgraphToArray subgr_id (gr: GraphDataContainer) (array: ResizeArray<Gra
     else
         gr.AddGeneralInfo [strict_key, ""; type_key, "subgraph"; name_key, get (get subgr_id)]
     array.Add gr
-    gr.GraphName
+    gr.GraphName()
