@@ -4,6 +4,8 @@ open System.Collections.Generic
 open Microsoft.FSharp.Collections
 open System.IO
 
+let maxVal = System.UInt64.MaxValue
+
 [<Struct>]
 type Edge<'iType, 'oType> = 
     val StartV : int
@@ -22,14 +24,14 @@ type SimpleFST<'iType, 'oType> =
 
 
 [<Class>]
-type InnerFST<'iType, 'oType when 'iType: comparison>() =
-    let mutable InitState = new ResizeArray<_>()
+type FST<'iType, 'oType when 'iType: comparison>() as this =
+    //let mutable InitState = new ResizeArray<_>()
     let mutable TableOfTransitions = new  ResizeArray<ResizeArray<_>>()
     let mutable ArrayOfFunction = new ResizeArray<'iType -> 'oType>()
-    let mutable FinalState = new ResizeArray<_> ()
+    //let mutable FinalState = new ResizeArray<_> ()
     let smbDict = new Dictionary<_, _>()
 
-    let inputFSTtoInnerFST (inputFST : SimpleFST<'iType, 'oType>) =        
+    let inputFSTtoFST (inputFST : SimpleFST<'iType, 'oType>) =        
         let stateDict =                        
             let incr () =
                 let key = ref -1 
@@ -54,39 +56,57 @@ type InnerFST<'iType, 'oType when 'iType: comparison>() =
             stateDict
         
         for stt in inputFST.InitState do
-            InitState.Add stateDict.[stt]
+            (this.InitState:ResizeArray<_>) .Add stateDict.[stt]
         
 
         for stt in inputFST.FinalState do
-            FinalState.Add stateDict.[stt]
+            (this.FinalState:ResizeArray<_>) .Add stateDict.[stt]
 
         TableOfTransitions <- ResizeArray.init stateDict.Count (fun _ -> ResizeArray.init smbDict.Count (fun _ -> (-1, -1)))
+        //ArrayOfFunction <- new ResizeArray<_>(inputFST.Edges.Count)
         let i = ref 0
         for edge in inputFST.Edges do
             TableOfTransitions.[stateDict.[edge.StartV]].[smbDict.[edge.InSymb]] <- (stateDict.[edge.EndV] , !i) 
-            ArrayOfFunction.[!i] <- fun _ -> edge.OutSymb
+            ArrayOfFunction.Add (fun _ -> edge.OutSymb)
             i := !i + 1
 
-    let printInnerFSTtoDOT filePrintPath =
-        let s = "digraph G {\n"
+    let printFSTtoDOT filePrintPath =
+        let printInDict = new Dictionary<_, _>(smbDict.Count) 
+        for i in smbDict do
+            printInDict.Add(i.Value, i.Key)
+        let rank s l =
+             "{ rank=" + s + "; " + (l |> ResizeArray.map string |> ResizeArray.toArray |> String.concat " ") + " }\n"
+        let s = 
+            "digraph G {\n" 
+            + "rankdir = LR\n"
+            + "node [shape = circle]\n"
+            + (this.InitState |> ResizeArray.map(fun x -> sprintf "%i[style=filled, fillcolor=green]\n" x) |> ResizeArray.toArray |> String.concat "")
+            + (this.FinalState |> ResizeArray.map(fun x -> sprintf "%i[shape = doublecircle, style=filled, fillcolor=red]\n" x) |> ResizeArray.toArray |> String.concat "")
+            + rank "same" this.InitState 
+            + rank "min" this.InitState 
+            + rank "same" this.FinalState 
+            + rank "max" this.FinalState 
+
         let strs = 
             TableOfTransitions
             |> ResizeArray.mapi(fun i x -> 
                 x
-                |> ResizeArray.mapi(fun j y -> sprintf "%i -> %i [label=\"%i\"]; \n" i (fst y) j))
+                |> ResizeArray.mapi(fun j y -> if fst y <> -1 then sprintf "%i -> %i [label=\"%s (%i)\"]; \n" i (fst y) (printInDict.[j].ToString().Replace("\"","\\\"")) j else ""))
             |> List.ofSeq
             |> ResizeArray.concat
                   
         System.IO.File.WriteAllText(filePrintPath, s + (String.concat "" strs) + "\n}")
         ()
         
+    member val InitState = new ResizeArray<_>() with get, set    
+    member val FinalState = new ResizeArray<_> () with get, set  
     member this.Init (initState, tableOfTransitions, arrayOfFunction, finalState) = 
-        InitState <- initState
+        this.InitState <- initState
         TableOfTransitions <- tableOfTransitions
         ArrayOfFunction <- arrayOfFunction
-        FinalState <- finalState
+        this.FinalState <- finalState
 
-    member this.LoadFromSimpleFST fst = inputFSTtoInnerFST fst
-    
+    member this.LoadFromSimpleFST fst = inputFSTtoFST fst
+    member this.printFST filePath = printFSTtoDOT filePath
 
         
