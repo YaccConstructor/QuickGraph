@@ -1,10 +1,27 @@
-﻿module YC.FST
+﻿module YC.FST.TableFST
 
 open System.Collections.Generic
 open Microsoft.FSharp.Collections
 open System.IO
 
 let maxVal = System.UInt64.MaxValue
+
+let fstToDot strs initState finalState filePrintPath =
+    let rank s l =
+        "{ rank=" + s + "; " + (l |> ResizeArray.map string |> ResizeArray.toArray |> String.concat " ") + " }\n"
+    let s = 
+        "digraph G {\n" 
+        + "rankdir = LR\n"
+        + "node [shape = circle]\n"
+        + (initState |> ResizeArray.map(fun x -> sprintf "%i[style=filled, fillcolor=green]\n" x) |> ResizeArray.toArray |> String.concat "")
+        + (finalState |> ResizeArray.map(fun x -> sprintf "%i[shape = doublecircle, style=filled, fillcolor=red]\n" x) |> ResizeArray.toArray |> String.concat "")
+        + rank "same" initState 
+        + rank "min" initState 
+        + rank "same" finalState 
+        + rank "max" finalState 
+                          
+    System.IO.File.WriteAllText(filePrintPath, s + (String.concat "" strs) + "\n}")
+    ()
 
 [<Struct>]
 type Edge<'iType, 'oType> = 
@@ -74,18 +91,6 @@ type FST<'iType, 'oType when 'iType: comparison>() as this =
         let printInDict = new Dictionary<_, _>(smbDict.Count) 
         for i in smbDict do
             printInDict.Add(i.Value, i.Key)
-        let rank s l =
-             "{ rank=" + s + "; " + (l |> ResizeArray.map string |> ResizeArray.toArray |> String.concat " ") + " }\n"
-        let s = 
-            "digraph G {\n" 
-            + "rankdir = LR\n"
-            + "node [shape = circle]\n"
-            + (this.InitState |> ResizeArray.map(fun x -> sprintf "%i[style=filled, fillcolor=green]\n" x) |> ResizeArray.toArray |> String.concat "")
-            + (this.FinalState |> ResizeArray.map(fun x -> sprintf "%i[shape = doublecircle, style=filled, fillcolor=red]\n" x) |> ResizeArray.toArray |> String.concat "")
-            + rank "same" this.InitState 
-            + rank "min" this.InitState 
-            + rank "same" this.FinalState 
-            + rank "max" this.FinalState 
 
         let strs = 
             TableOfTransitions
@@ -95,7 +100,7 @@ type FST<'iType, 'oType when 'iType: comparison>() as this =
             |> List.ofSeq
             |> ResizeArray.concat
                   
-        System.IO.File.WriteAllText(filePrintPath, s + (String.concat "" strs) + "\n}")
+        fstToDot strs this.InitState this.FinalState filePrintPath
         ()
         
     member val InitState = new ResizeArray<_>() with get, set    
