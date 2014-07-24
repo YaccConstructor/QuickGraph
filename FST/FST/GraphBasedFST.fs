@@ -1,6 +1,6 @@
-﻿module YC.FST.GraphBasedFST
+﻿module YC.FST.GraphBasedFst
 
-open YC.FST.TableFST
+open YC.FST.FstTable
 open QuickGraph
 open Microsoft.FSharp.Collections
 open System.Collections.Generic
@@ -173,4 +173,3 @@ type FST<'iType, 'oType when 'oType: comparison and 'iType: comparison>(initial,
         resFST.RemoveVertex(!i) |> ignore
         resFST.RemoveVertex(!i + 1) |> ignore
         resFST 
-

@@ -1,10 +1,10 @@
-﻿module GraphTestsFST
+﻿module YC.FST.Tests.GraphBasedFst
 
-open YC.FST.TableFST
+open YC.FST.FstTable
 open NUnit.Framework
 open Microsoft.FSharp.Collections
-open YC.FST.GraphBasedFST
-open YC.FST.TestData
+open YC.FST.GraphBasedFst
+open YC.FST.Tests.GraphBasedFstTestData
 
 let basePath = "../../../../DOTfst/"
 let fullPath f = System.IO.Path.Combine(basePath, f)

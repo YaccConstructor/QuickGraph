@@ -1,7 +1,7 @@
-﻿module YC.FST.TestData
+﻿module YC.FST.Tests.GraphBasedFstTestData
 
 open Microsoft.FSharp.Collections
-open YC.FST.GraphBasedFST
+open YC.FST.GraphBasedFst
 
 let fst1 =
     let startState = ResizeArray.singleton 0

@@ -66,11 +66,13 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FSTTests.fs" />
+    <Compile Include="FstTableTests.fs" />
     <None Include="App.config" />
     <None Include="packages.config" />
-    <Compile Include="TestData.fs" />
-    <Compile Include="GraphTestsFST.fs" />
+    <Compile Include="GraphBasedFstTestData.fs" />
+    <Compile Include="GraphBasedFstTests.fs" />
+    <Compile Include="FstApproximationTestData.fs" />
+    <Compile Include="FstApproximationTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FST\FST.fsproj">

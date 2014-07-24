@@ -65,10 +65,11 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FST.fs" />
+    <Compile Include="FstTable.fs" />
     <None Include="App.config" />
     <None Include="packages.config" />
-    <Compile Include="GraphBasedFST.fs" />
+    <Compile Include="GraphBasedFst.fs" />
+    <Compile Include="FstApproximation.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

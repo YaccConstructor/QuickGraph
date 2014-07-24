@@ -1,6 +1,6 @@
-﻿module YC.FST.Tests
+﻿module YC.FST.Tests.FstTable
 
-open YC.FST.TableFST
+open YC.FST.FstTable
 open NUnit.Framework
 open Microsoft.FSharp.Collections
 

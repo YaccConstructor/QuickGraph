@@ -1,4 +1,4 @@
-﻿module YC.FST.TableFST
+﻿module YC.FST.FstTable
 
 open System.Collections.Generic
 open Microsoft.FSharp.Collections
