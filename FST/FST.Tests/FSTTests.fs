@@ -1,6 +1,6 @@
 ﻿module YC.FST.Tests
 
-open YC.FST
+open YC.FST.TableFST
 open NUnit.Framework
 open Microsoft.FSharp.Collections
 
@@ -78,8 +78,8 @@ type ``FST tests`` () =
         Assert.AreEqual(fst.FinalState.Count, 3, "Count of final state not equal expected number.")
         fst.printFST <| fullPath "test_cicle_1.dot"
 
-[<EntryPoint>]
-let f x =
-      let t = new ``FST tests`` () 
-      t.``FST. Simple test.``()
-      1
+//[<EntryPoint>]
+//let f x =
+//      let t = new ``FST tests`` () 
+//      t.``FST. Simple test.``()
+//      1
