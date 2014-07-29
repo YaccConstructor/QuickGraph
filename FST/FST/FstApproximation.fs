@@ -28,18 +28,18 @@ and [<Class>]Appr<'br when 'br:comparison>(initial, final, edges) as this =
             let _end = edg.Target
 
             match str with
-            | Some("") -> [|new TaggedEdge<_,_>(start, _end, new EdgeLbl<_,_>(None, None))|]
-            | None -> [|new TaggedEdge<_,_>(start, _end, new EdgeLbl<_,_>(None, None))|]
+            | Some("") -> [|new TaggedEdge<_,_>(start, _end, new EdgeLbl<_,_>(Eps, Eps))|]
+            | None -> [|new TaggedEdge<_,_>(start, _end, new EdgeLbl<_,_>(Eps, Eps))|]
             | Some(s) ->
                 let l = s.Length
                 let ss = s.ToCharArray()
                 Array.init l 
                     (fun i ->
                         match i with
-                        | 0 when (l = 1)     -> new TaggedEdge<_,_>(start, _end, new EdgeLbl<_,_>(Some (ss.[i], br), Some (ss.[i], br))) 
-                        | 0                  -> new TaggedEdge<_,_>(start, (incr counter; !counter), new EdgeLbl<_,_>(Some (ss.[i], br), Some (ss.[i], br))) 
-                        | i when (i = l - 1) -> new TaggedEdge<_,_>(!counter, _end, new EdgeLbl<_,_>(Some (ss.[i], br), Some (ss.[i], br))) 
-                        | i                  -> new TaggedEdge<_,_>(!counter, (incr counter; !counter), new EdgeLbl<_,_>(Some (ss.[i], br), Some (ss.[i], br))) 
+                        | 0 when (l = 1)     -> new TaggedEdge<_,_>(start, _end, new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i], br))) 
+                        | 0                  -> new TaggedEdge<_,_>(start, (incr counter; !counter), new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i], br))) 
+                        | i when (i = l - 1) -> new TaggedEdge<_,_>(!counter, _end, new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i], br))) 
+                        | i                  -> new TaggedEdge<_,_>(!counter, (incr counter; !counter), new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i], br))) 
                     )
 
         let rec go (approximation:Appr<_>) =
