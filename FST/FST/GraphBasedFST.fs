@@ -179,6 +179,8 @@ type FST<'iType, 'oType when 'oType: comparison and 'iType: comparison>(initial,
 
         for v in vRemove1 do
             resFST.RemoveVertex(v) |> ignore
+            resFST.InitState.Remove(v) |> ignore
+            resFST.FinalState.Remove(v) |> ignore
 
         let FSTtmp = new FST<_,_>()
         for edge in resFST.Edges do
@@ -188,6 +190,8 @@ type FST<'iType, 'oType when 'oType: comparison and 'iType: comparison>(initial,
 
         for v in vRemove2 do
             resFST.RemoveVertex(v) |> ignore
+            resFST.InitState.Remove(v) |> ignore
+            resFST.FinalState.Remove(v) |> ignore
 
         resFST.RemoveVertex(!i) |> ignore
         resFST.RemoveVertex(!i + 1) |> ignore
