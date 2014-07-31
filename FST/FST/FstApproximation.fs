@@ -36,10 +36,10 @@ and [<Class>]Appr<'br when 'br:comparison>(initial, final, edges) as this =
                 Array.init l 
                     (fun i ->
                         match i with
-                        | 0 when (l = 1)     -> new TaggedEdge<_,_>(start, _end, new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i], br))) 
-                        | 0                  -> new TaggedEdge<_,_>(start, (incr counter; !counter), new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i], br))) 
-                        | i when (i = l - 1) -> new TaggedEdge<_,_>(!counter, _end, new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i], br))) 
-                        | i                  -> new TaggedEdge<_,_>(!counter, (incr counter; !counter), new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i], br))) 
+                        | 0 when (l = 1)     -> new TaggedEdge<_,_>(start, _end, new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i]))) 
+                        | 0                  -> new TaggedEdge<_,_>(start, (incr counter; !counter), new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i]))) 
+                        | i when (i = l - 1) -> new TaggedEdge<_,_>(!counter, _end, new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i]))) 
+                        | i                  -> new TaggedEdge<_,_>(!counter, (incr counter; !counter), new EdgeLbl<_,_>(Smbl (ss.[i], br), Smbl (ss.[i]))) 
                     )
 
         let rec go (approximation:Appr<_>) =
@@ -48,10 +48,14 @@ and [<Class>]Appr<'br when 'br:comparison>(initial, final, edges) as this =
                 | Smb (str, br) -> 
                     splitEdge edge (Some str) br
                     |> resFST.AddVerticesAndEdgeRange
-                    |> ignore
+                    |> ignore                                        
                 | Repl (a,str1,str2) -> go a
                 | Trim a -> go a
-
+    
+        let vEOF = !counter + 1
+        for v in resFST.FinalState do
+            new TaggedEdge<_,_>(v, vEOF, new EdgeLbl<_,_>(Smbl (char 65535,  Unchecked.defaultof<'br>), Smbl (char 65535))) |> resFST.AddVerticesAndEdge |> ignore
+        resFST.FinalState <- ResizeArray.singleton vEOF
         go this
         resFST
 
