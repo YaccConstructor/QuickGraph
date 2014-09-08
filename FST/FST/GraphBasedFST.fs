@@ -175,6 +175,7 @@ type FST<'iType, 'oType when 'oType: comparison and 'iType: comparison>(initial,
         for v in resFST.FinalState do
             new TaggedEdge<_,_>(v, !i + 1, new EdgeLbl<_,_>(Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
 
+        //resFST.PrintToDOT @"C:\recursive-ascent\src\AbstractLexer.Interpreter.Tests\Tests\testComposeOut.dot"
         let vRemove1 = setVertexRemoved resFST !i
 
         for v in vRemove1 do
