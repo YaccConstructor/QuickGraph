@@ -34,17 +34,17 @@ type FST<'iType, 'oType when 'oType: comparison and 'iType: comparison>(initial,
         |> this.AddVerticesAndEdgeRange
         |> ignore
 
-    let printFSTtoDOT filePrintPath =
+    let printFSTtoDOT filePrintPath printSmb =
         let strs = 
-            let getVal s = 
+            let getVal s printSmb = 
                 match s with
-                | Smbl y -> y.ToString().Replace("\"","\\\"")
+                | Smbl y -> (match printSmb with Some x -> x y | None -> y.ToString()).Replace("\"","\\\"")
                 | Exclosure x -> "A/[|" + (Array.map (fun x -> x.ToString()) x |> String.concat "; ") + "|]"
                 | Eps -> "Eps"
 
             this.Edges 
             |> Seq.map (fun edge ->
-                sprintf "%i -> %i [label=\"%s : %s\"]; \n" edge.Source edge.Target (getVal edge.Tag.InSymb)  (getVal edge.Tag.OutSymb))
+                sprintf "%i -> %i [label=\"%s : %s\"]; \n" edge.Source edge.Target (getVal edge.Tag.InSymb printSmb)  (getVal edge.Tag.OutSymb None))
        
         fstToDot strs this.InitState this.FinalState filePrintPath   
 
@@ -109,7 +109,7 @@ type FST<'iType, 'oType when 'oType: comparison and 'iType: comparison>(initial,
 
     member val InitState =  initial with get, set
     member val FinalState = final with get, set
-    member this.PrintToDOT filePath = printFSTtoDOT filePath
+    member this.PrintToDOT(filePath, ?printSmb) = printFSTtoDOT filePath printSmb
     member this.Concat fst2 = concat this fst2 
     static member Concat(fst1, fst2) = concat fst1 fst2
     member this.Union fst2 = union this fst2
