@@ -28,7 +28,7 @@ and [<Class>]Appr<'br when 'br:comparison>(initial, final, edges) as this =
             let _end = edg.Target
 
             match str with
-            | Some("") -> [|new TaggedEdge<_,_>(start, _end, new EdgeLbl<_,_>(Eps, Eps))|]
+            | Some("") -> failwith "We don't support eps-transition!" //[|new TaggedEdge<_,_>(start, _end, new EdgeLbl<_,_>(Eps, Eps))|] 
             | None -> [|new TaggedEdge<_,_>(start, _end, new EdgeLbl<_,_>(Eps, Eps))|]
             | Some(s) ->
                 let l = s.Length
@@ -48,15 +48,17 @@ and [<Class>]Appr<'br when 'br:comparison>(initial, final, edges) as this =
                 | Smb (str, br) -> 
                     splitEdge edge (Some str) br
                     |> resFST.AddVerticesAndEdgeRange
-                    |> ignore                                        
+                    |> ignore                                      
                 | Repl (a,str1,str2) -> go a
                 | Trim a -> go a
-    
+        
+        go this
+
         let vEOF = !counter + 1
         for v in resFST.FinalState do
             new TaggedEdge<_,_>(v, vEOF, new EdgeLbl<_,_>(Smbl (char 65535,  Unchecked.defaultof<'br>), Smbl (char 65535))) |> resFST.AddVerticesAndEdge |> ignore
+
         resFST.FinalState <- ResizeArray.singleton vEOF
-        go this
         resFST
 
     new () = 
