@@ -41,9 +41,9 @@ type ``Graph FST Approximation tests`` () =
         let fstInputLexer = appr.ToFST()
         fstInputLexer.PrintToDOT(fullPath "branch2_test.dot", printSmbString)
 
-[<EntryPoint>]
-let f x =
-      let t = new ``Graph FST Approximation tests`` () 
-      let a = t.``Graph FST Approximation. Test.``()
-      //printfn "%A" a      
-      1
+//[<EntryPoint>]
+//let f x =
+//      let t = new ``Graph FST Approximation tests`` () 
+//      let a = t.``Graph FST Approximation. Test.``()
+//      //printfn "%A" a      
+//      1
