@@ -5,18 +5,18 @@ open YC.FST.GraphBasedFst
 open Microsoft.FSharp.Collections
 
 [<Struct>]
-type Position<'br when 'br:comparison> =
+type Position<'br(* when 'br:comparison*)> =
     val start_offset: int
     val end_offset: int
     val back_ref: 'br
     new (so, eo, br) = {start_offset = so; end_offset = eo; back_ref = br}
 
-type EdgeLblAppr<'br when 'br:comparison> = 
+type EdgeLblAppr<'br (* when 'br:comparison *)> = 
     | Smb of string * 'br
     | Repl of Appr<'br> * string * string
     | Trim of Appr<'br>
 
-and [<Class>]Appr<'br when 'br:comparison>(initial, final, edges) as this =
+and [<Class>]Appr<'br (*when 'br:comparison *)>(initial, final, edges) as this =
     inherit AdjacencyGraph<int, TaggedEdge<int, EdgeLblAppr<'br>>>()
     do 
         edges |> ResizeArray.map (fun (f,l,t) -> new TaggedEdge<_,_>(f,t,l))

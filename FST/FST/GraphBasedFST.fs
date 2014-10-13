@@ -27,7 +27,7 @@ type EdgeLbl<'iType, 'oType> =
     new (inSymb, outSymb) = {InSymb = inSymb; OutSymb = outSymb} 
 
 [<Class>]
-type FST<'iType, 'oType when 'oType: comparison and 'iType: comparison>(initial, final, transitions) as this= 
+type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(initial, final, transitions) as this= 
     inherit AdjacencyGraph<int,TaggedEdge<int,EdgeLbl<'iType, 'oType>>>()
     do  
         transitions |> ResizeArray.map (fun (f,l,t) -> new TaggedEdge<_,_>(f,t,l))
