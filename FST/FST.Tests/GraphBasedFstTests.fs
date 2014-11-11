@@ -7,7 +7,7 @@ open YC.FST.GraphBasedFst
 open YC.FST.Tests.GraphBasedFstTestData
 open System.Collections.Generic
 
-let basePath = "../../../../DOTfst/"
+let basePath = "../../../FST/FST/FST.Tests/DOTfst/"
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 let checkGraph (fst:FST<_,_>) initV finalV countE countV filePath =
@@ -66,7 +66,7 @@ type ``Graph FST tests`` () =
     [<Test>]
     member this.``Graph FST. Test composition FSTs 1.`` () =
         let alphabet = new HashSet<_>()
-        for edge in fstCompos2.Edges do
+        for edge in fstCompos22.Edges do
             alphabet.Add(edge.Tag.InSymb) |> ignore
 
         CompositionTest fstCompos12 fstCompos22 alphabet 1 1 4 4 "compos_test_1.dot"

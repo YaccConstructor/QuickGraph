@@ -4,7 +4,7 @@ open YC.FST.FstTable
 open NUnit.Framework
 open Microsoft.FSharp.Collections
 
-let basePath = "../../../../DOTfst/"
+let basePath = "../../../FST/FST/FST.Tests/DOTfst/"
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 [<TestFixture>]
@@ -54,7 +54,10 @@ type ``FST tests`` () =
     member this.``FST. Multiple final state test.`` () =
         let startState = ResizeArray.singleton 0
         let finishState = ResizeArray<_>([| 2; 3; 4|])
-        let edges = [|new Edge<_,_>(0, "1", "1", 1); new Edge<_,_>(1, "2", "+", 2); new Edge<_,_>(1, "3", "-", 2); new Edge<_,_>(2, "4\"7", "4", 3); new Edge<_,_>(1, "2", "+", 4);|]
+        let edges = [|
+                      new Edge<_,_>(0, "1", "1", 1); new Edge<_,_>(1, "2", "+", 2); new Edge<_,_>(1, "3", "-", 2);
+                      new Edge<_,_>(2, "4\"7", "4", 3); new Edge<_,_>(1, "2", "+", 4);
+                     |]
         let simpleFST = new  SimpleFST<_, _>(startState, ResizeArray.ofArray edges, finishState)
         let fst = new FST<_,_>()
         fst.LoadFromSimpleFST simpleFST
