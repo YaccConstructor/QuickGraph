@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using QuickGraph.Collections;
-using QuickGraph.Algorithms.Observers;
+using QuickGraph;
 using QuickGraph.Algorithms.Services;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -37,7 +37,7 @@ namespace QuickGraph.Algorithms.Search
         private int[] vertexIndexedColors;
 
         public ParallelBreadthFirstSearchAlgorithm(IVertexListGraph<TVertex,TEdge> g)
-            : this(g, new QuickGraph.Collections.ConcurrentQueue<TVertex>(), new Dictionary<TVertex, GraphColor>())
+            : this(g, new MyQueue<TVertex>(), new Dictionary<TVertex, GraphColor>())
         {}
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace QuickGraph.Algorithms.Search
             base.Initialize();
 
             // make sure queue is empty
-            Contract.Ensures(this.vertexQueue.Count == 0);
+            Debug.Assert(this.vertexQueue.Count == 0);
 
             var cancelManager = this.Services.CancelManager;
 
@@ -198,6 +198,12 @@ namespace QuickGraph.Algorithms.Search
             this.VisitRoots(new TVertex[] { s });
         }
 
+        //ParallelLoopState
+        //ParallelLoopResult ForEach<TSource, TLocal>(
+        //    IEnumerable<TSource> source, 
+        //    Func<TLocal> localInit, 
+        //    Func<TSource, ParallelLoopState, TLocal, TLocal> body, 
+        //    Action<TLocal> localFinally)
         private void VisitRoots(IEnumerable<TVertex> roots)
         {
             // enqueue roots
@@ -217,7 +223,7 @@ namespace QuickGraph.Algorithms.Search
             var color = (GraphColor)Interlocked.Exchange(
                 ref this.vertexIndexedColors[this.vertexIndices[s]], 
                 (int)GraphColor.Gray);
-            Contract.Assert(color == GraphColor.White);
+            //Contract.Assert(color == GraphColor.White);
 
             OnDiscoverVertex(s, local);
             this.vertexQueue.Enqueue(s);

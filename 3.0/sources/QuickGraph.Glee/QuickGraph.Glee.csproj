@@ -189,7 +189,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Contracts" Condition="'$(Configuration)' == 'DebugContracts'" />
+    <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external\CodeContracts\v3.5\Microsoft.Contracts.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.GLEE, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f84f738e1fc245c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\external\Glee\Microsoft.GLEE.dll</HintPath>
@@ -211,9 +214,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\QuickGraph\Contracts\Contracts.cs">
-      <Link>Contracts.cs</Link>
-    </Compile>
     <Compile Include="..\version.cs">
       <Link>Properties\version.cs</Link>
     </Compile>

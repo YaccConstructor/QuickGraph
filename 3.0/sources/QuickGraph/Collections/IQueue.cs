@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QuickGraph.Collections
 {
-    public interface IQueue<T> 
+    public interface IQueue<T>
     {
         int Count { get; }
 

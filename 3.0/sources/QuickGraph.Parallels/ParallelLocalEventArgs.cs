@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace QuickGraph
 {
+    public class ParallelState<TLocal> //ParallelLoopState
+    {
+
+    }
     public class ParallelLocalEventArgs<TLocal>
         : EventArgs
     {

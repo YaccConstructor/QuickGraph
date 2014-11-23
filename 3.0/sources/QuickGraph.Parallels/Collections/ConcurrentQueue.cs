@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.Concurrent;
 
 namespace QuickGraph.Collections
 {
-    public sealed class ConcurrentQueue<T> 
-        : System.Threading.Collections.ConcurrentQueue<T>
-        , IQueue<T>        
+    public sealed class MyQueue<T>
+        : ConcurrentQueue<T>
+        , IQueue<T>
     {
         bool IQueue<T>.Contains(T value)
         {

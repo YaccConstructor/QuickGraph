@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Algorithms;
 
-namespace QuickGraph.Tests
+namespace QuickGraph.Samples
 {
-    using QuickGraph;
-    using QuickGraph.Algorithms;
-
     [TestClass]
     public class WikiSamples
     {
