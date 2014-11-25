@@ -11,8 +11,9 @@ open QuickGraph.Collections
 let setVertexRemoved (fst:#IVertexListGraph<_,_>) startV = 
         let dfs = DepthFirstSearchAlgorithm<_,_>(fst)                
         dfs.Compute(startV)
-        let vertexRemoved = dfs.VertexColors |> Seq.filter(fun x -> x.Value = GraphColor.White) |> Seq.map(fun x -> x.Key)
-        vertexRemoved
+        dfs.VisitedGraph
+        //let vertexRemoved = dfs.VertexColors |> Seq.filter(fun x -> x.Value = GraphColor.White) |> Seq.map(fun x -> x.Key)
+        //vertexRemoved
 
 
 type Smbl<'a> = 
@@ -183,27 +184,42 @@ type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(init
                 new TaggedEdge<_,_>(v, !i + 1, new EdgeLbl<_,_>(Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
 
             //resFST.PrintToDOT @"C:\recursive-ascent\src\AbstractLexer.Interpreter.Tests\Tests\testComposeOut.dot"
-            let vRemove1 = setVertexRemoved resFST !i
+            //let vRemove1 = setVertexRemoved resFST !i
+            let grAfterRemove1 = setVertexRemoved resFST !i
+            //let x = new BidirectionalMatrixGraph<_>
+            let tmpGr = new FST<_,_>()
+            for v in grAfterRemove1.Vertices do
+                for edge in grAfterRemove1.OutEdges(v) do
+                    new TaggedEdge<_,_>(edge.Target, edge.Source, edge.Tag) |>  tmpGr.AddVerticesAndEdge |> ignore    
 
-            for v in vRemove1 do
-                resFST.RemoveVertex(v) |> ignore
-                resFST.InitState.Remove(v) |> ignore
-                resFST.FinalState.Remove(v) |> ignore
+            let grAfterRemove2 = setVertexRemoved tmpGr (!i + 1)
+//            for v in vRemove1 do
+//                resFST.RemoveVertex(v) |> ignore
+//                resFST.InitState.Remove(v) |> ignore
+//                resFST.FinalState.Remove(v) |> ignore
 
-            let FSTtmp = new FST<_,_>()
-            for edge in resFST.Edges do
-                new TaggedEdge<_,_>(edge.Target, edge.Source, edge.Tag) |>  FSTtmp.AddVerticesAndEdge |> ignore
+//            let FSTtmp = new FST<_,_>()
+//            for edge in resFST.Edges do
+//                new TaggedEdge<_,_>(edge.Target, edge.Source, edge.Tag) |>  FSTtmp.AddVerticesAndEdge |> ignore
+//
+//            let vRemove2 = setVertexRemoved FSTtmp (!i + 1)
+//
+//            for v in vRemove2 do
+//                resFST.RemoveVertex(v) |> ignore
+//                resFST.InitState.Remove(v) |> ignore
+//                resFST.FinalState.Remove(v) |> ignore
+            let resFSTAfterRemove = new FST<_,_>()
+            for v in grAfterRemove2.Vertices do
+                for edge in grAfterRemove2.OutEdges(v) do
+                    new TaggedEdge<_,_>(edge.Target, edge.Source, edge.Tag) |>  resFSTAfterRemove.AddVerticesAndEdge |> ignore  
 
-            let vRemove2 = setVertexRemoved FSTtmp (!i + 1)
-
-            for v in vRemove2 do
-                resFST.RemoveVertex(v) |> ignore
-                resFST.InitState.Remove(v) |> ignore
-                resFST.FinalState.Remove(v) |> ignore
-
-            resFST.RemoveVertex(!i) |> ignore
-            resFST.RemoveVertex(!i + 1) |> ignore
-            Success resFST 
+//            resFST.RemoveVertex(!i) |> ignore
+//            resFST.RemoveVertex(!i + 1) |> ignore
+            resFSTAfterRemove.InitState <- resFST.InitState
+            resFSTAfterRemove.FinalState <- resFST.FinalState
+            resFSTAfterRemove.RemoveVertex(!i) |> ignore
+            resFSTAfterRemove.RemoveVertex(!i + 1) |> ignore
+            Success resFSTAfterRemove 
 
 and Test<'success, 'error> =
     | Success of 'success
