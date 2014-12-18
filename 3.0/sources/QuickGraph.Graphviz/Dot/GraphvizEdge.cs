@@ -62,6 +62,11 @@ namespace QuickGraph.Graphviz.Dot
                     writer.Write("{0}=\"#{1}{2}{3}{4}\"", new object[] { entry.Key.ToString(), GraphvizColor.R.ToString("x2").ToUpper(), GraphvizColor.G.ToString("x2").ToUpper(), GraphvizColor.B.ToString("x2").ToUpper(), GraphvizColor.A.ToString("x2").ToUpper() });
                     continue;
                 }
+                if (entry.Value is IConvertible)
+                {
+                    writer.WriteLine(" {0}={1}", entry.Key, ((IConvertible)entry.Value).ToString(System.Globalization.CultureInfo.InvariantCulture).ToLower());
+                    continue;
+                }
                 writer.Write(" {0}={1}", entry.Key.ToString(), entry.Value.ToString().ToLower());
             }
             return writer.ToString();

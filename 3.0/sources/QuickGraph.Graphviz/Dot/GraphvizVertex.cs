@@ -73,6 +73,11 @@ namespace QuickGraph.Graphviz.Dot
                     writer.WriteLine("{0}=\"{1}\"", entry.Key, ((GraphvizRecord) entry.Value).ToDot());
                     continue;
                 }
+                if (entry.Value is IConvertible)
+                {
+                    writer.WriteLine(" {0}={1}", entry.Key, ((IConvertible)entry.Value).ToString(System.Globalization.CultureInfo.InvariantCulture).ToLower());
+                    continue;
+                }
                 writer.Write(" {0}={1}", entry.Key, entry.Value.ToString().ToLower());
             }
             return writer.ToString();
