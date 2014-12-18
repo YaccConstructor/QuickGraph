@@ -119,6 +119,26 @@ this
             Contract.Requires(vertexFactory != null);
             Contract.Requires(edgeFactory != null);
 
+			DeserializeAndValidateFromGraphML(graph, XmlReader.Create(reader), vertexFactory, edgeFactory);
+        }
+
+		public static void DeserializeAndValidateFromGraphML<TVertex, TEdge,TGraph>(
+#if !NET20
+            this
+#endif
+            TGraph graph,
+            XmlReader reader,
+            IdentifiableVertexFactory<TVertex> vertexFactory,
+            IdentifiableEdgeFactory<TVertex, TEdge> edgeFactory
+            )
+            where TEdge : IEdge<TVertex>
+            where TGraph : IMutableVertexAndEdgeListGraph<TVertex, TEdge>
+        {
+            Contract.Requires(graph != null);
+            Contract.Requires(reader != null);
+            Contract.Requires(vertexFactory != null);
+            Contract.Requires(edgeFactory != null);
+
             var serializer = new GraphMLDeserializer<TVertex, TEdge,TGraph>();
             var settings = new XmlReaderSettings();
             // add graphxml schema
