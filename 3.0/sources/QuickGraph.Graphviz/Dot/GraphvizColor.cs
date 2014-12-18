@@ -28,9 +28,9 @@ namespace QuickGraph.Graphviz.Dot
         }
 
         public byte A { get { return this.a; } }
-        public byte R { get { return this.a; } }
-        public byte G { get { return this.a; } }
-        public byte B { get { return this.a; } }
+        public byte R { get { return this.r; } }
+        public byte G { get { return this.g; } }
+        public byte B { get { return this.b; } }
 
         public static GraphvizColor Black
         {
