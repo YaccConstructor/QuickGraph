@@ -116,7 +116,7 @@ namespace QuickGraph.Graphviz.Dot
             }
             if (!this.StrokeGraphvizColor.Equals(GraphvizColor.Black))
             {
-                dic["GraphvizColor"] = this.StrokeGraphvizColor;
+                dic["color"] = this.StrokeGraphvizColor;
             }
             if (this.Style != GraphvizEdgeStyle.Unspecified)
             {
