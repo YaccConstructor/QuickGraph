@@ -17,7 +17,7 @@ type EdgeLblAppr<'br> =
     | Trim of Appr<'br>
 
 and [<Class>]Appr<'br>(initial, final, edges) as this =
-    inherit EdgeListGraph<int, TaggedEdge<int, EdgeLblAppr<'br>>>()
+    inherit AdjacencyGraph<int, TaggedEdge<int, EdgeLblAppr<'br>>>()
     do 
         edges |> ResizeArray.map (fun (f,l,t) -> new TaggedEdge<_,_>(f,t,l))
         |> this.AddVerticesAndEdgeRange

@@ -29,7 +29,7 @@ type EdgeLbl<'iType, 'oType> =
 
 [<Class>]
 type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(initial, final, transitions) as this= 
-    inherit EdgeListGraph<int,TaggedEdge<int,EdgeLbl<'iType, 'oType>>>() //AdjacencyGraph<int,TaggedEdge<int,EdgeLbl<'iType, 'oType>>>()
+    inherit AdjacencyGraph<int,TaggedEdge<int,EdgeLbl<'iType, 'oType>>>()//EdgeListGraph<int,TaggedEdge<int,EdgeLbl<'iType, 'oType>>>() //AdjacencyGraph<int,TaggedEdge<int,EdgeLbl<'iType, 'oType>>>()
     do  
         transitions |> ResizeArray.map (fun (f,l,t) -> new TaggedEdge<_,_>(f,t,l))
         |> this.AddVerticesAndEdgeRange
@@ -43,8 +43,8 @@ type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(init
                 | Exclosure x -> "A/[|" + (Array.map (fun x -> x.ToString()) x |> String.concat "; ") + "|]"
                 | Eps -> "Eps"
 
-            this.GetEdges()
-            |> ResizeArray.map (fun edge ->
+            this.Edges
+            |> Seq.map (fun edge ->
                 sprintf "%i -> %i [label=\"%s : %s\"]; \n" edge.Source edge.Target (getVal edge.Tag.InSymb printSmb)  (getVal edge.Tag.OutSymb None))
        
         fstToDot strs this.InitState this.FinalState filePrintPath   
@@ -59,8 +59,8 @@ type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(init
             i := !i + 1
              
         let resFST =  new FST<_,_>() 
-        fst1.GetEdges() |> resFST.AddVerticesAndEdgeRange |> ignore
-        for e in fst2.GetEdges() do 
+        fst1.Edges |> resFST.AddVerticesAndEdgeRange |> ignore
+        for e in fst2.Edges do 
             new TaggedEdge<_,_>(fst2Dict.[e.Source], fst2Dict.[e.Target], e.Tag) |> resFST.AddVerticesAndEdge |> ignore
         
         resFST.InitState <- fst1.InitState
@@ -84,8 +84,8 @@ type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(init
             i := !i + 1
              
         let resFST =  new FST<_,_>() 
-        fst1.GetEdges() |> resFST.AddVerticesAndEdgeRange |> ignore
-        for e in fst2.GetEdges() do 
+        fst1.Edges |> resFST.AddVerticesAndEdgeRange |> ignore
+        for e in fst2.Edges do 
             new TaggedEdge<_,_>(fst2Dict.[e.Source], fst2Dict.[e.Target], e.Tag) |> resFST.AddVerticesAndEdge |> ignore
         
         resFST.InitState.Add(!i)
@@ -115,42 +115,43 @@ type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(init
     static member Concat(fst1, fst2) = concat fst1 fst2
     member this.Union fst2 = union this fst2
     static member Union(fst1, fst2) = union fst1 fst2 
-    static member Compos(fst1:FST<_,_>, fst2:FST<_,_>, alphabet:HashSet<_>) = 
+    static member Compos(fst1:FST<_,'d> when 'd:struct, fst2:FST<_,_>, alphabet:HashSet<_>, ?eq) = 
         let errors = new ResizeArray<_>()
-        for edge in fst1.GetEdges() do
+        for edge in fst1.Edges do
             if not <| alphabet.Contains(edge.Tag.OutSymb) 
             then errors.Add(edge.Tag.InSymb)                 
         if errors.Count > 0
         then Error (errors.ToArray())
         else    
-            let fstDict = new Dictionary<_,_>()
+            let fstDict = Array.init ((*fst1.Vertices |> Seq.max |> ((+) 1)*)20000) (fun _ -> Array.zeroCreate (70000(*fst2.Vertices |> Seq.max |> ((+)1))*)))
             let i = ref 0
             for v1 in fst1.Vertices do
                 for v2 in fst2.Vertices do
-                    fstDict.Add((v1, v2), !i)
+                    //fstDict.Add(v1, v2), !i)
+                    fstDict.[v1].[v2] <- !i
                     i := !i + 1
              
             let resFST =  new FST<_,_>() 
-            let isEqual s1 s2 =
+            let inline isEqual s1 s2 =                
                 match s1,s2 with
                 | Eps, Eps -> true
-                | Smbl x, Smbl y -> x = y
+                | Smbl x, Smbl y -> if eq.IsSome then eq.Value x y else x = y
                 | Exclosure x, Smbl y -> Array.exists ((=)y) x |> not
                 | Smbl x, Exclosure y -> Array.exists ((=)x) y |> not
                 | x,y -> false//failwithf "Cannot be compared %A and %A" x y
                 //| Exclosure x, Exclosure y -> Array.exists ((=)x) y |> not
 
-            let fst1e = fst1.GetEdges()
-            let fst2e = fst2.GetEdges()
+            let fst1e = fst1.Edges |> Array.ofSeq
+            let fst2e = fst2.Edges |> Array.ofSeq
 
             for edge1 in fst1e do
                 for edge2 in fst2e do 
                     if isEqual edge1.Tag.OutSymb edge2.Tag.InSymb
                     then
-                        new TaggedEdge<_,_>(fstDict.[(edge1.Source, edge2.Source)], fstDict.[(edge1.Target, edge2.Target)], new EdgeLbl<_,_>(edge1.Tag.InSymb, edge2.Tag.OutSymb))
+                        new TaggedEdge<_,_>(fstDict.[edge1.Source].[edge2.Source], fstDict.[edge1.Target].[edge2.Target], new EdgeLbl<_,_>(edge1.Tag.InSymb, edge2.Tag.OutSymb))
                         |> resFST.AddVerticesAndEdge  |> ignore                
 
-            let isEpsilon x = match x with | Eps -> true | _ -> false
+            let inline isEpsilon x = match x with | Eps -> true | _ -> false
 
             for edge1 in fst1e do
                 if isEpsilon edge1.Tag.OutSymb
@@ -158,7 +159,7 @@ type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(init
                     for v2 in fst2.Vertices do
                         match edge1.Tag.InSymb with
                         | Smbl _ | Exclosure _ -> 
-                            new TaggedEdge<_,_>(fstDict.[(edge1.Source, v2)], fstDict.[(edge1.Target, v2)], new EdgeLbl<_,_>(edge1.Tag.InSymb, Eps))
+                            new TaggedEdge<_,_>(fstDict.[edge1.Source].[v2], fstDict.[edge1.Target].[v2], new EdgeLbl<_,_>(edge1.Tag.InSymb, Eps))
                             |> resFST.AddVerticesAndEdge  |> ignore                    
                         | Eps -> ()
 
@@ -168,17 +169,17 @@ type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(init
                     for v1 in fst1.Vertices do
                         match edge2.Tag.OutSymb with
                         | Smbl _ -> 
-                            new TaggedEdge<_,_>(fstDict.[(v1, edge2.Source)], fstDict.[(v1, edge2.Target)], new EdgeLbl<_,_>(Eps, edge2.Tag.OutSymb))
+                            new TaggedEdge<_,_>(fstDict.[v1].[edge2.Source], fstDict.[v1].[edge2.Target], new EdgeLbl<_,_>(Eps, edge2.Tag.OutSymb))
                             |> resFST.AddVerticesAndEdge  |> ignore
                         | _ -> ()
 
             for v1 in fst1.InitState do
                 for v2 in fst2.InitState do
-                    resFST.InitState.Add(fstDict.[(v1, v2)])
+                    resFST.InitState.Add(fstDict.[v1].[v2])
                 
             for v1 in fst1.FinalState do
                 for v2 in fst2.FinalState do
-                    resFST.FinalState.Add(fstDict.[(v1, v2)])
+                    resFST.FinalState.Add(fstDict.[v1].[v2])
 
             for v in resFST.InitState do
                 new TaggedEdge<_,_>(!i, v, new EdgeLbl<_,_>(Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
