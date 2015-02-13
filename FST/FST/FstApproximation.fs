@@ -11,10 +11,7 @@ type Position<'br> =
     val back_ref: 'br
     new (so, eo, br) = {start_offset = so; end_offset = eo; back_ref = br}
 
-type EdgeLblAppr<'br> = 
-    | Smb of string * 'br
-    | Repl of Appr<'br> * string * string
-    | Trim of Appr<'br>
+type EdgeLblAppr<'br> = Smb of string * 'br
 
 and [<Class>]Appr<'br>(initial, final, edges) as this =
     inherit AdjacencyGraph<int, TaggedEdge<int, EdgeLblAppr<'br>>>()
@@ -57,9 +54,6 @@ and [<Class>]Appr<'br>(initial, final, edges) as this =
                     let x = splitEdge edge (Some str) br
                     x |> resFST.AddVerticesAndEdgeRange
                     |> ignore                                      
-                | Repl (a,str1,str2) -> go a
-                | Trim a -> go a
-        
         go this
 
         let vEOF = !counter + 1
