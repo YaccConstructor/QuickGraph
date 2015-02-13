@@ -15,11 +15,9 @@ let setVertexRemoved (fst:#IVertexListGraph<_,_>) startV =
         //let vertexRemoved = dfs.VertexColors |> Seq.filter(fun x -> x.Value = GraphColor.White) |> Seq.map(fun x -> x.Key)
         //vertexRemoved
 
-
 type Smbl<'a> = 
     | Smbl of 'a
     | Eps
-    | Exclosure of array<'a>
 
 [<Struct>]
 type EdgeLbl<'iType, 'oType> =
@@ -40,7 +38,6 @@ type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(init
             let getVal s printSmb = 
                 match s with
                 | Smbl y -> (match printSmb with Some x -> x y | None -> y.ToString()).Replace("\"","\\\"")
-                | Exclosure x -> "A/[|" + (Array.map (fun x -> x.ToString()) x |> String.concat "; ") + "|]"
                 | Eps -> "Eps"
 
             this.Edges 
@@ -135,10 +132,7 @@ type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(init
                 match s1,s2 with
                 | Eps, Eps -> true
                 | Smbl x, Smbl y -> x = y
-                | Exclosure x, Smbl y -> Array.exists ((=)y) x |> not
-                | Smbl x, Exclosure y -> Array.exists ((=)x) y |> not
-                | x,y -> false//failwithf "Cannot be compared %A and %A" x y
-                //| Exclosure x, Exclosure y -> Array.exists ((=)x) y |> not
+                | x,y -> false //failwithf "Cannot be compared %A and %A" x y
 
             for edge1 in fst1.Edges do
                 for edge2 in fst2.Edges do 
@@ -154,7 +148,7 @@ type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(init
                 then
                     for v2 in fst2.Vertices do
                         match edge1.Tag.InSymb with
-                        | Smbl _ | Exclosure _ -> 
+                        | Smbl _ -> 
                             new TaggedEdge<_,_>(fstDict.[(edge1.Source, v2)], fstDict.[(edge1.Target, v2)], new EdgeLbl<_,_>(edge1.Tag.InSymb, Eps))
                             |> resFST.AddVerticesAndEdge  |> ignore                    
                         | Eps -> ()
