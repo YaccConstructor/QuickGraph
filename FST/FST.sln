@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0D41AE
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSA", "FSA\FSA.fsproj", "{B48CFDCC-86F7-4C3A-A5A2-8170950DD2AB}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSA.Tests", "FSA.Tests\FSA.Tests.fsproj", "{968F28D8-1C01-4C68-8921-5A5B12D1E945}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +32,14 @@ Global
 		{9F662E5F-FCAA-4C49-842E-30155E0A66E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F662E5F-FCAA-4C49-842E-30155E0A66E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F662E5F-FCAA-4C49-842E-30155E0A66E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B48CFDCC-86F7-4C3A-A5A2-8170950DD2AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B48CFDCC-86F7-4C3A-A5A2-8170950DD2AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B48CFDCC-86F7-4C3A-A5A2-8170950DD2AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B48CFDCC-86F7-4C3A-A5A2-8170950DD2AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{968F28D8-1C01-4C68-8921-5A5B12D1E945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{968F28D8-1C01-4C68-8921-5A5B12D1E945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{968F28D8-1C01-4C68-8921-5A5B12D1E945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{968F28D8-1C01-4C68-8921-5A5B12D1E945}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
