@@ -1,14 +1,13 @@
 ﻿module YC.FSA.Tests.GraphBasedFsa
 
-open YC.FSA.FsaTable
 open NUnit.Framework
 open Microsoft.FSharp.Collections
-open YC.FSA.GraphBasedFst
 open System.Collections.Generic
+open YC.FSA.GraphBasedFsa
 open YC.FSA.Tests.GraphBasedFsaTestData
 
-//let basePath = "../../../FST/FST/FSA.Tests/DOTfsa/"
-let basePath = "C:/yc/recursive-ascent/FST/FST/FSA.Tests/DOTfsa/" 
+let basePath = "../../../FST/FST/FSA.Tests/DOTfsa/"
+//let basePath = "C:/yc/recursive-ascent/FST/FST/FSA.Tests/DOTfsa/" 
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 let checkGraph (fsa:FSA<_>) initV finalV countE countV filePath =

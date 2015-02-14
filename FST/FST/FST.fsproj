@@ -72,10 +72,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FstTable.fs" />
+    <Compile Include="GraphBasedFst.fs" />
     <None Include="App.config" />
     <None Include="packages.config" />
-    <Compile Include="GraphBasedFst.fs" />
-    <Compile Include="FstApproximation.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FSA\FSA.fsproj">
+      <Name>FSA</Name>
+      <Project>{b48cfdcc-86f7-4c3a-a5a2-8170950dd2ab}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

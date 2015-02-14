@@ -2,6 +2,7 @@
 
 open Microsoft.FSharp.Collections
 open YC.FST.GraphBasedFst
+open YC.FSA.GraphBasedFsa
 
 let fst1 =
     let startState = ResizeArray.singleton 0
