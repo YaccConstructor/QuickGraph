@@ -361,11 +361,11 @@ type FSA<'br when 'br : equality>(initial, final, transitions) as this =
 
     static let replace (fsa1_in:FSA<_>) (fsa2_in:FSA<_>) (fsa3_in:FSA<_>) = 
         let fsa1 = fsa1_in.NfaToDfa
-        fsa1.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa1.dot"
+        //fsa1.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa1.dot"
         let fsa2 = fsa2_in.NfaToDfa
-        fsa2.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa2.dot"
+        //fsa2.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa2.dot"
         let fsa3 = fsa3_in.NfaToDfa
-        fsa3.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa3.dot"
+        //fsa3.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa3.dot"
         //#1 = ~     #2 = ^
 
         //Step 1. Construct fsa1_tmp from fsa1
@@ -389,7 +389,7 @@ type FSA<'br when 'br : equality>(initial, final, transitions) as this =
             new TaggedEdge<_,_>(v, fsa1Dict.[v], new EdgeLbl<_>(SmblFSA('~', Unchecked.defaultof<'br>))) |> fsa1_tmp.AddVerticesAndEdge |> ignore
             new TaggedEdge<_,_>(fsa1Dict.[v], v, new EdgeLbl<_>(SmblFSA('^', Unchecked.defaultof<'br>))) |> fsa1_tmp.AddVerticesAndEdge |> ignore
  
-        fsa1_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa1_tmp.dot"
+        //fsa1_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa1_tmp.dot"
 
         //Step 2. Construct fsa2_tmp from fsa2       
         // construct dfa* above alphabet of fsa1 and fsa2 ??
@@ -412,7 +412,7 @@ type FSA<'br when 'br : equality>(initial, final, transitions) as this =
         for ch in alphabetFSAs do
             new TaggedEdge<_,_>(0, 0, new EdgeLbl<_>(SmblFSA(ch, Unchecked.defaultof<'br>))) |> fsaAllStrings.AddVerticesAndEdge |> ignore    
 
-        fsaAllStrings.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_star.dot"
+        //fsaAllStrings.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_star.dot"
 
         //construct complementation to fsa2
         //let (fsa_tmp_1:FSA<_>) = fsaAllStrings.Concat(fsa2)
@@ -469,7 +469,7 @@ type FSA<'br when 'br : equality>(initial, final, transitions) as this =
                 
         let (fsa_compl:FSA<_>) = fsa_tmp_2.Complementation
         //in paper fsa_compl MINIMIZATION
-        fsa_compl.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_compl.dot"
+        //fsa_compl.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_compl.dot"
 
         //construct fsa2_tmp
         let fsa2_tmp = new FSA<_>()
@@ -495,7 +495,7 @@ type FSA<'br when 'br : equality>(initial, final, transitions) as this =
         for v in fsa2.FinalState do
             new TaggedEdge<_,_>(fsa2DictStep2.[v], fsa_compl.InitState.[0], new EdgeLbl<_>(SmblFSA('^', Unchecked.defaultof<'br>))) |> fsa2_tmp.AddVerticesAndEdge |> ignore
         
-        fsa2_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa2_tmp.dot"  
+        //fsa2_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa2_tmp.dot"  
                       
         //Step 3. Generate fsa_tmp as intersection of fsa1_tmp and fsa2_tmp
         let (fsa_tmp:FSA<_>) = FSA<_>.Intersection(fsa1_tmp, fsa2_tmp)
@@ -554,7 +554,7 @@ type FSA<'br when 'br : equality>(initial, final, transitions) as this =
                     let vSet = getVert vReach
                     for outVReach in vSet do              
                         let searchStr = bfs outVReach fsa_tmp
-                        printf "%A %A %A \n" vReach (fst searchStr) (snd searchStr)
+                        //printf "%A %A %A \n" vReach (fst searchStr) (snd searchStr)
                         let vertSearchStr = new VerticesSearchString(vReach, fst searchStr, snd searchStr)
                         findVert.Add vertSearchStr
                    
@@ -572,7 +572,7 @@ type FSA<'br when 'br : equality>(initial, final, transitions) as this =
                 let mutable fsa3DictCurr = changeNumerationFSA3()
 
                 for vReach in reach do                    
-                    printf "%A " fsa3DictCurr
+                    //printf "%A " fsa3DictCurr
                     //new TaggedEdge<_,_>(vReach, fsa3DictCurr.[fsa3.InitState.[0]], new EdgeLbl<_>(EpsFSA)) |> fsa_tmp.AddVerticesAndEdge |> ignore
                     let findInfoForVReach = findVert.Find(fun x -> x.startAct = vReach)
                     for finalVReach in findInfoForVReach.endActs do
@@ -589,10 +589,10 @@ type FSA<'br when 'br : equality>(initial, final, transitions) as this =
                     for vUnused in findInfoForVReach.verticesSearchStr do
                         fsa_tmp.RemoveVertex(vUnused) |> ignore
 
-                    fsa_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_tmp_afterReplace.dot"
+                    //PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_tmp_afterReplace.dot"
                     
-                    let res = fsa_tmp.NfaToDfa
-                    res.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_tmp_afterReplace_woEPS.dot" 
+                    //let res = fsa_tmp.NfaToDfa
+                    //res.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_tmp_afterReplace_woEPS.dot" 
 
                 fsa_tmp.NfaToDfa
             else fsa1

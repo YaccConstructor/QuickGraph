@@ -57,7 +57,7 @@ type ``Graph FSA tests`` () =
         let resFSA = FSA<_>.Replace(fsaRepl1C, fsaRepl2C4, fsaRepl3)
         checkGraph resFSA 1 1 7 7 "replace_test_4.dot"
 
-    [<Test>] 
+    //[<Test>] 
     member this.``Graph FSA. Replace test 5. With simple cycle.`` () =
         let resFSA = FSA<_>.Replace(fsaRepl1C5, fsaRepl2C5, fsaRepl3)
         checkGraph resFSA 1 1 7 7 "replace_test_5.dot"
