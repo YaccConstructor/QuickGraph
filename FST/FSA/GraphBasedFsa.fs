@@ -627,7 +627,7 @@ type FSA<'br when 'br : equality>(initial, final, transitions) as this =
             let pos = ref 0
 
             match str with
-            | Some("") -> failwith "We don't support eps-transition!" //[|new TaggedEdge<_,_>(start, _end, new EdgeLbl<_>(Eps))|]
+            | Some("") -> [|new TaggedEdge<_,_>(start, _end, new EdgeLbl<_>(EpsFSA))|] //failwith "We don't support eps-transition!" 
             | None -> [|new TaggedEdge<_,_>(start, _end, new EdgeLbl<_>(EpsFSA))|]
             | Some(s) ->
                 let l = s.Length

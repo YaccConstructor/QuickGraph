@@ -115,10 +115,11 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
     member this.Union fst2 = union this fst2
     static member Union(fst1, fst2) = union fst1 fst2
     
-    static member FSAtoFST(fsa:FSA<_>) = 
+    static member FSAtoFST(fsa:FSA<_>) =
+        let dfa = fsa.NfaToDfa 
         let resFST =  new FST<_,_>()
-        resFST.InitState <- fsa.InitState
-        resFST.FinalState <- fsa.FinalState
+        resFST.InitState <- dfa.InitState
+        resFST.FinalState <- dfa.FinalState
 
         let getValOut s = 
             match s with
@@ -130,10 +131,10 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
             | SmblFSA(y, br) -> Smbl(y, br)
             | _ -> Eps
 
-        for edge in fsa.Edges do
+        for edge in dfa.Edges do
             new TaggedEdge<_,_>(edge.Source, edge.Target, new EdgeLbl<_,_>(getValIn edge.Tag.Symb, getValOut edge.Tag.Symb)) |> resFST.AddVerticesAndEdge  |> ignore
 
-        let vEOF = Seq.max fsa.Vertices + 1
+        let vEOF = Seq.max dfa.Vertices + 1
         for v in resFST.FinalState do
             new TaggedEdge<_,_>(v, vEOF, new EdgeLbl<_,_>(Smbl (char 65535,  Unchecked.defaultof<Position<'br>>), Smbl (char 65535))) |> resFST.AddVerticesAndEdge |> ignore
 
