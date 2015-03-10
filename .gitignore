@@ -21,6 +21,8 @@ bld/
 
 # Roslyn cache directories
 *.ide/
+# Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
+!packages/*/build/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -174,6 +176,8 @@ UpgradeLog*.htm
 # SQL Server files
 *.mdf
 *.ldf
+App_Data/*.mdf
+App_Data/*.ldf
 
 # Business Intelligence projects
 *.rdl.data
@@ -182,3 +186,41 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+#LightSwitch generated files
+GeneratedArtifacts/
+_Pvt_Extensions/
+ModelManifest.xml
+
+# =========================
+# Windows detritus
+# =========================
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Mac desktop service store files
+.DS_Store
+DotParserProject/DotParserProject/DotGrammar.yrd.orig
+DotParserProject/DotParserProject/DotParser.fs.orig
+DotParserProject/DotParserProject/Program.fs.orig
+DotParserProject/packages/QuickGraph.3.6.61119.7/QuickGraph.3.6.61119.7.nupkg
+DotParserProject/packages/QuickGraph.3.6.61119.7/QuickGraph.3.6.61119.7.nuspec
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/CodeContracts/QuickGraph.Contracts.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/CodeContracts/QuickGraph.Data.Contracts.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/CodeContracts/QuickGraph.Graphviz.Contracts.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/CodeContracts/QuickGraph.Serialization.Contracts.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Data.XML
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Data.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Graphviz.XML
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Graphviz.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Serialization.XML
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.Serialization.dll
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.XML
+DotParserProject/packages/QuickGraph.3.6.61119.7/lib/net4/QuickGraph.dll
