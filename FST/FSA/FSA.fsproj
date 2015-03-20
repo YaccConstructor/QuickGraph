@@ -72,8 +72,8 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FsaApproximation.fs" />
     <Compile Include="GraphBasedFsa.fs" />
+    <Compile Include="FsaApproximation.fs" />
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
