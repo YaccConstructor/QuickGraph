@@ -113,17 +113,12 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
         resFST.InitState <- dfa.InitState
         resFST.FinalState <- dfa.FinalState
 
-//        let getValOut s = 
-//            match s with
-//            | Smbl(y, br) -> Smbl y
-//            | _ -> Eps
-
         for edge in dfa.Edges do
-            new EdgeFST<_,_>(edge.Source, edge.Target, transform edge.Tag(*(edge.Tag, getValOut edge.Tag)*)) |> resFST.AddVerticesAndEdge  |> ignore
+            new EdgeFST<_,_>(edge.Source, edge.Target, transform edge.Tag) |> resFST.AddVerticesAndEdge  |> ignore
 
         let vEOF = Seq.max dfa.Vertices + 1
         for v in resFST.FinalState do
-            new EdgeFST<_,_>(v, vEOF, transform smblEOF(*(Smbl (char 65535,  Unchecked.defaultof<Position<'br>>), Smbl (char 65535))*)) |> resFST.AddVerticesAndEdge |> ignore
+            new EdgeFST<_,_>(v, vEOF, transform smblEOF) |> resFST.AddVerticesAndEdge |> ignore
 
         resFST.FinalState <- ResizeArray.singleton vEOF
 
