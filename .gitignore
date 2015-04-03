@@ -175,3 +175,4 @@ FakesAssemblies/
 
 DOTfst/*
 FST/FST.Tests/DOTfst/*
+FST/FSA.Tests/DOTfsa/*

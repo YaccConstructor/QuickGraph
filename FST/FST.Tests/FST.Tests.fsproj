@@ -21,9 +21,9 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <Tailcalls>false</Tailcalls>
-    <OutputPath>..\..\..\Bin\Release\v40\</OutputPath>
+    <OutputPath>..\..\..\Bin\Debug\v40\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <WarningLevel>3</WarningLevel>
+    <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DocumentationFile>
     </DocumentationFile>
@@ -33,7 +33,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <Tailcalls>true</Tailcalls>
-    <OutputPath>..\Bin\Release\v40\</OutputPath>
+    <OutputPath>..\..\..\Bin\Release\v40\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>5</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -76,14 +76,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FstTableTests.fs" />
-    <None Include="App.config" />
-    <None Include="packages.config" />
     <Compile Include="GraphBasedFstTestData.fs" />
     <Compile Include="GraphBasedFstTests.fs" />
-    <Compile Include="FstApproximationTestData.fs" />
-    <Compile Include="FstApproximationTests.fs" />
+    <Compile Include="AppoximationTests.fs" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FSA.Tests\FSA.Tests.fsproj">
+      <Name>FSA.Tests</Name>
+      <Project>{968f28d8-1c01-4c68-8921-5a5b12d1e945}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\FSA\FSA.fsproj">
+      <Name>FSA</Name>
+      <Project>{b48cfdcc-86f7-4c3a-a5a2-8170950dd2ab}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\FST\FST.fsproj">
       <Name>FST</Name>
       <Project>{bcf4793c-e8b4-4fd5-9723-3c08859066c5}</Project>

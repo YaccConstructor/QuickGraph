@@ -59,7 +59,7 @@ type ``Graph FST tests`` () =
     member this.``Graph FST. Test composition FSTs.`` () =
         let alphabet = new HashSet<_>()
         for edge in fstCompos2.Edges do
-            alphabet.Add(edge.Tag.InSymb) |> ignore
+            alphabet.Add(fst edge.Tag) |> ignore
         
         CompositionTest fstCompos1 fstCompos2 alphabet 1 1 11 8 "compos_test.dot"
 
@@ -67,7 +67,7 @@ type ``Graph FST tests`` () =
     member this.``Graph FST. Test composition FSTs 1.`` () =
         let alphabet = new HashSet<_>()
         for edge in fstCompos22.Edges do
-            alphabet.Add(edge.Tag.InSymb) |> ignore
+            alphabet.Add(fst edge.Tag) |> ignore
 
         CompositionTest fstCompos12 fstCompos22 alphabet 1 1 4 4 "compos_test_1.dot"
 
