@@ -123,7 +123,7 @@ type FST<'iType, 'oType (*when 'oType: comparison and 'iType: comparison*)>(init
         if errors.Count > 0
         then Error (errors.ToArray())
         else    
-            let fstDict = Array.init ((*fst1.Vertices |> Seq.max |> ((+) 1)*)20000) (fun _ -> Array.zeroCreate (70000(*fst2.Vertices |> Seq.max |> ((+)1))*)))
+            let fstDict = Array.init (fst1.Vertices |> Seq.max |> ((+) 1)) (fun _ -> Array.zeroCreate (fst2.Vertices |> Seq.max |> ((+)1)))
             let i = ref 0
             for v1 in fst1.Vertices do
                 for v2 in fst2.Vertices do
