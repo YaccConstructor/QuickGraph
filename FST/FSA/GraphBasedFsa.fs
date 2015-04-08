@@ -493,7 +493,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         //Step 3. Generate fsa_tmp as intersection of fsa1_tmp and fsa2_tmp
         let (fsa_tmp:FSA<_>) = FSA<_>.Intersection(fsa1_tmp, fsa2_tmp, equalSmbl)
 
-        fsa_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_tmp.dot"
+//        fsa_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_tmp.dot"
         
         //===================================================================
         let resFSA = 
