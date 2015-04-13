@@ -640,9 +640,37 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         let edges = dfsCollectingEdges q getInEdges
         let finals, inits, trans = buildFsaParts q edges fsa.InitState
         FSA<_>(inits, finals, trans)
+
+    /// Checks if q1 from fsa1 is equivalent to q2 from fsa2
+    /// in the sense of relation assumed by widening operator 
+    static let isEquivalent q1 (fsa1: FSA<_>) q2 (fsa2: FSA<_>) equalSmbl =
+        let fsaFromQ1 = subFsaFrom fsa1 q1
+        let fsaFromQ2 = subFsaFrom fsa2 q2
+        if FSA<_>.isSubFsa fsaFromQ1 fsaFromQ2 equalSmbl && 
+           FSA<_>.isSubFsa fsaFromQ2 fsaFromQ1 equalSmbl
+        then true
+        else
+            let fsaToQ1 = subFsaTo fsa1 q1
+            let fsaToQ2 = subFsaTo fsa2 q2
+            let intersection = FSA<_>.Intersection (fsaToQ1, fsaToQ2, equalSmbl)
+            not <| FSA<_>.isEmpty intersection
+
+//    static let buildEquivalenceClasses (fsa1: FSA<_>) (fsa2: FSA<_>) equalSmbl =
+//        let fsa1States = fsa1.Vertices
+//        let fsa2States = fsa2.Vertices
         
-    static member widen (fsa1: FSA<_>) (fsa2: FSA<_>) =
+    static member widen (fsa1: FSA<_>) (fsa2: FSA<_>) equalSmbl =
         ()
+
+    /// Checks if the language accepted by FSA a1 is a sublanguage 
+    /// of the language accepted by FSA a2
+    static member isSubFsa (a1: FSA<_>) (a2: FSA<_>) equalSmbl =
+        let a2Complement = a2.Complementation
+        let intersection = FSA<_>.Intersection (a1, a2Complement, equalSmbl)
+        intersection.IsEdgesEmpty && intersection.IsVerticesEmpty
+
+    /// Checks if FSA is empty
+    static member isEmpty (fsa: FSA<_>) = fsa.IsEdgesEmpty && fsa.IsVerticesEmpty
          
     new () = 
         FSA<_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<_>())
