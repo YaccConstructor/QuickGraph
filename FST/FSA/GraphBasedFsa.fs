@@ -594,34 +594,52 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
 
     // Widening operator implementation
 
-    /// Builds the sub automaton that generates the language consisting of words 
-    /// accepted by the original automaton with q being the initial state
-    static let subFsaFrom (fsa: FSA<_>) q =
-        let rec dfs state visited edges =
+    static let dfsCollectingEdges (state: int) (getNextEdges: int -> list<EdgeFSA<'a>>) =
+        let rec dfs state visited (edges: list<EdgeFSA<'a>>) =
             if not <| Set.contains state visited
             then
                 let visited = Set.add state visited
-                let outEdges = List.ofSeq <| fsa.OutEdges(state)
-                let edges = outEdges @ edges
-                outEdges
+                let nextEdges = getNextEdges state
+                let edges = nextEdges @ edges
+                nextEdges
                 |> List.map (fun e -> e.Target)
                 |> List.fold (fun (v, e) succ -> dfs succ v e) (visited, edges)
             else visited, edges
-        let _, edges = dfs q Set.empty []
-        let initialStates = ResizeArray.singleton(q)
-        let originalFinalsSet = Set.ofSeq fsa.FinalState
-        let finalStates = 
+        let _, edges = dfs state Set.empty []
+        edges
+
+    static let buildFsaParts state (edges: list<EdgeFSA<_>>) filterStates =
+        let states1 = ResizeArray.singleton(state)
+        let filterSet = Set.ofSeq filterStates
+        let states2 = 
             edges
             |> List.map (fun e -> [e.Source; e.Target])
             |> List.concat
             |> Set.ofList
-            |> Set.filter (fun s -> Set.contains s originalFinalsSet)
+            |> Set.filter (fun s -> Set.contains s filterSet)
             |> ResizeArray.ofSeq
         let transitions = 
             edges 
             |> List.map (fun e -> e.Source, e.Tag, e.Target) 
             |> ResizeArray.ofList
-        FSA<_>(initialStates, finalStates, transitions)
+        states1, states2, transitions
+
+    /// Builds the sub automaton that generates the language consisting of words 
+    /// accepted by the original automaton with q being the initial state
+    static let subFsaFrom (fsa: FSA<_>) q =
+        let getOutEdges st = List.ofSeq <| fsa.OutEdges(st)
+        let edges = dfsCollectingEdges q getOutEdges
+        let inits, finals, trans = buildFsaParts q edges fsa.FinalState
+        FSA<_>(inits, finals, trans)
+
+    /// Builds the sub automaton that generates the language consisting of words 
+    /// accepted by the original automaton with q being the only final state
+    static let subFsaTo (fsa: FSA<_>) q =
+        let bidirectionalFsa = fsa.ToBidirectionalGraph()
+        let getInEdges st = List.ofSeq <| bidirectionalFsa.InEdges(st)
+        let edges = dfsCollectingEdges q getInEdges
+        let finals, inits, trans = buildFsaParts q edges fsa.InitState
+        FSA<_>(inits, finals, trans)
         
     static member widen (fsa1: FSA<_>) (fsa2: FSA<_>) =
         ()
