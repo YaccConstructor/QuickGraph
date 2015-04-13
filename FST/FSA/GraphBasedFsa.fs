@@ -591,6 +591,40 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             else fsa1
 
         resFSA
+
+    // Widening operator implementation
+
+    /// Builds the sub automaton that generates the language consisting of words 
+    /// accepted by the original automaton with q being the initial state
+    static let subFsaFrom (fsa: FSA<_>) q =
+        let rec dfs state visited edges =
+            if not <| Set.contains state visited
+            then
+                let visited = Set.add state visited
+                let outEdges = List.ofSeq <| fsa.OutEdges(state)
+                let edges = outEdges @ edges
+                outEdges
+                |> List.map (fun e -> e.Target)
+                |> List.fold (fun (v, e) succ -> dfs succ v e) (visited, edges)
+            else visited, edges
+        let _, edges = dfs q Set.empty []
+        let initialStates = ResizeArray.singleton(q)
+        let originalFinalsSet = Set.ofSeq fsa.FinalState
+        let finalStates = 
+            edges
+            |> List.map (fun e -> [e.Source; e.Target])
+            |> List.concat
+            |> Set.ofList
+            |> Set.filter (fun s -> Set.contains s originalFinalsSet)
+            |> ResizeArray.ofSeq
+        let transitions = 
+            edges 
+            |> List.map (fun e -> e.Source, e.Tag, e.Target) 
+            |> ResizeArray.ofList
+        FSA<_>(initialStates, finalStates, transitions)
+        
+    static member widen (fsa1: FSA<_>) (fsa2: FSA<_>) =
+        ()
          
     new () = 
         FSA<_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<_>())
