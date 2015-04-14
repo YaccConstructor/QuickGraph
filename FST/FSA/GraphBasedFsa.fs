@@ -655,9 +655,46 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             let intersection = FSA<_>.Intersection (fsaToQ1, fsaToQ2, equalSmbl)
             not <| FSA<_>.isEmpty intersection
 
-//    static let buildEquivalenceClasses (fsa1: FSA<_>) (fsa2: FSA<_>) equalSmbl =
-//        let fsa1States = fsa1.Vertices
-//        let fsa2States = fsa2.Vertices
+    static let findRelations (fsa1: FSA<_>) (fsa2: FSA<_>) equalSmbl =
+        let fsa1States = fsa1.Vertices
+        let fsa2States = fsa2.Vertices
+        let relations =
+            fsa1States
+            |> Seq.map
+                (
+                    fun st1 ->
+                        fsa2States
+                        |> Seq.choose 
+                            (
+                                fun st2 -> 
+                                    if isEquivalent st1 fsa1 st2 fsa2 equalSmbl
+                                    then Some(Edge<int>(st1, st2))
+                                    else None
+                            )
+                )
+            |> Seq.concat
+        let inverseRelations = relations |> Seq.map (fun e -> Edge<int>(e.Target, e.Source))
+        relations, inverseRelations
+
+    static let buildEquivalenceClasses (fsa1: FSA<_>) (fsa2: FSA<_>) equalSmbl =
+        // find relations
+        let relations, inverseRelations = findRelations fsa1 fsa2 equalSmbl
+        // build relations graph and find connected components
+        let relationsGraph = AdjacencyGraph<int,Edge<int>>()
+        do relationsGraph.AddVerticesAndEdgeRange relations |> ignore
+        do relationsGraph.AddVerticesAndEdgeRange inverseRelations |> ignore
+        let _, components = relationsGraph.StronglyConnectedComponents()
+        // change components representation to more convenient one
+        components
+        |> Seq.fold
+            (
+                fun acc pair -> 
+                    let componentNumber = pair.Value
+                    let state = pair.Key
+                    let statesSet = defaultArg (Map.tryFind componentNumber acc) Set.empty
+                    Map.add componentNumber (Set.add state statesSet) acc
+            )
+            Map.empty
         
     static member widen (fsa1: FSA<_>) (fsa2: FSA<_>) equalSmbl =
         ()
