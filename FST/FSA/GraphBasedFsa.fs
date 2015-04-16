@@ -8,6 +8,8 @@ open QuickGraph.Algorithms
 open QuickGraph.Collections
 open Microsoft.FSharp.Text
 
+open Utils
+
 [<Struct>]
 type VerticesSearchString =
     val startAct: int
@@ -593,6 +595,12 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         resFSA
 
     // Widening operator implementation
+    static let initsOrFinalsProblemMsg = 
+        "Can't define initial or final states for widened FSA, states may be computed incorrectly"
+    static let stateMultipleTransitionsMsg =
+        "Current automaton is NFA, is must be converted to DFA before widening"
+    static let eqClassMultipleTransitionsMsg =
+        "Widened FSA under construction is NFA"
 
     static let dfsCollectingEdges (state: int) (getNextEdges: int -> list<EdgeFSA<'a>>) =
         let rec dfs state visited (edges: list<EdgeFSA<'a>>) =
@@ -646,14 +654,14 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
     static let isEquivalent q1 (fsa1: FSA<_>) q2 (fsa2: FSA<_>) equalSmbl =
         let fsaFromQ1 = subFsaFrom fsa1 q1
         let fsaFromQ2 = subFsaFrom fsa2 q2
-        if FSA<_>.isSubFsa fsaFromQ1 fsaFromQ2 equalSmbl && 
-           FSA<_>.isSubFsa fsaFromQ2 fsaFromQ1 equalSmbl
+        if FSA<_>.IsSubFsa fsaFromQ1 fsaFromQ2 equalSmbl && 
+           FSA<_>.IsSubFsa fsaFromQ2 fsaFromQ1 equalSmbl
         then true
         else
             let fsaToQ1 = subFsaTo fsa1 q1
             let fsaToQ2 = subFsaTo fsa2 q2
             let intersection = FSA<_>.Intersection (fsaToQ1, fsaToQ2, equalSmbl)
-            not <| FSA<_>.isEmpty intersection
+            not <| FSA<_>.IsEmpty intersection
 
     static let findRelations (fsa1: FSA<_>) (fsa2: FSA<_>) equalSmbl =
         let fsa1States = fsa1.Vertices
@@ -668,46 +676,137 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                             (
                                 fun st2 -> 
                                     if isEquivalent st1 fsa1 st2 fsa2 equalSmbl
-                                    then Some(Edge<int>(st1, st2))
+                                    then
+                                        let sf1 = StateFromFsaFuns.fromFsa1 st1
+                                        let sf2 = StateFromFsaFuns.fromFsa2 st2
+                                        Some(Edge(sf1, sf2))
                                     else None
                             )
                 )
             |> Seq.concat
-        let inverseRelations = relations |> Seq.map (fun e -> Edge<int>(e.Target, e.Source))
+        let inverseRelations = relations |> Seq.map (fun e -> Edge(e.Target, e.Source))
         relations, inverseRelations
 
+    /// Builds equivalence classees using FSA.isEquivalent function
     static let buildEquivalenceClasses (fsa1: FSA<_>) (fsa2: FSA<_>) equalSmbl =
         // find relations
         let relations, inverseRelations = findRelations fsa1 fsa2 equalSmbl
         // build relations graph and find connected components
-        let relationsGraph = AdjacencyGraph<int,Edge<int>>()
+        let relationsGraph = AdjacencyGraph<StateFromFsa,Edge<StateFromFsa>>()
         do relationsGraph.AddVerticesAndEdgeRange relations |> ignore
         do relationsGraph.AddVerticesAndEdgeRange inverseRelations |> ignore
-        let _, components = relationsGraph.StronglyConnectedComponents()
-        // change components representation to more convenient one
-        components
+        let _, stateToEqClassIdMap = relationsGraph.StronglyConnectedComponents()
+        // create alternative components representation
+        stateToEqClassIdMap
         |> Seq.fold
             (
                 fun acc pair -> 
                     let componentNumber = pair.Value
                     let state = pair.Key
-                    let statesSet = defaultArg (Map.tryFind componentNumber acc) Set.empty
-                    Map.add componentNumber (Set.add state statesSet) acc
+                    let eqClass = defaultArg (Map.tryFind componentNumber acc) EqClassFuns.empty
+                    Map.add componentNumber (EqClassFuns.add state eqClass) acc
             )
             Map.empty
+
+    static let symbolsToCheck (eqClass: EqClass) (fsa1: FSA<_>) (fsa2: FSA<_>) =
+        let getOutEdges states (fsa: FSA<_>) =
+            states
+            |> Set.toList
+            |> List.map (fun s -> fsa.OutEdges(s) |> List.ofSeq)
+            |> List.concat
+        let outEdges = 
+            let e1 = getOutEdges (EqClassFuns.fsa1States eqClass) fsa1
+            let e2 = getOutEdges (EqClassFuns.fsa2States eqClass) fsa2
+            List.append e1 e2
+        outEdges |> List.map (fun e -> e.Tag)
+
+    static let filterByContainsWithQuantifier quantifier elems (eqClasses: Map<int, EqClass>) =
+        eqClasses
+        |> Map.filter 
+            (fun _ ec -> quantifier (fun e -> EqClassFuns.contains e ec) elems)
+
+    static let createTransition eqClassId (sym: Symb<_>) (eqClasses: Map<int, EqClass>) fsa1 fsa2 =
+        let isSink id (fsa: FSA<_>) =
+            fsa.OutEdges(id) 
+            |> Seq.forall (fun e -> e.Target = e.Source)
+        let getDstStates srcStates (fsa: FSA<_>) =
+            srcStates
+            |> Set.toSeq
+            |> Seq.map
+                (
+                    fun st -> 
+                        fsa.OutEdges(st) 
+                        |> Seq.choose
+                            (fun e -> if e.Tag = sym then Some(e.Target) else None)
+                )
+            |> fun lst -> 
+                if Seq.length lst = 1 
+                then Seq.head lst 
+                else failwith stateMultipleTransitionsMsg
+            |> Set.ofSeq
+            |> Set.filter (fun s -> not <| isSink s fsa)
+        let tryCreateTransition srcStates (fsa: FSA<_>) =
+            let dstStates = getDstStates srcStates fsa
+            if Set.isEmpty dstStates
+            then Some(eqClassId)
+            else
+                let dstEqClasses = 
+                    filterByContainsWithQuantifier Set.forall dstStates eqClasses
+                    |> List.ofSeq
+                match dstEqClasses with
+                | [] -> None
+                | h :: [] -> Some(h.Key)
+                | _ -> failwith eqClassMultipleTransitionsMsg
+
+        let srcEqClass = Map.find eqClassId eqClasses
+        let dstEqClassId1 = tryCreateTransition (EqClassFuns.fsa1States srcEqClass) fsa1
+        let dstEqClassId2 = tryCreateTransition (EqClassFuns.fsa2States srcEqClass) fsa2
+        match dstEqClassId1, dstEqClassId2 with
+        | Some(id1), Some(id2) when id1 = id2 -> Some(id1)
+        | _ -> None
+
+    static let createTransitions (eqClasses: Map<int, EqClass>) (fsa1: FSA<_>) (fsa2: FSA<_>) =
+        let symbolsMap = Map.map (fun _ v -> symbolsToCheck v fsa1 fsa2) eqClasses
+        eqClasses
+        |> Map.toList
+        |> List.map
+            (   
+                fun (classId, eqClass) ->
+                    Map.find classId symbolsMap
+                    |> List.choose 
+                        (
+                            fun sym -> 
+                                createTransition classId sym eqClasses fsa1 fsa2 
+                                |> Option.map (fun dst -> classId, sym, dst)
+                        )
+            )
+        |> List.concat
+        |> ResizeArray.ofList
         
-    static member widen (fsa1: FSA<_>) (fsa2: FSA<_>) equalSmbl =
-        ()
+    static member Widen (fsa1: FSA<_>) (fsa2: FSA<_>) equalSmbl =
+        let eqClasses = buildEquivalenceClasses fsa1 fsa2 equalSmbl
+        let wTransitions = createTransitions eqClasses fsa1 fsa2
+        let wInits = 
+            let unitedInits = ResizeArray.append fsa1.InitState fsa2.InitState
+            filterByContainsWithQuantifier ResizeArray.forall unitedInits eqClasses
+            |> ResizeArray.ofSeq |> ResizeArray.map (fun kvp -> kvp.Key)
+        let wFinals = 
+            let unitedFinals = ResizeArray.append fsa1.FinalState fsa2.FinalState
+            filterByContainsWithQuantifier ResizeArray.exists unitedFinals eqClasses
+            |> ResizeArray.ofSeq |> ResizeArray.map (fun kvp -> kvp.Key)
+        if ResizeArray.isEmpty wInits || ResizeArray.isEmpty wFinals
+        then failwith initsOrFinalsProblemMsg
+        FSA<_>(wInits, wFinals, wTransitions)
 
     /// Checks if the language accepted by FSA a1 is a sublanguage 
     /// of the language accepted by FSA a2
-    static member isSubFsa (a1: FSA<_>) (a2: FSA<_>) equalSmbl =
+    static member IsSubFsa (a1: FSA<_>) (a2: FSA<_>) equalSmbl =
         let a2Complement = a2.Complementation
         let intersection = FSA<_>.Intersection (a1, a2Complement, equalSmbl)
         intersection.IsEdgesEmpty && intersection.IsVerticesEmpty
 
     /// Checks if FSA is empty
-    static member isEmpty (fsa: FSA<_>) = fsa.IsEdgesEmpty && fsa.IsVerticesEmpty
+    static member IsEmpty (fsa: FSA<_>) = fsa.IsEdgesEmpty && fsa.IsVerticesEmpty
          
     new () = 
         FSA<_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<_>())
