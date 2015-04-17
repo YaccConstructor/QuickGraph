@@ -293,6 +293,67 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                
         graph
     
+    static let dfaToFullDfa (fsa:FSA<_>) (alphabet:HashSet<_>) newSmb getChar = 
+        let fsaAllStrings = new FSA<_>()
+        fsaAllStrings.InitState <- ResizeArray.singleton 0
+        fsaAllStrings.FinalState <- fsaAllStrings.InitState
+
+        for ch in alphabet do
+            new EdgeFSA<_>(0, 0, newSmb ch) |> fsaAllStrings.AddVerticesAndEdge |> ignore
+
+        let fsaDictConcat1 = new Dictionary<_, _>()
+        let iConcat1 = ref 1
+        for v in fsa.Vertices do
+            if not <| fsaDictConcat1.ContainsKey(v)
+            then fsaDictConcat1.Add(v, !iConcat1)
+            iConcat1 := !iConcat1 + 1
+             
+        let fsa_tmp_1 =  new FSA<_>()     
+        for e in fsa.Edges do 
+            new EdgeFSA<_>(fsaDictConcat1.[e.Source], fsaDictConcat1.[e.Target], e.Tag) |> fsa_tmp_1.AddVerticesAndEdge |> ignore
+        
+        fsa_tmp_1.InitState <- fsaAllStrings.InitState
+
+        for v in fsa.FinalState do
+            fsa_tmp_1.FinalState.Add(fsaDictConcat1.[v])  
+        
+        for v in fsaAllStrings.FinalState do
+            for edge in fsa_tmp_1.OutEdges(fsaDictConcat1.[fsa.InitState.[0]]) do
+                new EdgeFSA<_>(v, edge.Target, edge.Tag) |> fsa_tmp_1.AddVerticesAndEdge  |> ignore
+
+        fsa_tmp_1.RemoveVertex(fsaDictConcat1.[fsa.InitState.[0]]) |> ignore
+
+        for v in fsa_tmp_1.FinalState do
+            for edge in fsaAllStrings.Edges do
+                new EdgeFSA<_>(v, v, edge.Tag) |> fsa_tmp_1.AddVerticesAndEdge  |> ignore 
+    
+        let isFinish v = 
+            fsa.FinalState.Exists (fun x -> x = v)       
+        
+        let currDict v =
+            let deleteCh = new HashSet<_>()
+            for edge in fsa_tmp_1.OutEdges(v) do
+                deleteCh.Add (getChar edge.Tag) |> ignore
+            let curChDict = new HashSet<_>()
+            for ch in alphabet do
+                if not (deleteCh.Contains(ch))
+                then curChDict.Add(ch) |> ignore
+            curChDict
+
+        let resFSA = new FSA<_>()
+        resFSA.InitState <- fsa_tmp_1.InitState
+        resFSA.FinalState <- fsa_tmp_1.FinalState
+        resFSA.AddVerticesAndEdgeRange fsa_tmp_1.Edges |> ignore
+
+        for edge in fsa_tmp_1.Edges do            
+            if not(isFinish edge.Target) || edge.Source = fsa_tmp_1.InitState.[0]
+            then 
+                for ch in currDict edge.Source do
+                    new EdgeFSA<_>(edge.Source, edge.Source, newSmb ch) |> resFSA.AddVerticesAndEdge  |> ignore 
+                
+        resFSA
+
+
     static let complementation (fsa:FSA<'a>) =  
         let (dfa:FSA<'a>) = fsa.NfaToDfa
         let resFSA = new FSA<'a>()
@@ -400,68 +461,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         for edge in fsa2.Edges do
             alphabetFSAs.Add(getChar edge.Tag) |> ignore
 
-        let fsaAllStrings = new FSA<_>()        
-        fsaAllStrings.InitState <- ResizeArray.singleton 0
-        fsaAllStrings.FinalState <- fsaAllStrings.InitState
-
-        for ch in alphabetFSAs do
-            new EdgeFSA<_>(0, 0, newSmb ch) |> fsaAllStrings.AddVerticesAndEdge |> ignore    
-
-        //fsaAllStrings.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_star.dot"
-
-        //construct complementation to fsa2
-        //let (fsa_tmp_1:FSA<_>) = fsaAllStrings.Concat(fsa2)
-        let fsa2DictConcat1 = new Dictionary<_, _>()
-        let iConcat1 = ref 1
-        for v in fsa2.Vertices do
-            if not <| fsa2DictConcat1.ContainsKey(v)
-            then fsa2DictConcat1.Add(v, !iConcat1)
-            iConcat1 := !iConcat1 + 1
-             
-        let fsa_tmp_1 =  new FSA<_>()     
-        for e in fsa2.Edges do 
-            new EdgeFSA<_>(fsa2DictConcat1.[e.Source], fsa2DictConcat1.[e.Target], e.Tag) |> fsa_tmp_1.AddVerticesAndEdge |> ignore
-        
-        fsa_tmp_1.InitState <- fsaAllStrings.InitState
-
-        for v in fsa2.FinalState do
-            fsa_tmp_1.FinalState.Add(fsa2DictConcat1.[v])  
-        
-        for v in fsaAllStrings.FinalState do
-            for edge in fsa_tmp_1.OutEdges(fsa2DictConcat1.[fsa2.InitState.[0]]) do
-                new EdgeFSA<_>(v, edge.Target, edge.Tag) |> fsa_tmp_1.AddVerticesAndEdge  |> ignore
-
-        fsa_tmp_1.RemoveVertex(fsa2DictConcat1.[fsa2.InitState.[0]]) |> ignore
-
-        //let fsa_tmp_2 = fsa_tmp_1.Concat(fsaAllStrings)
-        for v in fsa_tmp_1.FinalState do
-            for edge in fsaAllStrings.Edges do
-                new EdgeFSA<_>(v, v, edge.Tag) |> fsa_tmp_1.AddVerticesAndEdge  |> ignore 
-    
-        let isFinish v = 
-            fsa2.FinalState.Exists (fun x -> x = v)       
-        
-        let currDict v =
-            let deleteCh = new HashSet<_>()
-            for edge in fsa_tmp_1.OutEdges(v) do
-                deleteCh.Add (getChar edge.Tag) |> ignore
-            let curChDict = new HashSet<_>()
-            for ch in alphabetFSAs do
-                if not (deleteCh.Contains(ch))
-                then curChDict.Add(ch) |> ignore
-            curChDict
-
-        let fsa_tmp_2 = new FSA<_>()
-        fsa_tmp_2.InitState <- fsa_tmp_1.InitState
-        fsa_tmp_2.FinalState <- fsa_tmp_1.FinalState
-        fsa_tmp_2.AddVerticesAndEdgeRange fsa_tmp_1.Edges |> ignore
-
-        for edge in fsa_tmp_1.Edges do            
-            if not(isFinish edge.Target) || edge.Source = fsa_tmp_1.InitState.[0]
-            then 
-                for ch in currDict edge.Source do
-                    new EdgeFSA<_>(edge.Source, edge.Source, newSmb ch) |> fsa_tmp_2.AddVerticesAndEdge  |> ignore 
-                
+        let fsa_tmp_2 = dfaToFullDfa fsa2 alphabetFSAs newSmb getChar
         let (fsa_compl:FSA<_>) = fsa_tmp_2.Complementation
         //in paper fsa_compl MINIMIZATION
         //fsa_compl.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_compl.dot"
@@ -823,3 +823,4 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
     static member Replace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl
     member this.Complementation = complementation this
     static member Intersection(fsa1, fsa2, equalSmbl) = intersection fsa1 fsa2 equalSmbl
+    static member DfaToFullDfa (fsa, alphabet, newSmb, getChar) = dfaToFullDfa fsa alphabet newSmb getChar
