@@ -34,3 +34,5 @@ module EqClassFuns =
     let add (StateFromFsa mv) (EqClass ts) = 
         EqClass (TwoSetsFuns.add mv ts)
     let contains v (EqClass ts) = TwoSetsFuns.contains v ts
+
+let debugFilePath name = System.IO.Path.Combine ("E:\\Diploma\\Debug", name)
