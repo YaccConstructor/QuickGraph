@@ -143,3 +143,10 @@ let fsaRepl2C6 =
     transitions.Add(0, Smbl('a', 11), 1)
     transitions.Add(1, Smbl('a', 12), 1)
     new FSA<_>(startState, finishState, transitions)
+
+let fsaAcceptingOneLetter =
+    let initSt = ResizeArray.singleton 0
+    let finalSt = ResizeArray.singleton 1
+    let transitions = ResizeArray<_>()
+    do transitions.Add(0, Smbl('a', 11), 1)
+    FSA<_>(initSt, finalSt, transitions)

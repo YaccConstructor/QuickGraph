@@ -76,6 +76,38 @@ type ``Graph FSA tests`` () =
         let resFSA = FSA<_>.Replace(fsaRepl1C6, fsaRepl2C6, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
         checkGraph resFSA 1 1 5 5 "replace_test_6.dot"
 
+let checkFsa (fsa: FSA<_>) (expected: list<int * list<int * Symb<_>>>) symbEquals = 
+    let expectedMap = Map.ofList expected
+    fsa.Edges
+    |> Seq.forall 
+        (
+            fun e ->
+                match Map.tryFind e.Source expectedMap with
+                | None -> false
+                | Some(targets) -> 
+                    let filtered = 
+                        targets 
+                        |> List.filter (fun (tar, sym) -> tar = e.Target && symbEquals e.Tag sym)
+                    List.length filtered = 1
+        )
+    |> fun res -> Assert.IsTrue(res, "fsa structure differs from expected one")
+
+let symbEquals eqData (sym1: Symb<'a>) (sym2: Symb<'a>) =
+    match sym1, sym2 with
+    | Smbl(a), Smbl(b) -> eqData a b
+    | Eps, Eps -> true
+    | _ -> false
+
+[<TestFixture>]
+type ``Additional FSA tests`` () =  
+    [<Test>]
+    member this.``Intersection with self complement test`` () =
+        let comp = fsaAcceptingOneLetter.Complementation.NfaToDfa
+        fsaAcceptingOneLetter.PrintToDOT <| fullPath "inters_with_comp_orig.dot"
+        comp.PrintToDOT <| fullPath "inters_with_comp_comp.dot"
+        let res = FSA<_>.Intersection (fsaAcceptingOneLetter, comp, equalSmbl)
+        checkFsa res [] (symbEquals equalSmbl)
+
 //[<EntryPoint>]
 //let f x =
 //      let t = new ``Graph FSA tests`` () 
