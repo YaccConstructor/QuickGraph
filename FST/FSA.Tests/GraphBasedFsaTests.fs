@@ -107,6 +107,11 @@ type ``Additional FSA tests`` () =
         comp.PrintToDOT <| fullPath "inters_with_comp_comp.dot"
         let res = FSA<_>.Intersection (fsaAcceptingOneLetter, comp, equalSmbl)
         checkFsa res [] (symbEquals equalSmbl)
+        
+    [<Test>]
+    member this.``Empty FSA determinization`` () =
+        let res = emptyFsa.NfaToDfa
+        checkFsa res [] (symbEquals equalSmbl)
 
 //[<EntryPoint>]
 //let f x =
