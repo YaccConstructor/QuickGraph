@@ -340,9 +340,6 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                 new EdgeFSA<_>(v, !i + 1, Eps) |> resFSA.AddVerticesAndEdge  |> ignore
 
             let vRemove1 = setVertexRemoved resFSA resFSA.InitState.[0]
-            for v in vRemove1 do
-                resFSA.RemoveVertex(v) |> ignore
-                resFSA.FinalState.Remove(v) |> ignore
 
             let FSAtmp = new FSA<_>()
             for edge in resFSA.Edges do
@@ -350,9 +347,12 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
 
             let vRemove2 = setVertexRemoved FSAtmp (!i + 1)
 
-            for v in vRemove2 do
+            for v in vRemove1 do
                 resFSA.RemoveVertex(v) |> ignore
                 resFSA.FinalState.Remove(v) |> ignore
+            for v in vRemove2 do
+                resFSA.RemoveVertex(v) |> ignore
+                resFSA.InitState.Remove(v) |> ignore
 
             resFSA.RemoveVertex(!i + 1) |> ignore
         
