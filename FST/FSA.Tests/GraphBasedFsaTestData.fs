@@ -150,5 +150,3 @@ let fsaAcceptingOneLetter =
     let transitions = ResizeArray<_>()
     do transitions.Add(0, Smbl('a', 11), 1)
     FSA<_>(initSt, finalSt, transitions)
-
-let emptyFsa<'a when 'a: equality> = FSA<'a>()

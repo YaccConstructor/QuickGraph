@@ -805,8 +805,14 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         let intersection = FSA<_>.Intersection (a1, a2Complement, equalSmbl)
         intersection.IsEdgesEmpty && intersection.IsVerticesEmpty
 
-    /// Checks if FSA is empty
-    static member IsEmpty (fsa: FSA<_>) = fsa.IsEdgesEmpty && fsa.IsVerticesEmpty
+    /// Checks if FSA is empty. It is assumed that empty FSA should contain 
+    /// at least one state and no edges
+    static member IsEmpty (fsa: FSA<_>) = fsa.IsEdgesEmpty
+
+    static member CreateEmpty () = 
+        let simpleFsa = FSA<'a>(ResizeArray.singleton 0, ResizeArray.singleton 0, ResizeArray.ofList [])
+        simpleFsa.AddVertex 0 |> ignore
+        simpleFsa
          
     new () = 
         FSA<_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<_>())
