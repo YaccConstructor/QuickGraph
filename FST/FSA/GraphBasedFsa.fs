@@ -638,6 +638,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         let getOutEdges st = List.ofSeq <| fsa.OutEdges(st)
         let edges = dfsCollectingEdges q getOutEdges
         let inits, finals, trans = buildFsaParts q edges fsa.FinalState
+        if trans
         FSA<_>(inits, finals, trans)
 
     /// Builds the sub automaton that generates the language consisting of words 
@@ -813,6 +814,11 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         let simpleFsa = FSA<'a>(ResizeArray.singleton 0, ResizeArray.singleton 0, ResizeArray.ofList [])
         simpleFsa.AddVertex 0 |> ignore
         simpleFsa
+
+    static member Create (initial, final, transitions) =
+        if not <| ResizeArray.isEmpty transitions
+        then FSA<_>(initial, final, transitions)
+        else FSA.CreateEmpty ()
          
     new () = 
         FSA<_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<_>())
