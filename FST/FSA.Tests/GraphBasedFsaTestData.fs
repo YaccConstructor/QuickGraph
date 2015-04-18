@@ -149,4 +149,4 @@ let fsaAcceptingOneLetter =
     let finalSt = ResizeArray.singleton 1
     let transitions = ResizeArray<_>()
     do transitions.Add(0, Smbl('a', 11), 1)
-    FSA<_>(initSt, finalSt, transitions)
+    FSA<_>.Create(initSt, finalSt, transitions)

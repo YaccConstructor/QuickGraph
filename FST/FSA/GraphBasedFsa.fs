@@ -638,8 +638,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         let getOutEdges st = List.ofSeq <| fsa.OutEdges(st)
         let edges = dfsCollectingEdges q getOutEdges
         let inits, finals, trans = buildFsaParts q edges fsa.FinalState
-        if trans
-        FSA<_>(inits, finals, trans)
+        FSA<_>.Create(inits, finals, trans)
 
     /// Builds the sub automaton that generates the language consisting of words 
     /// accepted by the original automaton with q being the only final state
@@ -648,7 +647,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         let getInEdges st = List.ofSeq <| bidirectionalFsa.InEdges(st)
         let edges = dfsCollectingEdges q getInEdges
         let finals, inits, trans = buildFsaParts q edges fsa.InitState
-        FSA<_>(inits, finals, trans)
+        FSA<_>.Create(inits, finals, trans)
 
     /// Checks if q1 from fsa1 is equivalent to q2 from fsa2
     /// in the sense of relation assumed by widening operator 
@@ -797,7 +796,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             |> ResizeArray.ofSeq |> ResizeArray.map (fun kvp -> kvp.Key)
         if ResizeArray.isEmpty wInits || ResizeArray.isEmpty wFinals
         then failwith initsOrFinalsProblemMsg
-        FSA<_>(wInits, wFinals, wTransitions)
+        FSA<'a>.Create(wInits, wFinals, wTransitions)
 
     /// Checks if the language accepted by FSA a1 is a sublanguage 
     /// of the language accepted by FSA a2
@@ -810,15 +809,15 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
     /// at least one state and no edges
     static member IsEmpty (fsa: FSA<_>) = fsa.IsEdgesEmpty
 
-    static member CreateEmpty () = 
+    static member CreateEmpty (): FSA<'a> = 
         let simpleFsa = FSA<'a>(ResizeArray.singleton 0, ResizeArray.singleton 0, ResizeArray.ofList [])
         simpleFsa.AddVertex 0 |> ignore
         simpleFsa
 
-    static member Create (initial, final, transitions) =
+    static member Create (initial, final, transitions): FSA<'a> =
         if not <| ResizeArray.isEmpty transitions
-        then FSA<_>(initial, final, transitions)
-        else FSA.CreateEmpty ()
+        then FSA<'a>(initial, final, transitions)
+        else FSA<'a>.CreateEmpty ()
          
     new () = 
         FSA<_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<_>())
