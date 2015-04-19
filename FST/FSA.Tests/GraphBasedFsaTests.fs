@@ -76,6 +76,11 @@ type ``Graph FSA tests`` () =
         let resFSA = FSA<_>.Replace(fsaRepl1C6, fsaRepl2C6, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
         checkGraph resFSA 1 1 5 5 "replace_test_6.dot"
 
+    [<Test>]
+    member this.``Graph FSA. Test for construct full dfa.`` () =
+        let resFSA = FSA<_>.DfaToFullDfa(fsaInters2, new HashSet<_>([|'a'; 'b'; 'c'; 'e'|]), newSmb, getChar)
+        checkGraph resFSA 1 1 16 4 "fullDFA_test.dot"
+
 let checkFsa (fsa: FSA<_>) (expected: list<int * list<int * Symb<_>>>) symbEquals = 
     let expectedMap = Map.ofList expected
     fsa.Edges

@@ -291,46 +291,17 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                
         graph
     
-    static let dfaToFullDfa (fsa:FSA<_>) (alphabet:HashSet<_>) newSmb getChar = 
-        let fsaAllStrings = new FSA<_>()
-        fsaAllStrings.InitState <- ResizeArray.singleton 0
-        fsaAllStrings.FinalState <- fsaAllStrings.InitState
-
-        for ch in alphabet do
-            new EdgeFSA<_>(0, 0, newSmb ch) |> fsaAllStrings.AddVerticesAndEdge |> ignore
-
-        let fsaDictConcat1 = new Dictionary<_, _>()
-        let iConcat1 = ref 1
-        for v in fsa.Vertices do
-            if not <| fsaDictConcat1.ContainsKey(v)
-            then fsaDictConcat1.Add(v, !iConcat1)
-            iConcat1 := !iConcat1 + 1
-             
-        let fsa_tmp_1 =  new FSA<_>()     
-        for e in fsa.Edges do 
-            new EdgeFSA<_>(fsaDictConcat1.[e.Source], fsaDictConcat1.[e.Target], e.Tag) |> fsa_tmp_1.AddVerticesAndEdge |> ignore
-        
-        fsa_tmp_1.InitState <- fsaAllStrings.InitState
-
-        for v in fsa.FinalState do
-            fsa_tmp_1.FinalState.Add(fsaDictConcat1.[v])  
-        
-        for v in fsaAllStrings.FinalState do
-            for edge in fsa_tmp_1.OutEdges(fsaDictConcat1.[fsa.InitState.[0]]) do
-                new EdgeFSA<_>(v, edge.Target, edge.Tag) |> fsa_tmp_1.AddVerticesAndEdge  |> ignore
-
-        fsa_tmp_1.RemoveVertex(fsaDictConcat1.[fsa.InitState.[0]]) |> ignore
-
-        for v in fsa_tmp_1.FinalState do
-            for edge in fsaAllStrings.Edges do
-                new EdgeFSA<_>(v, v, edge.Tag) |> fsa_tmp_1.AddVerticesAndEdge  |> ignore 
-    
-        let isFinish v = 
-            fsa.FinalState.Exists (fun x -> x = v)       
+    static let dfaToFullDfa (fsa:FSA<_>) (alphabet:HashSet<_>) newSmb getChar =
+        let resFSA = new FSA<_>()
+        resFSA.InitState <- fsa.InitState
+        resFSA.FinalState <- fsa.FinalState
+                                                           
+        let isFinish v =
+            fsa.FinalState.Exists (fun x -> x = v)
         
         let currDict v =
             let deleteCh = new HashSet<_>()
-            for edge in fsa_tmp_1.OutEdges(v) do
+            for edge in fsa.OutEdges(v) do
                 deleteCh.Add (getChar edge.Tag) |> ignore
             let curChDict = new HashSet<_>()
             for ch in alphabet do
@@ -338,17 +309,12 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                 then curChDict.Add(ch) |> ignore
             curChDict
 
-        let resFSA = new FSA<_>()
-        resFSA.InitState <- fsa_tmp_1.InitState
-        resFSA.FinalState <- fsa_tmp_1.FinalState
-        resFSA.AddVerticesAndEdgeRange fsa_tmp_1.Edges |> ignore
+        resFSA.AddVerticesAndEdgeRange fsa.Edges |> ignore
 
-        for edge in fsa_tmp_1.Edges do            
-            if not(isFinish edge.Target) || edge.Source = fsa_tmp_1.InitState.[0]
-            then 
-                for ch in currDict edge.Source do
-                    new EdgeFSA<_>(edge.Source, edge.Source, newSmb ch) |> resFSA.AddVerticesAndEdge  |> ignore 
-                
+        for v in fsa.Vertices do         
+            for ch in currDict v do
+                new EdgeFSA<_>(v, v, newSmb ch) |> resFSA.AddVerticesAndEdge  |> ignore 
+      
         resFSA
 
 
