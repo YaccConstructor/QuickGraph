@@ -116,10 +116,10 @@ type ``Additional FSA tests`` () =
     [<Test>]
     member this.``Empty FSA determinization`` () =
         let emptyFsa = FSA.CreateEmpty ()
-        Assert.IsTrue (FSA.IsEmpty emptyFsa, "FSA must be empty")
+        Assert.IsTrue (FSA<_>.IsEmpty emptyFsa, "FSA must be empty")
         let res = emptyFsa.NfaToDfa
-        res.PrintToDOT <| fullPath "empty_fsa_determ.dot"
         checkFsa res [] (symbEquals equalSmbl)
+        checkGraph res 1 1 0 1 "empty_fsa_determ.dot"
 
 //[<EntryPoint>]
 //let f x =
