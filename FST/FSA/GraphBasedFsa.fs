@@ -134,7 +134,8 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                 sprintf "%i -> %i [label=\"%s\"]; \n" edge.Source edge.Target (getVal edge.Tag printSmb))
         
         fsaToDot strs this.InitState this.FinalState filePrintPath
-
+    
+    ///for FSAs, which are not empty
     static let concat (fsa1:FSA<_>) (fsa2:FSA<_>) =
         let maxVert = Seq.max fsa1.Vertices
         let fsa2Dict = new Dictionary<_, _>()
@@ -158,6 +159,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                                     
         resFSA
 
+    ///for FSAs, which are not empty
     static let union (fsa1:FSA<_>) (fsa2:FSA<_>) =
         let maxVert = Seq.max fsa1.Vertices
         let fst2Dict = new Dictionary<_, _>()
@@ -189,6 +191,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
               
         resFSA
   
+    ///for FSA
     let nfaToDfa (inGraph: FSA<'a>):FSA<'a> =
         if not(inGraph.IsEmpty) then 
             reset ()
@@ -300,7 +303,8 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             let isRemove v = Seq.exists ((=) v) vRemove
             ResizeArray.forall (isRemove) fsa.FinalState
         else true     
-     
+    
+    ///for FSA 
     static let complementation (fsa:FSA<'a>) (alphabet:HashSet<_>) newSmb getChar =
         if not (fsa.IsEmpty) then 
             let (dfa:FSA<'a>) = fsa.NfaToDfa
@@ -391,7 +395,8 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         else 
             if dfa1.IsEmpty then dfa1
             else dfa2
-
+    
+    ///for FSAs, which are not empty
     static let replace (fsa1_in:FSA<_>) (fsa2_in:FSA<_>) (fsa3_in:FSA<_>) smb1 smb2 getChar newSmb equalSmbl = 
         let fsa1 = fsa1_in.NfaToDfa
         let fsa2 = fsa2_in.NfaToDfa

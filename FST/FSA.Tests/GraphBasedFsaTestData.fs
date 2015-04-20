@@ -158,3 +158,12 @@ let anyNonEmptyWordsFsa =
         (0, Smbl('a', 11), 1); 
         (1, Smbl('a', 11), 1) ]
     FSA<_>(initSt, finalSt, ResizeArray.ofList transitions)
+
+let fsaEmpty =
+    let startState = ResizeArray.singleton 0
+    let finishState = ResizeArray.singleton 4
+    let transitions = new ResizeArray<_>()
+    transitions.Add(0, Smbl('b', 11), 1)
+    transitions.Add(1, Smbl('a', 12), 2)
+    transitions.Add(3, Smbl('b', 12), 4)
+    new FSA<_>(startState, finishState, transitions)
