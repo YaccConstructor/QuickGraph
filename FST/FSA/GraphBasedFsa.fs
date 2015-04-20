@@ -333,7 +333,15 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         
             resFSA
 
-        else fsa //return source fsa
+        else 
+            let resFSA = new FSA<_>()
+            resFSA.InitState.Add(0) 
+            resFSA.FinalState.Add(0) 
+
+            for ch in alphabet do
+                new EdgeFSA<_>(0, 0, newSmb ch) |> resFSA.AddVerticesAndEdge  |> ignore
+            resFSA
+
 
     ///for DFAs
     static let intersection (dfa1:FSA<_>) (dfa2:FSA<_>) equalSmbl =
