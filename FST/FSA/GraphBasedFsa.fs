@@ -331,62 +331,66 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
 
         else fsa //return source fsa
 
-    ///for DFAs, which are not empty
+    ///for DFAs
     static let intersection (dfa1:FSA<_>) (dfa2:FSA<_>) equalSmbl =
-        let resFSA = new FSA<_>()
-        let fsaDict = new Dictionary<_,_>()
-        let i = ref 0
-        for v1 in dfa1.Vertices do
-            for v2 in dfa2.Vertices do
-                fsaDict.Add((v1, v2), !i)
-                i := !i + 1
+        if not (dfa1.IsEmpty || dfa2.IsEmpty) then 
+            let resFSA = new FSA<_>()
+            let fsaDict = new Dictionary<_,_>()
+            let i = ref 0
+            for v1 in dfa1.Vertices do
+                for v2 in dfa2.Vertices do
+                    fsaDict.Add((v1, v2), !i)
+                    i := !i + 1
         
-        let isEqual s1 s2 =               
-            match s1,s2 with
-            | Smbl x, Smbl y -> equalSmbl x y
-            | x, y -> false
+            let isEqual s1 s2 =               
+                match s1,s2 with
+                | Smbl x, Smbl y -> equalSmbl x y
+                | x, y -> false
 
-        for edge1 in dfa1.Edges do
-            for edge2 in dfa2.Edges do
-                if isEqual edge1.Tag edge2.Tag
-                then
-                    new EdgeFSA<_>(fsaDict.[(edge1.Source, edge2.Source)], fsaDict.[(edge1.Target, edge2.Target)], edge1.Tag)
-                    |> resFSA.AddVerticesAndEdge  |> ignore 
+            for edge1 in dfa1.Edges do
+                for edge2 in dfa2.Edges do
+                    if isEqual edge1.Tag edge2.Tag
+                    then
+                        new EdgeFSA<_>(fsaDict.[(edge1.Source, edge2.Source)], fsaDict.[(edge1.Target, edge2.Target)], edge1.Tag)
+                        |> resFSA.AddVerticesAndEdge  |> ignore 
         
-        for v1 in dfa1.InitState do
-            for v2 in dfa2.InitState do
-                resFSA.AddVertex fsaDict.[(v1, v2)] |> ignore
-                resFSA.InitState.Add(fsaDict.[(v1, v2)])
+            for v1 in dfa1.InitState do
+                for v2 in dfa2.InitState do
+                    resFSA.AddVertex fsaDict.[(v1, v2)] |> ignore
+                    resFSA.InitState.Add(fsaDict.[(v1, v2)])
 
-        for v1 in dfa1.FinalState do
-            for v2 in dfa2.FinalState do
-                resFSA.AddVertex fsaDict.[(v1, v2)] |> ignore
-                resFSA.FinalState.Add(fsaDict.[(v1, v2)])
+            for v1 in dfa1.FinalState do
+                for v2 in dfa2.FinalState do
+                    resFSA.AddVertex fsaDict.[(v1, v2)] |> ignore
+                    resFSA.FinalState.Add(fsaDict.[(v1, v2)])
         
-        if not(resFSA.IsEmpty) then 
-            for v in resFSA.FinalState do
-                new EdgeFSA<_>(v, !i + 1, Eps) |> resFSA.AddVerticesAndEdge  |> ignore
+            if not(resFSA.IsEmpty) then 
+                for v in resFSA.FinalState do
+                    new EdgeFSA<_>(v, !i + 1, Eps) |> resFSA.AddVerticesAndEdge  |> ignore
 
-            let vRemove1 = setVertexRemoved resFSA resFSA.InitState.[0]
+                let vRemove1 = setVertexRemoved resFSA resFSA.InitState.[0]
 
-            let FSAtmp = new FSA<_>()
-            for edge in resFSA.Edges do
-                new EdgeFSA<_>(edge.Target, edge.Source, edge.Tag) |>  FSAtmp.AddVerticesAndEdge |> ignore
-            resFSA.Vertices |> Seq.iter (fun v -> FSAtmp.AddVertex v |> ignore)
+                let FSAtmp = new FSA<_>()
+                for edge in resFSA.Edges do
+                    new EdgeFSA<_>(edge.Target, edge.Source, edge.Tag) |>  FSAtmp.AddVerticesAndEdge |> ignore
+                resFSA.Vertices |> Seq.iter (fun v -> FSAtmp.AddVertex v |> ignore)
 
-            let vRemove2 = setVertexRemoved FSAtmp (!i + 1)
+                let vRemove2 = setVertexRemoved FSAtmp (!i + 1)
 
-            for v in vRemove1 do
-                resFSA.RemoveVertex(v) |> ignore
-                resFSA.FinalState.Remove(v) |> ignore
+                for v in vRemove1 do
+                    resFSA.RemoveVertex(v) |> ignore
+                    resFSA.FinalState.Remove(v) |> ignore
 
-            for v in vRemove2 do
-                resFSA.RemoveVertex(v) |> ignore
-                resFSA.InitState.Remove(v) |> ignore
+                for v in vRemove2 do
+                    resFSA.RemoveVertex(v) |> ignore
+                    resFSA.InitState.Remove(v) |> ignore
 
-            resFSA.RemoveVertex(!i + 1) |> ignore
+                resFSA.RemoveVertex(!i + 1) |> ignore
         
-        resFSA
+            resFSA
+        else 
+            if dfa1.IsEmpty then dfa1
+            else dfa2
 
     static let replace (fsa1_in:FSA<_>) (fsa2_in:FSA<_>) (fsa3_in:FSA<_>) smb1 smb2 getChar newSmb equalSmbl = 
         let fsa1 = fsa1_in.NfaToDfa
