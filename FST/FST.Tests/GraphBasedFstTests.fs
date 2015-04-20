@@ -71,6 +71,19 @@ type ``Graph FST tests`` () =
 
         CompositionTest fstCompos12 fstCompos22 alphabet 1 1 4 4 "compos_test_1.dot"
 
+    [<Test>]
+    member this.``Graph FST. Result of composition is empty FST.`` () =
+        let alphabet = new HashSet<_>()
+        for edge in fstCompos22.Edges do
+            alphabet.Add(fst edge.Tag) |> ignore
+
+        let res = FST.Compos(fstCompos2, fstCompos12, alphabet)
+
+        match res with 
+            |Success x -> Assert.Fail(sprintf "Incorrect answer!")
+            |Error e -> Assert.Pass(sprintf "Tokenization problem: %A" e)
+
+
 //[<EntryPoint>]
 //let f x =
 //      let t = new ``Graph FST tests`` () 

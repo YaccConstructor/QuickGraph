@@ -40,6 +40,15 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
        
         fstToDot strs this.InitState this.FinalState filePrintPath
 
+    ///not path from start state to any final state 
+    static let isEmptyFST (fst:FST<_,_>) =
+        if fst.EdgeCount > 0 then
+            let vRemove = setVertexRemoved fst fst.InitState.[0]
+            let isRemove v = Seq.exists ((=) v) vRemove
+            ResizeArray.forall (isRemove) fst.FinalState
+        else true  
+
+    ///for FSTs, which are not empty
     static let concat (fst1:FST<_,_>) (fst2:FST<_,_>) =
         let maxVert = Seq.max fst1.Vertices
         let fst2Dict = new Dictionary<_, _>()
@@ -65,6 +74,7 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
             new EdgeFST<_,_>(!i, fst2Dict.[v], (Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
         resFST
 
+    ///for FSTs, which are not empty
     static let union (fst1:FST<_,_>) (fst2:FST<_,_>) =
         let maxVert = Seq.max fst1.Vertices
         let fst2Dict = new Dictionary<_, _>()
@@ -106,7 +116,9 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
     static member Concat(fst1, fst2) = concat fst1 fst2
     member this.Union fst2 = union this fst2
     static member Union(fst1, fst2) = union fst1 fst2
-    
+    member this.IsEmpty =  isEmptyFST this
+
+    ///for FSA, which are not empty
     static member FSAtoFST(fsa:FSA<_>, transform, smblEOF) =
         let dfa = fsa.NfaToDfa 
         let resFST =  new FST<_,_>()
@@ -121,9 +133,9 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
             new EdgeFST<_,_>(v, vEOF, transform smblEOF) |> resFST.AddVerticesAndEdge |> ignore
 
         resFST.FinalState <- ResizeArray.singleton vEOF
-
         resFST     
 
+    ///for FSTs, which are not empty
     static member Compos(fst1:FST<_,_>, fst2:FST<_,_>, alphabet:HashSet<_>) =
         let errors = new ResizeArray<_>()
         for edge in fst1.Edges do
@@ -178,37 +190,46 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
             for v1 in fst1.InitState do
                 for v2 in fst2.InitState do
                     resFST.InitState.Add(fstDict.[(v1, v2)])
+                    resFST.AddVertex(fstDict.[(v1, v2)]) |> ignore
                 
             for v1 in fst1.FinalState do
                 for v2 in fst2.FinalState do
                     resFST.FinalState.Add(fstDict.[(v1, v2)])
+                    resFST.AddVertex(fstDict.[(v1, v2)]) |> ignore
 
-            for v in resFST.InitState do
-                new EdgeFST<_,_>(!i, v, (Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
+            if not(resFST.IsEmpty) then //result of composition is empty?
+                for v in resFST.InitState do
+                    new EdgeFST<_,_>(!i, v, (Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
 
-            for v in resFST.FinalState do
-                new EdgeFST<_,_>(v, !i + 1, (Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
+                for v in resFST.FinalState do
+                    new EdgeFST<_,_>(v, !i + 1, (Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
 
-            let vRemove1 = setVertexRemoved resFST !i
-            for v in vRemove1 do
-                resFST.RemoveVertex(v) |> ignore
-                resFST.InitState.Remove(v) |> ignore
-                resFST.FinalState.Remove(v) |> ignore
+                let vRemove1 = setVertexRemoved resFST !i
 
-            let FSTtmp = new FST<_,_>()
-            for edge in resFST.Edges do
-                new EdgeFST<_,_>(edge.Target, edge.Source, edge.Tag) |>  FSTtmp.AddVerticesAndEdge |> ignore
+                let FSTtmp = new FST<_,_>()
+                for edge in resFST.Edges do
+                    new EdgeFST<_,_>(edge.Target, edge.Source, edge.Tag) |>  FSTtmp.AddVerticesAndEdge |> ignore
 
-            let vRemove2 = setVertexRemoved FSTtmp (!i + 1)
+                let vRemove2 = setVertexRemoved FSTtmp (!i + 1)
 
-            for v in vRemove2 do
-                resFST.RemoveVertex(v) |> ignore
-                resFST.InitState.Remove(v) |> ignore
-                resFST.FinalState.Remove(v) |> ignore
+                for v in vRemove1 do
+                    resFST.RemoveVertex(v) |> ignore
+                    resFST.InitState.Remove(v) |> ignore
+                    resFST.FinalState.Remove(v) |> ignore
 
-            resFST.RemoveVertex(!i) |> ignore
-            resFST.RemoveVertex(!i + 1) |> ignore
-            Success resFST
+                for v in vRemove2 do
+                    resFST.RemoveVertex(v) |> ignore
+                    resFST.InitState.Remove(v) |> ignore
+                    resFST.FinalState.Remove(v) |> ignore
+
+                resFST.RemoveVertex(!i) |> ignore
+                resFST.RemoveVertex(!i + 1) |> ignore
+                Success resFST
+            else
+                let chFST1 = new ResizeArray<_>()
+                for ch in fst1.Edges do
+                    chFST1.Add (fst (ch.Tag))
+                Error (chFST1.ToArray())
 
 and Test<'success, 'error> =
     | Success of 'success
