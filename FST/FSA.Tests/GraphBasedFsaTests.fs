@@ -113,18 +113,35 @@ type ``Additional FSA tests`` () =
         let res = FSA<_>.Intersection (fsaAcceptingOneLetter, comp, equalSmbl)
         checkFsa res [] (symbEquals equalSmbl)
         
-    [<Test>]
-    member this.``Empty FSA determinization`` () =
-        let emptyFsa = FSA.CreateEmpty ()
-        Assert.IsTrue (FSA<_>.IsEmpty emptyFsa, "FSA must be empty")
-        let res = emptyFsa.NfaToDfa
-        checkFsa res [] (symbEquals equalSmbl)
-        checkGraph res 1 1 0 1 "empty_fsa_determ.dot"
+//    [<Test>]
+//    member this.``Empty FSA determinization`` () =
+//        let emptyFsa = FSA.CreateEmpty ()
+//        Assert.IsTrue (FSA<_>.IsEmpty emptyFsa, "FSA must be empty")
+//        let res = emptyFsa.NfaToDfa
+//        checkFsa res [] (symbEquals equalSmbl)
+//        checkGraph res 1 1 0 1 "empty_fsa_determ.dot"
 
     [<Test>]
     member this.``Intersection of any non empty word FSA and it's complementation`` () =
         let res = FSA<_>.Intersection (anyNonEmptyWordsFsa, anyNonEmptyWordsFsa.Complementation, equalSmbl)
         checkGraph res 1 1 0 1 "empty_fsa_on_inters.dot"
+
+    [<Test>]
+    member this.``Intersection of AB fsa and B fsa`` () =
+        let abFsa = 
+            FSA<_>(
+                ResizeArray.singleton 0, 
+                ResizeArray.singleton 2, 
+                ResizeArray.ofList [
+                    (0, Smbl('a', 11), 1);
+                    (1, Smbl('b', 12), 2) ])
+        let bFsa = 
+            FSA<_>(
+                ResizeArray.singleton 0, 
+                ResizeArray.singleton 1, 
+                ResizeArray.ofList [ (0, Smbl('b', 11), 1) ])
+        let res = FSA<_>.Intersection (abFsa, bFsa, equalSmbl)
+        checkGraph res 1 1 1 2 "ab_and_b_inters.dot"
 
 //[<EntryPoint>]
 //let f x =
