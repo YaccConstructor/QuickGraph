@@ -44,7 +44,7 @@ type ``Graph FSA tests`` () =
     [<Test>]
     member this.``Graph FSA. Intersection is empty.`` () =
         let resFSA = FSA<_>.Intersection(fsawoInters1, fsawoInters2, equalSmbl)
-        checkGraph resFSA 1 1 0 0 "intersection_is_empty.dot"
+        checkGraph resFSA 1 1 0 2 "intersection_is_empty.dot"
 
     [<Test>]
     member this.``Graph FSA. Replace test 1.`` () =
