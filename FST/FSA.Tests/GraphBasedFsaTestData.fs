@@ -149,7 +149,7 @@ let fsaAcceptingOneLetter =
     let finalSt = ResizeArray.singleton 1
     let transitions = ResizeArray<_>()
     do transitions.Add(0, Smbl('a', 11), 1)
-    FSA<_>.Create(initSt, finalSt, transitions)
+    FSA<_>(initSt, finalSt, transitions)
 
 let anyNonEmptyWordsFsa =
     let initSt = ResizeArray.singleton 0
@@ -157,4 +157,4 @@ let anyNonEmptyWordsFsa =
     let transitions = [
         (0, Smbl('a', 11), 1); 
         (1, Smbl('a', 11), 1) ]
-    FSA<_>.Create(initSt, finalSt, ResizeArray.ofList transitions)
+    FSA<_>(initSt, finalSt, ResizeArray.ofList transitions)

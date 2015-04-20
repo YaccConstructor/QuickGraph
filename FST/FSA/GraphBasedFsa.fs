@@ -557,20 +557,6 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             else fsa1
 
         resFSA
-
-    /// Checks if FSA is empty. It is assumed that empty FSA should contain 
-    /// at least one state and no edges
-    static member IsEmpty (fsa: FSA<_>) = fsa.IsEdgesEmpty
-
-    static member CreateEmpty (): FSA<'a> = 
-        let simpleFsa = FSA<'a>(ResizeArray.singleton 0, ResizeArray.singleton 0, ResizeArray.ofList [])
-        simpleFsa.AddVertex 0 |> ignore
-        simpleFsa
-
-    static member Create (initial, final, transitions): FSA<'a> =
-        if not <| ResizeArray.isEmpty transitions
-        then FSA<'a>(initial, final, transitions)
-        else FSA<'a>.CreateEmpty ()
          
     new () = 
         FSA<_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<_>())
