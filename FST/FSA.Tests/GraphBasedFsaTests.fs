@@ -124,7 +124,7 @@ type ``Additional FSA tests`` () =
     [<Test>]
     member this.``Intersection of any non empty word FSA and it's complementation`` () =
         let res = FSA<_>.Intersection (anyNonEmptyWordsFsa, anyNonEmptyWordsFsa.Complementation, equalSmbl)
-        checkGraph res 1 1 0 1 "empty_fsa_on_inters.dot"
+        checkGraph res 0 0 0 0 "empty_fsa_on_inters.dot"
 
     [<Test>]
     member this.``Intersection of AB fsa and B fsa`` () =
@@ -141,7 +141,7 @@ type ``Additional FSA tests`` () =
                 ResizeArray.singleton 1, 
                 ResizeArray.ofList [ (0, Smbl('b', 11), 1) ])
         let res = FSA<_>.Intersection (abFsa, bFsa, equalSmbl)
-        checkGraph res 1 1 1 2 "ab_and_b_inters.dot"
+        checkGraph res 0 0 0 0 "ab_and_b_inters.dot"
 
 //[<EntryPoint>]
 //let f x =

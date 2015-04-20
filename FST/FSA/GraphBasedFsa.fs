@@ -353,10 +353,12 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         
         for v1 in dfa1.InitState do
             for v2 in dfa2.InitState do
+                resFSA.AddVertex fsaDict.[(v1, v2)] |> ignore
                 resFSA.InitState.Add(fsaDict.[(v1, v2)])
 
         for v1 in dfa1.FinalState do
             for v2 in dfa2.FinalState do
+                resFSA.AddVertex fsaDict.[(v1, v2)] |> ignore
                 resFSA.FinalState.Add(fsaDict.[(v1, v2)])
         
         if resFSA.EdgeCount > 0 then 
@@ -369,6 +371,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             let FSAtmp = new FSA<_>()
             for edge in resFSA.Edges do
                 new EdgeFSA<_>(edge.Target, edge.Source, edge.Tag) |>  FSAtmp.AddVerticesAndEdge |> ignore
+            resFSA.Vertices |> Seq.iter (fun v -> FSAtmp.AddVertex v |> ignore)
 
             let vRemove2 = setVertexRemoved FSAtmp (!i + 1)
 
