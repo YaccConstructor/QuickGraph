@@ -290,8 +290,12 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             |> ignore
 
             graph.InitState <- ResizeArray.singleton (ruleNodes |> List.find (fun x -> x.IsStart)).Id
+            graph.AddVertex((ruleNodes |> List.find (fun x -> x.IsStart)).Id) |> ignore
+
             for el in ruleNodes do
-                if el.IsFinal then graph.FinalState.Add(el.Id)
+                if el.IsFinal then 
+                    graph.FinalState.Add(el.Id)
+                    graph.AddVertex(el.Id) |> ignore
                
             graph
         else inGraph

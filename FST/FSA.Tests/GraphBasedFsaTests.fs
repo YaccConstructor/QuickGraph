@@ -81,6 +81,17 @@ type ``Graph FSA tests`` () =
         Assert.AreEqual(fsaEmpty.IsEmpty, true)
         Assert.AreEqual(fsaRepl1C6.IsEmpty, false)
 
+    [<Test>]
+    member this.``Graph FSA. FSA accept only empty string and do nfaToDfa.`` () =
+        let fsa = FSA<_>(
+                    ResizeArray.singleton 0, 
+                    ResizeArray.singleton 0, 
+                    ResizeArray.ofList [
+                        (0, Eps, 0)])
+        
+        Assert.AreEqual(fsa.NfaToDfa.IsEmpty, true)
+        Assert.AreEqual(fsa.IsEmpty, false)
+
 let checkFsa (fsa: FSA<_>) (expected: list<int * list<int * Symb<_>>>) symbEquals = 
     let expectedMap = Map.ofList expected
     fsa.Edges
@@ -150,6 +161,6 @@ type ``Additional FSA tests`` () =
 
 //[<EntryPoint>]
 //let f x =
-//      let t = new ``Additional FSA tests`` () 
-//      t.``Intersection of AB fsa and B fsa``()
+//      let t = new ``Graph FSA tests`` () 
+//      t.``Graph FSA. FSA is empty and do nfaToDfa.``()
 //      1
