@@ -76,11 +76,6 @@ type ``Graph FSA tests`` () =
         let resFSA = FSA<_>.Replace(fsaRepl1C6, fsaRepl2C6, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
         checkGraph resFSA 1 1 5 5 "replace_test_6.dot"
 
-    [<Test>]
-    member this.``Graph FSA. Test for construct full dfa.`` () =
-        let resFSA = FSA<_>.DfaToFullDfa(fsaInters2, new HashSet<_>([|'a'; 'b'; 'c'; 'e'|]), newSmb, getChar)
-        checkGraph resFSA 1 1 16 4 "fullDFA_test.dot"
-
 let checkFsa (fsa: FSA<_>) (expected: list<int * list<int * Symb<_>>>) symbEquals = 
     let expectedMap = Map.ofList expected
     fsa.Edges
@@ -107,11 +102,13 @@ let symbEquals eqData (sym1: Symb<'a>) (sym2: Symb<'a>) =
 type ``Additional FSA tests`` () =  
     [<Test>]
     member this.``Intersection with self complement test`` () =
-        let comp = fsaAcceptingOneLetter.Complementation.NfaToDfa
+        let alphabet = new HashSet<_>(['a'])
+        let comp = fsaAcceptingOneLetter.Complementation(alphabet, newSmb, getChar).NfaToDfa
         fsaAcceptingOneLetter.PrintToDOT <| fullPath "inters_with_comp_orig.dot"
         comp.PrintToDOT <| fullPath "inters_with_comp_comp.dot"
         let res = FSA<_>.Intersection (fsaAcceptingOneLetter, comp, equalSmbl)
-        checkFsa res [] (symbEquals equalSmbl)
+        //checkFsa res [] (symbEquals equalSmbl)
+        Assert.AreEqual(res.IsEmpty, true)
         
 //    [<Test>]
 //    member this.``Empty FSA determinization`` () =
@@ -123,8 +120,10 @@ type ``Additional FSA tests`` () =
 
     [<Test>]
     member this.``Intersection of any non empty word FSA and it's complementation`` () =
-        let res = FSA<_>.Intersection (anyNonEmptyWordsFsa, anyNonEmptyWordsFsa.Complementation, equalSmbl)
-        checkGraph res 0 0 0 0 "empty_fsa_on_inters.dot"
+        let alphabet = new HashSet<_>(['a'])
+        let res = FSA<_>.Intersection (anyNonEmptyWordsFsa, anyNonEmptyWordsFsa.Complementation(alphabet, newSmb, getChar), equalSmbl)
+        Assert.AreEqual(res.IsEmpty, true)
+        //checkGraph res 0 0 0 0 "empty_fsa_on_inters.dot"
 
     [<Test>]
     member this.``Intersection of AB fsa and B fsa`` () =
@@ -141,10 +140,11 @@ type ``Additional FSA tests`` () =
                 ResizeArray.singleton 1, 
                 ResizeArray.ofList [ (0, Smbl('b', 11), 1) ])
         let res = FSA<_>.Intersection (abFsa, bFsa, equalSmbl)
-        checkGraph res 0 0 0 0 "ab_and_b_inters.dot"
+        Assert.AreEqual(res.IsEmpty, true)
+        //checkGraph res 0 0 0 0 "ab_and_b_inters.dot"
 
 //[<EntryPoint>]
 //let f x =
-//      let t = new ``Graph FSA tests`` () 
-//      t.``Graph FSA. Simple replace test.``()
+//      let t = new ``Additional FSA tests`` () 
+//      t.``Intersection of AB fsa and B fsa``()
 //      1
