@@ -121,6 +121,11 @@ type ``Additional FSA tests`` () =
         checkFsa res [] (symbEquals equalSmbl)
         checkGraph res 1 1 0 1 "empty_fsa_determ.dot"
 
+    [<Test>]
+    member this.``Intersection of any non empty word FSA and it's complementation`` () =
+        let res = FSA<_>.Intersection (anyNonEmptyWordsFsa, anyNonEmptyWordsFsa.Complementation, equalSmbl)
+        checkGraph res 1 1 0 1 "empty_fsa_on_inters.dot"
+
 //[<EntryPoint>]
 //let f x =
 //      let t = new ``Graph FSA tests`` () 
