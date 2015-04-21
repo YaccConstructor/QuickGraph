@@ -306,7 +306,10 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             let vRemove = setVertexRemoved fsa fsa.InitState.[0]
             let isRemove v = Seq.exists ((=) v) vRemove
             ResizeArray.forall (isRemove) fsa.FinalState
-        else true     
+        else
+            if (fsa.FinalState.Count = 1 && fsa.InitState.[0] = fsa.FinalState.[0])
+            then false
+            else true     
     
     ///for FSA 
     static let complementation (fsa:FSA<'a>) (alphabet:HashSet<_>) newSmb getChar =

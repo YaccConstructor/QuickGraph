@@ -89,7 +89,7 @@ type ``Graph FSA tests`` () =
                     ResizeArray.ofList [
                         (0, Eps, 0)])
         
-        Assert.AreEqual(fsa.NfaToDfa.IsEmpty, true)
+        Assert.AreEqual(fsa.NfaToDfa.IsEmpty, false)
         Assert.AreEqual(fsa.IsEmpty, false)
 
 let checkFsa (fsa: FSA<_>) (expected: list<int * list<int * Symb<_>>>) symbEquals = 
