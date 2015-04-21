@@ -76,6 +76,18 @@ type ``Graph FSA tests`` () =
         let resFSA = FSA<_>.Replace(fsaRepl1C6, fsaRepl2C6, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
         checkGraph resFSA 1 1 5 5 "replace_test_6.dot"
 
+    //[<Test>]
+    member this.``Graph FSA. Replace test 7. FSA 2 with one state.`` () =
+        let fsa = FSA<_>(
+                    ResizeArray.singleton 0, 
+                    ResizeArray.singleton 0, 
+                    ResizeArray.ofList [
+                        (0, Eps, 0)])
+        
+        Assert.AreEqual(fsa.IsEmpty, false)
+        let resFSA = FSA<_>.Replace(fsaRepl1C6, fsa, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 1 7 8 "replace_test_7.dot"
+
     [<Test>]
     member this.``Graph FSA. FSA is empty.`` () =
         Assert.AreEqual(fsaEmpty.IsEmpty, true)
@@ -162,5 +174,5 @@ type ``Additional FSA tests`` () =
 //[<EntryPoint>]
 //let f x =
 //      let t = new ``Graph FSA tests`` () 
-//      t.``Graph FSA. FSA is empty and do nfaToDfa.``()
+//      t.``Graph FSA. Replace test 1.``()
 //      1

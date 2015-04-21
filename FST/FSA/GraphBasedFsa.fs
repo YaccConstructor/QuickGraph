@@ -327,10 +327,52 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
     static let complementation (fsa:FSA<'a>) (alphabet:HashSet<_>) newSmb getChar =
         if not (fsa.IsEmpty) then 
             let (dfa:FSA<'a>) = fsa.NfaToDfa
+            let maxV = Seq.max dfa.Vertices
             let resFSA = new FSA<_>()
             resFSA.InitState <- dfa.InitState
             resFSA.AddVertexRange(dfa.InitState) |> ignore
+            resFSA.AddVertex(maxV + 1) |> ignore //sink-state
                                                                  
+            let currDict v =
+                let deleteCh = new HashSet<_>()
+                for edge in dfa.OutEdges(v) do
+                    deleteCh.Add (getChar edge.Tag) |> ignore
+                let curChDict = new HashSet<_>()
+                for ch in alphabet do
+                    if not (deleteCh.Contains(ch))
+                    then curChDict.Add(ch) |> ignore
+                curChDict
+
+            resFSA.AddVerticesAndEdgeRange dfa.Edges |> ignore
+
+            for v in dfa.Vertices do
+                for ch in currDict v do
+                    new EdgeFSA<_>(v, maxV + 1, newSmb ch) |> resFSA.AddVerticesAndEdge  |> ignore
+
+            for ch in alphabet do
+                new EdgeFSA<_>(maxV + 1, maxV + 1, newSmb ch) |> resFSA.AddVerticesAndEdge  |> ignore
+        
+            for st in resFSA.Vertices do
+                if not (ResizeArray.exists ((=) st) dfa.FinalState) 
+                then resFSA.FinalState.Add(st)
+            resFSA
+
+        else 
+            let resFSA = new FSA<_>()
+            resFSA.InitState.Add(0) 
+            resFSA.FinalState.Add(0) 
+
+            for ch in alphabet do
+                new EdgeFSA<_>(0, 0, newSmb ch) |> resFSA.AddVerticesAndEdge  |> ignore
+            resFSA
+
+ 
+    static let complementationForReplace (fsa:FSA<'a>) (alphabet:HashSet<_>) newSmb getChar =
+        if not (fsa.IsEmpty) then 
+            let (dfa:FSA<'a>) = fsa.NfaToDfa
+            let resFSA = new FSA<_>()
+            resFSA.InitState <- dfa.InitState
+                                                                  
             let currDict v =
                 let deleteCh = new HashSet<_>()
                 for edge in dfa.OutEdges(v) do
@@ -349,9 +391,8 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         
             for st in resFSA.Vertices do
                 if not (ResizeArray.exists ((=) st) dfa.FinalState) 
-                then 
-                    resFSA.FinalState.Add(st)
-                    resFSA.AddVertex(st) |> ignore
+                then resFSA.FinalState.Add(st)
+        
             resFSA
 
         else 
@@ -362,7 +403,6 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             for ch in alphabet do
                 new EdgeFSA<_>(0, 0, newSmb ch) |> resFSA.AddVerticesAndEdge  |> ignore
             resFSA
-
 
     ///for DFAs
     static let intersection (dfa1:FSA<_>) (dfa2:FSA<_>) equalSmbl =
@@ -467,8 +507,8 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             for edge in fsa2.Edges do
                 alphabetFSAs.Add(getChar edge.Tag) |> ignore
 
-            let (fsa_compl:FSA<_>) = complementation fsa2 alphabetFSAs newSmb getChar
-
+            let (fsa_compl:FSA<_>) = complementationForReplace fsa2 alphabetFSAs newSmb getChar
+            //fsa_compl.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_compl.dot"
             //construct fsa2_tmp
             let fsa2_tmp = new FSA<_>()
             fsa2_tmp.InitState <- fsa_compl.InitState
@@ -495,8 +535,11 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                 new EdgeFSA<_>(fsa2DictStep2.[v], fsa_compl.InitState.[0], newSmb smb2) |> fsa2_tmp.AddVerticesAndEdge |> ignore      
                       
             //Step 3. Generate fsa_tmp as intersection of fsa1_tmp and fsa2_tmp
+            //fsa1_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa1_tmp.dot"
+            //fsa2_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa2_tmp.dot"
             let (fsa_tmp:FSA<_>) = FSA<_>.Intersection(fsa1_tmp, fsa2_tmp, equalSmbl)
-        
+            //fsa_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_tmp.dot"
+
             let resFSA = 
                 if not (fsa_tmp.IsEmpty) //result of intersection is not empty?
                 then 
