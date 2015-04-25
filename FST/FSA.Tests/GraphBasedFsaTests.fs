@@ -89,6 +89,53 @@ type ``Graph FSA tests`` () =
         checkGraph resFSA 1 1 7 8 "replace_test_7.dot"
 
     [<Test>]
+    member this.``Graph FSA. Replace test 8. FSA 1 with one state. FSA 2 accept empty string.`` () =
+        let fsa = FSA<_>(
+                    ResizeArray.singleton 0, 
+                    ResizeArray.singleton 0, 
+                    ResizeArray.ofList [
+                        (0, Eps, 0)])
+        
+        let resFSA = FSA<_>.Replace(fsa, fsa, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 1 1 2 "replace_test_8.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 9. FSA 1 with one state. FSA 2 accept empty string.`` () =
+        let fsa1 = FSA<_>(
+                    ResizeArray.singleton 0, 
+                    ResizeArray.singleton 0, 
+                    ResizeArray.ofList [
+                        (0, Eps, 0)])
+
+        let fsa2 = FSA<_>(
+                    ResizeArray.singleton 0, 
+                    ResizeArray.singleton 0, 
+                    ResizeArray.ofList [
+                        (0, Smbl('a', 11), 1);
+                        (1, Smbl('b', 11), 2);])
+                                
+        let resFSA = FSA<_>.Replace(fsa1, fsa2, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 1 1 2 "replace_test_9.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 10. FSA 1 with one state. FSA 2 is not accept empty string.`` () =
+        let fsa1 = FSA<_>(
+                    ResizeArray.singleton 0, 
+                    ResizeArray.singleton 0, 
+                    ResizeArray.ofList [
+                        (0, Eps, 0)])
+
+        let fsa2 = FSA<_>(
+                    ResizeArray.singleton 0, 
+                    ResizeArray.singleton 2, 
+                    ResizeArray.ofList [
+                        (0, Smbl('a', 11), 1);
+                        (1, Smbl('b', 11), 2);])
+                                
+        let resFSA = FSA<_>.Replace(fsa1, fsa2, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 1 0 1 "replace_test_10.dot"
+
+    [<Test>]
     member this.``Graph FSA. FSA is empty.`` () =
         Assert.AreEqual(fsaEmpty.IsEmpty, true)
         Assert.AreEqual(fsaRepl1C6.IsEmpty, false)
@@ -151,7 +198,6 @@ type ``Additional FSA tests`` () =
         let alphabet = new HashSet<_>(['a'])
         let res = FSA<_>.Intersection (anyNonEmptyWordsFsa, anyNonEmptyWordsFsa.Complementation(alphabet, newSmb, getChar), equalSmbl)
         Assert.AreEqual(res.IsEmpty, true)
-        //checkGraph res 0 0 0 0 "empty_fsa_on_inters.dot"
 
     [<Test>]
     member this.``Intersection of AB fsa and B fsa`` () =
@@ -169,7 +215,6 @@ type ``Additional FSA tests`` () =
                 ResizeArray.ofList [ (0, Smbl('b', 11), 1) ])
         let res = FSA<_>.Intersection (abFsa, bFsa, equalSmbl)
         Assert.AreEqual(res.IsEmpty, true)
-        //checkGraph res 0 0 0 0 "ab_and_b_inters.dot"
 
 //[<EntryPoint>]
 //let f x =
