@@ -133,7 +133,7 @@ type ``Graph FSA tests`` () =
                         (1, Smbl('b', 11), 2);])
                                 
         let resFSA = FSA<_>.Replace(fsa1, fsa2, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
-        checkGraph resFSA 1 1 0 1 "replace_test_10.dot"
+        checkGraph resFSA 1 1 1 1 "replace_test_10.dot"
 
     [<Test>]
     member this.``Graph FSA. FSA is empty.`` () =
