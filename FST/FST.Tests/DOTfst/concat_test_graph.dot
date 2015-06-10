@@ -1,0 +1,20 @@
+digraph G {
+rankdir = LR
+node [shape = circle]
+0[style=filled, fillcolor=green]
+6[shape = doublecircle, style=filled, fillcolor=red]
+{ rank=same; 0 }
+{ rank=min; 0 }
+{ rank=same; 6 }
+{ rank=max; 6 }
+0 -> 1 [label="1 : 1"]; 
+1 -> 2 [label="2 : +"]; 
+1 -> 2 [label="3 : -"]; 
+2 -> 3 [label="4 : 4"]; 
+3 -> 7 [label="Eps : Eps"]; 
+4 -> 5 [label="+ : 1"]; 
+5 -> 6 [label="1 : +"]; 
+5 -> 6 [label="2 : -"]; 
+7 -> 4 [label="Eps : Eps"]; 
+
+}
