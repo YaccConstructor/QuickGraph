@@ -8,7 +8,7 @@
     <ProjectGuid>968f28d8-1c01-4c68-8921-5a5b12d1e945</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>FSA.Tests</RootNamespace>
-    <AssemblyName>FSA.Tests</AssemblyName>
+    <AssemblyName>YC.FSA.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
     <Name>FSA.Tests</Name>
