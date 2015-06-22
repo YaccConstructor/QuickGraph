@@ -13,8 +13,18 @@ open YC.FSA.FsaApproximation
 let setVertexRemoved (fst:#IVertexListGraph<_,_>) startV =
         let dfs = DepthFirstSearchAlgorithm<_,_>(fst)
         dfs.Compute(startV)
-        let vertexRemoved = dfs.VertexColors |> Seq.filter(fun x -> x.Value = GraphColor.White) |> Seq.map(fun x -> x.Key)
+        let vertexRemoved = new ResizeArray<_>() 
+        for kvp in dfs.VertexColors  do
+            if kvp.Value = GraphColor.White then vertexRemoved.Add kvp.Key
         vertexRemoved
+
+let getReachableV (fst:#IVertexListGraph<_,_>) startV =
+        let dfs = DepthFirstSearchAlgorithm<_,_>(fst)
+        dfs.Compute(startV)
+        let reachableV = new ResizeArray<_>() 
+        for kvp in dfs.VertexColors  do
+            if kvp.Value <> GraphColor.White then reachableV.Add kvp.Key
+        reachableV
 
 type EdgeFST<'a, 'b>(s,e,t)=
     inherit TaggedEdge<int, Symb<'a>*Symb<'b>>(s,e,t)
@@ -22,9 +32,10 @@ type EdgeFST<'a, 'b>(s,e,t)=
 [<Class>]
 type FST<'iType, 'oType>(initial, final, transitions) as this =
     inherit AdjacencyGraph<int,EdgeFST<'iType, 'oType>>()
+    let cachedEdges = new ResizeArray<_>() |> ref
     do
-        transitions |> ResizeArray.map (fun (f,l,t) -> new EdgeFST<_,_>(f,t,l))
-        |> this.AddVerticesAndEdgeRange
+        cachedEdges := transitions 
+        this.AddVerticesAndEdgeRange !cachedEdges
         |> ignore
 
     let printFSTtoDOT filePrintPath printSmb =
@@ -44,7 +55,7 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
     static let isEmptyFST (fst:FST<_,_>) =
         if fst.EdgeCount > 0 then
             let vRemove = setVertexRemoved fst fst.InitState.[0]
-            let isRemove v = Seq.exists ((=) v) vRemove
+            let isRemove v = ResizeArray.exists ((=) v) vRemove
             ResizeArray.forall (isRemove) fst.FinalState
         else true  
 
@@ -106,8 +117,12 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
               
         resFST
 
+    new (initial, final, transitions) =
+
+        FST<_,_>(initial, final, transitions|> ResizeArray.map (fun (f,l,t) -> new EdgeFST<_,_>(f,t,l)))
+
     new () =
-        FST<_,_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<_>())
+        FST<_,_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<EdgeFST<_,_>>())
 
     member val InitState =  initial with get, set
     member val FinalState = final with get, set
@@ -118,25 +133,28 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
     static member Union(fst1, fst2) = union fst1 fst2
     member this.IsEmpty =  isEmptyFST this
 
+    member this.CachedEdges = !cachedEdges
+    member this.RecachEdges () = cachedEdges := this.Edges |> ResizeArray.ofSeq
+         
     ///for FSA, which are not empty
     static member FSAtoFST(fsa:FSA<_>, transform, smblEOF) =
         let dfa = fsa.NfaToDfa 
-        let resFST =  new FST<_,_>()
-        resFST.InitState <- dfa.InitState
-        resFST.FinalState <- dfa.FinalState
-
+        
+        let edges = new ResizeArray<_>()
         for edge in dfa.Edges do
-            new EdgeFST<_,_>(edge.Source, edge.Target, transform edge.Tag) |> resFST.AddVerticesAndEdge  |> ignore
+            new EdgeFST<_,_>(edge.Source, edge.Target, transform edge.Tag) |> edges.Add
 
         let vEOF = Seq.max dfa.Vertices + 1
-        for v in resFST.FinalState do
-            new EdgeFST<_,_>(v, vEOF, transform smblEOF) |> resFST.AddVerticesAndEdge |> ignore
+        for v in dfa.FinalState do
+            new EdgeFST<_,_>(v, vEOF, transform smblEOF) |> edges.Add
 
-        resFST.FinalState <- ResizeArray.singleton vEOF
+        let resFST =  new FST<_,_>(dfa.InitState, ResizeArray.singleton vEOF, edges)
+
         resFST     
 
     ///for FSTs, which are not empty
     static member Compos(fst1:FST<_,_>, fst2:FST<_,_>, alphabet:HashSet<_>) =
+
         let errors = new ResizeArray<_>()
         for edge in fst1.Edges do
             if not <| alphabet.Contains(snd edge.Tag)
@@ -147,55 +165,38 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
             let fstDict = new Dictionary<_,_>()
             let i = ref 0
             for v1 in fst1.Vertices do
+                fstDict.Add(v1,new Dictionary<_,_>())
                 for v2 in fst2.Vertices do
-                    fstDict.Add((v1, v2), !i)
+                    fstDict.[v1].Add( v2, !i)
                     i := !i + 1
              
             let resFST =  new FST<_,_>()
-            let isEqual s1 s2 =               
+            let inline isEqual s1 s2 =               
                 match s1,s2 with
                 | Eps, Eps -> true
-                | Smbl x, Smbl y -> x = y
+                | Smbl x, Smbl y -> x.Equals y
                 | x,y -> false
 
-            for edge1 in fst1.Edges do
-                for edge2 in fst2.Edges do
+            for edge1 in fst1.CachedEdges do
+                for edge2 in fst2.CachedEdges do
                     if isEqual (snd edge1.Tag) (fst edge2.Tag)
                     then
-                        new EdgeFST<_,_>(fstDict.[(edge1.Source, edge2.Source)], fstDict.[(edge1.Target, edge2.Target)], (fst edge1.Tag, snd edge2.Tag))
+                        new EdgeFST<_,_>(fstDict.[edge1.Source].[edge2.Source], fstDict.[edge1.Target].[edge2.Target], (fst edge1.Tag, snd edge2.Tag))
                         |> resFST.AddVerticesAndEdge  |> ignore          
 
             let isEpsilon x = match x with | Eps -> true | _ -> false
 
-            for edge1 in fst1.Edges do
-                if isEpsilon (snd edge1.Tag)
-                then
-                    for v2 in fst2.Vertices do
-                        match (fst edge1.Tag) with
-                        | Smbl _ ->
-                            new EdgeFST<_,_>(fstDict.[(edge1.Source, v2)], fstDict.[(edge1.Target, v2)], (fst edge1.Tag, Eps))
-                            |> resFST.AddVerticesAndEdge  |> ignore
-                        | Eps -> ()
-
-            for edge2 in fst2.Edges do
-                if isEpsilon (fst edge2.Tag)
-                then
-                    for v1 in fst1.Vertices do
-                        match (snd edge2.Tag) with
-                        | Smbl _ ->
-                            new EdgeFST<_,_>(fstDict.[(v1, edge2.Source)], fstDict.[(v1, edge2.Target)], (Eps, snd edge2.Tag))
-                            |> resFST.AddVerticesAndEdge  |> ignore
-                        | _ -> ()
-
             for v1 in fst1.InitState do
                 for v2 in fst2.InitState do
-                    resFST.InitState.Add(fstDict.[(v1, v2)])
-                    resFST.AddVertex(fstDict.[(v1, v2)]) |> ignore
+                    resFST.InitState.Add(fstDict.[v1].[v2])
+                    resFST.AddVertex(fstDict.[v1].[v2]) |> ignore
                 
             for v1 in fst1.FinalState do
                 for v2 in fst2.FinalState do
-                    resFST.FinalState.Add(fstDict.[(v1, v2)])
-                    resFST.AddVertex(fstDict.[(v1, v2)]) |> ignore
+                    resFST.FinalState.Add(fstDict.[v1].[v2])
+                    resFST.AddVertex(fstDict.[v1].[v2]) |> ignore
+            
+            //resFST.PrintToDOT @"C:\yc\recursive-ascent\FST\FST\FST.Tests\DOTfst\fstt.dot" 
 
             if not(resFST.IsEmpty) then //result of composition is empty?
                 for v in resFST.InitState do
@@ -204,27 +205,25 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
                 for v in resFST.FinalState do
                     new EdgeFST<_,_>(v, !i + 1, (Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
 
-                let vRemove1 = setVertexRemoved resFST !i
+                let reachableV1 = getReachableV resFST !i
 
                 let FSTtmp = new FST<_,_>()
                 for edge in resFST.Edges do
                     new EdgeFST<_,_>(edge.Target, edge.Source, edge.Tag) |>  FSTtmp.AddVerticesAndEdge |> ignore
 
-                let vRemove2 = setVertexRemoved FSTtmp (!i + 1)
+                let reachableV2 = getReachableV FSTtmp (!i + 1)
 
-                for v in vRemove1 do
-                    resFST.RemoveVertex(v) |> ignore
-                    resFST.InitState.Remove(v) |> ignore
-                    resFST.FinalState.Remove(v) |> ignore
-
-                for v in vRemove2 do
-                    resFST.RemoveVertex(v) |> ignore
-                    resFST.InitState.Remove(v) |> ignore
-                    resFST.FinalState.Remove(v) |> ignore
-
-                resFST.RemoveVertex(!i) |> ignore
-                resFST.RemoveVertex(!i + 1) |> ignore
-                Success resFST
+                let h = new HashSet<_>(reachableV1)
+                h.IntersectWith reachableV2
+                let result = new FST<_,_>(resFST.InitState, resFST.FinalState |> ResizeArray.filter (fun s -> h.Contains s), new ResizeArray<EdgeFST<_,_>>())
+                for v in h do
+                    for e in resFST.OutEdges v do
+                         if h.Contains e.Target
+                         then result.AddVerticesAndEdge e |> ignore
+                result.RemoveVertex(!i) |> ignore
+                result.RemoveVertex(!i + 1) |> ignore
+                //result.PrintToDOT @"C:\yc\recursive-ascent\FST\FST\FST.Tests\DOTfst\fstt.dot" 
+                Success result
             else
                 let chFST1 = new ResizeArray<_>()
                 for ch in fst1.Edges do

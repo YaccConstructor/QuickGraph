@@ -77,8 +77,8 @@
   <ItemGroup>
     <Compile Include="FstTableTests.fs" />
     <Compile Include="GraphBasedFstTestData.fs" />
-    <Compile Include="GraphBasedFstTests.fs" />
     <Compile Include="AppoximationTests.fs" />
+    <Compile Include="GraphBasedFstTests.fs" />
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>

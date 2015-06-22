@@ -6,16 +6,18 @@ open Microsoft.FSharp.Collections
 open YC.FST.GraphBasedFst
 open YC.FST.Tests.GraphBasedFstTestData
 open System.Collections.Generic
+open YC.FSA.GraphBasedFsa
 
 let basePath = "../../../FST/FST/FST.Tests/DOTfst/"
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 let checkGraph (fst:FST<_,_>) initV finalV countE countV filePath =
+    fst.PrintToDOT <| fullPath filePath
     Assert.AreEqual(fst.InitState.Count, initV, "Count of init state not equal expected number.")
     Assert.AreEqual(fst.FinalState.Count, finalV, "Count of final state not equal expected number.")
     Assert.AreEqual(fst.EdgeCount, countE, "Count of edges not equal expected number. ")
     Assert.AreEqual(fst.VertexCount, countV, "Count of vertices not equal expected number. ")
-    fst.PrintToDOT <| fullPath filePath
+    
 
 let CompositionTest (fst1:FST<_,_>) (fst2:FST<_,_>) alphabet initV finalV countE countV filePath  =
     let res = FST.Compos(fst1, fst2, alphabet)
@@ -55,7 +57,7 @@ type ``Graph FST tests`` () =
         let resFST = multiFinishfst.Union multiInitfst
         checkGraph resFST 1 1 17 11 "union_test_graph_multi.dot"
 
-    [<Test>]
+    //[<Test>]  test with eps
     member this.``Graph FST. Test composition FSTs.`` () =
         let alphabet = new HashSet<_>()
         for edge in fstCompos2.Edges do
@@ -70,19 +72,6 @@ type ``Graph FST tests`` () =
             alphabet.Add(fst edge.Tag) |> ignore
 
         CompositionTest fstCompos12 fstCompos22 alphabet 1 1 4 4 "compos_test_1.dot"
-
-    [<Test>]
-    member this.``Graph FST. Result of composition is empty FST.`` () =
-        let alphabet = new HashSet<_>()
-        for edge in fstCompos22.Edges do
-            alphabet.Add(fst edge.Tag) |> ignore
-
-        let res = FST.Compos(fstCompos2, fstCompos12, alphabet)
-
-        match res with 
-            |Success x -> Assert.Fail(sprintf "Incorrect answer!")
-            |Error e -> Assert.Pass(sprintf "Tokenization problem: %A" e)
-
 
 //[<EntryPoint>]
 //let f x =
