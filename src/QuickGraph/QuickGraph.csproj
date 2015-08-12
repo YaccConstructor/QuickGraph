@@ -227,6 +227,7 @@
     <Compile Include="Algorithms\TopologicalSort\UndirectedFirstTopologicalSortAlgorithm.cs" />
     <Compile Include="Algorithms\TopologicalSort\UndirectedTopologicalSortAlgorithm.cs" />
     <Compile Include="Algorithms\ConnectedComponents\WeaklyConnectedComponentsAlgorithm.cs" />
+    <Compile Include="Algorithms\VertexCover\MinimumVertexCoverApproxAlgorithm.cs" />
     <Compile Include="ArrayAdjacencyGraph.cs" />
     <Compile Include="BidirectionAdapterGraph.cs" />
     <Compile Include="Collections\BinaryHeap.cs" />
