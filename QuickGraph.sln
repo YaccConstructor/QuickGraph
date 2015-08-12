@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Serialization", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Tests", "tests\QuickGraph.Tests\QuickGraph.Tests.csproj", "{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QuickGraphFS", "src\QuickGraphFS\QuickGraphFS.fsproj", "{1CCAFD2C-4A61-4F7F-986C-A2F575086344}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,16 @@ Global
 		{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}.Release20|Any CPU.Build.0 = Release20|Any CPU
 		{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}.ReleaseContractsReferences|Any CPU.ActiveCfg = Release20|Any CPU
 		{61DF76E1-DE2B-4DF1-AD5F-89939AB06693}.ReleaseContractsReferences|Any CPU.Build.0 = Release20|Any CPU
+		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.DebugContracts|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.DebugContracts|Any CPU.Build.0 = Debug|Any CPU
+		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.Release20|Any CPU.ActiveCfg = Release|Any CPU
+		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.Release20|Any CPU.Build.0 = Release|Any CPU
+		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.ReleaseContractsReferences|Any CPU.ActiveCfg = Release|Any CPU
+		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
