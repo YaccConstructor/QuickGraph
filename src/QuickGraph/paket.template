@@ -1,0 +1,23 @@
+type project
+owners
+    Jonathan \"Peli\" de Halleux
+authors 
+    Jonathan \"Peli\" de Halleux
+projectUrl
+    http://github.com/YaccConstructor/QuickGraph
+iconUrl
+    https://raw.githubusercontent.com/YaccConstructor/QuickGraph/master/docs/files/img/logo.png
+licenseUrl
+    http://github.com/YaccConstructor/QuickGraph/blob/master/LICENSE.txt
+requireLicenseAcceptance
+    false
+copyright
+    Copyright 2015
+tags
+    garph .NET datastructures algorithms C#
+summary
+    Graph datastructures and algorithms for .NET.
+description
+    QuickGraph provides generic directed/undirected graph datastructures and algorithms for .NET. QuickGraph comes with algorithms such as depth first seach, breath first search, A* search, shortest path, k-shortest path, maximum flow, etc...
+
+

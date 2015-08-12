@@ -1,7 +1,0 @@
-.echo dumping process managed heap, this might take a while...
-.loadby sos mscorwks
-!TraverseHeap -xml heap.xml
-!TraverseHeap heap.txt
-.detach
-q
-

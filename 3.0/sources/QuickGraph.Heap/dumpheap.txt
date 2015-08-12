@@ -1,7 +1,0 @@
-.echo dumping process managed heap, this might take a while...
-.loadby sos mscorwks
-.logopen eeheap.txt
-!eeheap -gc
-.logclose
-!TraverseHeap -xml heap.xml
-qd
