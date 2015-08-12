@@ -1,6 +1,6 @@
 type project
 owners
-    Jonathan \"Peli\" de Halleux
+    YaccConstructor
 authors 
     Jonathan \"Peli\" de Halleux
 projectUrl
@@ -14,7 +14,7 @@ requireLicenseAcceptance
 copyright
     Copyright 2015
 tags
-    garph .NET datastructures algorithms C#
+    garph .NET datastructures algorithms CSharp
 summary
     Graph datastructures and algorithms for .NET.
 description
