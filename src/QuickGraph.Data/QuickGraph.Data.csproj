@@ -165,9 +165,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\version.cs">
-      <Link>Properties\version.cs</Link>
-    </Compile>
     <Compile Include="DataRelationEdge.cs" />
     <Compile Include="DataSetGraph.cs" />
     <Compile Include="DataSetGraphExtensions.cs" />

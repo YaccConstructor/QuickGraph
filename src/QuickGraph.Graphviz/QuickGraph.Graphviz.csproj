@@ -147,9 +147,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\version.cs">
-      <Link>Properties\version.cs</Link>
-    </Compile>
     <Compile Include="CondensatedGraphRenderer.cs" />
     <Compile Include="Dot\GraphvizArrow.cs" />
     <Compile Include="Dot\GraphvizArrowClipping.cs" />

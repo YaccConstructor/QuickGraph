@@ -119,9 +119,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\version.cs">
-      <Link>Properties\version.cs</Link>
-    </Compile>
     <Compile Include="AdjacencyGraph.cs" />
     <Compile Include="Algorithms\AlgorithmBase.cs" />
     <Compile Include="Algorithms\AlgorithmEventHandler.cs" />
