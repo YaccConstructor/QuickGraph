@@ -21,7 +21,9 @@ let checkGraph (fst:FST<_,_>) initV finalV countE countV =
 let printSmbInt (x:char*Position<_>) = 
         match x with
         | (y, _) when y = char 65535 -> "eof"  
-        | _ -> (fst x).ToString() + "_br: " + (snd x).back_ref.ToString() + "(" + (snd x).start_offset.ToString() + "," + (snd x).end_offset.ToString() + ")"
+        | _ -> //(fst x).ToString() + "_br: " + (snd x).back_ref.ToString() + "(" + (snd x).start_offset.ToString() + "," + (snd x).end_offset.ToString() + ")"
+            let symbol, position = x
+            sprintf "%c_br: %s(%d, %d)" symbol <| position.back_ref.ToString() <| position.start_offset <| position.end_offset
 
 let transform x = (x, match x with |Smbl(y, _) -> Smbl y |_ -> Eps)
 let smblEOF = Smbl(char 65535,  Unchecked.defaultof<Position<_>>)
