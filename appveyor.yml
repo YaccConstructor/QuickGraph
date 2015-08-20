@@ -3,6 +3,7 @@ init:
 build_script:
   - cmd: build.cmd
 test: off
+os: Visual Studio 2013
 version: 0.0.1.{build}
 artifacts:
   - path: bin
