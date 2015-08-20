@@ -1,5 +1,7 @@
 init:
   - git config --global core.autocrlf input
+environment:
+  VisualStudioVersion: 12.0
 build_script:
   - cmd: build.cmd
 test: off
