@@ -3,7 +3,7 @@ init:
 build_script:
   - cmd: build.cmd
 test: off
-os: Previous Windows Server 2012 R2
+os: Windows Server 2012 R2
 version: 0.0.1.{build}
 artifacts:
   - path: bin
