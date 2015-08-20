@@ -60,9 +60,6 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.predecessors = new Dictionary<TVertex,TVertex>();
         }
 
-        /// <summary>
-        /// Indicates if a negative cycle was found
-        /// </summary>
         public bool FoundNegativeCycle
         {
             get { return this.foundNegativeCycle;}
@@ -201,6 +198,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// <remarks>
         /// Does not initialize the predecessor and distance map.
         /// </remarks>
+        /// <returns>true if successful, false if there was a negative cycle.</returns>
         protected override void InternalCompute()
         {
             // getting the number of 
@@ -228,6 +226,8 @@ namespace QuickGraph.Algorithms.ShortestPath
             foreach (var e in this.VisitedGraph.Edges)
             {
                 var edgeWeight = Weights(e);
+                if (edgeWeight < 0)
+                    throw new InvalidOperationException("non negative edge weight");
                 if (relaxer.Compare(
                         relaxer.Combine(
                             this.Distances[e.Source], edgeWeight),

@@ -57,7 +57,7 @@ namespace QuickGraph.Collections
             public int Rank;
         }
 
-        readonly Func<TKey, TKey, int> comparison;
+        readonly Comparison<TKey> comparison;
         readonly TKey keyMaxValue;
         readonly double errorRate;
         readonly Head header;
@@ -69,7 +69,7 @@ namespace QuickGraph.Collections
             : this(maximumErrorRate, keyMaxValue, Comparer<TKey>.Default.Compare)
         { }
 
-        public SoftHeap(double maximumErrorRate, TKey keyMaxValue, Func<TKey, TKey, int> comparison)
+        public SoftHeap(double maximumErrorRate, TKey keyMaxValue, Comparison<TKey> comparison)
         {
             Contract.Requires(comparison != null);
             Contract.Requires(0 < maximumErrorRate && maximumErrorRate <= 0.5);
@@ -91,7 +91,7 @@ namespace QuickGraph.Collections
             get { return this.r; }
         }
 
-        public Func<TKey, TKey, int> Comparison
+        public Comparison<TKey> Comparison
         {
             get { return this.comparison; }
         }

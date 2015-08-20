@@ -81,7 +81,7 @@ namespace QuickGraph.Algorithms
             if (!this.TryGetRootVertex(out root))
                 throw new InvalidOperationException("root vertex not set");
             if (this.pairs == null)
-                throw new InvalidOperationException("pairs not set");
+                throw new InvalidProgramException("pairs not set");
 
             var gpair = GraphExtensions.ToAdjacencyGraph(this.pairs);
             var disjointSet = new ForestDisjointSet<TVertex>();

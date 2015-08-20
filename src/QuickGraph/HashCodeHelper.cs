@@ -52,5 +52,18 @@ namespace QuickGraph
         {
             return Fold(Fold(Fold(FNV1_basis_32, x), y), z);
         }
+
+        /// <summary>
+        /// Combines four hashcodes in a strong way.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
+        /// <param name="w"></param>
+        /// <returns></returns>
+        public static Int32 Combine(Int32 x, Int32 y, Int32 z, Int32 w)
+        {
+            return Fold(Fold(Fold(Fold(FNV1_basis_32, x), y), z), w);
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace QuickGraph.Serialization
 
         public static BidirectionalGraph<string, Edge<string>> LoadBidirectionalGraph(string graphmlFile)
         {
-            TestConsole.WriteLine(graphmlFile);
+            Console.WriteLine(graphmlFile);
             var g = new BidirectionalGraph<string, Edge<string>>();
             using (var reader = new StreamReader(graphmlFile))
             {
@@ -58,7 +58,7 @@ namespace QuickGraph.Serialization
 
         public static AdjacencyGraph<string, Edge<string>> LoadGraph(string graphmlFile)
         {
-            TestConsole.WriteLine(graphmlFile);
+            Console.WriteLine(graphmlFile);
             var g = new AdjacencyGraph<string, Edge<string>>();
             using (var reader = new StreamReader(graphmlFile))
             {
@@ -118,7 +118,7 @@ namespace QuickGraph.Serialization
                 // check all nodes are loaded
                 var settings = new XmlReaderSettings();
                 settings.XmlResolver = new GraphMLXmlResolver();
-                settings.DtdProcessing = DtdProcessing.Ignore;
+                settings.ProhibitDtd = false;
                 settings.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.None;
                 using(var xreader = XmlReader.Create(graphmlFile, settings))
                 {
@@ -128,7 +128,7 @@ namespace QuickGraph.Serialization
                         string id = node.GetAttribute("id", "");
                         Assert.IsTrue(vertices.ContainsKey(id));
                     }
-                    TestConsole.Write(", vertices ok");
+                    Console.Write(", vertices ok");
 
                     // check all edges are loaded
                     foreach (XPathNavigator node in doc.CreateNavigator().Select("/graphml/graph/edge"))
@@ -137,9 +137,9 @@ namespace QuickGraph.Serialization
                         string target = node.GetAttribute("target", "");
                         Assert.IsTrue(g.ContainsEdge(vertices[source], vertices[target]));
                     }
-                    TestConsole.Write(", edges ok");
+                    Console.Write(", edges ok");
                 }
-                TestConsole.WriteLine();
+                Console.WriteLine();
             }
         }
     }

@@ -3,8 +3,9 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{595D6322-637A-4A36-97F1-D53F3F9ECEA7}</ProjectGuid>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuickGraph.Graphviz</RootNamespace>
@@ -15,16 +16,36 @@
     <SccProvider>SAK</SccProvider>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>quickgraph.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
-    <TargetFrameworkProfile>Profile2</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SILVERLIGHT</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -65,7 +86,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <DefineConstants>TRACE;INLINED_CONTRACTS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -101,7 +122,6 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
-    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release20|AnyCPU' ">
     <OutputPath>bin\Release20\</OutputPath>
@@ -138,11 +158,16 @@
     <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Contracts">
-      <HintPath>..\external\CodeContracts\Silverlight3\Microsoft.Contracts.dll</HintPath>
+    <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external\CodeContracts\v3.5\Microsoft.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -153,13 +178,11 @@
     <Compile Include="Dot\GraphvizArrowFilling.cs" />
     <Compile Include="Dot\GraphvizArrowShape.cs" />
     <Compile Include="Dot\GraphvizClusterMode.cs" />
-    <Compile Include="Dot\GraphvizColor.cs" />
     <Compile Include="Dot\GraphvizEdge.cs" />
     <Compile Include="Dot\GraphvizEdgeDirection.cs" />
     <Compile Include="Dot\GraphvizEdgeExtremity.cs" />
     <Compile Include="Dot\GraphvizEdgeLabel.cs" />
     <Compile Include="Dot\GraphvizEdgeStyle.cs" />
-    <Compile Include="Dot\GraphvizFont.cs" />
     <Compile Include="Dot\GraphvizGraph.cs" />
     <Compile Include="Dot\GraphvizImageType.cs" />
     <Compile Include="Dot\GraphvizLabelJustification.cs" />
@@ -168,18 +191,17 @@
     <Compile Include="Dot\GraphvizLayerCollection.cs" />
     <Compile Include="Dot\GraphvizOutputMode.cs" />
     <Compile Include="Dot\GraphvizPageDirection.cs" />
-    <Compile Include="Dot\GraphvizPoint.cs" />
     <Compile Include="Dot\GraphvizRankDirection.cs" />
     <Compile Include="Dot\GraphvizRatioMode.cs" />
     <Compile Include="Dot\GraphvizRecord.cs" />
     <Compile Include="Dot\GraphvizRecordCell.cs" />
     <Compile Include="Dot\GraphvizRecordCellCollection.cs" />
     <Compile Include="Dot\GraphvizRecordEscaper.cs" />
-    <Compile Include="Dot\GraphvizSize.cs" />
     <Compile Include="Dot\GraphvizVertex.cs" />
     <Compile Include="Dot\GraphvizVertexShape.cs" />
     <Compile Include="Dot\GraphvizVertexStyle.cs" />
     <Compile Include="EdgeMergeCondensatedGraphRenderer.cs" />
+    <Compile Include="FileDotEngine.cs" />
     <Compile Include="FormatEdgeEventArgs.cs" />
     <Compile Include="FormatVertexEventArgs.cs" />
     <Compile Include="GraphRendererBase.cs" />
@@ -223,7 +245,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

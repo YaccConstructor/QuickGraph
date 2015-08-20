@@ -4,7 +4,6 @@ using QuickGraph.Algorithms.Observers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Pex.Framework;
 using QuickGraph.Serialization;
-using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.RandomWalks
 {
@@ -14,8 +13,8 @@ namespace QuickGraph.Algorithms.RandomWalks
         [TestMethod]
         public void RoundRobinAll()
         {
-            Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
-                this.RoundRobinTest(g));
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+                this.RoundRobinTest(g);
         }
 
         [PexMethod]

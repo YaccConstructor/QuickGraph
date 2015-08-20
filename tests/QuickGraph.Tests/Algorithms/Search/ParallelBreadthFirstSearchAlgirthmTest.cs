@@ -78,7 +78,7 @@ namespace QuickGraph.Algorithms.Search
         [Test]
         public void GraphWithSelfEdgesBig()
         {
-            TestConsole.WriteLine("processors: {0}", TaskManager.Current.Policy.IdealProcessors);
+            Console.WriteLine("processors: {0}", TaskManager.Current.Policy.IdealProcessors);
             Random rnd = new Random();
             g = new AdjacencyGraph<int, Edge<int>>(true);
             var next = new IntFactory();

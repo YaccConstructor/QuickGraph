@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Pex.Framework;
 using QuickGraph.Serialization;
-using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -13,8 +12,8 @@ namespace QuickGraph.Algorithms.Search
         [TestMethod]
         public void ComputeAll()
         {
-            Parallel.ForEach(TestGraphFactory.GetBidirectionalGraphs(), g =>
-                this.Compute(g));
+            foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
+                this.Compute(g);
         }
 
         [PexMethod]

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-#if !SILVERLIGHT
 using System.Runtime.Serialization;
-#endif
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using QuickGraph.Contracts;
@@ -49,35 +47,21 @@ namespace QuickGraph
 
         public BidirectionalGraph(bool allowParallelEdges)
             :this(allowParallelEdges,-1)
-        {
-        }
+        {}
 
         public BidirectionalGraph(bool allowParallelEdges, int vertexCapacity)
-            :this(allowParallelEdges, vertexCapacity, -1)
         {
-        }
-
-        public BidirectionalGraph(bool allowParallelEdges, int vertexCapacity, int edgeCapacity)
-            :this(allowParallelEdges, vertexCapacity, edgeCapacity, EqualityComparer<TVertex>.Default)
-        {
-        }
-
-        public BidirectionalGraph(bool allowParallelEdges, int vertexCapacity, int edgeCapacity, IEqualityComparer<TVertex> vertexComparer)
-        {
-            Contract.Requires(vertexComparer != null);
-
             this.allowParallelEdges = allowParallelEdges;
             if (vertexCapacity > -1)
             {
-                this.vertexInEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity, vertexComparer);
-                this.vertexOutEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity, vertexComparer);
+                this.vertexInEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity);
+                this.vertexOutEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity);
             }
             else
             {
-                this.vertexInEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexComparer);
-                this.vertexOutEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexComparer);
+                this.vertexInEdges = new VertexEdgeDictionary<TVertex, TEdge>();
+                this.vertexOutEdges = new VertexEdgeDictionary<TVertex, TEdge>();
             }
-            this.edgeCapacity = edgeCapacity;
         }
 
         public BidirectionalGraph(
@@ -566,15 +550,6 @@ namespace QuickGraph
             this.vertexOutEdges.Clear();
             this.vertexInEdges.Clear();
             this.edgeCount = 0;
-            this.OnCleared(EventArgs.Empty);
-        }
-
-        public event EventHandler Cleared;
-        private void OnCleared(EventArgs e)
-        {
-            var eh = this.Cleared;
-            if (eh != null)
-                eh(this, e);
         }
 
         public void MergeVertex(TVertex v, EdgeFactory<TVertex, TEdge> edgeFactory)
@@ -622,6 +597,23 @@ namespace QuickGraph
         }
 
         #region ICloneable Members
+
+        /// <summary>
+        /// Copy constructor that creates sufficiently deep copy of the graph.
+        /// </summary>
+        /// <param name="other"></param>
+        public BidirectionalGraph(BidirectionalGraph<TVertex, TEdge> other)
+        {
+            Contract.Requires(other != null);
+
+            this.vertexInEdges = other.vertexInEdges.Clone();
+            this.vertexOutEdges = other.vertexOutEdges.Clone();
+            this.edgeCount = other.edgeCount;
+            this.edgeCapacity = other.edgeCapacity;
+            this.allowParallelEdges = other.allowParallelEdges;
+        }
+
+
         private BidirectionalGraph(
             IVertexEdgeDictionary<TVertex, TEdge> vertexInEdges,
             IVertexEdgeDictionary<TVertex, TEdge> vertexOutEdges,
@@ -643,13 +635,7 @@ namespace QuickGraph
 
         public BidirectionalGraph<TVertex, TEdge> Clone()
         {
-            return new BidirectionalGraph<TVertex, TEdge>(
-                this.vertexInEdges.Clone(),
-                this.vertexOutEdges.Clone(),
-                this.edgeCount,
-                this.edgeCapacity,
-                this.allowParallelEdges
-                );
+            return new BidirectionalGraph<TVertex, TEdge>(this);
         }
         
 #if !SILVERLIGHT

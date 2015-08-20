@@ -11,10 +11,14 @@
     <RootNamespace>QuickGraph.Tests</RootNamespace>
     <AssemblyName>QuickGraph.Tests</AssemblyName>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -49,7 +53,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsCustomRewriterAssembly>
     </CodeContractsCustomRewriterAssembly>
     <CodeContractsCustomRewriterClass>
@@ -81,15 +85,6 @@
     <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
     <CodeContractsExtraRewriteOptions />
     <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
-    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
-    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
-    <CodeContractsInferRequires>False</CodeContractsInferRequires>
-    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
-    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
-    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
-    <CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
-    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
-    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -100,7 +95,7 @@
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
     <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
@@ -122,16 +117,6 @@
     <CodeContractsBaseLineFile />
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
-    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
-    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
-    <CodeContractsInferRequires>False</CodeContractsInferRequires>
-    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
-    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
-    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
-    <CodeContractsDisjunctiveRequires>False</CodeContractsDisjunctiveRequires>
-    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
-    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
-    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release20|AnyCPU' ">
     <OutputPath>bin\Release20\</OutputPath>
@@ -168,9 +153,8 @@
     <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Pex.Framework, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Pex.Framework, Version=0.5.30516.0, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\src\external\Pex\Microsoft.Pex.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -325,6 +309,7 @@
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTestOld.cs" />
     <Compile Include="Algorithms\ShortestPath\DijkstraShortestPathAlgorithmTest.cs" />
     <Compile Include="Algorithms\ShortestPath\FloydWarshallAllPairShortestPathAlgorithmTest.cs" />
+    <Compile Include="Algorithms\SourceFirstBidirectionalTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\SourceFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\StronglyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\TarjanOfflineLeastCommonAncestorAlgorithmTest.cs" />
@@ -334,6 +319,7 @@
     <Compile Include="Algorithms\ConnectedComponents\WeaklyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="ArrayAdjacencyGraphTVertexTEdgeTest.cs" />
     <Compile Include="Benchmark.cs" />
+    <Compile Include="BidirectionalGraphTest.cs" />
     <Compile Include="Collections\BinaryHeapTest.cs" />
     <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Constructor.g.cs">
       <DependentUpon>BinaryHeapTest.cs</DependentUpon>
@@ -484,9 +470,10 @@
       <DependentUpon>TaggedEdgeTVertexTTagTest.cs</DependentUpon>
     </Compile>
     <Compile Include="TestCategories.cs" />
-    <Compile Include="TestConsole.cs" />
     <Compile Include="TestHelper.cs" />
+    <Compile Include="UndirectedBidirectionalGraphTest.cs" />
     <Compile Include="UndirectedGraphInvariant.cs" />
+    <Compile Include="UndirectedGraphTest.cs" />
     <Compile Include="UndirectedGraphTVertexTEdgeTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -497,10 +484,6 @@
     <ProjectReference Include="..\..\src\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
       <Project>{595D6322-637A-4A36-97F1-D53F3F9ECEA7}</Project>
       <Name>QuickGraph.Graphviz</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\QuickGraph.Serialization\QuickGraph.Serialization.csproj">
-      <Project>{4D96C520-8EDA-49F0-9201-ED8BEE69B1FC}</Project>
-      <Name>QuickGraph.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\QuickGraph\QuickGraph.csproj">
       <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>

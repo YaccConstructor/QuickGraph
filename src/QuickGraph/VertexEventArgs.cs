@@ -3,13 +3,10 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph
 {
-#if !SILVERLIGHT
-    [Serializable]
-#endif
-    public abstract class VertexEventArgs<TVertex> : EventArgs
+    public class VertexEventArgs<TVertex> : EventArgs
     {
         private readonly TVertex vertex;
-        protected VertexEventArgs(TVertex vertex)
+        public VertexEventArgs(TVertex vertex)
         {
             Contract.Requires(vertex != null);
             this.vertex = vertex;
@@ -21,5 +18,9 @@ namespace QuickGraph
         }
     }
 
-    public delegate void VertexAction<TVertex>(TVertex vertex);
+    public delegate void VertexAction<in TVertex>(TVertex vertex);
+
+    public delegate void VertexEventHandler<TVertex>(
+        Object sender,
+        VertexEventArgs<TVertex> e);
 }

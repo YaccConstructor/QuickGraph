@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+
+using QuickGraph.Serialization;
 using QuickGraph.Algorithms.MaximumFlow;
 using System.Diagnostics.Contracts;
 using System.Diagnostics;

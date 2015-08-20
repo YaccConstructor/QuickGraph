@@ -83,7 +83,7 @@ namespace QuickGraph
             int index = 0;
             foreach (var vertex in visitedGraph.Vertices)
             {
-                end = index + visitedGraph.OutDegree(vertex);
+                end = start + visitedGraph.OutDegree(vertex);
                 var range = new Range(start, end);
                 outEdgeStartRanges.Add(vertex, range);
                 foreach (var edge in visitedGraph.OutEdges(vertex))
@@ -211,12 +211,11 @@ namespace QuickGraph
 
         public bool TryGetOutEdges(TVertex v, out IEnumerable<SEquatableEdge<TVertex>> edges)
         {
-            Range range;
-            if (this.outEdgeStartRanges.TryGetValue(v, out range) &&
-                range.Length > 0)
+            var range = this.outEdgeStartRanges[v];
+            if (range.Length > 0)
             {
                 edges = this.OutEdges(v);
-                return true;
+                return false;
             }
 
             edges = null;
@@ -241,14 +240,12 @@ namespace QuickGraph
             get { return false; }
         }
 
-#if !SILVERLIGHT
         public CompressedSparseRowGraph<TVertex> Clone()
         {
             var ranges = new Dictionary<TVertex, Range>(this.outEdgeStartRanges);
             var edges = (TVertex[])this.outEdges.Clone();
             return new CompressedSparseRowGraph<TVertex>(ranges, edges);
         }
-#endif
 
 #if !SILVERLIGHT
         object ICloneable.Clone()

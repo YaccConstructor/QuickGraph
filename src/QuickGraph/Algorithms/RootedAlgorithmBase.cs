@@ -1,7 +1,6 @@
 ﻿using System;
 using QuickGraph.Algorithms.Services;
 using System.Diagnostics.Contracts;
-using System.Collections.Generic;
 
 namespace QuickGraph.Algorithms
 {
@@ -38,7 +37,7 @@ namespace QuickGraph.Algorithms
         {
             Contract.Requires(rootVertex != null);
 
-            bool changed = Comparer<TVertex>.Default.Compare(this.rootVertex, rootVertex) != 0;
+            bool changed = !Comparison<TVertex>.Equals(this.rootVertex, rootVertex);
             this.rootVertex = rootVertex;
             if (changed)
                 this.OnRootVertexChanged(EventArgs.Empty);

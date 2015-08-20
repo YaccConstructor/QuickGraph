@@ -9,7 +9,6 @@ using QuickGraph.Algorithms.RankedShortestPath;
 using System.IO;
 using QuickGraph.Algorithms;
 using QuickGraph.Collections;
-using System.Threading.Tasks;
 
 namespace QuickGraph.Tests.Algorithms.RankedShortestPath
 {
@@ -19,23 +18,22 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
         [TestMethod]
         public void HoffmanPavleyRankedShortestPathAll()
         {
-            Parallel.ForEach(TestGraphFactory.GetBidirectionalGraphs(), g =>
+            foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
             {
-                if (g.VertexCount == 0) return;
+                if (g.VertexCount == 0) continue;
 
                 var weights = new Dictionary<Edge<string>, double>();
                 foreach (var e in g.Edges)
                     weights.Add(e, g.OutDegree(e.Source) + 1);
 
                 this.HoffmanPavleyRankedShortestPath(
-                    g,
+                    g, 
                     weights,
                     Enumerable.First(g.Vertices),
                     Enumerable.Last(g.Vertices),
                     g.VertexCount
-                    );
-
-            });
+                    );                    
+            }
         }
 
         [TestMethod]
@@ -122,7 +120,7 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
             double lastWeight = double.MinValue;
             foreach (var path in target.ComputedShortestPaths)
             {
-                TestConsole.WriteLine("path: {0}", Enumerable.Sum(path, e => edgeWeights[e]));
+                Console.WriteLine("path: {0}", Enumerable.Sum(path, e => edgeWeights[e]));
                 double weight = Enumerable.Sum(path, e => edgeWeights[e]);
                 Assert.IsTrue(lastWeight <= weight, "{0} <= {1}", lastWeight, weight);
                 Assert.AreEqual(rootVertex, Enumerable.First(path).Source);
@@ -133,6 +131,28 @@ namespace QuickGraph.Tests.Algorithms.RankedShortestPath
             }
 
             return target.ComputedShortestPaths;
+        }
+
+        [TestMethod]
+        [WorkItem(12288)]
+        [Ignore]
+        [Description("binary data outdated")]
+        public void Repro12288()
+        {
+            AdjacencyGraph<int, Edge<int>> g;
+            using (var stream = this.GetType().Assembly.GetManifestResourceStream(
+                "QuickGraph.Tests.Algorithms.RankedShortestPath.AdjacencyGraph.bin"))
+                g = stream.DeserializeFromBinary<int, Edge<int>, AdjacencyGraph<int, Edge<int>>>();
+
+            var g1 = g.ToBidirectionalGraph();
+
+            int Source = 1;
+            int Target = 2;
+
+            int pathCount = 5;
+            foreach (IEnumerable<Edge<int>> path in g1.RankedShortestPathHoffmanPavley(
+                e => 5, Source, Target, pathCount))
+            {}
         }
     }
 }

@@ -22,7 +22,7 @@ namespace QuickGraph.Collections
 
 		public BinaryQueue(
             Func<TVertex, TDistance> distances,
-            Func<TDistance, TDistance, int> distanceComparison
+            Comparison<TDistance> distanceComparison
             )
 		{
             Contract.Requires(distances != null);
@@ -65,6 +65,16 @@ namespace QuickGraph.Collections
         public TVertex[] ToArray()
         {
             return this.heap.ToValueArray();
+        }
+
+        public KeyValuePair<TDistance, TVertex>[] ToArray2()
+        {
+            return heap.ToPriorityValueArray();
+        }
+
+        public string ToString2()
+        {
+            return heap.ToString2();
         }
     }
 }

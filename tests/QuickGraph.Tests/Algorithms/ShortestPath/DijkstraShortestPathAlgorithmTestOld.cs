@@ -114,6 +114,7 @@ namespace QuickGraph.Algorithms.ShortestPath
     {
         AdjacencyGraph<string, Edge<string>> graph;
         DijkstraShortestPathAlgorithm<string, Edge<string>> algo;
+        List<string> path;
         VertexPredecessorRecorderObserver<string, Edge<string>> predecessorObserver;
 
         [TestMethod]

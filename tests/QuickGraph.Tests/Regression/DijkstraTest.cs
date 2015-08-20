@@ -114,14 +114,14 @@ namespace QuickGraph.Tests.Regression {
             }
 
             foreach (KeyValuePair<string, Edge<string>> kvp in predecessorObserver.VertexPredecessors)
-                TestConsole.WriteLine("If you want to get to {0} you have to enter through the in edge {1}", kvp.Key, kvp.Value);
+                Console.WriteLine("If you want to get to {0} you have to enter through the in edge {1}", kvp.Key, kvp.Value);
 
             foreach (string v in graph.Vertices) {
                 double distance = 
                     AlgorithmExtensions.ComputePredecessorCost(
                         predecessorObserver.VertexPredecessors,
                         edgeCost,v);
-                TestConsole.WriteLine("A -> {0}: {1}", v, distance);
+                Console.WriteLine("A -> {0}: {1}", v, distance);
             }
 
         }

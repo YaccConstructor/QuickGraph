@@ -28,6 +28,15 @@ namespace QuickGraph.Algorithms
         }
 
         [TestMethod]
+        public void SortDCT8()
+        {
+            var g = TestGraphFactory.LoadGraph("DCT8.graphml");
+            var topo = new TopologicalSortAlgorithm<string, Edge<string>>(g);
+            Assert.IsFalse(topo.AllowCyclicGraph);
+            topo.Compute();
+        }
+
+        [TestMethod]
         public void OneTwo()
         {
             var graph = new AdjacencyGraph<int, Edge<int>>();
@@ -35,7 +44,24 @@ namespace QuickGraph.Algorithms
             graph.AddVertex(2);
             graph.AddEdge(new Edge<int>(1, 2));
             var t = new TopologicalSortAlgorithm<int, Edge<int>>(graph);
-            t.Compute();
+            var vertices = new List<int>(graph.VertexCount);
+            t.Compute(vertices);
+            Assert.AreEqual(2, vertices.Count);
+        }
+
+        // Trying to see if order of vertices affects the topological sort order.
+        [TestMethod]
+        public void TwoOne()
+        {
+            var graph = new AdjacencyGraph<int, Edge<int>>();
+            // Deliberately adding 1 and then 2, before adding edge (2, 1).
+            graph.AddVertex(1);
+            graph.AddVertex(2);
+            graph.AddEdge(new Edge<int>(2, 1));
+            var t = new TopologicalSortAlgorithm<int, Edge<int>>(graph);
+            var vertices = new List<int>(graph.VertexCount);
+            t.Compute(vertices);
+            Assert.AreEqual(2, vertices.Count);
         }
 
         [TestMethod]

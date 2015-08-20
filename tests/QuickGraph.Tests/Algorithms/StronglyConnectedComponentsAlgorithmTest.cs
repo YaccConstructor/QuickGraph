@@ -78,8 +78,8 @@ namespace QuickGraph.Algorithms
         [TestMethod]
         public void StronglyConnectedComponentAll()
         {
-            System.Threading.Tasks.Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
-                this.Compute(g));
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+                this.Compute(g);
         }
 
         [PexMethod]

@@ -15,7 +15,7 @@ namespace QuickGraph.Graphviz
     public class GraphvizAlgorithm<TVertex,TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private readonly static Regex writeLineReplace = new Regex("\n", RegexOptions.Multiline);
+        private readonly static Regex writeLineReplace = new Regex("\n", RegexOptions.Compiled | RegexOptions.Multiline);
         private IEdgeListGraph<TVertex, TEdge> visitedGraph;
         private StringWriter output;
         private GraphvizImageType imageType;

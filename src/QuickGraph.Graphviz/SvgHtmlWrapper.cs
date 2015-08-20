@@ -1,8 +1,7 @@
-﻿#if !SILVERLIGHT
-using System;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
-using QuickGraph.Graphviz.Dot;
 
 namespace QuickGraph.Graphviz
 {
@@ -21,31 +20,31 @@ namespace QuickGraph.Graphviz
        /// <returns></returns>
        public static string WrapSvg(string svgFileName)
        {
-           using (var reader = new StreamReader(svgFileName))
+           using (StreamReader reader = new StreamReader(svgFileName))
            {
-               var size = ParseSize(reader.ReadToEnd());
+               Size size = ParseSize(reader.ReadToEnd());
                reader.Close();
                return DumpHtml(size, svgFileName);
            }
        }
 
-       public static GraphvizSize ParseSize(string svg)
+       public static Size ParseSize(string svg)
        {
            Match m = sizeRegex.Match(svg);
            if (!m.Success)
-               return new GraphvizSize(400, 400);
+               return new Size(400, 400);
            else
            {
                int size = int.Parse(m.Groups["Width"].Value);
                int height = int.Parse(m.Groups["Height"].Value);
-               return new GraphvizSize(size, height);
+               return new Size(size, height);
            }
        }
 
-       public static string DumpHtml(GraphvizSize size, string svgFileName)
+       public static string DumpHtml(Size size, string svgFileName)
        {
            string outputFile = String.Format("{0}.html",svgFileName);
-           using (var html = new StreamWriter(outputFile))
+           using (StreamWriter html = new StreamWriter(outputFile))
            {
                html.WriteLine("<html>");
                html.WriteLine("<body>");
@@ -64,4 +63,3 @@ namespace QuickGraph.Graphviz
        }
    }
 }
-#endif

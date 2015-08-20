@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using QuickGraph.Graphviz.Dot;
 
 namespace QuickGraph.Graphviz
@@ -18,11 +19,11 @@ namespace QuickGraph.Graphviz
         protected virtual void Initialize()        
         {
             this.graphviz.CommonVertexFormat.Style = GraphvizVertexStyle.Filled;
-            this.graphviz.CommonVertexFormat.FillColor = GraphvizColor.LightYellow;
-            this.graphviz.CommonVertexFormat.Font = new GraphvizFont("Tahoma", 8.25F);
+            this.graphviz.CommonVertexFormat.FillColor = System.Drawing.Color.LightYellow;
+            this.graphviz.CommonVertexFormat.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.graphviz.CommonVertexFormat.Shape = GraphvizVertexShape.Box;
 
-            this.graphviz.CommonEdgeFormat.Font = new GraphvizFont("Tahoma", 8.25F);
+            this.graphviz.CommonEdgeFormat.Font = new System.Drawing.Font("Tahoma", 8.25F);
         }
 
         public GraphvizAlgorithm<TVertex, TEdge> Graphviz

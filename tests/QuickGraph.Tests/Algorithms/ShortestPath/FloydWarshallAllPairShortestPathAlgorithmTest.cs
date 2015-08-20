@@ -41,23 +41,23 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             var g = CreateGraph(distances);
             var fw = new FloydWarshallAllShortestPathAlgorithm<char, Edge<char>>(g, e => distances[e]);
             fw.Compute();
-            //fw.Dump(Console.Out);
+            fw.Dump(Console.Out);
             foreach (var i in g.Vertices)
                 foreach (var j in g.Vertices)
                 {
-                    TestConsole.Write("{0} -> {1}:", i, j);
+                    Console.Write("{0} -> {1}:", i, j);
                     IEnumerable<Edge<char>> path;
                     if (fw.TryGetPath(i, j, out path))
                     {
                         double cost = 0;
                         foreach (var edge in path)
                         {
-                            TestConsole.Write("{0}, ", edge.Source);
+                            Console.Write("{0}, ", edge.Source);
                             cost += distances[edge];
                         }
-                        TestConsole.Write("{0} --- {1}", j, cost);
+                        Console.Write("{0} --- {1}", j, cost);
                     }
-                    TestConsole.WriteLine();
+                    Console.WriteLine();
                 }
             {
                 double distance;
@@ -104,28 +104,24 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
         public void FloydVsBellmannGraphML()
         {
             Func<Edge<string>, double> distances = e => 1;
-            System.Threading.Tasks.Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
-                {
-                    this.Compare<string, Edge<string>, IVertexAndEdgeListGraph<string, Edge<string>>>(
-                        g,
-                        distances,
-                        (G, d) => new BellmanFordShortestPathAlgorithm<string, Edge<string>>(G, d)
-                        );
-                });
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+                this.Compare<string, Edge<string>, IVertexAndEdgeListGraph<string, Edge<string>>>(
+                    g,
+                    distances,
+                    (G, d) => new BellmanFordShortestPathAlgorithm<string, Edge<string>>(G, d)
+                    );
         }
 
         [TestMethod]
         public void FloydVsDijkstraGraphML()
         {
             Func<Edge<string>, double> distances = e => 1;
-            System.Threading.Tasks.Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
-                {
-                    this.Compare<string, Edge<string>, IVertexListGraph<string, Edge<string>>>(
-                        g,
-                        distances,
-                        (G, d) => new DijkstraShortestPathAlgorithm<string, Edge<string>>(G, d)
-                        );
-                });
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+                this.Compare<string, Edge<string>, IVertexListGraph<string, Edge<string>>>(
+                    g, 
+                    distances,
+                    (G, d) => new DijkstraShortestPathAlgorithm<string, Edge<string>>(G, d)
+                    );
         }
 
         void Compare<TVertex, TEdge, TGraph>(
@@ -198,13 +194,13 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
 
         private static void DumpPaths<TVertex, TEdge>(TVertex source, TVertex target, TEdge[] fwedges, TEdge[] dijedges) where TEdge : IEdge<TVertex>
         {
-            TestConsole.WriteLine("path: {0}->{1}", source, target);
-            TestConsole.WriteLine("dijkstra:");
+            Console.WriteLine("path: {0}->{1}", source, target);
+            Console.WriteLine("dijkstra:");
             for (int j = 0; j < dijedges.Length; ++j)
-                TestConsole.WriteLine("\t{0}", dijedges[j]);
-            TestConsole.WriteLine("floyd:");
+                Console.WriteLine("\t{0}", dijedges[j]);
+            Console.WriteLine("floyd:");
             for (int j = 0; j < fwedges.Length; ++j)
-                TestConsole.WriteLine("\t{0}", fwedges[j]);
+                Console.WriteLine("\t{0}", fwedges[j]);
         }
     }
 

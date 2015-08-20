@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-#if !SILVERLIGHT
 using System.Runtime.Serialization;
-#endif
 using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Collections

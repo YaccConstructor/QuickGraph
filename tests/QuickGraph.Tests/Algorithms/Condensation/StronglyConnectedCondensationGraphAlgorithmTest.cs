@@ -5,7 +5,6 @@ using QuickGraph.Algorithms.Condensation;
 using Microsoft.Pex.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Serialization;
-using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.Condensation
 {
@@ -15,8 +14,8 @@ namespace QuickGraph.Algorithms.Condensation
         [TestMethod]
         public void StronglyConnectedCondensateAll()
         {
-            Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
-                this.StronglyConnectedCondensate(g));
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+                this.StronglyConnectedCondensate(g);
         }
 
         [PexMethod]

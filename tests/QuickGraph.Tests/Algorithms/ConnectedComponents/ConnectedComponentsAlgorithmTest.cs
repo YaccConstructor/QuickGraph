@@ -7,7 +7,6 @@ using System.Diagnostics.Contracts;
 using System.Diagnostics;
 using QuickGraph.Algorithms.ConnectedComponents;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.ConnectedComponents
 {
@@ -18,14 +17,14 @@ namespace QuickGraph.Algorithms.ConnectedComponents
         [TestCategory(TestCategories.LongRunning)]
         public void ConnectedComponentsAll()
         {
-            Parallel.ForEach(TestGraphFactory.GetUndirectedGraphs(), g =>
+            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
             {
                 while (g.EdgeCount > 0)
                 {
                     this.Compute(g);
                     g.RemoveEdge(Enumerable.First(g.Edges));
                 }
-            });
+            }
         }
 
         [PexMethod]

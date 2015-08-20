@@ -2,15 +2,15 @@ namespace QuickGraph.Graphviz.Dot
 {
     using System;
     using System.Collections;
+    using System.Drawing;
     using System.IO;
-    using System.Collections.Generic;
 
     public class GraphvizEdge
     {
         private string comment = null;
         private GraphvizEdgeDirection dir = GraphvizEdgeDirection.Forward;
-        private GraphvizFont font = null;
-        private GraphvizColor fontGraphvizColor = GraphvizColor.Black;
+        private System.Drawing.Font font = null;
+        private Color fontColor = Color.Black;
         private GraphvizEdgeExtremity head = new GraphvizEdgeExtremity(true);
         private GraphvizArrow headArrow = null;
         private bool isConstrained = true;
@@ -18,7 +18,7 @@ namespace QuickGraph.Graphviz.Dot
         private GraphvizEdgeLabel label = new GraphvizEdgeLabel();
         private GraphvizLayer layer = null;
         private int minLength = 1;
-        private GraphvizColor strokeGraphvizColor = GraphvizColor.Black;
+        private Color strokeColor = Color.Black;
         private GraphvizEdgeStyle style = GraphvizEdgeStyle.Unspecified;
         private GraphvizEdgeExtremity tail = new GraphvizEdgeExtremity(false);
         private GraphvizArrow tailArrow = null;
@@ -27,11 +27,11 @@ namespace QuickGraph.Graphviz.Dot
         private double weight = 1;
         private int length = 1;
 
-        internal string GenerateDot(Dictionary<string, object> pairs)
+        internal string GenerateDot(Hashtable pairs)
         {
             bool flag = false;
             StringWriter writer = new StringWriter();
-            foreach (var entry in pairs)
+            foreach (DictionaryEntry entry in pairs)
             {
                 if (flag)
                 {
@@ -56,15 +56,10 @@ namespace QuickGraph.Graphviz.Dot
                     writer.Write("{0}={1}", entry.Key.ToString(), ((GraphvizEdgeStyle) entry.Value).ToString().ToLower());
                     continue;
                 }
-                if (entry.Value is GraphvizColor)
+                if (entry.Value is Color)
                 {
-                    GraphvizColor GraphvizColor = (GraphvizColor) entry.Value;
-                    writer.Write("{0}=\"#{1}{2}{3}{4}\"", new object[] { entry.Key.ToString(), GraphvizColor.R.ToString("x2").ToUpper(), GraphvizColor.G.ToString("x2").ToUpper(), GraphvizColor.B.ToString("x2").ToUpper(), GraphvizColor.A.ToString("x2").ToUpper() });
-                    continue;
-                }
-                if (entry.Value is IConvertible)
-                {
-                    writer.WriteLine(" {0}={1}", entry.Key, ((IConvertible)entry.Value).ToString(System.Globalization.CultureInfo.InvariantCulture).ToLower());
+                    Color color = (Color) entry.Value;
+                    writer.Write("{0}=\"#{1}{2}{3}{4}\"", new object[] { entry.Key.ToString(), color.R.ToString("x2").ToUpper(), color.G.ToString("x2").ToUpper(), color.B.ToString("x2").ToUpper(), color.A.ToString("x2").ToUpper() });
                     continue;
                 }
                 writer.Write(" {0}={1}", entry.Key.ToString(), entry.Value.ToString().ToLower());
@@ -74,7 +69,7 @@ namespace QuickGraph.Graphviz.Dot
 
         public string ToDot()
         {
-            var dic = new Dictionary<string, object>(StringComparer.Ordinal);
+            Hashtable dic = new Hashtable();
             if (this.Comment != null)
             {
                 dic["comment"] = this.Comment;
@@ -88,9 +83,9 @@ namespace QuickGraph.Graphviz.Dot
                 dic["fontname"] = this.Font.Name;
                 dic["fontsize"] = this.Font.SizeInPoints;
             }
-            if (!this.FontGraphvizColor.Equals(GraphvizColor.Black))
+            if (this.FontColor != Color.Black)
             {
-                dic["fontGraphvizColor"] = this.FontGraphvizColor;
+                dic["fontcolor"] = this.FontColor;
             }
             this.Head.AddParameters(dic);
             if (this.HeadArrow != null)
@@ -114,9 +109,9 @@ namespace QuickGraph.Graphviz.Dot
             {
                 dic["minlen"] = this.MinLength;
             }
-            if (!this.StrokeGraphvizColor.Equals(GraphvizColor.Black))
+            if (this.StrokeColor != Color.Black)
             {
-                dic["color"] = this.StrokeGraphvizColor;
+                dic["color"] = this.StrokeColor;
             }
             if (this.Style != GraphvizEdgeStyle.Unspecified)
             {
@@ -177,7 +172,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public GraphvizFont Font
+        public System.Drawing.Font Font
         {
             get
             {
@@ -189,15 +184,15 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public GraphvizColor FontGraphvizColor
+        public Color FontColor
         {
             get
             {
-                return this.fontGraphvizColor;
+                return this.fontColor;
             }
             set
             {
-                this.fontGraphvizColor = value;
+                this.fontColor = value;
             }
         }
 
@@ -285,15 +280,15 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public GraphvizColor StrokeGraphvizColor
+        public Color StrokeColor
         {
             get
             {
-                return this.strokeGraphvizColor;
+                return this.strokeColor;
             }
             set
             {
-                this.strokeGraphvizColor = value;
+                this.strokeColor = value;
             }
         }
 

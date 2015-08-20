@@ -44,25 +44,18 @@ namespace QuickGraph
         {
         }
 
-        public AdjacencyGraph(bool allowParallelEdges, int vertexCapacity)
-            :this(allowParallelEdges, vertexCapacity, -1)
+        public AdjacencyGraph(bool allowParallelEdges, int capacity)
+            :this(allowParallelEdges, capacity, -1)
         {
         }
 
-        public AdjacencyGraph(bool allowParallelEdges, int vertexCapacity, int edgeCapacity)
-            :this(allowParallelEdges, vertexCapacity, edgeCapacity, EqualityComparer<TVertex>.Default)
+        public AdjacencyGraph(bool allowParallelEdges, int capacity, int edgeCapacity)
         {
-        }
-
-        public AdjacencyGraph(bool allowParallelEdges, int vertexCapacity, int edgeCapacity, IEqualityComparer<TVertex> vertexComparer)
-        {
-            Contract.Requires(vertexComparer != null);
-
             this.allowParallelEdges = allowParallelEdges;
-            if (vertexCapacity > -1)
-                this.vertexEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexCapacity, vertexComparer);
+            if (capacity > -1)
+                this.vertexEdges = new VertexEdgeDictionary<TVertex, TEdge>(capacity);
             else
-                this.vertexEdges = new VertexEdgeDictionary<TVertex, TEdge>(vertexComparer);
+                this.vertexEdges = new VertexEdgeDictionary<TVertex, TEdge>();
             this.edgeCapacity = edgeCapacity;
         }
 
@@ -503,15 +496,6 @@ namespace QuickGraph
         {
             this.vertexEdges.Clear();
             this.edgeCount = 0;
-            this.OnCleared(EventArgs.Empty);
-        }
-
-        public event EventHandler Cleared;
-        private void OnCleared(EventArgs e)
-        {
-            var eh = this.Cleared;
-            if (eh != null)
-                eh(this, e);
         }
 
         #region ICloneable Members

@@ -9,7 +9,6 @@ using QuickGraph.Algorithms;
 using QuickGraph.Serialization;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.ShortestPath;
-using System.Threading.Tasks;
 
 namespace QuickGraph.Tests.Algorithms.Search
 {
@@ -33,8 +32,8 @@ namespace QuickGraph.Tests.Algorithms.Search
         [TestMethod]
         public void BestFirstFrontierSearchAllGraphs()
         {
-            Parallel.ForEach(TestGraphFactory.GetBidirectionalGraphs(), g =>
-                RunSearch(g));
+            foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
+                RunSearch(g);
         }
 
         [PexMethod]
@@ -61,27 +60,27 @@ namespace QuickGraph.Tests.Algorithms.Search
 
             if (recorder.VertexPredecessors.ContainsKey(target))
             {
-                TestConsole.WriteLine("cost: {0}", recorder.VertexPredecessors[target]);
+                Console.WriteLine("cost: {0}", recorder.VertexPredecessors[target]);
                 IEnumerable<TEdge> path;
                 Assert.IsTrue(recorder.TryGetPath(target, out path));
             }
 #if DEBUG
-            TestConsole.WriteLine("operator max count: {0}", search.OperatorMaxCount);
+            Console.WriteLine("operator max count: {0}", search.OperatorMaxCount);
 #endif
         }
 
         [TestMethod]
         public void CompareBestFirstFrontierSearchAllGraphs()
         {
-            Parallel.ForEach(TestGraphFactory.GetBidirectionalGraphs(), g =>
+            foreach (var g in TestGraphFactory.GetBidirectionalGraphs())
             {
-                if (g.VertexCount == 0) return;
+                if (g.VertexCount == 0) continue;
 
                 var root = g.Vertices.First();
-                foreach (var v in g.Vertices)
-                    if (!root.Equals(v))
+                foreach(var v in g.Vertices)
+                    if(!root.Equals(v))
                         CompareSearch(g, root, v);
-            });
+            }
         }
         
         [PexMethod]

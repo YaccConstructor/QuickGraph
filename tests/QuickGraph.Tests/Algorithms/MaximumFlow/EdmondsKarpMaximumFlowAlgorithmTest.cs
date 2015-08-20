@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Algorithms;
 using QuickGraph.Serialization;
-using System.Threading.Tasks;
 
 namespace QuickGraph.Tests.Algorithms.MaximumFlow
 {
@@ -12,11 +11,12 @@ namespace QuickGraph.Tests.Algorithms.MaximumFlow
         [TestMethod]
         public void EdmondsKarpMaxFlowAll()
         {
-            Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
+
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
             {
                 if (g.VertexCount > 0)
                     this.EdmondsKarpMaxFlow(g, (source, target) => new Edge<string>(source, target));
-            });
+            }
         }
 
 

@@ -9,7 +9,6 @@ using QuickGraph.Algorithms;
 using QuickGraph.Serialization;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.Search;
-using System.Threading.Tasks;
 
 namespace QuickGraph.Tests.Algorithms
 {
@@ -17,12 +16,11 @@ namespace QuickGraph.Tests.Algorithms
     public class TarjanOfflineLeastCommonAncestorAlgorithmTest
     {
         [TestMethod]
-        [Ignore]
         public void TarjanOfflineLeastCommonAncestorAlgorithmAll()
         {
-            Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
             {
-                if (g.VertexCount == 0) return;
+                if (g.VertexCount == 0) continue;
 
                 var pairs = new List<SEquatableEdge<string>>();
                 foreach(var v in g.Vertices)
@@ -39,7 +37,7 @@ namespace QuickGraph.Tests.Algorithms
                         pairs.ToArray());
                     if (count++ > 10) break;
                 }
-            });
+            }
         }
 
         [PexMethod]

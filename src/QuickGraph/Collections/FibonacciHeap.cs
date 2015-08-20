@@ -197,7 +197,7 @@ namespace QuickGraph.Collections
             : this(Direction, Comparer<TPriority>.Default.Compare)
         { }
         
-        public FibonacciHeap(HeapDirection Direction, Func<TPriority, TPriority, int> priorityComparison)            
+        public FibonacciHeap(HeapDirection Direction, Comparison<TPriority> priorityComparison)            
         {
             nodes = new FibonacciHeapLinkedList<TPriority, TValue>();
             degreeToNode = new Dictionary<int, FibonacciHeapCell<TPriority, TValue>>();
@@ -211,7 +211,7 @@ namespace QuickGraph.Collections
         private short DirectionMultiplier;  //Used to control the direction of the heap, set to 1 if the Heap is increasing, -1 if it's decreasing
                                           //We use the approach to avoid unnessecary branches
         private Dictionary<int, FibonacciHeapCell<TPriority, TValue>> degreeToNode;
-        private readonly Func<TPriority, TPriority, int> priorityComparsion;
+        private readonly Comparison<TPriority> priorityComparsion;
         private readonly HeapDirection direction;
         public HeapDirection Direction { get { return direction; } }
         private int count;
@@ -229,7 +229,7 @@ namespace QuickGraph.Collections
             }
         }
 
-        public Func<TPriority, TPriority, int> PriorityComparison
+        public Comparison<TPriority> PriorityComparison
         {
             get { return this.priorityComparsion; }
         }
@@ -257,8 +257,7 @@ namespace QuickGraph.Collections
                 {
                     var children = new List<FibonacciHeapCell<TPriority, TValue>>(currentcell.Node.Children);
                     children.Reverse();
-                    foreach(var child in children)
-                        stack.Push(new NodeLevel(child, currentcell.Level + 1));
+                    children.ForEach(x => stack.Push(new NodeLevel(x, currentcell.Level + 1)));
                 }
                 else
                 {
@@ -391,7 +390,7 @@ namespace QuickGraph.Collections
             }
         }
 
-        static int Max<T>(IEnumerable<T> values, Func<T, int> converter)
+        static int Max<T>(IEnumerable<T> values, Converter<T, int> converter)
         {
             Contract.Requires(values != null);
             Contract.Requires(converter != null);

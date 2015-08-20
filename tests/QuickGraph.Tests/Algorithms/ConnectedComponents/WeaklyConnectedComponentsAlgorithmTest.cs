@@ -6,7 +6,6 @@ using QuickGraph.Serialization;
 using System.Diagnostics.Contracts;
 using System.Diagnostics;
 using QuickGraph.Algorithms.ConnectedComponents;
-using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.ConnectedComponents
 {
@@ -16,8 +15,8 @@ namespace QuickGraph.Algorithms.ConnectedComponents
         [TestMethod]
         public void WeaklyConnectedComponentsAll()
         {
-            Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
-                this.Compute(g));
+            foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
+                this.Compute(g);
         }
 
         [PexMethod]

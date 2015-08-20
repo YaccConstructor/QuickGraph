@@ -21,7 +21,7 @@ namespace QuickGraph.Tests.Data
             var g = store.ToGraph(); 
             // topological sort of the tables (reversed)
             foreach(var table in g.TopologicalSort().Reverse())
-                TestConsole.WriteLine(table.TableName);
+                Console.WriteLine(table.TableName);
         }
         [TestMethod]
         public void DataSetGraphviz()
@@ -31,7 +31,7 @@ namespace QuickGraph.Tests.Data
             // extract the graph
             var g = store.ToGraph();
             // rendering to dot
-            TestConsole.WriteLine(g.ToGraphviz());
+            Console.WriteLine(g.ToGraphviz());
         }
 
     }

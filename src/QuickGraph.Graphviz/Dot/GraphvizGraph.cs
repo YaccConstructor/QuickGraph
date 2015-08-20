@@ -2,17 +2,17 @@ namespace QuickGraph.Graphviz.Dot
 {
     using System;
     using System.Collections;
+    using System.Drawing;
     using System.IO;
-    using System.Collections.Generic;
 
     public class GraphvizGraph
     {
         private string name = "G";
-        private GraphvizColor backgroundGraphvizColor = GraphvizColor.White;
+        private Color backgroundColor = Color.White;
         private GraphvizClusterMode clusterRank = GraphvizClusterMode.Local;
         private string comment = null;
-        private GraphvizFont font = null;
-        private GraphvizColor fontGraphvizColor = GraphvizColor.Black;
+        private System.Drawing.Font font = null;
+        private Color fontColor = Color.Black;
         private bool isCentered = false;
         private bool isCompounded = false;
         private bool isConcentrated = false;
@@ -29,7 +29,7 @@ namespace QuickGraph.Graphviz.Dot
         private int nsLimit1 = -1;
         private GraphvizOutputMode outputOrder = GraphvizOutputMode.BreadthFirst;
         private GraphvizPageDirection pageDirection = GraphvizPageDirection.BL;
-        private GraphvizSizeF pageSize = new GraphvizSizeF(0, 0);
+        private System.Drawing.SizeF pageSize = new System.Drawing.SizeF(0, 0);
         private double quantum = 0;
         private GraphvizRankDirection rankDirection = GraphvizRankDirection.TB;
         private double rankSeparation = 0.5;
@@ -38,15 +38,15 @@ namespace QuickGraph.Graphviz.Dot
         private int rotate = 0;
         private int samplePoints = 8;
         private int searchSize = 30;
-        private GraphvizSizeF size = new GraphvizSizeF(0, 0);
+        private System.Drawing.SizeF size = new System.Drawing.SizeF(0, 0);
         private string styleSheet = null;
         private string url = null;
 
-        internal string GenerateDot(Dictionary<string, object> pairs)
+        internal string GenerateDot(Hashtable pairs)
         {
             bool flag = false;
             StringWriter writer = new StringWriter();
-            foreach (var entry in pairs)
+            foreach (DictionaryEntry entry in pairs)
             {
                 if (flag)
                 {
@@ -61,20 +61,15 @@ namespace QuickGraph.Graphviz.Dot
                     writer.Write("{0}=\"{1}\"", entry.Key.ToString(), entry.Value.ToString());
                     continue;
                 }
-                if (entry.Value is GraphvizColor)
+                if (entry.Value is Color)
                 {
-                    GraphvizColor GraphvizColor = (GraphvizColor) entry.Value;
-                    writer.Write("{0}=\"#{1}{2}{3}{4}\"", new object[] { entry.Key.ToString(), GraphvizColor.R.ToString("x2").ToUpper(), GraphvizColor.G.ToString("x2").ToUpper(), GraphvizColor.B.ToString("x2").ToUpper(), GraphvizColor.A.ToString("x2").ToUpper() });
+                    Color color = (Color) entry.Value;
+                    writer.Write("{0}=\"#{1}{2}{3}{4}\"", new object[] { entry.Key.ToString(), color.R.ToString("x2").ToUpper(), color.G.ToString("x2").ToUpper(), color.B.ToString("x2").ToUpper(), color.A.ToString("x2").ToUpper() });
                     continue;
                 }
                 if ((entry.Value is GraphvizRankDirection) || (entry.Value is GraphvizPageDirection))
                 {
                     writer.Write("{0}={1};", entry.Key.ToString(), entry.Value.ToString());
-                    continue;
-                }
-                if (entry.Value is IConvertible)
-                {
-                    writer.WriteLine(" {0}={1}", entry.Key, ((IConvertible)entry.Value).ToString(System.Globalization.CultureInfo.InvariantCulture).ToLower());
                     continue;
                 }
                 writer.Write(" {0}={1}", entry.Key.ToString(), entry.Value.ToString().ToLower());
@@ -84,14 +79,14 @@ namespace QuickGraph.Graphviz.Dot
 
         public string ToDot()
         {
-            var pairs = new Dictionary<string, object>(StringComparer.Ordinal);
+            Hashtable pairs = new Hashtable();
             if (this.Url != null)
             {
                 pairs["URL"] = this.Url;
             }
-            if (!this.BackgroundGraphvizColor.Equals(GraphvizColor.White))
+            if (this.BackgroundColor != Color.White)
             {
-                pairs["bgGraphvizColor"] = this.BackgroundGraphvizColor;
+                pairs["bgcolor"] = this.BackgroundColor;
             }
             if (this.IsCentered)
             {
@@ -118,9 +113,9 @@ namespace QuickGraph.Graphviz.Dot
                 pairs["fontname"] = this.Font.Name;
                 pairs["fontsize"] = this.Font.SizeInPoints;
             }
-            if (!this.FontGraphvizColor.Equals(GraphvizColor.Black))
+            if (this.FontColor != Color.Black)
             {
-                pairs["fontGraphvizColor"] = this.FontGraphvizColor;
+                pairs["fontcolor"] = this.FontColor;
             }
             if (this.Label != null)
             {
@@ -232,15 +227,15 @@ namespace QuickGraph.Graphviz.Dot
             set { this.name = value; }
         }
 
-        public GraphvizColor BackgroundGraphvizColor
+        public Color BackgroundColor
         {
             get
             {
-                return this.backgroundGraphvizColor;
+                return this.backgroundColor;
             }
             set
             {
-                this.backgroundGraphvizColor = value;
+                this.backgroundColor = value;
             }
         }
 
@@ -268,7 +263,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public GraphvizFont Font
+        public System.Drawing.Font Font
         {
             get
             {
@@ -280,15 +275,15 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public GraphvizColor FontGraphvizColor
+        public Color FontColor
         {
             get
             {
-                return this.fontGraphvizColor;
+                return this.fontColor;
             }
             set
             {
-                this.fontGraphvizColor = value;
+                this.fontColor = value;
             }
         }
 
@@ -480,7 +475,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public GraphvizSizeF PageSize
+        public System.Drawing.SizeF PageSize
         {
             get
             {
@@ -588,7 +583,7 @@ namespace QuickGraph.Graphviz.Dot
             }
         }
 
-        public GraphvizSizeF Size
+        public System.Drawing.SizeF Size
         {
             get
             {

@@ -12,8 +12,8 @@ namespace QuickGraph.Algorithms
         [TestMethod]
         public void SortAll()
         {
-            System.Threading.Tasks.Parallel.ForEach(TestGraphFactory.GetAdjacencyGraphs(), g =>
-                this.Sort(g));
+            foreach(var g in TestGraphFactory.GetAdjacencyGraphs())
+                this.Sort(g);
         }
 
         [PexMethod]
@@ -27,6 +27,31 @@ namespace QuickGraph.Algorithms
             }
             catch (NonAcyclicGraphException)
             { }
+        }
+
+        [TestMethod]
+        public void SortAnotherOne()
+        {
+            var g = new BidirectionalGraph<int, Edge<int>>();
+
+            g.AddVertexRange(new int[5] { 0, 1, 2, 3, 4 });
+            g.AddEdge(new Edge<int>(0, 1));
+            g.AddEdge(new Edge<int>(1, 2));
+            g.AddEdge(new Edge<int>(1, 3));
+            g.AddEdge(new Edge<int>(2, 3));
+            g.AddEdge(new Edge<int>(3, 4));
+
+            var topo = new SourceFirstTopologicalSortAlgorithm<int, Edge<int>>(g);
+            topo.Compute();
+        }
+
+        [TestMethod]
+        public void SortDCT()
+        {
+            var g = TestGraphFactory.LoadBidirectionalGraph("DCT8.graphml");
+
+            var topo = new SourceFirstTopologicalSortAlgorithm<string, Edge<string>>(g);
+            topo.Compute();
         }
     }
 }
