@@ -15,4 +15,7 @@ IF NOT EXIST build.fsx (
   .paket\paket.exe update
   packages\FAKE\tools\FAKE.exe init.fsx
 )
+
+set PATH=C:\Program Files (x86)\MSBuild\12.0\Bin;%PATH%
+
 packages\FAKE\tools\FAKE.exe build.fsx %*
