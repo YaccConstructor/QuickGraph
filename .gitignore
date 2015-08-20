@@ -253,3 +253,7 @@ paket-files
 docs/content/license.md
 docs/content/release-notes.md
 .fake
+TestResults/
+*.bak
+QuickGraph.5.1.TeamCity.user
+QuickGraph.sln.docstates

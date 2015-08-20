@@ -1,0 +1,87 @@
+<!-- ====================================================================== -->
+<!-- GRAPHML DTD (flat version) =========================================== -->
+<!-- file: graphml.dtd 
+
+            SYSTEM "http://graphml.graphdrawing.org/dtds/graphml.dtd"
+ 
+            xmlns="http://graphml.graphdrawing.org/xmlns/graphml"
+            (consider these urls as examples)
+
+    ====================================================================== -->
+
+
+<!--============================================================-->
+<!--elements of GRAPHML-->
+<!--============================================================-->
+
+
+<!ELEMENT graphml  ((desc)?,(key)*,((data)|(graph))*)>
+
+
+<!ELEMENT locator EMPTY>
+<!ATTLIST locator 
+          xmlns:xlink   CDATA    #FIXED    "http://www.w3.org/TR/2000/PR-xlink-20001220/"
+          xlink:href    CDATA    #REQUIRED
+          xlink:type    (simple) #FIXED    "simple"
+>
+
+<!ELEMENT desc (#PCDATA)>
+
+
+<!ELEMENT graph    ((desc)?,((((data)|(node)|(edge)|(hyperedge))*)|(locator)))>
+<!ATTLIST graph    
+          id          ID                    #IMPLIED
+          edgedefault (directed|undirected) #REQUIRED
+>   
+
+<!ELEMENT node   (desc?,(((data|port)*,graph?)|locator))>
+<!ATTLIST node   
+          id        ID      #REQUIRED
+>
+  
+<!ELEMENT port ((desc)?,((data)|(port))*)>
+<!ATTLIST port
+          name    NMTOKEN  #REQUIRED
+>
+
+
+<!ELEMENT edge ((desc)?,(data)*,(graph)?)>
+<!ATTLIST edge 
+          id         ID           #IMPLIED
+          source     IDREF        #REQUIRED
+          sourceport NMTOKEN      #IMPLIED
+          target     IDREF        #REQUIRED
+          targetport NMTOKEN      #IMPLIED
+          directed   (true|false) #IMPLIED
+>
+
+
+<!ELEMENT hyperedge  ((desc)?,((data)|(endpoint))*,(graph)?)>
+<!ATTLIST hyperedge 
+          id     ID      #IMPLIED
+>
+
+<!ELEMENT endpoint ((desc)?)>
+<!ATTLIST endpoint 
+          id    ID             #IMPLIED
+          node  IDREF          #REQUIRED
+          port  NMTOKEN        #IMPLIED
+          type  (in|out|undir) "undir"
+>
+
+
+<!ELEMENT key (#PCDATA)>
+<!ATTLIST key 
+          id  ID                                            #REQUIRED
+          for (graph|node|edge|hyperedge|port|endpoint|all) "all"
+>   
+
+<!ELEMENT data  (#PCDATA)>
+<!ATTLIST data 
+          key      IDREF        #REQUIRED
+          id       ID           #IMPLIED
+>
+
+<!--==============================================================
+     end of graphml.dtd
+=================================================================-->

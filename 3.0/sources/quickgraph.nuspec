@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>QuickGraph</id>
+    <version>3.3.51106.0</version>
+    <authors>Jonathan Peli de Halleux</authors>
+    <title>Generic graph data structures and algorithms for .NET</title>
+    <description>
+      QuickGraph provides generic directed/undirected graph datastructures and algorithms for .Net 3.5 and up. 
+      QuickGraph comes with algorithms such as depth first seach, breath first search, A* search, shortest path, 
+      k-shortest path, maximum flow, minimum spanning tree, least common ancestors, etc... 
+    </description>
+    <projectUrl>http://quickgraph.codeplex.com/</projectUrl>
+    <licenseUrl>http://quickgraph.codeplex.com/license</licenseUrl>
+    <language>en-US</language>    
+  </metadata>
+  <files>
+    <!-- net3.5 -->
+    <file src="QuickGraph\bin\Release\QuickGraph.dll" target="lib\net35" />
+    <file src="QuickGraph\bin\Release\QuickGraph.xml" target="lib\net35" />
+    <file src="QuickGraph\bin\Release\CodeContracts\QuickGraph.dll" target="lib\net35\CodeContracts" />
+
+    <file src="QuickGraph.Data\bin\Release\QuickGraph.Data.dll" target="lib\net35" />
+    <file src="QuickGraph.Data\bin\Release\QuickGraph.Data.xml" target="lib\net35" />
+    <file src="QuickGraph.Data\bin\Release\CodeContracts\QuickGraph.Data.dll" target="lib\net35\CodeContracts" />
+
+    <file src="QuickGraph.Graphviz\bin\Release\QuickGraph.Graphviz.dll" target="lib\net35" />
+    <file src="QuickGraph.Graphviz\bin\Release\QuickGraph.Graphviz.xml" target="lib\net35" />
+    <file src="QuickGraph.Graphviz\bin\Release\CodeContracts\QuickGraph.Graphviz.dll" target="lib\net35\CodeContracts" />
+    <!-- silverlight-->
+    <file src="QuickGraph.Silverlight\bin\Release\QuickGraph.dll" target="lib\sl3" />
+    <file src="QuickGraph.Silverlight\bin\Release\QuickGraph.xml" target="lib\sl3" />
+    <file src="QuickGraph.Silverlight\bin\Release\CodeContracts\QuickGraph.dll" target="lib\sl3\CodeContracts" />
+  </files>
+</package>
