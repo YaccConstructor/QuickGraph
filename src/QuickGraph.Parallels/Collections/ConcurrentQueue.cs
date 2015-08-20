@@ -6,7 +6,7 @@ using System.Text;
 namespace QuickGraph.Collections
 {
     public sealed class ConcurrentQueue<T> 
-        : System.Threading.Collections.ConcurrentQueue<T>
+        : System.Collections.Concurrent.ConcurrentQueue<T>
         , IQueue<T>        
     {
         bool IQueue<T>.Contains(T value)
