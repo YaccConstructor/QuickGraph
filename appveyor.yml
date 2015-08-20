@@ -2,8 +2,9 @@ init:
   - git config --global core.autocrlf input
 build_script:
   - cmd: build.cmd
+install:
+  - npm install --msvs_version=2013
 test: off
-os: Windows Server 2012 R2
 version: 0.0.1.{build}
 artifacts:
   - path: bin
