@@ -6,10 +6,13 @@ A* search, shortest path, k-shortest path, maximum flow, minimum spanning tree, 
 *QuickGraph was originally created by Jonathan "Peli" de Halleux in 2003.*
 
 ####Buld
+
+Use VS 2012 for build. Note thet F# 3.1 required.
+
 | Mono | .NET |
 |------|-----------------------------|
 |  | [![.NET Build Status](https://img.shields.io/appveyor/ci/gsvgit/quickgraph/master.svg)](https://ci.appveyor.com/project/gsvgit/quickgraph) |
-Use VS 2012 for build. 
+
 
 
 ####Where to go next?
