@@ -1,7 +1,7 @@
 init:
   - git config --global core.autocrlf input
 before_build:
-  - cmd: msiexec.exe /i /jm "lib\Pex\pex.academic.x86.msi" /quiet /norestart
+  - cmd: msiexec.exe /i "lib\Pex\pex.academic.x86.msi" /quiet /norestart
 build_script:
   - cmd: build.cmd
 test: off
