@@ -7,11 +7,11 @@ A* search, shortest path, k-shortest path, maximum flow, minimum spanning tree, 
 
 ####Buld
 
-Use VS 2012 for build. Note thet F# 3.1 required.
+Use VS 2013 for build. Note thet F# 3.1 required.
 
-| Mono | .NET |
-|------|-----------------------------|
-|  | [![.NET Build Status](https://img.shields.io/appveyor/ci/gsvgit/quickgraph/master.svg)](https://ci.appveyor.com/project/gsvgit/quickgraph) |
+| .NET |
+|-----------------------------|
+| [![.NET Build Status](https://img.shields.io/appveyor/ci/gsvgit/quickgraph/master.svg)](https://ci.appveyor.com/project/gsvgit/quickgraph) |
 
 
 
