@@ -1,4 +1,4 @@
-# QuickGraph 3.6
+# QuickGraph 3.6 [![NuGet Status](http://img.shields.io/nuget/v/YC.QuickGraph.svg?style=flat)](https://www.nuget.org/packages/YC.QuickGraph/)
 QuickGraph provides generic directed/undirected graph datastructures and algorithms for .NET.
 QuickGraph comes with algorithms such as depth first seach, breath first search,
 A* search, shortest path, k-shortest path, maximum flow, minimum spanning tree, etc...
