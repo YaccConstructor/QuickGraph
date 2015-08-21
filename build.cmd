@@ -16,8 +16,4 @@ IF NOT EXIST build.fsx (
   packages\FAKE\tools\FAKE.exe init.fsx
 )
 
-set PATH=C:\Program Files (x86)\MSBuild\12.0\Bin;%PATH%
-
-msbuild QuickGraph.sln
-
 packages\FAKE\tools\FAKE.exe build.fsx %*

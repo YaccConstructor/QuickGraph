@@ -9,6 +9,7 @@ open Fake.AssemblyInfoFile
 open Fake.ReleaseNotesHelper
 open System
 open System.IO
+open System.Configuration
 #if MONO
 #else
 #load "packages/SourceLink.Fake/tools/Fake.fsx"
@@ -59,6 +60,8 @@ let gitName = "QuickGraph"
 
 // The url for the raw files hosted
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/YaccConstructor"
+
+do setEnvironVar "MSBuild" (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin")
 
 // --------------------------------------------------------------------------------------
 // END TODO: The rest of the file includes standard build steps
