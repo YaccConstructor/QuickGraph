@@ -13,7 +13,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         [TestMethod]
         public void Repro12359()
         {
-            var g = TestGraphFactory.LoadGraph("repro12359.graphml");
+            var g = TestGraphFactory.LoadGraph("GraphML/repro12359.graphml");
             int i = 0;
             foreach (var v in g.Vertices)
             {

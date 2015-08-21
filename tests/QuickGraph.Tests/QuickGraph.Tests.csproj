@@ -509,6 +509,9 @@
     <None Include="Data\Store.xss">
       <DependentUpon>Store.xsd</DependentUpon>
     </None>
+    <None Include="GraphML\DCT8.graphml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="GraphML\g.10.0.graphml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

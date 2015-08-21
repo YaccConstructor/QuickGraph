@@ -30,7 +30,7 @@ namespace QuickGraph.Algorithms
         [TestMethod]
         public void SortDCT8()
         {
-            var g = TestGraphFactory.LoadGraph("DCT8.graphml");
+            var g = TestGraphFactory.LoadGraph("GraphML/DCT8.graphml");
             var topo = new TopologicalSortAlgorithm<string, Edge<string>>(g);
             Assert.IsFalse(topo.AllowCyclicGraph);
             topo.Compute();

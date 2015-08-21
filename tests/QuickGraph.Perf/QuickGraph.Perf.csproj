@@ -5230,13 +5230,17 @@
     </None>
     <None Include="..\QuickGraph.Tests\GraphML\repro12359.graphml">
       <Link>GraphML\repro12359.graphml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="App.config" />
+    <None Include="GraphML\DCT8.graphml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\QuickGraph.Tests\GraphML\repro12273.xml">
       <Link>GraphML\repro12273.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

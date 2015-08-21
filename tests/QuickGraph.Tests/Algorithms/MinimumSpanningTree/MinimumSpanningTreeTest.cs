@@ -209,7 +209,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             //        int.Parse(nav.GetAttribute("weight", ""))
             //        )
             //    );
-            var ug = XmlReader.Create("repro12273.xml").DeserializeFromXml(
+            var ug = XmlReader.Create("GraphML/repro12273.xml").DeserializeFromXml(
                 "graph", "node", "edge", "",
                 reader => new UndirectedGraph<string, TaggedEdge<string, double>>(),
                 reader => reader.GetAttribute("id"),
