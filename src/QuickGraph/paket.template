@@ -1,4 +1,5 @@
 type project
+id YC.QuickGraph
 owners
     YaccConstructor
 authors 
@@ -14,10 +15,23 @@ requireLicenseAcceptance
 copyright
     Copyright 2015
 tags
-    garph .NET datastructures algorithms CSharp
+    garph .NET datastructures algorithms CSharp QuickGraph
 summary
     Graph datastructures and algorithms for .NET.
 description
     QuickGraph provides generic directed/undirected graph datastructures and algorithms for .NET. QuickGraph comes with algorithms such as depth first seach, breath first search, A* search, shortest path, k-shortest path, maximum flow, etc...
+references
+    QuickGraph.dll
+    QuickGraph.Data.dll
+    QuickGraph.Graphviz.dll
+files
+    bin/Release/QuickGraph.dll ==> lib/net35
+    bin/Release/QuickGraph.xml ==> lib/net35
+    bin/Release/Microsoft.Contracts.dll ==> lib/net35
+    ../QuickGraph.Data/bin/Release/QuickGraph.Data.dll ==> lib/net35
+    ../QuickGraph.Data/bin/Release/QuickGraph.Data.xml ==> lib/net35
+    ../QuickGraph.Graphviz/bin/Release/QuickGraph.Graphviz.dll ==> lib/net35
+    ../QuickGraph.Graphviz/bin/Release/QuickGraph.Graphviz.xml ==> lib/net35
+
 
 
