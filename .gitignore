@@ -257,3 +257,6 @@ TestResults/
 *.bak
 QuickGraph.5.1.TeamCity.user
 QuickGraph.sln.docstates
+
+User_*/Out/*
+*.trx

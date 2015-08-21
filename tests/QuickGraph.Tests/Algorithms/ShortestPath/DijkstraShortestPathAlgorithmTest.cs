@@ -11,6 +11,7 @@ namespace QuickGraph.Algorithms.ShortestPath
     public partial class DijkstraShortestPathAlgorithmTest
     {
         [TestMethod]
+        [DeploymentItem("GraphML/repro12359.graphml", "GraphML")]
         public void Repro12359()
         {
             var g = TestGraphFactory.LoadGraph("GraphML/repro12359.graphml");

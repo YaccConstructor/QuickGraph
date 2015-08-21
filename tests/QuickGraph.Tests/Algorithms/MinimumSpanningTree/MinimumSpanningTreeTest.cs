@@ -195,6 +195,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
 
         [TestMethod]
         [WorkItem(12273)]
+        [DeploymentItem("GraphML/repro12273.xml", "GraphML")]
         public void Prim12273()
         {
           //  var doc = new XPathDocument("repro12273.xml");

@@ -28,6 +28,7 @@ namespace QuickGraph.Algorithms
         }
 
         [TestMethod]
+        [DeploymentItem("GraphML/DCT8.graphml", "GraphML")]
         public void SortDCT8()
         {
             var g = TestGraphFactory.LoadGraph("GraphML/DCT8.graphml");

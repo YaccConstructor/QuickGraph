@@ -510,7 +510,7 @@
       <DependentUpon>Store.xsd</DependentUpon>
     </None>
     <None Include="GraphML\DCT8.graphml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="GraphML\g.10.0.graphml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -4347,10 +4347,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="GraphML\repro12273.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="GraphML\repro12359.graphml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
