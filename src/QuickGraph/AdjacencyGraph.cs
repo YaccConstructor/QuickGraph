@@ -389,6 +389,12 @@ namespace QuickGraph
         /// <returns>true if the edge was added; false if it was already part of the graph</returns>
         public virtual bool AddEdge(TEdge e)
         {
+            Contract.Assert(e != null);
+            if (e == null)
+            {
+                throw new System.ArgumentException("Edge can not be null.");
+                return false;
+            }
             if (!this.AllowParallelEdges)
             {
                 if (this.ContainsEdge(e.Source, e.Target))
