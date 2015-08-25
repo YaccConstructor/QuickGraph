@@ -14,6 +14,5 @@ Use VS 2013 for build. Note thet F# 3.1 required.
 | [![.NET Build Status](https://img.shields.io/appveyor/ci/gsvgit/quickgraph/master.svg)](https://ci.appveyor.com/project/gsvgit/quickgraph) |
 
 
-
 ####Where to go next?
 [Documentation](https://quickgraph.codeplex.com/documentation)
