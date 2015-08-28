@@ -16,3 +16,8 @@ Use VS 2013 for build. Note thet F# 3.1 required.
 
 ####Where to go next?
 [Documentation](https://quickgraph.codeplex.com/documentation)
+
+# Maintainer(s)
+
+- [@gsvgit](https://github.com/gsvgit)
+
