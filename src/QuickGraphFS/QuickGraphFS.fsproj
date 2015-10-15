@@ -34,9 +34,6 @@
     <DocumentationFile>bin\Release\QuickGraphFS.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotParserProject">
-      <HintPath>..\..\DotParserProject\DotParserProject\bin\Debug\DotParserProject.dll</HintPath>
-    </Reference>
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </ItemGroup>
   <ItemGroup>

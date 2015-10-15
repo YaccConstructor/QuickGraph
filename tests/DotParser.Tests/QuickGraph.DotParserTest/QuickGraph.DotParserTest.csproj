@@ -38,9 +38,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="QuickGraph">
-      <HintPath>..\..\..\src\QuickGraph\bin\Debug\QuickGraph.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -58,6 +55,12 @@
   <ItemGroup>
     <Compile Include="DotParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\QuickGraph\QuickGraph.csproj">
+      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
+      <Name>QuickGraph</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

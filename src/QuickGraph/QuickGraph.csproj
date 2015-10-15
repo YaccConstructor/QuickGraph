@@ -174,10 +174,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotParserProject, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5af0675bc04703b7, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DotParserProject\DotParserProject\bin\Debug\DotParserProject.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" Condition="'$(Configuration)' != 'Release20'">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -504,6 +500,11 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\DotParserProject\DotParserProject\DotParserProject.fsproj">
+      <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
+      <Name>DotParserProject %28DotParserProject\DotParserProject%29</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
 </Project>
