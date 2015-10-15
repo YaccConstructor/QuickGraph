@@ -12,7 +12,7 @@ open System.Collections.Generic
 open DotParserProject.GraphDataContainer
 
 //array of GraphDataContainer
-let mutable graphs = new ResizeArray<GraphDataContainer>()
+let graphs = new ResizeArray<GraphDataContainer>()
 graphs.Add(new GraphDataContainer())
 
 //constants

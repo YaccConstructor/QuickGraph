@@ -618,7 +618,7 @@ namespace QuickGraph
         }
         public static BidirectionalGraph<TVertex,TEdge> LoadDotString(String s, Func<string, Tuple<string, string>[], TVertex> fVertex, Func<string, string, Tuple<string, string>[], TEdge> fEdge)
         {
-            var graph = DotLangParser.VertAndEdgesString(s);
+            var graph = DotLangParser.VertAndEdgesStr(s);
             var VertWithAttrs = graph.Item1;
             var EdgesWithAttrs = graph.Item2;
             var BidGraph = new BidirectionalGraph<TVertex, TEdge>();
