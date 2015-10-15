@@ -6,6 +6,7 @@ using System.Diagnostics.Contracts;
 using QuickGraph.Contracts;
 using QuickGraph.Collections;
 using System.Linq;
+using DotParserProject;
 
 namespace QuickGraph
 {
@@ -596,6 +597,45 @@ namespace QuickGraph
                 MergeVertex(v, edgeFactory);
         }
 
+
+        public static BidirectionalGraph<TVertex,TEdge> LoadDotFile(String file, Func<string, Tuple<string,string>[], TVertex> fVertex, Func<string, string, Tuple<string,string>[], TEdge> fEdge)
+        {
+            var graph = DotLangParser.VertAndEdges(file);
+            var VertWithAttrs = graph.Item1; 
+            var EdgesWithAttrs = graph.Item2;
+            var BidGraph = new BidirectionalGraph<TVertex,TEdge>();            
+            foreach (var i in EdgesWithAttrs)
+            {
+                var NewEdge = fEdge(i.Item1, i.Item2, i.Item3);
+                BidGraph.AddVerticesAndEdge(NewEdge);
+            }
+            foreach (var i in VertWithAttrs)
+            {
+                var NewVertex = fVertex(i.Item1, i.Item2);
+                BidGraph.AddVertex(NewVertex);                             
+            }
+            return BidGraph;
+        }
+        public static BidirectionalGraph<TVertex,TEdge> LoadDotString(String s, Func<string, Tuple<string, string>[], TVertex> fVertex, Func<string, string, Tuple<string, string>[], TEdge> fEdge)
+        {
+            var graph = DotLangParser.VertAndEdgesString(s);
+            var VertWithAttrs = graph.Item1;
+            var EdgesWithAttrs = graph.Item2;
+            var BidGraph = new BidirectionalGraph<TVertex, TEdge>();
+            foreach (var i in EdgesWithAttrs)
+            {
+                var NewEdge = fEdge(i.Item1, i.Item2, i.Item3);
+                BidGraph.AddVerticesAndEdge(NewEdge); 
+            }
+            foreach (var i in VertWithAttrs)
+            {
+                var NewVertex = fVertex(i.Item1, i.Item2);
+                BidGraph.AddVertex(NewVertex);
+            }
+            return BidGraph;
+        }
+
+
         #region ICloneable Members
 
         /// <summary>
@@ -637,7 +677,10 @@ namespace QuickGraph
         {
             return new BidirectionalGraph<TVertex, TEdge>(this);
         }
+
         
+
+                
 #if !SILVERLIGHT
         object ICloneable.Clone()
         {
