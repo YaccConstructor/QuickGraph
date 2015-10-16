@@ -5,9 +5,9 @@ open System.IO
 open Option
 
 type GraphDataContainer = class
-    val private vertices_lists : ResizeArray<string list>
+    val public vertices_lists : ResizeArray<string list>
     val private graph_info : Dictionary<string, string>
-    val private vertices_attrs :  Dictionary<string, (string*string) list>
+    val public vertices_attrs :  Dictionary<string, (string*string) list>
     val private edges_attrs :  Dictionary<string, (string*string) list>
     val private general_attrs : Dictionary<string, (string*string) list>
     val private assign_stmt_list : ResizeArray<string*string>
@@ -57,7 +57,7 @@ type GraphDataContainer = class
         if x.general_attrs.ContainsKey "edge" then x.general_attrs.Item "edge" else []
 
     member x.AssignStatements() = x.assign_stmt_list.ToArray()
-
+            
     member x.VerticeTags vertice_name =
         match x.vertices_attrs.ContainsKey vertice_name with
         | true -> x.vertices_attrs.Item vertice_name
@@ -68,7 +68,8 @@ type GraphDataContainer = class
                                 yield x.vertices_lists.Item i}
         let seq_with_duplicates = Seq.concat lists
         List.ofSeq (Seq.distinct seq_with_duplicates)
-
+     
+         
     member x.GetEdgeArray handler =
         let WalkWithHandler lst = x.WalkEdges handler lst [||]
         x.Walk WalkWithHandler

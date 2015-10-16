@@ -3,7 +3,7 @@
 open System
 open System.IO
 open DotLangParser
-open QuickGraph
+(*open QuickGraph
 
 let example0() =
     let input = "..\\..\\..\\test_inputs\\test1.dot"
@@ -12,7 +12,7 @@ let example0() =
     for gr in graphs do
         gr.PrintAllCollectedData()
         printfn "---------------------------------------------------------"
-
+*)
 let example1() =
     let input = "..\\..\\..\\test_inputs\\test1.dot"
     let graphs = DotLangParser.parse input
@@ -30,6 +30,7 @@ let example1() =
     printfn "Assignment statements: %A" (main_graph.AssignStatements())
     printfn "Vertices: %A" (main_graph.GetVerticeArray())
 
+    (*
 let example2() =
     let input = "..\\..\\..\\test_inputs\\test1.dot"
     let graphs = DotLangParser.parse input
@@ -87,3 +88,80 @@ let example4() =
     for e in my_graph.Edges do
         printfn "%A" e
     printfn ""
+    *)
+
+
+let example5() =
+    let input = "strict graph test1_graph {
+     graph [color = red]
+     node [col = b, tail = bp];
+     edge [ size = 100500 ] 
+     style=fashionable
+     6 [lable = \"v1\"]
+     1 -- 1
+     1
+     1 -- 2 -- 3 [weight = 10]
+     3
+     4 -- 3 [weight = 5]
+     2 -- 4 [weight = 1]
+     1 -- 2
+     1 -- 2
+     1 -- 1
+     1 -- 1
+     3
+     1 -- 3
+     }"
+    let graphs = DotLangParser.parsestring input
+    let main_graph = graphs.[0]
+
+    match main_graph.IsStrict() with
+    | true -> printfn "Input graph is strict"
+    | false -> printfn "Input graph is not strict"
+    
+    printfn "Graph's type: %A" (main_graph.Type())
+    printfn "Graph's name: %A" (main_graph.GraphName())
+    printfn "Graph attributes: %A" (main_graph.GraphAttributes())
+    printfn "Node attributes: %A" (main_graph.NodeAttributes())
+    printfn "Edge attributes: %A" (main_graph.EdgeAttributes())
+    printfn "Assignment statements: %A" (main_graph.AssignStatements())
+    printfn "Vertices: %A" (main_graph.GetVerticeArray())
+     
+       
+
+//example0()
+//example1()
+//example2()
+//example3()
+//example4()
+//example5()
+
+let pr s = 
+   let lst = VertWithAttrForStr s
+   //printfn "%A" <| lst.Item "[6]"
+   for i in lst do
+      printfn "%A" i
+  
+  
+pr "strict graph test1_graph {
+     graph [color = red]
+     node [col = b, tail = bp];
+     edge [ size = 100500 ] 
+     style=fashionable
+     6 [lable = \"v1\"]
+     1 -- 1 [weight = 3]
+     1 
+     1 -- 2 -- 3 [weight = 10]
+     3
+     4 -- 3 [weight = 5]
+     2 -- 4 [weight = 1]
+     1 -- 2
+     2 -- 1
+     1 -- 1 
+     1 -- 1
+     3
+     1 [weight = 6]
+     1 -- 3
+     }"
+  
+
+//let key = Console.ReadKey(true)

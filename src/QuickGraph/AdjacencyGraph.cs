@@ -393,7 +393,7 @@ namespace QuickGraph
             if (e == null)
             {
                 throw new System.ArgumentException("Edge can not be null.");
-                return false;
+                //return false;
             }
             if (!this.AllowParallelEdges)
             {
