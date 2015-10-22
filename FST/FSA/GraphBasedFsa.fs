@@ -75,7 +75,7 @@ type internal NfaNodeIdSet(nodes: NfaNodeIdSetBuilder) =
             let yr = y.Representation
             let n = yr.Length
             xr.Length = n && 
-            (let rec go i = (i < n) && xr.[i] = yr.[i] && go (i+1) 
+            (let rec go i = (i >= n) || xr.[i] = yr.[i] && go (i+1) 
              go 0)
         | _ -> false
 
