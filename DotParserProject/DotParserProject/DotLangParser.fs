@@ -7,9 +7,10 @@ open DotParserProject.DotParser
 open DotParserProject.GraphDataContainer
 open System.Collections
 
-let parse tokens = 
-    graphs.Clear()
-    let gr = 
+let parse (lexbuf: Lexing.LexBuffer<char>) =
+    //graphs.Clear()
+    let tokens = seq {while not lexbuf.IsPastEndOfStream do yield DotParserProject.DotLexer.tokenize lexbuf }
+    let gr =       
         match buildAst tokens with
         | Error (pos, token, msg, debugFuns, _) ->
             printfn "Error on position %d, token %A: %s" pos token msg
@@ -25,31 +26,15 @@ let parse tokens =
             translate args ast errors |> ignore
             graphs
     let main_graph = gr.[0] 
-    let mutable lst = []  
-    let mutable arr = [||]
-    let mutable str = ""
     let vrtArr = List.toArray <| main_graph.GetVerticeArray()
-    for i in vrtArr do
-        arr <- List.toArray <| main_graph.VerticeTags("[" + i + "]")
-        lst <- List.append lst [(i,arr)]    
-    let mutable lstvertx = List.toArray <| lst    
+    let mutable lstvertx =
+        [|for i in vrtArr -> (i,List.toArray <| main_graph.VerticeTags("[" + i + "]"))|]
     let simpleHandler v1 v2 (v3: list<string*string>) = (v1,v2,List.toArray <| v3)
     let edges_array = main_graph.GetTaggedEdgeArray simpleHandler
-    let mutable L = (lstvertx, edges_array)
-    L
-     
-     
+    (lstvertx, edges_array)     
      
 let VertAndEdgesStr (str: string) =
-    graphs.Clear()
-    let tokens = 
-            let lexbuf = Lexing.LexBuffer<_>.FromString <| str
-            seq { while not lexbuf.IsPastEndOfStream do yield DotParserProject.DotLexer.tokenize lexbuf }
-    parse tokens
-    
+    parse (Lexing.LexBuffer<_>.FromString <| str)
+        
 let VertAndEdges (file: string) =
-    graphs.Clear()
-    let tokens = 
-        let lexbuf = Lexing.LexBuffer<_>.FromTextReader <| new System.IO.StreamReader(file)
-        seq { while not lexbuf.IsPastEndOfStream do yield DotParserProject.DotLexer.tokenize lexbuf }
-    parse tokens
+    parse (Lexing.LexBuffer<_>.FromTextReader <| new System.IO.StreamReader(file))

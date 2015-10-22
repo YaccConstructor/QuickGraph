@@ -503,7 +503,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\DotParserProject\DotParserProject\DotParserProject.fsproj">
       <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
-      <Name>DotParserProject %28DotParserProject\DotParserProject%29</Name>
+      <Name>DotParserProject</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
