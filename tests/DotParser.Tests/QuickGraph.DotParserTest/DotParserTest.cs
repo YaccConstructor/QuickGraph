@@ -10,13 +10,18 @@ namespace QuickGraph.DotParserTest
         [TestMethod]
         public void TestMethod1()
         {
-            var str = "strict graph t { 6 [lable = \"v1\"] \n 1 -- 2 -- 3 \n 2 -- 1 \n 1 -- 1; \n 3 -- 4 \n }";
+            var str = "strict graph t { 6 [lable = \"v1\"] \n 1 -- 2 -- 3 \n 2 -- 1 \n 1 -- 1 \n 3 -- 4 \n }";
             Func<string, Tuple<string, string>[], string> f = (v, attrs) => v;
             Func<string, string, Tuple<string, string>[], SUndirectedEdge<string>> f2 = (v1, v2, attrs) => new SUndirectedEdge<string>(v1, v2);
             var g1 = BidirectionalGraph<string, SUndirectedEdge<string>>.LoadDotString(str, f, f2);
             
             Assert.AreEqual(5, g1.EdgeCount);
             Assert.AreEqual(5, g1.VertexCount);
+            Assert.IsTrue(g1.ContainsEdge("1","2"));
+            Assert.IsTrue(g1.ContainsEdge("2", "3"));
+            Assert.IsTrue(g1.ContainsEdge("1", "1"));
+            Assert.IsTrue(g1.ContainsEdge("3", "4"));
+            Assert.IsTrue(g1.ContainsVertex("6"));
 
         }
         [TestMethod]
@@ -56,7 +61,11 @@ namespace QuickGraph.DotParserTest
 
             Assert.AreEqual(0, g1.EdgeCount);
             Assert.AreEqual(5, g1.VertexCount);
-            
+            Assert.IsFalse(g1.ContainsEdge("1", "2"));
+            Assert.IsFalse(g1.ContainsEdge("2", "3"));
+            Assert.IsFalse(g1.ContainsEdge("3", "4"));
+            Assert.IsFalse(g1.ContainsEdge("4", "5"));
+
         }
         [TestMethod]
         public void TestMethod5()
@@ -68,6 +77,8 @@ namespace QuickGraph.DotParserTest
 
             Assert.AreEqual(0, g1.EdgeCount);
             Assert.AreEqual(1, g1.VertexCount);
+            Assert.IsTrue(g1.ContainsVertex("9"));
+            Assert.IsFalse(g1.ContainsEdge("9","9"));
 
 
         }
@@ -80,8 +91,11 @@ namespace QuickGraph.DotParserTest
             var g1 = BidirectionalGraph<string, SEdge<string>>.LoadDotString(str, f, f2);
 
             Assert.AreEqual(3, g1.EdgeCount);
-            Assert.AreEqual(1, g1.VertexCount);
-
+            Assert.AreEqual(6, g1.VertexCount);
+            Assert.IsTrue(g1.ContainsVertex("8"));
+            Assert.IsTrue(g1.ContainsEdge("3", "6"));
+            Assert.IsTrue(g1.ContainsEdge("6", "1"));
+            Assert.IsTrue(g1.ContainsEdge("9", "10"));
 
         }
 
@@ -94,7 +108,12 @@ namespace QuickGraph.DotParserTest
             var g1 = BidirectionalGraph<string, SUndirectedEdge<string>>.LoadDotString(str, f, f2);
 
             Assert.AreEqual(6, g1.EdgeCount);
-            Assert.AreEqual(7, g1.VertexCount);
+            Assert.AreEqual(6, g1.VertexCount);
+            Assert.IsTrue(g1.ContainsEdge("1", "2"));
+            Assert.IsTrue(g1.ContainsEdge("2", "3"));
+            Assert.IsTrue(g1.ContainsEdge("3", "4"));
+            Assert.IsTrue(g1.ContainsEdge("4", "6"));
+            Assert.IsTrue(g1.ContainsEdge("6", "7"));
 
 
         }
