@@ -41,6 +41,31 @@
     </DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '11.0'">
+      <PropertyGroup>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <ItemGroup>
+    <Compile Include="FstTableTests.fs" />
+    <Compile Include="GraphBasedFstTestData.fs" />
+    <Compile Include="AppoximationTests.fs" />
+    <Compile Include="GraphBasedFstTests.fs" />
+    <None Include="App.config" />
+    <Content Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
@@ -50,8 +75,24 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="nunit.core">
+      <HintPath>..\packages\NUnitTestAdapter.2.0.0\lib\nunit.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.core.interfaces">
+      <HintPath>..\packages\NUnitTestAdapter.2.0.0\lib\nunit.core.interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\..\src\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.util">
+      <HintPath>..\packages\NUnitTestAdapter.2.0.0\lib\nunit.util.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NUnit.VisualStudio.TestAdapter">
+      <HintPath>..\packages\NUnitTestAdapter.2.0.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="QuickGraph">
@@ -73,16 +114,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="FstTableTests.fs" />
-    <Compile Include="GraphBasedFstTestData.fs" />
-    <Compile Include="AppoximationTests.fs" />
-    <Compile Include="GraphBasedFstTests.fs" />
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\FSA.Tests\FSA.Tests.fsproj">
       <Name>FSA.Tests</Name>
       <Project>{968f28d8-1c01-4c68-8921-5a5b12d1e945}</Project>
@@ -99,23 +130,6 @@
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
-  <PropertyGroup>
-    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
-  </PropertyGroup>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '11.0'">
-      <PropertyGroup>
-        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
-  <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

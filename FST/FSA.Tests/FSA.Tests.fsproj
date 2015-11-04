@@ -57,7 +57,7 @@
   <ItemGroup>
     <Compile Include="GraphBasedFsaTestData.fs" />
     <Compile Include="GraphBasedFsaTests.fs" />
-    <None Include="packages.config" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharpx.Core">
@@ -69,7 +69,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\..\src\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="QuickGraph">

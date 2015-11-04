@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FST", "FST\FST.fsproj", "{BCF4793C-E8B4-4FD5-9723-3C08859066C5}"
 EndProject
@@ -17,6 +17,8 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSA", "FSA\FSA.fsproj", "{B48CFDCC-86F7-4C3A-A5A2-8170950DD2AB}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSA.Tests", "FSA.Tests\FSA.Tests.fsproj", "{968F28D8-1C01-4C68-8921-5A5B12D1E945}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.fsproj", "{150EC74F-A305-4098-BD75-C662ADA3F018}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,10 @@ Global
 		{968F28D8-1C01-4C68-8921-5A5B12D1E945}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{968F28D8-1C01-4C68-8921-5A5B12D1E945}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{968F28D8-1C01-4C68-8921-5A5B12D1E945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{150EC74F-A305-4098-BD75-C662ADA3F018}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{150EC74F-A305-4098-BD75-C662ADA3F018}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{150EC74F-A305-4098-BD75-C662ADA3F018}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{150EC74F-A305-4098-BD75-C662ADA3F018}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

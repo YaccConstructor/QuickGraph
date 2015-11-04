@@ -82,6 +82,19 @@ let fstCompos12 =
     let fst = new FST<_,_>(startState, finishState, transitions)
     fst
 
+let fstCompos13 =
+    let startState = ResizeArray.singleton 0
+    let finishState = ResizeArray.singleton 3
+    let transitions = new ResizeArray<_>()
+    transitions.Add(0, (Smbl 'a', Smbl (int 'a')), 0)
+    transitions.Add(0, (Smbl 'a', Smbl (int 'b')), 1)
+    transitions.Add(1, (Smbl 'b', Smbl (int 'a')), 3)
+    transitions.Add(0, (Smbl 'b', Smbl (int 'b')), 2)
+    transitions.Add(2, (Smbl 'b', Smbl (int 'b')), 3)
+    transitions.Add(3, (Smbl 'b', Smbl (int 'a')), 3)
+    let fst = new FST<_,_>(startState, finishState, transitions)
+    fst
+
 let fstCompos22 =
     let startState = ResizeArray.singleton 0
     let finishState = ResizeArray.singleton 2

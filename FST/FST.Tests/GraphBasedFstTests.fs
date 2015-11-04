@@ -8,7 +8,7 @@ open YC.FST.Tests.GraphBasedFstTestData
 open System.Collections.Generic
 open YC.FSA.GraphBasedFsa
 
-let basePath = "../../../FST/FST/FST.Tests/DOTfst/"
+let basePath = "../../../YC.FST/FST/FST.Tests/DOTfst/"
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 let checkGraph (fst:FST<_,_>) initV finalV countE countV filePath =
@@ -25,6 +25,14 @@ let CompositionTest (fst1:FST<_,_>) (fst2:FST<_,_>) alphabet initV finalV countE
     | Success res ->
         checkGraph res initV finalV countE countV filePath  
     | Error e -> Assert.Fail(sprintf "Tokenization problem: %A" e)
+
+let OptimalCompositionTest (fst1:FST<_,_>) (fst2:FST<_,_>) alphabet initV finalV countE countV filePath  =
+    let res = FST.optimalCompose(fst1, fst2, alphabet);
+    match res with
+    | Success res ->
+        checkGraph res initV finalV countE countV filePath  
+    | Error e -> Assert.Fail(sprintf "Tokenization problem: %A" e)
+    
 
 [<TestFixture>]
 type ``Graph FST tests`` () =    
@@ -72,6 +80,14 @@ type ``Graph FST tests`` () =
             alphabet.Add(fst edge.Tag) |> ignore
 
         CompositionTest fstCompos12 fstCompos22 alphabet 1 1 4 4 "compos_test_1.dot"
+
+    [<Test>]
+    member this.``Graph FST. Test optimal composition FSTs 1.`` () =
+        let alphabet = new HashSet<_>()
+        for edge in fstCompos22.Edges do
+            alphabet.Add(fst edge.Tag) |> ignore
+
+        OptimalCompositionTest fstCompos13 fstCompos22 alphabet 1 1 7 5 "compos_test_2.dot"
 
 //[<EntryPoint>]
 //let f x =

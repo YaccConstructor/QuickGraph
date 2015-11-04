@@ -4,7 +4,7 @@ open YC.FST.FstTable
 open NUnit.Framework
 open Microsoft.FSharp.Collections
 
-let basePath = "../../../FST/FST/FST.Tests/DOTfst/"
+let basePath = "../../../YC.FST/FST/FST.Tests/DOTfst/"
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 [<TestFixture>]

@@ -6,7 +6,7 @@ open System.Collections.Generic
 open YC.FSA.GraphBasedFsa
 open YC.FSA.Tests.GraphBasedFsaTestData
 
-let basePath = "../../../FST/FST/FSA.Tests/DOTfsa/"
+let basePath = "../../../YC.FST/FST/FSA.Tests/DOTfsa/"
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 let checkGraph (fsa:FSA<_>) initV finalV countE countV filePath =

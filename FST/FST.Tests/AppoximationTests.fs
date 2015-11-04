@@ -8,7 +8,7 @@ open YC.FSA.Tests.GraphBasedFsaTestData
 open YC.FSA.FsaApproximation
 open YC.FST.GraphBasedFst
 
-let basePath = "../../../FST/FST/FST.Tests/DOTfst/"
+let basePath = "../../../YC.FST/FST/FST.Tests/DOTfst/"
 //let basePath = "C:/yc/recursive-ascent/FST/FST/FST.Tests/DOTfst/" 
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
