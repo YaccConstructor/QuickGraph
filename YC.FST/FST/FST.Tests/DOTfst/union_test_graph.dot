@@ -1,0 +1,22 @@
+digraph G {
+rankdir = LR
+node [shape = circle]
+7[style=filled, fillcolor=green]
+8[shape = doublecircle, style=filled, fillcolor=red]
+{ rank=same; 7 }
+{ rank=min; 7 }
+{ rank=same; 8 }
+{ rank=max; 8 }
+0 -> 1 [label="1 : 1"]; 
+1 -> 2 [label="2 : +"]; 
+1 -> 2 [label="3 : -"]; 
+2 -> 3 [label="4 : 4"]; 
+3 -> 8 [label="Eps : Eps"]; 
+4 -> 5 [label="+ : 1"]; 
+5 -> 6 [label="1 : +"]; 
+5 -> 6 [label="2 : -"]; 
+6 -> 8 [label="Eps : Eps"]; 
+7 -> 0 [label="Eps : Eps"]; 
+7 -> 4 [label="Eps : Eps"]; 
+
+}
