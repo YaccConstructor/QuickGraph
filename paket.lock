@@ -1,29 +1,31 @@
 NUGET
   remote: https://nuget.org/api/v2
   specs:
-    FAKE (4.6.4)
-    FSharp.Compiler.Service (0.0.90)
-    FSharp.Formatting (2.11.0)
-      FSharp.Compiler.Service (>= 0.0.90 <= 1.3)
-      FSharpVSPowerTools.Core (1.9.0)
-    FSharpVSPowerTools.Core (1.9.0)
-      FSharp.Compiler.Service (>= 0.0.90)
+    FAKE (4.8.0)
+    FSharp.Compiler.Service (1.4.0.6)
+    FSharp.Formatting (2.12.0)
+      FSharp.Compiler.Service (1.4.0.6)
+      FSharpVSPowerTools.Core (2.1.0)
+    FSharpVSPowerTools.Core (2.1.0)
+      FSharp.Compiler.Service (>= 1.4.0.6)
+    FSharpx.Core (1.8.41)
     FSPowerPack.Core.Community (3.0.0.0) - framework: >= net45
     Microsoft.Bcl (1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
-    Microsoft.Bcl.Build (1.0.21) - import_targets: false
+    Microsoft.Bcl.Build (1.0.21)
     Microsoft.Net.Http (2.2.29)
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
     NuGet.CommandLine (2.8.6)
     NUnit (2.6.4)
     NUnit.Runners (2.6.4)
-    Octokit (0.16.0)
+    NUnitTestAdapter (2.0.0)
+    Octokit (0.16.0) - framework: >= net45
       Microsoft.Net.Http
     SourceLink.Fake (1.1.0)
     YC.FsYARD (0.1.5033.0) - framework: >= net45
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (e7f5ad5e90f03dd89068cb1374e8ddf4725de373)
+    modules/Octokit/Octokit.fsx (545fb5d2cc7901bcbfd8f7f1a53da8f7f169deda)
       Octokit
