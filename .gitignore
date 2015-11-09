@@ -260,3 +260,7 @@ QuickGraph.sln.docstates
 
 User_*/Out/*
 *.trx
+
+tests/QuickGraph.FST.Tests/DOTfst/*
+tests/QuickGraph.FSA.Tests/DOTfsa/*
+*.orig
