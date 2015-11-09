@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{CECB81F0-8DCB-4FB4-8A20-9C9177CC0BFB}"
+	ProjectSection(SolutionItems) = preProject
+		..\paket.dependencies = ..\paket.dependencies
+	EndProjectSection
+EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DotParserProject", "DotParserProject\DotParserProject.fsproj", "{8826810A-DC59-46E6-8978-21E273DB1236}"
 EndProject
 Global

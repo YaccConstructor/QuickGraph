@@ -1,9 +1,12 @@
 source https://nuget.org/api/v2
 
 nuget FSharp.Formatting
+nuget FSPowerPack.Core.Community 3.0.0.0 framework: >= net45
+nuget Nuget.CommandLine
 nuget NUnit 
 nuget NUnit.Runners
 nuget FAKE
 nuget SourceLink.Fake
+nuget YC.FsYARD 0.1.5033.0 framework: >= net45
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx
