@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharpx.Core">
-      <HintPath>..\packages\FSharpx.Core.1.8.41\lib\40\FSharpx.Core.dll</HintPath>
+      <HintPath>..\..\packages\FSharpx.Core.1.8.41\lib\40\FSharpx.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
@@ -72,12 +72,12 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
-    <ProjectReference Include="..\src\QuickGraph.FSA\QuickGraph.FSA.fsproj">
+    <ProjectReference Include="..\QuickGraph.FSA\QuickGraph.FSA.fsproj">
       <Name>QuickGraph.FSA</Name>
       <Project>{b48cfdcc-86f7-4c3a-a5a2-8170950dd2ab}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\src\QuickGraph\QuickGraph.csproj">
+    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
       <Name>QuickGraph</Name>
       <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
       <Private>True</Private>
