@@ -8,7 +8,7 @@ open QuickGraph.FST.Tests.GraphBasedFstTestData
 open System.Collections.Generic
 open QuickGraph.FSA.GraphBasedFsa
 
-let basePath = "../../../QuickGraph/tests/QuickGraph.FST.Tests/DOTfst/"
+let basePath = "../../../QuickGraph.FST.Tests/DOTfst/"
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 let checkGraph (fst:FST<_,_>) initV finalV countE countV filePath =

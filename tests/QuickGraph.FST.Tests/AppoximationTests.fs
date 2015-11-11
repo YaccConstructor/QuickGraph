@@ -8,7 +8,7 @@ open QuickGraph.FSA.Tests.GraphBasedFsaTestData
 open QuickGraph.FSA.FsaApproximation
 open QuickGraph.FST.GraphBasedFst
 
-let basePath = "../../../QuickGraph/tests/QuickGraph.FST.Tests/DOTfst/"
+let basePath = "../../../QuickGraph.FST.Tests/DOTfst/"
 //let basePath = "C:/yc/recursive-ascent/FST/FST/FST.Tests/DOTfst/" 
 let fullPath f = System.IO.Path.Combine(basePath, f)
 

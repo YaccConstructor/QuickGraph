@@ -4,7 +4,7 @@ open QuickGraph.FST.FstTable
 open NUnit.Framework
 open Microsoft.FSharp.Collections
 
-let basePath = "../../../QuickGraph/tests/QuickGraph.FST.Tests/DOTfst/"
+let basePath = "../../../QuickGraph.FST.Tests/DOTfst/"
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 [<TestFixture>]
