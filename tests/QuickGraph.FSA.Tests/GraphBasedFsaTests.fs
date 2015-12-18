@@ -11,10 +11,10 @@ let fullPath f = System.IO.Path.Combine(basePath, f)
 
 let checkGraph (fsa:FSA<_>) initV finalV countE countV filePath =
     fsa.PrintToDOT <| fullPath filePath
-    Assert.AreEqual(fsa.InitState.Count, initV, "Count of init state not equal expected number.")
-    Assert.AreEqual(fsa.FinalState.Count, finalV, "Count of final state not equal expected number.")
-    Assert.AreEqual(fsa.EdgeCount, countE, "Count of edges not equal expected number. ")
-    Assert.AreEqual(fsa.VertexCount, countV, "Count of vertices not equal expected number. ")
+    Assert.AreEqual(initV, fsa.InitState.Count, "Count of init state not equal expected number.")
+    Assert.AreEqual(finalV, fsa.FinalState.Count, "Count of final state not equal expected number.")
+    Assert.AreEqual(countE, fsa.EdgeCount, "Count of edges not equal expected number. ")
+    Assert.AreEqual(countV, fsa.VertexCount, "Count of vertices not equal expected number. ")
 
 let equalSmbl x y = (fst x) = (fst y)
 
@@ -215,7 +215,7 @@ type ``Additional FSA tests`` () =
                 ResizeArray.ofList [ (0, Smbl('b', 11), 1) ])
         let res = FSA<_>.Intersection (abFsa, bFsa, equalSmbl)
         Assert.AreEqual(res.IsEmpty, true)
-
+        
 //[<EntryPoint>]
 //let f x =
 //      let t = new ``Graph FSA tests`` () 
