@@ -156,6 +156,16 @@ type ``Graph FSA tests`` () =
         checkGraph resFSA 1 3 17 10 "replace_test_14.dot"
 
     [<Test>]
+    member this.``Graph FSA. Replace test 15. Reluctant replace.`` () =
+        let resFSA = FSA<_>.ReluctantReplace(fsaRepl1C6, fsaRepl2C6, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 1 4 5 "replace_test_15.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 16. Complicated reluctant replace.`` () =
+        let resFSA = FSA<_>.ReluctantReplace(fsaRepl1C9, fsaRepl2C9, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 4 12 5 "replace_test_16.dot"
+
+    [<Test>]
     member this.``Graph FSA. FSA is empty.`` () =
         Assert.AreEqual(fsaEmpty.IsEmpty, true)
         Assert.AreEqual(fsaRepl1C6.IsEmpty, false)
