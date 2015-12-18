@@ -242,6 +242,27 @@ let fsaRepl2C10 =
     transitions.Add(3, Smbl('d', 21), 2)
     new FSA<_>(startState, finishState, transitions)
 
+let fsaRepl1C10a =
+    let startState = ResizeArray.singleton 2
+    let finishState = ResizeArray.singleton 5
+    finishState.Add 6 |> ignore
+    let transitions = new ResizeArray<_>()
+    transitions.Add(2, Smbl('d', 05), 4)
+    transitions.Add(4, Smbl('k', 15), 4)
+    transitions.Add(4, Smbl('a', 16), 5)
+    transitions.Add(4, Smbl('c', 17), 6)
+    new FSA<_>(startState, finishState, transitions)
+   
+let fsaRepl2C10a =
+    let startState = ResizeArray.singleton 0
+    let finishState = ResizeArray.singleton 3
+    let transitions = new ResizeArray<_>()
+    transitions.Add(0, Smbl('d', 22), 2)
+    transitions.Add(2, Smbl('k', 23), 5)
+    transitions.Add(5, Smbl('k', 24), 2)
+    transitions.Add(2, Smbl('c', 20), 3)
+    new FSA<_>(startState, finishState, transitions)
+
 let fsaAcceptingOneLetter =
     let initSt = ResizeArray.singleton 0
     let finalSt = ResizeArray.singleton 1

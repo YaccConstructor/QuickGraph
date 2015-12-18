@@ -153,7 +153,12 @@ type ``Graph FSA tests`` () =
     [<Test>]
     member this.``Graph FSA. Replace test 14. Complicated greedy replace.`` () =
         let resFSA = FSA<_>.GreedyReplace(fsaRepl1C10, fsaRepl2C10, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
-        checkGraph resFSA 1 3 17 10 "replace_test_14.dot"
+        checkGraph resFSA 1 3 19 11 "replace_test_14.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 14a. Empty handle list for greedy replace.`` () =
+        let resFSA = FSA<_>.GreedyReplace(fsaRepl1C10a, fsaRepl2C10a, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 3 7 6 "replace_test_14a.dot"
 
     [<Test>]
     member this.``Graph FSA. Replace test 15. Reluctant replace.`` () =
