@@ -461,9 +461,104 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             if dfa1.IsEmpty then dfa1
             else dfa2
 
+    static let greedifyMatchFsa (toGreedFsa: _ FSA) smb1 smb2 getChar newSmb charwiseEqual =
+//            toGreedFsa.PrintToDOT "../../../YC.FST/FST/FSA.Tests/DOTfsa/fsa_before_tmp.dot"
+
+            let needsToBeHandled (edge : EdgeFSA<_>) =
+                (charwiseEqual edge.Tag (newSmb smb2)) &&
+                    (edge.Source |> toGreedFsa.OutEdges |> Seq.length) > 1
+
+            let matchEndings = toGreedFsa.Edges |> Seq.filter needsToBeHandled |> ResizeArray.ofSeq
+            
+
+            let removeOddPathsAfterVertex (fsa: _ FSA) (symb2Edge: EdgeFSA<_>)=   
+                //there is no vertex with two out #2 edges 
+                let rootInVertex = symb2Edge.Source
+                let rootOutVertex = symb2Edge.Target
+
+                let mult = Seq.max fsa.Vertices - Seq.min fsa.Vertices + 1
+                let toNewVertices inVert outVert = mult * (outVert + 1) + inVert
+
+                fsa.RemoveEdge symb2Edge |> ignore
+                let newRootOutVertex = toNewVertices rootInVertex rootOutVertex
+                newRootOutVertex |> fsa.AddVertex |> ignore
+
+                if fsa.FinalState |> Seq.exists ((=) rootOutVertex)
+                then fsa.FinalState.Add newRootOutVertex |> ignore
+
+                new EdgeFSA<_> (rootInVertex, newRootOutVertex, newSmb smb2) |> fsa.AddEdge |> ignore
+                    
+                let visited = new HashSet<_>()        
+                let queue = new Queue<_>()
+                queue.Enqueue((rootInVertex, rootOutVertex)) |> ignore
+                
+//                let j = ref 0
+                while queue.Count > 0 do
+                    let (currInVertex, currOutVertex) = queue.Dequeue()
+                    if not <| (visited.Contains (currInVertex, currOutVertex) || currOutVertex = currInVertex)
+                    then
+                        let currentVertex = toNewVertices currInVertex currOutVertex
+                        visited.Add (currInVertex, currOutVertex) |> ignore
+                        let innnerEdges = fsa.OutEdges(currInVertex) |> Seq.filter (fun e -> not <| charwiseEqual e.Tag (newSmb smb2))
+                        let deprecatedInnerEdges = 
+                            innnerEdges |> Seq.filter (fun e1 -> fsa.OutEdges(e1.Target) |> Seq.exists (fun e2 -> charwiseEqual e2.Tag (newSmb smb2)))
+
+                        let outerEdges = fsa.OutEdges(currOutVertex)
+                        let newEdges = seq {
+                            for outEdge in outerEdges do
+                                let pairInEdge = innnerEdges |> Seq.tryFind (fun e -> charwiseEqual e.Tag outEdge.Tag)
+                                if not <| (pairInEdge.IsNone || Seq.exists ((=) <| Option.get pairInEdge) deprecatedInnerEdges)
+                                then
+                                    let inEdge = Option.get pairInEdge
+                                    queue.Enqueue (inEdge.Target, outEdge.Target) |> ignore  
+                                    let nextVertex = toNewVertices inEdge.Target outEdge.Target
+
+                                    if (Seq.exists ((=) outEdge.Target) fsa.FinalState) && not (Seq.exists ((=) nextVertex) fsa.FinalState)
+                                    then fsa.FinalState.Add nextVertex |> ignore
+
+                                    yield new EdgeFSA<_> (currentVertex, nextVertex, outEdge.Tag)
+
+                                elif charwiseEqual outEdge.Tag (newSmb smb1) ||
+                                        charwiseEqual outEdge.Tag (newSmb smb2)
+                                then 
+                                    queue.Enqueue (currInVertex, outEdge.Target) |> ignore  
+                                    let nextVertex = toNewVertices currInVertex outEdge.Target
+
+                                    if (Seq.exists ((=) outEdge.Target) fsa.FinalState) && not (Seq.exists ((=) nextVertex) fsa.FinalState)
+                                    then fsa.FinalState.Add nextVertex |> ignore
+
+                                    let newEdge = new EdgeFSA<_> (currentVertex, nextVertex, outEdge.Tag)
+
+                                    if needsToBeHandled newEdge
+                                    then matchEndings.Add newEdge |> ignore
+
+                                    yield newEdge
+
+                                elif pairInEdge.IsNone
+                                then               
+                                    let nextVertex = outEdge.Target
+                                    yield new EdgeFSA<_> (currentVertex, nextVertex, outEdge.Tag)                                                               
+                        }
+                        newEdges |> fsa.AddVerticesAndEdgeRange |> ignore
+//                        if !j = 0
+//                        then 
+//                            fsa.PrintToDOT "../../../YC.FST/FST/FSA.Tests/DOTfsa/fsa_after_tmp.dot"
+//                        j := !j + 1
+                fsa.RemoveExtraPaths |> ignore
+                            
+            let i = ref 0 
+            while matchEndings.Count > !i do
+                removeOddPathsAfterVertex toGreedFsa matchEndings.[!i] |> ignore
+                i := !i + 1
+//                if !i = 2
+//                then
+//                    toGreedFsa.PrintToDOT "../../../YC.FST/FST/FSA.Tests/DOTfsa/fsa_after_tmp.dot"
+//            toGreedFsa.PrintToDOT "../../../YC.FST/FST/FSA.Tests/DOTfsa/fsa_after_tmp.dot"
+
+
     ///for FSAs
     ///TODO: handle of FSA_2 which accept only empty string -> return FSA_1 which after every transition insert FSA_3
-    static let replace (fsa1_in:FSA<_>) (fsa2_in:FSA<_>) (fsa3_in:FSA<_>) smb1 smb2 getChar newSmb equalSmbl = 
+    static let replace (fsa1_in:FSA<_>) (fsa2_in:FSA<_>) (fsa3_in:FSA<_>) smb1 smb2 getChar newSmb equalSmbl isGreedy = 
         if (fsa1_in.IsEmpty || fsa2_in.IsEmpty || fsa3_in.IsEmpty)
         then fsa1_in
         else
@@ -531,9 +626,11 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                 //Step 3. Generate fsa_tmp as intersection of fsa1_tmp and fsa2_tmp
                 
                 let fsa_tmp = intersection fsa1_tmp fsa2_tmp equalSmbl
-                
 
-               
+                //Additional step. Making match greedy.
+                if isGreedy
+                then greedifyMatchFsa fsa_tmp smb1 smb2 getChar newSmb charwiseEqual |> ignore
+                
                 let resFSA = 
                     if not (fsa_tmp.IsEmpty) //result of intersection is not empty?
                     then             
@@ -850,7 +947,8 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
     member this.Union fsa2 = union this fsa2
     static member Union(fsa1, fsa2) = union fsa1 fsa2
     ///fsa1 -- original strings; fsa2 -- match strings; fsa3 -- replacement strings, FSAs are not empty
-    static member Replace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl
+    static member Replace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl false
+    static member GreedyReplace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl true
     member this.Complementation(alphabet, newSmb,  getChar) = complementation this alphabet newSmb getChar 
     static member Intersection(fsa1, fsa2, equalSmbl) = intersection fsa1 fsa2 equalSmbl
     member this.IsEmpty =  isEmptyFSA this
