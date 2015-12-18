@@ -9,13 +9,6 @@ open QuickGraph.Collections
 open Microsoft.FSharp.Text
 open HelperTypes
 
-[<Struct>]
-type VerticesSearchString =
-    val startAct: int
-    val endActs: HashSet<int>
-    val verticesSearchStr: HashSet<int>
-    new (sa, ea, vs) = {startAct = sa; endActs = ea; verticesSearchStr = vs}   
-
 type DfaNode<'a> = 
     { Id: int;
       Name: string;
