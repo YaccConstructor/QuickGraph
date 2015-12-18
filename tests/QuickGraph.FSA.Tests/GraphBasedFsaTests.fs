@@ -136,6 +136,26 @@ type ``Graph FSA tests`` () =
         checkGraph resFSA 1 1 1 1 "replace_test_10.dot"
 
     [<Test>]
+    member this.``Graph FSA. Replace test 11. ComplemetationForReplace test.`` () =
+        let resFSA = FSA<_>.Replace(fsaRepl1C7, fsaRepl2C7, fsaRepl3C7, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 1 5 6 "replace_test_11.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 12. Greedy replace.`` () =
+        let resFSA = FSA<_>.GreedyReplace(fsaRepl1C8, fsaRepl2C8, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 2 2 3 "replace_test_12.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 13. Another greedy replace.`` () =
+        let resFSA = FSA<_>.GreedyReplace(fsaRepl1C9, fsaRepl2C9, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 4 8 5 "replace_test_13.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 14. Complicated greedy replace.`` () =
+        let resFSA = FSA<_>.GreedyReplace(fsaRepl1C10, fsaRepl2C10, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 3 17 10 "replace_test_14.dot"
+
+    [<Test>]
     member this.``Graph FSA. FSA is empty.`` () =
         Assert.AreEqual(fsaEmpty.IsEmpty, true)
         Assert.AreEqual(fsaRepl1C6.IsEmpty, false)
@@ -215,7 +235,7 @@ type ``Additional FSA tests`` () =
                 ResizeArray.ofList [ (0, Smbl('b', 11), 1) ])
         let res = FSA<_>.Intersection (abFsa, bFsa, equalSmbl)
         Assert.AreEqual(res.IsEmpty, true)
-        
+
 //[<EntryPoint>]
 //let f x =
 //      let t = new ``Graph FSA tests`` () 
