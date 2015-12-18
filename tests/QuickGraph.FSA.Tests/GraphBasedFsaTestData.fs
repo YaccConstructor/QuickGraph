@@ -194,7 +194,6 @@ let fsaRepl2C8 =
 let fsaRepl1C9 =
     let startState = ResizeArray.singleton 0
     let finishState = ResizeArray.singleton 1
-    finishState.Add 5 |> ignore
     let transitions = new ResizeArray<_>()
     transitions.Add(0, Smbl('a', 11), 0)
     transitions.Add(0, Smbl('a', 11), 1)
@@ -206,7 +205,6 @@ let fsaRepl1C9 =
 let fsaRepl2C9 =
     let startState = ResizeArray.singleton 0
     let finishState = ResizeArray.singleton 1
-    finishState.Add 5 |> ignore
     let transitions = new ResizeArray<_>()
     transitions.Add(0, Smbl('a', 11), 0)
     transitions.Add(0, Smbl('a', 11), 1)
