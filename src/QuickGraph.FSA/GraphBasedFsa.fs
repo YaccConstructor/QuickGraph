@@ -566,14 +566,14 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                 then fsa3_in
                 else fsa1_in
             else                 
-                let charwiseEquatity =
+                let charwiseEquality =
                     { new IEqualityComparer<Symb<'a>> with
                         member this.Equals (p1, p2) = match (p1, p2) with
                           | (Smbl s1, Smbl s2) -> equalSmbl s1 s2
                           | (Eps, Eps) -> true
                           | _ -> false
                         member this.GetHashCode s   = (getChar s).GetHashCode() }
-                let charwiseEqual = (fun x y -> charwiseEquatity.Equals (x, y))
+                let charwiseEqual = (fun x y -> charwiseEquality.Equals (x, y))
 
                 //Step 1. Construct fsa1_tmp from fsa1
                 let fsa1_tmp = new FSA<_>()
@@ -602,7 +602,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                 for edge in fsa2.Edges do
                     alphabetFSAs.Add(getChar edge.Tag) |> ignore
                 
-                let (fsa2_tmp: _ FSA) = complementationForReplace fsa2 alphabetFSAs newSmb getChar charwiseEquatity
+                let (fsa2_tmp: _ FSA) = complementationForReplace fsa2 alphabetFSAs newSmb getChar charwiseEquality
                 
                 //renumerating fsa2's vertices                
                 let to2_tmp = (+) (Seq.max fsa2_tmp.Vertices - Seq.min fsa2.Vertices + 1)
