@@ -79,6 +79,8 @@ type internal NfaNodeIdSet(nodes: NfaNodeIdSetBuilder) =
 
 type NodeSetSet = Set<NfaNodeIdSet>
 
+type ReplaceSemantics = Greedy | Reluctant | Declarative
+
 let newDfaNodeId, reset = 
     let i = ref 0 
     fun () -> let res = !i in incr i; res
@@ -548,10 +550,17 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
 //                    toGreedFsa.PrintToDOT "../../../YC.FST/FST/FSA.Tests/DOTfsa/fsa_after_tmp.dot"
 //            toGreedFsa.PrintToDOT "../../../YC.FST/FST/FSA.Tests/DOTfsa/fsa_after_tmp.dot"
 
+    static let reluctantMatchFsa (toReluctantFsa: _ FSA) smb1 smb2 getChar newSmb charwiseEqual =
+        let isSmb2Tagged (edge : EdgeFSA<_>) = (charwiseEqual edge.Tag (newSmb smb2)) 
+        let toHandle = toReluctantFsa.Edges |> Seq.filter isSmb2Tagged |> Seq.map (fun (edge : EdgeFSA<_>) -> edge.Source)
+//        let handle vertex = toReluctantFsa.RemoveOutEdgeIf(vertex, (fun (edge : EdgeFSA<_>) -> not <| isSmb2Tagged edge))
+//        toHandle |> Seq.map handle |> ignore
+        let toRemove = toHandle |> Seq.map toReluctantFsa.OutEdges |> Seq.concat |> Seq.filter ((not) << isSmb2Tagged) |>List.ofSeq
+        toRemove |> List.map toReluctantFsa.RemoveEdge |> ignore
 
     ///for FSAs
-    ///TODO: handle of FSA_2 which accept only empty string -> return FSA_1 which after every transition insert FSA_3
-    static let replace (fsa1_in:FSA<_>) (fsa2_in:FSA<_>) (fsa3_in:FSA<_>) smb1 smb2 getChar newSmb equalSmbl isGreedy = 
+    ///TODO: handle of FSA_2 which accept only empty string -> return FSA_1 which after every transition insert FSA_3    
+    static let replace (fsa1_in:FSA<_>) (fsa2_in:FSA<_>) (fsa3_in:FSA<_>) smb1 smb2 getChar newSmb equalSmbl (semantics:ReplaceSemantics) = 
         if (fsa1_in.IsEmpty || fsa2_in.IsEmpty || fsa3_in.IsEmpty)
         then fsa1_in
         else
@@ -621,8 +630,13 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                 let fsa_tmp = intersection fsa1_tmp fsa2_tmp equalSmbl
 
                 //Additional step. Making match greedy.
-                if isGreedy
+                if semantics = Greedy
                 then greedifyMatchFsa fsa_tmp smb1 smb2 getChar newSmb charwiseEqual |> ignore
+                elif semantics = Reluctant
+                then reluctantMatchFsa fsa_tmp smb1 smb2 getChar newSmb charwiseEqual |> ignore
+//                fsa_tmp.PrintToDOT "../../../QuickGraph.FSA.Tests/DOTfsa/arel.dot"
+                
+
                 
                 let resFSA = 
                     if not (fsa_tmp.IsEmpty) //result of intersection is not empty?
@@ -940,8 +954,9 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
     member this.Union fsa2 = union this fsa2
     static member Union(fsa1, fsa2) = union fsa1 fsa2
     ///fsa1 -- original strings; fsa2 -- match strings; fsa3 -- replacement strings, FSAs are not empty
-    static member Replace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl false
-    static member GreedyReplace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl true
+    static member Replace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl Declarative
+    static member GreedyReplace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl Greedy
+    static member ReluctantReplace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl Reluctant
     member this.Complementation(alphabet, newSmb,  getChar) = complementation this alphabet newSmb getChar 
     static member Intersection(fsa1, fsa2, equalSmbl) = intersection fsa1 fsa2 equalSmbl
     member this.IsEmpty =  isEmptyFSA this
