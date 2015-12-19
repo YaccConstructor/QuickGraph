@@ -8,7 +8,7 @@
     <ProjectGuid>4b220e23-a7e0-4222-83f5-c785f7c66b33</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>QuickGraph.FST_fix</RootNamespace>
-    <AssemblyName>QuickGraph.FST</AssemblyName>
+    <AssemblyName>YC.QuickGraph.FST</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
@@ -61,6 +61,11 @@
     <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
+      <Name>QuickGraph</Name>
+      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
@@ -70,12 +75,7 @@
     <Reference Include="System.Numerics" />
     <ProjectReference Include="..\QuickGraph.FSA\QuickGraph.FSA.fsproj">
       <Name>QuickGraph.FSA</Name>
-      <Project>{b48cfdcc-86f7-4c3a-a5a2-8170950dd2ab}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
-      <Name>QuickGraph</Name>
-      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
+      <Project>{bd5d18de-1c9d-4314-a777-21aa683eeace}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

@@ -8,7 +8,7 @@
     <ProjectGuid>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>QuickGraph</RootNamespace>
-    <AssemblyName>QuickGraph</AssemblyName>
+    <AssemblyName>YC.QuickGraph</AssemblyName>
     <WarningLevel>4</WarningLevel>
     <AssemblyOriginatorKeyFile>quickgraph.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
@@ -93,7 +93,7 @@
     <Optimize>true</Optimize>
     <OutputPath>.\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>bin\Release\QuickGraph.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\YC.QuickGraph.xml</DocumentationFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
@@ -139,7 +139,7 @@
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <DocumentationFile>bin\Release20\QuickGraph.XML</DocumentationFile>
+    <DocumentationFile>bin\Release20\YC.QuickGraph.xml</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
     <CodeContractsCustomRewriterAssembly>
     </CodeContractsCustomRewriterAssembly>

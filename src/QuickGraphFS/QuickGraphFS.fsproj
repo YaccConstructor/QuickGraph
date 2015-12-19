@@ -8,7 +8,7 @@
     <ProjectGuid>1ccafd2c-4a61-4f7f-986c-a2f575086344</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>QuickGraphFS</RootNamespace>
-    <AssemblyName>QuickGraphFS</AssemblyName>
+    <AssemblyName>YC.QuickGraphFS</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <Name>QuickGraphFS</Name>

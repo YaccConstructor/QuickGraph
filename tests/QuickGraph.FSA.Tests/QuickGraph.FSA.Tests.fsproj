@@ -5,10 +5,10 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>968f28d8-1c01-4c68-8921-5a5b12d1e945</ProjectGuid>
+    <ProjectGuid>{3bf3542b-4034-429f-9105-197a60625ca3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>FSA.Tests</RootNamespace>
-    <AssemblyName>QuickGraph.FSA.Test</AssemblyName>
+    <AssemblyName>YC.QuickGraph.FSA.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
     <Name>QuickGraph.FSA.Tests</Name>
@@ -70,7 +70,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\QuickGraph.FSA\QuickGraph.FSA.fsproj">
       <Name>QuickGraph.FSA</Name>
-      <Project>{b48cfdcc-86f7-4c3a-a5a2-8170950dd2ab}</Project>
+      <Project>{bd5d18de-1c9d-4314-a777-21aa683eeace}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\src\QuickGraph\QuickGraph.csproj">

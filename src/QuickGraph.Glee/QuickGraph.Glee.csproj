@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuickGraph.Glee</RootNamespace>
-    <AssemblyName>QuickGraph.Glee</AssemblyName>
+    <AssemblyName>YC.QuickGraph.Glee</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -82,7 +82,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <DocumentationFile>bin\Release\QuickGraph.Glee.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\YC.QuickGraph.Glee.xml</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
     <CodeContractsCustomRewriterAssembly>
     </CodeContractsCustomRewriterAssembly>
@@ -226,12 +226,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
-      <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
-      <Name>QuickGraph</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="quickgraph.snk" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +252,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
+      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
+      <Name>QuickGraph</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

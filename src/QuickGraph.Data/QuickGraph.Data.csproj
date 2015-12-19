@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuickGraph.Data</RootNamespace>
-    <AssemblyName>QuickGraph.Data</AssemblyName>
+    <AssemblyName>YC.QuickGraph.Data</AssemblyName>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -90,7 +90,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <DocumentationFile>bin\Release\QuickGraph.Data.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\YC.QuickGraph.Data.xml</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
     <CodeContractsCustomRewriterAssembly>
     </CodeContractsCustomRewriterAssembly>
@@ -176,16 +176,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
-      <Project>{595D6322-637A-4A36-97F1-D53F3F9ECEA7}</Project>
-      <Name>QuickGraph.Graphviz</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
-      <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
-      <Name>QuickGraph</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +199,16 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
+      <Project>{595d6322-637a-4a36-97f1-d53f3f9ecea7}</Project>
+      <Name>QuickGraph.Graphviz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
+      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
+      <Name>QuickGraph</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuickGraph.Samples</RootNamespace>
-    <AssemblyName>QuickGraph.Samples</AssemblyName>
+    <AssemblyName>YC.QuickGraph.Samples</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -125,15 +125,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickGraph.Data\QuickGraph.Data.csproj">
-      <Project>{960C14D1-EDBD-40E5-8AE6-25E311551B87}</Project>
+      <Project>{960c14d1-edbd-40e5-8ae6-25e311551b87}</Project>
       <Name>QuickGraph.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
-      <Project>{595D6322-637A-4A36-97F1-D53F3F9ECEA7}</Project>
+      <Project>{595d6322-637a-4a36-97f1-d53f3f9ecea7}</Project>
       <Name>QuickGraph.Graphviz</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
-      <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
+      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
       <Name>QuickGraph</Name>
     </ProjectReference>
   </ItemGroup>

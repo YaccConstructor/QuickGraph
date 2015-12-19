@@ -9,7 +9,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuickGraph.Perf</RootNamespace>
-    <AssemblyName>QuickGraph.Perf</AssemblyName>
+    <AssemblyName>YC.QuickGraph.Perf</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -109,13 +109,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\QuickGraph\QuickGraph.csproj">
+      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
+      <Name>QuickGraph</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\tests\QuickGraph.Tests\QuickGraph.Tests.csproj">
       <Project>{61df76e1-de2b-4df1-ad5f-89939ab06693}</Project>
       <Name>QuickGraph.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\QuickGraph\QuickGraph.csproj">
-      <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
-      <Name>QuickGraph</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
