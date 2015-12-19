@@ -11,10 +11,10 @@ let fullPath f = System.IO.Path.Combine(basePath, f)
 
 let checkGraph (fsa:FSA<_>) initV finalV countE countV filePath =
     fsa.PrintToDOT <| fullPath filePath
-    Assert.AreEqual(fsa.InitState.Count, initV, "Count of init state not equal expected number.")
-    Assert.AreEqual(fsa.FinalState.Count, finalV, "Count of final state not equal expected number.")
-    Assert.AreEqual(fsa.EdgeCount, countE, "Count of edges not equal expected number. ")
-    Assert.AreEqual(fsa.VertexCount, countV, "Count of vertices not equal expected number. ")
+    Assert.AreEqual(initV, fsa.InitState.Count, "Count of init state not equal expected number.")
+    Assert.AreEqual(finalV, fsa.FinalState.Count, "Count of final state not equal expected number.")
+    Assert.AreEqual(countE, fsa.EdgeCount, "Count of edges not equal expected number. ")
+    Assert.AreEqual(countV, fsa.VertexCount, "Count of vertices not equal expected number. ")
 
 let equalSmbl x y = (fst x) = (fst y)
 
@@ -134,6 +134,56 @@ type ``Graph FSA tests`` () =
                                 
         let resFSA = FSA<_>.Replace(fsa1, fsa2, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
         checkGraph resFSA 1 1 1 1 "replace_test_10.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 11. ComplemetationForReplace test.`` () =
+        let resFSA = FSA<_>.Replace(fsaRepl1C7, fsaRepl2C7, fsaRepl3C7, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 1 5 6 "replace_test_11.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 12. Greedy replace.`` () =
+        let resFSA = FSA<_>.GreedyReplace(fsaRepl1C8, fsaRepl2C8, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 2 2 3 "replace_test_12.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 13. Another greedy replace.`` () =
+        let resFSA = FSA<_>.GreedyReplace(fsaRepl1C9, fsaRepl2C9, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 4 8 5 "replace_test_13.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 14. Complicated greedy replace.`` () =
+        let resFSA = FSA<_>.GreedyReplace(fsaRepl1C10, fsaRepl2C10, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 3 19 11 "replace_test_14.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 14a. Empty handle list for greedy replace.`` () =
+        let resFSA = FSA<_>.GreedyReplace(fsaRepl1C10a, fsaRepl2C10a, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 3 7 6 "replace_test_14a.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 15. Reluctant replace.`` () =
+        let resFSA = FSA<_>.ReluctantReplace(fsaRepl1C6, fsaRepl2C6, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 1 4 5 "replace_test_15.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 16. Complicated reluctant replace.`` () =
+        let resFSA = FSA<_>.ReluctantReplace(fsaRepl1C9, fsaRepl2C9, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl)
+        checkGraph resFSA 1 4 12 5 "replace_test_16.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 17. Leftmost replace.`` () =
+        let resFSA = FSA<_>.CustomizableReplace(fsaRepl1C11, fsaRepl2C11, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl) (Declarative, Leftmost, All)
+        checkGraph resFSA 1 2 2 3 "replace_test_17.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 18. Leftmost greedy replace.`` () =
+        let resFSA = FSA<_>.CustomizableReplace(fsaRepl1C11, fsaRepl2C11, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl) (Greedy, Leftmost, All)
+        checkGraph resFSA 1 1 1 2 "replace_test_18.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 19. Leftmost reluctant replace.`` () =
+        let resFSA = FSA<_>.CustomizableReplace(fsaRepl1C11, fsaRepl2C11, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl) (Reluctant, Leftmost, All)
+        checkGraph resFSA 1 1 2 3 "replace_test_19.dot"
 
     [<Test>]
     member this.``Graph FSA. FSA is empty.`` () =
