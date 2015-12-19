@@ -457,7 +457,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             else dfa2
 
     static let greedifyMatchFsa (toGreedFsa: _ FSA) smb1 smb2 getChar newSmb charwiseEqual equalSmbl =
-        toGreedFsa.PrintToDOT "../../../QuickGraph.FSA.Tests/DOTfsa/fsa_before.dot"
+//        toGreedFsa.PrintToDOT "../../../QuickGraph.FSA.Tests/DOTfsa/fsa_before.dot"
 
         let needsToBeHandled (edge : EdgeFSA<_>) =
             (charwiseEqual edge.Tag (newSmb smb2)) &&
@@ -466,92 +466,91 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         let matchEndings = toGreedFsa.Edges |> Seq.filter needsToBeHandled |> List.ofSeq
             
 
-        let getRedundantPathsThrough (fsa: _ FSA) (symb2Edge: EdgeFSA<_>) : _ FSA =  
+        let getRedundantPathsThrough (fsa: _ FSA) (theEdge: EdgeFSA<_>) : _ FSA =  
             let redundant = new FSA<_>()
             redundant.InitState <- fsa.InitState
             redundant.AddVertexRange(fsa.InitState) |> ignore
             redundant.AddVerticesAndEdgeRange(fsa.Edges) |> ignore
+            
+            let taggedSymb1 (edge: _ EdgeFSA) = charwiseEqual (newSmb smb1) edge.Tag
+            let taggedSymb2 (edge: _ EdgeFSA) = charwiseEqual (newSmb smb2) edge.Tag
+            let taggedSpecial edge = taggedSymb1 edge || taggedSymb2 edge
 
             let toRedund = new Dictionary<_,_>()
-
-            let isSymb1 = charwiseEqual (newSmb smb1)
-            let isSymb2 = charwiseEqual (newSmb smb2)
-            let inToRedund = (fun x y -> toRedund.[(x, y, false)])
+            let makeRedund = (fun x y -> toRedund.[(x, y, false)])
 
             let i = ref ((Seq.max redundant.Vertices) + 1)
             for p1 in fsa.Vertices do
                 for p2 in fsa.Vertices do
                     toRedund.Add((p1, p2, false), !i) |> ignore
-                    inToRedund p1 p2 |> redundant.AddVertex |> ignore
+                    makeRedund p1 p2 |> redundant.AddVertex |> ignore
                     i := !i + 1
                      
-            let uniqueVertex = !i
-            redundant.AddVertex uniqueVertex |> ignore
+            let bottleNeck = !i
+            redundant.AddVertex bottleNeck |> ignore
           
-            let newSymb2Edge = new EdgeFSA<_> (symb2Edge.Source, uniqueVertex, symb2Edge.Tag)
-            redundant.AddEdge newSymb2Edge |> ignore
+            let newTheEdge = new EdgeFSA<_> (theEdge.Source, bottleNeck, theEdge.Tag)//
+            redundant.AddEdge newTheEdge |> ignore
 
             let visited = new HashSet<_>()    
-            let zeroStepFromUnique = new HashSet<_>()     
-            zeroStepFromUnique.Add(uniqueVertex) |> ignore   
+            let zeroStepAccesible = new HashSet<_>()     
+            zeroStepAccesible.Add(bottleNeck) |> ignore   
             let queue = new Queue<_>()
-            queue.Enqueue(symb2Edge.Source, symb2Edge.Target, true) |> ignore
-
+            queue.Enqueue(theEdge.Source, theEdge.Target, true) |> ignore
 
             while queue.Count > 0 do
-                let (currInVertex, currOutVertex, isUnique) = queue.Dequeue() 
-                if not <| visited.Contains (currInVertex, currOutVertex, isUnique)
+                let (currInVertex, currOutVertex, isBottleNeck) = queue.Dequeue() 
+                if not <| visited.Contains (currInVertex, currOutVertex, isBottleNeck)
                 then
                     let newSource = 
-                        if not isUnique
-                        then inToRedund currInVertex currOutVertex
-                        else uniqueVertex 
-                    if not isUnique && 
-                            Seq.exists ((=) currOutVertex) fsa.FinalState && 
-                            Seq.exists ((=) currInVertex) fsa.FinalState &&
-                            not (zeroStepFromUnique.Contains newSource)
+                        if not isBottleNeck
+                        then makeRedund currInVertex currOutVertex
+                        else bottleNeck 
+                                                
+                    let addRedundEdge source target tag = 
+                        let newTarget = makeRedund source target
+                        let newEdge = new EdgeFSA<_>(newSource, newTarget, tag)
+                        redundant.AddEdge newEdge |> ignore
+                        queue.Enqueue(source, target, false) |> ignore
+
+                    if not (zeroStepAccesible.Contains newSource)
                     then
-                        inToRedund currInVertex currOutVertex |> redundant.FinalState.Add |> ignore
-                    for inEdge in currInVertex |> fsa.OutEdges do
-                        if (isSymb1 inEdge.Tag || isSymb2 inEdge.Tag) && 
-                                not (zeroStepFromUnique.Contains newSource)
-                        then 
-                            let newTarget = inToRedund inEdge.Target currOutVertex
-                            let newEdge = new EdgeFSA<_>(newSource, newTarget, Eps) 
-                            redundant.AddEdge newEdge |> ignore
-                            queue.Enqueue(inEdge.Target, currOutVertex, false) |> ignore
-                    for outEdge in currOutVertex |> fsa.OutEdges do
-                        if isSymb2 outEdge.Tag || isSymb1 outEdge.Tag 
+                        if not isBottleNeck && 
+                            Seq.exists ((=) currOutVertex) fsa.FinalState && 
+                            Seq.exists ((=) currInVertex) fsa.FinalState
                         then
-                            let newTarget = inToRedund currInVertex outEdge.Target
-                            let newEdge = new EdgeFSA<_>(newSource, newTarget, outEdge.Tag) 
-                            redundant.AddEdge newEdge |> ignore
-                            if zeroStepFromUnique.Contains newSource
-                            then zeroStepFromUnique.Add newTarget |> ignore
-                            queue.Enqueue(currInVertex, outEdge.Target, false) |> ignore
+                            makeRedund currInVertex currOutVertex |> redundant.FinalState.Add |> ignore
+
+                        for inEdge in currInVertex |> fsa.OutEdges |> Seq.filter taggedSpecial do
+                            addRedundEdge inEdge.Target currOutVertex Eps
+
+                    for outEdge in currOutVertex |> fsa.OutEdges do
+                        if taggedSpecial outEdge
+                        then
+                            addRedundEdge currInVertex outEdge.Target outEdge.Tag
+
+                            let newTarget = makeRedund currInVertex outEdge.Target
+                            if zeroStepAccesible.Contains newSource then zeroStepAccesible.Add newTarget |> ignore
                         else
                             for inEdge in currInVertex |> fsa.OutEdges do
                                 if charwiseEqual inEdge.Tag outEdge.Tag
-                                then                                        
-                                    let newTarget = inToRedund inEdge.Target outEdge.Target
-                                    let newEdge = new EdgeFSA<_>(newSource, newTarget, outEdge.Tag)
-                                    redundant.AddEdge newEdge |> ignore
-                                    queue.Enqueue(inEdge.Target, outEdge.Target, false) |> ignore 
-                    visited.Add(currInVertex, currOutVertex, isUnique) |> ignore
+                                then     
+                                    addRedundEdge inEdge.Target outEdge.Target outEdge.Tag
+
+                    visited.Add(currInVertex, currOutVertex, isBottleNeck) |> ignore
+
             let det_redundant = redundant.NfaToDfa
             det_redundant.RemoveExtraPaths
                 
         if not matchEndings.IsEmpty
         then
-            for e in matchEndings do 
-                 (getRedundantPathsThrough toGreedFsa e).PrintToDOT "../../../QuickGraph.FSA.Tests/DOTfsa/fsa_in.dot"
             let all_redund = matchEndings |> List.map (getRedundantPathsThrough toGreedFsa) |> List.reduce union 
 
             let alphabet = new HashSet<_>()                                 
             for edge in toGreedFsa.Edges do
                 alphabet.Add(getChar edge.Tag) |> ignore
+            //todo: implement minus for FSA
             let compl_redund = complementation all_redund alphabet newSmb getChar
-            (intersection toGreedFsa compl_redund equalSmbl).PrintToDOT "../../../QuickGraph.FSA.Tests/DOTfsa/fsa_after.dot"
             intersection toGreedFsa compl_redund equalSmbl
         else
             toGreedFsa
