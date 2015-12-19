@@ -171,6 +171,21 @@ type ``Graph FSA tests`` () =
         checkGraph resFSA 1 4 12 5 "replace_test_16.dot"
 
     [<Test>]
+    member this.``Graph FSA. Replace test 17. Leftmost replace.`` () =
+        let resFSA = FSA<_>.CustomizableReplace(fsaRepl1C11, fsaRepl2C11, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl) (Declarative, Leftmost, All)
+        checkGraph resFSA 1 2 2 3 "replace_test_17.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 18. Leftmost greedy replace.`` () =
+        let resFSA = FSA<_>.CustomizableReplace(fsaRepl1C11, fsaRepl2C11, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl) (Greedy, Leftmost, All)
+        checkGraph resFSA 1 1 1 2 "replace_test_18.dot"
+
+    [<Test>]
+    member this.``Graph FSA. Replace test 19. Leftmost reluctant replace.`` () =
+        let resFSA = FSA<_>.CustomizableReplace(fsaRepl1C11, fsaRepl2C11, fsaRepl3, '~', '^', getChar, newSmb, equalSmbl) (Reluctant, Leftmost, All)
+        checkGraph resFSA 1 1 2 3 "replace_test_19.dot"
+
+    [<Test>]
     member this.``Graph FSA. FSA is empty.`` () =
         Assert.AreEqual(fsaEmpty.IsEmpty, true)
         Assert.AreEqual(fsaRepl1C6.IsEmpty, false)
