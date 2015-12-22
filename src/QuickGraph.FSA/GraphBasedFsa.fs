@@ -9,13 +9,6 @@ open QuickGraph.Collections
 open Microsoft.FSharp.Text
 open HelperTypes
 
-[<Struct>]
-type VerticesSearchString =
-    val startAct: int
-    val endActs: HashSet<int>
-    val verticesSearchStr: HashSet<int>
-    new (sa, ea, vs) = {startAct = sa; endActs = ea; verticesSearchStr = vs}   
-
 type DfaNode<'a> = 
     { Id: int;
       Name: string;
@@ -86,11 +79,17 @@ type internal NfaNodeIdSet(nodes: NfaNodeIdSetBuilder) =
 
 type NodeSetSet = Set<NfaNodeIdSet>
 
+type ReplaceAppetite = Greedy | Reluctant | Declarative
+type ReplaceOrder = Leftmost | Anymost
+type ReplaceAmount = OnlyFirst | All
+
+type ReplaceSemantics = ReplaceAppetite * ReplaceOrder * ReplaceAmount
+
 let newDfaNodeId, reset = 
     let i = ref 0 
     fun () -> let res = !i in incr i; res
-    , fun () -> i := 0
-   
+    , fun () -> i := 0   
+
 
 let fsaToDot strs initState finalState filePrintPath =
     let rank s l =
@@ -215,7 +214,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             else fsa1
   
     ///for FSA
-    let nfaToDfa (inGraph: FSA<'a>):FSA<'a> =
+    static let nfaToDfa (inGraph : FSA<'a>) (optionSymbEquality : IEqualityComparer<_> option) : FSA<'a> =
         if not(inGraph.IsEmpty) then 
             reset ()
             let numNfaNodes = inGraph.VertexCount
@@ -238,7 +237,9 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             // Compute all the immediate one-step moves for a set of NFA states, as a dictionary
             // mapping inputs to destination lists
             let ComputeMoves (nset:NfaNodeIdSet) = 
-                let moves = new MultiMap<_,_>()
+                let moves = match optionSymbEquality with 
+                                | Some symbEquality -> new MultiMap<_,_>(symbEquality)
+                                | None              -> new MultiMap<_,_>()
                 nset.Iterate(fun nodeId -> 
                     for e in inGraph.OutEdges nodeId do
                         if e.Tag <> Eps then AddToMultiMap moves e.Tag e.Target)
@@ -335,7 +336,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             else true     
     
     ///for FSA 
-    static let complementation (fsa:FSA<'a>) (alphabet:HashSet<_>) newSmb getChar =
+    static let complementation (fsa:FSA<'a>) alphabet newSmb getChar =
         if not (fsa.IsEmpty) then 
             let (dfa:FSA<'a>) = fsa.NfaToDfa
             let maxV = Seq.max dfa.Vertices
@@ -377,44 +378,6 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                 new EdgeFSA<_>(0, 0, newSmb ch) |> resFSA.AddVerticesAndEdge  |> ignore
             resFSA
 
- 
-    static let complementationForReplace (fsa:FSA<'a>) (alphabet:HashSet<_>) newSmb getChar =
-        if not (fsa.IsEmpty) then 
-            let (dfa:FSA<'a>) = fsa.NfaToDfa
-            let resFSA = new FSA<_>()
-            resFSA.InitState <- dfa.InitState
-                                                                  
-            let currDict v =
-                let deleteCh = new HashSet<_>()
-                for edge in dfa.OutEdges(v) do
-                    deleteCh.Add (getChar edge.Tag) |> ignore
-                let curChDict = new HashSet<_>()
-                for ch in alphabet do
-                    if not (deleteCh.Contains(ch))
-                    then curChDict.Add(ch) |> ignore
-                curChDict
-
-            resFSA.AddVerticesAndEdgeRange dfa.Edges |> ignore
-
-            for v in dfa.Vertices do
-                for ch in currDict v do
-                    new EdgeFSA<_>(v, v, newSmb ch) |> resFSA.AddVerticesAndEdge  |> ignore
-        
-            for st in resFSA.Vertices do
-                if not (ResizeArray.exists ((=) st) dfa.FinalState) 
-                then resFSA.FinalState.Add(st)
-        
-            resFSA
-
-        else 
-            let resFSA = new FSA<_>()
-            resFSA.InitState.Add(0) 
-            resFSA.FinalState.Add(0) 
-
-            for ch in alphabet do
-                new EdgeFSA<_>(0, 0, newSmb ch) |> resFSA.AddVerticesAndEdge  |> ignore
-            resFSA
-
     static let removeExtraPaths (fsa:FSA<'a>):FSA<'a> =
         if fsa.EdgeCount > 0 && not(fsa.IsEmpty) then
             let maxV = Seq.max fsa.Vertices                     
@@ -442,6 +405,22 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             fsa
         else
             fsa
+
+
+    static let complementationForReplace (dfa: 'a FSA) alphabet newSmb getChar (symbEquality : IEqualityComparer<_>) =
+        let any = new FSA<_>()
+        any.InitState.Add(0) 
+        any.FinalState.Add(0) 
+
+        for ch in alphabet do
+            new EdgeFSA<_>(0, 0, newSmb ch) |> any.AddVerticesAndEdge  |> ignore
+
+        if dfa.IsEmpty then 
+            any                // todo: there shouldn't be any
+        else
+            let toComplement = nfaToDfa (concat any <| concat dfa any) <| Some symbEquality             
+            complementation toComplement alphabet newSmb getChar 
+
 
     ///for DFAs
     static let intersection (dfa1:FSA<_>) (dfa2:FSA<_>) equalSmbl =
@@ -481,9 +460,127 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             if dfa1.IsEmpty then dfa1
             else dfa2
 
+    static let getRedundantPathsThrough (fsa: _ FSA) (theEdge: EdgeFSA<_>) smb1 smb2 newSmb charwiseEqual : _ FSA =  
+        let redundant = new FSA<_>()
+        redundant.InitState <- fsa.InitState
+        redundant.AddVertexRange(fsa.InitState) |> ignore
+        redundant.AddVerticesAndEdgeRange(fsa.Edges) |> ignore
+            
+        let taggedSymb1 (edge: _ EdgeFSA) = charwiseEqual (newSmb smb1) edge.Tag
+        let taggedSymb2 (edge: _ EdgeFSA) = charwiseEqual (newSmb smb2) edge.Tag
+        let taggedSpecial edge = taggedSymb1 edge || taggedSymb2 edge
+        let equallyTagged (e1: _ EdgeFSA) (e2: _ EdgeFSA) = charwiseEqual e1.Tag e2.Tag
+
+        let toRedund = new Dictionary<_,_>()
+        let makeRedund = (fun x y -> toRedund.[(x, y, false)])
+
+        let i = ref ((Seq.max redundant.Vertices) + 1)
+        for p1 in fsa.Vertices do
+            for p2 in fsa.Vertices do
+                toRedund.Add((p1, p2, false), !i) |> ignore
+                makeRedund p1 p2 |> redundant.AddVertex |> ignore
+                i := !i + 1
+                     
+        let bottleNeck = !i
+        redundant.AddVertex bottleNeck |> ignore
+          
+        let bottleNeckTag = if taggedSymb2 theEdge then theEdge.Tag else Eps                
+        let bottleNeckEdge = new EdgeFSA<_> (theEdge.Source, bottleNeck, bottleNeckTag)
+        redundant.AddEdge bottleNeckEdge |> ignore
+
+        let visited = new HashSet<_>()    
+        let zeroStepAccesible = new HashSet<_>()     
+        zeroStepAccesible.Add(bottleNeck) |> ignore   
+        let queue = new Queue<_>()
+
+        if taggedSymb1 theEdge 
+        then
+            queue.Enqueue(theEdge.Target, theEdge.Source, true) |> ignore
+        else
+            queue.Enqueue(theEdge.Source, theEdge.Target, true) |> ignore
+
+        while queue.Count > 0 do
+            let (currInVertex, currOutVertex, isBottleNeck) = queue.Dequeue() 
+            if not <| visited.Contains (currInVertex, currOutVertex, isBottleNeck)
+            then
+                let newSource = 
+                    if not isBottleNeck
+                    then makeRedund currInVertex currOutVertex
+                    else bottleNeck 
+                                                
+                let addRedundEdge source target tag = 
+                    let newTarget = makeRedund source target
+                    let newEdge = new EdgeFSA<_>(newSource, newTarget, tag)
+                    redundant.AddEdge newEdge |> ignore
+                    queue.Enqueue(source, target, false) |> ignore
+                        
+                if not (zeroStepAccesible.Contains newSource) &&
+                    Seq.exists ((=) currOutVertex) fsa.FinalState && 
+                    Seq.exists ((=) currInVertex) fsa.FinalState
+                then
+                    makeRedund currInVertex currOutVertex |> redundant.FinalState.Add |> ignore
+                            
+                if (taggedSymb1 theEdge) || not (zeroStepAccesible.Contains newSource)
+                then
+                    for inEdge in currInVertex |> fsa.OutEdges |> Seq.filter taggedSpecial do
+                        addRedundEdge inEdge.Target currOutVertex Eps
+                    
+                if (taggedSymb2 theEdge) || not (zeroStepAccesible.Contains newSource)
+                then
+                    for outEdge in currOutVertex |> fsa.OutEdges |> Seq.filter taggedSpecial do
+                        addRedundEdge currInVertex outEdge.Target outEdge.Tag                            
+                        let newTarget = makeRedund currInVertex outEdge.Target
+                        if zeroStepAccesible.Contains newSource then zeroStepAccesible.Add newTarget |> ignore
+
+                for outEdge in currOutVertex |> fsa.OutEdges |> Seq.filter ((not) << taggedSpecial) do
+                    for inEdge in currInVertex |> fsa.OutEdges |> Seq.filter (equallyTagged outEdge) do
+                        addRedundEdge inEdge.Target outEdge.Target outEdge.Tag
+
+                visited.Add(currInVertex, currOutVertex, isBottleNeck) |> ignore
+
+        let det_redundant = redundant.NfaToDfa
+        det_redundant.RemoveExtraPaths
+
+    static let removeRedundantPathsThrough (fsa: _ FSA) theSmb smb1 smb2 getChar newSmb charwiseEqual equalSmbl =
+        let needsToBeHandled (edge : EdgeFSA<_>) = (charwiseEqual edge.Tag theSmb) && 
+                                                   (edge.Source |> fsa.OutEdges |> Seq.length) > 1
+
+        let edgesToHandle = fsa.Edges |> Seq.filter needsToBeHandled |> List.ofSeq
+                           
+        if not edgesToHandle.IsEmpty
+        then
+            let getRedundantPaths edge = getRedundantPathsThrough fsa edge smb1 smb2 newSmb charwiseEqual
+            let allRedundandPaths = edgesToHandle |> List.map getRedundantPaths |> List.reduce union 
+
+            let alphabet = new HashSet<_>()                                 
+            for edge in fsa.Edges do
+                alphabet.Add(getChar edge.Tag) |> ignore
+
+            //todo: implement minus for FSA
+            let complementForRedundant = complementation allRedundandPaths alphabet newSmb getChar
+            intersection fsa complementForRedundant equalSmbl
+        else
+            fsa
+
+            
+    static let greedifyMatchFsa (toGreedFsa: _ FSA) smb1 smb2 getChar newSmb charwiseEqual equalSmbl =
+        removeRedundantPathsThrough toGreedFsa (newSmb smb2) smb1 smb2 getChar newSmb charwiseEqual equalSmbl
+
+
+    static let toLeftmostMatchFsa (toLeftmostFsa: _ FSA) smb1 smb2 getChar newSmb charwiseEqual equalSmbl =
+        toLeftmostFsa.PrintToDOT "../../../QuickGraph.FSA.Tests/DOTfsa/fsa_before.dot"
+        removeRedundantPathsThrough toLeftmostFsa (newSmb smb1) smb1 smb2 getChar newSmb charwiseEqual equalSmbl
+        
+
+    static let reluctantMatchFsa (toReluctantFsa: _ FSA) smb1 smb2 getChar newSmb charwiseEqual =
+        let isSmb2Tagged (edge : EdgeFSA<_>) = (charwiseEqual edge.Tag (newSmb smb2)) 
+        let toHandle = toReluctantFsa.Edges |> Seq.filter isSmb2Tagged |> Seq.map (fun (edge : EdgeFSA<_>) -> edge.Source)
+        let toRemove = toHandle |> Seq.map toReluctantFsa.OutEdges |> Seq.concat |> Seq.filter ((not) << isSmb2Tagged) |>List.ofSeq
+        toRemove |> List.map toReluctantFsa.RemoveEdge |> ignore
+
     ///for FSAs
     ///TODO: handle of FSA_2 which accept only empty string -> return FSA_1 which after every transition insert FSA_3
-    static let replace (fsa1_in:FSA<_>) (fsa2_in:FSA<_>) (fsa3_in:FSA<_>) smb1 smb2 getChar newSmb equalSmbl = 
+    static let replace (fsa1_in:FSA<_>) (fsa2_in:FSA<_>) (fsa3_in:FSA<_>) smb1 smb2 getChar newSmb equalSmbl (semantics:ReplaceSemantics) = 
         if (fsa1_in.IsEmpty || fsa2_in.IsEmpty || fsa3_in.IsEmpty)
         then fsa1_in
         else
@@ -494,10 +591,19 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             
             if fsa1.EdgeCount = 0 && fsa1.FinalState.Count = 1 && fsa1.FinalState.[0] = fsa1.InitState.[0] //FSA1 accept only empty string
             then 
-                if ResizeArray.exists ((=) fsa2.InitState.[0]) fsa2.FinalState   //FSA2 accept empty string
+                if fsa2.FinalState.Contains fsa2.InitState.[0]                     //FSA2 accept empty string
                 then fsa3_in
                 else fsa1_in
-            else 
+            else                 
+                let charwiseEquality =
+                    { new IEqualityComparer<Symb<'a>> with
+                        member this.Equals (p1, p2) = match (p1, p2) with
+                          | (Smbl s1, Smbl s2) -> equalSmbl s1 s2
+                          | (Eps, Eps) -> true
+                          | _ -> false
+                        member this.GetHashCode s   = (getChar s).GetHashCode() }
+                let charwiseEqual = (fun x y -> charwiseEquality.Equals (x, y))
+
                 //Step 1. Construct fsa1_tmp from fsa1
                 let fsa1_tmp = new FSA<_>()
                 fsa1_tmp.InitState <- fsa1.InitState
@@ -505,152 +611,126 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                 fsa1_tmp.AddVertexRange(fsa1.FinalState) |> ignore
                 fsa1_tmp.AddVertexRange(fsa1.InitState) |> ignore
                 fsa1_tmp.AddVerticesAndEdgeRange(fsa1.Edges) |> ignore
-        
-                let maxVert = Seq.max fsa1.Vertices
-
-                let fsa1Dict = new Dictionary<_,_>()
-                let i = ref (maxVert + 1)
-                for v in fsa1.Vertices do
-                    fsa1Dict.Add(v, !i)
-                    i := !i + 1
-                        
+                              
+                let to1_tmp = (+) (Seq.max fsa1_tmp.Vertices - Seq.min fsa1.Vertices + 1)
+  
                 for edge in fsa1.Edges do
-                    new EdgeFSA<_>(fsa1Dict.[edge.Source], fsa1Dict.[edge.Target], edge.Tag) |> fsa1_tmp.AddVerticesAndEdge |> ignore            
-        
+                    new EdgeFSA<_>(to1_tmp edge.Source, to1_tmp edge.Target, edge.Tag) |> fsa1_tmp.AddVerticesAndEdge |> ignore    
+      
                 for v in fsa1.Vertices do
-                    new EdgeFSA<_>(v, fsa1Dict.[v], newSmb smb1) |> fsa1_tmp.AddVerticesAndEdge |> ignore
-                    new EdgeFSA<_>(fsa1Dict.[v], v, newSmb smb2) |> fsa1_tmp.AddVerticesAndEdge |> ignore
+                    new EdgeFSA<_>(v, to1_tmp v, newSmb smb1) |> fsa1_tmp.AddVerticesAndEdge |> ignore
+                    new EdgeFSA<_>(to1_tmp v, v, newSmb smb2) |> fsa1_tmp.AddVerticesAndEdge |> ignore
 
                 //Step 2. Construct fsa2_tmp from fsa2       
-                let alphabetFSAs = new HashSet<_>() //alphabets of fsa1 and fsa2
 
+                let alphabetFSAs = new HashSet<_>() //alphabets of fsa1 and fsa2
+                                
                 for edge in fsa1.Edges do
                     alphabetFSAs.Add(getChar edge.Tag) |> ignore
 
                 for edge in fsa2.Edges do
                     alphabetFSAs.Add(getChar edge.Tag) |> ignore
                 
-                let (fsa_compl:FSA<_>) = complementationForReplace fsa2 alphabetFSAs newSmb getChar
-                //fsa_compl.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_compl.dot"
-                //construct fsa2_tmp
-                let fsa2_tmp = new FSA<_>()
-                fsa2_tmp.InitState <- fsa_compl.InitState
-                fsa2_tmp.FinalState <- fsa_compl.FinalState
-                fsa2_tmp.AddVertexRange(fsa_compl.FinalState) |> ignore
-                fsa2_tmp.AddVertexRange(fsa_compl.InitState) |> ignore
-                fsa2_tmp.AddVerticesAndEdgeRange(fsa_compl.Edges) |> ignore
-
-                //перенумеровать вершины fsa2
-                let maxVertFsa2Step2 = Seq.max fsa_compl.Vertices
-                let fsa2DictStep2 = new Dictionary<_,_>()
-                let iStep2 = ref (maxVertFsa2Step2 + 1)
-                for v in fsa2.Vertices do
-                    fsa2DictStep2.Add(v, !iStep2)
-                    iStep2 := !iStep2 + 1
+                let (fsa2_tmp: _ FSA) = complementationForReplace fsa2 alphabetFSAs newSmb getChar charwiseEquality
+                
+                //renumerating fsa2's vertices                
+                let to2_tmp = (+) (Seq.max fsa2_tmp.Vertices - Seq.min fsa2.Vertices + 1)
 
                 for edge in fsa2.Edges do
-                    new EdgeFSA<_>(fsa2DictStep2.[edge.Source], fsa2DictStep2.[edge.Target], edge.Tag) |> fsa2_tmp.AddVerticesAndEdge |> ignore 
+                    new EdgeFSA<_>(to2_tmp edge.Source, to2_tmp edge.Target, edge.Tag) |> fsa2_tmp.AddVerticesAndEdge |> ignore 
 
-                for v in fsa_compl.FinalState do
-                    new EdgeFSA<_>(v, fsa2DictStep2.[fsa2.InitState.[0]], newSmb smb1) |> fsa2_tmp.AddVerticesAndEdge |> ignore
+                for v in fsa2_tmp.FinalState do
+                    new EdgeFSA<_>(v, to2_tmp fsa2.InitState.[0], newSmb smb1) |> fsa2_tmp.AddVerticesAndEdge |> ignore
             
                 for v in fsa2.FinalState do
-                    new EdgeFSA<_>(fsa2DictStep2.[v], fsa_compl.InitState.[0], newSmb smb2) |> fsa2_tmp.AddVerticesAndEdge |> ignore      
+                    new EdgeFSA<_>(to2_tmp v, fsa2_tmp.InitState.[0], newSmb smb2) |> fsa2_tmp.AddVerticesAndEdge |> ignore      
                       
                 //Step 3. Generate fsa_tmp as intersection of fsa1_tmp and fsa2_tmp
-                //fsa1_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa1_tmp.dot"
-                //fsa2_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa2_tmp.dot"
-                let (fsa_tmp:FSA<_>) = FSA<_>.Intersection(fsa1_tmp, fsa2_tmp, equalSmbl)
-                //fsa_tmp.PrintToDOT "../../../FST/FST/FSA.Tests/DOTfsa/fsa_tmp.dot"
+                
+                let fsa_ = intersection fsa1_tmp fsa2_tmp equalSmbl
 
+                //Additional step. Applying semantics.
+                let (appetite, order, amount) = semantics
+
+                let fsa_a =
+                    if appetite = Greedy
+                    then 
+                        greedifyMatchFsa fsa_ smb1 smb2 getChar newSmb charwiseEqual equalSmbl
+                    elif appetite = Reluctant
+                    then 
+                        reluctantMatchFsa fsa_ smb1 smb2 getChar newSmb charwiseEqual |> ignore
+                        fsa_
+                    else 
+                        fsa_
+
+                let fsa_ao =
+                    if order = Leftmost
+                    then 
+                        toLeftmostMatchFsa fsa_a smb1 smb2 getChar newSmb charwiseEqual equalSmbl
+                    else 
+                        fsa_a
+
+                let fsa_tmp = fsa_ao                
+                
                 let resFSA = 
                     if not (fsa_tmp.IsEmpty) //result of intersection is not empty?
-                    then 
-                        //Step 4. Construct resFSA from fsa_tmp, delete #1, #2
-            
-                        //search 'reachable' state which is source vertex for edge with tag #1
-                        let reach = new HashSet<_>()
+                    then             
+                        //Step 4. Construct resFSA from fsa_tmp by replacing paths btween #1 and #2 to fsa3
 
-                        for edge in fsa_tmp.Edges do
-                            if getChar edge.Tag = smb1
-                            then reach.Add(edge.Source) |> ignore
+                        // making one final vertex in fsa3. just to simplify code below and 
+                        // reduce number of epsilon transitions which will be added to fsa_tmp later.
+                        if fsa3.FinalState.Count > 1
+                        then 
+                            let newVertex = Seq.max fsa3.Vertices + 1
+                            fsa3.AddVertex newVertex |> ignore
+                            fsa3.FinalState |> Seq.map (fun vertex -> new EdgeFSA<_>(vertex, newVertex, Eps)) |> fsa3.AddEdgeRange |> ignore
+                            fsa3.FinalState <- ResizeArray.singleton newVertex
         
-                        let visited = new HashSet<_>()
+                        // bf search vertices with out edge labeled by #2 reachable from given vertex.
+                        // by reachable I mean reachability without using edges labeled by #2
+                        let findFinalVertices vertex (graphFsa: _ FSA) =   
+                            let visited = new HashSet<_>()        
+                            let queue = new Queue<_>()
+                            queue.Enqueue(vertex) |> ignore
 
-                        let bfs vertex (graphFsa: FSA<_>) =
-                            let targetAct = new HashSet<_>()
-                            let verticesSearchStr = new HashSet<_>()            
-                            let queueV = new Queue<_>()
-                            queueV.Enqueue(vertex)               
+                            seq {
+                                while queue.Count > 0 do
+                                    let currentVertex = queue.Dequeue()
+                                    if not <| visited.Contains currentVertex 
+                                    then
+                                        visited.Add currentVertex |> ignore
+                                        for v in graphFsa.OutEdges(currentVertex) do
+                                            if v.Tag = newSmb smb2
+                                            then yield v.Target                       
+                                            else queue.Enqueue v.Target |> ignore
+                            }
+   
+                        // there is always only one (or none) vertex returning (see comments above)
+                        let getVertexAfterSymb1 v = fsa_tmp.OutEdges(v) |> Seq.filter (fun edge -> edge.Tag = newSmb smb1) |> Seq.map (fun edge -> edge.Target)
+                        
+                        // search states with out edge labeled by #1
+                        let startVertices = [for edge in fsa_tmp.Edges do if edge.Tag = newSmb smb1 then yield edge.Source]
 
-                            while queueV.Count > 0 do
-                                let topV = queueV.Dequeue()
-                                if not <| visited.Contains(topV) 
-                                then
-                                    visited.Add(topV) |> ignore
-                                    for v in graphFsa.OutEdges(topV) do
-                                        if getChar v.Tag = smb2
-                                        then 
-                                            targetAct.Add v.Target |> ignore 
-                                            verticesSearchStr.Add v.Source |> ignore                             
-                                        else 
-                                            queueV.Enqueue v.Target
-                                            verticesSearchStr.Add v.Target |> ignore
-                                            verticesSearchStr.Add v.Source |> ignore
-                                                                                       
-                            visited.Clear()                                   
-                            (targetAct, verticesSearchStr)
-    
-                        let findVert = new ResizeArray<_>()  
+                        // renumerator for first fsa3
+                        let forFsa3 = 1 + Seq.max fsa_tmp.Vertices - Seq.min fsa3.Vertices
+                        // adding for next fsa3
+                        let forYetAnother = 1 + Seq.max fsa3.Vertices - Seq.min fsa3.Vertices
 
-                        let getVert v =
-                            let vert = HashSet<_>()
-                            for edge in fsa_tmp.OutEdges(v) do
-                                if getChar edge.Tag = smb1
-                                then vert.Add(edge.Target) |> ignore
-                            vert
+                        for (vertex, count) in Seq.zip startVertices <| seq {0 .. startVertices.Length - 1} do      
+                            let to_tmp = (+) (forFsa3 + count * forYetAnother)
 
-                        for vReach in reach do
-                            let vSet = getVert vReach
-                            for outVReach in vSet do              
-                                let searchStr = bfs outVReach fsa_tmp
-                                let vertSearchStr = new VerticesSearchString(vReach, fst searchStr, snd searchStr)
-                                findVert.Add vertSearchStr
-                   
-                        //перенумеровывать вершины FSA3 при каждом добавлении их в FSA1
-                        let maxVertCurr = Seq.max fsa_tmp.Vertices
-                        let iCurr = ref (maxVertCurr + 1)
+                            let finalVertices = findFinalVertices (Seq.head <| getVertexAfterSymb1 vertex) fsa_tmp
+                            new EdgeFSA<_>(vertex, to_tmp fsa3.InitState.[0], Eps) |> fsa_tmp.AddVerticesAndEdge |> ignore
+                            for finalVertex in finalVertices do
+                                new EdgeFSA<_>(to_tmp fsa3.FinalState.[0], finalVertex, Eps) |> fsa_tmp.AddVerticesAndEdge |> ignore
+                            for edgeFsa3 in fsa3.Edges do
+                                new EdgeFSA<_>(to_tmp edgeFsa3.Source, to_tmp edgeFsa3.Target, edgeFsa3.Tag) |> fsa_tmp.AddVerticesAndEdge |> ignore
 
-                        let changeNumerationFSA3() = 
-                            let fsa3Dict = new Dictionary<_,_>()
-                            for v in fsa3.Vertices do
-                                fsa3Dict.Add(v, !iCurr)
-                                iCurr := !iCurr + 1
-                            fsa3Dict
-
-                        let mutable fsa3DictCurr = changeNumerationFSA3()
-
-                        for vReach in reach do                    
-                            let findInfoForVReach = findVert.Find(fun x -> x.startAct = vReach)
-                            for finalVReach in findInfoForVReach.endActs do
-                                new EdgeFSA<_>(vReach, fsa3DictCurr.[fsa3.InitState.[0]], Eps) |> fsa_tmp.AddVerticesAndEdge |> ignore
-                                for finalVFSA3 in fsa3.FinalState do
-                                    new EdgeFSA<_>(fsa3DictCurr.[finalVFSA3], finalVReach, Eps) |> fsa_tmp.AddVerticesAndEdge |> ignore
-                                for edgeFsa3 in fsa3.Edges do
-                                    new EdgeFSA<_>(fsa3DictCurr.[edgeFsa3.Source], fsa3DictCurr.[edgeFsa3.Target], edgeFsa3.Tag) |> fsa_tmp.AddVerticesAndEdge |> ignore
-                                fsa3DictCurr <- changeNumerationFSA3()
-
-                        for vReach in reach do 
-                            let findInfoForVReach = findVert.Find(fun x -> x.startAct = vReach)
-                            //delete verts from fsa_tmp
-                            for vUnused in findInfoForVReach.verticesSearchStr do
-                                fsa_tmp.RemoveVertex(vUnused) |> ignore
-                                fsa_tmp.FinalState.Remove(vUnused) |> ignore
-                                fsa_tmp.InitState.Remove(vUnused) |> ignore
-
+                        // Step 5. Removing #1 and #2 edges.
+                        fsa_tmp.RemoveEdgeIf (fun edge -> edge.Tag = newSmb smb1 || edge.Tag = newSmb smb2) |> ignore                                      
+                        fsa_tmp.RemoveExtraPaths |> ignore
                         fsa_tmp.NfaToDfa
                     else fsa1
-
                 resFSA
 
     static let isSubFsa (a1: FSA<_>) (a2: FSA<_>) (fsaParams: FsaParams<_,_>) = 
@@ -660,7 +740,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         then
             let a2Complement = complementation a2 fsaParams.Alphabet fsaParams.NewSymbol fsaParams.GetChar
             let intersFsa = FSA<_>.Intersection (a1, a2Complement, fsaParams.SymbolsAreEqual)
-            intersFsa.IsEmpty
+            (intersFsa : FSA<_>).IsEmpty
         else false
 
     // Widening operator implementation
@@ -898,7 +978,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
     new () = 
         FSA<_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<_>())
     
-    member this.NfaToDfa = nfaToDfa this
+    member this.NfaToDfa = nfaToDfa this None
     member this.RemoveExtraPaths = removeExtraPaths this
     member val InitState =  initial with get, set
     member val FinalState = final with get, set
@@ -908,7 +988,10 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
     member this.Union fsa2 = union this fsa2
     static member Union(fsa1, fsa2) = union fsa1 fsa2
     ///fsa1 -- original strings; fsa2 -- match strings; fsa3 -- replacement strings, FSAs are not empty
-    static member Replace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl
+    static member Replace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl (Declarative, Anymost, All)
+    static member GreedyReplace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl (Greedy, Anymost, All)
+    static member ReluctantReplace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl (Reluctant, Anymost, All)
+    static member CustomizableReplace(fsa1, fsa2, fsa3, smb1, smb2, getChar, newSmb, equalSmbl) = replace fsa1 fsa2 fsa3  smb1 smb2 getChar newSmb equalSmbl
     member this.Complementation(alphabet, newSmb,  getChar) = complementation this alphabet newSmb getChar 
     static member Intersection(fsa1, fsa2, equalSmbl) = intersection fsa1 fsa2 equalSmbl
     member this.IsEmpty =  isEmptyFSA this
