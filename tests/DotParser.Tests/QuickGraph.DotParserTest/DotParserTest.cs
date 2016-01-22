@@ -10,7 +10,7 @@ namespace QuickGraph.DotParserTest
         [TestMethod]
         public void TestMethod1()
         {
-            var str = "strict graph t { 6 [lable = \"v1\"] \n 1 -- 2 -- 3 \n 2 -- 1 \n 1 -- 1 \n 3 -- 4 \n }";
+            var str = "strict graph t { 6 [label = \"v1\"] \n 1 -- 2 -- 3 \n 2 -- 1 \n 1 -- 1 \n 3 -- 4 \n }";
             Func<string, Tuple<string, string>[], string> f = (v, attrs) => v;
             Func<string, string, Tuple<string, string>[], SUndirectedEdge<string>> f2 = (v1, v2, attrs) => new SUndirectedEdge<string>(v1, v2);
             var g1 = BidirectionalGraph<string, SUndirectedEdge<string>>.LoadDotString(str, f, f2);
