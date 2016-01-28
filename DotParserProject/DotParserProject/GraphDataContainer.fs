@@ -1,166 +1,108 @@
 ﻿module DotParserProject.GraphDataContainer
 
+open Option
 open System.Collections.Generic
 open System.IO
-open Option
 
 type GraphDataContainer = class
-    val public vertices_lists : ResizeArray<string list>
-    val private graph_info : Dictionary<string, string>
-    val public vertices_attrs :  Dictionary<string, (string*string) list>
-    val private edges_attrs :  Dictionary<string, (string*string) list>
-    val private general_attrs : Dictionary<string, (string*string) list>
-    val private assign_stmt_list : ResizeArray<string*string>
+    val mutable private isStrict : bool // todo: check this when adding edges
+    val mutable private isDirected : bool
+    val mutable private name : string
 
+    val private edges : ResizeArray<string * string * ((string * string) list)>
+    val private nodes : Dictionary<string, Dictionary<string, string>>
+    val private edgesAttributes : Dictionary<string, string>
+    val private graphAttributes : Dictionary<string, string>
+    val private nodesAttributes : Dictionary<string, string>
+
+    val private assign_stmt_list : ResizeArray<string*string> // todo: rewrite assignment statements 
+    
     new () = {
-        vertices_lists = new ResizeArray<string list>()
-        graph_info = new Dictionary<string, string>()
-        vertices_attrs = new Dictionary<string, (string*string) list>()
-        edges_attrs = new Dictionary<string, (string*string) list>()
-        general_attrs = new Dictionary<string, (string*string) list>()
+        isStrict = false
+        isDirected = false
+        name = null
+
+        edges = new ResizeArray<_>()
+        nodes = new Dictionary<_, _>()
+        edgesAttributes = new Dictionary<_, _>()
+        graphAttributes = new Dictionary<_, _>()
+        nodesAttributes = new Dictionary<_, _>()
+
         assign_stmt_list = new ResizeArray<string*string>()
-        }
+    }
 
-    // methods for collecting graph's data
-    member x.AddGeneralInfo (info_list: list<string*string>) =
-        let new_info = info_list |> List.filter (fun (key,value) -> not (x.graph_info.ContainsKey key))
-        new_info |> List.map x.graph_info.Add |> ignore
+    member x.IsStrict() = x.isStrict
+    member x.IsDirected() = x.isDirected
+    member x.GetName() = x.name
 
-    member x.AddGeneralAttrs key value =
-        x.AddAttrToDict key value x.general_attrs
+    member x.GetEdges() = [| for v1, v2, attr in x.edges -> v1, v2, Array.ofList attr |]
+    member x.GetNodes() = [| for KeyValue(node, attributes) in x.nodes ->
+                                (node, [| for KeyValue(k, v) in attributes ->  (k, v) |]) |]
 
-    member x.AddEdgeStmtData (elems_list: list<string>) (attr_list: list<string*string>) = 
-        if not elems_list.IsEmpty then 
-            x.vertices_lists.Add elems_list
-        if not attr_list.IsEmpty then
-            x.AddAttrToDict (elems_list.ToString()) attr_list x.edges_attrs
-            
-    member x.AddNodeStmtData (elems_list: list<string>) (attr_list: list<string*string>) = 
-        if not elems_list.IsEmpty then 
-            x.vertices_lists.Add elems_list
-        if not attr_list.IsEmpty then
-            x.AddAttrToDict (elems_list.ToString()) attr_list x.vertices_attrs
+
+    member x.AddGeneralInfo isStrict graphType name =
+        x.isDirected <- graphType.Equals "digraph"
+        x.isStrict <- isSome isStrict
+        x.name <- if isSome name then get name else ""
+
+
+    member x.AddGeneralAttrs key attributes =
+        let dict =
+            match key with
+            | "edge" -> Some x.edgesAttributes
+            | "graph" -> Some x.graphAttributes
+            | "node" -> Some x.nodesAttributes
+            | _ -> None
+
+        match dict with
+        | Some d -> for (k, v) in attributes do d.[k] <- v
+        | None -> ()
+
+        
+    member private x.AddEdges nodes attributes =
+        match nodes with
+        | v1 :: v2 :: tail ->
+            x.edges.Add (v1, v2, attributes @ [for KeyValue(k, v) in x.edgesAttributes -> (k, v)])
+            x.AddEdges (v2 :: tail) attributes
+        | _ -> ()
+
+
+    member private x.CreateNode node =
+        if not <| x.nodes.ContainsKey node then
+            let dict = new Dictionary<_, _>()
+            for KeyValue(k, v) in x.nodesAttributes do dict.[k] <- v
+            x.nodes.[node] <- dict
+
+
+    member x.AddEdgeStmtData nodes attributes = 
+        x.AddEdges nodes attributes
+        for node in nodes do x.CreateNode node
+
+
+    member x.AddNodeStmtData node attributes =
+        x.CreateNode node
+        
+        let dict = x.nodes.[node]
+        for k, v in attributes do
+             dict.[k] <- v
+
 
     member x.AddAssignStmt key value =
         x.assign_stmt_list.Add (key, value) |> ignore 
-
-    //methods to get collected data
-    member x.GraphName() = x.graph_info.Item "name"
-    member x.IsStrict() = (x.graph_info.Item "is_strict").Equals "strict"
-    member x.Type() = x.graph_info.Item "type"
-
-    member x.GraphAttributes() =
-        if x.general_attrs.ContainsKey "graph" then x.general_attrs.Item "graph" else []
-    member x.NodeAttributes() = 
-        if x.general_attrs.ContainsKey "node" then x.general_attrs.Item "node" else []
-    member x.EdgeAttributes() = 
-        if x.general_attrs.ContainsKey "edge" then x.general_attrs.Item "edge" else []
-
-    member x.AssignStatements() = x.assign_stmt_list.ToArray()
-            
-    member x.VerticeTags vertice_name =
-        match x.vertices_attrs.ContainsKey vertice_name with
-        | true -> x.vertices_attrs.Item vertice_name
-        | false -> []
-
-    member x.GetVerticeArray() =
-        let lists = seq {for i in 0 .. (ResizeArray.length x.vertices_lists) - 1 do
-                                yield x.vertices_lists.Item i}
-        let seq_with_duplicates = Seq.concat lists
-        List.ofSeq (Seq.distinct seq_with_duplicates)
-     
-         
-    member x.GetEdgeArray handler =
-        let WalkWithHandler lst = x.WalkEdges handler lst [||]
-        x.Walk WalkWithHandler
-
-    member x.GetTaggedEdgeArray handler =
-        let WalkWithHandler lst = x.WalkEdgesAndTags handler lst [||]
-        x.Walk WalkWithHandler
-
-    //private section
-    member private x.AddAttrToDict key value (attrs_list:Dictionary<string, (string*string) list>) =
-        let contains_node = attrs_list.ContainsKey key
-        if not contains_node then 
-            attrs_list.Add (key, value)
-        else
-            attrs_list.[key] <- List.concat [attrs_list.[key]; value]
-
-    member private x.WalkEdges handler (lst: string list) edges =
-        match lst with
-        | first::second::rest ->
-            let edges = Array.append edges [|(handler first second)|]
-            x.WalkEdges handler (second::rest) edges
-        | head::rest -> edges
-        | [] -> edges
-    
-    member private x.WalkEdgesAndTags handler (lst: string list) edges =
-        match lst with
-        | first::second::rest ->
-            let edge = ResizeArray.find (fun list -> x.FindEdge first second list) x.vertices_lists
-            let str_edge = edge.ToString()
-            match x.edges_attrs.ContainsKey str_edge with
-            | true ->
-                let edges = Array.append edges [|(handler first second (x.edges_attrs.Item str_edge))|]
-                x.WalkEdgesAndTags handler (second::rest) edges
-            | false ->
-                let edges = Array.append edges [|(handler first second [])|]
-                x.WalkEdgesAndTags handler (second::rest) edges
-        | head::rest -> edges
-        | [] -> edges
-
-    member private x.Walk handler =
-        let res = ResizeArray.map handler x.vertices_lists
-        let res_seq = seq {for i in 0 .. (ResizeArray.length res) - 1 do
-                                yield res.Item i}
-        Array.concat res_seq
-
-    member private x.FindEdge (v1: string) (v2: string) (vert_lists : string list) =
-        let res1 = List.tryFind v1.Equals vert_lists
-        let res2 = List.tryFind v2.Equals vert_lists
-        match (isSome res1) && (isSome res2) with
-        | true -> true
-        | false -> false
-    
+       
+    // todo: remove or move to Utils    
     member x.PrintAllCollectedData() =
-        printfn "\nGeneral info:"
-        for entry in x.graph_info do printf "%A " entry
-        printfn "\n\nGeneral attributes:"
-        for entry in x.general_attrs do printfn "%A: %A" entry.Key entry.Value
-        printfn "\nVertices lists:"
-        x.vertices_lists |> ResizeArray.iter (printfn "%A")
-        printfn "\nVertices attributes:"
-        for entry in x.vertices_attrs do printfn "%A: %A" entry.Key entry.Value
+        printfn "\nNodes attributes:"
+        for entry in x.nodesAttributes do printfn "%A: %A" entry.Key entry.Value
+
         printfn "\nEdges attributes:"
-        for entry in x.edges_attrs do printfn "%A: %A" entry.Key entry.Value
-        printfn "\nAssign statements:"
-        x.assign_stmt_list |> ResizeArray.iter (printfn "%A")
+        for entry in x.edgesAttributes do printfn "%A: %A" entry.Key entry.Value
 
-    // debugging method)
-    member x.ToFiles() =
-        let f_general_info = "..\\..\\..\\test_output\\collected_data_gen_info.txt"
-        let f_vert = "..\\..\\..\\test_output\\collected_data_vertices.txt"
-        let f_vert_attrs = "..\\..\\..\\test_output\\collected_data_vert_attrs.txt"
-        let f_edges = "..\\..\\..\\test_output\\collected_data_edges.txt"
-        let f_assign_list = "..\\..\\..\\test_output\\collected_data_assign_list.txt"
+        printfn "\nEdges:"
+        for edge in x.edges do printfn "%A" edge
 
-        let out_gen = File.CreateText f_general_info
-        let out_vert = File.CreateText f_vert
-        let out_vert_attrs = File.CreateText f_vert_attrs
-        let out_edges = File.CreateText f_edges
-        let out_assign = File.CreateText f_assign_list
+        printfn "\nNodes:"
+        for KeyValue(k, v) in x.nodes do printfn "%A: %A" k v
 
-        for entry in x.graph_info do out_gen.Write("{0}", entry)
-        out_gen.WriteLine ""
-        for entry in x.general_attrs do out_gen.WriteLine("{0} : {1}", entry.Key, entry.Value)
-        x.vertices_lists |> ResizeArray.iter out_vert.WriteLine
-        for entry in x.vertices_attrs do out_vert_attrs.WriteLine("{0} : {1}", entry.Key, entry.Value)
-        for entry in x.edges_attrs do out_edges.WriteLine("{0} : {1}", entry.Key, entry.Value)
-        x.assign_stmt_list |> ResizeArray.iter (fun (x, y) -> out_assign.WriteLine("{0} : {1}", x, y))
-
-        out_gen.Close()
-        out_vert.Close()
-        out_vert_attrs.Close()
-        out_edges.Close()
-        out_assign.Close()
+        printfn "\n isStrict: %A" x.isStrict
 end
