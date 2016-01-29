@@ -138,7 +138,7 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
          
     ///for FSA, which are not empty
     static member FSAtoFST(fsa:FSA<_>, transform, smblEOF) =
-        let dfa = fsa.NfaToDfa 
+        let dfa = fsa.NfaToDfa()
         
         let edges = new ResizeArray<_>()
         for edge in dfa.Edges do

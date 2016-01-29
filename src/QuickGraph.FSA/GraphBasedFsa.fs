@@ -338,7 +338,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
     ///for FSA 
     static let complementation (fsa:FSA<'a>) alphabet newSmb getChar =
         if not (fsa.IsEmpty) then 
-            let (dfa:FSA<'a>) = fsa.NfaToDfa
+            let (dfa:FSA<'a>) = fsa.NfaToDfa()
             let maxV = Seq.max dfa.Vertices
             let resFSA = new FSA<_>()
             resFSA.InitState <- dfa.InitState
@@ -538,7 +538,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
 
                 visited.Add(currInVertex, currOutVertex, isBottleNeck) |> ignore
 
-        let det_redundant = redundant.NfaToDfa
+        let det_redundant = redundant.NfaToDfa()
         det_redundant.RemoveExtraPaths
 
     static let removeRedundantPathsThrough (fsa: _ FSA) theSmb smb1 smb2 getChar newSmb charwiseEqual equalSmbl =
@@ -584,9 +584,9 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         if (fsa1_in.IsEmpty || fsa2_in.IsEmpty || fsa3_in.IsEmpty)
         then fsa1_in
         else
-            let fsa1 = (removeExtraPaths fsa1_in).NfaToDfa
-            let fsa2 = (removeExtraPaths fsa2_in).NfaToDfa
-            let fsa3 = (removeExtraPaths fsa3_in).NfaToDfa
+            let fsa1 = (removeExtraPaths fsa1_in).NfaToDfa()
+            let fsa2 = (removeExtraPaths fsa2_in).NfaToDfa()
+            let fsa3 = (removeExtraPaths fsa3_in).NfaToDfa()
             //#1 = ~ smb1     #2 = ^ smb2
             
             if fsa1.EdgeCount = 0 && fsa1.FinalState.Count = 1 && fsa1.FinalState.[0] = fsa1.InitState.[0] //FSA1 accept only empty string
@@ -729,7 +729,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                         // Step 5. Removing #1 and #2 edges.
                         fsa_tmp.RemoveEdgeIf (fun edge -> edge.Tag = newSmb smb1 || edge.Tag = newSmb smb2) |> ignore                                      
                         fsa_tmp.RemoveExtraPaths |> ignore
-                        fsa_tmp.NfaToDfa
+                        fsa_tmp.NfaToDfa()
                     else fsa1
                 resFSA
 
@@ -959,8 +959,8 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         |> ResizeArray.ofSeq
         
     static let widen (fsa1: FSA<_>) (fsa2: FSA<_>) (fsaParams: FsaParams<_,_>) =
-        let dfa1 = fsa1.NfaToDfa
-        let dfa2 = fsa2.NfaToDfa
+        let dfa1 = fsa1.NfaToDfa()
+        let dfa2 = fsa2.NfaToDfa()
         let eqClasses = buildEquivalenceClasses dfa1 dfa2 fsaParams
         let wTransitions = createTransitions eqClasses dfa1 dfa2
         let wInits = 
@@ -978,7 +978,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
     new () = 
         FSA<_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<_>())
     
-    member this.NfaToDfa = nfaToDfa this None
+    member this.NfaToDfa() = nfaToDfa this None
     member this.RemoveExtraPaths = removeExtraPaths this
     member val InitState =  initial with get, set
     member val FinalState = final with get, set
