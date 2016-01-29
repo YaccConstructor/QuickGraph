@@ -1,4 +1,4 @@
-# 1 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 1 "DotLexer.fsl"
  
 module DotParserProject.DotLexer
 
@@ -7,8 +7,6 @@ open Microsoft.FSharp.Text.Lexing
 open System
 
 let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
-
-//Как сделать независимым от регистра Отв: в tryFind передать дот нет строку в lower case
 
 let keywords =   
     [   
@@ -20,7 +18,7 @@ let keywords =
         "strict", STRICT;     
     ] |> Map.ofList 
 
-# 23 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 21 "DotLexer.fs"
 let trans : uint16[] array = 
     [| 
     (* State 0 *)
@@ -38,7 +36,7 @@ let trans : uint16[] array =
     (* State 6 *)
      [| 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |];
     (* State 7 *)
-     [| 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 8us; 9us; 23us; 23us; 8us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 8us; 23us; 10us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 17us; 18us; 20us; 23us; 21us; 21us; 21us; 21us; 21us; 21us; 21us; 21us; 21us; 21us; 16us; 8us; 23us; 15us; 23us; 23us; 23us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 11us; 23us; 12us; 23us; 19us; 23us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 13us; 23us; 14us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 22us; |];
+     [| 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 8us; 8us; 23us; 23us; 8us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 8us; 23us; 10us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 17us; 18us; 20us; 23us; 21us; 21us; 21us; 21us; 21us; 21us; 21us; 21us; 21us; 21us; 16us; 9us; 23us; 15us; 23us; 23us; 23us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 11us; 23us; 12us; 23us; 19us; 23us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 19us; 13us; 23us; 14us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 23us; 22us; |];
     (* State 8 *)
      [| 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |];
     (* State 9 *)
@@ -105,119 +103,117 @@ and string pos s (lexbuf : Microsoft.FSharp.Text.Lexing.LexBuffer<_>) = _fslex_s
 and _fslex_tokenize  _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 30 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 27 "DotLexer.fsl"
                               tokenize lexbuf 
-# 110 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 108 "DotLexer.fs"
           )
   | 1 -> ( 
-# 31 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 28 "DotLexer.fsl"
                              SEP <| lexeme lexbuf 
-# 115 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 113 "DotLexer.fs"
           )
   | 2 -> ( 
-# 32 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 29 "DotLexer.fsl"
                         ID ( (string lexbuf.StartPos "" lexbuf) ) 
-# 120 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 118 "DotLexer.fs"
           )
   | 3 -> ( 
-# 33 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 30 "DotLexer.fsl"
                        LSQBRACE <| lexeme lexbuf 
-# 125 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 123 "DotLexer.fs"
           )
   | 4 -> ( 
-# 34 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 31 "DotLexer.fsl"
                        RSQBRACE <| lexeme lexbuf 
-# 130 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 128 "DotLexer.fs"
           )
   | 5 -> ( 
-# 35 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 32 "DotLexer.fsl"
                        LCURBRACE <| lexeme lexbuf 
-# 135 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 133 "DotLexer.fs"
           )
   | 6 -> ( 
-# 36 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 33 "DotLexer.fsl"
                        RCURBRACE <| lexeme lexbuf 
-# 140 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 138 "DotLexer.fs"
           )
   | 7 -> ( 
-# 37 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 34 "DotLexer.fsl"
                        ASSIGN <| lexeme lexbuf 
-# 145 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 143 "DotLexer.fs"
           )
   | 8 -> ( 
-# 38 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 35 "DotLexer.fsl"
                        COL <| lexeme lexbuf 
-# 150 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 148 "DotLexer.fs"
           )
   | 9 -> ( 
-# 39 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 36 "DotLexer.fsl"
                        COMMA <| lexeme lexbuf 
-# 155 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 153 "DotLexer.fs"
           )
   | 10 -> ( 
-# 40 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 37 "DotLexer.fsl"
                         EDGEOP <| lexeme lexbuf 
-# 160 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 158 "DotLexer.fs"
           )
   | 11 -> ( 
-# 41 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 38 "DotLexer.fsl"
                         DIEDGEOP <| lexeme lexbuf 
-# 165 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 163 "DotLexer.fs"
           )
   | 12 -> ( 
-# 42 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
-                                  match keywords.TryFind((lexeme lexbuf).ToLower()) with
+# 39 "DotLexer.fsl"
+                      match keywords.TryFind((lexeme lexbuf).ToLower()) with
                        | Some(keyword) -> keyword <| (lexeme lexbuf).ToLower()
                        | None -> ID <| lexeme lexbuf 
-# 172 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 170 "DotLexer.fs"
           )
   | 13 -> ( 
-# 45 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 42 "DotLexer.fsl"
                        RNGLR_EOF <| lexeme lexbuf 
-# 177 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 175 "DotLexer.fs"
           )
   | 14 -> ( 
-# 46 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 43 "DotLexer.fsl"
                      failwithf "unexpected input: %s" <| lexeme lexbuf 
-# 182 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 180 "DotLexer.fs"
           )
   | _ -> failwith "tokenize"
 (* Rule string *)
 and _fslex_string pos s _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 49 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 46 "DotLexer.fsl"
                            string pos s lexbuf 
-# 191 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 189 "DotLexer.fs"
           )
   | 1 -> ( 
-# 50 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 47 "DotLexer.fsl"
                            string pos s lexbuf 
-# 196 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 194 "DotLexer.fs"
           )
   | 2 -> ( 
-# 51 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 48 "DotLexer.fsl"
                            s 
-# 201 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 199 "DotLexer.fs"
           )
   | 3 -> ( 
-# 52 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 49 "DotLexer.fsl"
                            lexbuf.EndPos <- lexbuf.EndPos.NextLine;
                            string pos s lexbuf 
-# 207 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 205 "DotLexer.fs"
           )
   | 4 -> ( 
-# 54 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 51 "DotLexer.fsl"
                            failwithf "end of file in string started at or near %A" pos 
-# 212 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 210 "DotLexer.fs"
           )
   | 5 -> ( 
-# 55 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
+# 52 "DotLexer.fsl"
                            string pos (s + (lexeme lexbuf)) lexbuf 
-# 217 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 215 "DotLexer.fs"
           )
   | _ -> failwith "string"
 
-# 55 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fsl"
-
-# 3000000 "D:\NIR\DotParser\DotParserProject\DotParserProject\DotLexer.fs"
+# 3000000 "DotLexer.fs"

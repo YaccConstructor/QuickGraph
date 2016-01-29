@@ -596,31 +596,12 @@ namespace QuickGraph
             foreach (var v in mergeVertices)
                 MergeVertex(v, edgeFactory);
         }
-
-
-        public static BidirectionalGraph<TVertex,TEdge> LoadDotFile(String file, Func<string, Tuple<string,string>[], TVertex> fVertex, Func<string, string, Tuple<string,string>[], TEdge> fEdge)
+        
+        public static BidirectionalGraph<TVertex,TEdge> LoadDot(String s, Func<string, Tuple<string, string>[], TVertex> fVertex, Func<string, string, Tuple<string, string>[], TEdge> fEdge)
         {
-            var graph = DotLangParser.VertAndEdges(file);
-            var VertWithAttrs = graph.Item1; 
-            var EdgesWithAttrs = graph.Item2;
-            var BidGraph = new BidirectionalGraph<TVertex,TEdge>();            
-            foreach (var i in EdgesWithAttrs)
-            {
-                var NewEdge = fEdge(i.Item1, i.Item2, i.Item3);
-                BidGraph.AddVerticesAndEdge(NewEdge);
-            }
-            foreach (var i in VertWithAttrs)
-            {
-                var NewVertex = fVertex(i.Item1, i.Item2);
-                BidGraph.AddVertex(NewVertex);                             
-            }
-            return BidGraph;
-        }
-        public static BidirectionalGraph<TVertex,TEdge> LoadDotString(String s, Func<string, Tuple<string, string>[], TVertex> fVertex, Func<string, string, Tuple<string, string>[], TEdge> fEdge)
-        {
-            var graph = DotLangParser.VertAndEdgesStr(s);
-            var VertWithAttrs = graph.Item1;
-            var EdgesWithAttrs = graph.Item2;
+            var graph = DotLangParser.parse(s);
+            var VertWithAttrs = graph.GetNodes();
+            var EdgesWithAttrs = graph.GetEdges();
             var BidGraph = new BidirectionalGraph<TVertex, TEdge>();
             foreach (var i in EdgesWithAttrs)
             {
@@ -635,6 +616,11 @@ namespace QuickGraph
             return BidGraph;
         }
 
+        public static BidirectionalGraph<TVertex, TEdge> LoadDotFromFile(String path, Func<string, Tuple<string, string>[], TVertex> fVertex, Func<string, string, Tuple<string, string>[], TEdge> fEdge)
+        {
+            var str = System.String.Concat(System.IO.File.ReadLines(path));
+            return LoadDot(str, fVertex, fEdge);
+        }
 
         #region ICloneable Members
 

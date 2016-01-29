@@ -7,8 +7,6 @@ open System
 
 let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
 
-//Как сделать независимым от регистра Отв: в tryFind передать дот нет строку в lower case
-
 let keywords =   
     [   
         "node", NODE;   
@@ -21,10 +19,9 @@ let keywords =
 }
 
 let digit = ['0'-'9']
-let whitespace = [' ' '\t' '\r' ';']
-let separator = '\n'
-let id_expressions = ['a'-'z' 'A'-'Z' '_'](['a'-'z' 'A'-'Z' '_' '0'-'9'])*|['-']?('.'['0'-'9']+|['0'-'9']+('.'['0'-'9']+)?)
-//let compass = "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "nw" | "c" | "_"
+let whitespace = [' ' '\t' '\r' '\n']
+let separator = ';'
+let id = ['a'-'z' 'A'-'Z' '_'](['a'-'z' 'A'-'Z' '_' '0'-'9'])*|['-']?('.'['0'-'9']+|['0'-'9']+('.'['0'-'9']+)?)
 
 rule tokenize = parse
 | whitespace { tokenize lexbuf }
@@ -39,7 +36,7 @@ rule tokenize = parse
 | ',' { COMMA <| lexeme lexbuf }
 | "--" { EDGEOP <| lexeme lexbuf }
 | "->" { DIEDGEOP <| lexeme lexbuf }
-| id_expressions { match keywords.TryFind((lexeme lexbuf).ToLower()) with
+| id { match keywords.TryFind((lexeme lexbuf).ToLower()) with
         | Some(keyword) -> keyword <| (lexeme lexbuf).ToLower()
         | None -> ID <| lexeme lexbuf }
 | eof { RNGLR_EOF <| lexeme lexbuf }
