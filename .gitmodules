@@ -1,0 +1,3 @@
+[submodule "src/GraphX"]
+	path = src/GraphX
+	url = https://github.com/YaccConstructor/GraphX.git
