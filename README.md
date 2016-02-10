@@ -9,9 +9,10 @@ A* search, shortest path, k-shortest path, maximum flow, minimum spanning tree, 
 
 Use VS 2013 for build. Note thet F# 3.1 required.
 
-| .NET |
-|-----------------------------|
-| [![.NET Build Status](https://img.shields.io/appveyor/ci/gsvgit/quickgraph/master.svg)](https://ci.appveyor.com/project/gsvgit/quickgraph) |
+|Branch | .NET |
+|----|-----------------------------|
+| Master | [![master .NET Build Status](https://img.shields.io/appveyor/ci/gsvgit/quickgraph/master.svg)](https://ci.appveyor.com/project/gsvgit/quickgraph) |
+| GraphTasks | [![GraphTasks .NET Build Status](https://img.shields.io/appveyor/ci/gsvgit/quickgraph/GraphTasks.svg)](https://ci.appveyor.com/project/gsvgit/quickgraph) |
 
 
 ####Where to go next?
