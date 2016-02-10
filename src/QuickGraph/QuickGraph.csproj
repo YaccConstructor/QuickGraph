@@ -175,6 +175,9 @@
     <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" Condition="'$(Configuration)' != 'Release20'">
