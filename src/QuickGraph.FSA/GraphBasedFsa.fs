@@ -597,7 +597,8 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
             else                 
                 let charwiseEquality =
                     { new IEqualityComparer<Symb<'a>> with
-                        member this.Equals (p1, p2) = match (p1, p2) with
+                        member this.Equals (p1, p2) = 
+                          match (p1, p2) with
                           | (Smbl s1, Smbl s2) -> equalSmbl s1 s2
                           | (Eps, Eps) -> true
                           | _ -> false
