@@ -33,7 +33,7 @@ type ``Graph FSA tests`` () =
 
     [<Test>]
     member this.``Graph FSA. Intersection test.`` () =
-        let resFSA = FSA<_>.Intersection(fsaInters1.NfaToDfa, fsaInters2.NfaToDfa, equalSmbl)
+        let resFSA = FSA<_>.Intersection(fsaInters1.NfaToDfa(), fsaInters2.NfaToDfa(), equalSmbl)
         checkGraph resFSA 1 1 3 4 "simple_intersection_test.dot"
 
     [<Test>]
@@ -198,7 +198,7 @@ type ``Graph FSA tests`` () =
                     ResizeArray.ofList [
                         (0, Eps, 0)])
         
-        Assert.AreEqual(fsa.NfaToDfa.IsEmpty, false)
+        Assert.AreEqual(fsa.NfaToDfa().IsEmpty, false)
         Assert.AreEqual(fsa.IsEmpty, false)
 
 let checkFsa (fsa: FSA<_>) (expected: list<int * list<int * Symb<_>>>) symbEquals = 
@@ -228,7 +228,7 @@ type ``Additional FSA tests`` () =
     [<Test>]
     member this.``Intersection with self complement test`` () =
         let alphabet = new HashSet<_>(['a'])
-        let comp = fsaAcceptingOneLetter.Complementation(alphabet, newSmb, getChar).NfaToDfa
+        let comp = fsaAcceptingOneLetter.Complementation(alphabet, newSmb, getChar).NfaToDfa()
         fsaAcceptingOneLetter.PrintToDOT <| fullPath "inters_with_comp_orig.dot"
         comp.PrintToDOT <| fullPath "inters_with_comp_comp.dot"
         let res = FSA<_>.Intersection (fsaAcceptingOneLetter, comp, equalSmbl)
