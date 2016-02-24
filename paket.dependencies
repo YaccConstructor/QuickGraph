@@ -1,14 +1,19 @@
 source https://nuget.org/api/v2
 
+nuget Accordion 1.0.0 framework: >= net40
+nuget AvalonEdit 5.0.2 framework: >= net40
 nuget FSharp.Formatting
 nuget FSPowerPack.Core.Community 3.0.0.0 framework: >= net45
 nuget FSharpx.Core 1.8.41
+nuget Mono.Addins 1.2 framework: >= net452
 nuget NUnitTestAdapter 2.0.0
 nuget Nuget.CommandLine
 nuget NUnit 2.6.4
-nuget NUnit.Runners
+nuget NUnit.Runners 2.6.4
 nuget FAKE
+nuget QuickGraphPCL 3.6.61114.2
 nuget SourceLink.Fake
+nuget YAXLib 2.13 framework: >= net40
 nuget YC.FsYARD 0.1.5033.0 framework: >= net45
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx

@@ -53,13 +53,9 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Library1.fs" />
     <None Include="Script.fsx" />
-    <Content Include="packages.config" />
+    <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Mono.Addins">
-      <HintPath>..\..\packages\Mono.Addins.1.2\lib\net40\Mono.Addins.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
@@ -97,4 +93,16 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="..\..\.paket\paket.targets" />
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
+      <ItemGroup>
+        <Reference Include="Mono.Addins">
+          <HintPath>..\..\packages\Mono.Addins\lib\net40\Mono.Addins.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
 </Project>

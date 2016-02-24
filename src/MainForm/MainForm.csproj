@@ -33,10 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Addins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Mono.Addins.1.2\lib\net40\Mono.Addins.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,7 +67,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="packages.config" />
+    <None Include="paket.references" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -106,4 +102,16 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="..\..\.paket\paket.targets" />
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
+      <ItemGroup>
+        <Reference Include="Mono.Addins">
+          <HintPath>..\..\packages\Mono.Addins\lib\net40\Mono.Addins.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
 </Project>
