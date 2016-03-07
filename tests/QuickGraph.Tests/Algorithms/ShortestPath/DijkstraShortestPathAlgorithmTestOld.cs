@@ -87,9 +87,12 @@ namespace QuickGraph.Algorithms.ShortestPath
             g.AddVertex(2);
             g.AddVertex(3);
 
-            Edge<int> e12 = new Edge<int>(1, 2); g.AddEdge(e12);
-            Edge<int> e23 = new Edge<int>(2, 3); g.AddEdge(e23);
-            Edge<int> e13 = new Edge<int>(1, 3); g.AddEdge(e13);
+            Edge<int> e12 = new Edge<int>(1, 2);
+            g.AddEdge(e12);
+            Edge<int> e23 = new Edge<int>(2, 3);
+            g.AddEdge(e23);
+            Edge<int> e13 = new Edge<int>(1, 3);
+            g.AddEdge(e13);
 
             var dij = new DijkstraShortestPathAlgorithm<int, Edge<int>>(g, e => 1);
             var vis = new VertexPredecessorRecorderObserver<int, Edge<int>>();
