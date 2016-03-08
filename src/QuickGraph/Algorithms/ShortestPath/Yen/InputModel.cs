@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using QuickGraph;
 
-namespace ConsoleApplication1
+namespace QuickGraph.Algorithms.ShortestPath.Yen
 {
   public class InputModel
   {
