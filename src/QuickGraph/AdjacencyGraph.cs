@@ -191,7 +191,6 @@ namespace QuickGraph
                         yield return edge;
             }
         }
-
         [Pure]
         public bool ContainsEdge(TVertex source, TVertex target)
         {

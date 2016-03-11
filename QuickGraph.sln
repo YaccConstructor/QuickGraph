@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{FAAD5B1C-1217-48D6-B1EF-7CAC0440D6A4}"
 	ProjectSection(SolutionItems) = preProject
@@ -72,6 +72,8 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QuickGraph.FST.Tests", "tests\QuickGraph.FST.Tests\QuickGraph.FST.Tests.fsproj", "{6B141FDE-F5DF-4DFD-B21F-C076BC87CCAF}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QuickGraph.FST", "src\QuickGraph.FST\QuickGraph.FST.fsproj", "{4B220E23-A7E0-4222-83F5-C785F7C66B33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{0E16423A-9E06-489B-A642-E05AF668405B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -242,6 +244,16 @@ Global
 		{4B220E23-A7E0-4222-83F5-C785F7C66B33}.Release20|Any CPU.Build.0 = Release|Any CPU
 		{4B220E23-A7E0-4222-83F5-C785F7C66B33}.ReleaseContractsReferences|Any CPU.ActiveCfg = Release|Any CPU
 		{4B220E23-A7E0-4222-83F5-C785F7C66B33}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
+		{0E16423A-9E06-489B-A642-E05AF668405B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E16423A-9E06-489B-A642-E05AF668405B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E16423A-9E06-489B-A642-E05AF668405B}.DebugContracts|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E16423A-9E06-489B-A642-E05AF668405B}.DebugContracts|Any CPU.Build.0 = Debug|Any CPU
+		{0E16423A-9E06-489B-A642-E05AF668405B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E16423A-9E06-489B-A642-E05AF668405B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E16423A-9E06-489B-A642-E05AF668405B}.Release20|Any CPU.ActiveCfg = Release|Any CPU
+		{0E16423A-9E06-489B-A642-E05AF668405B}.Release20|Any CPU.Build.0 = Release|Any CPU
+		{0E16423A-9E06-489B-A642-E05AF668405B}.ReleaseContractsReferences|Any CPU.ActiveCfg = Release|Any CPU
+		{0E16423A-9E06-489B-A642-E05AF668405B}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
