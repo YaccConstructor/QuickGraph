@@ -2,9 +2,9 @@
 
 namespace QuickGraph.Algorithms.ShortestPath.Yen
 {
-  public class InputModel <TVertex>
+  public class InputModel<TVertex, TEdge> where TEdge : IEdge<TVertex>
   {
-    public AdjacencyGraph<TVertex, Edge<TVertex>> Graph { get; set; }
-    public Dictionary<Edge<TVertex>, double> Distances { get; set; }
+    public AdjacencyGraph<TVertex, TEdge> Graph { get; set; }
+    public Dictionary<TEdge, double> Distances { get; set; }
   }
 }

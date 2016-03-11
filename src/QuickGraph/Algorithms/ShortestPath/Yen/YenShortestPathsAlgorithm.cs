@@ -4,14 +4,14 @@ using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Algorithms.ShortestPath.Yen
 {
-  public class YenShortestPathsAlgorithm <TVertex>
+  public class YenShortestPathsAlgorithm<TVertex, TEdge> where TEdge : IEdge<TVertex>
   {
     private TVertex sourceVertix;
     private TVertex targetVertix;
     private int k;
-    private InputModel<TVertex> input;
+    private InputModel<TVertex, TEdge> input;
 
-    public YenShortestPathsAlgorithm(InputModel<TVertex> input, TVertex s, TVertex t, int k)
+    public YenShortestPathsAlgorithm(InputModel<TVertex, TEdge> input, TVertex s, TVertex t, int k)
     {
       sourceVertix = s;
       targetVertix = t;
@@ -19,9 +19,9 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
       this.input = input;
     }
 
-    public IEnumerable<IEnumerable<Edge<TVertex>>> Execute()
+    public IEnumerable<IEnumerable<TEdge>> Execute()
     {
-      var listShortestWays = new List<IEnumerable<Edge<TVertex>>>();
+      var listShortestWays = new List<IEnumerable<TEdge>>();
       // нашли первый самый короткий путь
       var shortestWay = GetShortestPathFromInput(input);
       listShortestWays.Add(shortestWay);
@@ -29,9 +29,9 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
       for (var i = 0; i < k - 1; i++)
       {
         var minDistance = double.MaxValue;
-        IEnumerable<Edge<TVertex>> pathSlot = null;
+        IEnumerable<TEdge> pathSlot = null;
         // запомним версию графа без какого-то ребра
-        InputModel<TVertex> inputSlot = null;
+        InputModel<TVertex, TEdge> inputSlot = null;
         foreach (var edge in shortestWay)
         {
           // новые параметры для алгоритма Дейскстры: взяли старые и выкинули ребро
@@ -63,24 +63,24 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
       return listShortestWays;
     } 
 
-    private double GetPathDistance(IEnumerable<Edge<TVertex>> edges, InputModel<TVertex> input) =>
+    private double GetPathDistance(IEnumerable<TEdge> edges, InputModel<TVertex, TEdge> input) =>
       edges.Sum(edge => input.Distances[edge]);
 
-    private IEnumerable<Edge<TVertex>> GetShortestPathFromInput(InputModel<TVertex> input)
+    private IEnumerable<TEdge> GetShortestPathFromInput(InputModel<TVertex, TEdge> input)
     {
       // нашли кратчайший путь для стартовой вершины
-      var dij = new DijkstraShortestPathAlgorithm<TVertex, Edge<TVertex>>(input.Graph, e => input.Distances[e]);
-      var vis = new VertexPredecessorRecorderObserver<TVertex, Edge<TVertex>>();
+      var dij = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(input.Graph, e => input.Distances[e]);
+      var vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
       using (vis.Attach(dij))
         dij.Compute(sourceVertix);
 
       // первый самый короткий путь
-      IEnumerable<Edge<TVertex>> path;
+      IEnumerable<TEdge> path;
 
       return vis.TryGetPath(targetVertix, out path) ? path : null;
     }
 
-    private InputModel<TVertex> RemoveEdge(InputModel<TVertex> old, Edge<TVertex> edgeRemoving)
+    private InputModel<TVertex, TEdge> RemoveEdge(InputModel<TVertex, TEdge> old, TEdge edgeRemoving)
     {
       // получил копию графа
       var copyGraph = ObjectCopier.Clone(old.Graph);
@@ -91,7 +91,7 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
       copyGraph.RemoveEdge(foundEdge);
 
       // скопировал расстояния ребер
-      var newDistances = new Dictionary<Edge<TVertex>, double>();
+      var newDistances = new Dictionary<TEdge, double>();
       var index = 0;
       // взять все ребра старого без удаляемого
       var oldEdges = old.Graph.Edges.Where(x => !(x.Source.Equals(edgeRemoving.Source) &&
@@ -101,7 +101,7 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
         newDistances[edge] = old.Distances[oldEdges[index++]];
       }
       
-      return new InputModel<TVertex>
+      return new InputModel<TVertex, TEdge>
       {
         Distances = newDistances,
         Graph = copyGraph

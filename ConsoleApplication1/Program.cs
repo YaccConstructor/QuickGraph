@@ -14,11 +14,11 @@ namespace ConsoleApplication1
     private static void Main()
     {
       var input = GenerateInput();
-      var yen = new YenShortestPathsAlgorithm<char>(input, '1', '5', 10);
+      var yen = new YenShortestPathsAlgorithm<char, Edge<char>>(input, '1', '5', 10);
       var result = yen.Execute();
     }
 
-    private static InputModel<char> GenerateInput()
+    private static InputModel<char, Edge<char>> GenerateInput()
     {
       var g = new AdjacencyGraph<char, Edge<char>>(true);
       var distances = new Dictionary<Edge<char>, double>();
@@ -34,7 +34,7 @@ namespace ConsoleApplication1
       AddEdgeWithDistance(g, distances, '4', '5', 6);
       AddEdgeWithDistance(g, distances, '5', '6', 9);
 
-      return new InputModel<char>
+      return new InputModel<char, Edge<char>>
       {
         Distances = distances,
         Graph = g
