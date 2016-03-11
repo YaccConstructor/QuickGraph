@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using QuickGraph.Algorithms.Observers;
 
@@ -83,32 +82,30 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
 
     private InputModel RemoveEdge(InputModel old, Edge<char> edgeRemoving)
     {
-      /*
-      Создаем новый граф и расстония на основе старого, без одного ребра
-      */
-      var newGraph = new AdjacencyGraph<char, Edge<char>>(true);
+      // получил копию графа
+      var copyGraph = ObjectCopier.Clone(old.Graph);
+      
+      // удалил из нее ребро
+      var foundEdge = copyGraph.Edges.First(x => x.Source == edgeRemoving.Source &&
+                                                 x.Target == edgeRemoving.Target);
+      copyGraph.RemoveEdge(foundEdge);
+
+      // скопировал расстояния ребер
       var newDistances = new Dictionary<Edge<char>, double>();
-      newGraph.AddVertexRange(old.Graph.Vertices);
-      foreach (var edge in old.Graph.Edges.Where(x => x.Source != edgeRemoving.Source ||
-                                                 x.Target != edgeRemoving.Target))
+      var index = 0;
+      // взять все ребра старого без удаляемого
+      var oldEdges = old.Graph.Edges.Where(x => !(x.Source == edgeRemoving.Source &&
+                                                  x.Target == edgeRemoving.Target)).ToArray();
+      foreach (var edge in copyGraph.Edges)
       {
-        AddEdgeWithDistance(newGraph, newDistances, edge.Source, edge.Target, old.Distances[edge]);
+        newDistances[edge] = old.Distances[oldEdges[index++]];
       }
+      
       return new InputModel
       {
         Distances = newDistances,
-        Graph = newGraph
+        Graph = copyGraph
       };
-    }
-
-    private void AddEdgeWithDistance(
-           AdjacencyGraph<char, Edge<char>> g,
-           Dictionary<Edge<char>, double> distances,
-           char source, char target, double weight)
-    {
-      var ac = new Edge<char>(source, target);
-      distances[ac] = weight;
-      g.AddEdge(ac);
     }
 
   }
