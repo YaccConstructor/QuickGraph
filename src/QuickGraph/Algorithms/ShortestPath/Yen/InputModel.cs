@@ -1,5 +1,10 @@
 ﻿using System.Collections.Generic;
 
+/*
+Input model of Yen alogorithm
+also represents a state of the algorithm
+*/
+
 namespace QuickGraph.Algorithms.ShortestPath.Yen
 {
   public class InputModel<TVertex, TEdge> where TEdge : IEdge<TVertex>

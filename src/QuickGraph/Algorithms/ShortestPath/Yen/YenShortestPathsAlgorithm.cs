@@ -8,6 +8,7 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
   {
     private TVertex sourceVertix;
     private TVertex targetVertix;
+    // limit for amount of paths
     private int k;
     private InputModel<TVertex, TEdge> input;
 
@@ -22,7 +23,7 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
     public IEnumerable<IEnumerable<TEdge>> Execute()
     {
       var listShortestWays = new List<IEnumerable<TEdge>>();
-      // нашли первый самый короткий путь
+      // find the first shortest way
       var shortestWay = GetShortestPathFromInput(input);
       listShortestWays.Add(shortestWay);
 
@@ -30,14 +31,14 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
       {
         var minDistance = double.MaxValue;
         IEnumerable<TEdge> pathSlot = null;
-        // запомним версию графа без какого-то ребра
+        // slote for graph state without some edge
         InputModel<TVertex, TEdge> inputSlot = null;
         foreach (var edge in shortestWay)
         {
-          // новые параметры для алгоритма Дейскстры: взяли старые и выкинули ребро
+          // get new state without the edge
           var newInput = RemoveEdge(input, edge);
 
-          //Найти кратчайший путь в перестроенном графе.
+          //find shortest way in the new graph
           var newPath = GetShortestPathFromInput(newInput);
           if (newPath == null)
           {
@@ -68,13 +69,13 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
 
     private IEnumerable<TEdge> GetShortestPathFromInput(InputModel<TVertex, TEdge> input)
     {
-      // нашли кратчайший путь для стартовой вершины
+      // calc distances beetween the start vertex and other
       var dij = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(input.Graph, e => input.Distances[e]);
       var vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
       using (vis.Attach(dij))
         dij.Compute(sourceVertix);
 
-      // первый самый короткий путь
+      // get shortest path from start (source) vertex to target
       IEnumerable<TEdge> path;
 
       return vis.TryGetPath(targetVertix, out path) ? path : null;
@@ -82,18 +83,18 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
 
     private InputModel<TVertex, TEdge> RemoveEdge(InputModel<TVertex, TEdge> old, TEdge edgeRemoving)
     {
-      // получил копию графа
+      // get copy of the grapth using Serialization and Deserialization
       var copyGraph = ObjectCopier.Clone(old.Graph);
       
-      // удалил из нее ребро
+      // remove the edge
       var foundEdge = copyGraph.Edges.First(x => x.Source.Equals(edgeRemoving.Source) &&
                                                  x.Target.Equals(edgeRemoving.Target) );
       copyGraph.RemoveEdge(foundEdge);
 
-      // скопировал расстояния ребер
+      // get copy of the distancies
       var newDistances = new Dictionary<TEdge, double>();
       var index = 0;
-      // взять все ребра старого без удаляемого
+      // get all edges but the removing one
       var oldEdges = old.Graph.Edges.Where(x => !(x.Source.Equals(edgeRemoving.Source) &&
                                                   x.Target.Equals(edgeRemoving.Target)) ).ToArray();
       foreach (var edge in copyGraph.Edges)
