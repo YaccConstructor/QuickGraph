@@ -290,6 +290,7 @@
       <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Algorithms\AlgorithmExtensionsTest.cs" />
+    <Compile Include="Algorithms\BipartiteDimensionAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\WeaklyConnectedCondensationGraphTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\ConnectedComponentsAlgorithmTest.cs" />
