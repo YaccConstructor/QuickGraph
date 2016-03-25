@@ -75,16 +75,16 @@ type BipartiteDimensionAlgorithm(graph: UndirectedGraph<int, IEdge<int> >) as al
         bipartiteGraph (filt g.LeftPart) (filt g.RightPart) edges, mergedWith
 
     let convertUndirectedGraphToBipartite () = 
-        let mutable colors = Map.empty
+        let colors = new System.Collections.Generic.Dictionary<int, int>()
         let rec dfs v color =
             if colors.ContainsKey v then 
-                if Map.find v colors <> color then failwith "Graph not bipartite." else ()
+                if colors.[v] <> color then failwith "Graph not bipartite." else ()
             else 
-                colors <- Map.add v color colors
+                colors.Add(v, color)
                 for e in graph.AdjacentEdges v do
                     dfs (e.GetOtherVertex v) (color % 2 + 1)
         for v in graph.Vertices do
-            if Map.containsKey v colors then ()
+            if colors.ContainsKey v then ()
             else dfs v 1
         let left = graph.Vertices |> Seq.filter (fun v -> colors.[v] = 1) |> Seq.toArray
         let right = graph.Vertices |> Seq.filter (fun v -> colors.[v] = 2) |> Seq.toArray
