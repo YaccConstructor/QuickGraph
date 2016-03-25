@@ -71,7 +71,7 @@ type BipartiteDimensionAlgorithm(graph: UndirectedGraph<int, IEdge<int> >) as al
                         mergedWith.[u] <- v
         let edges = g.Edges |> Array.filter(fun (u, v) -> mergedWith.[u] = -1 && mergedWith.[v] = -1)
 
-        let filt = Array.filter (fun v -> mergedWith.[v] = -1)
+        let filt = Array.filter (fun v -> mergedWith.[v] = -1 && (g.AdjacentVerticies v |> Array.length > 0))
         bipartiteGraph (filt g.LeftPart) (filt g.RightPart) edges, mergedWith
 
     let convertUndirectedGraphToBipartite () = 
@@ -130,20 +130,22 @@ type BipartiteDimensionAlgorithm(graph: UndirectedGraph<int, IEdge<int> >) as al
         if travVerts 0 then Some(mapping) else None
 
     override this.InternalCompute() = 
-        let bipartite = convertUndirectedGraphToBipartite()
-        let (g, mergedWith) = reduceBipartiteGraph bipartite
-        let rec loop k = 
-            if k > g.Edges.Length || cancelManager.IsCancelling then ()
-            else 
-                match bipartiteCoverAtMostK g k with 
-                | Some(_) when exitBecauseCanceled -> ()
-                | Some(result) ->
-                    bdvalue <- k
-                    mapping <- result
-                    bicliques <- Array.init k (fun i -> [0 .. g.AdjMat.Length - 1] |> List.filter (fun v -> mapping.[v].[i]) )
-                | None -> loop (k + 1)
-        loop 1
-        ()
+        if graph.EdgeCount = 0 then bdvalue <- 0 
+        else 
+            let bipartite = convertUndirectedGraphToBipartite()
+            let (g, mergedWith) = reduceBipartiteGraph bipartite
+            let rec loop k = 
+                if k > g.Edges.Length || cancelManager.IsCancelling then ()
+                else 
+                    match bipartiteCoverAtMostK g k with 
+                    | Some(_) when exitBecauseCanceled -> ()
+                    | Some(result) ->
+                        bdvalue <- k
+                        mapping <- result
+                        bicliques <- Array.init k (fun i -> [0 .. g.AdjMat.Length - 1] |> List.filter (fun v -> mapping.[v].[i]) )
+                    | None -> loop (k + 1)
+            loop 1
+
     member x.BipartiteDimensionValue = if bdvalue <> -1 then bdvalue else failwith "Value not computed" 
     member x.GetNthBiclique i = bicliques.[i]
 
