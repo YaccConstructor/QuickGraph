@@ -93,6 +93,10 @@
       <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>
       <Name>GraphX.WPF.Controls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PluginSample\PluginSample.fsproj">
+      <Project>{eddc5504-f47f-4261-ae56-987116e6e2dd}</Project>
+      <Name>PluginSample</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
