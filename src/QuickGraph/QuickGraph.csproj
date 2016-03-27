@@ -508,7 +508,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DotParserProject\DotParserProject\DotParserProject.fsproj">
+    <ProjectReference Include="..\DotParserProject\DotParserProject\DotParserProject.fsproj">
       <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
       <Name>DotParserProject</Name>
     </ProjectReference>

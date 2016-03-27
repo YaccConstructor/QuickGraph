@@ -227,12 +227,12 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Import Project="..\..\.paket\paket.targets" />
+  <Import Project="..\..\..\.paket\paket.targets" />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
       <ItemGroup>
         <Reference Include="FSharp.PowerPack">
-          <HintPath>..\..\packages\FSPowerPack.Core.Community\Lib\Net40\FSharp.PowerPack.dll</HintPath>
+          <HintPath>..\..\..\packages\FSPowerPack.Core.Community\Lib\Net40\FSharp.PowerPack.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -243,17 +243,17 @@
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
       <ItemGroup>
         <Reference Include="FSharpx.Core">
-          <HintPath>..\..\packages\YC.FsYARD\lib\FSharpx.Core.dll</HintPath>
+          <HintPath>..\..\..\packages\YC.FsYARD\lib\FSharpx.Core.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="RNGLRCommon">
-          <HintPath>..\..\packages\YC.FsYARD\lib\RNGLRCommon.dll</HintPath>
+          <HintPath>..\..\..\packages\YC.FsYARD\lib\RNGLRCommon.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="RNGLRParser">
-          <HintPath>..\..\packages\YC.FsYARD\lib\RNGLRParser.dll</HintPath>
+          <HintPath>..\..\..\packages\YC.FsYARD\lib\RNGLRParser.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>

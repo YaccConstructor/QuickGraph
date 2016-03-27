@@ -55,9 +55,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Tests", "tests\Q
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Perf", "tests\QuickGraph.Perf\QuickGraph.Perf.csproj", "{2C35D329-D1F8-4862-8DA2-F2D27E8D4DB7}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DotParserProject", "DotParserProject\DotParserProject\DotParserProject.fsproj", "{8826810A-DC59-46E6-8978-21E273DB1236}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DotParserProject", "src\DotParserProject\DotParserProject\DotParserProject.fsproj", "{8826810A-DC59-46E6-8978-21E273DB1236}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotParserProject", "DotParserProject", "{278F278F-6F15-4CAE-9665-A068A795A222}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotParserProject", "src\DotParserProject", "{278F278F-6F15-4CAE-9665-A068A795A222}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotParser.Test", "DotParser.Test", "{FBFEF0E6-F195-4146-A529-8B613AB549DC}"
 EndProject
