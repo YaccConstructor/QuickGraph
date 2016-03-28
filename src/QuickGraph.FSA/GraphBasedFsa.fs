@@ -539,7 +539,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
                 visited.Add(currInVertex, currOutVertex, isBottleNeck) |> ignore
 
         let det_redundant = redundant.NfaToDfa()
-        det_redundant.RemoveExtraPaths
+        det_redundant.RemoveExtraPaths()
 
     static let removeRedundantPathsThrough (fsa: _ FSA) theSmb smb1 smb2 getChar newSmb charwiseEqual equalSmbl =
         let needsToBeHandled (edge : EdgeFSA<_>) = (charwiseEqual edge.Tag theSmb) && 
@@ -980,7 +980,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
         FSA<_>(new ResizeArray<_>(),new ResizeArray<_>(),new ResizeArray<_>())
     
     member this.NfaToDfa() = nfaToDfa this None
-    member this.RemoveExtraPaths = removeExtraPaths this
+    member this.RemoveExtraPaths() = removeExtraPaths this
     member val InitState =  initial with get, set
     member val FinalState = final with get, set
     member this.PrintToDOT(filePath, ?printSmb) = printFSAtoDOT filePath printSmb
