@@ -23,7 +23,4 @@
 
 <Addins>
 	<!--Directory include-subdirs="true"></Directory-->
-	 
-    <Directory>C:\Users\User\QuickGraph\PluginSample\bin\Debug</Directory>
-	
 </Addins>

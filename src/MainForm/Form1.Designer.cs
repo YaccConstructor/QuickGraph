@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.algorithmsList = new System.Windows.Forms.ListBox();
+            this.codeEditorPanel = new System.Windows.Forms.Panel();
+            this.playerPanel = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -43,33 +43,35 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.listBox1);
+            this.panel1.Controls.Add(this.algorithmsList);
             this.panel1.Location = new System.Drawing.Point(1, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(138, 529);
             this.panel1.TabIndex = 0;
             // 
-            // listBox1
+            // algorithmsList
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(0, 0);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(138, 537);
-            this.listBox1.TabIndex = 0;
+            this.algorithmsList.FormattingEnabled = true;
+            this.algorithmsList.Location = new System.Drawing.Point(0, 0);
+            this.algorithmsList.Name = "algorithmsList";
+            this.algorithmsList.Size = new System.Drawing.Size(138, 537);
+            this.algorithmsList.TabIndex = 0;
+            this.algorithmsList.SelectedIndexChanged += new System.EventHandler(this.algorithmsList_SelectedValueChanged);
+            this.algorithmsList.SelectedValueChanged += new System.EventHandler(this.algorithmsList_SelectedValueChanged);
             // 
-            // panel2
+            // codeEditorPanel
             // 
-            this.panel2.Location = new System.Drawing.Point(145, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(273, 270);
-            this.panel2.TabIndex = 1;
+            this.codeEditorPanel.Location = new System.Drawing.Point(145, 0);
+            this.codeEditorPanel.Name = "codeEditorPanel";
+            this.codeEditorPanel.Size = new System.Drawing.Size(273, 270);
+            this.codeEditorPanel.TabIndex = 1;
             // 
-            // panel3
+            // playerPanel
             // 
-            this.panel3.Location = new System.Drawing.Point(424, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(696, 568);
-            this.panel3.TabIndex = 2;
+            this.playerPanel.Location = new System.Drawing.Point(424, 0);
+            this.playerPanel.Name = "playerPanel";
+            this.playerPanel.Size = new System.Drawing.Size(696, 568);
+            this.playerPanel.TabIndex = 2;
             // 
             // button1
             // 
@@ -136,12 +138,11 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.playerPanel);
+            this.Controls.Add(this.codeEditorPanel);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Text = "Graph Algorithms";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -150,15 +151,15 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        public System.Windows.Forms.Panel panel2;
-        public System.Windows.Forms.Panel panel3;
+        public System.Windows.Forms.Panel codeEditorPanel;
+        public System.Windows.Forms.Panel playerPanel;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
-        public System.Windows.Forms.ListBox listBox1;
+        public System.Windows.Forms.ListBox algorithmsList;
     }
 }
 

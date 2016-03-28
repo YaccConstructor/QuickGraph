@@ -1,37 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using Common;
 using Mono.Addins;
-using Common;
-
+using System;
+using System.Windows.Forms;
 
 [assembly: AddinRoot("GraphTasks", "1.0")]
 namespace MainForm
 {
-    static class Program
+    internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        public static IAlgorithm[] Algorithms { get; private set; }
+
         [STAThread]
-        
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Form1 form = new Form1();
+
             AddinManager.Initialize();
-            AddinManager.Registry.Update(null);
-            IAlgorithm[] addinInterface = (AddinManager.GetExtensionObjects(typeof(IAlgorithm))).Cast<IAlgorithm>().ToArray<IAlgorithm>();
-            foreach (IAlgorithm i in addinInterface)
+            AddinManager.Registry.Update();
+            Algorithms = AddinManager.GetExtensionObjects<IAlgorithm>();
+
+            var form = new Form1();
+            foreach (var algorithm in Algorithms)
             {
-                form.listBox1.Items.Add(i.Name);
+                form.algorithmsList.Items.Add(algorithm.Name);
             }
-            form.panel2.Controls.Add(addinInterface[0].Input);
+
             Application.Run(form);
-            
         }
     }
 }
