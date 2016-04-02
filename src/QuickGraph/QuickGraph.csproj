@@ -206,6 +206,8 @@
     <Compile Include="Algorithms\Contracts\IAlgorithmContract.cs" />
     <Compile Include="Algorithms\Contracts\IComputationContract.cs" />
     <Compile Include="Algorithms\DistanceRelaxers.cs" />
+    <Compile Include="Algorithms\GraphPartition\Helpers.cs" />
+    <Compile Include="Algorithms\GraphPartition\KernighanLinAlgoritm.cs" />
     <Compile Include="Algorithms\IUndirectedVertexPredecessorRecorderAlgorithm.cs" />
     <Compile Include="Algorithms\IUndirectedTreeBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\LengauerTarjanDominatorAlgorithm.cs" />

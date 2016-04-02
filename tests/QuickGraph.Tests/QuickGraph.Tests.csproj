@@ -296,6 +296,7 @@
     <Compile Include="Algorithms\ConnectedComponents\ConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\IncrementalConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
+    <Compile Include="Algorithms\GraphPartition\KernighanLinAlgoritmTest.cs" />
     <Compile Include="Algorithms\MaximumBipartiteMatchingAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\EdmondsKarpMaximumFlowAlgorithmTest.cs" />
@@ -4402,6 +4403,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
