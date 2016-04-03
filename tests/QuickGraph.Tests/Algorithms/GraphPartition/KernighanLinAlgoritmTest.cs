@@ -40,7 +40,7 @@ namespace QuickGraph.Tests.Algorithms.GraphPartitioning
             B.Add(3); B.Add(2);
             var expected = new Partition<int>(A, B, 3);
 
-            var algo = new KernighanLinAlgoritm<int, double>(graph, 1);
+            var algo = new KernighanLinAlgoritm<int, TaggedUndirectedEdge<int, double>>(graph, 1);
             var test = algo.Execute();
 
             Assert.IsTrue(isEqual(test,expected));
@@ -66,7 +66,7 @@ namespace QuickGraph.Tests.Algorithms.GraphPartitioning
                 else B.Add(i);
             }
             var expected = new Partition<int>(A, B, 3);
-            var algo = new KernighanLinAlgoritm<int, double>(graph, 1);
+            var algo = new KernighanLinAlgoritm<int, TaggedUndirectedEdge<int, double>>(graph, 1);
             var test = algo.Execute();
 
             Assert.IsTrue(isEqual(test, expected));
@@ -101,7 +101,7 @@ namespace QuickGraph.Tests.Algorithms.GraphPartitioning
             }
 
             var expected = new Partition<int>(A, B, 3);
-            var algo = new KernighanLinAlgoritm<int, double>(graph, 1);
+            var algo = new KernighanLinAlgoritm<int, TaggedUndirectedEdge<int, double>>(graph, 1);
             var test = algo.Execute();
 
             Assert.IsTrue(isEqual(test, expected));

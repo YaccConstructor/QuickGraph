@@ -7,16 +7,16 @@ using QuickGraph.Algorithms;
 
 namespace QuickGraph.Algorithms.KernighanLinAlgoritm
 {
-    public sealed class KernighanLinAlgoritm<TVertex, TTag>
-        where TTag : IEquatable<TTag>, IConvertible, IComparable
+    public sealed class KernighanLinAlgoritm<TVertex, TEdge>
+        where TEdge : TaggedUndirectedEdge<TVertex, double>
     {
-        private UndirectedGraph<TVertex, TaggedUndirectedEdge<TVertex, TTag>> g;
+        private UndirectedGraph<TVertex, TEdge> g;
         private int itersNum;
         private int partitionSize;
         private SortedSet<TVertex> A, B;
         private SortedSet<TVertex> unswappedA, unswappedB;
 
-        public KernighanLinAlgoritm(UndirectedGraph<TVertex, TaggedUndirectedEdge<TVertex, TTag>> g, int itersNum) 
+        public KernighanLinAlgoritm(UndirectedGraph<TVertex, TEdge> g, int itersNum) 
         {
             this.g = g;
             this.itersNum = itersNum;
@@ -93,10 +93,10 @@ namespace QuickGraph.Algorithms.KernighanLinAlgoritm
             foreach (TVertex vertFromA in unswappedA)
                 foreach (TVertex vertFromB in unswappedB)
                 {
-                    TaggedUndirectedEdge<TVertex, TTag> edge = findEdge(vertFromA, vertFromB);
+                    TEdge edge = findEdge(vertFromA, vertFromB);
                     double edgeCost;
-                    if (edge != null) edgeCost = Convert.ToDouble(edge.Tag); else edgeCost = 0.0;
-                    double gain = getVertexCost(vertFromA) + getVertexCost(vertFromB) - (edgeCost + edgeCost);
+                    if (edge != null) edgeCost = edge.Tag; else edgeCost = 0.0;
+                    double gain = getVertexCost(vertFromA) + getVertexCost(vertFromB) - 2*edgeCost;
                     if (gain > maxGain)
                     {
                         maxPair = new Tuple<TVertex, TVertex>(vertFromA, vertFromB);
@@ -123,11 +123,11 @@ namespace QuickGraph.Algorithms.KernighanLinAlgoritm
             foreach (TVertex vertNeighbord in neib)
             {
                 bool vertNeighbordIsInA = A.Contains(vertNeighbord);
-                TaggedUndirectedEdge<TVertex, TTag> edge = findEdge(vert, vertNeighbord);
+                TEdge edge = findEdge(vert, vertNeighbord);
                 if (vertIsInA != vertNeighbordIsInA) // external
-                    cost += Convert.ToDouble(edge.Tag);
+                    cost += edge.Tag;
                 else
-                    cost -= Convert.ToDouble(edge.Tag);
+                    cost -= edge.Tag;
 ;
             }
 
@@ -135,16 +135,16 @@ namespace QuickGraph.Algorithms.KernighanLinAlgoritm
         }
 
 
-        private List<TVertex> getNeighbors(TVertex vert)
+        private HashSet<TVertex> getNeighbors(TVertex vert)
         {
-            var neibList = new List<TVertex>();
-            foreach (TaggedUndirectedEdge<TVertex, TTag> edge in g.AdjacentEdges(vert))
+            var neibList = new HashSet<TVertex>();
+            foreach (TEdge edge in g.AdjacentEdges(vert))
             {
-                if (edge.Source.Equals(vert) && !neibList.Contains(edge.Target))
-                    neibList.Add(edge.Target);
-                if (edge.Target.Equals(vert) && !neibList.Contains(edge.Source))
-                    neibList.Add(edge.Source);
+                neibList.Add(edge.Source);
+                neibList.Add(edge.Target);
+          
             }
+            if (neibList.Contains(vert)) neibList.Remove(vert);
 
             return neibList;
         }
@@ -162,26 +162,24 @@ namespace QuickGraph.Algorithms.KernighanLinAlgoritm
         private double getCutCost()
         {
             double cost = 0;
-            foreach (TaggedUndirectedEdge<TVertex, TTag> edge in g.Edges)
+            foreach (TEdge edge in g.Edges)
             {
                 if (A.Contains(edge.Source) != A.Contains(edge.Target))
                 {
-                    cost += Convert.ToDouble(edge.Tag);
+                    cost += edge.Tag;
                 }
             }
             return cost;
         }
 
 
-        private TaggedUndirectedEdge<TVertex, TTag> findEdge(TVertex vertFromA, TVertex vertFromB)
+        private TEdge findEdge(TVertex vertFromA, TVertex vertFromB)
         {
-            foreach (TaggedUndirectedEdge<TVertex, TTag> edge in g.Edges)
+            foreach (TEdge edge in g.AdjacentEdges(vertFromA))
             {
-                if ((edge.Source.Equals(vertFromA) && edge.Target.Equals(vertFromB))
-                     || (edge.Target.Equals(vertFromA) && edge.Source.Equals(vertFromB)))
-                    return edge;
+                if (edge.Target.Equals(vertFromB) || edge.Source.Equals(vertFromB)) return edge;
             }
-            return default(TaggedUndirectedEdge<TVertex, TTag>);
+            return default(TEdge);
         }
 
 
