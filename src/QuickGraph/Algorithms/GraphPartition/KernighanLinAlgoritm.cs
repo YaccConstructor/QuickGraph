@@ -7,20 +7,20 @@ using QuickGraph.Algorithms;
 
 namespace QuickGraph.Algorithms.KernighanLinAlgoritm
 {
-    public sealed class KernighanLinAlgoritm<TVertex, TEdge> where TEdge : IEdge<TVertex>
+    public sealed class KernighanLinAlgoritm<TVertex, TTag>
+        where TTag : IEquatable<TTag>, IConvertible, IComparable
     {
-        private GraphWithWeights<TVertex, TEdge> g;
+        private UndirectedGraph<TVertex, TaggedUndirectedEdge<TVertex, TTag>> g;
         private int itersNum;
         private int partitionSize;
         private SortedSet<TVertex> A, B;
         private SortedSet<TVertex> unswappedA, unswappedB;
 
-
-        public KernighanLinAlgoritm(GraphWithWeights<TVertex, TEdge> g, int itersNum)
+        public KernighanLinAlgoritm(UndirectedGraph<TVertex, TaggedUndirectedEdge<TVertex, TTag>> g, int itersNum) 
         {
             this.g = g;
             this.itersNum = itersNum;
-            this.partitionSize = g.graph.Vertices.Count() / 2;
+            this.partitionSize = g.Vertices.Count() / 2;
         }
 
 
@@ -36,7 +36,7 @@ namespace QuickGraph.Algorithms.KernighanLinAlgoritm
             unswappedB = new SortedSet<TVertex>(B);
 
             var bestPartition = new Partition<TVertex>(A, B);
-            int minCost = int.MaxValue;
+            double minCost = double.MaxValue;
 
             for (int i = 0; i < itersNum; i++)
             {
@@ -61,16 +61,13 @@ namespace QuickGraph.Algorithms.KernighanLinAlgoritm
 
         private Partition<TVertex> doAllSwaps()
         {
-            List<Pair<TVertex>> swaps = new List<Pair<TVertex>>();
-            int minCost = int.MaxValue;
+            List<Tuple<TVertex, TVertex>> swaps = new List<Tuple<TVertex, TVertex>>();
+            double minCost = double.MaxValue;
             int minId = -1;
-            // int partSize = 0;
-            // if (g.graph.Vertices.Count() != partitionSize * 2) partSize = partitionSize + 1;
-            // else partSize = partitionSize;
 
             for (int i = 0; i < partitionSize; i++)
             {
-                int cost = doSingleSwap(swaps);
+                double cost = doSingleSwap(swaps);
                 if (cost < minCost)
                 {
                     minCost = cost; minId = i;
@@ -80,56 +77,58 @@ namespace QuickGraph.Algorithms.KernighanLinAlgoritm
             //Back to swap step with min cutcost
             while (swaps.Count - 1 > minId)
             {
-                Pair<TVertex> pair = swaps.Last();
+                Tuple<TVertex, TVertex> pair = swaps.Last();
                 swaps.Remove(pair);
-                swapVertices(A, pair.second, B, pair.first);
+                swapVertices(A, pair.Item2, B, pair.Item1);
             }
 
             return new Partition<TVertex>(A, B, minCost);
         }
 
 
-        private int doSingleSwap(List<Pair<TVertex>> swaps)
+        private double doSingleSwap(List<Tuple<TVertex, TVertex>> swaps)
         {
-            Pair<TVertex> maxPair = null;
-            int maxGain = int.MinValue;
+            Tuple<TVertex, TVertex> maxPair = null;
+            double maxGain = double.MinValue;
             foreach (TVertex vertFromA in unswappedA)
                 foreach (TVertex vertFromB in unswappedB)
                 {
-                    TEdge edge = findEdge(vertFromA, vertFromB);
-                    int edgeCost = edge != null ? g.edgeWeights[edge] : 0;
-                    int gain = getVertexCost(vertFromA) + getVertexCost(vertFromB) - 2 * edgeCost;
+                    TaggedUndirectedEdge<TVertex, TTag> edge = findEdge(vertFromA, vertFromB);
+                    double edgeCost;
+                    if (edge != null) edgeCost = Convert.ToDouble(edge.Tag); else edgeCost = 0.0;
+                    double gain = getVertexCost(vertFromA) + getVertexCost(vertFromB) - (edgeCost + edgeCost);
                     if (gain > maxGain)
                     {
-                        maxPair = new Pair<TVertex>(vertFromA, vertFromB);
+                        maxPair = new Tuple<TVertex, TVertex>(vertFromA, vertFromB);
                         maxGain = gain;
                     }
 
                 }
-            swapVertices(A, maxPair.first, B, maxPair.second);
+            swapVertices(A, maxPair.Item1, B, maxPair.Item2);
             swaps.Add(maxPair);
-            unswappedA.Remove(maxPair.first);
-            unswappedB.Remove(maxPair.second);
+            unswappedA.Remove(maxPair.Item1);
+            unswappedB.Remove(maxPair.Item2);
 
             return getCutCost();
         }
 
 
-        private int getVertexCost(TVertex vert)
+        private double getVertexCost(TVertex vert)
         {
 
-            int cost = 0;
+            double cost = 0;
             bool vertIsInA = A.Contains(vert);
             var neib = getNeighbors(vert);
 
             foreach (TVertex vertNeighbord in neib)
             {
                 bool vertNeighbordIsInA = A.Contains(vertNeighbord);
-                TEdge edge = findEdge(vert, vertNeighbord);
+                TaggedUndirectedEdge<TVertex, TTag> edge = findEdge(vert, vertNeighbord);
                 if (vertIsInA != vertNeighbordIsInA) // external
-                    cost += g.edgeWeights[edge];
+                    cost += Convert.ToDouble(edge.Tag);
                 else
-                    cost -= g.edgeWeights[edge];
+                    cost -= Convert.ToDouble(edge.Tag);
+;
             }
 
             return cost;
@@ -138,13 +137,12 @@ namespace QuickGraph.Algorithms.KernighanLinAlgoritm
 
         private List<TVertex> getNeighbors(TVertex vert)
         {
-            var v = vert.ToString();
             var neibList = new List<TVertex>();
-            foreach (TEdge edge in g.graph.Edges)
+            foreach (TaggedUndirectedEdge<TVertex, TTag> edge in g.AdjacentEdges(vert))
             {
-                if (edge.Source.ToString() == v && !neibList.Contains(edge.Target))
+                if (edge.Source.Equals(vert) && !neibList.Contains(edge.Target))
                     neibList.Add(edge.Target);
-                if (edge.Target.ToString() == v && !neibList.Contains(edge.Source))
+                if (edge.Target.Equals(vert) && !neibList.Contains(edge.Source))
                     neibList.Add(edge.Source);
             }
 
@@ -161,38 +159,36 @@ namespace QuickGraph.Algorithms.KernighanLinAlgoritm
         }
 
 
-        private int getCutCost()
+        private double getCutCost()
         {
-            int cost = 0;
-            foreach (TEdge edge in g.graph.Edges)
+            double cost = 0;
+            foreach (TaggedUndirectedEdge<TVertex, TTag> edge in g.Edges)
             {
                 if (A.Contains(edge.Source) != A.Contains(edge.Target))
                 {
-                    cost += g.edgeWeights[edge];
+                    cost += Convert.ToDouble(edge.Tag);
                 }
             }
             return cost;
         }
 
 
-        private TEdge findEdge(TVertex vertFromA, TVertex vertFromB)
+        private TaggedUndirectedEdge<TVertex, TTag> findEdge(TVertex vertFromA, TVertex vertFromB)
         {
-            var vA = vertFromA.ToString();
-            var vB = vertFromB.ToString();
-            foreach (TEdge edge in g.graph.Edges)
+            foreach (TaggedUndirectedEdge<TVertex, TTag> edge in g.Edges)
             {
-                if ((edge.Source.ToString() == vA && edge.Target.ToString() == vB)
-                     || (edge.Target.ToString() == vA && edge.Source.ToString() == vB))
+                if ((edge.Source.Equals(vertFromA) && edge.Target.Equals(vertFromB))
+                     || (edge.Target.Equals(vertFromA) && edge.Source.Equals(vertFromB)))
                     return edge;
             }
-            return default(TEdge);
+            return default(TaggedUndirectedEdge<TVertex, TTag>);
         }
 
 
         public void getStartPartition()
         {
             int i = 0;
-            foreach (TVertex vert in g.graph.Vertices)
+            foreach (TVertex vert in g.Vertices)
             {
                 if (i < partitionSize) A.Add(vert);
                 else B.Add(vert);
