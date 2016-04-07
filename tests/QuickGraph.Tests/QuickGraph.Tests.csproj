@@ -295,6 +295,7 @@
     <Compile Include="Algorithms\Condensation\WeaklyConnectedCondensationGraphTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\ConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\IncrementalConnectedComponentsAlgorithmTest.cs" />
+    <Compile Include="Algorithms\DomaticPartitionAlgorithmTest.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
     <Compile Include="Algorithms\GraphPartition\KernighanLinAlgoritmTest.cs" />
     <Compile Include="Algorithms\MaximumBipartiteMatchingAlgorithmTest.cs" />
