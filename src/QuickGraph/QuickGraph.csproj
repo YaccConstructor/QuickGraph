@@ -208,6 +208,8 @@
     <Compile Include="Algorithms\DistanceRelaxers.cs" />
     <Compile Include="Algorithms\GraphPartition\Partition.cs" />
     <Compile Include="Algorithms\GraphPartition\KernighanLinAlgoritm.cs" />
+    <Compile Include="Algorithms\IsEulerianGraphAlgorithm.cs" />
+    <Compile Include="Algorithms\IsHamiltonianGraphAlgorithm.cs" />
     <Compile Include="Algorithms\IUndirectedVertexPredecessorRecorderAlgorithm.cs" />
     <Compile Include="Algorithms\IUndirectedTreeBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\LengauerTarjanDominatorAlgorithm.cs" />
