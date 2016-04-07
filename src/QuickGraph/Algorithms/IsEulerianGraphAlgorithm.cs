@@ -21,7 +21,7 @@ namespace QuickGraph.Algorithms
             var componentsAlgo = new ConnectedComponentsAlgorithm<TVertex, UndirectedEdge<TVertex>>(this.graph);
             componentsAlgo.Compute();
             
-            if (componentsAlgo.ComponentCount <= 1)
+            if (componentsAlgo.ComponentCount == 1)
             {
                 // Every vertice has even count of edges
                 foreach (var v in graph.Vertices)
@@ -35,7 +35,7 @@ namespace QuickGraph.Algorithms
             }
             else 
             {
-                // Check if only one component could contain edges
+                // Only one component could contain edges
                 bool[] hasEdgesInComponent = new bool[componentsAlgo.ComponentCount];
                 foreach (var verticeAndComponent in componentsAlgo.Components)
                 {
@@ -45,7 +45,7 @@ namespace QuickGraph.Algorithms
                     }
                 }
                 int firstIndex = Array.FindIndex(hasEdgesInComponent, x => x == true);
-                // Not one component contain edges
+                // More than one component contain edges
                 if (firstIndex != Array.FindLastIndex(hasEdgesInComponent, x => x == true)) 
                 {
                     return false;

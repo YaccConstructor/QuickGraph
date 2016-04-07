@@ -17,7 +17,7 @@ namespace QuickGraph.Algorithms
 
         public bool IsHamiltonian()
         {
-            // Using Dirac's theorem: if n >= 3 every vertex has degree n / 2 or greater.
+            // Using Dirac's theorem: if |vertices| >= 3 and for any vertex deg(vertex) >= (|vertices| / 2) then graph is Hamiltonian
             int n = graph.VertexCount;
             if (n >= 3)
             {
