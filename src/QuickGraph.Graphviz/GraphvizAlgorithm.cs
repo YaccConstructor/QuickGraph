@@ -237,11 +237,16 @@ namespace QuickGraph.Graphviz
             {
                 if (edgeColors[e] != GraphColor.White)
                     continue;
-
-                Output.Write("{0} -> {1} [",
-                    this.vertexIds[e.Source],
-                    this.vertexIds[e.Target]
+                if (this.VisitedGraph.IsDirected)
+                    Output.Write("{0} -> {1} [",
+                        this.vertexIds[e.Source],
+                        this.vertexIds[e.Target]
                     );
+                else
+                    Output.Write("{0} -- {1} [",
+                       this.vertexIds[e.Source],
+                       this.vertexIds[e.Target]
+                   );
 
                 OnFormatEdge(e);
                 Output.WriteLine("];");
