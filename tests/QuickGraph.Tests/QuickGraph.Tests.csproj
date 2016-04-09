@@ -327,6 +327,7 @@
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\WeaklyConnectedComponentsAlgorithmTest.cs" />
+    <Compile Include="Algorithms\VertexColoring\VertexColoringAlgorithmTest.cs" />
     <Compile Include="ArrayAdjacencyGraphTVertexTEdgeTest.cs" />
     <Compile Include="Benchmark.cs" />
     <Compile Include="BidirectionalGraphTest.cs" />
