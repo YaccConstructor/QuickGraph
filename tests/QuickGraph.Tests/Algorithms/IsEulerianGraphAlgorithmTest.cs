@@ -12,7 +12,7 @@ namespace QuickGraph.Tests.Algorithms
     public class EulerianGraphTest
     {
         [TestMethod]
-        public void testIsEulerianOneComponentTrue()
+        public void IsEulerianOneComponentTrue()
         {
             var g = new UndirectedGraph<int, UndirectedEdge<int>>();
             
@@ -25,7 +25,7 @@ namespace QuickGraph.Tests.Algorithms
         }
 
         [TestMethod]
-        public void testIsEulerianOneComponentFalse()
+        public void IsEulerianOneComponentFalse()
         {
             var g = new UndirectedGraph<int, UndirectedEdge<int>>();
 
@@ -40,7 +40,7 @@ namespace QuickGraph.Tests.Algorithms
         }
 
         [TestMethod]
-        public void testIsEulerianManyComponentsTrue()
+        public void IsEulerianManyComponentsTrue()
         {
             var g = new UndirectedGraph<String, UndirectedEdge<String>>();
 
@@ -55,7 +55,7 @@ namespace QuickGraph.Tests.Algorithms
         }
 
         [TestMethod]
-        public void testIsEulerianManyComponentsFalse()
+        public void IsEulerianManyComponentsFalse()
         {
             var g = new UndirectedGraph<String, UndirectedEdge<String>>();
 

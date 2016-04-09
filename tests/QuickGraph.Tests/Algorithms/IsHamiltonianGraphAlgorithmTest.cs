@@ -11,7 +11,7 @@ namespace QuickGraph.Tests.Algorithms
     public class IsHamiltonianGraphAlgorithmTest
     {
         [TestMethod]
-        public void testIsHamiltonianTrue()
+        public void IsHamiltonianTrue()
         {
             var g = new UndirectedGraph<int, UndirectedEdge<int>>();
 
@@ -26,7 +26,7 @@ namespace QuickGraph.Tests.Algorithms
         }
 
         [TestMethod]
-        public void testIsHamiltonianFalse()
+        public void IsHamiltonianFalse()
         {
             var g = new UndirectedGraph<int, UndirectedEdge<int>>();
 
