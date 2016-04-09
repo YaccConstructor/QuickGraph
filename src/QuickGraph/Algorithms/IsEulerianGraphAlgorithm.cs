@@ -44,14 +44,15 @@ namespace QuickGraph.Algorithms
                         hasEdgesInComponent[verticeAndComponent.Value] = true;
                     }
                 }
-                int firstIndex = Array.FindIndex(hasEdgesInComponent, x => x == true);
+                int firstIndex = Array.FindIndex(hasEdgesInComponent, x => x);
                 // More than one component contain edges
-                if (firstIndex != Array.FindLastIndex(hasEdgesInComponent, x => x == true)) 
+                if (firstIndex != Array.FindLastIndex(hasEdgesInComponent, x => x)) 
                 {
                     return false;
                 }
                 else
                 {
+                    // Now only one component contains edges, check is it an eulerian component
                     foreach (var verticeAndComponent in componentsAlgo.Components)
                     {   
                         // Vertice in selected component and has even count of edges

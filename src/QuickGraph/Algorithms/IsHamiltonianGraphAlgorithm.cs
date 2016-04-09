@@ -23,7 +23,7 @@ namespace QuickGraph.Algorithms
             {
                 foreach (var v in graph.Vertices)
                 {
-                    if (!(graph.AdjacentEdges(v).Count() >= n / 2))
+                    if (graph.AdjacentEdges(v).Count() < n / 2)
                     {
                         return false;
                     }
