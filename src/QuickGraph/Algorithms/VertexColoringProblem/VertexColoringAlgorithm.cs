@@ -6,13 +6,21 @@ using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
 {
-    public sealed class InputModel<TVertex, TEdge> where TEdge : IEdge<TVertex>
+    public  class InputModel<TVertex, TEdge> 
+        where TEdge : IEdge<TVertex>
     {
         public UndirectedGraph<TVertex, TEdge> Graph { get; set; }
-        public Dictionary<TVertex, int> Colors { get; set; }
     }
 
-    public class VertexColoringAlgorithm<TVertex, TEdge> where TEdge : IEdge<TVertex>
+    public class OutputModel<TVertex, TEdge>
+        : InputModel<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
+    {
+        public Dictionary<TVertex, Nullable<int>> Colors { get; set; }
+    }
+
+    public class VertexColoringAlgorithm<TVertex, TEdge> 
+        where TEdge : IEdge<TVertex>
     {
         private InputModel<TVertex, TEdge> input;
 
@@ -21,18 +29,18 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
             this.input = input;
         }
 
-        public InputModel<TVertex, TEdge> Compute()
+        public OutputModel<TVertex, TEdge> Compute()
         {
             int V = input.Graph.VertexCount;
             var listOfVertex = new List<IEnumerable<TVertex>>();
-            var vertexColor = new Dictionary<TVertex, int>();
+            var vertexColor = new Dictionary<TVertex, Nullable<int>>();
             var firstVertex = input.Graph.Vertices.First();
 
 
             // Initialize remaining vertices as unassigned
             foreach (var vertex in input.Graph.Vertices)
             {
-                vertexColor[vertex] = -1; // no color is assigned to vertex
+                vertexColor[vertex] = null; // no color is assigned to vertex
             }
 
             // Assign the first color to first vertex
@@ -40,13 +48,13 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
 
             /*
             A temporary array to store the available colors. True
-            value of available[cr] would mean that the color cr is
+            value of available[usedColor] would mean that the color usedColor is
             assigned to one of its adjacent vertices
             */
             bool[] available = new bool[V];
-            for (int usedColor = 0; usedColor < V; usedColor++)
+            for (int usingColor = 0; usingColor < V; usingColor++)
             {
-                available[usedColor] = false;
+                available[usingColor] = false;
             }
 
             // Assign colors to remaining V-1 vertices            
@@ -57,34 +65,35 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
                     // Process all adjacent vertices and flag their colors as unavailable
                     foreach (var edgesOfProcessVertex in input.Graph.AdjacentEdges(vertexOfGraph))
                     {
-                        if (vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)] != -1)
+                        if (vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)].HasValue)
                         {
-                            available[vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)]] = true;
+                            available[vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)].Value] = true;
                         }
                     }
 
                     // Find the first available color
-                    int usedColor = new int();
-                    for (usedColor = 0; usedColor < V; usedColor++)
+                    int usingColor = new int();
+                    for (usingColor = 0; usingColor < V; usingColor++)
                     {
-                        if (available[usedColor] == false)
+                        if (!(available[usingColor]))
                             break;
                     }
 
                     // Assign the found color
-                    vertexColor[vertexOfGraph] = usedColor;
+                    vertexColor[vertexOfGraph] = usingColor;
 
                     // Reset the values back to false for the next iteration
                     foreach (var edgesOfProcessVertex in input.Graph.AdjacentEdges(vertexOfGraph))
                     {
-                        if (vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)] != -1)
+                        if (vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)].HasValue)
                         {
-                            available[vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)]] = false;
+                            available[vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)].Value] = false;
                         }
                     }
                 }
             }
-            return new InputModel<TVertex, TEdge>
+            // Return the Graph with colored Vertices
+            return new OutputModel<TVertex, TEdge>
             {
                 Graph = input.Graph,
                 Colors = vertexColor

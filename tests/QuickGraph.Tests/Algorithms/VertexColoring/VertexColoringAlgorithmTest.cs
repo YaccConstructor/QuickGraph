@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Algorithms.GraphColoring.VertexColoring;
@@ -20,11 +21,21 @@ namespace QuickGraph.Tests.Algorithms.GraphColoring
             */
             var input = GenerateInput();
             var grafWithColoredVertices = new VertexColoringAlgorithm<char, Edge<char>>(input).Compute();
+
+            // Graph doesn't have third vertex color
+            Assert.IsFalse(grafWithColoredVertices.Colors.Values.Contains(3));
+
             var result = grafWithColoredVertices.Colors.Values.ToArray();
 
             // Expecting to get 3 diferent colors
             Assert.AreEqual(3, result.Max() + 1);
 
+            // not equal to null 
+            foreach(var color in result)
+            {
+                Assert.AreNotEqual(null, color);
+            }            
+            
             /* 
             and corresponding colors of vertices:
             0 vertex = 0 color
@@ -43,44 +54,24 @@ namespace QuickGraph.Tests.Algorithms.GraphColoring
         private InputModel<char, Edge<char>> GenerateInput()
         {
             var g = new UndirectedGraph<char, Edge<char>>(true);
-            var colorsOfVertex = new Dictionary<char, int>();
 
+            g.AddVertex('0'); // 1 Vertex
+            g.AddVertex('1'); // 2 Vertex
+            g.AddVertex('2'); // 3 Vertex
+            g.AddVertex('3'); // 4 Vertex
+            g.AddVertex('4'); // 5 Vertex
 
-            AddColoredVertex(g, colorsOfVertex, '0'); // 1 Vertex
-            AddColoredVertex(g, colorsOfVertex, '1'); // 2 Vertex
-            AddColoredVertex(g, colorsOfVertex, '2'); // 3 Vertex
-            AddColoredVertex(g, colorsOfVertex, '3'); // 4 Vertex
-            AddColoredVertex(g, colorsOfVertex, '4'); // 5 Vertex
-
-            AddEdgeBnColoredVertices(g, '0', '1'); // 1 Edge
-            AddEdgeBnColoredVertices(g, '0', '2'); // 2 Edge
-            AddEdgeBnColoredVertices(g, '1', '2'); // 3 Edge
-            AddEdgeBnColoredVertices(g, '1', '3'); // 4 Edge
-            AddEdgeBnColoredVertices(g, '2', '3'); // 5 Edge
-            AddEdgeBnColoredVertices(g, '3', '4'); // 6 Edge
+            g.AddEdge(new Edge<char>('0', '1')); // 1 Edge
+            g.AddEdge(new Edge<char>('0', '2')); // 2 Edge
+            g.AddEdge(new Edge<char>('1', '2')); // 3 Edge
+            g.AddEdge(new Edge<char>('1', '3')); // 4 Edge
+            g.AddEdge(new Edge<char>('2', '3')); // 5 Edge
+            g.AddEdge(new Edge<char>('3', '4')); // 6 Edge
 
             return new InputModel<char, Edge<char>>
             {
-                Graph = g,
-                Colors = colorsOfVertex
+                Graph = g
             };
         }
-        private void AddColoredVertex(
-               UndirectedGraph<char, Edge<char>> g,
-               Dictionary<char, int> colorsOfVertex,
-               char vertex)
-        {
-            var ac = vertex;
-            colorsOfVertex[ac] = 0;
-            g.AddVertex(ac);
-        }
-        private void AddEdgeBnColoredVertices(
-              UndirectedGraph<char, Edge<char>> g,
-              char source, char target)
-        {
-            var ac = new Edge<char>(source, target);
-            g.AddEdge(ac);
-        }
-
     }
 }
