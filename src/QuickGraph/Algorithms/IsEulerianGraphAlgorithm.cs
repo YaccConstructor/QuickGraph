@@ -16,26 +16,26 @@ namespace QuickGraph.Algorithms
             this.graph = graph;
         }
 
-        private Tuple<int, int> firstAndSecondIndexOfTrue(bool[] data)
+        private Tuple<int?, int?> firstAndSecondIndexOfTrue(bool[] data)
         {
-            // if no true elements returns (-1, -1)
-            // if only one true element, returns (indexOfTrue, -1)
-            int firstIndex = -1, secondIndex = -1;
+            // if no true elements returns (null, null)
+            // if only one true element, returns (indexOfTrue, null)
+            int? firstIndex = null, secondIndex = null;
             for (int i = 0; i < data.Length; i++)
             {
                 if (data[i])
                 {
-                    if (firstIndex == -1)
+                    if (!firstIndex.HasValue)
                     {
                         firstIndex = i;
                     }
                     else
                     {
-                        return new Tuple<int, int>(firstIndex, i);
+                        return new Tuple<int?, int?>(firstIndex, i);
                     } 
                 }
             }
-            return new Tuple<int, int>(firstIndex, secondIndex);
+            return new Tuple<int?, int?>(firstIndex, secondIndex);
         }
 
         public bool isEulerian()
@@ -47,15 +47,12 @@ namespace QuickGraph.Algorithms
             bool[] hasEdgesInComponent = new bool[componentsAlgo.ComponentCount];
             foreach (var verticeAndComponent in componentsAlgo.Components)
             {
-                if (graph.AdjacentEdges(verticeAndComponent.Key).Count() > 0) 
-                {
-                    hasEdgesInComponent[verticeAndComponent.Value] = true;
-                }
+                hasEdgesInComponent[verticeAndComponent.Value] = graph.AdjacentEdges(verticeAndComponent.Key).Count() > 0;
             }
             var t = firstAndSecondIndexOfTrue(hasEdgesInComponent);
-            int firstIndex = t.Item1, secondIndex = t.Item2;
-            // More than one component contain edges
-            if (secondIndex != -1) 
+            int? firstIndex = t.Item1, secondIndex = t.Item2;
+            // No edges at all or More than one component contain edges
+            if (!firstIndex.HasValue || secondIndex.HasValue) 
             {
                 return false;
             }
@@ -65,7 +62,7 @@ namespace QuickGraph.Algorithms
                 foreach (var verticeAndComponent in componentsAlgo.Components)
                 {   
                     // Vertice in selected component and has even count of edges
-                    if (verticeAndComponent.Value == firstIndex && 
+                    if (verticeAndComponent.Value == firstIndex.Value && 
                         graph.AdjacentEdges(verticeAndComponent.Key).Count() % 2 == 1)
                     {
                         return false;
