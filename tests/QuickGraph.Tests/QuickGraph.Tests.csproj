@@ -297,6 +297,8 @@
     <Compile Include="Algorithms\ConnectedComponents\IncrementalConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
     <Compile Include="Algorithms\GraphPartition\KernighanLinAlgoritmTest.cs" />
+    <Compile Include="Algorithms\IsEulerianGraphAlgorithmTest.cs" />
+    <Compile Include="Algorithms\IsHamiltonianGraphAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumBipartiteMatchingAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\EdmondsKarpMaximumFlowAlgorithmTest.cs" />
