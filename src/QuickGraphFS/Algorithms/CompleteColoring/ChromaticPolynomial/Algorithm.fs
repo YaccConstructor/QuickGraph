@@ -1,60 +1,90 @@
-﻿namespace QuickGraph.Algorithms.ChromaticPolynomial
+﻿namespace QuickGraph.Algorithms
 
 open QuickGraph
+open System.Collections
+open System.Linq
 
-module Algorithm =
+module ChromaticPolynomial =
    
-    let private joinVertexes (graph : UndirectedGraph<_,_>) fstVertex sndVertex =
-        let edges = graph.AdjacentEdges fstVertex
+    let private getAdjVertices (graph : UndirectedGraph<'TVertex,_>) vertex =
+        let edges = graph.AdjacentEdges vertex
+        let adjVertices : Set<'TVertex> ref = ref (new Set<'TVertex>(Set.empty))
         for edge in edges do
-            graph.AddEdge (new UndirectedEdge<_>(edge.Source, sndVertex)) |> ignore
+            adjVertices := (!adjVertices).Add edge.Source
+            adjVertices := (!adjVertices).Add edge.Target
+        !adjVertices
+
+    let private joinVertices (graph : UndirectedGraph<'a,_>) fstVertex sndVertex =
+        let adjVertices1 = getAdjVertices graph fstVertex
+        let adjVertices2 = (getAdjVertices graph sndVertex).Add fstVertex
+        let verticesToAdd : 'a array = (adjVertices1.Except adjVertices2).ToArray()
+        for vertex in verticesToAdd do
+            graph.AddEdge (new UndirectedEdge<_>(sndVertex, vertex)) |> ignore
         graph.RemoveVertex fstVertex |> ignore
 
 
-    let private sum (fstPolynomial : int array) (sndPolynomial : int array) =
-        let fst : int array ref = ref null
-        let snd : int array ref = ref null
-        if fstPolynomial.Length < sndPolynomial.Length then
-            fst := sndPolynomial
-            snd := [| for i in 0..(!fst).Length-1 -> if i < fstPolynomial.Length then fstPolynomial.[i] else 0 |]
-        else
-            fst := fstPolynomial
-            snd := [| for i in 0..(!fst).Length-1 -> if i < sndPolynomial.Length then sndPolynomial.[i] else 0 |]
+    let private sum (fstPolynomial : int list) (sndPolynomial : int list) =
+        let fst : int list ref = ref fstPolynomial
+        let snd : int list ref = ref sndPolynomial
+        while ((!fst).Length < ((!snd).Length)) do
+            fst := 0::(!fst)
+        while ((!fst).Length > ((!snd).Length)) do
+            snd := 0::(!snd)
         
-        Array.map2 (+) !fst !snd
+        List.map2 (+) !fst !snd
         
     // Multiply polinomial with (x - r) polinomial
-    let private mul (polynomial : int array) (r : int) =
-        let res = [| for i in 0..polynomial.Length -> if i = 0 then 0 else polynomial.[i-1] |]
-        Array.map2 (+) res (Array.map (fun x -> x * r) res)
+    let private mul (polynomial : int list) (r : int) =
+        let res = polynomial @ [0]
+        List.map2 (-) res (0::(List.map (fun x -> x * r) polynomial))
 
     let private countChrPolCompleteGraph degree =
-        let mutable res = [| 1; 0 |]
+        let mutable res = [ 1; 0 ]
         for i in 1..degree-1 do
             res <- mul res i
         res
 
-    let findFirstMissingEdge (graph : UndirectedGraph<_,_>) =
-        let vertexes = graph.Vertices
-        let enumerator = vertexes.GetEnumerator()
+    let private findFirstMissingEdge (graph : UndirectedGraph<_,_>) =
+        let enumerator = graph.Vertices.GetEnumerator()
         enumerator.MoveNext() |> ignore
         while (graph.AdjacentDegree enumerator.Current = graph.VertexCount - 1) do
             enumerator.MoveNext() |> ignore
 
-        let cur = enumerator.Current
+        let src = enumerator.Current
+        let adjVertices = (getAdjVertices graph src).Add src
         enumerator.Reset()
-        enumerator.MoveNext() |> ignore
-        while ((cur.Equals enumerator.Current) && (graph.ContainsEdge (new UndirectedEdge<_>(cur, enumerator.Current)))) do
-            enumerator.MoveNext() |> ignore
-        (cur, enumerator.Current)
-        
+        while (enumerator.MoveNext() && (adjVertices.Contains (enumerator.Current))) do
+            ()
+        (src, enumerator.Current)
 
-    let rec findChromaticPolynomial (graph : UndirectedGraph<_,_>) = 
+    (*let private getAdjMatrix (graph : UndirectedGraph<'TVertex,_>) =
+        let size = graph.VertexCount
+        let matrix = new BitArray(size * size)
+        let vertices = new Dictionary<int, 'TVertex>(size)
+        let vertexEnum = graph.Vertices.GetEnumerator()
+        vertexEnum.MoveNext() |> ignore
+        
+        for i in 0..size-1 do
+            vertices.
+            vertexEnum.MoveNext() |> ignore
+
+        for i in 0..size-1 do
+            let v = array.[i]
+            let degree = graph.AdjacentDegree()
+            for j in 0..degree-1 do
+                let edge = graph.AdjacentEdge v degree
+
+        (matrix, array)*)
+
+    let rec private findChromaticPolynomialAsList (graph : UndirectedGraph<_,_>) = 
         if graph.EdgeCount = graph.VertexCount * (graph.VertexCount - 1) / 2 then countChrPolCompleteGraph graph.VertexCount
         else 
             let fst, snd = findFirstMissingEdge graph
             let graph1 = graph.Clone()
             let graph2 = graph.Clone()
             graph1.AddEdge(new UndirectedEdge<_>(fst, snd)) |> ignore
-            joinVertexes graph2 fst snd
-            sum (findChromaticPolynomial graph1) (findChromaticPolynomial graph1)
+            joinVertices graph2 fst snd
+            sum (findChromaticPolynomialAsList graph1) (findChromaticPolynomialAsList graph2)
+
+    let rec findChromaticPolynomial (graph : UndirectedGraph<_,_>) =
+        List.toArray (findChromaticPolynomialAsList graph)
