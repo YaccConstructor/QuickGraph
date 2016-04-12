@@ -1,23 +1,24 @@
 ﻿namespace QuickGraph.Algorithms
 
 open QuickGraph
-open System.Collections
+open System.Collections.Generic
 open System.Linq
 
 module ChromaticPolynomial =
    
     let private getAdjVertices (graph : UndirectedGraph<'TVertex,_>) vertex =
         let edges = graph.AdjacentEdges vertex
-        let adjVertices : Set<'TVertex> ref = ref (new Set<'TVertex>(Set.empty))
+        let adjVertices : HashSet<'TVertex> = new HashSet<'TVertex>(Set.empty)
         for edge in edges do
-            adjVertices := (!adjVertices).Add edge.Source
-            adjVertices := (!adjVertices).Add edge.Target
-        !adjVertices
+            adjVertices.Add edge.Source |> ignore
+            adjVertices.Add edge.Target |> ignore
+        adjVertices
 
-    let private joinVertices (graph : UndirectedGraph<'a,_>) fstVertex sndVertex =
+    let private joinVertices (graph : UndirectedGraph<_,_>) fstVertex sndVertex =
         let adjVertices1 = getAdjVertices graph fstVertex
-        let adjVertices2 = (getAdjVertices graph sndVertex).Add fstVertex
-        let verticesToAdd : 'a array = (adjVertices1.Except adjVertices2).ToArray()
+        let adjVertices2 = getAdjVertices graph sndVertex
+        adjVertices2.Add fstVertex |> ignore
+        let verticesToAdd = adjVertices1.Except adjVertices2
         for vertex in verticesToAdd do
             graph.AddEdge (new UndirectedEdge<_>(sndVertex, vertex)) |> ignore
         graph.RemoveVertex fstVertex |> ignore
@@ -45,17 +46,12 @@ module ChromaticPolynomial =
         res
 
     let private findFirstMissingEdge (graph : UndirectedGraph<_,_>) =
-        let enumerator = graph.Vertices.GetEnumerator()
-        enumerator.MoveNext() |> ignore
-        while (graph.AdjacentDegree enumerator.Current = graph.VertexCount - 1) do
-            enumerator.MoveNext() |> ignore
-
-        let src = enumerator.Current
-        let adjVertices = (getAdjVertices graph src).Add src
-        enumerator.Reset()
-        while (enumerator.MoveNext() && (adjVertices.Contains (enumerator.Current))) do
-            ()
-        (src, enumerator.Current)
+        let vertices = graph.Vertices
+        let src = Seq.find (fun vertex -> graph.AdjacentDegree vertex <> graph.VertexCount - 1) vertices
+        let adjVertices = getAdjVertices graph src
+        adjVertices.Add src |> ignore
+        let target = Seq.find (fun vertex -> not (adjVertices.Contains vertex)) vertices
+        (src, target)
 
     (*let private getAdjMatrix (graph : UndirectedGraph<'TVertex,_>) =
         let size = graph.VertexCount
