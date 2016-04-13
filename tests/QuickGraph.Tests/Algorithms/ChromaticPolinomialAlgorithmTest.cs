@@ -28,10 +28,11 @@ namespace QuickGraph.Tests.Algorithms
         [TestMethod]
         public void ChromaticPolinomialEmptyGraph()
         {
-            var graph = BuildGraph(new int[] { 1, 2, 3 },
+            var graph = BuildGraph(new int[] { 1, 2, 3, 4, 5 },
                 new int[] {});
-            CollectionAssert.AreEqual(new int[] { 1, 0, 0, 0}, ChromaticPolynomial.findChromaticPolynomial(graph));
+            CollectionAssert.AreEqual(new int[] { 1, 0, 0, 0, 0, 0}, ChromaticPolynomial.findChromaticPolynomial(graph));
         }
+
 
         private UndirectedGraph<int, UndirectedEdge<int>> BuildGraph(int[] verticies, int[] edges)
         {

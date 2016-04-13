@@ -25,14 +25,10 @@ module ChromaticPolynomial =
 
 
     let private sum (fstPolynomial : int list) (sndPolynomial : int list) =
-        let fst : int list ref = ref fstPolynomial
-        let snd : int list ref = ref sndPolynomial
-        while ((!fst).Length < ((!snd).Length)) do
-            fst := 0::(!fst)
-        while ((!fst).Length > ((!snd).Length)) do
-            snd := 0::(!snd)
-        
-        List.map2 (+) !fst !snd
+        let max = max fstPolynomial.Length sndPolynomial.Length
+        let fst = (List.init (max - fstPolynomial.Length) (fun _ -> 0)) @ fstPolynomial
+        let snd = (List.init (max - sndPolynomial.Length) (fun _ -> 0)) @ sndPolynomial
+        List.map2 (+) fst snd
         
     // Multiply polinomial with (x - r) polinomial
     let private mul (polynomial : int list) (r : int) =
