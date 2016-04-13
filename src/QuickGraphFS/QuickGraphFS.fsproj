@@ -35,11 +35,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\EdgeColoring\EdgeColoringAlgorithm.fs" />
     <Compile Include="Algorithms\FeedbackArcSet\BergerShorMinimumFeedbackArcSetAlgorithm.fs" />
     <Compile Include="Algorithms\CompleteColoring\ApproxCompleteColoringAlgorithm.fs" />
+    <Compile Include="Algorithms\CompleteColoring\ChromaticPolynomial\Algorithm.fs" />
     <Compile Include="Algorithms\DominatingSet\MinimumDominatingSetGeneticAlgorithm.fs" />
     <Compile Include="Algorithms\IndependentSet\MaximumIndependentSetAlgorithm.fs" />
     <Compile Include="Algorithms\BipartiteDimension\BipartiteDimensionAlgorithm.fs" />
