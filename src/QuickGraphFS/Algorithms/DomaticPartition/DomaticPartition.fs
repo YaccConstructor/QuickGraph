@@ -45,14 +45,15 @@ type public DomaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Ve
             elif s.IsEmpty then failwith "No set cover"
             else 
                 let uniqueElem = u |> Seq.tryFind (fun elem -> frequency s elem = 1)
-                if uniqueElem.IsSome then
-                    let uniqueElemSet = s |> Seq.find (fun (set: Set<'Vertex>) -> set.Contains uniqueElem.Value)
+                match uniqueElem with
+                | Some uniqueElemVal ->
+                    let uniqueElemSet = s |> Seq.find (fun (set: Set<'Vertex>) -> set.Contains uniqueElemVal)
                     computeMSC (Set.difference u uniqueElemSet) (Set.remove uniqueElemSet s) (Set.add uniqueElemSet c)
-                else
+                | None ->
                     let pairSameContained = u |> tryFindForPairs (fun (elem1, elem2) -> containingSets s elem1 = containingSets s elem2)
-                    if pairSameContained.IsSome then
-                        computeMSC (Set.remove (fst pairSameContained.Value) u) s c
-                    else
+                    match pairSameContained with
+                    | Some pairSameContainedVal -> computeMSC (Set.remove (fst pairSameContainedVal) u) s c
+                    | None ->
                         let s' = ref Set.empty
                         let singletonsElem = u |> Seq.tryFind (fun elem ->
                             let uContainingSets = containingSets s elem
@@ -60,20 +61,22 @@ type public DomaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Ve
                                 s' := uContainingSets
                                 true
                             else false)
-                        if singletonsElem.IsSome then                        
+                        match singletonsElem with   
+                        | Some singletonsElemVal ->                  
                             !s' |> Set.iter (fun elem -> 
-                                computeMSC <| Set.remove (singletonsElem.Value) u
+                                computeMSC <| Set.remove singletonsElemVal u
                                            <| Set.difference s !s'
                                            <| Set.add elem c)
-                        else
+                        | None ->
                             let sMaxCard = card <| Seq.maxBy (fun (subset: Set<'Vertex>) -> card subset) s
                             let sMax = Set.filter (fun (subset: Set<'Vertex>) -> card subset = sMaxCard) s
                             let freq2subsetElem = Seq.tryPick (fun subset -> 
                                 let elem = Seq.tryFind (fun elem -> frequency s elem = 2 && u.Contains elem) subset
-                                match elem with Some elemVal -> Some (subset, elemVal) | None -> None) sMax
+                                elem |> Option.map (fun elemVal -> subset, elemVal)) sMax                                
 
-                            if freq2subsetElem.IsSome then
-                                let freq2subset, freq2elem = freq2subsetElem.Value
+                            match freq2subsetElem with
+                            | Some freq2subsetElemVal ->
+                                let freq2subset, freq2elem = freq2subsetElemVal
                                 let s' = Set.remove freq2subset (containingSets s freq2elem)
 
                                 // Select set
@@ -85,9 +88,10 @@ type public DomaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Ve
                                 computeMSC <| Set.difference u (Set.unionMany s')
                                            <| Set.difference s (Set.add freq2subset s')
                                            <| Set.union c s'
-                            else
+                            | None ->
                                 let biggerSubset = Seq.tryFind (fun (subset: Set<'Vertex>) -> card subset >= 3) sMax
-                                if biggerSubset.IsSome then
+                                match biggerSubset with
+                                | Some biggerSubsetVal ->
                                     let biggerSubsetVal = biggerSubset.Value
 
                                     // Select set
@@ -97,16 +101,15 @@ type public DomaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Ve
 
                                     // Discard set
                                     computeMSC u (Set.remove biggerSubsetVal s) c
-                                else
+                                | None ->
                                     let containingContained = Seq.tryPick (fun maxSubset -> 
                                         let contained = Seq.tryFind (fun (subset: Set<'Vertex>) -> 
                                             subset <> maxSubset && 
                                             subset.Count = (Set.intersect subset maxSubset).Count) s
                                         if contained.IsSome then Some (maxSubset, contained.Value) else None) sMax
                                 
-                                    if containingContained.IsSome then
-                                        let containing, contained = containingContained.Value
-
+                                    match containingContained with
+                                    | Some (containing, contained) ->
                                         // Select set
                                         computeMSC <| Set.difference u containing
                                                    <| Set.difference s (Set([containing; contained]))
@@ -114,7 +117,7 @@ type public DomaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Ve
 
                                         // Discard set
                                         computeMSC u (Set.remove containing s) c
-                                    else
+                                    | None ->
                                         let maxFreqElem = Seq.maxBy (fun x -> frequency s x) u
                                         let uvSet = Seq.find (fun (subset: Set<'Vertex>) -> subset.Contains maxFreqElem) s
                                         let otherUSets = Set.remove uvSet <| containingSets s maxFreqElem
@@ -164,19 +167,28 @@ type public DomaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Ve
 //        printfn "[end] Min dominating sets"
 
         set mdss
+    
 
     // Minimal dominating set partition is returned if it exists for a given graph
     // Otherwise some other max size domatic partition is returned
     member this.GetMaxSizePartition() = 
-        let rec subsets s = 
-            [yield s
-             for e in s do
-                 yield! subsets (Set.remove e s)]
-            |> set
+        let subsets s = 
+                let max_bits x = 
+                    let rec loop acc = if (1 <<< acc) > x then acc else loop (acc + 1)
+                    loop 0
+
+                let bit_setAt i x = ((1 <<< i) &&& x) <> 0
+
+                let a = Set.toArray s in
+                let len = Array.length a
+                let as_set x =  set [for i in 0 .. (max_bits x) do 
+                                        if (bit_setAt i x) && (i < len) then yield a.[i]]
+        
+                seq { for i in 0 .. (1 <<< len) - 1 -> as_set i }
 
         let sortedSubsets = 
             subsets <| set graph.Vertices
-            |> Set.toArray
+            |> Seq.toArray
             |> Array.sortBy (fun (subset: Set<'Vertex>) -> subset.Count)
 
         let mdss = this.MinimalDominatingSets()

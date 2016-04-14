@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Algorithms;
 using System.Collections.Generic;
+using System.Linq;
+using System.Diagnostics;
 
 namespace QuickGraph.Tests
 {
@@ -50,6 +52,37 @@ namespace QuickGraph.Tests
             }
 
             return tocompare.Count == 0;
+        }
+
+        public Tuple<int[], Tuple<int, int>[]> generateGraph(int vertexCount)
+        {
+            int[] vertices = Enumerable.Range(1, vertexCount + 1).ToArray();
+
+            Random rnd = new Random();
+            var edgesList = new List<Tuple<int, int>>();
+            for (int i = 0; i < vertexCount; i++)
+            {
+                int randVertex1 = rnd.Next(1, vertexCount + 1);
+                int randVertex2 = rnd.Next(1, vertexCount + 1);
+
+                bool wasTuple = false;
+                foreach (var edge in edgesList)
+                {
+                    if (edge.Item1 == randVertex1 && edge.Item2 == randVertex2 ||
+                        edge.Item1 == randVertex2 && edge.Item2 == randVertex1)
+                    {
+                        wasTuple = true;
+                        break;
+                    }
+                }
+
+                if (randVertex1 != randVertex2 && !wasTuple)
+                {
+                    edgesList.Add(new Tuple<int, int>(randVertex1, randVertex2));
+                }
+            }
+
+            return Tuple.Create(vertices, edgesList.ToArray());
         }
 
         [TestMethod]
@@ -187,6 +220,32 @@ namespace QuickGraph.Tests
             var partition = GetMaxDomaticPartition(vertices, edges);
 
             Assert.AreEqual(partition.Count, 2);
+        }
+
+        //[TestMethod]
+        public void DomaticPartitionTestPerf()
+        {
+            var stopwatch = new System.Diagnostics.Stopwatch();
+            int maxVertexCount = 16, statRetriesCount = 5;
+            for (int curVertexCount = 0; curVertexCount < maxVertexCount; curVertexCount++)
+            {
+                double meanTime = 0;
+                for (int j = 0; j < statRetriesCount; j++)
+                {
+                    var graph = generateGraph(curVertexCount);
+                    int[] vertices = graph.Item1;
+                    Tuple<int, int>[] edges = graph.Item2;
+
+                    stopwatch.Restart();
+                    var partition = GetMaxDomaticPartition(vertices, edges);
+                    stopwatch.Stop();
+
+                    meanTime += stopwatch.Elapsed.TotalSeconds;
+                }
+                meanTime /= statRetriesCount;
+               
+                Console.WriteLine("Mean time on " + curVertexCount + " vertices = " + meanTime);
+            }
         }
     }
 }

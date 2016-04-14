@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\EdgeColoring\EdgeColoringAlgorithm.fs" />
