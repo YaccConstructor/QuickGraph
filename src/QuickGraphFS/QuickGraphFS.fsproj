@@ -41,6 +41,7 @@
     <Compile Include="Algorithms\EdgeColoring\EdgeColoringAlgorithm.fs" />
     <Compile Include="Algorithms\FeedbackArcSet\BergerShorMinimumFeedbackArcSetAlgorithm.fs" />
     <Compile Include="Algorithms\CompleteColoring\ApproxCompleteColoringAlgorithm.fs" />
+    <Compile Include="Algorithms\CompleteColoring\ChromaticPolynomial\Algorithm.fs" />
     <Compile Include="Algorithms\DominatingSet\MinimumDominatingSetGeneticAlgorithm.fs" />
     <Compile Include="Algorithms\IndependentSet\MaximumIndependentSetAlgorithm.fs" />
     <Compile Include="Algorithms\BipartiteDimension\BipartiteDimensionAlgorithm.fs" />
