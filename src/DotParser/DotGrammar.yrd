@@ -8,6 +8,11 @@ open System.Linq
 
 let map = Map.ofList
 let wrongEdge = failwithf "DotParser: unexpected token: %s"
+
+let inline getOrElse v =
+    function
+    | Some x -> x
+    | None -> v
 }
 
 tokens {
@@ -24,12 +29,12 @@ options {
 module DotGrammar
 
 [<Start>]
-graph: g=graph_type [ID] LBRACE r=stmt_list<<g>> RBRACE { r }
+graph: g=graph_type [ID] LBRACE g1=stmt_list<<g>> RBRACE { g1 }
 
 graph_type: s=[STRICT] d=(GRAPH { false } | DIGRAPH { true }) { emptyGraph d (isSome s) }
 
 stmt_list<<(g: GraphData)>>:
-    g1=[s=stmt<<g>> [SEMI] s1=[stmt_list<<s>>] { if isSome s1 then s1.Value else s }] { if isSome g1 then g1.Value else g }
+    g1=[s=stmt<<g>> [SEMI] s1=[stmt_list<<s>>] { getOrElse s s1 }] { getOrElse g g1 }
 
 stmt<<(g: GraphData)>>:
     g1=node_stmt<<g>> { g1 }
@@ -39,24 +44,22 @@ stmt<<(g: GraphData)>>:
 
 
 attr_stmt<<(g: GraphData)>>:
-    k=(GRAPH { "graph" } | NODE { "node" } | EDGE { "edge" }) a=attr_list { addAttributes g k (map a) }
+    k=(GRAPH { "graph" } | NODE { "node" } | EDGE { "edge" }) a=attr_list { addAttributes g k a }
 
-attr_list: LBRACK a=[a_list] RBRACK { if isSome a then a.Value else [] }
+attr_list: LBRACK a=[a_list] RBRACK { getOrElse Map.empty a }
 
-a_list: a=attr [SEMI { } | COMMA { }] l=[a_list] { if isSome l then a :: l.Value else [a] }
+a_list:
+    k=ID ASSIGN v=ID [SEMI { } | COMMA { }] l=[a_list] { Map.add k v (getOrElse Map.empty l) }
 
-attr: k=ID ASSIGN v=ID { (k, v) }
-
-node_stmt<<(g: GraphData)>>: n=ID a=[attr_list] { addNode g n (if isSome a then (map a.Value) else Map.empty) |> fst }
+node_stmt<<(g: GraphData)>>: n=ID a=[attr_list] { addNode g n (getOrElse Map.empty a) |> fst }
 
 edge_stmt<<(g: GraphData)>>:
-	n=nodes<<g>> g1=edge_rhs<<(fst n, [snd n])>> a=[attr_list] { addEdgesForList (fst g1) (snd g1) (if isSome a then (map a.Value) else Map.empty) }
+	n=nodes<<g>> g1=edge_rhs<<(fst n, [snd n])>> a=[attr_list] { addEdgesForList (fst g1) (snd g1) (getOrElse Map.empty a) }
 
 edge_rhs<<(d: GraphData * string list list)>>:
     edgeop<<(fst d)>> n=nodes<<(fst d)>> r=[edge_rhs<<(fst n, (snd n) :: (snd d))>>] { if isSome r then r.Value else (fst n), ((snd n) :: (snd d)) }
 
 nodes<<(g: GraphData)>>: n=node_id<<g>> { n } | n=subgraph<<g>> { n }
-(* why n= ... {n} needed ? *)
 
 edgeop<<(g: GraphData)>>:
 	EDGE { if g.IsDirected then wrongEdge "--" else () }
