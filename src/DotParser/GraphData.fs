@@ -9,34 +9,34 @@ open System.Collections.Generic
 type Attributes = Map<string, string>
 type GraphData =
     {
-        IsDirected : bool;
-        IsStrict   : bool;
-        Nodes : Map<string,          Attributes>;
-        Edges : Map<string * string, Attributes list>;
-        GraphAttributes : Attributes;
-        NodeAttributes  : Attributes;
+        IsDirected : bool
+        IsStrict   : bool
+        Nodes : Map<string,          Attributes>
+        Edges : Map<string * string, Attributes list>
+        GraphAttributes : Attributes
+        NodeAttributes  : Attributes
         EdgeAttributes  : Attributes
     }
 
 let emptyGraph d s =
     {
-        IsDirected = d;
-        IsStrict   = s;
-        Nodes = Map.empty;
-        Edges = Map.empty;
-        GraphAttributes = Map.empty;
-        NodeAttributes  = Map.empty;
+        IsDirected = d
+        IsStrict   = s
+        Nodes = Map.empty
+        Edges = Map.empty
+        GraphAttributes = Map.empty
+        NodeAttributes  = Map.empty
         EdgeAttributes  = Map.empty
     }
 
 let copyAttrs (g : GraphData) =
     {
-        IsDirected = g.IsDirected;
-        IsStrict   = g.IsStrict;
-        Nodes = Map.empty;
-        Edges = Map.empty;
-        GraphAttributes = g.GraphAttributes;
-        NodeAttributes  = g.NodeAttributes;
+        IsDirected = g.IsDirected
+        IsStrict   = g.IsStrict
+        Nodes = Map.empty
+        Edges = Map.empty
+        GraphAttributes = g.GraphAttributes
+        NodeAttributes  = g.NodeAttributes
         EdgeAttributes  = g.EdgeAttributes
     }
 
@@ -47,7 +47,7 @@ let addAttributes (g : GraphData) (key : string) (a : Attributes) =
     | "graph" -> { g with GraphAttributes = merge g.GraphAttributes a }
     | "node"  -> { g with NodeAttributes  = merge g.NodeAttributes a }
     | "edge"  -> { g with EdgeAttributes  = merge g.EdgeAttributes a }
-    | _ -> failwithf "parser error: wrong attribute key: %s" key
+    | _ -> failwithf "DotParser: parser error: wrong attribute key: %s" key
 
 
 let addNode (g : GraphData) (n : string) =
@@ -55,11 +55,12 @@ let addNode (g : GraphData) (n : string) =
 
 
 let addEdge (g : GraphData) (n1 : string) (n2 : string) =
-    let edge = if g.IsDirected && n2 < n1 then n2, n1 else n1, n2
+    let edge = if (not <| g.IsDirected) && n2 < n1 then n2, n1 else n1, n2
     let newEdges =
-        match g.Edges.TryFind edge with
-        | Some oldEdges -> if g.IsStrict then oldEdges else g.EdgeAttributes :: oldEdges
-        | None -> [g.EdgeAttributes]
+        match g.Edges.TryFind edge, g.IsStrict with
+        | Some oldEdges, true  -> [merge (List.head oldEdges) g.EdgeAttributes]
+        | Some oldEdges, false -> g.EdgeAttributes :: oldEdges
+        | _ -> [g.EdgeAttributes]
 
     { g with Edges = Map.add edge newEdges g.Edges } (* todo: merge attrs when strict *)
 
