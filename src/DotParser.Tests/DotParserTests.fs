@@ -209,18 +209,54 @@ let ``Strict graph attributes`` () =
 
     graph.Edges.["a", "b"] |> should equal [map ["color", "red"]]
 
+
 [<Test>]
 let ``Edge statement attributes`` () =
     let graph = DotParser.parse "graph { a -- b [color=red] }"
 
+    printfn "%A" graph
     graph.Edges.["a", "b"] |> should equal [map ["color", "red"]]
+
 
 [<Test>]
 let ``Node statement attributes`` () =
-    let graph = DotParser.parse "grah { a [color=red] b c [color=blue] }"
+    let graph = DotParser.parse "graph { a [color=red] b c [color=blue] }"
 
     nodesCount graph |> should equal 3
 
-    graph.Nodes.["a"] |> should equal [map ["color", "red"]]
-    graph.Nodes.["b"] |> should equal [Map.empty]
-    graph.Nodes.["c"] |> should equal [map ["color", "blue"]]
+    graph.Nodes.["a"] |> should equal (map ["color", "red"])
+    graph.Nodes.["b"] |> should equal Map.empty
+    graph.Nodes.["c"] |> should equal (map ["color", "blue"])
+
+[<Test>]
+let ``Mixed statement and default attributes with subgraphs`` () =
+    let graph =
+        "graph {"
+      + "  a -- b"
+      + "  edge [color=red]"
+      + "  a -- c"
+      + "  a -- d [color=green]"
+      + "  a -- { e -- f [color=yellow] g -- h }"
+      + "  a -- { z -- x [color=yellow] y -- v } [color=blue]"
+      + "}" |> DotParser.parse
+
+    graph.Edges.["a", "b"] |> should equal [Map.empty]
+    graph.Edges.["a", "c"] |> should equal [map ["color", "red"]]
+    graph.Edges.["a", "d"] |> should equal [map ["color", "green"]]
+    graph.Edges.["a", "e"] |> should equal [map ["color", "red"]]
+    graph.Edges.["a", "f"] |> should equal [map ["color", "red"]]
+    graph.Edges.["a", "g"] |> should equal [map ["color", "red"]]
+    graph.Edges.["a", "h"] |> should equal [map ["color", "red"]]
+    graph.Edges.["a", "z"] |> should equal [map ["color", "blue"]]
+    graph.Edges.["a", "y"] |> should equal [map ["color", "blue"]]
+    graph.Edges.["e", "f"] |> should equal [map ["color", "yellow"]]
+    graph.Edges.["g", "h"] |> should equal [map ["color", "red"]]
+    graph.Edges.["x", "z"] |> should equal [map ["color", "yellow"]]
+    graph.Edges.["v", "y"] |> should equal [map ["color", "red"]]
+
+[<Test>]
+let ``Multiple directed edges`` () =
+    let graph = DotParser.parse "digraph { a -> b f -> e }"
+    printfn "%A" graph
+    graph.Edges.ContainsKey("a", "b") |> should be True
+    graph.Edges.ContainsKey("f", "e") |> should be True
