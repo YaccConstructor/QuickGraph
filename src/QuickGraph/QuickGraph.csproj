@@ -515,12 +515,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DotParserProject\DotParserProject\DotParserProject.fsproj">
-      <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
-      <Name>DotParserProject</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <Import Project="..\..\packages\FsLexYacc.6.1.0\build\FsLexYacc.targets" Condition="Exists('..\..\packages\FsLexYacc.6.1.0\build\FsLexYacc.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

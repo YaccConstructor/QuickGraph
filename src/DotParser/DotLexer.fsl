@@ -1,0 +1,41 @@
+﻿{
+module DotParserProject.Gen.DotLexer
+
+open DotParserProject.DotParser
+open Microsoft.FSharp.Text.Lexing
+open System
+
+let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
+
+let keywords =   
+    [   
+        "graph", GRAPH;
+        "digraph", DIGRAPH;
+        "strict", STRICT;     
+    ] |> Map.ofList 
+}
+
+let digit = ['0'-'9']
+let whitespace = [' ' '\t' '\r' '\n']
+let id = ['a'-'z' 'A'-'Z' '_'](['a'-'z' 'A'-'Z' '_' '0'-'9'])*|['-']?('.'['0'-'9']+|['0'-'9']+('.'['0'-'9']+)?)
+
+rule tokenize = parse
+| whitespace { tokenize lexbuf }
+| '"' { ID ( (string lexbuf.StartPos "" lexbuf) ) }
+| '{' { LCURBRACE <| lexeme lexbuf }
+| '}' { RCURBRACE <| lexeme lexbuf }
+| ';' { SEMI <| lexeme lexbuf }
+| id { match keywords.TryFind((lexeme lexbuf).ToLower()) with
+        | Some(keyword) -> keyword <| (lexeme lexbuf).ToLower()
+        | None -> ID <| lexeme lexbuf }
+| eof { RNGLR_EOF <| lexeme lexbuf }
+| _ { failwithf "unexpected input: %s" <| lexeme lexbuf }
+
+and string pos s = parse
+| "\\"    { string pos s lexbuf }
+| "\r"    { string pos s lexbuf }
+| "\""    { s }
+| "\n"    { lexbuf.EndPos <- lexbuf.EndPos.NextLine;
+            string pos s lexbuf }
+| eof     { failwithf "end of file in string started at or near %A" pos }
+| _       { string pos (s + (lexeme lexbuf)) lexbuf }

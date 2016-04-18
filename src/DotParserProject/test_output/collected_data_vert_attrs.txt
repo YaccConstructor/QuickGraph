@@ -1,1 +1,0 @@
-[A] : [(name, Anode); (size, 123); (shape, rect)]
