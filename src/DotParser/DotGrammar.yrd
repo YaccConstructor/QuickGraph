@@ -1,0 +1,32 @@
+﻿{
+open DotParserProject.GraphData
+open Option
+open System.Collections.Generic
+open QuickGraph
+
+let mutable g: GraphData = null
+
+}
+
+tokens {
+    _ of string
+}
+
+options {   
+    translate = true
+    module = "DotParserProject.Gen.DotParser"
+    infEpsPath = epsilons
+    pos = uint64
+}
+
+
+
+module DotGrammar
+
+[<Start>]
+graph: g=graph_type [ ID ] LCURBRACE (stmt<<g>> [SEMI] { })* RCURBRACE { }
+
+graph_type:
+    s=[ STRICT ] d=( GRAPH {false} | DIGRAPH {true} ) {g <- new GraphData (d, not <| isSome s); g}
+
+stmt<<(g: GraphData)>>: name=ID { g.AddNode name }

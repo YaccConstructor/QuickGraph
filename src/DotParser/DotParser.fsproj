@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>8826810a-dc59-46e6-8978-21e273db1236</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>DotParserProject</RootNamespace>
+    <AssemblyName>DotParserProject</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Name>DotParser</Name>
+    <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>false</Tailcalls>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin\Debug\DotParserProject.XML</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <OtherFlags>
+    </OtherFlags>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin\Release\DotParserProject.XML</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '11.0'">
+      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" />
+  <Import Project="FsYard\FsYard.targets" />
+  <PropertyGroup>
+    <RLiterals>KW_%s</RLiterals>
+    <OutFile>DotParser.fs</OutFile>
+    <NeedTranslate>true</NeedTranslate>
+    <Token>string</Token>
+    <Module>DotParserProject.DotParser</Module>
+    <EpsilonPath>epsilons</EpsilonPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="GraphData.fs" />
+    <Compile Include="Utils.fs" />
+    <FsYard Include="DotGrammar.yrd" />
+    <FsLex Include="DotLexer.fsl">
+      <OtherFlags>--unicode</OtherFlags>
+    </FsLex>
+    <Compile Include="DotParser.fs" />
+    <Compile Include="DotLexer.fs" />
+    <Compile Include="Parser.fs" />
+    <None Include="App.config" />
+    <None Include="FsYARD\YardFrontend.pdb" />
+    <None Include="FsYARD\RNGLRParser.pdb" />
+    <None Include="FsYARD\RNGLRCommon.pdb" />
+    <None Include="FsYARD\RNGLR.pdb" />
+    <None Include="FsYARD\FsYARD.pdb" />
+    <None Include="FsYARD\FsYacc.pdb" />
+    <None Include="FsYARD\FSharpx.Text.StructuredFormat.pdb" />
+    <None Include="FsYARD\FSharpx.Core.pdb" />
+    <None Include="FsYARD\Conversions.pdb" />
+    <None Include="FsYARD\Constraints.pdb" />
+    <None Include="FsYARD\Common.pdb" />
+    <Content Include="FsYARD\Common.dll">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\Common.pdb">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\Constraints.dll">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\Constraints.pdb">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\Conversions.dll">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\Conversions.pdb">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\FSharpx.Core.dll">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\FSharpx.Core.pdb">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\FSharpx.Text.StructuredFormat.dll">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\FSharpx.Text.StructuredFormat.pdb">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\FsYacc.exe">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\FsYacc.pdb">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\FsYARD.exe">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\FsYARD.pdb">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\FsYard.targets">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\RNGLR.dll">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\RNGLR.pdb">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\RNGLRCommon.dll">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\RNGLRCommon.pdb">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\RNGLRParser.dll">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\RNGLRParser.pdb">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\YardFrontend.dll">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\YardFrontend.pdb">
+      <Paket>True</Paket>
+    </Content>
+    <Content Include="FsYARD\YardFrontend.XML">
+      <Paket>True</Paket>
+    </Content>
+    <None Include="FsYARD\YardFrontend.dll" />
+    <Content Include="FsYARD\RNGLRParser.XML">
+      <Paket>True</Paket>
+    </Content>
+    <None Include="FsYARD\RNGLRParser.dll" />
+    <Content Include="FsYARD\RNGLRCommon.XML">
+      <Paket>True</Paket>
+    </Content>
+    <None Include="FsYARD\RNGLRCommon.dll" />
+    <Content Include="FsYARD\RNGLR.XML">
+      <Paket>True</Paket>
+    </Content>
+    <None Include="FsYARD\RNGLR.dll" />
+    <Content Include="FsYARD\FsYARD.XML">
+      <Paket>True</Paket>
+    </Content>
+    <None Include="FsYARD\FsYard.targets" />
+    <None Include="FsYARD\FsYARD.exe" />
+    <None Include="FsYARD\FsYacc.exe" />
+    <Content Include="FsYARD\FSharpx.Text.StructuredFormat.xml">
+      <Paket>True</Paket>
+    </Content>
+    <None Include="FsYARD\FSharpx.Text.StructuredFormat.dll" />
+    <Content Include="FsYARD\FSharpx.Core.xml">
+      <Paket>True</Paket>
+    </Content>
+    <None Include="FsYARD\FSharpx.Core.dll" />
+    <Content Include="FsYARD\Conversions.XML">
+      <Paket>True</Paket>
+    </Content>
+    <None Include="FsYARD\Conversions.dll" />
+    <Content Include="FsYARD\Constraints.XML">
+      <Paket>True</Paket>
+    </Content>
+    <None Include="FsYARD\Constraints.dll" />
+    <Content Include="FsYARD\Common.XML">
+      <Paket>True</Paket>
+    </Content>
+    <None Include="FsYARD\Common.dll" />
+    <None Include="paket.references" />
+    <Compile Include="DotParserUtil.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
+      <Name>QuickGraph</Name>
+      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Import Project="..\..\.paket\paket.targets" />
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
+      <ItemGroup>
+        <Reference Include="FSharp.PowerPack">
+          <HintPath>..\..\packages\FSPowerPack.Core.Community\Lib\Net40\FSharp.PowerPack.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
+      <ItemGroup>
+        <Reference Include="FSharpx.Core">
+          <HintPath>..\..\packages\YC.FsYARD\lib\FSharpx.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="RNGLRCommon">
+          <HintPath>..\..\packages\YC.FsYARD\lib\RNGLRCommon.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="RNGLRParser">
+          <HintPath>..\..\packages\YC.FsYARD\lib\RNGLRParser.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+</Project>
