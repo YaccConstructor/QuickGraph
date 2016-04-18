@@ -1,93 +1,75 @@
-﻿module DotParserProject.GraphData
+﻿// Eugene Auduchinok, 2016
+
+module DotParserProject.GraphData
 
 open Option
 open System.Collections.Generic
-open System.IO
-open QuickGraph
 
-[<AllowNullLiteral>]
-type GraphData = class
-    val private edgesAttributes : Dictionary<string, string>
-    val private graphAttributes : Dictionary<string, string>
-    val private nodesAttributes : Dictionary<string, string>
 
-    val public graph : IMutableVertexAndEdgeSet<string * Dictionary<string, string>, SEdge<string * Dictionary<string, string>>>
-    val private assign_stmt_list : ResizeArray<string*string> // todo: rewrite assignment statements 
-
-    new (isDirected: bool, isStrict: bool) = {
-        graph = if isDirected
-                then new BidirectionalGraph<string * Dictionary<string, string>, SEdge<string * Dictionary<string, string>>> (isStrict) :> IMutableVertexAndEdgeSet<_,_>
-                else new UndirectedGraph<string * Dictionary<string, string>, SEdge<string * Dictionary<string, string>>>    (isStrict) :> IMutableVertexAndEdgeSet<_,_>
-
-        edgesAttributes = new Dictionary<_,_> ()
-        graphAttributes = new Dictionary<_,_> ()
-        nodesAttributes = new Dictionary<_,_> ()
-
-        assign_stmt_list = new ResizeArray<string*string>()
+type Attributes = Map<string, string>
+type GraphData =
+    {
+        IsDirected : bool;
+        IsStrict   : bool;
+        Nodes : Map<string,          Attributes>;
+        Edges : Map<string * string, Attributes list>;
+        GraphAttributes : Attributes;
+        NodeAttributes  : Attributes;
+        EdgeAttributes  : Attributes
     }
 
-    member x.AddDefaultAttributes key attributes =
-        let dict =
-            match key with
-            | "edge" -> Some x.edgesAttributes
-            | "graph" -> Some x.graphAttributes
-            | "node" -> Some x.nodesAttributes
-            | _ -> None
+let emptyGraph d s =
+    {
+        IsDirected = d;
+        IsStrict   = s;
+        Nodes = Map.empty;
+        Edges = Map.empty;
+        GraphAttributes = Map.empty;
+        NodeAttributes  = Map.empty;
+        EdgeAttributes  = Map.empty
+    }
 
-        match dict with
-        | Some d -> for (k, v) in attributes do d.[k] <- v
-        | None -> ()
+let copyAttrs (g : GraphData) =
+    {
+        IsDirected = g.IsDirected;
+        IsStrict   = g.IsStrict;
+        Nodes = Map.empty;
+        Edges = Map.empty;
+        GraphAttributes = g.GraphAttributes;
+        NodeAttributes  = g.NodeAttributes;
+        EdgeAttributes  = g.EdgeAttributes
+    }
 
-    member x.AddNode name =
-        x.graph.AddVertex (name, new Dictionary<_,_>()) |> ignore
+let merge m1 m2 = Map.fold (fun acc key value -> Map.add key value acc) m1 m2
 
-        
-    member private x.AddEdges nodes attributes =
-//        match nodes with
-//        | v1 :: v2 :: tail ->
-//            x.edges.Add (v1, v2, attributes @ [for KeyValue(k, v) in x.edgesAttributes -> (k, v)])
-//            x.AddEdges (v2 :: tail) attributes
-//        | _ -> ()
-        printf "add edges"
-
-
-    member private x.CreateNode node =
-//        if not <| x.nodes.ContainsKey node then
-//            let dict = new Dictionary<_, _>()
-//            for KeyValue(k, v) in x.nodesAttributes do dict.[k] <- v
-//            x.nodes.[node] <- dict
-            printf "create node"
-
-//            x.graph.AddVertex(node, dict) |> ignore
+let addAttributes (g : GraphData) (key : string) (a : Attributes) =
+    match key with
+    | "graph" -> { g with GraphAttributes = merge g.GraphAttributes a }
+    | "node"  -> { g with NodeAttributes  = merge g.NodeAttributes a }
+    | "edge"  -> { g with EdgeAttributes  = merge g.EdgeAttributes a }
+    | _ -> failwithf "parser error: wrong attribute key: %s" key
 
 
-    member x.AddEdgeStmtData nodes attributes = 
-        x.AddEdges nodes attributes
-        for node in nodes do x.CreateNode node
+let addNode (g : GraphData) (n : string) =
+    { g with Nodes = Map.add n g.NodeAttributes g.Nodes }, [n]
 
 
-    member x.AddNodeStmtData node attributes =
-        x.CreateNode node
-        
-//        let dict = x.nodes.[node]
-//        for k, v in attributes do
-//             dict.[k] <- v
+let addEdge (g : GraphData) (n1 : string) (n2 : string) =
+    let edge = if g.IsDirected && n2 < n1 then n2, n1 else n1, n2
+    let newEdges =
+        match g.Edges.TryFind edge with
+        | Some oldEdges -> if g.IsStrict then oldEdges else g.EdgeAttributes :: oldEdges
+        | None -> [g.EdgeAttributes]
+
+    { g with Edges = Map.add edge newEdges g.Edges } (* todo: merge attrs when strict *)
 
 
-    member x.AddAssignStmt key value =
-        x.assign_stmt_list.Add (key, value) |> ignore 
-       
-    // todo: remove or move to Utils    
-    member x.PrintAllCollectedData() =
-        printfn "\nNodes attributes:"
-        for entry in x.nodesAttributes do printfn "%A: %A" entry.Key entry.Value
+let addEdges (g : GraphData) (ns1 : string list) (ns2 : string list) =
+    (List.fold (fun acc n1 -> List.fold (fun acc n2 -> addEdge acc n1 n2) acc ns2) g ns1), ns2
 
-        printfn "\nEdges attributes:"
-        for entry in x.edgesAttributes do printfn "%A: %A" entry.Key entry.Value
 
-//        printfn "\nEdges:"
-//        for edge in x.edges do printfn "%A" edge
+let addSubgraph (g : GraphData) (s : GraphData) =
+    let addNodes g = Map.fold (fun acc n attr -> fst <| addNode acc n) g s.Nodes
+    let addEdges g = Map.fold (fun acc (n1, n2) attr -> addEdge acc n1 n2) g s.Edges
 
-//        printfn "\nNodes:"
-//        for KeyValue(k, v) in x.nodes do printfn "%A: %A" k v
-end
+    (g |> addNodes |> addEdges), (s.Nodes |> Map.toList |> List.map fst)

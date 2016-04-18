@@ -79,7 +79,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GraphData.fs" />
-    <Compile Include="Utils.fs" />
     <FsYard Include="DotGrammar.yrd" />
     <FsLex Include="DotLexer.fsl">
       <OtherFlags>--unicode</OtherFlags>
@@ -211,7 +210,6 @@
     </Content>
     <None Include="FsYARD\Common.dll" />
     <None Include="paket.references" />
-    <Compile Include="DotParserUtil.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
