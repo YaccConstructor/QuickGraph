@@ -7,15 +7,15 @@ open System
 
 let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
 
-let keywords =   
-    [   
+let keywords =
+    [
         "graph", GRAPH;
         "digraph", DIGRAPH;
         "strict", STRICT;
         "subgraph", SUBGRAPH;
         "node", NODE;
         "edge", EDGE;
-    ] |> Map.ofList 
+    ] |> Map.ofList
 }
 
 let digit = ['0'-'9']
@@ -31,6 +31,7 @@ rule tokenize = parse
 | ']'  { RBRACK <| lexeme lexbuf }
 | '='  { ASSIGN <| lexeme lexbuf }
 | ';'  { SEMI   <| lexeme lexbuf }
+| ':'  { COLON  <| lexeme lexbuf }
 | ','  { COMMA  <| lexeme lexbuf }
 | "--" { EDGE   <| lexeme lexbuf }
 | "->" { DIEDGE <| lexeme lexbuf }

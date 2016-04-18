@@ -41,6 +41,7 @@ stmt<<(g: GraphData)>>:
   | g1=edge_stmt<<g>> { g1 }
   | g1=attr_stmt<<g>> { g1 }
   | g1=subgraph<<g>>  { fst g1 }
+  | ID ASSIGN ID { g }
 
 
 attr_stmt<<(g: GraphData)>>:
@@ -51,7 +52,7 @@ attr_list: LBRACK a=[a_list] RBRACK { getOrElse Map.empty a }
 a_list:
     k=ID ASSIGN v=ID [SEMI { } | COMMA { }] l=[a_list] { Map.add k v (getOrElse Map.empty l) }
 
-node_stmt<<(g: GraphData)>>: n=ID a=[attr_list] { addNode g n (getOrElse Map.empty a) |> fst }
+node_stmt<<(g: GraphData)>>: n=ID [port { }] a=[attr_list] { addNode g n (getOrElse Map.empty a) |> fst }
 
 edge_stmt<<(g: GraphData)>>:
 	n=nodes<<g>> g1=edge_rhs<<(fst n, [snd n])>> a=[attr_list] { addEdgesForList (fst g1) (snd g1) (getOrElse Map.empty a) }
@@ -65,7 +66,9 @@ edgeop<<(g: GraphData)>>:
 	EDGE { if g.IsDirected then wrongEdge "--" else () }
   | DIEDGE { if not <| g.IsDirected then wrongEdge "->" else () }
 
-node_id<<(g: GraphData)>>: name=ID { addNode g name Map.empty }
+node_id<<(g: GraphData)>>: name=ID [port { }] { addNode g name Map.empty }
 
 subgraph<<(g: GraphData)>>:
     [SUBGRAPH [ID] { }] LBRACE s=stmt_list<<(copyAttrs g)>> RBRACE { addSubgraph g s }
+
+port: COLON ID [COLON ID { }] { }

@@ -255,3 +255,17 @@ let ``Multiple directed edges`` () =
 
     graph.Edges.ContainsKey("a", "b") |> should be True
     graph.Edges.ContainsKey("f", "e") |> should be True
+
+
+let testNodesInGraph s ns =
+    DotParser.parse s |> should equal { (emptyGraph false false) with Nodes = map ns}
+
+
+[<Test>]
+let ``Parse and ignore assign statement`` () =
+    testNodesInGraph "graph { rank = same; A; B }" ["A", Map.empty; "B", Map.empty]
+
+
+[<Test>]
+let ``Parse and ignore port, compass pointers`` () =
+    testNodesInGraph "graph { a : f : n b : g }" ["a", Map.empty; "b", Map.empty]
