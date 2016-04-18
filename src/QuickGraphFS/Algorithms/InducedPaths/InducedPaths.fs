@@ -9,10 +9,7 @@ module InducedPathAlgorithm =
 
         let vertices = Set.ofSeq graph.Vertices
 
-        let chooseAdj (edge: IEdge<_>) v = 
-            let (x, y) = edge.Target, edge.Source
-            if x <> v then x else y
-        let adjVertices v = Set.ofSeq <| Seq.map (fun edge -> chooseAdj edge v) (graph.AdjacentEdges v)
+        let adjVertices = Set.ofSeq << graph.AdjacentVertices 
 
         let createPaths map filter list = List.map map (List.filter filter list)
 
@@ -28,7 +25,7 @@ module InducedPathAlgorithm =
             List.concat <| createPaths (fun (x, y) -> buildPaths (Set.toList <| adjVertices y) x y) (not << isEdge) pairs
 
         let rec listPaths k =
-            let chooseMax (paths1: _ list list) (paths2: _ list list) = 
+            let chooseMax (paths1: list<_> list) (paths2: list<_> list) = 
                 match paths1, paths2 with
                 | [], _ -> paths2
                 | _, [] -> paths1
@@ -84,9 +81,9 @@ module InducedPathAlgorithm =
 
         let toList list =
             let newList = new System.Collections.Generic.List<_>()
-            List.iter (fun x -> newList.Add(x)) list
+            List.iter newList.Add list
             newList
                 
         let maxPaths = if res.Length = 0 then []
-                       else List.maxBy (fun (paths: _ list list) -> paths.Head.Length) res
+                       else List.maxBy (List.head >> List.length) res
         toList <| List.map (fun path -> toList path) maxPaths
