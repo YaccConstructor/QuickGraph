@@ -181,6 +181,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="FsLexYacc.Runtime, Version=6.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FsLexYacc.Runtime.6.1.0\lib\net40\FsLexYacc.Runtime.dll</HintPath>
       <Private>True</Private>
@@ -331,6 +332,7 @@
     <Compile Include="Contracts\IUndirectedEdgeContract.cs" />
     <Compile Include="ArrayUndirectedGraph.cs" />
     <Compile Include="ArrayBidirectionalGraph.cs" />
+    <Compile Include="DotParserAdapter.cs" />
     <Compile Include="EquatableTermEdge.cs" />
     <Compile Include="ITermBidirectionalGraph.cs" />
     <Compile Include="TermBidirectionalGraph.cs" />
@@ -514,6 +516,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotParser\DotParser.fsproj">
+      <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
+      <Name>DotParser</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <Import Project="..\..\packages\FsLexYacc.6.1.0\build\FsLexYacc.targets" Condition="Exists('..\..\packages\FsLexYacc.6.1.0\build\FsLexYacc.targets')" />
