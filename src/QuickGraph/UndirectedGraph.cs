@@ -63,7 +63,22 @@ namespace QuickGraph
                 this.edgeCapacity = value;
             }
         }
-    
+
+        public IEnumerable<TVertex> AdjacentVertices(TVertex v)
+        {
+            var adjacentEdges = AdjacentEdges(v);
+            var adjacentVertices = new HashSet<TVertex>();
+            foreach (TEdge edge in adjacentEdges)
+            {
+                adjacentVertices.Add(edge.Source);
+                adjacentVertices.Add(edge.Target);
+            }
+
+            adjacentVertices.Remove(v);
+
+            return adjacentVertices;
+        }
+
         #region IGraph<Vertex,Edge> Members
         public bool  IsDirected
         {
