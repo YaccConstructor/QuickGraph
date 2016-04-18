@@ -1,7 +1,7 @@
 ﻿namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("DotParser.Tests")>]
+[<assembly: AssemblyTitleAttribute("DotParser")>]
 [<assembly: AssemblyProductAttribute("QuickGraph")>]
 [<assembly: AssemblyDescriptionAttribute("Graph datastructures and algorithms for .NET.")>]
 [<assembly: AssemblyVersionAttribute("0.0.1")>]
