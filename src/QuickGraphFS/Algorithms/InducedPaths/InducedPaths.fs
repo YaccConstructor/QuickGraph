@@ -11,7 +11,7 @@ module InducedPathAlgorithm =
 
         let adjVertices = Set.ofSeq << graph.AdjacentVertices 
 
-        let createPaths map filter list = List.map map (List.filter filter list)
+        let createPaths map pairs = List.map map (List.filter (not << isEdge) pairs)
 
         let paths2 = Seq.fold (fun acc (edge: IEdge<_>) -> [edge.Target; edge.Source]::acc) [] graph.Edges
         let paths3 = 
@@ -20,12 +20,14 @@ module InducedPathAlgorithm =
                 | hd::tail -> [ for v in tail -> (hd, v)] @ (pairwise tail)
                 | [] -> []
 
-            let buildPaths list x y  = createPaths (fun z -> [y; z; x]) (fun z -> isEdge(x, z)) list
-            let pairs = pairwise <| Set.toList vertices
-            List.concat <| createPaths (fun (x, y) -> buildPaths (Set.toList <| adjVertices y) x y) (not << isEdge) pairs
+            let findPaths x = createPaths (fun (y, z) -> [y; x; z]) (pairwise << Set.toList <| adjVertices x)
+
+            List.collect findPaths (Set.toList vertices)
 
         let rec listPaths k =
-            let chooseMax (paths1: list<_> list) (paths2: list<_> list) = 
+            let pairwise set1 set2 = [ for x in set1 do for y in set2 do yield (x, y) ]
+
+            let chooseMax paths1 paths2: list<list<_>> = 
                 match paths1, paths2 with
                 | [], _ -> paths2
                 | _, [] -> paths1
@@ -33,7 +35,7 @@ module InducedPathAlgorithm =
                                     else paths2
 
             let nonAdjVert list = vertices - List.fold (fun acc v -> acc + adjVertices v) Set.empty list
-            let adjToHead (list: _ list) = Set.intersect (nonAdjVert list.Tail) (adjVertices list.Head)
+            let adjToHead (list: list<_>) = Set.intersect (nonAdjVert list.Tail) (adjVertices list.Head)
             let adjToLast list = adjToHead <| List.rev list
 
             match k with
@@ -47,8 +49,8 @@ module InducedPathAlgorithm =
                     let findPaths path =
                         let a = adjToHead path
                         let b = adjToLast path
-                        let pairs = [ for x in a do for y in b do yield (x, y) ]
-                        createPaths (fun (x, y) -> x::path @ [y]) (not << isEdge) pairs
+  
+                        createPaths (fun (x, y) -> x::path @ [y]) <| pairwise a b
 
                     chooseMax paths (List.collect findPaths paths)
                 else paths
@@ -64,20 +66,17 @@ module InducedPathAlgorithm =
                         let findPaths' (x, y) = 
                             let a' = Set.filter (fun s -> isEdge(s, x) && not <| isEdge(s, y)) c
                             let b' = Set.filter (fun s -> isEdge(s, y) && not <| isEdge(s, x)) c
-                            let pairs = [ for u in a' do for v in b' do yield (u, v) ]
 
-                            createPaths (fun (u, v) -> u::x::path @ [y; v]) (not << isEdge) pairs
-     
-                        let pairs = [ for x in a do for y in b do yield (x, y) ]
+                            createPaths (fun (u, v) -> u::x::path @ [y; v]) <| pairwise a' b'
 
-                        List.concat <| createPaths findPaths' (not << isEdge) pairs
-
+                        List.concat <| createPaths findPaths' (pairwise a b)
+                        
                     chooseMax paths (List.collect findPaths paths)
                 else paths
 
         let res =
             let paths = [ for k in max 2 (graph.VertexCount - 4) .. graph.VertexCount -> listPaths k]
-            List.filter (fun (x: _ list) -> x.Length > 0) paths
+            List.filter (fun (x: list<_>) -> x.Length > 0) paths
 
         let toList list =
             let newList = new System.Collections.Generic.List<_>()
