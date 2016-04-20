@@ -246,21 +246,6 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
                     verticeDict.Add((v1, v2), !i)
                     incr i
 
-            // outer transitions of each vertice
-            let findAdjacentEdges (fst : FST<_, _>) = 
-                let dict = new Dictionary<int, ResizeArray<_>>()
-                for v in fst.CachedEdges do
-                    if dict.ContainsKey(v.Source) then
-                        dict.[v.Source].Add(v)
-                    else
-                        let transitions = new ResizeArray<_>()
-                        transitions.Add(v)
-                        dict.Add(v.Source, transitions)
-                dict
-        
-            let fst1Edges = findAdjacentEdges fst1
-            let fst2Edges = findAdjacentEdges fst2
-
             // initial data for FST constructor
             let initial = new ResizeArray<_>()
             let final = new ResizeArray<_>()
@@ -282,24 +267,23 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
             // filling transitions
             while queue.Count <> 0 do
                 let q = queue.Dequeue();
+                let fst1OutEdges = fst1.OutEdges(fst q)
+                let fst2OutEdges = fst2.OutEdges(snd q)
 
                 // filling final states
                 if fst1.FinalState.Contains(fst q) && fst2.FinalState.Contains(snd q) then
                     if not (final.Contains(verticeDict.[q])) then final.Add(verticeDict.[q])
 
-                if fst1Edges.ContainsKey(fst q) then
-                    for e1 in fst1Edges.[fst q] do
-                        if fst2Edges.ContainsKey(snd q) then
-                            for e2 in fst2Edges.[snd q] do
-                                if snd e1.Tag = fst e2.Tag then
-                                    let q' = (e1.Target, e2.Target)
-                                    if not (buffer.Contains(q')) then
-                                        queue.Enqueue(q')
-                                        buffer.Enqueue(q')
-                                    transitions.Add(new EdgeFST<_, _>(verticeDict.[q], verticeDict.[q'], (fst e1.Tag, snd e2.Tag)))
+                for e1 in fst1OutEdges do
+                    for e2 in fst2OutEdges do
+                        if snd e1.Tag = fst e2.Tag then
+                            let q' = (e1.Target, e2.Target)
+                            if not (buffer.Contains(q')) then
+                                queue.Enqueue(q')
+                                buffer.Enqueue(q')
+                            transitions.Add(new EdgeFST<_, _>(verticeDict.[q], verticeDict.[q'], (fst e1.Tag, snd e2.Tag)))
             
-            let lol = new FST<_,_>(initial, final, transitions)
-            Success (lol)
+            Success(new FST<_,_>(initial, final, transitions))
 
 and Test<'success, 'error> =
     | Success of 'success
