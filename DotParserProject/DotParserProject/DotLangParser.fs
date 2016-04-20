@@ -35,5 +35,5 @@ let parse (str) =
             translate args ast errors |> ignore
             graphs.[0] // todo: add subgraph support
 
-    graph.PrintAllCollectedData() // todo: move to tests
+    // graph.PrintAllCollectedData() // todo: move to tests
     graph
