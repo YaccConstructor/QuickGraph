@@ -5,6 +5,7 @@ open Microsoft.FSharp.Collections
 open System.Collections.Generic
 open QuickGraph.FSA.GraphBasedFsa
 open QuickGraph.FSA.Tests.GraphBasedFsaTestData
+open AbstractAnalysis.Common
 
 let basePath = "../../../QuickGraph.FSA.Tests/DOTfsa/"
 let fullPath f = System.IO.Path.Combine(basePath, f)

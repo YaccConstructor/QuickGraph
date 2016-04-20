@@ -8,7 +8,7 @@ open QuickGraph.Algorithms
 open QuickGraph.Collections
 open QuickGraph.FST.FstTable
 open QuickGraph.FSA.GraphBasedFsa
-open QuickGraph.FSA.FsaApproximation
+open AbstractAnalysis.Common
 
 let setVertexRemoved (fst:#IVertexListGraph<_,_>) startV =
         let dfs = DepthFirstSearchAlgorithm<_,_>(fst)
@@ -298,7 +298,8 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
                                         buffer.Enqueue(q')
                                     transitions.Add(new EdgeFST<_, _>(verticeDict.[q], verticeDict.[q'], (fst e1.Tag, snd e2.Tag)))
             
-            Success (new FST<_,_>(initial, final, transitions))
+            let lol = new FST<_,_>(initial, final, transitions)
+            Success (lol)
 
 and Test<'success, 'error> =
     | Success of 'success

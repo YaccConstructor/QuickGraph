@@ -8,6 +8,7 @@ open QuickGraph.Algorithms
 open QuickGraph.Collections
 open Microsoft.FSharp.Text
 open HelperTypes
+open AbstractAnalysis.Common
 
 type DfaNode<'a> = 
     { Id: int;
