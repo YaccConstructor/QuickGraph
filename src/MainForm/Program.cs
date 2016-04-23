@@ -1,14 +1,18 @@
-﻿using Common;
-using Mono.Addins;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
+using Common;
+using Mono.Addins;
 
 [assembly: AddinRoot("GraphTasks", "1.0")]
+
 namespace MainForm
 {
     internal static class Program
     {
-        public static IAlgorithm[] Algorithms { get; private set; }
+        internal static Dictionary<string, IAlgorithm> Algorithms { get; private set; }
+        internal static IAlgorithm CurrentAlgorithm { get; set; }
 
         [STAThread]
         private static void Main()
@@ -18,14 +22,13 @@ namespace MainForm
 
             AddinManager.Initialize();
             AddinManager.Registry.Update();
-            Algorithms = AddinManager.GetExtensionObjects<IAlgorithm>();
+            Algorithms = AddinManager.GetExtensionObjects<IAlgorithm>().ToDictionary(algorithm => algorithm.Name);
 
-            var form = new Form1();
-            foreach (var algorithm in Algorithms)
+            var form = new MainForm();
+            foreach (var algorithm in Algorithms.Values)
             {
-                form.algorithmsList.Items.Add(algorithm.Name);
+                form.algorithmPicker.Items.Add(algorithm.Name);
             }
-
             Application.Run(form);
         }
     }
