@@ -1,5 +1,0 @@
-digraph G {1 -> 2
-node [col = b]
-4 -> 3 [x=y]
-4 -> 2
-}

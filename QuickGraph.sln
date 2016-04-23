@@ -79,15 +79,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphX.PCL.Logic", "src\Gra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphTask", "GraphTask", "{A60EEA3D-8F36-4B81-8242-CA6B30087AE6}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "GraphTask.Common", "src\Common\GraphTask.Common.fsproj", "{E383F190-86FE-454C-8568-1762F8820925}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "GraphTask.Common", "src\GraphTask.Common\GraphTask.Common.fsproj", "{E383F190-86FE-454C-8568-1762F8820925}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphTask.MainForm", "src\MainForm\GraphTask.MainForm.csproj", "{3AC1E323-82F9-4E8E-BB52-D22FBA2C844F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphTask.MainForm", "src\GraphTask.MainForm\GraphTask.MainForm.csproj", "{3AC1E323-82F9-4E8E-BB52-D22FBA2C844F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{CBD0EAE9-B336-4359-AC80-E2E0A47FB991}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DotParser.Tests", "src\DotParser.Tests\DotParser.Tests.fsproj", "{C2F89DE1-B429-4B5D-AF22-3A075D00BAA4}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DotParser.Tests", "tests\DotParser.Tests\DotParser.Tests.fsproj", "{C2F89DE1-B429-4B5D-AF22-3A075D00BAA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphTask.PluginSample", "PluginSampleCSharp\GraphTask.PluginSample.csproj", "{D495C472-6CBB-4B04-A30E-215EE125C08C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginSample", "src\GraphTask.PluginSample\PluginSample.csproj", "{D495C472-6CBB-4B04-A30E-215EE125C08C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

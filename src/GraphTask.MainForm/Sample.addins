@@ -1,0 +1,26 @@
+<!--    
+	As a default all available conversions, frontends and generators in folder "packages" are included in project
+
+	If you don't want to use all of them remove the line 
+		<Directory include-subdirs="true">../../../</Directory> 
+	from this file
+	
+	If you want to include and use new module (conversion, frontend or generator) add the next line to this file
+		<Directory>PATH</Directory>
+	between tags
+		<Addins> </Addins>
+	PATH - path to directory with new module
+
+	If you add attribute
+		include-subdirs="true"
+	in tag 
+		<Directory> 
+	searching new modules will be recursive. All modules in current directory and all modules in all subdirectories will be included
+
+	ATTENTION. If you download new version of YC.Core this file will be rewrited to the begining version. 
+		   So if you've modified it save all changes in some new file and then copy it back to the new version of YaccConstructor.addins
+-->
+
+<Addins>
+	<!--Directory include-subdirs="true"></Directory-->
+</Addins>
