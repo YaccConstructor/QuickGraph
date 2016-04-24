@@ -172,6 +172,7 @@ namespace QuickGraph.Graphviz
 
         public string Generate()
         {
+            ClusterCount = 0;
             this.vertexIds.Clear();
             this.output = new StringWriter();
             // build vertex id map
@@ -203,6 +204,9 @@ namespace QuickGraph.Graphviz
             var edgeColors = new Dictionary<TEdge, GraphColor>();
             foreach (var e in VisitedGraph.Edges)
                 edgeColors[e] = GraphColor.White;
+
+            if (VisitedGraph is IClusteredGraph)
+                WriteClusters(colors, edgeColors, VisitedGraph as IClusteredGraph);
 
             WriteVertices(colors, VisitedGraph.Vertices);
             WriteEdges(edgeColors, VisitedGraph.Edges);
