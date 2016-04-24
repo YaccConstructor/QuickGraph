@@ -1,23 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Windows.Forms;
+using Common;
 using MainForm.Properties;
 
 namespace MainForm
 {
     public partial class MainForm : Form
     {
+        private static IAlgorithm _currentAlgorithm;
+
         public MainForm()
         {
             InitializeComponent();
-        }
-
-        private void RestoreAlgorithmOptions()
-        {
-            foreach (Control control in algorithmOptionsGroupBox.Controls)
-            {
-                Program.CurrentAlgorithm.Options.Controls.Add(control);
-            }
         }
 
         private void editorNewButton_Click(object sender, EventArgs e)
@@ -48,21 +44,21 @@ namespace MainForm
 
         private void algorithmPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Program.CurrentAlgorithm != null)
+            if (_currentAlgorithm != null)
             {
-                if (Program.CurrentAlgorithm.Name == algorithmPicker.Text) return;
-                RestoreAlgorithmOptions();
+                if (_currentAlgorithm.Name == algorithmPicker.Text) return;
+                RestoreAlgorithmControls();
             }
 
-            Program.CurrentAlgorithm = Program.Algorithms[algorithmPicker.Text];
-            var algorithm = Program.CurrentAlgorithm;
-            algorithmInfoLabel.Text = algorithm.Description;
+            _currentAlgorithm = Program.Algorithms[algorithmPicker.Text];
+            algorithmInfoLabel.Text = _currentAlgorithm.Description;
 
-            if (algorithm.Options == null) return;
-            foreach (Control control in algorithm.Options.Controls)
+            if (_currentAlgorithm.Options == null) return;
+            foreach (Control control in _currentAlgorithm.Options.Controls)
             {
                 algorithmOptionsGroupBox.Controls.Add(control);
             }
+            playbackPanel.Controls.Add(_currentAlgorithm.Output);
 
             noOptionsLabel.Text = Resources.noOptionsAvailableText;
             noOptionsLabel.Visible = algorithmOptionsGroupBox.Controls.Count == 0;
@@ -71,35 +67,50 @@ namespace MainForm
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            if (Program.CurrentAlgorithm == null) return;
-            Program.CurrentAlgorithm.Run(editorField.Text);
+            if (_currentAlgorithm == null) return;
+            _currentAlgorithm.Run(editorField.Text);
             UpdatePlayer();
         }
 
         private void nextStepButton_Click(object sender, EventArgs e)
         {
-            if (Program.CurrentAlgorithm == null) return;
-            Program.CurrentAlgorithm.NextStep();
+            if (_currentAlgorithm == null) return;
+            _currentAlgorithm.NextStep();
             UpdatePlayer();
         }
 
         private void previousStepButton_Click(object sender, EventArgs e)
         {
-            if (Program.CurrentAlgorithm == null) return;
-            Program.CurrentAlgorithm.PreviousStep();
+            if (_currentAlgorithm == null) return;
+            _currentAlgorithm.PreviousStep();
             UpdatePlayer();
         }
 
         private void UpdatePlayer()
         {
-            var algorithm = Program.CurrentAlgorithm;
-            var canGoFurther = algorithm != null && algorithm.CanGoFurther;
-            var canGoBack = algorithm != null && algorithm.CanGoBack;
+            var canGoFurther = _currentAlgorithm != null && _currentAlgorithm.CanGoFurther;
+            var canGoBack = _currentAlgorithm != null && _currentAlgorithm.CanGoBack;
 
-            startButton.Enabled = algorithm != null;
+            startButton.Enabled = _currentAlgorithm != null;
             nextStepButton.Enabled = canGoFurther;
             previousStepButton.Enabled = canGoBack;
             algorithmFinishedLabel.Visible = canGoBack && !canGoFurther;
+        }
+
+        private static void MoveControlsToPanel(IEnumerable collection, Panel panel)
+        {
+            foreach (Control control in collection)
+            {
+                panel.Controls.Add(control);
+            }
+        }
+
+        private void RestoreAlgorithmControls()
+        {
+            if (_currentAlgorithm == null) return;
+
+            MoveControlsToPanel(algorithmOptionsGroupBox.Controls, _currentAlgorithm.Options);
+            MoveControlsToPanel(algorithmPlaybackGroupBox.Controls, _currentAlgorithm.Output);
         }
     }
 }

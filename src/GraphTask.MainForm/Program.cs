@@ -12,7 +12,6 @@ namespace MainForm
     internal static class Program
     {
         internal static Dictionary<string, IAlgorithm> Algorithms { get; private set; }
-        internal static IAlgorithm CurrentAlgorithm { get; set; }
 
         [STAThread]
         private static void Main()

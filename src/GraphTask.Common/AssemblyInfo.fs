@@ -1,7 +1,7 @@
 ﻿namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("Common")>]
+[<assembly: AssemblyTitleAttribute("GraphTask.Common")>]
 [<assembly: AssemblyProductAttribute("QuickGraph")>]
 [<assembly: AssemblyDescriptionAttribute("Graph datastructures and algorithms for .NET.")>]
 [<assembly: AssemblyVersionAttribute("0.0.1")>]

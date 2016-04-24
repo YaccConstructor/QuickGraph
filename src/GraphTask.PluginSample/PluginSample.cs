@@ -43,7 +43,8 @@ namespace PluginSample
             };
 
             Options.Controls.Add(_countSymbolsCheckBox);
-            Output.Controls.Add(_wpfHost);
+//            Output.Controls.Add(_wpfHost);
+            Output.Controls.Add(new CheckBox {Text = "Yo."});
         }
 
         public string Name => "Sample Plugin";
@@ -54,7 +55,7 @@ namespace PluginSample
             "Algorithms removes one vertex on each step until there's no vertices.\n";
 
         public Panel Options { get; } = new Panel();
-        public Panel Output { get; } = new Panel();
+        public Panel Output { get; } = new Panel { Dock = DockStyle.Fill };
 
         public void Run(string dotSource)
         {
@@ -65,14 +66,15 @@ namespace PluginSample
 
             try
             {
-                _steps = new Stack<BidirectionalGraph<string, SEdge<string>>>();
                 _graph = BidirectionalGraph<string, SEdge<string>>.LoadDot(dotSource, vertexFun, edgeFun);
+                _steps = new Stack<BidirectionalGraph<string, SEdge<string>>>();
 
                 var message = $"{_graph.VertexCount} vertices.";
                 if (_countSymbolsCheckBox.Checked) message = $"{message} {dotSource.Length} symbols read.";
                 MessageBox.Show(message);
 
                 _hasStarted = true;
+                _hasFinished = false;
             }
             catch (Exception ex)
             {
@@ -101,7 +103,7 @@ namespace PluginSample
 
         private void ShowResults()
         {
-            MessageBox.Show(_graph.VertexCount.ToString());
+            MessageBox.Show($"{_graph.VertexCount} vertices.");
         }
 
         public bool CanGoBack => _steps != null && _steps.Count != 0;

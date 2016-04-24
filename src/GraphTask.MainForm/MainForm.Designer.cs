@@ -249,6 +249,8 @@
             this.Controls.Add(this.algorithmPlaybackGroupBox);
             this.Controls.Add(this.editorGroupBox);
             this.Controls.Add(this.button6);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Graph Algorithms";
             this.editorGroupBox.ResumeLayout(false);
