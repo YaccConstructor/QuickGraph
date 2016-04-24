@@ -12,28 +12,12 @@ namespace MainForm
             InitializeComponent();
         }
 
-        private void algorithmPicker_SelectedIndexChanged(object sender, EventArgs e)
+        private void RestoreAlgorithmOptions()
         {
-            Program.CurrentAlgorithm = Program.Algorithms[algorithmPicker.Text];
-            var algorithm = Program.CurrentAlgorithm;
-
-            algorithmInfoLabel.Text = algorithm.Description;
-            algorithmPlaybackGroupBox.Enabled = true;
-
-            algorithmOptionsGroupBox.Controls.Clear();
-            noOptionsLabel.Text = Resources.noOptionsAvailableText;
-            noOptionsLabel.Visible = algorithm.Options == null || algorithm.Options.Controls.Count == 0;
-
-            if (algorithm.Options == null) return;
-            foreach (Control control in algorithm.Options.Controls)
+            foreach (Control control in algorithmOptionsGroupBox.Controls)
             {
-                algorithmOptionsGroupBox.Controls.Add(control);
+                Program.CurrentAlgorithm.Options.Controls.Add(control);
             }
-        }
-
-        private void startButton_Click(object sender, EventArgs e)
-        {
-            Program.CurrentAlgorithm.Run(editorField.Text);
         }
 
         private void editorNewButton_Click(object sender, EventArgs e)
@@ -60,6 +44,62 @@ namespace MainForm
             {
                 MessageBox.Show($"{Resources.couldNotReadFile}\n{ex.Message}");
             }
+        }
+
+        private void algorithmPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Program.CurrentAlgorithm != null)
+            {
+                if (Program.CurrentAlgorithm.Name == algorithmPicker.Text) return;
+                RestoreAlgorithmOptions();
+            }
+
+            Program.CurrentAlgorithm = Program.Algorithms[algorithmPicker.Text];
+            var algorithm = Program.CurrentAlgorithm;
+            algorithmInfoLabel.Text = algorithm.Description;
+
+            if (algorithm.Options == null) return;
+            foreach (Control control in algorithm.Options.Controls)
+            {
+                algorithmOptionsGroupBox.Controls.Add(control);
+            }
+
+            noOptionsLabel.Text = Resources.noOptionsAvailableText;
+            noOptionsLabel.Visible = algorithmOptionsGroupBox.Controls.Count == 0;
+            UpdatePlayer();
+        }
+
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            if (Program.CurrentAlgorithm == null) return;
+            Program.CurrentAlgorithm.Run(editorField.Text);
+            UpdatePlayer();
+        }
+
+        private void nextStepButton_Click(object sender, EventArgs e)
+        {
+            if (Program.CurrentAlgorithm == null) return;
+            Program.CurrentAlgorithm.NextStep();
+            UpdatePlayer();
+        }
+
+        private void previousStepButton_Click(object sender, EventArgs e)
+        {
+            if (Program.CurrentAlgorithm == null) return;
+            Program.CurrentAlgorithm.PreviousStep();
+            UpdatePlayer();
+        }
+
+        private void UpdatePlayer()
+        {
+            var algorithm = Program.CurrentAlgorithm;
+            var canGoFurther = algorithm != null && algorithm.CanGoFurther;
+            var canGoBack = algorithm != null && algorithm.CanGoBack;
+
+            startButton.Enabled = algorithm != null;
+            nextStepButton.Enabled = canGoFurther;
+            previousStepButton.Enabled = canGoBack;
+            algorithmFinishedLabel.Visible = canGoBack && !canGoFurther;
         }
     }
 }

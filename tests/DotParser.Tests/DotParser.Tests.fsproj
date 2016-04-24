@@ -80,7 +80,7 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotParser\DotParser.fsproj">
+    <ProjectReference Include="..\..\src\DotParser\DotParser.fsproj">
       <Name>DotParser (DotParser\DotParser)</Name>
       <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
       <Private>True</Private>

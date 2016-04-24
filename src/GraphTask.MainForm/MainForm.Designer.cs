@@ -29,22 +29,23 @@
         private void InitializeComponent()
         {
             this.button6 = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.editorGroupBox = new System.Windows.Forms.GroupBox();
             this.editorField = new System.Windows.Forms.RichTextBox();
             this.editorSaveButton = new System.Windows.Forms.Button();
             this.editorOpenButton = new System.Windows.Forms.Button();
             this.editorNewButton = new System.Windows.Forms.Button();
             this.algorithmPlaybackGroupBox = new System.Windows.Forms.GroupBox();
-            this.stepInButton = new System.Windows.Forms.Button();
-            this.stepBackButton = new System.Windows.Forms.Button();
+            this.playbackPanel = new System.Windows.Forms.Panel();
+            this.nextStepButton = new System.Windows.Forms.Button();
+            this.previousStepButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
             this.algorithmPicker = new System.Windows.Forms.ComboBox();
             this.algorithmPickerGroupBox = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.algorithmInfoLabel = new System.Windows.Forms.Label();
             this.algorithmOptionsGroupBox = new System.Windows.Forms.GroupBox();
             this.noOptionsLabel = new System.Windows.Forms.Label();
-            this.algorithmInfoLabel = new System.Windows.Forms.Label();
+            this.algorithmFinishedLabel = new System.Windows.Forms.Label();
             this.editorGroupBox.SuspendLayout();
             this.algorithmPlaybackGroupBox.SuspendLayout();
             this.algorithmPickerGroupBox.SuspendLayout();
@@ -58,15 +59,8 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(132, 30);
             this.button6.TabIndex = 7;
-            this.button6.Text = "Run";
+            this.button6.Text = "Start";
             this.button6.UseVisualStyleBackColor = true;
-            // 
-            // panel2
-            // 
-            this.panel2.Location = new System.Drawing.Point(246, 100);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(258, 219);
-            this.panel2.TabIndex = 8;
             // 
             // editorGroupBox
             // 
@@ -124,11 +118,11 @@
             // 
             // algorithmPlaybackGroupBox
             // 
-            this.algorithmPlaybackGroupBox.Controls.Add(this.stepInButton);
-            this.algorithmPlaybackGroupBox.Controls.Add(this.stepBackButton);
+            this.algorithmPlaybackGroupBox.Controls.Add(this.algorithmFinishedLabel);
+            this.algorithmPlaybackGroupBox.Controls.Add(this.playbackPanel);
+            this.algorithmPlaybackGroupBox.Controls.Add(this.nextStepButton);
+            this.algorithmPlaybackGroupBox.Controls.Add(this.previousStepButton);
             this.algorithmPlaybackGroupBox.Controls.Add(this.startButton);
-            this.algorithmPlaybackGroupBox.Controls.Add(this.panel2);
-            this.algorithmPlaybackGroupBox.Enabled = false;
             this.algorithmPlaybackGroupBox.Location = new System.Drawing.Point(300, 132);
             this.algorithmPlaybackGroupBox.Name = "algorithmPlaybackGroupBox";
             this.algorithmPlaybackGroupBox.Size = new System.Drawing.Size(696, 417);
@@ -136,27 +130,39 @@
             this.algorithmPlaybackGroupBox.TabStop = false;
             this.algorithmPlaybackGroupBox.Text = "Algorithm playback";
             // 
-            // stepInButton
+            // playbackPanel
             // 
-            this.stepInButton.Location = new System.Drawing.Point(88, 19);
-            this.stepInButton.Name = "stepInButton";
-            this.stepInButton.Size = new System.Drawing.Size(75, 23);
-            this.stepInButton.TabIndex = 6;
-            this.stepInButton.Text = "Step in";
-            this.stepInButton.UseVisualStyleBackColor = true;
+            this.playbackPanel.Location = new System.Drawing.Point(6, 48);
+            this.playbackPanel.Name = "playbackPanel";
+            this.playbackPanel.Size = new System.Drawing.Size(684, 363);
+            this.playbackPanel.TabIndex = 8;
             // 
-            // stepBackButton
+            // nextStepButton
             // 
-            this.stepBackButton.Location = new System.Drawing.Point(169, 19);
-            this.stepBackButton.Name = "stepBackButton";
-            this.stepBackButton.Size = new System.Drawing.Size(75, 23);
-            this.stepBackButton.TabIndex = 7;
-            this.stepBackButton.Text = "Step back";
-            this.stepBackButton.UseVisualStyleBackColor = true;
+            this.nextStepButton.Enabled = false;
+            this.nextStepButton.Location = new System.Drawing.Point(615, 19);
+            this.nextStepButton.Name = "nextStepButton";
+            this.nextStepButton.Size = new System.Drawing.Size(75, 23);
+            this.nextStepButton.TabIndex = 7;
+            this.nextStepButton.Text = "Next";
+            this.nextStepButton.UseVisualStyleBackColor = true;
+            this.nextStepButton.Click += new System.EventHandler(this.nextStepButton_Click);
+            // 
+            // previousStepButton
+            // 
+            this.previousStepButton.Enabled = false;
+            this.previousStepButton.Location = new System.Drawing.Point(534, 19);
+            this.previousStepButton.Name = "previousStepButton";
+            this.previousStepButton.Size = new System.Drawing.Size(75, 23);
+            this.previousStepButton.TabIndex = 6;
+            this.previousStepButton.Text = "Previous";
+            this.previousStepButton.UseVisualStyleBackColor = true;
+            this.previousStepButton.Click += new System.EventHandler(this.previousStepButton_Click);
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(7, 20);
+            this.startButton.Enabled = false;
+            this.startButton.Location = new System.Drawing.Point(6, 19);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 5;
@@ -193,6 +199,14 @@
             this.panel1.Size = new System.Drawing.Size(311, 63);
             this.panel1.TabIndex = 11;
             // 
+            // algorithmInfoLabel
+            // 
+            this.algorithmInfoLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.algorithmInfoLabel.Location = new System.Drawing.Point(0, 0);
+            this.algorithmInfoLabel.Name = "algorithmInfoLabel";
+            this.algorithmInfoLabel.Size = new System.Drawing.Size(311, 63);
+            this.algorithmInfoLabel.TabIndex = 11;
+            // 
             // algorithmOptionsGroupBox
             // 
             this.algorithmOptionsGroupBox.Controls.Add(this.noOptionsLabel);
@@ -214,13 +228,16 @@
             this.noOptionsLabel.Text = "No algorithm selected.";
             this.noOptionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // algorithmInfoLabel
+            // algorithmFinishedLabel
             // 
-            this.algorithmInfoLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.algorithmInfoLabel.Location = new System.Drawing.Point(0, 0);
-            this.algorithmInfoLabel.Name = "algorithmInfoLabel";
-            this.algorithmInfoLabel.Size = new System.Drawing.Size(311, 63);
-            this.algorithmInfoLabel.TabIndex = 11;
+            this.algorithmFinishedLabel.AutoSize = true;
+            this.algorithmFinishedLabel.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.algorithmFinishedLabel.Location = new System.Drawing.Point(87, 24);
+            this.algorithmFinishedLabel.Name = "algorithmFinishedLabel";
+            this.algorithmFinishedLabel.Size = new System.Drawing.Size(139, 13);
+            this.algorithmFinishedLabel.TabIndex = 9;
+            this.algorithmFinishedLabel.Text = "Algorithm has been finished.";
+            this.algorithmFinishedLabel.Visible = false;
             // 
             // MainForm
             // 
@@ -236,6 +253,7 @@
             this.Text = "Graph Algorithms";
             this.editorGroupBox.ResumeLayout(false);
             this.algorithmPlaybackGroupBox.ResumeLayout(false);
+            this.algorithmPlaybackGroupBox.PerformLayout();
             this.algorithmPickerGroupBox.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.algorithmOptionsGroupBox.ResumeLayout(false);
@@ -245,7 +263,6 @@
 
         #endregion
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.GroupBox editorGroupBox;
         private System.Windows.Forms.RichTextBox editorField;
         private System.Windows.Forms.Button editorSaveButton;
@@ -256,11 +273,13 @@
         private System.Windows.Forms.GroupBox algorithmPickerGroupBox;
         private System.Windows.Forms.GroupBox algorithmOptionsGroupBox;
         private System.Windows.Forms.Label noOptionsLabel;
-        private System.Windows.Forms.Button stepInButton;
-        private System.Windows.Forms.Button stepBackButton;
+        private System.Windows.Forms.Button nextStepButton;
+        private System.Windows.Forms.Button previousStepButton;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label algorithmInfoLabel;
+        private System.Windows.Forms.Panel playbackPanel;
+        private System.Windows.Forms.Label algorithmFinishedLabel;
     }
 }
 
