@@ -219,6 +219,47 @@ namespace QuickGraph.Graphviz
             var output = this.Generate();
             return dot.Run(ImageType, Output.ToString(), outputFileName);
         }
+        internal void WriteClusters (
+        IDictionary<TVertex, GraphColor> colors,
+        IDictionary<TEdge, GraphColor> edgeColors,
+        IClusteredGraph parent
+    ) 
+        {
+            ++ClusterCount;
+            foreach (IVertexAndEdgeListGraph<TVertex,TEdge> g in parent.Clusters)
+            {
+                Output.Write("subgraph cluster{0}", ClusterCount.ToString());
+                Output.WriteLine(" {");
+
+                OnFormatCluster(g);
+
+                if (g is IClusteredGraph)
+                    WriteClusters(colors, edgeColors, g as IClusteredGraph);
+
+                if (parent.Colapsed)
+                {
+                    // draw cluster
+                    // put vertices as black
+                    foreach (TVertex v in g.Vertices)
+                    {
+                        colors[v] = GraphColor.Black;
+
+                    }
+                    foreach (TEdge e in g.Edges)
+                        edgeColors[e] = GraphColor.Black;
+
+                    // add fake vertex
+
+                }
+                else
+                {
+                    WriteVertices(colors, g.Vertices);
+                    WriteEdges(edgeColors, g.Edges);
+                }
+
+                Output.WriteLine("}");
+            }
+        }
 
         private void WriteVertices(
             IDictionary<TVertex,GraphColor> colors,
