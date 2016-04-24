@@ -20,7 +20,7 @@ namespace QuickGraph.Graphviz
         private StringWriter output;
         private GraphvizImageType imageType;
         private readonly Dictionary<TVertex, int> vertexIds = new Dictionary<TVertex, int>();
-
+        private int clusterCount;
         private GraphvizGraph graphFormat;
         private GraphvizVertex commonVertexFormat;
         private GraphvizEdge commonEdgeFormat;
@@ -38,6 +38,7 @@ namespace QuickGraph.Graphviz
             Contract.Requires(g != null);
             Contract.Requires(!String.IsNullOrEmpty(path));
 
+            this.clusterCount = 0;
             this.visitedGraph = g;
             this.imageType = imageType;
             this.graphFormat = new GraphvizGraph();
@@ -113,24 +114,34 @@ namespace QuickGraph.Graphviz
                 imageType = value;
             }
         }
-/*
-        /// <summary>
-        /// Event raised while drawing a cluster
-        /// </summary>
-        public event FormatClusterEventHandler<Vertex,Edge> FormatCluster;
-        private void OnFormatCluster(IVertexAndEdgeListGraph<Vertex,Edge> cluster)
+
+        internal int ClusterCount
+        {
+            get
+            {
+                return clusterCount;
+            }
+            set
+            {
+                clusterCount = value;
+            }
+        }
+
+
+       public event FormatClusterEventHandler<TVertex,TEdge> FormatCluster;
+        private void OnFormatCluster(IVertexAndEdgeListGraph<TVertex,TEdge> cluster)
         {
             if (FormatCluster != null)
             {
-                FormatClusterEventArgs<Vertex,Edge> args =
-                    new FormatClusterEventArgs<Vertex,Edge>(cluster, new GraphvizGraph());
+                FormatClusterEventArgs<TVertex,TEdge> args =
+                    new FormatClusterEventArgs<TVertex,TEdge>(cluster, new GraphvizGraph());
                 FormatCluster(this, args);
                 string s = args.GraphFormat.ToDot();
                 if (s.Length != 0)
                     Output.WriteLine(s);
             }
-        }
-*/
+      }
+
         public event FormatVertexEventHandler<TVertex> FormatVertex;
         private void OnFormatVertex(TVertex v)
         {
