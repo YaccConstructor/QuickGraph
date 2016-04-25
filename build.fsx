@@ -8,6 +8,7 @@ open Fake.Git
 open Fake.MSTest
 open Fake.AssemblyInfoFile
 open Fake.ReleaseNotesHelper
+open Fake.Testing.NUnit3
 open System
 open System.IO
 open System.Configuration
@@ -49,7 +50,7 @@ let tags = "garph .NET datastructures algorithms C#"
 let solutionFile  = "QuickGraph.sln"
 
 // Pattern specifying assemblies to be tested using NUnit
-let testAssemblies = "tests/**/bin/Release/*Tests*.dll"
+let testAssemblies = "tests/**/bin/Release/*QuickGraph*Tests*.dll"
 
 let nUtestAssemblies = "tests/**/bin/Release/*FS*Test*.dll"
 
@@ -153,11 +154,16 @@ Target "RunMSTests" (fun _ ->
 
 Target "RunNUnitTests" (fun _ ->
     !! nUtestAssemblies
-    |> NUnit (fun p ->
+    |> NUnit3 (fun p ->
         { p with
-            DisableShadowCopy = true
             TimeOut = TimeSpan.FromMinutes 20.
-            OutputFile = "TestResults.xml" })
+            DisposeRunners = true
+            ProcessModel = SeparateProcessModel })
+)
+
+Target "RunDotParserTests" (fun _ ->
+    !! "tests/DotParser.Tests/bin/Release/DotParser.Tests.dll"
+    |> NUnit3 (fun p -> NUnit3Defaults)
 )
 
 
@@ -344,6 +350,7 @@ Target "All" DoNothing
   ==> "CopyBinaries"
   ==> "RunMSTests"
   ==> "RunNUnitTests"
+  ==> "RunDotParserTests"
   //==> "GenerateReferenceDocs"
   //==> "GenerateDocs"
   ==> "All"
