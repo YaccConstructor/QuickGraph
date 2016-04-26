@@ -1,4 +1,0 @@
-[is_strict, strict][type, graph][name, test1_graph]
-graph : [(color, red)]
-node : [(col, b); (tail, bp); (shape, Triangle)]
-edge : [(size, 100500)]

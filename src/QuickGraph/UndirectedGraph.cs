@@ -79,6 +79,17 @@ namespace QuickGraph
             return adjacentVertices;
         }
 
+        public static UndirectedGraph<TVertex, TEdge> LoadDot(string dotSource,
+            Func<string, IDictionary<string, string>, TVertex> vertexFunc,
+            Func<TVertex, TVertex, IDictionary<string, string>, TEdge> edgeFunc)
+        {
+            Func<bool, IMutableVertexAndEdgeSet<TVertex, TEdge>> createGraph = (allowParallelEdges) =>
+                new UndirectedGraph<TVertex, TEdge>(allowParallelEdges);
+
+            return (UndirectedGraph<TVertex, TEdge>)
+                DotParserAdapter.LoadDot(dotSource, createGraph, vertexFunc, edgeFunc);
+        }
+
         #region IGraph<Vertex,Edge> Members
         public bool  IsDirected
         {

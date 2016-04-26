@@ -181,6 +181,11 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="FsLexYacc.Runtime, Version=6.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FsLexYacc.Runtime.6.1.0\lib\net40\FsLexYacc.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" Condition="'$(Configuration)' != 'Release20'">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -327,6 +332,7 @@
     <Compile Include="Contracts\IUndirectedEdgeContract.cs" />
     <Compile Include="ArrayUndirectedGraph.cs" />
     <Compile Include="ArrayBidirectionalGraph.cs" />
+    <Compile Include="DotParserAdapter.cs" />
     <Compile Include="EquatableTermEdge.cs" />
     <Compile Include="ITermBidirectionalGraph.cs" />
     <Compile Include="TermBidirectionalGraph.cs" />
@@ -479,6 +485,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Algorithms\Cliques\ncliques.pdf" />
+    <None Include="packages.config" />
     <None Include="quickgraph.snk" />
     <None Include="Diagrams\TraversalInterfaces.cd" />
     <EmbeddedResource Include="Serialization\graphml-structure.xsd" />
@@ -511,10 +518,17 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotParserProject\DotParserProject\DotParserProject.fsproj">
+    <ProjectReference Include="..\DotParser\DotParser.fsproj">
       <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
-      <Name>DotParserProject</Name>
+      <Name>DotParser</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <Import Project="..\..\packages\FsLexYacc.6.1.0\build\FsLexYacc.targets" Condition="Exists('..\..\packages\FsLexYacc.6.1.0\build\FsLexYacc.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\FsLexYacc.6.1.0\build\FsLexYacc.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\FsLexYacc.6.1.0\build\FsLexYacc.targets'))" />
+  </Target>
 </Project>
