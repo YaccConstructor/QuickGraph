@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Tests.Algorithms
@@ -34,6 +30,58 @@ namespace QuickGraph.Tests.Algorithms
         {
             var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 2),
                     new Tuple<int, int>(2, 3), new Tuple<int, int>(2, 4), new Tuple<int, int>(3, 4)});
+            var gAlgo = new QuickGraph.Algorithms.IsHamiltonianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsFalse(gAlgo.IsHamiltonian());
+        }
+
+        [TestMethod]
+        public void IsHamiltonianEmpty()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { });
+            var gAlgo = new QuickGraph.Algorithms.IsHamiltonianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsFalse(gAlgo.IsHamiltonian());
+        }
+
+        [TestMethod]
+        public void IsHamiltonianOneVertexWithCycle()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 1) });
+            var gAlgo = new QuickGraph.Algorithms.IsHamiltonianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsTrue(gAlgo.IsHamiltonian());
+        }
+
+        [TestMethod]
+        public void IsHamiltonianTwoVerticesTrue()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 2) });
+            var gAlgo = new QuickGraph.Algorithms.IsHamiltonianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsTrue(gAlgo.IsHamiltonian());
+        }
+
+        [TestMethod]
+        public void IsHamiltonianTwoVerticesFalse()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 1), new Tuple<int, int>(2, 2) });
+            var gAlgo = new QuickGraph.Algorithms.IsHamiltonianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsFalse(gAlgo.IsHamiltonian());
+        }
+
+        [TestMethod]
+        public void IsHamiltonianWithLoops()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 1), new Tuple<int, int>(1, 1),
+                new Tuple<int, int>(2, 2), new Tuple<int, int>(2, 2), new Tuple<int, int>(2, 2),
+                new Tuple<int, int>(3, 3), new Tuple<int, int>(3, 3)});
+            var gAlgo = new QuickGraph.Algorithms.IsHamiltonianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsFalse(gAlgo.IsHamiltonian());
+        }
+
+
+        [TestMethod]
+        public void IsHamiltonianWithParallelEdges()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 2), new Tuple<int, int>(1, 2),
+                new Tuple<int, int>(3, 4), new Tuple<int, int>(3, 4)});
             var gAlgo = new QuickGraph.Algorithms.IsHamiltonianGraphAlgorithm<int, UndirectedEdge<int>>(g);
             Assert.IsFalse(gAlgo.IsHamiltonian());
         }

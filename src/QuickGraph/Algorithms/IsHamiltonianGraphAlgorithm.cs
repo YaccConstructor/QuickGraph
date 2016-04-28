@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace QuickGraph.Algorithms
 {
@@ -12,27 +8,44 @@ namespace QuickGraph.Algorithms
 
         public IsHamiltonianGraphAlgorithm(UndirectedGraph<TVertex, UndirectedEdge<TVertex>> graph)
         {
-            this.graph = graph;
+            // Create new graph without parallel edges
+            var newGraph = new UndirectedGraph<TVertex, UndirectedEdge<TVertex>>(false, graph.EdgeEqualityComparer);      
+            foreach (var vertex in graph.Vertices) {
+                newGraph.AddVertex(vertex);
+            }
+            foreach (var edge in graph.Edges)
+            {
+                newGraph.AddEdge(edge);
+            }
+            //Remove loops
+            EdgePredicate<TVertex, UndirectedEdge<TVertex>> isLoop = e => e.Source.Equals(e.Target);
+            newGraph.RemoveEdgeIf(isLoop);
+            this.graph = newGraph;
         }
 
         public bool IsHamiltonian()
         {
-            // Using Dirac's theorem: if |vertices| >= 3 and for any vertex deg(vertex) >= (|vertices| / 2) then graph is Hamiltonian
+            // Using Dirac's theorem: if |vertices| >= 2 and for any vertex deg(vertex) >= (|vertices| / 2) then graph is Hamiltonian
             int n = graph.VertexCount;
-            if (n >= 3)
+            if (n == 0)
             {
+                return false;
+            }
+            else if (n == 1)
+            {
+                return true;
+            }
+            else
+            {
+                double threshold = n / 2.0;
                 foreach (var v in graph.Vertices)
                 {
-                    if (graph.AdjacentEdges(v).Count() < n / 2)
+                    if (graph.AdjacentEdges(v).Count() < threshold)
                     {
                         return false;
                     }
                 }
                 return true;
-            }
-            else
-            {
-                return false;
             }
         }
     }
