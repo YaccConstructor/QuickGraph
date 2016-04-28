@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QuickGraph.Algorithms;
 
 namespace QuickGraph.Tests.Algorithms
 {
@@ -58,6 +53,73 @@ namespace QuickGraph.Tests.Algorithms
                     new Tuple<int, int>(4, 5), new Tuple<int, int>(5, 6),
                     new Tuple<int, int>(6, 4)});
             g.AddVertex(7);           
+            var gAlgo = new QuickGraph.Algorithms.IsEulerianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsFalse(gAlgo.isEulerian());
+        }
+
+
+        [TestMethod]
+        public void IsEulerianEmpty()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { });
+            var gAlgo = new QuickGraph.Algorithms.IsEulerianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsFalse(gAlgo.isEulerian());
+        }
+
+        [TestMethod]
+        public void IsEulerianOneVertex()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { });
+            g.AddVertex(420);
+            var gAlgo = new QuickGraph.Algorithms.IsEulerianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsFalse(gAlgo.isEulerian());
+        }
+
+        [TestMethod]
+        public void IsEulerianOneVertexWithLoop()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 1) });
+            var gAlgo = new QuickGraph.Algorithms.IsEulerianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsTrue(gAlgo.isEulerian());
+        }
+
+        [TestMethod]
+        public void IsEulerianOneVertexWithTwoLoops()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 1), new Tuple<int, int>(1, 1) });
+            var gAlgo = new QuickGraph.Algorithms.IsEulerianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsTrue(gAlgo.isEulerian());
+        }
+
+        [TestMethod]
+        public void IsEulerianTwoVertices()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 2), new Tuple<int, int>(2, 2) });
+            var gAlgo = new QuickGraph.Algorithms.IsEulerianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsFalse(gAlgo.isEulerian());
+        }
+
+        [TestMethod]
+        public void IsEulerianTwoVerticesWithLoops()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 1), new Tuple<int, int>(2, 2) });
+            var gAlgo = new QuickGraph.Algorithms.IsEulerianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsFalse(gAlgo.isEulerian());
+        }
+
+
+        [TestMethod]
+        public void IsEulerianTwoVerticesTwoEdges()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 2), new Tuple<int, int>(2, 1) });
+            var gAlgo = new QuickGraph.Algorithms.IsEulerianGraphAlgorithm<int, UndirectedEdge<int>>(g);
+            Assert.IsTrue(gAlgo.isEulerian());
+        }
+
+        [TestMethod]
+        public void IsEulerianTwoVerticesOneEdge()
+        {
+            var g = constructGraph(new Tuple<int, int>[] { new Tuple<int, int>(1, 2) });
             var gAlgo = new QuickGraph.Algorithms.IsEulerianGraphAlgorithm<int, UndirectedEdge<int>>(g);
             Assert.IsFalse(gAlgo.isEulerian());
         }

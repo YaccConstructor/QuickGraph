@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using QuickGraph.Algorithms.ConnectedComponents;
 
 namespace QuickGraph.Algorithms
@@ -59,8 +56,14 @@ namespace QuickGraph.Algorithms
             else
             {
                 // Now only one component contains edges, check is it an eulerian component
+                // If component contain one vertex it is an eulerian component
+                if (componentsAlgo.Components.First(x => x.Value == firstIndex.Value).Key
+                    .Equals(componentsAlgo.Components.Last(x => x.Value == firstIndex.Value).Key))
+                {
+                    return true;
+                }
                 foreach (var verticeAndComponent in componentsAlgo.Components)
-                {   
+                {
                     // Vertice in selected component and has even count of edges
                     if (verticeAndComponent.Value == firstIndex.Value && 
                         graph.AdjacentEdges(verticeAndComponent.Key).Count() % 2 == 1)
