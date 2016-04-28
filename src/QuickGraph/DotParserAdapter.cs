@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QuickGraph
 {
@@ -9,8 +10,8 @@ namespace QuickGraph
     {
         /// <param name="dotSource"></param>
         /// <param name="createGraph">Graph constructor function</param>
-        /// <param name="vertexFunc">Packing function (see VertexFunctions class)</param>
-        /// <param name="edgeFunc">Packing function (see EdgeFunctions class)</param>
+        /// <param name="vertexFunc">Packing function (see VertexFactory class)</param>
+        /// <param name="edgeFunc">Packing function (see EdgeFactory class)</param>
         internal static IMutableVertexAndEdgeSet<TVertex, TEdge> LoadDot<TVertex, TEdge>(string dotSource,
             Func<bool, IMutableVertexAndEdgeSet<TVertex, TEdge>> createGraph,
             Func<string, Attributes, TVertex> vertexFunc,
@@ -19,19 +20,15 @@ namespace QuickGraph
             var graphData = DotParser.parse(dotSource);
             var graph = createGraph(!graphData.IsStrict);
 
-            foreach (var node in graphData.Nodes)
-            {
-                graph.AddVertex(vertexFunc(node.Key, node.Value));
-            }
+            var vertices = graphData.Nodes.ToDictionary(v => v.Key, v => vertexFunc(v.Key, v.Value));
+            graph.AddVertexRange(vertices.Values);
+
             foreach (var parallelEdges in graphData.Edges)
             {
-                var vertices = parallelEdges.Key;
-                var v1 = vertexFunc(vertices.Item1, graphData.Nodes[vertices.Item1]);
-                var v2 = vertexFunc(vertices.Item2, graphData.Nodes[vertices.Item2]);
-
+                var edgeVertices = parallelEdges.Key;
                 foreach (var attr in parallelEdges.Value)
                 {
-                    graph.AddEdge(edgeFunc(v1, v2, attr));
+                    graph.AddEdge(edgeFunc(vertices[edgeVertices.Item1], vertices[edgeVertices.Item2], attr));
                 }
             }
             return graph;
@@ -45,22 +42,19 @@ namespace QuickGraph
                 return int.TryParse(attrs["weight"], out weight) ? (int?) weight : null;
             }
 
-            public static int GetWeightOrFallback(Attributes attrs, int fallback)
+            public static int GetWeight(Attributes attrs, int defaultValue)
             {
-                if (!attrs.ContainsKey("weight")) return fallback;
+                if (!attrs.ContainsKey("weight")) return defaultValue;
 
                 int weight;
-                return int.TryParse(attrs["weight"], out weight) ? weight : fallback;
+                return int.TryParse(attrs["weight"], out weight) ? weight : defaultValue;
             }
         }
 
-        /// <summary>
-        /// Example vertex packing functions
-        /// </summary>
-        public class VertexFunctions
+        public class VertexFactory
         {
             public static Func<string, Attributes, string>
-                Name = (v, attr) => v;
+                Name = (v, attrs) => v;
 
 
             public static Func<string, Attributes, KeyValuePair<string, Attributes>>
@@ -69,23 +63,20 @@ namespace QuickGraph
 
 
             public static Func<string, Attributes, KeyValuePair<string, int?>>
-                WeightNullable = (v, attrs) =>
-                    new KeyValuePair<string, int?>(v, Common.GetWeightNullable(attrs));
+                WeightedNullable = (v, attrs) =>
+                    new KeyValuePair<string, int?>(v, DotParserAdapter.Common.GetWeightNullable(attrs));
 
 
             public static Func<string, Attributes, KeyValuePair<string, int>>
-                WeightOrFallback(int fallback)
+                Weighted(int defaultValue)
             {
                 return (v, attrs) =>
-                    new KeyValuePair<string, int>(v, Common.GetWeightOrFallback(attrs, fallback));
+                    new KeyValuePair<string, int>(v, DotParserAdapter.Common.GetWeight(attrs, defaultValue));
             }
         }
 
-        /// <summary>
-        /// Example edge packing functions
-        /// </summary>
-        /// <typeparam name="TVertex">type of the vertices</typeparam>
-        public class EdgeFunctions<TVertex>
+
+        public class EdgeFactory<TVertex>
         {
             public static Func<TVertex, TVertex, Attributes, SEdge<TVertex>>
                 VerticesOnly = (v1, v2, attrs) => new SEdge<TVertex>(v1, v2);
@@ -97,15 +88,15 @@ namespace QuickGraph
 
 
             public static Func<TVertex, TVertex, Attributes, STaggedEdge<TVertex, int?>>
-                WeightNullable = (v1, v2, attrs) =>
-                    new STaggedEdge<TVertex, int?>(v1, v2, Common.GetWeightNullable(attrs));
+                WeightedNullable = (v1, v2, attrs) =>
+                    new STaggedEdge<TVertex, int?>(v1, v2, DotParserAdapter.Common.GetWeightNullable(attrs));
 
 
             public static Func<TVertex, TVertex, Attributes, STaggedEdge<TVertex, int>>
-                WeightOrFallback(int fallback)
+                Weighted(int defaultValue)
             {
                 return (v1, v2, attrs) =>
-                    new STaggedEdge<TVertex, int>(v1, v2, Common.GetWeightOrFallback(attrs, fallback));
+                    new STaggedEdge<TVertex, int>(v1, v2, DotParserAdapter.Common.GetWeight(attrs, defaultValue));
             }
         }
     }
