@@ -1,56 +1,71 @@
 ﻿using System.Collections.Generic;
+using System.Management.Instrumentation;
 using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Algorithms.ShortestPath.Yen
 {
-  public class YenShortestPathsAlgorithm<TVertex, TEdge> where TEdge : IEdge<TVertex>
+  public class YenShortestPathsAlgorithm<TVertex>
   {
     private TVertex sourceVertix;
     private TVertex targetVertix;
     // limit for amount of paths
     private int k;
-    private InputModel<TVertex, TEdge> input;
+    private AdjacencyGraph<TVertex, TaggedEquatableEdge<TVertex, double>> graph;
 
-    public YenShortestPathsAlgorithm(InputModel<TVertex, TEdge> input, TVertex s, TVertex t, int k)
+    /*
+      double type of tag comes from Dijkstra’s algorithm,
+      which is used to get one shortest path.
+    */
+
+    public YenShortestPathsAlgorithm(AdjacencyGraph<TVertex, TaggedEquatableEdge<TVertex, double>> graph, TVertex s,
+      TVertex t, int k)
     {
       sourceVertix = s;
       targetVertix = t;
       this.k = k;
-      this.input = input;
+      this.graph = graph;
     }
 
-    public IEnumerable<IEnumerable<TEdge>> Execute()
+    public IEnumerable<IEnumerable<TaggedEquatableEdge<TVertex, double>>> Execute()
     {
-      var listShortestWays = new List<IEnumerable<TEdge>>();
+      var listShortestWays = new List<IEnumerable<TaggedEquatableEdge<TVertex, double>>>();
       // find the first shortest way
-      var shortestWay = GetShortestPathFromInput(input);
+      var shortestWay = GetShortestPathInGraph(graph);
       listShortestWays.Add(shortestWay);
+
+      /*
+       * in case of Dijkstra’s algorithm couldn't find any ways
+       */
+      if (shortestWay == null)
+      {
+        throw new InstanceNotFoundException();
+      }
 
       for (var i = 0; i < k - 1; i++)
       {
         var minDistance = double.MaxValue;
-        IEnumerable<TEdge> pathSlot = null;
+        IEnumerable<TaggedEquatableEdge<TVertex, double>> pathSlot = null;
         // slote for graph state without some edge
-        InputModel<TVertex, TEdge> inputSlot = null;
+        AdjacencyGraph<TVertex, TaggedEquatableEdge<TVertex, double>> graphSlot = null;
         foreach (var edge in shortestWay)
         {
           // get new state without the edge
-          var newInput = RemoveEdge(input, edge);
+          var newGraph = RemoveEdge(graph, edge);
 
           //find shortest way in the new graph
-          var newPath = GetShortestPathFromInput(newInput);
+          var newPath = GetShortestPathInGraph(newGraph);
           if (newPath == null)
           {
             continue;
           }
-          var pathWeight = GetPathDistance(newPath, newInput);
+          var pathWeight = GetPathDistance(newPath);
           if (pathWeight >= minDistance)
           {
             continue;
           }
           minDistance = pathWeight;
           pathSlot = newPath;
-          inputSlot = newInput;
+          graphSlot = newGraph;
         }
         if (pathSlot == null)
         {
@@ -58,44 +73,47 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
         }
         listShortestWays.Add(pathSlot);
         shortestWay = pathSlot;
-        input = inputSlot;
+        graph = graphSlot;
       }
       return listShortestWays;
     }
 
-    private double GetPathDistance(IEnumerable<TEdge> edges, InputModel<TVertex, TEdge> input)
+    private double GetPathDistance(IEnumerable<TaggedEquatableEdge<TVertex, double>> edges)
     {
       var pathSum = 0.0;
       foreach (var edge in edges)
       {
-        pathSum += input.Distances[edge];
+        pathSum += edge.Tag;
       }
       return pathSum;
     }
 
-    private IEnumerable<TEdge> GetShortestPathFromInput(InputModel<TVertex, TEdge> input)
+    private IEnumerable<TaggedEquatableEdge<TVertex, double>> GetShortestPathInGraph(
+      AdjacencyGraph<TVertex, TaggedEquatableEdge<TVertex, double>> graph)
     {
       // calc distances beetween the start vertex and other
-      var dij = new DijkstraShortestPathAlgorithm<TVertex, TEdge>(input.Graph, e => input.Distances[e]);
-      var vis = new VertexPredecessorRecorderObserver<TVertex, TEdge>();
+      var dij = new DijkstraShortestPathAlgorithm<TVertex, TaggedEquatableEdge<TVertex, double>>(graph, e => e.Tag);
+      var vis = new VertexPredecessorRecorderObserver<TVertex, TaggedEquatableEdge<TVertex, double>>();
       using (vis.Attach(dij))
         dij.Compute(sourceVertix);
 
       // get shortest path from start (source) vertex to target
-      IEnumerable<TEdge> path;
+      IEnumerable<TaggedEquatableEdge<TVertex, double>> path;
 
       return vis.TryGetPath(targetVertix, out path) ? path : null;
     }
 
-    private InputModel<TVertex, TEdge> RemoveEdge(InputModel<TVertex, TEdge> old, TEdge edgeRemoving)
+    private AdjacencyGraph<TVertex, TaggedEquatableEdge<TVertex, double>> RemoveEdge(
+      AdjacencyGraph<TVertex, TaggedEquatableEdge<TVertex, double>> old,
+      TaggedEquatableEdge<TVertex, double> edgeRemoving)
     {
       // get copy of the grapth using Serialization and Deserialization
-      var copyGraph = old.Graph.Clone();
+      var copyGraph = old.Clone();
 
       // remove the edge
       foreach (var edge in copyGraph.Edges)
       {
-        if (edge.Source.Equals(edgeRemoving.Source) && edge.Target.Equals(edgeRemoving.Target))
+        if (edge == edgeRemoving)
         {
           copyGraph.RemoveEdge(edge);
           break;
@@ -103,31 +121,16 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
       }
 
       // get all edges but the removing one
-      List<TEdge> oldEdges = new List<TEdge>();
-      foreach (var edge in old.Graph.Edges)
+      var oldEdges = new List<TaggedEquatableEdge<TVertex, double>>();
+      foreach (var edge in old.Edges)
       {
-        if (!(edge.Source.Equals(edgeRemoving.Source) && edge.Target.Equals(edgeRemoving.Target)))
+        if (edge != edgeRemoving)
         {
           oldEdges.Add(edge);
         }
       }
-      var oldEdgesArray = oldEdges.ToArray();
 
-      // get copy of the distancies
-      var newDistances = new Dictionary<TEdge, double>();
-      var index = 0;
-
-      foreach (var edge in copyGraph.Edges)
-      {
-        newDistances[edge] = old.Distances[oldEdgesArray[index++]];
-      }
-
-      return new InputModel<TVertex, TEdge>
-      {
-        Distances = newDistances,
-        Graph = copyGraph
-      };
+      return copyGraph;
     }
-
   }
 }
