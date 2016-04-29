@@ -34,6 +34,4 @@ let parse (str) =
             ast.ChooseSingleAst()
             translate args ast errors |> ignore
             graphs.[0] // todo: add subgraph support
-
-    graph.PrintAllCollectedData() // todo: move to tests
     graph
