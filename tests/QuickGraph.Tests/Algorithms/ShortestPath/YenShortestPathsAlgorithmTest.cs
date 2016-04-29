@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Management.Instrumentation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Algorithms.ShortestPath.Yen;
 
@@ -8,15 +9,84 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
   [TestClass]
   public class YenShortestPathsAlgorithmTest
   {
+
+    /*
+     * Attempt to use non existing vertices
+     */
     [TestMethod]
-    public void TestCharEdges()
+    public void YenZeroCaseTest()
+    {
+      var graph = new AdjacencyGraph<char, TaggedEquatableEdge<char, double>>(true);
+      var yen = new YenShortestPathsAlgorithm<char>(graph, '1', '5', 10);
+      var exeptionWas = true;
+      try
+      {
+        var result = yen.Execute().ToList();
+      }
+      catch (Exception e)
+      {
+        Assert.AreEqual(true, e is System.Collections.Generic.KeyNotFoundException);
+        exeptionWas = true;
+      }
+      Assert.AreEqual(exeptionWas, true);
+    }
+
+    /*
+    * Attempt to use for graph that only have one vertex
+    * Expecting that Dijkstra’s algorithm couldn't find any ways
+    */
+    [TestMethod]
+    public void YenOneVertexCaseTest()
+    {
+      var graph = new AdjacencyGraph<char, TaggedEquatableEdge<char, double>>(true);
+      graph.AddVertexRange("1");
+      var yen = new YenShortestPathsAlgorithm<char>(graph, '1', '1', 10);
+      var exeptionWas = true;
+      try
+      {
+        var result = yen.Execute().ToList();
+      }
+      catch (Exception e)
+      {
+        Assert.AreEqual(true, e is InstanceNotFoundException);
+        exeptionWas = true;
+      }
+      Assert.AreEqual(exeptionWas, true);
+    }
+
+    /*
+    * Attempt to use for loop graph
+    * Expecting that Dijkstra’s algorithm couldn't find any ways
+    */
+    [TestMethod]
+    public void YenLoopCaseTest()
+    {
+      var graph = new AdjacencyGraph<char, TaggedEquatableEdge<char, double>>(true);
+      graph.AddVertexRange("1");
+      var yen = new YenShortestPathsAlgorithm<char>(graph, '1', '1', 10);
+      graph.AddEdge(new TaggedEquatableEdge<char, double>('1', '1', 7));
+      var exeptionWas = true;
+      try
+      {
+        var result = yen.Execute().ToList();
+      }
+      catch (Exception e)
+      {
+        Assert.AreEqual(true, e is InstanceNotFoundException);
+        exeptionWas = true;
+      }
+      Assert.AreEqual(exeptionWas, true);
+    }
+
+    [TestMethod]
+    public void YenNormalCaseTest()
     {
       /* generate simple graph
         like this https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
-        but with directed edges
+        but with directed edgesinput.Graph
       */
-      var input = GenerateInput();
-      var yen = new YenShortestPathsAlgorithm<char, Edge<char>>(input, '1', '5', 10);
+      var input = GenerateNormalInput();
+      var yen = new YenShortestPathsAlgorithm<char> (input, '1', '5', 10);
       var result = yen.Execute().ToList();
 
       /*
@@ -28,57 +98,34 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
       */
       Assert.AreEqual(3, result.Count);
       // 1.
-      Assert.AreEqual(Eq(result[0].ToArray()[0], input.Graph.Edges.ToArray()[1]), true);
-      Assert.AreEqual(Eq(result[0].ToArray()[1], input.Graph.Edges.ToArray()[5]), true);
-      Assert.AreEqual(Eq(result[0].ToArray()[2], input.Graph.Edges.ToArray()[7]), true);
+      Assert.AreEqual(result[0].ToArray()[0], input.Edges.ToArray()[1]);
+      Assert.AreEqual(result[0].ToArray()[1], input.Edges.ToArray()[5]);
+      Assert.AreEqual(result[0].ToArray()[2], input.Edges.ToArray()[7]);
       // 2.
-      Assert.AreEqual(Eq(result[1].ToArray()[0], input.Graph.Edges.ToArray()[0]), true);
-      Assert.AreEqual(Eq(result[1].ToArray()[1], input.Graph.Edges.ToArray()[4]), true);
-      Assert.AreEqual(Eq(result[1].ToArray()[2], input.Graph.Edges.ToArray()[7]), true);
+      Assert.AreEqual(result[1].ToArray()[0], input.Edges.ToArray()[0]);
+      Assert.AreEqual(result[1].ToArray()[1], input.Edges.ToArray()[4]);
+      Assert.AreEqual(result[1].ToArray()[2], input.Edges.ToArray()[7]);
       // 3.
-      Assert.AreEqual(Eq(result[2].ToArray()[0], input.Graph.Edges.ToArray()[0]), true);
-      Assert.AreEqual(Eq(result[2].ToArray()[1], input.Graph.Edges.ToArray()[3]), true);
-      Assert.AreEqual(Eq(result[2].ToArray()[2], input.Graph.Edges.ToArray()[5]), true);
-      Assert.AreEqual(Eq(result[2].ToArray()[3], input.Graph.Edges.ToArray()[7]), true);
+      Assert.AreEqual(result[2].ToArray()[0], input.Edges.ToArray()[0]);
+      Assert.AreEqual(result[2].ToArray()[1], input.Edges.ToArray()[3]);
+      Assert.AreEqual(result[2].ToArray()[2], input.Edges.ToArray()[5]);
+      Assert.AreEqual(result[2].ToArray()[3], input.Edges.ToArray()[7]);
     }
 
-    private bool Eq(Edge<char> a, Edge<char> b)
+    private AdjacencyGraph<char, TaggedEquatableEdge<char, double>> GenerateNormalInput()
     {
-      return a.Source == b.Source && a.Target == b.Target;
+      var graph = new AdjacencyGraph<char, TaggedEquatableEdge<char,double>>(true);
+      graph.AddVertexRange("123456");
+      graph.AddEdge(new TaggedEquatableEdge<char, double>('1', '2', 7)); // 0
+      graph.AddEdge(new TaggedEquatableEdge<char, double>('1', '3', 9)); // 1
+      graph.AddEdge(new TaggedEquatableEdge<char, double>('1', '6', 14)); // 2
+      graph.AddEdge(new TaggedEquatableEdge<char, double>('2', '3', 10)); // 3
+      graph.AddEdge(new TaggedEquatableEdge<char, double>('2', '4', 15)); // 4
+      graph.AddEdge(new TaggedEquatableEdge<char, double>('3', '4', 11)); // 5
+      graph.AddEdge(new TaggedEquatableEdge<char, double>('3', '6', 2)); // 6
+      graph.AddEdge(new TaggedEquatableEdge<char, double>('4', '5', 6)); // 7
+      graph.AddEdge(new TaggedEquatableEdge<char, double>('5', '6', 9)); // 8
+      return graph;
     }
-
-    private InputModel<char, Edge<char>> GenerateInput()
-    {
-      var g = new AdjacencyGraph<char, Edge<char>>(true);
-      var distances = new Dictionary<Edge<char>, double>();
-      g.AddVertexRange("123456");
-
-      AddEdgeWithDistance(g, distances, '1', '2', 7); // 0
-      AddEdgeWithDistance(g, distances, '1', '3', 9); // 1
-      AddEdgeWithDistance(g, distances, '1', '6', 14); // 2
-      AddEdgeWithDistance(g, distances, '2', '3', 10); // 3
-      AddEdgeWithDistance(g, distances, '2', '4', 15); // 4
-      AddEdgeWithDistance(g, distances, '3', '4', 11); // 5
-      AddEdgeWithDistance(g, distances, '3', '6', 2); // 6
-      AddEdgeWithDistance(g, distances, '4', '5', 6); // 7
-      AddEdgeWithDistance(g, distances, '5', '6', 9); // 8
-
-      return new InputModel<char, Edge<char>>
-      {
-        Distances = distances,
-        Graph = g
-      };
-    }
-
-    private void AddEdgeWithDistance(
-           AdjacencyGraph<char, Edge<char>> g,
-           Dictionary<Edge<char>, double> distances,
-           char source, char target, double weight)
-    {
-      var ac = new Edge<char>(source, target);
-      distances[ac] = weight;
-      g.AddEdge(ac);
-    }
-
   }
 }
