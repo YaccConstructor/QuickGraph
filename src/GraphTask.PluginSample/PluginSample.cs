@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using Common;
 using GraphX.Controls;
+using GraphX.Controls.Models;
+using GraphX.PCL.Common.Enums;
+using GraphX.PCL.Logic.Algorithms.OverlapRemoval;
+using GraphX.PCL.Logic.Models;
 using Mono.Addins;
 using QuickGraph;
 using QuickGraph.GraphXAdapter;
@@ -30,6 +36,9 @@ namespace PluginSample
     {
         private readonly CheckBox _countSymbolsCheckBox;
         private readonly ElementHost _wpfHost;
+        private readonly GraphArea<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>, Graph> _graphArea;
+        private readonly GXLogicCore<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>, Graph> _logic;
+        private readonly ZoomControl _zoomControl;
         private Stack<Graph> _steps;
         private Graph _graph;
         private bool _hasStarted;
@@ -43,17 +52,47 @@ namespace PluginSample
                 Location = new Point(12, 20)
             };
 
-            _wpfHost = new ElementHost()
+            // GraphX integration
+            _logic = new GXLogicCore<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>, Graph>
             {
-                Dock = DockStyle.Fill
+                DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.LinLog,
+                DefaultOverlapRemovalAlgorithm = OverlapRemovalAlgorithmTypeEnum.FSA,
+                DefaultEdgeRoutingAlgorithm = EdgeRoutingAlgorithmTypeEnum.None,
+                AsyncAlgorithmCompute = false
+
+            };
+            _graphArea = new GraphArea<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>, Graph>
+            {
+                EnableWinFormsHostingMode = true,
+                LogicCore = _logic,
+                EdgeLabelFactory = new DefaultEdgelabelFactory(),
             };
 
-            var zoomControl = new ZoomControl();
-            zoomControl.ZoomToFill();
-            ZoomControl.SetViewFinderVisibility(zoomControl, Visibility.Visible);
+            _zoomControl = new ZoomControl
+            {
+                Content = _graphArea,
+                Visibility = Visibility.Visible,
+            };
+            ZoomControl.SetViewFinderVisibility(_zoomControl, Visibility.Visible);
 
-            _wpfHost.Child = zoomControl;
+            _wpfHost = new ElementHost()
+            {
+                Dock = DockStyle.Fill,
+                BackColor = Color.White,
+                Child = _zoomControl
+            };
 
+            _graphArea.ShowAllEdgesLabels();
+            _logic.DefaultLayoutAlgorithmParams = _logic.AlgorithmFactory.CreateLayoutParameters(LayoutAlgorithmTypeEnum.LinLog);
+            _logic.DefaultOverlapRemovalAlgorithmParams = _logic.AlgorithmFactory.CreateOverlapRemovalParameters(OverlapRemovalAlgorithmTypeEnum.FSA);
+            ((OverlapRemovalParameters)_logic.DefaultOverlapRemovalAlgorithmParams).HorizontalGap = 50;
+            ((OverlapRemovalParameters)_logic.DefaultOverlapRemovalAlgorithmParams).VerticalGap = 50;
+
+            MessageBox.Show(Directory.GetCurrentDirectory());
+            MessageBox.Show(new Uri(Directory.GetCurrentDirectory()).ToString());
+
+            var templatePath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "GraphXTemplate.xaml";
+            _zoomControl.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri(templatePath) });
 
             Options.Controls.Add(_countSymbolsCheckBox);
             Output.Controls.Add(_wpfHost);
@@ -67,7 +106,7 @@ namespace PluginSample
             "Algorithms removes one vertex on each step until there's no vertices.\n";
 
         public Panel Options { get; } = new Panel();
-        public Panel Output { get; } = new Panel { Dock = DockStyle.Fill };
+        public Panel Output { get; } = new Panel();
 
         public void Run(string dotSource)
         {
@@ -79,9 +118,17 @@ namespace PluginSample
                 _graph = Graph.LoadDot(dotSource, vertexFun, edgeFun);
                 _steps = new Stack<Graph>();
 
-                var message = $"{_graph.VertexCount} vertices.";
-                if (_countSymbolsCheckBox.Checked) message = $"{message} {dotSource.Length} symbols read.";
-                MessageBox.Show(message);
+                _logic.Graph = _graph;
+                _graphArea.GenerateGraph();
+                _graphArea.SetVerticesDrag(true, true);
+                _graphArea.RelayoutGraph(true);
+                _zoomControl.ZoomToFill();
+                _wpfHost.Refresh();
+                _wpfHost.Update();
+
+//                var message = $"{_graph.VertexCount} vertices.";
+//                if (_countSymbolsCheckBox.Checked) message = $"{message} {dotSource.Length} symbols read.";
+//                MessageBox.Show(message);
 
                 _hasStarted = true;
                 _hasFinished = false;

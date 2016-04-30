@@ -58,7 +58,10 @@ namespace MainForm
             {
                 algorithmOptionsGroupBox.Controls.Add(control);
             }
-            playbackPanel.Controls.Add(_currentAlgorithm.Output);
+            foreach (Control control in _currentAlgorithm.Output.Controls)
+            {
+                playbackPanel.Controls.Add(control);
+            }
 
             noOptionsLabel.Text = Resources.noOptionsAvailableText;
             noOptionsLabel.Visible = algorithmOptionsGroupBox.Controls.Count == 0;
