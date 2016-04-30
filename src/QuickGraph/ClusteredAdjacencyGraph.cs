@@ -16,10 +16,10 @@ namespace QuickGraph
     public class ClusteredAdjacencyGraph<TVertex, TEdge>
         : IVertexAndEdgeListGraph<TVertex, TEdge>
         , IEdgeListAndIncidenceGraph<TVertex, TEdge>
-       /*, IMutableEdgeListGraph<TVertex, TEdge>
-        , IMutableIncidenceGraph<TVertex, TEdge>
-        , IMutableVertexListGraph<TVertex, TEdge>
-        , IMutableVertexAndEdgeListGraph<TVertex, TEdge>*/
+        /*, IMutableEdgeListGraph<TVertex, TEdge>
+         , IMutableIncidenceGraph<TVertex, TEdge>
+         , IMutableVertexListGraph<TVertex, TEdge>
+         , IMutableVertexAndEdgeListGraph<TVertex, TEdge>*/
         , IClusteredGraph
         where TEdge : IEdge<TVertex>
     {
@@ -28,11 +28,6 @@ namespace QuickGraph
         private ArrayList clusters;
         private bool colapsed;
 
-        private readonly bool isDirected = true;
-        private readonly bool allowParallelEdges;
-        private readonly IVertexEdgeDictionary<TVertex, TEdge> vertexEdges;
-        private int edgeCount = 0;
-        private int edgeCapacity = -1;
         //OK
         public ClusteredAdjacencyGraph(AdjacencyGraph<TVertex, TEdge> wrapped)
         {
@@ -257,11 +252,13 @@ namespace QuickGraph
 
         public virtual bool AddVertex(TVertex v)
         {
-            if (parent.ContainsVertex(v) || parent == null)
-                return false;
-            else
+            if (!(parent == null || parent.ContainsVertex(v)))
+            {
                 parent.AddVertex(v);
-            return wrapped.AddVertex(v);
+                return wrapped.AddVertex(v);
+            }
+            else
+                return wrapped.AddVertex(v);
         }
 
         public virtual int AddVertexRange(IEnumerable<TVertex> vertices)
