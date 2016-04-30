@@ -88,7 +88,7 @@ namespace PluginSample
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Source}: {ex.Data}: {ex.Message}");
+                MessageBox.Show(ex.Message);
             }
         }
 

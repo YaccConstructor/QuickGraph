@@ -89,7 +89,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DotParser.Tests", "tests\Do
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginSample", "src\GraphTask.PluginSample\PluginSample.csproj", "{D495C472-6CBB-4B04-A30E-215EE125C08C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.GraphXAdapter", "QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj", "{646CFBB0-B998-45E7-8809-991A5538FF36}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.GraphXAdapter", "src\QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj", "{646CFBB0-B998-45E7-8809-991A5538FF36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

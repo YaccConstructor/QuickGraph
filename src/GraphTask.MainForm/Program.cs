@@ -5,8 +5,6 @@ using System.Windows.Forms;
 using Common;
 using Mono.Addins;
 
-[assembly: AddinRoot("GraphTasks", "1.0")]
-
 namespace MainForm
 {
     internal static class Program
