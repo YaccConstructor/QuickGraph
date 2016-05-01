@@ -34,17 +34,18 @@ namespace QuickGraph.Tests.Algorithms
         }
 
 
-        private UndirectedGraph<int, UndirectedEdge<int>> BuildGraph(int[] verticies, int[] edges)
+        private UndirectedGraph<object, UndirectedEdge<object>> BuildGraph(int[] verticies, int[] edges)
         {
-            var graph = new UndirectedGraph<int, UndirectedEdge<int>>();
-            graph.AddVertexRange(verticies);
-            var convEdges = new UndirectedEdge<int>[edges.Length / 2];
-            for (int i = 0; i < edges.Length; i += 2)
+            var graph = new UndirectedGraph<object, UndirectedEdge<object>>();
+            graph.AddVertexRange(verticies.Select(x => (object)x));
+            var newEdges = edges.Select(x => (object)x).ToArray();
+            var convEdges = new UndirectedEdge<object>[edges.Length / 2];
+            for (int i = 0; i < newEdges.Length; i += 2)
             {
-                convEdges[i / 2] = new UndirectedEdge<int>(edges[i], edges[i + 1]);
+                convEdges[i / 2] = new UndirectedEdge<object>(newEdges[i], newEdges[i + 1]);
             }
             graph.AddEdgeRange(convEdges);
             return graph;
-        }
+    }
     }
 }
