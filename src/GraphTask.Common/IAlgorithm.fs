@@ -5,6 +5,9 @@ open GraphX.PCL.Common.Models
 open Mono.Addins
 open QuickGraph
 
+[<assembly:AddinRoot ("GraphTasks", "1.0")>]
+do()
+
 [<TypeExtensionPoint>]
 [<Interface>]
 type IAlgorithm =

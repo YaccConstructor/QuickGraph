@@ -90,10 +90,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphTask.PluginSample\PluginSample.csproj">
-      <Project>{d495c472-6cbb-4b04-a30e-215ee125c08c}</Project>
-      <Name>PluginSample</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GraphTask.Common\GraphTask.Common.fsproj">
       <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
       <Name>GraphTask.Common</Name>
