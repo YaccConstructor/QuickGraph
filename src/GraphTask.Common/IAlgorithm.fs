@@ -5,9 +5,6 @@ open Mono.Addins
 [<assembly: AddinRoot("GraphTasks", "1.0")>]
 do()
 
-[<assembly:AddinRoot ("GraphTasks", "1.0")>]
-do()
-
 [<TypeExtensionPoint>]
 [<Interface>]
 type IAlgorithm =
