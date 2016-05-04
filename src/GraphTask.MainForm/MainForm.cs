@@ -58,7 +58,10 @@ namespace MainForm
             {
                 algorithmOptionsGroupBox.Controls.Add(control);
             }
-            playbackPanel.Controls.Add(_currentAlgorithm.Output);
+            foreach (Control control in _currentAlgorithm.Output.Controls)
+            {
+                playbackPanel.Controls.Add(control);
+            }
 
             noOptionsLabel.Text = Resources.noOptionsAvailableText;
             noOptionsLabel.Visible = algorithmOptionsGroupBox.Controls.Count == 0;
@@ -97,11 +100,11 @@ namespace MainForm
             algorithmFinishedLabel.Visible = canGoBack && !canGoFurther;
         }
 
-        private static void MoveControlsToPanel(IEnumerable collection, Panel panel)
+        private void MoveControlsToPanel(IEnumerable collection, Control panel)
         {
             foreach (Control control in collection)
             {
-                panel.Controls.Add(control);
+                if (control != noOptionsLabel) panel.Controls.Add(control);
             }
         }
 
@@ -110,7 +113,7 @@ namespace MainForm
             if (_currentAlgorithm == null) return;
 
             MoveControlsToPanel(algorithmOptionsGroupBox.Controls, _currentAlgorithm.Options);
-            MoveControlsToPanel(algorithmPlaybackGroupBox.Controls, _currentAlgorithm.Output);
+            MoveControlsToPanel(playbackPanel.Controls, _currentAlgorithm.Output);
         }
     }
 }

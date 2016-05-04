@@ -228,6 +228,13 @@
   </Target>
   -->
   <Import Project="..\..\.paket\paket.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>$(SolutionDir)packages\FsLexYacc\build\fslex.exe --unicode $(SolutionDir)src\DotParser\DotLexer.fsl</PreBuildEvent>
+  </PropertyGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
       <ItemGroup>
@@ -260,11 +267,4 @@
       </ItemGroup>
     </When>
   </Choose>
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir)packages\FsLexYacc\build\fslex.exe --unicode $(SolutionDir)src\DotParser\DotLexer.fsl</PreBuildEvent>
-  </PropertyGroup>
 </Project>
