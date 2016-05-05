@@ -1,25 +1,32 @@
 ﻿using System;
 using System.Collections;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Common;
+using ICSharpCode.AvalonEdit;
 using MainForm.Properties;
+using FontFamily = System.Windows.Media.FontFamily;
 
 namespace MainForm
 {
     public partial class MainForm : Form
     {
-        private static IAlgorithm _currentAlgorithm;
+        private IAlgorithm _currentAlgorithm;
+        private readonly TextEditor _editor;
 
         public MainForm()
         {
             InitializeComponent();
+
+            _editor = new TextEditor { FontFamily = new FontFamily("Consolas") };
+            editorHost.Child = _editor;
         }
 
         private void editorNewButton_Click(object sender, EventArgs e)
         {
-            editorField.Clear();
-            editorField.Focus();
+            _editor.Clear();
+            _editor.Focus();
         }
 
         private async void editorOpenButton_Click(object sender, EventArgs e)
@@ -33,8 +40,8 @@ namespace MainForm
             if (dialog.ShowDialog() != DialogResult.OK) return;
             try
             {
-                editorField.Text = await new StreamReader(dialog.FileName).ReadToEndAsync();
-                editorField.Focus();
+                _editor.Text = await new StreamReader(dialog.FileName).ReadToEndAsync();
+                _editor.Focus();
             }
             catch (Exception ex)
             {
@@ -77,7 +84,7 @@ namespace MainForm
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            PlaybackControlClickHandler(() => _currentAlgorithm.Run(editorField.Text));
+            PlaybackControlClickHandler(() => _currentAlgorithm.Run(_editor.Text));
         }
 
         private void nextStepButton_Click(object sender, EventArgs e)

@@ -30,7 +30,7 @@
         {
             this.button6 = new System.Windows.Forms.Button();
             this.editorGroupBox = new System.Windows.Forms.GroupBox();
-            this.editorField = new System.Windows.Forms.RichTextBox();
+            this.editorHost = new System.Windows.Forms.Integration.ElementHost();
             this.editorSaveButton = new System.Windows.Forms.Button();
             this.editorOpenButton = new System.Windows.Forms.Button();
             this.editorNewButton = new System.Windows.Forms.Button();
@@ -64,7 +64,7 @@
             // 
             // editorGroupBox
             // 
-            this.editorGroupBox.Controls.Add(this.editorField);
+            this.editorGroupBox.Controls.Add(this.editorHost);
             this.editorGroupBox.Controls.Add(this.editorSaveButton);
             this.editorGroupBox.Controls.Add(this.editorOpenButton);
             this.editorGroupBox.Controls.Add(this.editorNewButton);
@@ -75,16 +75,14 @@
             this.editorGroupBox.TabStop = false;
             this.editorGroupBox.Text = "Graph source";
             // 
-            // editorField
+            // editorHost
             // 
-            this.editorField.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.editorField.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.editorField.Location = new System.Drawing.Point(7, 49);
-            this.editorField.Name = "editorField";
-            this.editorField.Size = new System.Drawing.Size(269, 481);
-            this.editorField.TabIndex = 3;
-            this.editorField.Text = "";
-            this.editorField.WordWrap = false;
+            this.editorHost.Location = new System.Drawing.Point(6, 48);
+            this.editorHost.Name = "editorHost";
+            this.editorHost.Size = new System.Drawing.Size(270, 483);
+            this.editorHost.TabIndex = 3;
+            this.editorHost.Text = "elementHost1";
+            this.editorHost.Child = null;
             // 
             // editorSaveButton
             // 
@@ -266,7 +264,6 @@
         #endregion
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.GroupBox editorGroupBox;
-        private System.Windows.Forms.RichTextBox editorField;
         private System.Windows.Forms.Button editorSaveButton;
         private System.Windows.Forms.Button editorOpenButton;
         private System.Windows.Forms.Button editorNewButton;
@@ -282,6 +279,7 @@
         private System.Windows.Forms.Panel playbackPanel;
         private System.Windows.Forms.Label algorithmFinishedLabel;
         private System.Windows.Forms.Label noOptionsLabel;
+        private System.Windows.Forms.Integration.ElementHost editorHost;
     }
 }
 
