@@ -37,8 +37,8 @@ namespace QuickGraph.Tests.Algorithms
         private UndirectedGraph<object, UndirectedEdge<object>> BuildGraph(int[] verticies, int[] edges)
         {
             var graph = new UndirectedGraph<object, UndirectedEdge<object>>();
-            graph.AddVertexRange(verticies.Select(x => (object)x));
-            var newEdges = edges.Select(x => (object)x).ToArray();
+            graph.AddVertexRange(verticies.Cast<object>());
+            var newEdges = edges.Cast<object>().ToArray();
             var convEdges = new UndirectedEdge<object>[edges.Length / 2];
             for (int i = 0; i < newEdges.Length; i += 2)
             {
