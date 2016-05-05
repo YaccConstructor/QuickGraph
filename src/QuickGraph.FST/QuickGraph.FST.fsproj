@@ -61,11 +61,6 @@
     <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\AbstractAnalysis.Common\AbstractAnalysis.Common.fsproj">
-      <Name>AbstractAnalysis.Common</Name>
-      <Project>{4049cf0a-8f86-48b7-98ba-d062625ba281}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
       <Name>QuickGraph</Name>
       <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>

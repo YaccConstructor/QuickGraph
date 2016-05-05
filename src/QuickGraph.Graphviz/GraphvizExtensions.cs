@@ -108,7 +108,7 @@ this
             Contract.Requires(dot != null);
             Contract.Ensures(Contract.Result<string>() != null);
 
-            var request = WebRequest.Create("http://rise4fun.com/services.svc/ask/agl");
+            var request = WebRequest.Create("http://rise4fun.com/rest/ask/Agl/");
             request.Method = "POST";
             // write dot
             using (var writer = new StreamWriter(request.GetRequestStream()))
