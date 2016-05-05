@@ -12,5 +12,10 @@ namespace QuickGraph.GraphXAdapter
 
         public TTag Tag { get; set; }
         public event EventHandler TagChanged;
+
+        public override string ToString()
+        {
+            return Tag.ToString();
+        }
     }
 }
