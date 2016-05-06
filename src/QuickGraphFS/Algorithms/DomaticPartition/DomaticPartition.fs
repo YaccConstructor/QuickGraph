@@ -10,7 +10,13 @@ namespace QuickGraph.Algorithms
 open System
 open QuickGraph
 
-type public DomaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vertex: comparison>(graph: UndirectedGraph<'Vertex, 'Edge>) =  
+type public DomaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vertex: comparison>(graph: UndirectedGraph<'Vertex, 'Edge>) = 
+    let removeLoopsAndMultipleEdges (graph: UndirectedGraph<'Vertex, 'Edge>) = 
+         let mutable newGraph = new UndirectedGraph<'Vertex, 'Edge>(false, graph.EdgeEqualityComparer)
+         for v in graph.Vertices do newGraph.AddVertex v |> ignore
+         for e in graph.Edges do if e.Source <> e.Target then newGraph.AddEdge e |> ignore
+         newGraph
+
     let frequency (s: Set<Set<'Vertex>>) (v: 'Vertex) = 
         Set.fold (fun acc (subset: Set<'Vertex>) -> if subset.Contains v then acc + 1 else acc) 0 s
 
@@ -177,6 +183,8 @@ type public DomaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Ve
     // Minimal dominating set partition is returned if it exists for a given graph
     // Otherwise some other max size domatic partition is returned
     member this.GetMaxSizePartition() = 
+        let graph = removeLoopsAndMultipleEdges graph
+
         // Efficient func to generate subsets
         let subsets s = 
                 let maxBits x = 
@@ -240,7 +248,7 @@ type public DomaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Ve
 //            printfn "Min set domatic partition: %A" (minSetPart)
             minSetPart
         else
-//            printfn "Graph not divisable into minimum dominating sets partition"
+//            printfn "Graph not divisable into minimal dominating sets partition"
             let part = getPartition (set graph.Vertices)
 //            printfn "Domatic partition: %A" (part)
             part

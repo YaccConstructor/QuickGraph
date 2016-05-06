@@ -201,7 +201,7 @@ namespace QuickGraph.Tests
         }
 
         [TestMethod]
-        public void DomaticPartitionTest3()
+        public void DomaticPartitionTestLoops()
         {
             int[] vertices = { 1, 2, 3, 4, 5, 6, 7, 8 };
             Tuple<int, int>[] edges =
@@ -215,11 +215,85 @@ namespace QuickGraph.Tests
                 new Tuple<int, int>(5, 6),
                 new Tuple<int, int>(6, 7),
                 new Tuple<int, int>(6, 8),
+                new Tuple<int, int>(1, 1),
+                new Tuple<int, int>(2, 2),
+                new Tuple<int, int>(3, 3)
             };
 
             var partition = GetMaxDomaticPartition(vertices, edges);
 
             Assert.AreEqual(partition.Count, 2);
+        }
+
+        [TestMethod]
+        public void DomaticPartitionTestMultipleEdges()
+        {
+            int[] vertices = { 1, 2, 3, 4, 5, 6, 7, 8 };
+            Tuple<int, int>[] edges =
+            {
+                new Tuple<int, int>(1, 2),
+                new Tuple<int, int>(3, 4),
+                new Tuple<int, int>(6, 7),
+                new Tuple<int, int>(1, 3),
+                new Tuple<int, int>(2, 4),
+                new Tuple<int, int>(2, 5),
+                new Tuple<int, int>(2, 6),
+                new Tuple<int, int>(3, 4),
+                new Tuple<int, int>(5, 6),
+                new Tuple<int, int>(5, 6),
+                new Tuple<int, int>(6, 7),
+                new Tuple<int, int>(6, 8),
+                new Tuple<int, int>(6, 8)
+            };
+
+            var partition = GetMaxDomaticPartition(vertices, edges);
+
+            Assert.AreEqual(partition.Count, 2);
+        }
+
+        [TestMethod]
+        public void DomaticPartitionTestEmptyGraph()
+        {
+            int[] vertices = {};
+            Tuple<int, int>[] edges = {};
+
+            var partition = GetMaxDomaticPartition(vertices, edges);
+
+            Assert.AreEqual(partition.Count, 0);
+        }
+
+        [TestMethod]
+        public void DomaticPartitionTestOneVertGraph()
+        {
+            int[] vertices = { 1 };
+            Tuple<int, int>[] edges = {};
+
+            var partition = GetMaxDomaticPartition(vertices, edges);
+
+            Assert.AreEqual(partition.Count, 1);
+        }
+
+        [TestMethod]
+        public void DomaticPartitionTestFullGraph()
+        {
+            int[] vertices = { 1, 2, 3, 4, 5 };
+            Tuple<int, int>[] edges = 
+            {
+                new Tuple<int, int>(1, 2),
+                new Tuple<int, int>(1, 3),
+                new Tuple<int, int>(1, 4),
+                new Tuple<int, int>(1, 5),
+                new Tuple<int, int>(2, 3),
+                new Tuple<int, int>(2, 4),
+                new Tuple<int, int>(2, 5),
+                new Tuple<int, int>(3, 4),
+                new Tuple<int, int>(3, 5),
+                new Tuple<int, int>(4, 5),
+            };
+
+            var partition = GetMaxDomaticPartition(vertices, edges);
+
+            Assert.AreEqual(partition.Count, vertices.Length);
         }
 
         //[TestMethod] // commented not to take too much time during tests run
