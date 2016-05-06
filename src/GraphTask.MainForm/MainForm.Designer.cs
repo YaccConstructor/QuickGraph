@@ -35,6 +35,7 @@
             this.editorOpenButton = new System.Windows.Forms.Button();
             this.editorNewButton = new System.Windows.Forms.Button();
             this.algorithmPlaybackGroupBox = new System.Windows.Forms.GroupBox();
+            this.algorithmFinishedLabel = new System.Windows.Forms.Label();
             this.playbackPanel = new System.Windows.Forms.Panel();
             this.nextStepButton = new System.Windows.Forms.Button();
             this.previousStepButton = new System.Windows.Forms.Button();
@@ -45,7 +46,6 @@
             this.algorithmInfoLabel = new System.Windows.Forms.Label();
             this.algorithmOptionsGroupBox = new System.Windows.Forms.GroupBox();
             this.noOptionsLabel = new System.Windows.Forms.Label();
-            this.algorithmFinishedLabel = new System.Windows.Forms.Label();
             this.editorGroupBox.SuspendLayout();
             this.algorithmPlaybackGroupBox.SuspendLayout();
             this.algorithmPickerGroupBox.SuspendLayout();
@@ -129,6 +129,17 @@
             this.algorithmPlaybackGroupBox.TabIndex = 10;
             this.algorithmPlaybackGroupBox.TabStop = false;
             this.algorithmPlaybackGroupBox.Text = "Algorithm playback";
+            // 
+            // algorithmFinishedLabel
+            // 
+            this.algorithmFinishedLabel.AutoSize = true;
+            this.algorithmFinishedLabel.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.algorithmFinishedLabel.Location = new System.Drawing.Point(87, 24);
+            this.algorithmFinishedLabel.Name = "algorithmFinishedLabel";
+            this.algorithmFinishedLabel.Size = new System.Drawing.Size(139, 13);
+            this.algorithmFinishedLabel.TabIndex = 9;
+            this.algorithmFinishedLabel.Text = "Algorithm has been finished.";
+            this.algorithmFinishedLabel.Visible = false;
             // 
             // playbackPanel
             // 
@@ -224,20 +235,9 @@
             this.noOptionsLabel.Location = new System.Drawing.Point(3, 16);
             this.noOptionsLabel.Name = "noOptionsLabel";
             this.noOptionsLabel.Size = new System.Drawing.Size(360, 94);
-            this.noOptionsLabel.TabIndex = 0;
+            this.noOptionsLabel.TabIndex = 1;
             this.noOptionsLabel.Text = "No algorithm selected.";
             this.noOptionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // algorithmFinishedLabel
-            // 
-            this.algorithmFinishedLabel.AutoSize = true;
-            this.algorithmFinishedLabel.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.algorithmFinishedLabel.Location = new System.Drawing.Point(87, 24);
-            this.algorithmFinishedLabel.Name = "algorithmFinishedLabel";
-            this.algorithmFinishedLabel.Size = new System.Drawing.Size(139, 13);
-            this.algorithmFinishedLabel.TabIndex = 9;
-            this.algorithmFinishedLabel.Text = "Algorithm has been finished.";
-            this.algorithmFinishedLabel.Visible = false;
             // 
             // MainForm
             // 
@@ -274,7 +274,6 @@
         internal System.Windows.Forms.ComboBox algorithmPicker;
         private System.Windows.Forms.GroupBox algorithmPickerGroupBox;
         private System.Windows.Forms.GroupBox algorithmOptionsGroupBox;
-        private System.Windows.Forms.Label noOptionsLabel;
         private System.Windows.Forms.Button nextStepButton;
         private System.Windows.Forms.Button previousStepButton;
         private System.Windows.Forms.Button startButton;
@@ -282,6 +281,7 @@
         private System.Windows.Forms.Label algorithmInfoLabel;
         private System.Windows.Forms.Panel playbackPanel;
         private System.Windows.Forms.Label algorithmFinishedLabel;
+        private System.Windows.Forms.Label noOptionsLabel;
     }
 }
 
