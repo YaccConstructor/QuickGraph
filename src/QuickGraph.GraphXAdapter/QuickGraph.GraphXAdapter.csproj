@@ -31,18 +31,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BidirectedGraphArea.cs" />
     <Compile Include="EdgeFactory.cs" />
     <Compile Include="GraphXTaggedVertex.cs" />
+    <Compile Include="GraphXZoomControl.cs" />
     <Compile Include="VertexFactory.cs" />
     <Compile Include="GraphXEdge.cs" />
     <Compile Include="GraphXTaggedEdge.cs" />
@@ -50,14 +56,27 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
+      <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>
+      <Name>GraphX.WPF.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphX\GraphX.PCL.Common\GraphX.PCL.Common.csproj">
       <Project>{3644D44B-DEC0-4B65-BBA0-C68E34821AAE}</Project>
       <Name>GraphX.PCL.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphX\GraphX.PCL.Logic\GraphX.PCL.Logic.csproj">
+      <Project>{A30D218B-AAA4-483A-99F7-EAEB1B8B4610}</Project>
+      <Name>GraphX.PCL.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
       <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
       <Name>QuickGraph</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GraphXDefaultTemplate.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

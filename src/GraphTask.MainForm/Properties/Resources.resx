@@ -123,4 +123,7 @@
   <data name="couldNotReadFile" xml:space="preserve">
     <value>Could not read the file.</value>
   </data>
+  <data name="noInputGraph" xml:space="preserve">
+    <value>No input graph specified.</value>
+  </data>
 </root>

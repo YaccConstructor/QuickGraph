@@ -84,7 +84,13 @@ namespace MainForm
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            PlaybackControlClickHandler(() => _currentAlgorithm.Run(_editor.Text));
+            var dotSource = _editor.Text;
+            if (string.IsNullOrEmpty(dotSource))
+            {
+                MessageBox.Show(Resources.noInputGraph);
+                return;
+            }
+            PlaybackControlClickHandler(() => _currentAlgorithm.Run(dotSource));
         }
 
         private void nextStepButton_Click(object sender, EventArgs e)
@@ -107,7 +113,7 @@ namespace MainForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{_currentAlgorithm.Name}: {ex.Message}");
+                MessageBox.Show($"{_currentAlgorithm.Name}:\n{ex.Message}");
             }
         }
 
