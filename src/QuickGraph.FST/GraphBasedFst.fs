@@ -8,7 +8,6 @@ open QuickGraph.Algorithms
 open QuickGraph.Collections
 open QuickGraph.FST.FstTable
 open QuickGraph.FSA.GraphBasedFsa
-open QuickGraph.FSA.FsaApproximation
 
 let setVertexRemoved (fst:#IVertexListGraph<_,_>) startV =
         let dfs = DepthFirstSearchAlgorithm<_,_>(fst)
@@ -166,7 +165,7 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
             for v1 in fst1.Vertices do
                 fstDict.Add(v1,new Dictionary<_,_>())
                 for v2 in fst2.Vertices do
-                    fstDict.[v1].Add( v2, !i)
+                    fstDict.[v1].Add(v2, !i)
                     i := !i + 1
              
             let resFST =  new FST<_,_>()
@@ -181,7 +180,7 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
                     if isEqual (snd edge1.Tag) (fst edge2.Tag)
                     then
                         new EdgeFST<_,_>(fstDict.[edge1.Source].[edge2.Source], fstDict.[edge1.Target].[edge2.Target], (fst edge1.Tag, snd edge2.Tag))
-                        |> resFST.AddVerticesAndEdge  |> ignore          
+                        |> resFST.AddVerticesAndEdge  |> ignore 
 
             let isEpsilon x = match x with | Eps -> true | _ -> false
 
@@ -221,15 +220,17 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
                          then result.AddVerticesAndEdge e |> ignore
                 result.RemoveVertex(!i) |> ignore
                 result.RemoveVertex(!i + 1) |> ignore
-                //result.PrintToDOT @"C:\yc\recursive-ascent\FST\FST\FST.Tests\DOTfst\fstt.dot" 
+                // result.PrintToDOT @"C:\yc\temp\fstt0.dot"
                 Success result
             else
                 let chFST1 = new ResizeArray<_>()
                 for ch in fst1.Edges do
                     chFST1.Add (fst (ch.Tag))
                 Error (chFST1.ToArray())
-
+    
     static member optimalCompose(fst1:FST<_, _>, fst2:FST<_, _>, alphabet:HashSet<_>) =
+        let inline pack v1 v2 = (int64(v1) <<< 32) ||| int64(v2)
+        let inline unpack v = (int(v >>> 32), int(v &&& 0xffffffffL))
         let errors = new ResizeArray<_>()
         for edge in fst1.Edges do
             if not <| alphabet.Contains(snd edge.Tag)
@@ -239,66 +240,53 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
         else
             // input FST's vertices mapping to resulting FST vertices 
             let i = ref 0
-            let verticeDict = new Dictionary<int*int, int>()
+            let verticeDict = new Dictionary<int64, int>()
         
             for v1 in fst1.Vertices do
                 for v2 in fst2.Vertices do
-                    verticeDict.Add((v1, v2), !i)
+                    verticeDict.Add(pack v1 v2, !i)
                     incr i
 
-            // outer transitions of each vertice
-            let findAdjacentEdges (fst : FST<_, _>) = 
-                let dict = new Dictionary<int, ResizeArray<_>>()
-                for v in fst.CachedEdges do
-                    if dict.ContainsKey(v.Source) then
-                        dict.[v.Source].Add(v)
-                    else
-                        let transitions = new ResizeArray<_>()
-                        transitions.Add(v)
-                        dict.Add(v.Source, transitions)
-                dict
-        
-            let fst1Edges = findAdjacentEdges fst1
-            let fst2Edges = findAdjacentEdges fst2
-
-            // initial data for FST constructor
-            let initial = new ResizeArray<_>()
-            let final = new ResizeArray<_>()
-            let transitions = new ResizeArray<EdgeFST<_, _>>()
+            // initial fst
+            let resFST =  new FST<_,_>()
 
             // main queue of algorithm
-            let queue = Queue<int*int>()
+            let queue = Queue<int64>()
 
             // buffer helps to deal with cycles
-            let buffer = Queue<int*int>()
+            let buffer = Queue<int64>()
 
             // filling initial states
             for v1 in fst1.InitState do
                 for v2 in fst2.InitState do
-                    queue.Enqueue((v1, v2))
-                    buffer.Enqueue((v1, v2))
-                    initial.Add(verticeDict.[(v1, v2)])
+                    queue.Enqueue(pack v1 v2)
+                    buffer.Enqueue(pack v1 v2)
+                    resFST.InitState.Add(verticeDict.[pack v1 v2])
         
             // filling transitions
             while queue.Count <> 0 do
                 let q = queue.Dequeue();
+                let v1, v2 = unpack q
+
+                // This adds V3*(E1+E2) complexity to the algorithm
+                let fst1OutEdges = fst1.OutEdges v1
+                let fst2OutEdges = fst2.OutEdges v2
 
                 // filling final states
-                if fst1.FinalState.Contains(fst q) && fst2.FinalState.Contains(snd q) then
-                    if not (final.Contains(verticeDict.[q])) then final.Add(verticeDict.[q])
-
-                if fst1Edges.ContainsKey(fst q) then
-                    for e1 in fst1Edges.[fst q] do
-                        if fst2Edges.ContainsKey(snd q) then
-                            for e2 in fst2Edges.[snd q] do
-                                if snd e1.Tag = fst e2.Tag then
-                                    let q' = (e1.Target, e2.Target)
-                                    if not (buffer.Contains(q')) then
-                                        queue.Enqueue(q')
-                                        buffer.Enqueue(q')
-                                    transitions.Add(new EdgeFST<_, _>(verticeDict.[q], verticeDict.[q'], (fst e1.Tag, snd e2.Tag)))
-            
-            Success (new FST<_,_>(initial, final, transitions))
+                if fst1.FinalState.Contains(v1) && fst2.FinalState.Contains(v2) then
+                    resFST.FinalState.Add(verticeDict.[q])
+                
+                for e1 in fst1OutEdges do
+                    for e2 in fst2OutEdges do
+                        if snd e1.Tag = fst e2.Tag then
+                            let q' = pack e1.Target e2.Target
+                            if not (buffer.Contains(q')) then
+                                queue.Enqueue(q')
+                                buffer.Enqueue(q')
+                            new EdgeFST<_,_>(verticeDict.[q], verticeDict.[q'], (fst e1.Tag, snd e2.Tag))
+                            |> resFST.AddVerticesAndEdge  |> ignore
+            // resFST.PrintToDOT @"C:\yc\temp\fstt1.dot"
+            Success(resFST)
 
 and Test<'success, 'error> =
     | Success of 'success

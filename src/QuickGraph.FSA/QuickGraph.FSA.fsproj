@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="HelperTypes.fs" />
     <Compile Include="GraphBasedFsa.fs" />
-    <Compile Include="FsaApproximation.fs" />
     <None Include="App.config" />
     <Content Include="paket.references" />
   </ItemGroup>
