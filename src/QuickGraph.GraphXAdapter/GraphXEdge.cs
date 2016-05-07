@@ -1,4 +1,5 @@
-﻿using GraphX.PCL.Common.Models;
+﻿using System;
+using GraphX.PCL.Common.Models;
 
 namespace QuickGraph.GraphXAdapter
 {
@@ -6,6 +7,11 @@ namespace QuickGraph.GraphXAdapter
     {
         public GraphXEdge(TVertex source, TVertex target) : base(source, target)
         {
+        }
+
+        public override string ToString()
+        {
+            return string.Empty;
         }
     }
 }

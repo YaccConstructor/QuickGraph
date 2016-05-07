@@ -1,11 +1,10 @@
 ﻿<ResourceDictionary
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="http://schemas.panthernet.ru/graphx/"
-    xmlns:controls1="clr-namespace:GraphX.Controls;assembly=GraphX.Controls">
+    xmlns:controls="http://schemas.panthernet.ru/graphx/">
 
     <!-- VERTEX CONTROL -->
-    <Style TargetType="{x:Type controls1:VertexControl}">
+    <Style TargetType="{x:Type controls:VertexControl}">
         <Setter Property="Background" Value="#FFE3E3E3"/>
         <Setter Property="BorderThickness" Value="5,3,5,3"/>
         <Setter Property="Padding" Value="10,5,10,5"/>
@@ -13,8 +12,8 @@
 
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls1:VertexControl}">
-                    <Border Background="{TemplateBinding Background}" 
+                <ControlTemplate TargetType="{x:Type controls:VertexControl}">
+                    <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
 							CornerRadius="10,10,10,10"
 						Padding="{TemplateBinding Padding}">
@@ -23,7 +22,7 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <ContentPresenter Content="{TemplateBinding Vertex}" />                          
+                            <ContentPresenter Content="{TemplateBinding Vertex}" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -31,13 +30,13 @@
         </Setter>
 
         <!-- VERTEX DRAGGING CONTROL -->
-        <Setter Property="controls1:DragBehaviour.IsDragEnabled"
+        <Setter Property="controls:DragBehaviour.IsDragEnabled"
                 Value="True" />
 
-        <Setter Property="controls1:HighlightBehaviour.IsHighlightEnabled" Value="False"/>
+        <Setter Property="controls:HighlightBehaviour.IsHighlightEnabled" Value="False"/>
 
         <Style.Triggers>
-            <Trigger Property="controls1:HighlightBehaviour.Highlighted" Value="True">
+            <Trigger Property="controls:HighlightBehaviour.Highlighted" Value="True">
                 <Setter Property="Background" Value="Gold"/>
                 <Setter Property="BorderThickness" Value="7"/>
             </Trigger>
@@ -45,18 +44,18 @@
     </Style>
 
     <!-- EDGE CONTROL -->
-    <Style TargetType="{x:Type controls1:EdgeControl}">
+    <Style TargetType="{x:Type controls:EdgeControl}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls1:EdgeControl}">
+                <ControlTemplate TargetType="{x:Type controls:EdgeControl}">
                     <Grid>
                         <Path Stroke="{TemplateBinding Foreground}"
                           StrokeThickness="2" MinWidth="1" MinHeight="1"
-                          ToolTip="{TemplateBinding ToolTip}" 
+                          ToolTip="{TemplateBinding ToolTip}"
                             x:Name="PART_edgePath"/>
-                        <controls1:DefaultEdgePointer NeedRotation="true" x:Name="PART_EdgePointerForTarget" >
+                        <controls:DefaultEdgePointer NeedRotation="true" x:Name="PART_EdgePointerForTarget" >
                             <Path Data="M0,0.5 L1,1 1,0" Fill="Black" Stretch="Uniform" Width="10" Height="10"/>
-                        </controls1:DefaultEdgePointer>
+                        </controls:DefaultEdgePointer>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -73,11 +72,11 @@
         <Setter Property="Opacity"
                 Value="1" />
 
-        <Setter Property="controls1:HighlightBehaviour.IsHighlightEnabled" Value="False"/>
+        <Setter Property="controls:HighlightBehaviour.IsHighlightEnabled" Value="False"/>
 
 
         <Style.Triggers>
-            <Trigger Property="controls1:HighlightBehaviour.Highlighted" Value="True">
+            <Trigger Property="controls:HighlightBehaviour.Highlighted" Value="True">
                 <Setter Property="Foreground" Value="Gold"/>
                 <Setter Property="StrokeThickness" Value="5"/>
             </Trigger>

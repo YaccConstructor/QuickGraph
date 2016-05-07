@@ -79,6 +79,15 @@ namespace MainForm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No input graph specified..
+        /// </summary>
+        internal static string noInputGraph {
+            get {
+                return ResourceManager.GetString("noInputGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The algorithm has no options..
         /// </summary>
         internal static string noOptionsAvailableText {

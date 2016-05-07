@@ -1,25 +1,32 @@
 ﻿using System;
 using System.Collections;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Common;
+using ICSharpCode.AvalonEdit;
 using MainForm.Properties;
+using FontFamily = System.Windows.Media.FontFamily;
 
 namespace MainForm
 {
     public partial class MainForm : Form
     {
-        private static IAlgorithm _currentAlgorithm;
+        private IAlgorithm _currentAlgorithm;
+        private readonly TextEditor _editor;
 
         public MainForm()
         {
             InitializeComponent();
+
+            _editor = new TextEditor { FontFamily = new FontFamily("Consolas") };
+            editorHost.Child = _editor;
         }
 
         private void editorNewButton_Click(object sender, EventArgs e)
         {
-            editorField.Clear();
-            editorField.Focus();
+            _editor.Clear();
+            _editor.Focus();
         }
 
         private async void editorOpenButton_Click(object sender, EventArgs e)
@@ -33,8 +40,8 @@ namespace MainForm
             if (dialog.ShowDialog() != DialogResult.OK) return;
             try
             {
-                editorField.Text = await new StreamReader(dialog.FileName).ReadToEndAsync();
-                editorField.Focus();
+                _editor.Text = await new StreamReader(dialog.FileName).ReadToEndAsync();
+                _editor.Focus();
             }
             catch (Exception ex)
             {
@@ -47,46 +54,67 @@ namespace MainForm
             if (_currentAlgorithm != null)
             {
                 if (_currentAlgorithm.Name == algorithmPicker.Text) return;
-                RestoreAlgorithmControls();
+                CleanOptionsAndPlaybackPanels();
             }
 
-            _currentAlgorithm = Program.Algorithms[algorithmPicker.Text];
-            algorithmInfoLabel.Text = _currentAlgorithm.Description;
-
-            if (_currentAlgorithm.Options == null) return;
-            foreach (Control control in _currentAlgorithm.Options.Controls)
+            try
             {
-                algorithmOptionsGroupBox.Controls.Add(control);
-            }
-            foreach (Control control in _currentAlgorithm.Output.Controls)
-            {
-                playbackPanel.Controls.Add(control);
-            }
+                _currentAlgorithm = Program.Algorithms[algorithmPicker.Text];
+                algorithmInfoLabel.Text = _currentAlgorithm.Description;
 
-            noOptionsLabel.Text = Resources.noOptionsAvailableText;
-            noOptionsLabel.Visible = algorithmOptionsGroupBox.Controls.Count == 0;
-            UpdatePlayer();
+                if (_currentAlgorithm.Options.Controls.Count != 0)
+                {
+                    algorithmOptionsGroupBox.Controls.Add(_currentAlgorithm.Options);
+                    noOptionsLabel.Parent = null;
+                }
+                else
+                {
+                    noOptionsLabel.Text = Resources.noOptionsAvailableText;
+                    algorithmOptionsGroupBox.Controls.Add(noOptionsLabel);
+                }
+
+                playbackPanel.Controls.Add(_currentAlgorithm.Output);
+                UpdatePlayer();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not load plugin:\n{ex.Message}");
+            }
         }
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            if (_currentAlgorithm == null) return;
-            _currentAlgorithm.Run(editorField.Text);
-            UpdatePlayer();
+            var dotSource = _editor.Text;
+            if (string.IsNullOrEmpty(dotSource))
+            {
+                MessageBox.Show(Resources.noInputGraph);
+                return;
+            }
+            PlaybackControlClickHandler(() => _currentAlgorithm.Run(dotSource));
         }
 
         private void nextStepButton_Click(object sender, EventArgs e)
         {
-            if (_currentAlgorithm == null) return;
-            _currentAlgorithm.NextStep();
-            UpdatePlayer();
+            PlaybackControlClickHandler(() => _currentAlgorithm.NextStep());
         }
 
         private void previousStepButton_Click(object sender, EventArgs e)
         {
+            PlaybackControlClickHandler(() => _currentAlgorithm.PreviousStep());
+        }
+
+        private void PlaybackControlClickHandler(Action algorithmAction)
+        {
             if (_currentAlgorithm == null) return;
-            _currentAlgorithm.PreviousStep();
-            UpdatePlayer();
+            try
+            {
+                algorithmAction();
+                UpdatePlayer();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{_currentAlgorithm.Name}:\n{ex.Message}");
+            }
         }
 
         private void UpdatePlayer()
@@ -100,20 +128,14 @@ namespace MainForm
             algorithmFinishedLabel.Visible = canGoBack && !canGoFurther;
         }
 
-        private void MoveControlsToPanel(IEnumerable collection, Control panel)
+        private void CleanOptionsAndPlaybackPanels()
         {
-            foreach (Control control in collection)
-            {
-                if (control != noOptionsLabel) panel.Controls.Add(control);
-            }
-        }
+            _currentAlgorithm.Output.Parent = null;
+            _currentAlgorithm.Options.Parent = null;
+            noOptionsLabel.Parent = null;
 
-        private void RestoreAlgorithmControls()
-        {
-            if (_currentAlgorithm == null) return;
-
-            MoveControlsToPanel(algorithmOptionsGroupBox.Controls, _currentAlgorithm.Options);
-            MoveControlsToPanel(playbackPanel.Controls, _currentAlgorithm.Output);
+            playbackPanel.Controls.Clear();
+            algorithmOptionsGroupBox.Controls.Clear();
         }
     }
 }
