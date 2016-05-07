@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Windows.Media;
 using Common;
-using GraphX.Controls;
-using GraphX.PCL.Common.Enums;
 using GraphX.PCL.Common.Models;
 using Mono.Addins;
 using QuickGraph;
 using QuickGraph.GraphXAdapter;
-using Color = System.Drawing.Color;
 using MessageBox = System.Windows.Forms.MessageBox;
 using Point = System.Drawing.Point;
 
-// This plugin demonstrates how to use plugin system.
-// Add your plugin reference to MainForm project for auto-rebuild while working on it.
-// Please do not commit this reference, as it will force every plugin to rebuild when MainForm rebuilds.
-// Read more at Mono.Addins wiki page on GitHub.
+// Read more about plugin system on GitHub.
 // https://github.com/mono/mono-addins/wiki/Architecture-Overview
+
+// GraphX GraphArea works with classes implementing IMutableBidirectionalGraph only.
+// Possible undirected graph workaround:
+//   UndirectedGraph<TVertex, TEdge>.LoadDot(...).Edges.ToBidirectionalGraph<TVertex, TEdge>();
+
+// Add your plugin reference to MainForm project for auto-rebuild while working on it.
+// Please do not commit this reference, as it will force your plugin to be rebuilt when MainForm rebuilds.
 
 
 [assembly: Addin]
@@ -31,7 +28,7 @@ using Point = System.Drawing.Point;
 namespace PluginSample
 {
     using Graph = BidirectionalGraph<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>;
-    using GraphArea = BidirectedGraphArea<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>;
+    using GraphArea = BidirectionalGraphArea<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>;
 
     [Extension]
     public class PluginSample : IAlgorithm
@@ -58,7 +55,7 @@ namespace PluginSample
 
         public string Description =>
             "This plugin demonstrates how to use plugin system.\n" +
-            "Algorithms removes one vertex on each step until graph's empty.\n";
+            "Algorithm removes one vertex on each step until graph's empty.\n";
 
         public Panel Options { get; } = new Panel {Dock = DockStyle.Fill};
         public Panel Output { get; } = new Panel {Dock = DockStyle.Fill};

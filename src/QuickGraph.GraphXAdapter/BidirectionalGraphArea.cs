@@ -5,9 +5,12 @@ using GraphX.PCL.Common.Interfaces;
 using GraphX.PCL.Logic.Algorithms.OverlapRemoval;
 using GraphX.PCL.Logic.Models;
 
+// Sample GraphArea and GXLogicCore config copied from GraphX examples.
+// Feel free to inherit or modify.
+
 namespace QuickGraph.GraphXAdapter
 {
-    public class BidirectedGraphArea<TVertex, TEdge> : GraphArea<TVertex, TEdge, BidirectionalGraph<TVertex, TEdge>>
+    public class BidirectionalGraphArea<TVertex, TEdge> : GraphArea<TVertex, TEdge, BidirectionalGraph<TVertex, TEdge>>
         where TVertex : class, IGraphXVertex
         where TEdge : class, IGraphXEdge<TVertex>
     {
@@ -21,7 +24,7 @@ namespace QuickGraph.GraphXAdapter
                 DefaultOverlapRemovalAlgorithmParams = new OverlapRemovalParameters { HorizontalGap = 50, VerticalGap = 50}
             };
 
-        public BidirectedGraphArea(GXLogicCore<TVertex, TEdge, BidirectionalGraph<TVertex, TEdge>> logicCore)
+        public BidirectionalGraphArea(GXLogicCore<TVertex, TEdge, BidirectionalGraph<TVertex, TEdge>> logicCore)
         {
             LogicCore = logicCore;
             EnableWinFormsHostingMode = true;
@@ -34,7 +37,7 @@ namespace QuickGraph.GraphXAdapter
                 logicCore.AlgorithmFactory.CreateOverlapRemovalParameters(OverlapRemovalAlgorithmTypeEnum.FSA);
         }
 
-        public BidirectedGraphArea() : this(DefaultLogicCore)
+        public BidirectionalGraphArea() : this(DefaultLogicCore)
         {
         }
     }
