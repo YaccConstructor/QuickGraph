@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button6 = new System.Windows.Forms.Button();
             this.editorGroupBox = new System.Windows.Forms.GroupBox();
             this.editorHost = new System.Windows.Forms.Integration.ElementHost();
             this.editorSaveButton = new System.Windows.Forms.Button();
@@ -42,28 +41,21 @@
             this.startButton = new System.Windows.Forms.Button();
             this.algorithmPicker = new System.Windows.Forms.ComboBox();
             this.algorithmPickerGroupBox = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.algorithmInfoPanel = new System.Windows.Forms.Panel();
             this.algorithmInfoLabel = new System.Windows.Forms.Label();
             this.algorithmOptionsGroupBox = new System.Windows.Forms.GroupBox();
             this.noOptionsLabel = new System.Windows.Forms.Label();
             this.editorGroupBox.SuspendLayout();
             this.algorithmPlaybackGroupBox.SuspendLayout();
             this.algorithmPickerGroupBox.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.algorithmInfoPanel.SuspendLayout();
             this.algorithmOptionsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(7, 574);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(132, 30);
-            this.button6.TabIndex = 7;
-            this.button6.Text = "Start";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
             // editorGroupBox
             // 
+            this.editorGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.editorGroupBox.Controls.Add(this.editorHost);
             this.editorGroupBox.Controls.Add(this.editorSaveButton);
             this.editorGroupBox.Controls.Add(this.editorOpenButton);
@@ -77,6 +69,8 @@
             // 
             // editorHost
             // 
+            this.editorHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.editorHost.Location = new System.Drawing.Point(6, 48);
             this.editorHost.Name = "editorHost";
             this.editorHost.Size = new System.Drawing.Size(270, 483);
@@ -116,6 +110,9 @@
             // 
             // algorithmPlaybackGroupBox
             // 
+            this.algorithmPlaybackGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.algorithmPlaybackGroupBox.Controls.Add(this.algorithmFinishedLabel);
             this.algorithmPlaybackGroupBox.Controls.Add(this.playbackPanel);
             this.algorithmPlaybackGroupBox.Controls.Add(this.nextStepButton);
@@ -141,6 +138,9 @@
             // 
             // playbackPanel
             // 
+            this.playbackPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.playbackPanel.Location = new System.Drawing.Point(6, 48);
             this.playbackPanel.Name = "playbackPanel";
             this.playbackPanel.Size = new System.Drawing.Size(684, 363);
@@ -148,6 +148,7 @@
             // 
             // nextStepButton
             // 
+            this.nextStepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nextStepButton.Enabled = false;
             this.nextStepButton.Location = new System.Drawing.Point(615, 19);
             this.nextStepButton.Name = "nextStepButton";
@@ -159,6 +160,7 @@
             // 
             // previousStepButton
             // 
+            this.previousStepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.previousStepButton.Enabled = false;
             this.previousStepButton.Location = new System.Drawing.Point(534, 19);
             this.previousStepButton.Name = "previousStepButton";
@@ -191,7 +193,7 @@
             // 
             // algorithmPickerGroupBox
             // 
-            this.algorithmPickerGroupBox.Controls.Add(this.panel1);
+            this.algorithmPickerGroupBox.Controls.Add(this.algorithmInfoPanel);
             this.algorithmPickerGroupBox.Controls.Add(this.algorithmPicker);
             this.algorithmPickerGroupBox.Location = new System.Drawing.Point(301, 13);
             this.algorithmPickerGroupBox.Name = "algorithmPickerGroupBox";
@@ -200,13 +202,13 @@
             this.algorithmPickerGroupBox.TabStop = false;
             this.algorithmPickerGroupBox.Text = "Algorithm picker";
             // 
-            // panel1
+            // algorithmInfoPanel
             // 
-            this.panel1.Controls.Add(this.algorithmInfoLabel);
-            this.panel1.Location = new System.Drawing.Point(6, 47);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(311, 63);
-            this.panel1.TabIndex = 11;
+            this.algorithmInfoPanel.Controls.Add(this.algorithmInfoLabel);
+            this.algorithmInfoPanel.Location = new System.Drawing.Point(6, 47);
+            this.algorithmInfoPanel.Name = "algorithmInfoPanel";
+            this.algorithmInfoPanel.Size = new System.Drawing.Size(311, 63);
+            this.algorithmInfoPanel.TabIndex = 11;
             // 
             // algorithmInfoLabel
             // 
@@ -218,6 +220,8 @@
             // 
             // algorithmOptionsGroupBox
             // 
+            this.algorithmOptionsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.algorithmOptionsGroupBox.Controls.Add(this.noOptionsLabel);
             this.algorithmOptionsGroupBox.Location = new System.Drawing.Point(630, 13);
             this.algorithmOptionsGroupBox.Name = "algorithmOptionsGroupBox";
@@ -246,23 +250,20 @@
             this.Controls.Add(this.algorithmPickerGroupBox);
             this.Controls.Add(this.algorithmPlaybackGroupBox);
             this.Controls.Add(this.editorGroupBox);
-            this.Controls.Add(this.button6);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(1024, 600);
             this.Name = "MainForm";
             this.Text = "Graph Algorithms";
             this.editorGroupBox.ResumeLayout(false);
             this.algorithmPlaybackGroupBox.ResumeLayout(false);
             this.algorithmPlaybackGroupBox.PerformLayout();
             this.algorithmPickerGroupBox.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
+            this.algorithmInfoPanel.ResumeLayout(false);
             this.algorithmOptionsGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.GroupBox editorGroupBox;
         private System.Windows.Forms.Button editorSaveButton;
         private System.Windows.Forms.Button editorOpenButton;
@@ -274,7 +275,7 @@
         private System.Windows.Forms.Button nextStepButton;
         private System.Windows.Forms.Button previousStepButton;
         private System.Windows.Forms.Button startButton;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel algorithmInfoPanel;
         private System.Windows.Forms.Label algorithmInfoLabel;
         private System.Windows.Forms.Panel playbackPanel;
         private System.Windows.Forms.Label algorithmFinishedLabel;
