@@ -46,6 +46,7 @@
     <Compile Include="Algorithms\IndependentSet\MaximumIndependentSetAlgorithm.fs" />
     <Compile Include="Algorithms\BipartiteDimension\BipartiteDimensionAlgorithm.fs" />
     <Compile Include="Algorithms\InducedPaths\InducedPaths.fs" />
+    <Compile Include="Algorithms\DomaticPartition\DomaticPartition.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
