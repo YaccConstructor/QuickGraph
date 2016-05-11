@@ -3,38 +3,38 @@ using QuickGraph.GraphXAdapter;
 
 namespace PluginsCommon
 {
-    public class Traversal
+    public class Traversal<TVertex>
     {
         public class Node
         {
-            public LinkedList<Node> children = new LinkedList<Node>();
-            public GraphXVertex v;
+            public List<Node> children = new List<Node>();
+            public TVertex v;
             public Node parent;
 
-            public Node(GraphXVertex v, Node parent)
+            public Node(TVertex v, Node parent)
             {
                 this.parent = parent;
                 this.v = v;
             }
 
-            public Node AddChild(GraphXVertex v)
+            public Node AddChild(TVertex v)
             {
                 Node child = new Node(v, this);
-                children.AddLast(child);
+                children.Add(child);
                 return child;
             }
         }
         public Node currNode;
-        private LinkedList<Node> nodes = new LinkedList<Node>();
+        public List<Node> nodes = new List<Node>();
         public Traversal()
         { }
 
-        public void Push(GraphXVertex v)
+        public void Push(TVertex v)
         {
             if (currNode == null)
             {
                 currNode = new Node(v, null);
-                nodes.AddLast(currNode);
+                nodes.Add(currNode);
             }
             else
                 currNode = currNode.AddChild(v);
@@ -42,10 +42,14 @@ namespace PluginsCommon
 
         public void Pop()
         {
-            if (currNode == null)
-                currNode = null;
-            else
-                currNode = currNode.parent;
+            if (currNode != null)
+                currNode = currNode.parent;                
+        }
+
+        public void Clear()
+        {
+            currNode = null;
+            nodes.Clear();
         }
 
     }
