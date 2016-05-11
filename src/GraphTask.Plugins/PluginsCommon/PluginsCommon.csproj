@@ -44,6 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\GraphX\GraphX.PCL.Common\GraphX.PCL.Common.csproj">
+      <Project>{3644d44b-dec0-4b65-bba0-c68e34821aae}</Project>
+      <Name>GraphX.PCL.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj">
       <Project>{646cfbb0-b998-45e7-8809-991a5538ff36}</Project>
       <Name>QuickGraph.GraphXAdapter</Name>
