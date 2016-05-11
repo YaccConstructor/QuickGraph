@@ -218,6 +218,7 @@
     <Compile Include="Algorithms\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\KruskalMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\ShortestPath\Yen\YenShortestPathsAlgorithm.cs" />
+    <Compile Include="Algorithms\TSP\TSP.cs" />
     <Compile Include="Algorithms\VertexColoringProblem\VertexColoringAlgorithm.cs" />
     <Compile Include="Algorithms\Observers\Contracts\IObserverContract.cs" />
     <Compile Include="Algorithms\Observers\DisposableAction.cs" />
