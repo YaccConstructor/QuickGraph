@@ -90,22 +90,24 @@ namespace MainForm
                 MessageBox.Show(Resources.noInputGraph);
                 return;
             }
+            if (_currentAlgorithm == null) return;
             PlaybackControlClickHandler(() => _currentAlgorithm.Run(dotSource));
         }
 
         private void nextStepButton_Click(object sender, EventArgs e)
         {
+            if (_currentAlgorithm == null) return;
             PlaybackControlClickHandler(() => _currentAlgorithm.NextStep());
         }
 
         private void previousStepButton_Click(object sender, EventArgs e)
         {
+            if (_currentAlgorithm == null) return;
             PlaybackControlClickHandler(() => _currentAlgorithm.PreviousStep());
         }
 
         private void PlaybackControlClickHandler(Action algorithmAction)
         {
-            if (_currentAlgorithm == null) return;
             try
             {
                 algorithmAction();
@@ -113,7 +115,7 @@ namespace MainForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{_currentAlgorithm.Name}:\n{ex.Message}");
+                MessageBox.Show($"{_currentAlgorithm.Name}:\n{ex.Source}: {ex.Message}");
             }
         }
 

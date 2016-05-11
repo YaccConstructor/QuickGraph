@@ -29,6 +29,10 @@ namespace QuickGraph
                 foreach (var attr in parallelEdges.Value)
                 {
                     graph.AddEdge(edgeFunc(vertices[edgeVertices.Item1], vertices[edgeVertices.Item2], attr));
+                    if (graph.IsDirected && !graphData.IsDirected)
+                    {
+                        graph.AddEdge(edgeFunc(vertices[edgeVertices.Item2], vertices[edgeVertices.Item1], attr));
+                    }
                 }
             }
             return graph;

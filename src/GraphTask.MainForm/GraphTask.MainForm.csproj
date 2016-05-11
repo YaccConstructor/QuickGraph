@@ -101,6 +101,10 @@
       <Project>{3644d44b-dec0-4b65-bba0-c68e34821aae}</Project>
       <Name>GraphX.PCL.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj">
+      <Project>{646cfbb0-b998-45e7-8809-991a5538ff36}</Project>
+      <Name>QuickGraph.GraphXAdapter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
       <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
       <Name>QuickGraph</Name>
