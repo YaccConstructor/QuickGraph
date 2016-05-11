@@ -12,13 +12,17 @@ namespace QuickGraph.Algorithms.TSP
     public class TSP<TVertex, TEdge, TGraph> : ShortestPathAlgorithmBase<TVertex, TEdge
         , TGraph>
         , ITreeBuilderAlgorithm<TVertex, TEdge>
-        where TEdge : IEdge<TVertex>
-        where TGraph : IVertexAndEdgeListGraph<TVertex, TEdge>
+        where TGraph : BidirectionalGraph<TVertex, TEdge>
+        where TEdge : EquatableEdge<TVertex>
     {
+        private InternalGraphRepr<TVertex, TEdge> graph;
+        private readonly Dictionary<TEdge, double> weights;
 
-        public TSP(TGraph visitedGraph, Func<TEdge, double> weights)
-            :base(null, visitedGraph, weights, DistanceRelaxers.ShortestDistance)
-        {}
+        public TSP(TGraph visitedGraph, Dictionary<TEdge, double> weights)
+            :base(null, visitedGraph, edge => weights[edge], DistanceRelaxers.ShortestDistance)
+        {
+            this.weights = weights;
+        }
 
         protected override void Initialize()
         {
@@ -32,7 +36,11 @@ namespace QuickGraph.Algorithms.TSP
 
         protected override void InternalCompute()
         {
-            throw new NotImplementedException();
+            graph = new InternalGraphRepr<TVertex, TEdge>(VisitedGraph, weights);
+            graph.simplify();
+            graph.chooseEdgeForSplit();
+            graph.buildSplit();
         }
+
     }
 }
