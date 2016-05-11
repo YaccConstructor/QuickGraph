@@ -93,10 +93,6 @@
       <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
       <Name>GraphTask.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphTask.Plugins\TopologicalSortPlugin\TopologicalSortPlugin.csproj">
-      <Project>{7a3cd47c-df15-4fc6-a923-dec16264e79f}</Project>
-      <Name>TopologicalSortPlugin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
       <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>
       <Name>GraphX.WPF.Controls</Name>
