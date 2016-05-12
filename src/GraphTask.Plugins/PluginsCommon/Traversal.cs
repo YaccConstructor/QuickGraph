@@ -3,21 +3,21 @@ using QuickGraph.GraphXAdapter;
 
 namespace PluginsCommon
 {
-    public class Traversal
+    public class Traversal<TVertex>
     {
         public class Node
         {
             public LinkedList<Node> children = new LinkedList<Node>();
-            public GraphXVertex v;
+            public TVertex v;
             public Node parent;
 
-            public Node(GraphXVertex v, Node parent)
+            public Node(TVertex v, Node parent)
             {
                 this.parent = parent;
                 this.v = v;
             }
 
-            public Node AddChild(GraphXVertex v)
+            public Node AddChild(TVertex v)
             {
                 Node child = new Node(v, this);
                 children.AddLast(child);
@@ -29,7 +29,7 @@ namespace PluginsCommon
         public Traversal()
         { }
 
-        public void Push(GraphXVertex v)
+        public void Push(TVertex v)
         {
             if (currNode == null)
             {

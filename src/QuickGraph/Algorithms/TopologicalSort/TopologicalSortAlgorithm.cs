@@ -54,17 +54,10 @@ namespace QuickGraph.Algorithms.TopologicalSort
         {
             vertices.Insert(0, v);
         }
+
         public event VertexAction<TVertex> DiscoverVertex;
         public event VertexAction<TVertex> FinishVertex;
-        /*
-        public event VertexAction<TVertex> InitializeVertex;
-        public event VertexAction<TVertex> StartVertex;
-        public event VertexAction<TVertex> DiscoverVertex;
-        public event EdgeAction<TVertex, TEdge> ExamineEdge;
-        public event EdgeAction<TVertex, TEdge> TreeEdge;
-        public event EdgeAction<TVertex, TEdge> BackEdge;
-        public event EdgeAction<TVertex, TEdge> ForwardOrCrossEdge;
-        */
+
         protected override void InternalCompute()
         {
             DepthFirstSearchAlgorithm<TVertex, TEdge> dfs = null;
@@ -77,18 +70,8 @@ namespace QuickGraph.Algorithms.TopologicalSort
                     );
                 dfs.BackEdge += new EdgeAction<TVertex, TEdge>(this.BackEdge);
                 dfs.FinishVertex += new VertexAction<TVertex>(this.VertexFinished);
-
-                /*
-                dfs.InitializeVertex += InitializeVertex;
-                dfs.DiscoverVertex += DiscoverVertex;
-                dfs.ExamineEdge += ExamineEdge;
-                dfs.TreeEdge += TreeEdge;
-                dfs.BackEdge += BackEdge;
-                dfs.ForwardOrCrossEdge += ForwardOrCrossEdge;
-                */
                 dfs.DiscoverVertex += DiscoverVertex;
                 dfs.FinishVertex += FinishVertex;
-
 
                 dfs.Compute();
             }

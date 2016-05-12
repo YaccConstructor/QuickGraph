@@ -32,10 +32,9 @@ namespace TopologicalSortPlugin
         private readonly GraphXZoomControl _zoomControl;
         private bool _hasStarted;
         private bool _hasFinished;
-
         private BindingList<String> sortedList;
-        private Traversal traversal = new Traversal();
-        private LinkedList<Tuple<Traversal.Node, int>> states;
+        private Traversal<GraphXVertex> traversal = new Traversal<GraphXVertex>();
+        private List<Tuple<Traversal<GraphXVertex>.Node, int>> states;
         private TopologicalSortAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>> sort;
         private int currState;
 
@@ -60,6 +59,9 @@ namespace TopologicalSortPlugin
         public Panel Options { get; } = new Panel { Dock = DockStyle.Fill };
         public Panel Output { get; } = new Panel { Dock = DockStyle.Fill };
 
+        public bool CanGoBack => currState != 0 && states.Count != 0;
+        public bool CanGoFurther => _hasStarted && !_hasFinished;
+
         public void Run(string dotSource)
         {
             sortedList.Clear();
@@ -67,7 +69,7 @@ namespace TopologicalSortPlugin
             var edgeFun = EdgeFactory<GraphXVertex>.Weighted(0);
             var graph = Graph.LoadDot(dotSource, vertexFun, edgeFun);
 
-            states = new LinkedList<Tuple<Traversal.Node, int>>();
+            states = new List<Tuple<Traversal<GraphXVertex>.Node, int>>();
 
             if (!graph.Vertices.Any())
             {
@@ -97,7 +99,7 @@ namespace TopologicalSortPlugin
             var currNode = states.ElementAt(currState).Item1;
             if (currNode != null)
             {
-                foreach (Traversal.Node node in currNode.children)
+                foreach (Traversal<GraphXVertex>.Node node in currNode.children)
                     _graphArea.VertexList[node.v].Background = new SolidColorBrush(Colors.LightGray);
                 while (currNode != null)
                 {
@@ -133,8 +135,7 @@ namespace TopologicalSortPlugin
             currState++;
             UpdateSortedList();
             HighlightTraversal();
-            if (currState == states.Count - 1)
-                _hasFinished = true;
+            _hasFinished = currState == states.Count - 1;
         }
 
         public void PreviousStep()
@@ -144,38 +145,22 @@ namespace TopologicalSortPlugin
             HighlightTraversal();
             _hasFinished = false;
         }
+
         private void memorizeState()
         {
-            states.AddLast(new Tuple<Traversal.Node, int>(traversal.currNode, sort.SortedVertices.Count()));
+            states.Add(new Tuple<Traversal<GraphXVertex>.Node, int>(traversal.currNode, sort.SortedVertices.Count()));
         }
+
         private void OnFinishVertex(GraphXVertex vertex)
         {
-            try
-            {
-                traversal.Pop();
-                memorizeState();
-            }
-            catch (Exception e)
-            {
-                string s = e.ToString();
-            }
+            traversal.Pop();
+            memorizeState();
         }
+
         private void OnDiscoverVertex(GraphXVertex vertex)
         {
-            try
-            {
-                traversal.Push(vertex);
-                memorizeState();
-                
-            }
-            catch (Exception e)
-            {
-                string s = e.ToString();
-            }
-
+            traversal.Push(vertex);
+            memorizeState();
         }
-
-        public bool CanGoBack => currState != 0 && states.Count != 0;
-        public bool CanGoFurther => _hasStarted && !_hasFinished;
     }
 }
