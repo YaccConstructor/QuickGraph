@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using QuickGraph.Algorithms.Services;
 using QuickGraph.Algorithms.ShortestPath;
+using QuickGraph.Collections;
 
 namespace QuickGraph.Algorithms.TSP
 {
@@ -15,13 +16,17 @@ namespace QuickGraph.Algorithms.TSP
         where TGraph : BidirectionalGraph<TVertex, TEdge>
         where TEdge : EquatableEdge<TVertex>
     {
-        private InternalGraphRepr<TVertex, TEdge> graph;
-        private readonly Dictionary<TEdge, double> weights;
+        private TasksManager<TVertex, TEdge> taskManager = new TasksManager<TVertex, TEdge>();
 
-        public TSP(TGraph visitedGraph, Dictionary<TEdge, double> weights)
+        private BidirectionalGraph<TVertex, TEdge> resultPath;
+        private double bestCost;
+
+        public TSP(TGraph visitedGraph, Dictionary<EquatableEdge<TVertex>, double> weights)
             :base(null, visitedGraph, edge => weights[edge], DistanceRelaxers.ShortestDistance)
         {
-            this.weights = weights;
+            BidirectionalGraph<TVertex, TEdge> path = new BidirectionalGraph<TVertex, TEdge>();
+            path.AddVertexRange(visitedGraph.Vertices);
+            taskManager.addTask(new Task<TVertex, TEdge>(visitedGraph, weights, path, 0));
         }
 
         protected override void Initialize()
@@ -36,10 +41,34 @@ namespace QuickGraph.Algorithms.TSP
 
         protected override void InternalCompute()
         {
-            graph = new InternalGraphRepr<TVertex, TEdge>(VisitedGraph, weights);
-            graph.simplify();
-            graph.chooseEdgeForSplit();
-            graph.buildSplit();
+            while(taskManager.hasTasks())
+            {
+                Task<TVertex, TEdge> task = taskManager.getTask();
+                if (task.isResultReady())
+                {
+                    bestCost = task.minCost;
+                    resultPath = task.path;
+                    var blabla = 1.0;
+                    blabla -= 1;
+                    return;
+                }
+                else
+                {
+                    if (task.minCost < Double.PositiveInfinity)
+                    {
+                        Task<TVertex, TEdge> task1;
+                        Task<TVertex, TEdge> task2;
+
+                        task.split(out task1, out task2);
+
+                        taskManager.addTask(task1);
+                        taskManager.addTask(task2);
+                    }
+                }
+            }
+
+            return;
+            
         }
 
     }
