@@ -20,7 +20,7 @@ namespace QuickGraph.Graphviz
         private StringWriter output;
         private GraphvizImageType imageType;
         private readonly Dictionary<TVertex, int> vertexIds = new Dictionary<TVertex, int>();
-
+        private int clusterCount;
         private GraphvizGraph graphFormat;
         private GraphvizVertex commonVertexFormat;
         private GraphvizEdge commonEdgeFormat;
@@ -38,6 +38,7 @@ namespace QuickGraph.Graphviz
             Contract.Requires(g != null);
             Contract.Requires(!String.IsNullOrEmpty(path));
 
+            this.clusterCount = 0;
             this.visitedGraph = g;
             this.imageType = imageType;
             this.graphFormat = new GraphvizGraph();
@@ -113,24 +114,34 @@ namespace QuickGraph.Graphviz
                 imageType = value;
             }
         }
-/*
-        /// <summary>
-        /// Event raised while drawing a cluster
-        /// </summary>
-        public event FormatClusterEventHandler<Vertex,Edge> FormatCluster;
-        private void OnFormatCluster(IVertexAndEdgeListGraph<Vertex,Edge> cluster)
+
+        internal int ClusterCount
+        {
+            get
+            {
+                return clusterCount;
+            }
+            set
+            {
+                clusterCount = value;
+            }
+        }
+
+
+       public event FormatClusterEventHandler<TVertex,TEdge> FormatCluster;
+        private void OnFormatCluster(IVertexAndEdgeListGraph<TVertex,TEdge> cluster)
         {
             if (FormatCluster != null)
             {
-                FormatClusterEventArgs<Vertex,Edge> args =
-                    new FormatClusterEventArgs<Vertex,Edge>(cluster, new GraphvizGraph());
+                FormatClusterEventArgs<TVertex,TEdge> args =
+                    new FormatClusterEventArgs<TVertex,TEdge>(cluster, new GraphvizGraph());
                 FormatCluster(this, args);
                 string s = args.GraphFormat.ToDot();
                 if (s.Length != 0)
                     Output.WriteLine(s);
             }
-        }
-*/
+      }
+
         public event FormatVertexEventHandler<TVertex> FormatVertex;
         private void OnFormatVertex(TVertex v)
         {
@@ -161,6 +172,7 @@ namespace QuickGraph.Graphviz
 
         public string Generate()
         {
+            ClusterCount = 0;
             this.vertexIds.Clear();
             this.output = new StringWriter();
             // build vertex id map
@@ -193,6 +205,9 @@ namespace QuickGraph.Graphviz
             foreach (var e in VisitedGraph.Edges)
                 edgeColors[e] = GraphColor.White;
 
+            if (VisitedGraph is IClusteredGraph)
+                WriteClusters(colors, edgeColors, VisitedGraph as IClusteredGraph);
+
             WriteVertices(colors, VisitedGraph.Vertices);
             WriteEdges(edgeColors, VisitedGraph.Edges);
 
@@ -207,6 +222,47 @@ namespace QuickGraph.Graphviz
 
             var output = this.Generate();
             return dot.Run(ImageType, Output.ToString(), outputFileName);
+        }
+        internal void WriteClusters (
+        IDictionary<TVertex, GraphColor> colors,
+        IDictionary<TEdge, GraphColor> edgeColors,
+        IClusteredGraph parent
+    ) 
+        {
+            ++ClusterCount;
+            foreach (IVertexAndEdgeListGraph<TVertex,TEdge> g in parent.Clusters)
+            {
+                Output.Write("subgraph cluster{0}", ClusterCount.ToString());
+                Output.WriteLine(" {");
+
+                OnFormatCluster(g);
+
+                if (g is IClusteredGraph)
+                    WriteClusters(colors, edgeColors, g as IClusteredGraph);
+
+                if (parent.Colapsed)
+                {
+                    // draw cluster
+                    // put vertices as black
+                    foreach (TVertex v in g.Vertices)
+                    {
+                        colors[v] = GraphColor.Black;
+
+                    }
+                    foreach (TEdge e in g.Edges)
+                        edgeColors[e] = GraphColor.Black;
+
+                    // add fake vertex
+
+                }
+                else
+                {
+                    WriteVertices(colors, g.Vertices);
+                    WriteEdges(edgeColors, g.Edges);
+                }
+
+                Output.WriteLine("}");
+            }
         }
 
         private void WriteVertices(
