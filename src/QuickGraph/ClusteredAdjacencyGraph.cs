@@ -16,10 +16,6 @@ namespace QuickGraph
     public class ClusteredAdjacencyGraph<TVertex, TEdge>
         : IVertexAndEdgeListGraph<TVertex, TEdge>
         , IEdgeListAndIncidenceGraph<TVertex, TEdge>
-        /*, IMutableEdgeListGraph<TVertex, TEdge>
-         , IMutableIncidenceGraph<TVertex, TEdge>
-         , IMutableVertexListGraph<TVertex, TEdge>
-         , IMutableVertexAndEdgeListGraph<TVertex, TEdge>*/
         , IClusteredGraph
         where TEdge : IEdge<TVertex>
     {
@@ -372,12 +368,6 @@ namespace QuickGraph
             return edgeToRemoveCount;
         }
 
-        /* public void TrimEdgeExcess()
-         {
-             wrapped.TrimEdgeExcess();
-             if (parent != null)
-                 parent.TrimEdgeExcess();
-         }*/
 
         public void Clear()
         {
