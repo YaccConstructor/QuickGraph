@@ -43,24 +43,24 @@ namespace QuickGraph.Algorithms.TSP
         {
             while(taskManager.hasTasks())
             {
+                if (State == ComputationState.Aborted)
+                {
+                    return;
+                }
                 Task<TVertex, TEdge> task = taskManager.getTask();
                 if (task.isResultReady())
                 {
                     bestCost = task.minCost;
                     resultPath = task.path;
-                    var blabla = 1.0;
-                    blabla -= 1;
                     return;
                 }
                 else
                 {
-                    if (task.minCost < Double.PositiveInfinity)
+                    if (task.canSplit())
                     {
                         Task<TVertex, TEdge> task1;
                         Task<TVertex, TEdge> task2;
-
                         task.split(out task1, out task2);
-
                         taskManager.addTask(task1);
                         taskManager.addTask(task2);
                     }

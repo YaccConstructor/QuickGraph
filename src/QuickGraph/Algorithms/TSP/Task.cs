@@ -28,7 +28,7 @@ namespace QuickGraph.Algorithms.TSP
             if (!check())
             {
                 removeCycles();
-                simplify();
+                reduce();
             }
         }
 
@@ -63,7 +63,7 @@ namespace QuickGraph.Algorithms.TSP
             edgesToRemove.ForEach(edge => graph.RemoveEdge(edge));
         }
 
-        public void simplify()
+        public void reduce()
         {
             double sum = 0;
 
@@ -144,7 +144,10 @@ namespace QuickGraph.Algorithms.TSP
             }
             return edgeForSplit;
         }
-
+        public bool canSplit()
+        {
+            return minCost < Double.PositiveInfinity;
+        }
         public void split(out Task<TVertex, TEdge> taskTake, out Task<TVertex, TEdge> taskDrop)
         {
             TEdge edgeForSplit = this.chooseEdgeForSplit();
