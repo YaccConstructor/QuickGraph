@@ -218,7 +218,6 @@
     <Compile Include="Algorithms\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\MinimumSpanningTree\KruskalMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\ShortestPath\Yen\YenShortestPathsAlgorithm.cs" />
-    <Compile Include="Algorithms\TSP\InternalGraphRepr.cs" />
     <Compile Include="Algorithms\TSP\Task.cs" />
     <Compile Include="Algorithms\TSP\TasksManager.cs" />
     <Compile Include="Algorithms\TSP\TSP.cs" />

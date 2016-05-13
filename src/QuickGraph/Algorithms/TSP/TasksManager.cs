@@ -10,30 +10,30 @@ namespace QuickGraph.Algorithms.TSP
     class TasksManager<TVertex, TEdge>
         where TEdge : EquatableEdge<TVertex>
     {
-        BinaryHeap<TaskPriority, Task<TVertex, TEdge>> tasksQueue;
+        private BinaryHeap<TaskPriority, Task<TVertex, TEdge>> _tasksQueue;
 
 
         public TasksManager()
         {
-            tasksQueue = new BinaryHeap<TaskPriority, Task<TVertex, TEdge>>();
+            _tasksQueue = new BinaryHeap<TaskPriority, Task<TVertex, TEdge>>();
         }
 
-        public void addTask(Task<TVertex, TEdge> task)
+        public void AddTask(Task<TVertex, TEdge> task)
         {
-            if (task.minCost < Double.PositiveInfinity)
+            if (task.MinCost < Double.PositiveInfinity)
             {
-                tasksQueue.Add(task.priority, task);
+                _tasksQueue.Add(task.Priority, task);
             }
         }
 
-        public Task<TVertex, TEdge> getTask()
+        public Task<TVertex, TEdge> GetTask()
         {
-            return tasksQueue.RemoveMinimum().Value;
+            return _tasksQueue.RemoveMinimum().Value;
         }
 
-        public bool hasTasks()
+        public bool HasTasks()
         {
-            return tasksQueue.Any();
+            return _tasksQueue.Any();
         }
     }
 

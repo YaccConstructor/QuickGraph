@@ -6,65 +6,158 @@ using QuickGraph.Serialization;
 using QuickGraph.Algorithms.TSP;
 using System.IO;
 using QuickGraph;
+using QuickGraph.Algorithms;
 
 namespace QuickGraph.Tests.Algorithms.TSP
 {
     [TestClass]
     public class TSPTest
     {
+
         [TestMethod]
-        public void Compute()
+        public void UndirectedFullGraph()
         {
-            var g = new BidirectionalGraph<String, EquatableEdge<String>>();
-            g.AddVertex("n1");
-            g.AddVertex("n2");
-            g.AddVertex("n3");
-            g.AddVertex("n4");
-            g.AddVertex("n5");
-            //g.AddVertex("n6");
+            TestCase testCase = new TestCase();
+            testCase.AddVertex("n1")
+                .AddVertex("n2")
+                .AddVertex("n3")
+                .AddVertex("n4")
+                .AddVertex("n5");
 
-            var weightsDict = new Dictionary<EquatableEdge<string>, double>();
+            testCase.AddUndirectedEdge("n1", "n2", 16)
+                .AddUndirectedEdge("n1", "n3", 9)
+                .AddUndirectedEdge("n1", "n4", 15)
+                .AddUndirectedEdge("n1", "n5", 3)
+                .AddUndirectedEdge("n2", "n3", 14)
+                .AddUndirectedEdge("n2", "n4", 4)
+                .AddUndirectedEdge("n2", "n5", 5)
+                .AddUndirectedEdge("n3", "n4", 4)
+                .AddUndirectedEdge("n3", "n5", 2)
+                .AddUndirectedEdge("n4", "n5", 1);
 
-            addEdge("n1", "n2", 16, g, weightsDict);
-            addEdge("n1", "n3", 9, g, weightsDict);
-            addEdge("n1", "n4", 15, g, weightsDict);
-            addEdge("n1", "n5", 3, g, weightsDict);
-            addEdge("n2", "n3", 14, g, weightsDict);
-            addEdge("n2", "n4", 4, g, weightsDict);
-            addEdge("n2", "n5", 5, g, weightsDict);
-            addEdge("n3", "n4", 4, g, weightsDict);
-            addEdge("n3", "n5", 2, g, weightsDict);
-            addEdge("n4", "n5", 1, g, weightsDict);
-            //addEdge("n1", "n2", 10, g, weightsDict);
-            //addEdge("n2", "n3", 8, g, weightsDict);
-            //addEdge("n3", "n4", 11, g, weightsDict);
-            //addEdge("n4", "n5", 6, g, weightsDict);
-            //addEdge("n5", "n6", 9, g, weightsDict);
-            //addEdge("n1", "n6", 3, g, weightsDict);
-            //addEdge("n2", "n6", 5, g, weightsDict);
-            //addEdge("n3", "n6", 18, g, weightsDict);
-            //addEdge("n3", "n5", 21, g, weightsDict);
-
-
-            var tcp = new TSP<String, EquatableEdge<String>, BidirectionalGraph<String, EquatableEdge<String>>>(g, weightsDict);
+            var tcp = new TSP<String, EquatableEdge<String>, BidirectionalGraph<String, EquatableEdge<String>>>(testCase.Graph, testCase.GetFuncWeights());
 
             tcp.Compute();
-
+            Assert.AreEqual(tcp.BestCost, 25);
+            Assert.IsFalse(tcp.ResultPath.IsDirectedAcyclicGraph());
         }
-
-        private EquatableEdge<String> createEdge(String n1, String n2)
+        [TestMethod]
+        public void UndirectedSparseGraph()
         {
-            return new EquatableEdge<string>(n1, n2);
-        }
+            TestCase testCase = new TestCase();
+            testCase.AddVertex("n1")
+                .AddVertex("n2")
+                .AddVertex("n3")
+                .AddVertex("n4")
+                .AddVertex("n5")
+                .AddVertex("n6");
 
-        private void addEdge(String n1, String n2, double w, BidirectionalGraph<String, EquatableEdge<String>> g, Dictionary<EquatableEdge<string>, double> d)
+            testCase.AddUndirectedEdge("n1", "n2", 10)
+                .AddUndirectedEdge("n2", "n3", 8)
+                .AddUndirectedEdge("n3", "n4", 11)
+                .AddUndirectedEdge("n4", "n5", 6)
+                .AddUndirectedEdge("n5", "n6", 9)
+                .AddUndirectedEdge("n1", "n6", 3)
+                .AddUndirectedEdge("n2", "n6", 5)
+                .AddUndirectedEdge("n3", "n6", 18)
+                .AddUndirectedEdge("n3", "n5", 21);
+
+            var tcp = new TSP<String, EquatableEdge<String>, BidirectionalGraph<String, EquatableEdge<String>>>(testCase.Graph, testCase.GetFuncWeights());
+            tcp.Compute();
+
+            Assert.AreEqual(tcp.BestCost, 47);
+            Assert.IsFalse(tcp.ResultPath.IsDirectedAcyclicGraph());
+        }
+        [TestMethod]
+        public void DirectedSparseGraphWithoutPath()
         {
-            g.AddEdge(createEdge(n1, n2));
-            g.AddEdge(createEdge(n2, n1));
-            d.Add(createEdge(n1, n2), w);
-            d.Add(createEdge(n2, n1), w);
+            TestCase testCase = new TestCase();
+            testCase.AddVertex("n1")
+                .AddVertex("n2")
+                .AddVertex("n3")
+                .AddVertex("n4")
+                .AddVertex("n5")
+                .AddVertex("n6");
+
+            testCase.AddDirectedEdge("n1", "n2", 10)
+                .AddDirectedEdge("n2", "n3", 8)
+                .AddDirectedEdge("n3", "n4", 11)
+                .AddDirectedEdge("n4", "n5", 6)
+                .AddDirectedEdge("n5", "n6", 9)
+                .AddDirectedEdge("n1", "n6", 3)
+                .AddDirectedEdge("n2", "n6", 5)
+                .AddDirectedEdge("n3", "n6", 18)
+                .AddDirectedEdge("n3", "n5", 21);
+
+            var tcp = new TSP<String, EquatableEdge<String>, BidirectionalGraph<String, EquatableEdge<String>>>(testCase.Graph, testCase.GetFuncWeights());
+            tcp.Compute();
+
+            Assert.AreEqual(tcp.BestCost, Double.PositiveInfinity);
+            Assert.IsTrue(tcp.ResultPath == null);
+        }
+        [TestMethod]
+        public void DirectedSparseGraph()
+        {
+            TestCase testCase = new TestCase();
+            testCase.AddVertex("n1")
+                .AddVertex("n2")
+                .AddVertex("n3")
+                .AddVertex("n4")
+                .AddVertex("n5")
+                .AddVertex("n6");
+
+            testCase.AddDirectedEdge("n1", "n2", 10)
+                .AddDirectedEdge("n2", "n3", 8)
+                .AddDirectedEdge("n3", "n4", 11)
+                .AddDirectedEdge("n4", "n5", 6)
+                .AddDirectedEdge("n5", "n6", 9)
+                .AddDirectedEdge("n1", "n6", 3)
+                .AddDirectedEdge("n2", "n6", 5)
+                .AddDirectedEdge("n3", "n6", 18)
+                .AddDirectedEdge("n3", "n5", 21)
+                .AddDirectedEdge("n6", "n1", 1);
+
+            var tcp = new TSP<String, EquatableEdge<String>, BidirectionalGraph<String, EquatableEdge<String>>>(testCase.Graph, testCase.GetFuncWeights());
+            tcp.Compute();
+
+            Assert.AreEqual(tcp.BestCost, 45);
+            Assert.IsFalse(tcp.ResultPath.IsDirectedAcyclicGraph());
+        }
+    }
+
+    public class TestCase
+    {
+        public BidirectionalGraph<String, EquatableEdge<String>> Graph = new BidirectionalGraph<String, EquatableEdge<String>>();
+        public Dictionary<EquatableEdge<String>, double> WeightsDict = new Dictionary<EquatableEdge<String>, double>();
+
+        public TestCase AddVertex(String vertex)
+        {
+            Graph.AddVertex(vertex);
+
+            return this;
         }
 
+        public TestCase AddUndirectedEdge(String source, String target, double weight)
+        {
+            AddDirectedEdge(source, target, weight);
+            AddDirectedEdge(target, source, weight);
+
+            return this;
+        }
+
+        public TestCase AddDirectedEdge(String source, String target, double weight)
+        {
+            var e = new EquatableEdge<String>(source, target);
+            Graph.AddEdge(e);
+            WeightsDict.Add(e, weight);
+
+            return this;
+        }
+
+        public Func<EquatableEdge<String>, double> GetFuncWeights()
+        {
+            return (edge => WeightsDict[edge]);
+        }
     }
 
 }

@@ -1,34 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using QuickGraph.Algorithms.Services;
+﻿using System.Collections.Generic;
 using QuickGraph.Algorithms.ShortestPath;
-using QuickGraph.Collections;
+using System;
 
 namespace QuickGraph.Algorithms.TSP
 {
-    public class TSP<TVertex, TEdge, TGraph> : ShortestPathAlgorithmBase<TVertex, TEdge
-        , TGraph>
-        , ITreeBuilderAlgorithm<TVertex, TEdge>
+    public class TSP<TVertex, TEdge, TGraph> : ShortestPathAlgorithmBase<TVertex, TEdge, TGraph>
+            , ITreeBuilderAlgorithm<TVertex, TEdge>
         where TGraph : BidirectionalGraph<TVertex, TEdge>
         where TEdge : EquatableEdge<TVertex>
     {
         private TasksManager<TVertex, TEdge> taskManager = new TasksManager<TVertex, TEdge>();
 
-        private BidirectionalGraph<TVertex, TEdge> resultPath;
-        private double bestCost;
+        public BidirectionalGraph<TVertex, TEdge> ResultPath;
+        public double BestCost = Double.PositiveInfinity;
 
-        public TSP(TGraph visitedGraph, Dictionary<EquatableEdge<TVertex>, double> weights)
-            :base(null, visitedGraph, edge => weights[edge], DistanceRelaxers.ShortestDistance)
+        public TSP(TGraph visitedGraph, Func<TEdge, double> weights)
+            : base(null, visitedGraph, weights, DistanceRelaxers.ShortestDistance)
         {
             BidirectionalGraph<TVertex, TEdge> path = new BidirectionalGraph<TVertex, TEdge>();
             path.AddVertexRange(visitedGraph.Vertices);
-            taskManager.addTask(new Task<TVertex, TEdge>(visitedGraph, weights, path, 0));
+            taskManager.AddTask(new Task<TVertex, TEdge>(visitedGraph, buildWeightsDict(visitedGraph, weights), path, 0));
         }
 
+        private Dictionary<EquatableEdge<TVertex>, double> buildWeightsDict(TGraph visitedGraph, Func<TEdge, double> weights)
+        {
+            var dict = new Dictionary<EquatableEdge<TVertex>, double>();
+            foreach (var edge in visitedGraph.Edges) {
+                dict[edge] = weights(edge);
+            }
+            return dict;
+        }
         protected override void Initialize()
         {
             base.Initialize();
@@ -41,33 +42,30 @@ namespace QuickGraph.Algorithms.TSP
 
         protected override void InternalCompute()
         {
-            while(taskManager.hasTasks())
+            while(taskManager.HasTasks())
             {
                 if (State == ComputationState.Aborted)
                 {
                     return;
                 }
-                Task<TVertex, TEdge> task = taskManager.getTask();
-                if (task.isResultReady())
+                Task<TVertex, TEdge> task = taskManager.GetTask();
+                if (task.IsResultReady())
                 {
-                    bestCost = task.minCost;
-                    resultPath = task.path;
+                    BestCost = task.MinCost;
+                    ResultPath = task.Path;
                     return;
                 }
                 else
                 {
-                    if (task.canSplit())
+                    Task<TVertex, TEdge> task1;
+                    Task<TVertex, TEdge> task2;
+                    if (task.Split(out task1, out task2))
                     {
-                        Task<TVertex, TEdge> task1;
-                        Task<TVertex, TEdge> task2;
-                        task.split(out task1, out task2);
-                        taskManager.addTask(task1);
-                        taskManager.addTask(task2);
+                        taskManager.AddTask(task1);
+                        taskManager.AddTask(task2);
                     }
                 }
             }
-
-            return;
             
         }
 
