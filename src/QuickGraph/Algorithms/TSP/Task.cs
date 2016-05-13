@@ -14,6 +14,8 @@ namespace QuickGraph.Algorithms.TSP
         public double minCost;
         public BidirectionalGraph<TVertex, TEdge> path;
 
+        public TaskPriority priority;
+
         public Task(BidirectionalGraph<TVertex, TEdge> graph, Dictionary<EquatableEdge<TVertex>, double> weights, BidirectionalGraph<TVertex, TEdge> path, double cost)
         {
             this.graph = new BidirectionalGraph<TVertex, TEdge>(graph);
@@ -21,6 +23,7 @@ namespace QuickGraph.Algorithms.TSP
             this.path = path;
             minCost = cost;
             init();
+            priority = new TaskPriority(minCost, path.EdgeCount);
         }
 
         private void init()
@@ -177,6 +180,30 @@ namespace QuickGraph.Algorithms.TSP
         public bool isResultReady()
         {
             return path.EdgeCount == graph.VertexCount;
+        }
+
+    }
+
+    public class TaskPriority : IComparable<TaskPriority>
+    {
+        double cost;
+        int pathSize;
+
+        public TaskPriority(double cost, int pathSize)
+        {
+            this.cost = cost;
+    
+        this.pathSize = pathSize;
+        }
+
+        public int CompareTo(TaskPriority other)
+        {
+            var costCompare = cost.CompareTo(other.cost);
+            if (costCompare == 0)
+            {
+                return -pathSize.CompareTo(other.pathSize);
+            }
+            return costCompare;
         }
     }
 }
