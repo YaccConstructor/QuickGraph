@@ -4368,7 +4368,6 @@
     <None Include="GraphML\g.99.2.graphml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GraphML\g.TSP.1.0.graphml" />
     <None Include="GraphML\Graph.log">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
