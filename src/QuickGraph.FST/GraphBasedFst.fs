@@ -231,6 +231,12 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
     static member optimalCompose(fst1:FST<_, _>, fst2:FST<_, _>, alphabet:HashSet<_>) =
         let inline pack v1 v2 = (int64(v1) <<< 32) ||| int64(v2)
         let inline unpack v = (int(v >>> 32), int(v &&& 0xffffffffL))
+        let inline isEqual s1 s2 =               
+            match s1,s2 with
+            | Eps, Eps -> true
+            | Smbl x, Smbl y -> x.Equals y
+            | x,y -> false
+
         let errors = new ResizeArray<_>()
         for edge in fst1.Edges do
             if not <| alphabet.Contains(snd edge.Tag)
@@ -278,7 +284,7 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
                 
                 for e1 in fst1OutEdges do
                     for e2 in fst2OutEdges do
-                        if snd e1.Tag = fst e2.Tag then
+                        if isEqual (snd e1.Tag) (fst e2.Tag) then
                             let q' = pack e1.Target e2.Target
                             if not (buffer.Contains(q')) then
                                 queue.Enqueue(q')
