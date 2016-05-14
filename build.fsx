@@ -67,7 +67,7 @@ let gitName = "QuickGraph"
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/YaccConstructor"
 let MSBuild12 = (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin")
 let MSBuild14 = (ProgramFilesX86 @@ @"\MSBuild\14.0\Bin")
-do setEnvironVar "MSBuild" (if (Directory.Exists(MSBuild14)) then MSBuild14 else MSBuild12)
+do setEnvironVar "MSBuild" (if (Directory.Exists(MSBuild12)) then MSBuild12 else MSBuild14)
 
 // --------------------------------------------------------------------------------------
 // END TODO: The rest of the file includes standard build steps
