@@ -93,6 +93,18 @@
       <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
       <Name>GraphTask.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GraphTask.KruskalVisualisation\KruskalVisualisation.csproj">
+      <Project>{9a9537d4-2eb6-4273-aea0-c86eb0028bb9}</Project>
+      <Name>KruskalVisualisation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphTask.PluginSample\PluginSample.csproj">
+      <Project>{d495c472-6cbb-4b04-a30e-215ee125c08c}</Project>
+      <Name>PluginSample</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphTask.PrimVisualisation\PrimVisualisation.csproj">
+      <Project>{c9fe495c-cb1e-4703-bf34-a93f5f400dcb}</Project>
+      <Name>PrimVisualisation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
       <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>
       <Name>GraphX.WPF.Controls</Name>
