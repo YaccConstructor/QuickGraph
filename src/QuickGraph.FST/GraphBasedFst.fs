@@ -152,7 +152,9 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
         resFST     
 
     ///for FSTs, which are not empty
-    static member Compos(fst1:FST<_,_>, fst2:FST<_,_>, alphabet:HashSet<_>) =
+    static member oldCompose(fst1:FST<_,_>, fst2:FST<_,_>, alphabet:HashSet<_>) =
+        let inline pack v1 v2 = (int64(v1) <<< 32) ||| int64(v2)
+        let inline unpack v = (int(v >>> 32), int(v &&& 0xffffffffL))
         let errors = new ResizeArray<_>()
         for edge in fst1.Edges do
             if not <| alphabet.Contains(snd edge.Tag)
@@ -163,10 +165,9 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
             let fstDict = new Dictionary<_,_>()
             let i = ref 0
             for v1 in fst1.Vertices do
-                fstDict.Add(v1,new Dictionary<_,_>())
                 for v2 in fst2.Vertices do
-                    fstDict.[v1].Add(v2, !i)
-                    i := !i + 1
+                    fstDict.Add(pack v1 v2, !i)
+                    incr i
              
             let resFST =  new FST<_,_>()
             let inline isEqual s1 s2 =               
@@ -179,56 +180,60 @@ type FST<'iType, 'oType>(initial, final, transitions) as this =
                 for edge2 in fst2.CachedEdges do
                     if isEqual (snd edge1.Tag) (fst edge2.Tag)
                     then
-                        new EdgeFST<_,_>(fstDict.[edge1.Source].[edge2.Source], fstDict.[edge1.Target].[edge2.Target], (fst edge1.Tag, snd edge2.Tag))
+                        new EdgeFST<_,_>(fstDict.[pack (edge1.Source) (edge2.Source)], fstDict.[pack (edge1.Target) (edge2.Target)], (fst edge1.Tag, snd edge2.Tag))
                         |> resFST.AddVerticesAndEdge  |> ignore 
 
             let isEpsilon x = match x with | Eps -> true | _ -> false
 
             for v1 in fst1.InitState do
                 for v2 in fst2.InitState do
-                    resFST.InitState.Add(fstDict.[v1].[v2])
-                    resFST.AddVertex(fstDict.[v1].[v2]) |> ignore
+                    resFST.InitState.Add(fstDict.[pack v1 v2])
+                    resFST.AddVertex(fstDict.[pack v1 v2]) |> ignore
                 
             for v1 in fst1.FinalState do
                 for v2 in fst2.FinalState do
-                    resFST.FinalState.Add(fstDict.[v1].[v2])
-                    resFST.AddVertex(fstDict.[v1].[v2]) |> ignore
+                    resFST.FinalState.Add(fstDict.[pack v1 v2])
+                    resFST.AddVertex(fstDict.[pack v1 v2]) |> ignore
             
             //resFST.PrintToDOT @"C:\yc\recursive-ascent\FST\FST\FST.Tests\DOTfst\fstt.dot"
 
-            if not(resFST.IsEmpty) then //result of composition is empty?
-                for v in resFST.InitState do
-                    new EdgeFST<_,_>(!i, v, (Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
+// This code removes unreachable vertices. It's turned off for the sake of fair performance comparison.
+//
+//            if not(resFST.IsEmpty) then //result of composition is empty?
+//                for v in resFST.InitState do
+//                    new EdgeFST<_,_>(!i, v, (Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
+//
+//                for v in resFST.FinalState do
+//                    new EdgeFST<_,_>(v, !i + 1, (Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
+//
+//                let reachableV1 = getReachableV resFST !i
+//
+//                let FSTtmp = new FST<_,_>()
+//                for edge in resFST.Edges do
+//                    new EdgeFST<_,_>(edge.Target, edge.Source, edge.Tag) |>  FSTtmp.AddVerticesAndEdge |> ignore
+//
+//                let reachableV2 = getReachableV FSTtmp (!i + 1)
+//
+//                let h = new HashSet<_>(reachableV1)
+//                h.IntersectWith reachableV2
+//                let result = new FST<_,_>(resFST.InitState, resFST.FinalState |> ResizeArray.filter (fun s -> h.Contains s), new ResizeArray<EdgeFST<_,_>>())
+//                for v in h do
+//                    for e in resFST.OutEdges v do
+//                         if h.Contains e.Target
+//                         then result.AddVerticesAndEdge e |> ignore
+//                result.RemoveVertex(!i) |> ignore
+//                result.RemoveVertex(!i + 1) |> ignore
+//                // result.PrintToDOT @"C:\yc\temp\fstt0.dot"
+//                Success result
+//            else
+//                let chFST1 = new ResizeArray<_>()
+//                for ch in fst1.Edges do
+//                    chFST1.Add (fst (ch.Tag))
+//                Error (chFST1.ToArray())
 
-                for v in resFST.FinalState do
-                    new EdgeFST<_,_>(v, !i + 1, (Eps, Eps)) |> resFST.AddVerticesAndEdge  |> ignore
-
-                let reachableV1 = getReachableV resFST !i
-
-                let FSTtmp = new FST<_,_>()
-                for edge in resFST.Edges do
-                    new EdgeFST<_,_>(edge.Target, edge.Source, edge.Tag) |>  FSTtmp.AddVerticesAndEdge |> ignore
-
-                let reachableV2 = getReachableV FSTtmp (!i + 1)
-
-                let h = new HashSet<_>(reachableV1)
-                h.IntersectWith reachableV2
-                let result = new FST<_,_>(resFST.InitState, resFST.FinalState |> ResizeArray.filter (fun s -> h.Contains s), new ResizeArray<EdgeFST<_,_>>())
-                for v in h do
-                    for e in resFST.OutEdges v do
-                         if h.Contains e.Target
-                         then result.AddVerticesAndEdge e |> ignore
-                result.RemoveVertex(!i) |> ignore
-                result.RemoveVertex(!i + 1) |> ignore
-                // result.PrintToDOT @"C:\yc\temp\fstt0.dot"
-                Success result
-            else
-                let chFST1 = new ResizeArray<_>()
-                for ch in fst1.Edges do
-                    chFST1.Add (fst (ch.Tag))
-                Error (chFST1.ToArray())
+            Success(resFST)
     
-    static member optimalCompose(fst1:FST<_, _>, fst2:FST<_, _>, alphabet:HashSet<_>) =
+    static member Compose(fst1:FST<_, _>, fst2:FST<_, _>, alphabet:HashSet<_>) =
         let inline pack v1 v2 = (int64(v1) <<< 32) ||| int64(v2)
         let inline unpack v = (int(v >>> 32), int(v &&& 0xffffffffL))
         let inline isEqual s1 s2 =               
