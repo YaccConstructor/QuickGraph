@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C9FE495C-CB1E-4703-BF34-A93F5F400DCB}</ProjectGuid>
+    <ProjectGuid>{C308BDBC-BA61-4743-A933-6240032106A6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PrimVisualisation</RootNamespace>
-    <AssemblyName>PrimVisualisation</AssemblyName>
+    <RootNamespace>HelperForKruskalAndPrimVisualisation</RootNamespace>
+    <AssemblyName>HelperForKruskalAndPrimVisualisation</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -48,8 +48,10 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Prim.cs" />
+    <Compile Include="HelperForKruskalAndPrimVisualisation.cs" />
+    <Compile Include="EdgeForVisualisation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UndirectedGraphFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotParser\DotParser.fsproj">
@@ -59,10 +61,6 @@
     <ProjectReference Include="..\GraphTask.Common\GraphTask.Common.fsproj">
       <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
       <Name>GraphTask.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphTask.HelperForKruskalAndPrimVisualisation\HelperForKruskalAndPrimVisualisation.csproj">
-      <Project>{c308bdbc-ba61-4743-a933-6240032106a6}</Project>
-      <Name>HelperForKruskalAndPrimVisualisation</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
       <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>

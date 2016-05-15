@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="..\..\packages\Microsoft.Net.Compilers\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\packages\Microsoft.Net.Compilers\build\Microsoft.Net.Compilers.props')" Label="Paket" />  
+  <Import Project="..\..\packages\Microsoft.Net.Compilers\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\packages\Microsoft.Net.Compilers\build\Microsoft.Net.Compilers.props')" Label="Paket" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -59,6 +59,10 @@
     <ProjectReference Include="..\GraphTask.Common\GraphTask.Common.fsproj">
       <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
       <Name>GraphTask.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphTask.HelperForKruskalAndPrimVisualisation\HelperForKruskalAndPrimVisualisation.csproj">
+      <Project>{c308bdbc-ba61-4743-a933-6240032106a6}</Project>
+      <Name>HelperForKruskalAndPrimVisualisation</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
       <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>
