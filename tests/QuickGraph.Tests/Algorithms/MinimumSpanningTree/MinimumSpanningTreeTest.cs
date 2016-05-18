@@ -26,6 +26,13 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                 Kruskal(g);
         }
 
+        [TestMethod]
+        public void MyPrimMinimumSpanningTreeAll()
+        {
+            foreach (var g in TestGraphFactory.GetUndirectedGraphs())
+                MyPrim(g);
+        }
+
         [PexMethod]
         public void Kruskal<TVertex,TEdge>([PexAssumeNotNull]IUndirectedGraph<TVertex, TEdge> g)
             where TEdge : IEdge<TVertex>
@@ -36,6 +43,18 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
 
             var kruskal = new KruskalMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => distances[e]);
             AssertMinimumSpanningTree<TVertex, TEdge>(g, kruskal);
+        }
+
+        [PexMethod]
+        public void MyPrim<TVertex, TEdge>([PexAssumeNotNull]IUndirectedGraph<TVertex, TEdge> g)
+            where TEdge : IEdge<TVertex>
+        {
+            var distances = new Dictionary<TEdge, double>();
+            foreach (var e in g.Edges)
+                distances[e] = g.AdjacentDegree(e.Source) + 1;
+
+            var prim = new PrimMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => distances[e]);
+            AssertMinimumSpanningTree<TVertex, TEdge>(g, prim);
         }
 
         [TestMethod]
