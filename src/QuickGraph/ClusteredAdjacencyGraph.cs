@@ -24,7 +24,6 @@ namespace QuickGraph
         private ArrayList clusters;
         private bool colapsed;
 
-        //OK
         public ClusteredAdjacencyGraph(AdjacencyGraph<TVertex, TEdge> wrapped)
         {
             if (wrapped == null)
@@ -79,39 +78,63 @@ namespace QuickGraph
 
         public bool IsDirected
         {
-            get { return wrapped.IsDirected; }
+            get 
+            { 
+                return wrapped.IsDirected;
+            }
         }
 
         public bool AllowParallelEdges
         {
             [Pure]
-            get { return wrapped.AllowParallelEdges; }
+            get 
+            {
+                return wrapped.AllowParallelEdges;
+            }
         }
 
         public int EdgeCapacity
         {
-            get { return wrapped.EdgeCapacity; }
-            set { wrapped.EdgeCapacity = value; }
+            get 
+            {
+                return wrapped.EdgeCapacity;
+            }
+            set 
+            {
+                wrapped.EdgeCapacity = value; 
+            }
         }
 
         public static Type EdgeType
         {
-            get { return typeof(TEdge); }
+            get 
+            {
+                return typeof(TEdge); 
+            }
         }
 
         public bool IsVerticesEmpty
         {
-            get { return wrapped.IsVerticesEmpty; }
+            get 
+            {
+                return wrapped.IsVerticesEmpty; 
+            }
         }
 
         public int VertexCount
         {
-            get { return wrapped.VertexCount; }
+            get 
+            { 
+                return wrapped.VertexCount; 
+            }
         }
 
         public virtual IEnumerable<TVertex> Vertices
         {
-            get { return wrapped.Vertices; }
+            get 
+            {
+                return wrapped.Vertices; 
+            }
         }
 
         [Pure]
@@ -149,7 +172,10 @@ namespace QuickGraph
         public bool IsEdgesEmpty
         {
             [Pure]
-            get { return wrapped.IsEdgesEmpty; }
+            get 
+            {
+                return wrapped.IsEdgesEmpty;
+            }
         }
 
 
@@ -285,10 +311,8 @@ namespace QuickGraph
             foreach (var v in wrapped.Vertices)
                 if (predicate(v))
                     vertices.Add(v);
-
             foreach (var v in vertices)
                 wrapped.RemoveVertex(v);
-
             return vertices.Count;
         }
 
@@ -313,10 +337,7 @@ namespace QuickGraph
         {
             wrapped.AddEdge(e);
             if (parent != null && !parent.ContainsEdge(e))
-            {
                 parent.AddEdge(e);
-            }
-
             return true;
         }
 
@@ -348,10 +369,8 @@ namespace QuickGraph
             foreach (var edge in wrapped.Edges)
                 if (predicate(edge))
                     edges.Add(edge);
-
             foreach (var edge in edges)
                 wrapped.RemoveEdge(edge);
-
             return edges.Count;
         }
 

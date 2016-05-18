@@ -14,13 +14,6 @@ namespace QuickGraph.Graphviz
         private IVertexAndEdgeListGraph<TVertex,TEdge> cluster;
         private GraphvizGraph graphFormat;
 
-        /// <summary>
-        /// Construct a clustered graph event argument
-        /// </summary>
-        /// <param name="cluster">cluster to send to event handlers</param>
-        /// <param name="graphFormat">cluster formatter</param>
-        /// <exception cref="ArgumentNullException">cluster is a null reference.
-        /// </exception>
         public FormatClusterEventArgs(IVertexAndEdgeListGraph<TVertex,TEdge> cluster, GraphvizGraph graphFormat)
         {
             if (cluster == null)
@@ -29,9 +22,6 @@ namespace QuickGraph.Graphviz
             this.graphFormat = graphFormat;
         }
 
-        /// <summary>
-        /// Cluster
-        /// </summary>
         public IVertexAndEdgeListGraph<TVertex,TEdge> Cluster
         {
             get
@@ -40,9 +30,6 @@ namespace QuickGraph.Graphviz
             }
         }
 
-        /// <summary>
-        /// Cluster format
-        /// </summary>
         public GraphvizGraph GraphFormat
         {
             get
@@ -51,7 +38,6 @@ namespace QuickGraph.Graphviz
             }
         }
     }
-
 
     public delegate void FormatClusterEventHandler<TVertex, TEdge>(
         Object sender,

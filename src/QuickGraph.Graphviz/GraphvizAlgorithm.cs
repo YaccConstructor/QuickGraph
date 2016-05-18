@@ -128,7 +128,7 @@ namespace QuickGraph.Graphviz
         }
 
 
-       public event FormatClusterEventHandler<TVertex,TEdge> FormatCluster;
+        public event FormatClusterEventHandler<TVertex,TEdge> FormatCluster;
         private void OnFormatCluster(IVertexAndEdgeListGraph<TVertex,TEdge> cluster)
         {
             if (FormatCluster != null)
@@ -234,33 +234,23 @@ namespace QuickGraph.Graphviz
             {
                 Output.Write("subgraph cluster{0}", ClusterCount.ToString());
                 Output.WriteLine(" {");
-
                 OnFormatCluster(g);
-
                 if (g is IClusteredGraph)
                     WriteClusters(colors, edgeColors, g as IClusteredGraph);
-
                 if (parent.Colapsed)
                 {
-                    // draw cluster
-                    // put vertices as black
                     foreach (TVertex v in g.Vertices)
                     {
                         colors[v] = GraphColor.Black;
-
                     }
                     foreach (TEdge e in g.Edges)
                         edgeColors[e] = GraphColor.Black;
-
-                    // add fake vertex
-
                 }
                 else
                 {
                     WriteVertices(colors, g.Vertices);
                     WriteEdges(edgeColors, g.Edges);
                 }
-
                 Output.WriteLine("}");
             }
         }
