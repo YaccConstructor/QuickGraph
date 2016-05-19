@@ -287,16 +287,26 @@ namespace QuickGraph
         {
             int count = 0;
             foreach (var v in vertices)
-                if (wrapped.AddVertex(v))
+                if (this.AddVertex(v))
                     count++;
             return count;
         }
 
-
+        private void RemoveChildVertex(TVertex v)
+        {
+            foreach (ClusteredAdjacencyGraph<TVertex, TEdge> el in Clusters)
+                if (el.ContainsVertex(v))
+                {
+                    el.Wrapped.RemoveVertex(v);
+                    el.RemoveChildVertex(v);
+                    break;
+                }
+        }
         public virtual bool RemoveVertex(TVertex v)
         {
             if (!wrapped.ContainsVertex(v))
                 return false;
+            RemoveChildVertex(v);
             wrapped.RemoveVertex(v);
             if (parent != null)
                 parent.RemoveVertex(v);
@@ -312,15 +322,15 @@ namespace QuickGraph
                 if (predicate(v))
                     vertices.Add(v);
             foreach (var v in vertices)
-                wrapped.RemoveVertex(v);
+                this.RemoveVertex(v);
             return vertices.Count;
         }
 
         public virtual bool AddVerticesAndEdge(TEdge e)
         {
-            wrapped.AddVertex(e.Source);
-            wrapped.AddVertex(e.Target);
-            return wrapped.AddEdge(e);
+            this.AddVertex(e.Source);
+            this.AddVertex(e.Target);
+            return this.AddEdge(e);
         }
 
 
@@ -328,7 +338,7 @@ namespace QuickGraph
         {
             int count = 0;
             foreach (var edge in edges)
-                if (wrapped.AddVerticesAndEdge(edge))
+                if (this.AddVerticesAndEdge(edge))
                     count++;
             return count;
         }
@@ -345,17 +355,27 @@ namespace QuickGraph
         {
             int count = 0;
             foreach (var edge in edges)
-                if (wrapped.AddEdge(edge))
+                if (this.AddEdge(edge))
                     count++;
             return count;
         }
 
-
+        private void RemoveChildEdge(TEdge e)
+        {
+            foreach (ClusteredAdjacencyGraph<TVertex, TEdge> el in Clusters)
+                if (el.ContainsEdge(e))
+                {
+                    el.Wrapped.RemoveEdge(e);
+                    el.RemoveChildEdge(e);
+                    break;
+                }
+        }
 
         public virtual bool RemoveEdge(TEdge e)
         {
             if (!wrapped.ContainsEdge(e))
                 return false;
+            RemoveChildEdge(e);
             wrapped.RemoveEdge(e);
             if (parent != null)
                 parent.RemoveEdge(e);
@@ -370,7 +390,7 @@ namespace QuickGraph
                 if (predicate(edge))
                     edges.Add(edge);
             foreach (var edge in edges)
-                wrapped.RemoveEdge(edge);
+                this.RemoveEdge(edge);
             return edges.Count;
         }
 
