@@ -328,6 +328,7 @@
     <Compile Include="ArrayAdjacencyGraphTVertexTEdgeTest.cs" />
     <Compile Include="Benchmark.cs" />
     <Compile Include="BidirectionalGraphTest.cs" />
+    <Compile Include="ClusteredGraphTest.cs" />
     <Compile Include="Collections\BinaryHeapTest.cs" />
     <Compile Include="Collections\BinaryHeapTPriorityTValueTest.Constructor.g.cs">
       <DependentUpon>BinaryHeapTest.cs</DependentUpon>

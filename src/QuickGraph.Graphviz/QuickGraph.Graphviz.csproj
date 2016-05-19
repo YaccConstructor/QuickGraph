@@ -205,6 +205,7 @@
     <Compile Include="Dot\GraphvizVertexStyle.cs" />
     <Compile Include="EdgeMergeCondensatedGraphRenderer.cs" />
     <Compile Include="FileDotEngine.cs" />
+    <Compile Include="FormatClusterEventArgs.cs" />
     <Compile Include="FormatEdgeEventArgs.cs" />
     <Compile Include="FormatVertexEventArgs.cs" />
     <Compile Include="GraphRendererBase.cs" />

@@ -298,6 +298,7 @@
     <Compile Include="Algorithms\ConnectedComponents\WeaklyConnectedComponentsAlgorithm.cs" />
     <Compile Include="ArrayAdjacencyGraph.cs" />
     <Compile Include="BidirectionAdapterGraph.cs" />
+    <Compile Include="ClusteredAdjacencyGraph.cs" />
     <Compile Include="Collections\BinaryHeap.cs" />
     <Compile Include="Collections\ForestDisjointSet.cs" />
     <Compile Include="Collections\EdgeEdgeDictionary.cs" />
@@ -322,6 +323,7 @@
     <Compile Include="ArrayUndirectedGraph.cs" />
     <Compile Include="ArrayBidirectionalGraph.cs" />
     <Compile Include="EquatableTermEdge.cs" />
+    <Compile Include="IClusteredGraph.cs" />
     <Compile Include="ITermBidirectionalGraph.cs" />
     <Compile Include="TermBidirectionalGraph.cs" />
     <Compile Include="TermEdge.cs" />
