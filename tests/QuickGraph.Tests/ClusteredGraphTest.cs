@@ -9,57 +9,70 @@ namespace QuickGraph.Tests
     [TestClass()]
     public class ClusteredGraphTest
     {
-        public bool ContainsVert(ClusteredAdjacencyGraph<int, IEdge<int>> clus,int v)
+        public bool ContainsVertexParent(ClusteredAdjacencyGraph<int, IEdge<int>> clus,int v)
         {
-            if (!clus.ContainsVertex(v))
-            {
-                return false;
-            }
-            else if (clus.Parent != null)
-            {
-                ContainsVert(clus.Parent,v);
-            }
-            return true;
+            return (clus.ContainsVertex(v) && clus.Parent!=null && ContainsVertexParent(clus.Parent,v) 
+                   || clus.Parent == null);
         }
 
-        public bool ContainsEd(ClusteredAdjacencyGraph<int, IEdge<int>> clus, IEdge<int> e)
+        public bool ContainsEdgeParent(ClusteredAdjacencyGraph<int, IEdge<int>> clus, IEdge<int> e)
         {
-            if (!clus.ContainsEdge(e))
-            {
-                return false;
-            }
-            else if (clus.Parent != null)
-            {
-                ContainsEd(clus.Parent, e);
-            }
-            return true;
+            return (clus.ContainsEdge(e) && clus.Parent != null && ContainsEdgeParent(clus.Parent, e) 
+                   || clus.Parent == null);
         }
 
         [TestMethod()]
-        public void ContainsClustVertexTest1()
+        public void AddingClustVertexTest1()
         {
-            var ag = new AdjacencyGraph<int, IEdge<int>>();
-            var cl = new ClusteredAdjacencyGraph<int, IEdge<int>>(ag);
-            var cluster1 = cl.AddCluster();
+            var graph = new AdjacencyGraph<int, IEdge<int>>();
+            var clusteredGraph = new ClusteredAdjacencyGraph<int, IEdge<int>>(graph);
+            var cluster1 = clusteredGraph.AddCluster();
             cluster1.AddVertex(5);
-            var a = ContainsVert(cl, 5);
+            var a = ContainsVertexParent(clusteredGraph, 5);
             Assert.IsTrue(a);
         }
 
         [TestMethod()]
-        public void ContainsClustEdgeTest1()
+        public void AddingClustEdgeTest1()
         {
-            var ag = new AdjacencyGraph<int, IEdge<int>>();
-            var cl = new ClusteredAdjacencyGraph<int, IEdge<int>>(ag);
-            var cluster1 = cl.AddCluster();
+            var graph = new AdjacencyGraph<int, IEdge<int>>();
+            var clusteredGraph = new ClusteredAdjacencyGraph<int, IEdge<int>>(graph);
+            var cluster1 = clusteredGraph.AddCluster();
             cluster1.AddVertex(5);
             cluster1.AddVertex(6);
-            var edge = new TaggedEdge<int, int>(5, 7, 1);
+            var edge = new TaggedEdge<int, int>(5, 6, 1);
             cluster1.AddEdge(edge);
-            var a = ContainsEd(cl, edge);
+            var a = ContainsEdgeParent(clusteredGraph, edge);
             Assert.IsTrue(a);
         }
 
+          [TestMethod()]
+          public void RemovingClustEdgeTest1()
+          {
+              var graph = new AdjacencyGraph<int, IEdge<int>>();
+              var clusteredGraph = new ClusteredAdjacencyGraph<int, IEdge<int>>(graph);
+              var cluster1 = clusteredGraph.AddCluster();
+              var cluster2 = cluster1.AddCluster();
+              var cluster3 = cluster2.AddCluster();
+            cluster3.AddVertex(5);
+            cluster3.AddVertex(6);
+            var edge = new TaggedEdge<int, int>(5, 6, 1);
+            cluster1.RemoveEdge(edge);
+            Assert.IsFalse(ContainsEdgeParent(cluster2, edge));
+          }
+          
+        [TestMethod()]
+        public void RemovingClustVertexTest1()
+        {
+            var graph = new AdjacencyGraph<int, IEdge<int>>();
+            var clusteredGraph = new ClusteredAdjacencyGraph<int, IEdge<int>>(graph);
+            var cluster1 = clusteredGraph.AddCluster();
+            var cluster2 = cluster1.AddCluster();
+            var cluster3 = cluster2.AddCluster();
+            cluster3.AddVertex(5);
+            cluster2.RemoveVertex(5);
+            Assert.IsFalse(ContainsVertexParent(cluster3, 5));
+        }
     }
 }
 
