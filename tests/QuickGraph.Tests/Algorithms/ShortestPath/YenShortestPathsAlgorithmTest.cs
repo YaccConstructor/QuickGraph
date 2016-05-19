@@ -18,10 +18,10 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
     {
       var graph = new AdjacencyGraph<char, TaggedEquatableEdge<char, double>>(true);
       var yen = new YenShortestPathsAlgorithm<char>(graph, '1', '5', 10);
-      var exeptionWas = true;
+      var exeptionWas = false;
       try
       {
-        var result = yen.Execute().ToList();
+          yen.Execute();
       }
       catch (Exception e)
       {
@@ -41,10 +41,10 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
       var graph = new AdjacencyGraph<char, TaggedEquatableEdge<char, double>>(true);
       graph.AddVertexRange("1");
       var yen = new YenShortestPathsAlgorithm<char>(graph, '1', '1', 10);
-      var exeptionWas = true;
+      var exeptionWas = false;
       try
       {
-        var result = yen.Execute().ToList();
+        yen.Execute();
       }
       catch (Exception e)
       {
@@ -65,10 +65,10 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
       graph.AddVertexRange("1");
       var yen = new YenShortestPathsAlgorithm<char>(graph, '1', '1', 10);
       graph.AddEdge(new TaggedEquatableEdge<char, double>('1', '1', 7));
-      var exeptionWas = true;
+      var exeptionWas = false;
       try
       {
-        var result = yen.Execute().ToList();
+          yen.Execute();
       }
       catch (Exception e)
       {
@@ -114,7 +114,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
 
     private AdjacencyGraph<char, TaggedEquatableEdge<char, double>> GenerateNormalInput()
     {
-      var graph = new AdjacencyGraph<char, TaggedEquatableEdge<char,double>>(true);
+      var graph = new AdjacencyGraph<char, TaggedEquatableEdge<char, double>>(true);
       graph.AddVertexRange("123456");
       graph.AddEdge(new TaggedEquatableEdge<char, double>('1', '2', 7)); // 0
       graph.AddEdge(new TaggedEquatableEdge<char, double>('1', '3', 9)); // 1

@@ -6,11 +6,18 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
 {
   public class YenShortestPathsAlgorithm<TVertex>
   {
-    private TVertex sourceVertix;
-    private TVertex targetVertix;
+    private readonly TVertex _sourceVertix;
+    private readonly TVertex _targetVertix;
     // limit for amount of paths
     private int k;
-    private AdjacencyGraph<TVertex, TaggedEquatableEdge<TVertex, double>> graph;
+    private AdjacencyGraph<TVertex, TaggedEquatableEdge<TVertex, double>> _graph;
+    private readonly List<TaggedEquatableEdge<TVertex, double>> _removedEdges = new List<TaggedEquatableEdge<TVertex, double>>();
+
+    /*
+     * for access from visualisation code
+     */
+    public IEnumerable<TaggedEquatableEdge<TVertex, double>> RemovedEdges
+      => _removedEdges;
 
     /*
       double type of tag comes from Dijkstra’s algorithm,
@@ -20,17 +27,17 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
     public YenShortestPathsAlgorithm(AdjacencyGraph<TVertex, TaggedEquatableEdge<TVertex, double>> graph, TVertex s,
       TVertex t, int k)
     {
-      sourceVertix = s;
-      targetVertix = t;
+      _sourceVertix = s;
+      _targetVertix = t;
       this.k = k;
-      this.graph = graph;
+      this._graph = graph;
     }
 
     public IEnumerable<IEnumerable<TaggedEquatableEdge<TVertex, double>>> Execute()
     {
       var listShortestWays = new List<IEnumerable<TaggedEquatableEdge<TVertex, double>>>();
       // find the first shortest way
-      var shortestWay = GetShortestPathInGraph(graph);
+      var shortestWay = GetShortestPathInGraph(_graph);
       listShortestWays.Add(shortestWay);
 
       /*
@@ -45,12 +52,13 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
       {
         var minDistance = double.MaxValue;
         IEnumerable<TaggedEquatableEdge<TVertex, double>> pathSlot = null;
-        // slote for graph state without some edge
+        // slot for graph state without some edge
         AdjacencyGraph<TVertex, TaggedEquatableEdge<TVertex, double>> graphSlot = null;
+        TaggedEquatableEdge<TVertex, double> removedEdge = null;
         foreach (var edge in shortestWay)
         {
           // get new state without the edge
-          var newGraph = RemoveEdge(graph, edge);
+          var newGraph = RemoveEdge(_graph, edge);
 
           //find shortest way in the new graph
           var newPath = GetShortestPathInGraph(newGraph);
@@ -66,14 +74,16 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
           minDistance = pathWeight;
           pathSlot = newPath;
           graphSlot = newGraph;
+          removedEdge = edge;
         }
         if (pathSlot == null)
         {
           break;
         }
         listShortestWays.Add(pathSlot);
+        _removedEdges.Add(removedEdge);
         shortestWay = pathSlot;
-        graph = graphSlot;
+        _graph = graphSlot;
       }
       return listShortestWays;
     }
@@ -95,12 +105,12 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
       var dij = new DijkstraShortestPathAlgorithm<TVertex, TaggedEquatableEdge<TVertex, double>>(graph, e => e.Tag);
       var vis = new VertexPredecessorRecorderObserver<TVertex, TaggedEquatableEdge<TVertex, double>>();
       using (vis.Attach(dij))
-        dij.Compute(sourceVertix);
+        dij.Compute(_sourceVertix);
 
       // get shortest path from start (source) vertex to target
       IEnumerable<TaggedEquatableEdge<TVertex, double>> path;
 
-      return vis.TryGetPath(targetVertix, out path) ? path : null;
+      return vis.TryGetPath(_targetVertix, out path) ? path : null;
     }
 
     private AdjacencyGraph<TVertex, TaggedEquatableEdge<TVertex, double>> RemoveEdge(
@@ -117,16 +127,6 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
         {
           copyGraph.RemoveEdge(edge);
           break;
-        }
-      }
-
-      // get all edges but the removing one
-      var oldEdges = new List<TaggedEquatableEdge<TVertex, double>>();
-      foreach (var edge in old.Edges)
-      {
-        if (edge != edgeRemoving)
-        {
-          oldEdges.Add(edge);
         }
       }
 
