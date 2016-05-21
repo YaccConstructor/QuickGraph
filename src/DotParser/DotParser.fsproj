@@ -65,18 +65,6 @@
     <Module>DotParserProject.DotParser</Module>
     <EpsilonPath>epsilons</EpsilonPath>
   </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
   <ItemGroup>
     <Compile Include="GraphData.fs" />
     <FsYard Include="DotGrammar.yrd" />
@@ -233,7 +221,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir)packages\FsLexYacc\build\fslex.exe --unicode $(SolutionDir)src\DotParser\DotLexer.fsl</PreBuildEvent>
+    <PreBuildEvent>$(ProjectDir)..\..\packages\FsLexYacc\build\fslex.exe --unicode $(ProjectDir)..\..\src\DotParser\DotLexer.fsl</PreBuildEvent>
   </PropertyGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
