@@ -44,6 +44,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
     <TargetFrameworkProfile />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -160,11 +161,14 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Pex.Framework, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Pex\Microsoft.Pex.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -290,11 +294,18 @@
       <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Algorithms\AlgorithmExtensionsTest.cs" />
+    <Compile Include="Algorithms\BipartiteDimensionAlgorithmTest.cs" />
+    <Compile Include="Algorithms\ChromaticPolinomialAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\WeaklyConnectedCondensationGraphTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\ConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\IncrementalConnectedComponentsAlgorithmTest.cs" />
+    <Compile Include="Algorithms\DomaticPartitionAlgorithmTest.cs" />
     <Compile Include="Algorithms\EulerianTrailAlgorithmTest.cs" />
+    <Compile Include="Algorithms\GraphPartition\KernighanLinAlgoritmTest.cs" />
+    <Compile Include="Algorithms\InducedPathsTest.cs" />
+    <Compile Include="Algorithms\IsEulerianGraphAlgorithmTest.cs" />
+    <Compile Include="Algorithms\IsHamiltonianGraphAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumBipartiteMatchingAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\EdmondsKarpMaximumFlowAlgorithmTest.cs" />
@@ -323,9 +334,11 @@
     <Compile Include="Algorithms\StronglyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\TarjanOfflineLeastCommonAncestorAlgorithmTest.cs" />
     <Compile Include="Algorithms\TopologicalSortAlgorithmTest.cs" />
+    <Compile Include="Algorithms\TSP\TSPTest.cs" />
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\ConnectedComponents\WeaklyConnectedComponentsAlgorithmTest.cs" />
+    <Compile Include="Algorithms\VertexColoring\VertexColoringAlgorithmTest.cs" />
     <Compile Include="ArrayAdjacencyGraphTVertexTEdgeTest.cs" />
     <Compile Include="Benchmark.cs" />
     <Compile Include="BidirectionalGraphTest.cs" />
@@ -494,6 +507,10 @@
     <ProjectReference Include="..\..\src\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
       <Project>{595d6322-637a-4a36-97f1-d53f3f9ecea7}</Project>
       <Name>QuickGraph.Graphviz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\QuickGraphFS\QuickGraphFS.fsproj">
+      <Project>{1ccafd2c-4a61-4f7f-986c-a2f575086344}</Project>
+      <Name>QuickGraphFS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\QuickGraph\QuickGraph.csproj">
       <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>

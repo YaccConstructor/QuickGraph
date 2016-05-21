@@ -8,7 +8,7 @@ open QuickGraph.FST.Tests.GraphBasedFstTestData
 open System.Collections.Generic
 open QuickGraph.FSA.GraphBasedFsa
 
-let basePath = "../../../QuickGraph.FST.Tests/DOTfst/"
+let basePath = "tests/QuickGraph.FST.Tests/DOTfst/"
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 let getAlphabet (fst:FST<_,_>) = 

@@ -16,6 +16,9 @@ namespace QuickGraph
     [DebuggerDisplay("VertexCount = {VertexCount}, EdgeCount = {EdgeCount}")]
     public class UndirectedGraph<TVertex, TEdge> 
         : IMutableUndirectedGraph<TVertex,TEdge>
+#if !SILVERLIGHT
+        , ICloneable
+#endif
         where TEdge : IEdge<TVertex>
     {
         private readonly bool allowParallelEdges = true;
@@ -60,7 +63,33 @@ namespace QuickGraph
                 this.edgeCapacity = value;
             }
         }
-    
+
+        public IEnumerable<TVertex> AdjacentVertices(TVertex v)
+        {
+            var adjacentEdges = AdjacentEdges(v);
+            var adjacentVertices = new HashSet<TVertex>();
+            foreach (TEdge edge in adjacentEdges)
+            {
+                adjacentVertices.Add(edge.Source);
+                adjacentVertices.Add(edge.Target);
+            }
+
+            adjacentVertices.Remove(v);
+
+            return adjacentVertices;
+        }
+
+        public static UndirectedGraph<TVertex, TEdge> LoadDot(string dotSource,
+            Func<string, IDictionary<string, string>, TVertex> vertexFunc,
+            Func<TVertex, TVertex, IDictionary<string, string>, TEdge> edgeFunc)
+        {
+            Func<bool, IMutableVertexAndEdgeSet<TVertex, TEdge>> createGraph = (allowParallelEdges) =>
+                new UndirectedGraph<TVertex, TEdge>(allowParallelEdges);
+
+            return (UndirectedGraph<TVertex, TEdge>)
+                DotParserAdapter.LoadDot(dotSource, createGraph, vertexFunc, edgeFunc);
+        }
+
         #region IGraph<Vertex,Edge> Members
         public bool  IsDirected
         {
@@ -440,6 +469,46 @@ namespace QuickGraph
         {
             return this.adjacentEdges[v].Count == 0;
         }
+        #endregion
+
+        #region ICloneable Members
+        private UndirectedGraph(
+            VertexEdgeDictionary<TVertex, TEdge> adjacentEdges,
+            EdgeEqualityComparer<TVertex, TEdge> edgeEqualityComparer,
+            int edgeCount,
+            int edgeCapacity,
+            bool allowParallelEdges
+            )
+        {
+            Contract.Requires(adjacentEdges != null);
+            Contract.Requires(edgeEqualityComparer != null);
+            Contract.Requires(edgeCount >= 0);
+
+            this.adjacentEdges = adjacentEdges;
+            this.edgeEqualityComparer = edgeEqualityComparer;
+            this.edgeCount = edgeCount;
+            this.edgeCapacity = edgeCapacity;
+            this.allowParallelEdges = allowParallelEdges;
+        }
+
+        [Pure]
+        public UndirectedGraph<TVertex, TEdge> Clone()
+        {
+            return new UndirectedGraph<TVertex, TEdge>(
+                this.adjacentEdges.Clone(),
+                this.edgeEqualityComparer,
+                this.edgeCount,
+                this.edgeCapacity,
+                this.allowParallelEdges
+                );
+        }
+
+#if !SILVERLIGHT
+        object ICloneable.Clone()
+        {
+            return this.Clone();
+        }
+#endif
         #endregion
     }
 }

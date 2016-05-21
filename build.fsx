@@ -8,6 +8,7 @@ open Fake.Git
 open Fake.MSTest
 open Fake.AssemblyInfoFile
 open Fake.ReleaseNotesHelper
+open Fake.Testing.NUnit3
 open System
 open System.IO
 open System.Configuration
@@ -49,7 +50,7 @@ let tags = "garph .NET datastructures algorithms C#"
 let solutionFile  = "QuickGraph.sln"
 
 // Pattern specifying assemblies to be tested using NUnit
-let testAssemblies = "tests/**/bin/Release/*Tests*.dll"
+let testAssemblies = "tests/**/bin/Release/*QuickGraph*Tests*.dll"
 
 let nUtestAssemblies = "tests/**/bin/Release/*FS*Test*.dll"
 
@@ -64,8 +65,9 @@ let gitName = "QuickGraph"
 
 // The url for the raw files hosted
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/YaccConstructor"
-
-do setEnvironVar "MSBuild" (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin")
+let MSBuild12 = (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin")
+let MSBuild14 = (ProgramFilesX86 @@ @"\MSBuild\14.0\Bin")
+do setEnvironVar "MSBuild" (if (Directory.Exists(MSBuild12)) then MSBuild12 else MSBuild14)
 
 // --------------------------------------------------------------------------------------
 // END TODO: The rest of the file includes standard build steps
@@ -114,6 +116,7 @@ Target "AssemblyInfo" (fun _ ->
 // src folder to support multiple project outputs
 Target "CopyBinaries" (fun _ ->
     !! "src/**/*.??proj"
+    |> Seq.filter (fun p -> not(p.Contains "METRO." || p.Contains "GraphX\\Examples"||p.Contains "MainForm"||p.Contains "Plugin"))
     |>  Seq.map (fun f -> ((System.IO.Path.GetDirectoryName f) @@ "bin/Release", "bin" @@ (System.IO.Path.GetFileNameWithoutExtension f)))
     |>  Seq.iter (fun (fromDir, toDir) -> CopyDir toDir fromDir (fun _ -> true))
 )
@@ -152,11 +155,16 @@ Target "RunMSTests" (fun _ ->
 
 Target "RunNUnitTests" (fun _ ->
     !! nUtestAssemblies
-    |> NUnit (fun p ->
+    |> NUnit3 (fun p ->
         { p with
-            DisableShadowCopy = true
             TimeOut = TimeSpan.FromMinutes 20.
-            OutputFile = "TestResults.xml" })
+            DisposeRunners = true
+            ProcessModel = SeparateProcessModel })
+)
+
+Target "RunDotParserTests" (fun _ ->
+    !! "tests/DotParser.Tests/bin/Release/DotParser.Tests.dll"
+    |> NUnit3 (fun p -> NUnit3Defaults)
 )
 
 
@@ -340,9 +348,10 @@ Target "All" DoNothing
 "Clean"
   ==> "AssemblyInfo"
   ==> "Build"
-  ==> "CopyBinaries"
+  //==> "CopyBinaries"
   ==> "RunMSTests"
   ==> "RunNUnitTests"
+  ==> "RunDotParserTests"
   //==> "GenerateReferenceDocs"
   //==> "GenerateDocs"
   ==> "All"

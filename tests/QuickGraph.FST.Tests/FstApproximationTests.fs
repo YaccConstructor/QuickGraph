@@ -5,7 +5,7 @@ open NUnit.Framework
 open YC.FST.Tests.FstApproximationTestData
 open Microsoft.FSharp.Collections
  
-let basePath = "../../../FST/FST/FST.Tests/DOTfst/"
+let basePath = "tests/QuickGraph.FST.Tests/DOTfst/"
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 let printSmbInt (x:char*Position<_>) = 

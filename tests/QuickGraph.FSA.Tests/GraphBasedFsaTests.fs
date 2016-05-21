@@ -6,7 +6,7 @@ open System.Collections.Generic
 open QuickGraph.FSA.GraphBasedFsa
 open QuickGraph.FSA.Tests.GraphBasedFsaTestData
 
-let basePath = "../../../QuickGraph.FSA.Tests/DOTfsa/"
+let basePath = "tests/QuickGraph.FSA.Tests/DOTfsa/"
 let fullPath f = System.IO.Path.Combine(basePath, f)
 
 let checkGraph (fsa:FSA<_>) initV finalV countE countV filePath =

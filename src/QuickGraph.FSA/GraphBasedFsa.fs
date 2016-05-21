@@ -568,7 +568,7 @@ type FSA<'a when 'a : equality>(initial, final, transitions) as this =
 
 
     static let toLeftmostMatchFsa (toLeftmostFsa: _ FSA) smb1 smb2 getChar newSmb charwiseEqual equalSmbl =
-        toLeftmostFsa.PrintToDOT "../../../QuickGraph.FSA.Tests/DOTfsa/fsa_before.dot"
+        toLeftmostFsa.PrintToDOT "tests/QuickGraph.FSA.Tests/DOTfsa/fsa_before.dot"
         removeRedundantPathsThrough toLeftmostFsa (newSmb smb1) smb1 smb2 getChar newSmb charwiseEqual equalSmbl
         
 

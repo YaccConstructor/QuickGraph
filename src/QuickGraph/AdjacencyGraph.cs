@@ -504,6 +504,17 @@ namespace QuickGraph
             this.edgeCount = 0;
         }
 
+        public static AdjacencyGraph<TVertex, TEdge> LoadDot(string dotSource,
+            Func<string, IDictionary<string, string>, TVertex> vertexFunc,
+            Func<TVertex, TVertex, IDictionary<string, string>, TEdge> edgeFunc)
+        {
+            Func<bool, IMutableVertexAndEdgeSet<TVertex, TEdge>> createGraph = (allowParallelEdges) =>
+                new AdjacencyGraph<TVertex, TEdge>(allowParallelEdges);
+
+            return (AdjacencyGraph<TVertex, TEdge>)
+            DotParserAdapter.LoadDot(dotSource, createGraph, vertexFunc, edgeFunc);
+        }
+
         #region ICloneable Members
         private AdjacencyGraph(
             IVertexEdgeDictionary<TVertex, TEdge> vertexEdges,

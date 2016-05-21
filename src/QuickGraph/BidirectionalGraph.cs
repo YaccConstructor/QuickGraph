@@ -596,30 +596,16 @@ namespace QuickGraph
             foreach (var v in mergeVertices)
                 MergeVertex(v, edgeFactory);
         }
-        
-        public static BidirectionalGraph<TVertex,TEdge> LoadDot(String s, Func<string, Tuple<string, string>[], TVertex> fVertex, Func<string, string, Tuple<string, string>[], TEdge> fEdge)
-        {
-            var graph = DotLangParser.parse(s);
-            var VertWithAttrs = graph.GetNodes();
-            var EdgesWithAttrs = graph.GetEdges();
-            var BidGraph = new BidirectionalGraph<TVertex, TEdge>();
-            foreach (var i in EdgesWithAttrs)
-            {
-                var NewEdge = fEdge(i.Item1, i.Item2, i.Item3);
-                BidGraph.AddVerticesAndEdge(NewEdge); 
-            }
-            foreach (var i in VertWithAttrs)
-            {
-                var NewVertex = fVertex(i.Item1, i.Item2);
-                BidGraph.AddVertex(NewVertex);
-            }
-            return BidGraph;
-        }
 
-        public static BidirectionalGraph<TVertex, TEdge> LoadDotFromFile(String path, Func<string, Tuple<string, string>[], TVertex> fVertex, Func<string, string, Tuple<string, string>[], TEdge> fEdge)
+        public static BidirectionalGraph<TVertex, TEdge> LoadDot(string dotSource,
+            Func<string, IDictionary<string, string>, TVertex> vertexFunc,
+            Func<TVertex, TVertex, IDictionary<string, string>, TEdge> edgeFunc)
         {
-            var str = System.String.Concat(System.IO.File.ReadLines(path));
-            return LoadDot(str, fVertex, fEdge);
+            Func<bool, IMutableVertexAndEdgeSet<TVertex, TEdge>> createGraph = (allowParallelEdges) =>
+                new BidirectionalGraph<TVertex, TEdge>(allowParallelEdges);
+
+            return (BidirectionalGraph<TVertex, TEdge>)
+                DotParserAdapter.LoadDot(dotSource, createGraph, vertexFunc, edgeFunc);
         }
 
         #region ICloneable Members
