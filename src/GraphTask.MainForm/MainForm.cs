@@ -115,7 +115,7 @@ namespace MainForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{_currentAlgorithm.Name}:\n{ex.Source}: {ex.Message}");
+                MessageBox.Show($"{_currentAlgorithm.Name}:\n{ex.Source}: {ex.Message}\n{ex.StackTrace}");
             }
         }
 
