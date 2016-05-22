@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{FAAD5B1C-1217-48D6-B1EF-7CAC0440D6A4}"
 	ProjectSection(SolutionItems) = preProject
@@ -100,6 +100,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperForKruskalAndPrimVisualisation", "src\GraphTask.HelperForKruskalAndPrimVisualisation\HelperForKruskalAndPrimVisualisation.csproj", "{C308BDBC-BA61-4743-A933-6240032106A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsHamiltonianVisualisation", "src\IsHamiltonianVisualisation\IsHamiltonianVisualisation.csproj", "{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YenVisualisation", "src\YenVisualisation\YenVisualisation.csproj", "{D562B4DB-F701-4885-82D7-6379B8E6B6C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -655,6 +657,26 @@ Global
 		{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
 		{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}.ReleaseContractsReferences|x86.ActiveCfg = Release|Any CPU
 		{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}.ReleaseContractsReferences|x86.Build.0 = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Debug|x86.Build.0 = Debug|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.DebugContracts|Any CPU.ActiveCfg = Debug|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.DebugContracts|Any CPU.Build.0 = Debug|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.DebugContracts|x86.ActiveCfg = Debug|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.DebugContracts|x86.Build.0 = Debug|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Release|x86.ActiveCfg = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Release|x86.Build.0 = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Release20|Any CPU.ActiveCfg = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Release20|Any CPU.Build.0 = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Release20|x86.ActiveCfg = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.Release20|x86.Build.0 = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.ReleaseContractsReferences|Any CPU.ActiveCfg = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.ReleaseContractsReferences|x86.ActiveCfg = Release|Any CPU
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0}.ReleaseContractsReferences|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -689,6 +711,7 @@ Global
 		{0D8F3492-7672-40C6-B976-3E40576CD057} = {A60EEA3D-8F36-4B81-8242-CA6B30087AE6}
 		{C308BDBC-BA61-4743-A933-6240032106A6} = {0D8F3492-7672-40C6-B976-3E40576CD057}
 		{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC} = {CBD0EAE9-B336-4359-AC80-E2E0A47FB991}
+		{D562B4DB-F701-4885-82D7-6379B8E6B6C0} = {CBD0EAE9-B336-4359-AC80-E2E0A47FB991}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = QuickGraph1.vsmdi
