@@ -16,8 +16,12 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
         /*
          * for access from visualisation code
          */
-        public IEnumerable<TaggedEquatableEdge<TVertex, double>> RemovedEdges
-          => _removedEdges;
+
+        public List<TaggedEquatableEdge<TVertex, double>> RemovedEdges()
+        {
+            return _removedEdges;
+        }
+
 
         /*
           double type of tag comes from Dijkstra’s algorithm,

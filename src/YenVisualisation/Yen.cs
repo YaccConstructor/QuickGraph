@@ -60,7 +60,7 @@ namespace YenVisualisation
             var yenGraph = ToYenInput(graph);
             var yen = new YenShortestPathsAlgorithm<char>(yenGraph, _startVertex.Text.First(), _finishVertex.Text.First(), int.Parse(_k.Text));
             _paths = yen.Execute().ToList();
-            _removedEdges = yen.RemovedEdges.ToList();
+            _removedEdges = yen.RemovedEdges();
         }
 
         private void EnlightBeginEndVertix()
