@@ -94,9 +94,9 @@ module ChromaticPolynomial =
                 upcast node
         buildTreeNode graph None []
 
-    let findChromaticPolynomial (graph : UndirectedGraph<_,_>) (createEdge : Func<_,_,_>) =
+    (*let findChromaticPolynomial (graph : UndirectedGraph<_,_>) (createEdge : Func<_,_,_>) =
         let tree = buildTree graph createEdge
-        List.toArray (tree.CromaticPolinomial)
+        List.toArray (tree.CromaticPolinomial)*)
 
     let next (node : Node<_,_>) =
         node.IsVisited <- true
@@ -127,3 +127,16 @@ module ChromaticPolynomial =
         match node.Parent with
         | None -> (node :? Node<_,_>) && (node :?> Node<_,_>).RightChild.IsVisited
         | Some _ -> false
+
+    let rec private findChromaticPolynomialAsList (graph : UndirectedGraph<_,_>) (createEdge : Func<_,_,_>) = 
+        if graph.EdgeCount = graph.VertexCount * (graph.VertexCount - 1) / 2 then countChrPolCompleteGraph graph.VertexCount
+        else 
+            let fst, snd = findFirstMissingEdge graph
+            let graph1 = graph.Clone()
+            let graph2 = graph.Clone()
+            graph1.AddEdge(new UndirectedEdge<_>(fst, snd)) |> ignore
+            joinVertices graph2 fst snd createEdge
+            sum (findChromaticPolynomialAsList graph1 createEdge) (findChromaticPolynomialAsList graph2 createEdge)
+
+    let rec findChromaticPolynomial (graph : UndirectedGraph<_,_>) (createEdge : Func<_,_,_>) =
+        List.toArray (findChromaticPolynomialAsList graph createEdge) 
