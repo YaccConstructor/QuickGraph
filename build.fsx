@@ -348,7 +348,7 @@ Target "All" DoNothing
 "Clean"
   ==> "AssemblyInfo"
   ==> "Build"
-  ==> "CopyBinaries"
+  //==> "CopyBinaries"
   ==> "RunMSTests"
   ==> "RunNUnitTests"
   ==> "RunDotParserTests"

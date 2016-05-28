@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C308BDBC-BA61-4743-A933-6240032106A6}</ProjectGuid>
+    <ProjectGuid>{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HelperForKruskalAndPrimVisualisation</RootNamespace>
-    <AssemblyName>HelperForKruskalAndPrimVisualisation</AssemblyName>
+    <RootNamespace>IsHamiltonianVisualisation</RootNamespace>
+    <AssemblyName>IsHamiltonianVisualisation</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.GLEE.Drawing">
+      <HintPath>..\external\Glee\Microsoft.GLEE.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -48,20 +52,10 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HelperForKruskalAndPrimVisualisation.cs" />
-    <Compile Include="EdgeForVisualisation.cs" />
+    <Compile Include="IsHamiltonian.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UndirectedGraphFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotParser\DotParser.fsproj">
-      <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
-      <Name>DotParser</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphTask.Common\GraphTask.Common.fsproj">
-      <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
-      <Name>GraphTask.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
       <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>
       <Name>GraphX.WPF.Controls</Name>
@@ -86,8 +80,16 @@
       <Project>{646cfbb0-b998-45e7-8809-991a5538ff36}</Project>
       <Name>QuickGraph.GraphXAdapter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotParser\DotParser.fsproj">
+      <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
+      <Name>DotParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphTask.Common\GraphTask.Common.fsproj">
+      <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
+      <Name>GraphTask.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
-      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
+      <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
       <Name>QuickGraph</Name>
     </ProjectReference>
   </ItemGroup>
@@ -99,6 +101,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="..\..\.paket\paket.targets" />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
       <ItemGroup>

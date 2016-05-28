@@ -456,7 +456,12 @@ namespace QuickGraph
                     edges.Add(edge);
 
             foreach (var edge in edges)
-                this.RemoveEdge(edge);
+            {
+                this.OnEdgeRemoved(edge);
+                this.vertexEdges[edge.Source].Remove(edge);
+            }
+
+            this.edgeCount -= edges.Count;
 
             return edges.Count;
         }
