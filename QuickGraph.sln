@@ -107,13 +107,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChromaticPolinomialVisualis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsHamiltonianVisualisation", "src\IsHamiltonianVisualisation\IsHamiltonianVisualisation.csproj", "{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}"
 EndProject
-<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsEulerianVisualisation", "src\IsEulerianVisualisation\IsEulerianVisualisation.csproj", "{BE9B5380-AF8D-4196-B414-4C82C8ED4F35}"
-=======
+EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "GraphTask.Performance", "src\GraphTask.Performance\GraphTask.Performance.fsproj", "{14F6CDFE-CB54-46B6-81F1-730506BC0383}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "RandomGraphGenerator", "src\GraphTask.RandomGraphGenerator\RandomGraphGenerator.fsproj", "{8D33982D-685B-4BFD-86CB-AC70CCD39FB8}"
->>>>>>> upstream/GraphTasks
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
