@@ -80,14 +80,7 @@ namespace QuickGraph.Algorithms
                     return true;
                 case ComponentWithEdges.OneComponentWithManyVertices:
                     {
-                        foreach (var vertex in graph.Vertices)
-                        {
-                            if (!satisfiesEulerianCondition(vertex))
-                            {
-                                return false;
-                            }
-                        }
-                        return true;
+                        return graph.Vertices.All<TVertex>(satisfiesEulerianCondition);
                     }
                 case ComponentWithEdges.NoComponent:
                 case ComponentWithEdges.ManyComponents:
