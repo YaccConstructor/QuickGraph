@@ -3,15 +3,16 @@
 open QuickGraph
 open System.Collections.Generic
 open System.Linq
+open System
 
 module ChromaticPolynomial =
-    let private joinVertices (graph : UndirectedGraph<_,_>) fstVertex sndVertex =
+    let private joinVertices (graph : UndirectedGraph<_,_>) fstVertex sndVertex (createEdge : Func<_,_,_>) =
         let tempAdjVertices1 = graph.AdjacentVertices fstVertex
         let adjVertices2 = graph.AdjacentVertices sndVertex
         let adjVertices1 = tempAdjVertices1.Concat [fstVertex]
         let verticesToAdd = adjVertices1.Except adjVertices2
         for vertex in verticesToAdd do
-            graph.AddEdge (new UndirectedEdge<_>(sndVertex, vertex)) |> ignore
+            graph.AddEdge (createEdge.Invoke(sndVertex, vertex)) |> ignore
         graph.RemoveVertex fstVertex |> ignore
 
 
@@ -40,20 +41,28 @@ module ChromaticPolynomial =
         let target = Seq.find (fun vertex -> not (adjVertices.Contains vertex)) vertices
         (src, target)
 
-    type BaseNode(graph : UndirectedGraph<_,_>, parent) =
+    type BaseNode<'TVertex, 'TEdge when 'TEdge :> IEdge<'TVertex>>(graph : UndirectedGraph<'TVertex, 'TEdge>, parent, verticesToPaintIfChild) =
+        let mutable isVisited = false
         member this.Graph : UndirectedGraph<_,_> = graph
-        member this.Parent : BaseNode option = parent
-        abstract member CromaticPolinomial : int list
-        default this.CromaticPolinomial = []
+        member this.Parent : BaseNode<'TVertex, 'TEdge> option = parent
+        member this.IsVisited
+            with public get() = isVisited
+            and public set value = isVisited <- value
+        abstract member ChromaticPolinomial : int list
+        default this.ChromaticPolinomial = []
+        member this.VerticesToPaintIfChild : 'TVertex list = verticesToPaintIfChild
 
-    type Leaf(graph, parent)  =
-        inherit BaseNode(graph, parent)
-        override this.CromaticPolinomial = countChrPolCompleteGraph graph.VertexCount
+    type Leaf<'TVertex, 'TEdge when 'TEdge :> IEdge<'TVertex>>(graph, parent, verticesToPaintIfChild) as this =
+        inherit BaseNode<'TVertex, 'TEdge>(graph, parent, verticesToPaintIfChild)
+        do this.IsVisited <- true
+        override this.ChromaticPolinomial = countChrPolCompleteGraph graph.VertexCount
+        
 
-    type Node(graph, parent) =
-        inherit BaseNode(graph, parent)
-        let mutable leftChild : BaseNode option = None
-        let mutable rightChild : BaseNode option = None
+    type Node<'TVertex, 'TEdge when 'TEdge :> IEdge<'TVertex>>(graph, parent, verticesToPaintIfChild) =
+        inherit BaseNode<'TVertex, 'TEdge>(graph, parent, verticesToPaintIfChild)
+        let mutable verticesToPaintIfParent : 'TVertex list = []
+        let mutable leftChild : BaseNode<'TVertex, 'TEdge> option = None
+        let mutable rightChild : BaseNode<'TVertex, 'TEdge> option = None
         let getChild child =
             match child with
                 | Some x -> x
@@ -64,23 +73,72 @@ module ChromaticPolynomial =
         member this.RightChild
             with public get() = getChild rightChild
             and public set value = rightChild <- Some value
-        override this.CromaticPolinomial = sum this.LeftChild.CromaticPolinomial this.RightChild.CromaticPolinomial
+        member this.VerticesToPaintIfParent
+            with public get() = verticesToPaintIfParent
+            and public set value = verticesToPaintIfParent <- value
+        override this.ChromaticPolinomial = sum this.LeftChild.ChromaticPolinomial this.RightChild.ChromaticPolinomial
            
-    let buildTree (graph : UndirectedGraph<_,_>) =
-        let rec buildTreeNode (graph : UndirectedGraph<_,_>) (parent : BaseNode option) : BaseNode =
-            if graph.EdgeCount = graph.VertexCount * (graph.VertexCount - 1) / 2 then upcast new Leaf(graph, parent)
+    let buildTree (graph : UndirectedGraph<_,_>) (createEdge : Func<_,_,_>) =
+        let rec buildTreeNode (graph : UndirectedGraph<_,_>) (parent : BaseNode<_,_> option) (verticesToPaintIfChild : 'Tvertex list) : BaseNode<_,_> =
+            if graph.EdgeCount = graph.VertexCount * (graph.VertexCount - 1) / 2 then upcast new Leaf<_,_>(graph, parent, verticesToPaintIfChild)
             else 
                 let fst, snd = findFirstMissingEdge graph
                 let graph1 = graph.Clone()
                 let graph2 = graph.Clone()
-                graph1.AddEdge(new UndirectedEdge<_>(fst, snd)) |> ignore
-                joinVertices graph2 fst snd
-                let mutable node = new Node(graph, parent)
-                node.LeftChild <- buildTreeNode graph1 (Some (upcast node))
-                node.RightChild <- buildTreeNode graph2 (Some (upcast node))
+                graph1.AddEdge(createEdge.Invoke(fst, snd)) |> ignore
+                joinVertices graph2 fst snd createEdge
+                let mutable node = new Node<_,_>(graph, parent, verticesToPaintIfChild)
+                node.VerticesToPaintIfParent <- [fst; snd]
+                node.LeftChild <- buildTreeNode graph1 (Some (upcast node)) [fst; snd]
+                node.RightChild <- buildTreeNode graph2 (Some (upcast node)) [snd]
                 upcast node
-        buildTreeNode graph None
+        buildTreeNode graph None []
 
-    let findChromaticPolynomial (graph : UndirectedGraph<_,_>) =
-        let tree = buildTree graph
-        List.toArray (tree.CromaticPolinomial)
+    (*let findChromaticPolynomial (graph : UndirectedGraph<_,_>) (createEdge : Func<_,_,_>) =
+        let tree = buildTree graph createEdge
+        List.toArray (tree.CromaticPolinomial)*)
+
+    let next (node : Node<_,_>) =
+        node.IsVisited <- true
+        if node.LeftChild.IsVisited then
+            if node.RightChild.IsVisited then
+                match node.Parent with
+                | Some x -> x
+                | None -> failwith "Next called on root when whole tree visited"
+            else node.RightChild
+        else node.LeftChild
+
+    let prev (node : Node<_,_>) =
+        if node.RightChild.IsVisited && not (node.RightChild :? Leaf<_,_>) then 
+            node.RightChild 
+        else 
+            if node.LeftChild.IsVisited && not (node.LeftChild :? Leaf<_,_>) then 
+                node.LeftChild
+            else 
+                node.IsVisited <- false
+                match node.Parent with
+                | Some x -> x
+                | None -> failwith "Prev called on root node"
+
+    let isFirstNode (node : BaseNode<_,_>) =
+        match node.Parent with
+        | None -> (node :? Node<_,_>) && not (node :?> Node<_,_>).LeftChild.IsVisited
+        | Some _ -> false
+
+    let isLastNode (node : BaseNode<_,_>) =
+        match node.Parent with
+        | None -> (node :? Node<_,_>) && (node :?> Node<_,_>).RightChild.IsVisited
+        | Some _ -> false
+
+    let rec private findChromaticPolynomialAsList (graph : UndirectedGraph<_,_>) (createEdge : Func<_,_,_>) = 
+        if graph.EdgeCount = graph.VertexCount * (graph.VertexCount - 1) / 2 then countChrPolCompleteGraph graph.VertexCount
+        else 
+            let fst, snd = findFirstMissingEdge graph
+            let graph1 = graph.Clone()
+            let graph2 = graph.Clone()
+            graph1.AddEdge(new UndirectedEdge<_>(fst, snd)) |> ignore
+            joinVertices graph2 fst snd createEdge
+            sum (findChromaticPolynomialAsList graph1 createEdge) (findChromaticPolynomialAsList graph2 createEdge)
+
+    let rec findChromaticPolynomial (graph : UndirectedGraph<_,_>) (createEdge : Func<_,_,_>) =
+        List.toArray (findChromaticPolynomialAsList graph createEdge) 

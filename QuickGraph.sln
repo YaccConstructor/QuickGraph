@@ -103,6 +103,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimVisualisation", "src\Gr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperForKruskalAndPrimVisualisation", "src\GraphTask.HelperForKruskalAndPrimVisualisation\HelperForKruskalAndPrimVisualisation.csproj", "{C308BDBC-BA61-4743-A933-6240032106A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChromaticPolinomialVisualisation", "src\GraphTask.ChromaticPolinomialVisualisation\ChromaticPolinomialVisualisation.csproj", "{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsHamiltonianVisualisation", "src\IsHamiltonianVisualisation\IsHamiltonianVisualisation.csproj", "{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}"
 EndProject
 Global
@@ -679,6 +681,26 @@ Global
 		{C308BDBC-BA61-4743-A933-6240032106A6}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
 		{C308BDBC-BA61-4743-A933-6240032106A6}.ReleaseContractsReferences|x86.ActiveCfg = Release|Any CPU
 		{C308BDBC-BA61-4743-A933-6240032106A6}.ReleaseContractsReferences|x86.Build.0 = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Debug|x86.Build.0 = Debug|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.DebugContracts|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.DebugContracts|Any CPU.Build.0 = Debug|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.DebugContracts|x86.ActiveCfg = Debug|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.DebugContracts|x86.Build.0 = Debug|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Release|x86.ActiveCfg = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Release|x86.Build.0 = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Release20|Any CPU.ActiveCfg = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Release20|Any CPU.Build.0 = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Release20|x86.ActiveCfg = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.Release20|x86.Build.0 = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.ReleaseContractsReferences|Any CPU.ActiveCfg = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.ReleaseContractsReferences|x86.ActiveCfg = Release|Any CPU
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}.ReleaseContractsReferences|x86.Build.0 = Release|Any CPU
 		{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -734,6 +756,7 @@ Global
 		{9A9537D4-2EB6-4273-AEA0-C86EB0028BB9} = {CBD0EAE9-B336-4359-AC80-E2E0A47FB991}
 		{C9FE495C-CB1E-4703-BF34-A93F5F400DCB} = {CBD0EAE9-B336-4359-AC80-E2E0A47FB991}
 		{C308BDBC-BA61-4743-A933-6240032106A6} = {0CE1D294-B109-461F-88DC-42AFCA5039E9}
+		{7EBC6156-A93B-48FA-B630-C232E6EA1F8E} = {CBD0EAE9-B336-4359-AC80-E2E0A47FB991}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = QuickGraph1.vsmdi
