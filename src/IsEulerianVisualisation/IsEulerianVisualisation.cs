@@ -8,8 +8,7 @@ using System;
 using System.Windows.Media;
 using QuickGraph;
 using QuickGraph.GraphXAdapter;
-using QuickGraph.Algorithms.ConnectedComponents;
-
+using QuickGraph.Algorithms;
 
 // Read more about plugin system on GitHub.
 // https://github.com/mono/mono-addins/wiki/Architecture-Overview
@@ -35,9 +34,12 @@ namespace IsEulerianVisualisation
     {
         private readonly GraphArea _graphArea;
         private readonly GraphXZoomControl _zoomControl;
-        private List<KeyValuePair<GraphXVertex, GraphX.Controls.VertexControl>> _graphVertices;
+        private List<KeyValuePair<GraphXVertex, GraphX.Controls.VertexControl>> _graphVerticesVisualisation;
+        private List<GraphXVertex> _graphVertices;
         private int _currentVertexIndex;
         private bool _isEulerian;
+        private IsEulerianGraphAlgorithm<GraphXVertex, UndirectedEdge<GraphXVertex>> _algo;
+        private ComponentWithEdges _graphProperty;
 
         public IsEulerian()
         {
@@ -60,36 +62,12 @@ namespace IsEulerianVisualisation
         public static Func<GraphXVertex, GraphXVertex, IDictionary<string, string>, UndirectedEdge<GraphXVertex>>
             edgeFun = (v1, v2, attrs) => new UndirectedEdge<GraphXVertex>(v1, v2);
 
-        private Tuple<int?, int?> firstAndSecondIndexOfTrue(bool[] data)
-        {
-            // if no true elements returns (null, null)
-            // if only one true element, returns (indexOfTrue, null)
-            int? firstIndex = null, secondIndex = null;
-            for (int i = 0; i < data.Length; i++)
-            {
-                if (data[i])
-                {
-                    if (!firstIndex.HasValue)
-                    {
-                        firstIndex = i;
-                    }
-                    else
-                    {
-                        return new Tuple<int?, int?>(firstIndex, i);
-                    }
-                }
-            }
-            return new Tuple<int?, int?>(firstIndex, secondIndex);
-        }
-
         public void Run(string dotSource)
         {
             var vertexFun = VertexFactory.Name;
             
             var graph = UndirectedGraph<GraphXVertex, UndirectedEdge<GraphXVertex>>.LoadDot(dotSource, vertexFun, edgeFun);
-            var graphVis = Graph.LoadDot(dotSource, vertexFun, EdgeFactory<GraphXVertex>.Weighted(0));
-
-            _isEulerian = true;
+            var graphVisualisation = Graph.LoadDot(dotSource, vertexFun, EdgeFactory<GraphXVertex>.Weighted(0));
 
             if (!graph.Vertices.Any())
             {
@@ -97,48 +75,58 @@ namespace IsEulerianVisualisation
                 return;
             }
 
-            var componentsAlgo = new ConnectedComponentsAlgorithm<GraphXVertex, UndirectedEdge<GraphXVertex>>(graph);
-            componentsAlgo.Compute();
+            _algo = new IsEulerianGraphAlgorithm<GraphXVertex, UndirectedEdge<GraphXVertex>>(graph);
+            _graphProperty = _algo.checkComponentsWithEdges();
 
-            // Only one component could contain edges
-            bool[] hasEdgesInComponent = new bool[componentsAlgo.ComponentCount];
-            foreach (var verticeAndComponent in componentsAlgo.Components)
+            switch (_graphProperty)
             {
-                hasEdgesInComponent[verticeAndComponent.Value] = graph.AdjacentEdges(verticeAndComponent.Key).Count() > 0;
-            }
-            var t = firstAndSecondIndexOfTrue(hasEdgesInComponent);
-            int? firstIndex = t.Item1, secondIndex = t.Item2;
-            
-            if (!firstIndex.HasValue)
-            {
-                MessageBox.Show($"Graph doesn't contain any edges. Graph is not Eulerian");
-                _isEulerian = false;
+                case ComponentWithEdges.ManyComponents:
+                    {
+                        MessageBox.Show($"Graph contains more than one connected component with edges. Graph is not Eulerian");
+                        _isEulerian = false;
+                        break;
+                    }
+                case ComponentWithEdges.NoComponent:
+                    {
+                        MessageBox.Show($"Graph doesn't contain any edges. Graph is not Eulerian");
+                        _isEulerian = false;
+                        break;
+                    }
+                case ComponentWithEdges.OneComponentWithOneVertex:
+                    {
+                        MessageBox.Show($"Graph contains one component with one vertex. Graph is Eulerian");
+                        _isEulerian = true;
+                        break;
+                    }
+                case ComponentWithEdges.OneComponentWithManyVertices:
+                    {
+                        // Check every vertice with NextStep()
+                        _isEulerian = true;
+                        break;
+                    }
             }
 
-            if (secondIndex.HasValue)
-            {
-                MessageBox.Show($"Graph contains more than one connected component with edges. Graph is not Eulerian");
-                _isEulerian = false;
-            }
-
-            _graphArea.LogicCore.Graph = graphVis;
+            _graphArea.LogicCore.Graph = graphVisualisation;
             _graphArea.GenerateGraph();
             _zoomControl.ZoomToFill();
-            _graphVertices = _graphArea.VertexList.ToList();
+            _graphVertices = graph.Vertices.ToList();
+            _graphVerticesVisualisation = _graphArea.VertexList.ToList();
             _currentVertexIndex = 0;
         }
 
         public void NextStep()
         {
+            var vertexVisualisation = _graphVerticesVisualisation.ElementAt(_currentVertexIndex);
             var vertex = _graphVertices.ElementAt(_currentVertexIndex);
-            vertex.Value.Background = new SolidColorBrush(Colors.YellowGreen);
-            if (_graphArea.LogicCore.Graph.OutEdges(vertex.Key).Count() % 2 == 1)
+            vertexVisualisation.Value.Background = new SolidColorBrush(Colors.YellowGreen);
+
+            if ((_graphProperty == ComponentWithEdges.OneComponentWithManyVertices) && (!_algo.satisfiesEulerianCondition(vertex)))
             {
                 _isEulerian = false;
-                MessageBox.Show($"Vertex {vertex.Key} has odd count of edges. Graph is not Eulerian");
+                MessageBox.Show($"Vertex {vertexVisualisation.Key} has odd count of edges. Graph is not Eulerian");
             }
 
-            if (++_currentVertexIndex == _graphVertices.Count)
+            if (++_currentVertexIndex == _graphVerticesVisualisation.Count)
             {
                 MessageBox.Show($"Finished, " + (_isEulerian ? $"graph is Eulerian" : $"graph is not Eulerian"));
             }
@@ -148,12 +136,12 @@ namespace IsEulerianVisualisation
 
         public void PreviousStep()
         {
-            var vertex = _graphVertices.ElementAt(--_currentVertexIndex);
+            var vertex = _graphVerticesVisualisation.ElementAt(--_currentVertexIndex);
             vertex.Value.Background = new SolidColorBrush(Colors.LightGray);
             _zoomControl.ZoomToFill();
         }
 
         public bool CanGoBack => _currentVertexIndex > 0;
-        public bool CanGoFurther => (_graphVertices == null) || (_currentVertexIndex < _graphVertices.Count);
+        public bool CanGoFurther => (_graphVerticesVisualisation == null) || (_currentVertexIndex < _graphVerticesVisualisation.Count);
     }
 }
