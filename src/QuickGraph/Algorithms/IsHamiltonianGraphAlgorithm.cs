@@ -5,6 +5,7 @@ namespace QuickGraph.Algorithms
     public class IsHamiltonianGraphAlgorithm<TVertex, TEdge> where TEdge : IUndirectedEdge<TVertex>
     {
         private UndirectedGraph<TVertex, UndirectedEdge<TVertex>> graph;
+        private double threshold;
 
         public IsHamiltonianGraphAlgorithm(UndirectedGraph<TVertex, UndirectedEdge<TVertex>> graph)
         {
@@ -18,10 +19,16 @@ namespace QuickGraph.Algorithms
             {
                 newGraph.AddEdge(edge);
             }
-            //Remove loops
+            // Remove loops
             EdgePredicate<TVertex, UndirectedEdge<TVertex>> isLoop = e => e.Source.Equals(e.Target);
             newGraph.RemoveEdgeIf(isLoop);
             this.graph = newGraph;
+            threshold = newGraph.VertexCount / 2.0;
+        }
+
+        public bool satisfiesHamiltonianCondition(TVertex vertex)
+        {
+            return graph.AdjacentEdges(vertex).Count() >= threshold;
         }
 
         public bool IsHamiltonian()
@@ -38,15 +45,7 @@ namespace QuickGraph.Algorithms
             }
             else
             {
-                double threshold = n / 2.0;
-                foreach (var v in graph.Vertices)
-                {
-                    if (graph.AdjacentEdges(v).Count() < threshold)
-                    {
-                        return false;
-                    }
-                }
-                return true;
+                return graph.Vertices.All<TVertex>(satisfiesHamiltonianCondition);
             }
         }
     }
