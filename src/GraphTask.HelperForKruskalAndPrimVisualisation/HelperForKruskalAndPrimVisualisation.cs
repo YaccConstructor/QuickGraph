@@ -22,8 +22,9 @@ namespace HelperForKruskalAndPrimVisualisation
     [Extension]
     static public class HelperForKruskalAndPrimVisualisation
     {
-        static private readonly GraphArea _graphArea = new GraphArea();
-        static private readonly GraphXZoomControl _zoomControl = new GraphXZoomControl { Content = _graphArea };
+        static private CheckBox _countSymbolsCheckBox;
+        static private GraphArea _graphArea;
+        static private GraphXZoomControl _zoomControl;
         static private bool hasStarted;
         static private bool hasFinished;
         static private List<EdgeForVisualisation> edges = new List<EdgeForVisualisation>();
@@ -32,8 +33,16 @@ namespace HelperForKruskalAndPrimVisualisation
         static public Panel Options { get; } = new Panel { Dock = DockStyle.Fill };
         static public Panel Output { get; } = new Panel { Dock = DockStyle.Fill };
 
-        static public void Run(string dotSource, List<EdgeForVisualisation> e)
+        static public void Run(string dotSource, List<EdgeForVisualisation> e, GraphArea ga, GraphXZoomControl gz, CheckBox cb)
         {
+            _graphArea = ga;
+            _zoomControl = gz;
+            _countSymbolsCheckBox = cb;
+            //Output.Controls.Add(new ElementHost { Dock = DockStyle.Fill, Child = _zoomControl });
+            if (_countSymbolsCheckBox.Checked)
+            {
+                MessageBox.Show($"Read {dotSource.Length} symbol(s).");
+            }
             edges = e;
             i = -1;
 
@@ -58,12 +67,13 @@ namespace HelperForKruskalAndPrimVisualisation
             }
             hasStarted = true;
             hasFinished = false;
+            CanFuther(true);
         }
 
         static public void NextStep()
         {
             i++;
-            var edge = _graphArea.EdgesList.First(x => (x.Key.Source == edges[i].edge.Source) && (x.Key.Target == edges[i].edge.Target));
+            var edge = _graphArea.EdgesList.First(x => (x.Key.Source.Text == edges[i].edge.Source.Text) && (x.Key.Target.Text == edges[i].edge.Target.Text));
             if (edges[i].isConteins)
             {
                 var vertex1 = _graphArea.VertexList.First(x => x.Key == edge.Key.Source);
@@ -92,19 +102,23 @@ namespace HelperForKruskalAndPrimVisualisation
                 CanBack(true);
             else
                 CanBack(false);
+            if (i != edges.Count - 1)
+                CanFuther(true);
+            else
+                CanFuther(false);
         }
 
         static public void PreviousStep()
         {
-            var edge = _graphArea.EdgesList.First(x => (x.Key.Source == edges[i].edge.Source) && (x.Key.Target == edges[i].edge.Target));
+            var edge = _graphArea.EdgesList.First(x => (x.Key.Source.Text == edges[i].edge.Source.Text) && (x.Key.Target.Text == edges[i].edge.Target.Text));
             if (edges[i].isConteins)
             {
                 var vertex1 = _graphArea.VertexList.First(x => x.Key == edge.Key.Source);
                 var vertex2 = _graphArea.VertexList.First(x => x.Key == edge.Key.Target);
-                var edge1 = edges.ToList().FirstOrDefault(x => x.edge.Source == vertex1.Key && x.isConteins && x.number < i)?.edge;
-                var edge2 = edges.ToList().FirstOrDefault(x => x.edge.Target == vertex1.Key && x.isConteins && x.number < i)?.edge;
-                var edge3 = edges.ToList().FirstOrDefault(x => x.edge.Source == vertex2.Key && x.isConteins && x.number < i)?.edge;
-                var edge4 = edges.ToList().FirstOrDefault(x => x.edge.Target == vertex2.Key && x.isConteins && x.number < i)?.edge;
+                var edge1 = edges.ToList().FirstOrDefault(x => x.edge.Source.Text == vertex1.Key.Text && x.isConteins && x.number < i)?.edge;
+                var edge2 = edges.ToList().FirstOrDefault(x => x.edge.Target.Text == vertex1.Key.Text && x.isConteins && x.number < i)?.edge;
+                var edge3 = edges.ToList().FirstOrDefault(x => x.edge.Source.Text == vertex2.Key.Text && x.isConteins && x.number < i)?.edge;
+                var edge4 = edges.ToList().FirstOrDefault(x => x.edge.Target.Text == vertex2.Key.Text && x.isConteins && x.number < i)?.edge;
                 if ((edge1 == null) && (edge2 == null))
                     vertex1.Value.Background = new SolidColorBrush(Color.FromArgb(255, 227, 227, 227));
                 if ((edge3 == null) && (edge4 == null))
@@ -123,6 +137,10 @@ namespace HelperForKruskalAndPrimVisualisation
                 CanFuther(true);
             else
                 CanFuther(false);
+            if (i != -1)
+                CanBack(true);
+            else
+                CanBack(false);
         }
         static public event EndAction CanBack;
         static private void OnCanBack(bool x)
