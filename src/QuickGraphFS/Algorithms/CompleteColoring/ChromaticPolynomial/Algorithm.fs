@@ -48,14 +48,14 @@ module ChromaticPolynomial =
         member this.IsVisited
             with public get() = isVisited
             and public set value = isVisited <- value
-        abstract member CromaticPolinomial : int list
-        default this.CromaticPolinomial = []
+        abstract member ChromaticPolinomial : int list
+        default this.ChromaticPolinomial = []
         member this.VerticesToPaintIfChild : 'TVertex list = verticesToPaintIfChild
 
     type Leaf<'TVertex, 'TEdge when 'TEdge :> IEdge<'TVertex>>(graph, parent, verticesToPaintIfChild) as this =
         inherit BaseNode<'TVertex, 'TEdge>(graph, parent, verticesToPaintIfChild)
         do this.IsVisited <- true
-        override this.CromaticPolinomial = countChrPolCompleteGraph graph.VertexCount
+        override this.ChromaticPolinomial = countChrPolCompleteGraph graph.VertexCount
         
 
     type Node<'TVertex, 'TEdge when 'TEdge :> IEdge<'TVertex>>(graph, parent, verticesToPaintIfChild) =
@@ -76,7 +76,7 @@ module ChromaticPolynomial =
         member this.VerticesToPaintIfParent
             with public get() = verticesToPaintIfParent
             and public set value = verticesToPaintIfParent <- value
-        override this.CromaticPolinomial = sum this.LeftChild.CromaticPolinomial this.RightChild.CromaticPolinomial
+        override this.ChromaticPolinomial = sum this.LeftChild.ChromaticPolinomial this.RightChild.ChromaticPolinomial
            
     let buildTree (graph : UndirectedGraph<_,_>) (createEdge : Func<_,_,_>) =
         let rec buildTreeNode (graph : UndirectedGraph<_,_>) (parent : BaseNode<_,_> option) (verticesToPaintIfChild : 'Tvertex list) : BaseNode<_,_> =
@@ -109,9 +109,11 @@ module ChromaticPolynomial =
         else node.LeftChild
 
     let prev (node : Node<_,_>) =
-        if node.RightChild.IsVisited && not (node.RightChild :? Leaf<_,_>) then node.RightChild 
+        if node.RightChild.IsVisited && not (node.RightChild :? Leaf<_,_>) then 
+            node.RightChild 
         else 
-            if node.LeftChild.IsVisited && not (node.LeftChild :? Leaf<_,_>) then node.LeftChild
+            if node.LeftChild.IsVisited && not (node.LeftChild :? Leaf<_,_>) then 
+                node.LeftChild
             else 
                 node.IsVisited <- false
                 match node.Parent with

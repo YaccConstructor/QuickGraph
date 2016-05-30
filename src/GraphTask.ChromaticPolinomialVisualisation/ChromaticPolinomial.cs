@@ -180,7 +180,7 @@ namespace ChromaticPolinomialVisualisation
 
         private void AddTree(DrawGraph graph)
         {
-            var rootVertex = new VertexWithComponent(string.Join(",", _rootNode.CromaticPolinomial.ToArray()), Component.TreeRoot);
+            var rootVertex = new VertexWithComponent(string.Join(",", _rootNode.ChromaticPolinomial.ToArray()), Component.TreeRoot);
             graph.AddVertex(rootVertex);
             if (_curNode is Node)
             {
@@ -195,17 +195,12 @@ namespace ChromaticPolinomialVisualisation
             if (parent == _curNode)
             {
                 parentVertex.Component = Component.TreeParent;
-                leftVertex = new VertexWithComponent(string.Join(",", parent.LeftChild.CromaticPolinomial.ToArray()), Component.TreeLeftChild);
-                rightVertex = new VertexWithComponent(string.Join(",", parent.RightChild.CromaticPolinomial.ToArray()), Component.TreeRightChild);
-            } else if (parentVertex.Component == Component.TreeRoot)
+                leftVertex = new VertexWithComponent(string.Join(",", parent.LeftChild.ChromaticPolinomial.ToArray()), Component.TreeLeftChild);
+                rightVertex = new VertexWithComponent(string.Join(",", parent.RightChild.ChromaticPolinomial.ToArray()), Component.TreeRightChild);
+            } else
             {
-                leftVertex = new VertexWithComponent(string.Join(",", parent.LeftChild.CromaticPolinomial.ToArray()), Component.TreeRest);
-                rightVertex = new VertexWithComponent(string.Join(",", parent.RightChild.CromaticPolinomial.ToArray()), Component.TreeRest);
-            }
-            else
-            {
-                leftVertex = new VertexWithComponent(string.Join(",", parent.LeftChild.CromaticPolinomial.ToArray()), parentVertex.Component);
-                rightVertex = new VertexWithComponent(string.Join(",", parent.RightChild.CromaticPolinomial.ToArray()), parentVertex.Component);
+                leftVertex = CreateVetex(parentVertex, parent.LeftChild.ChromaticPolinomial.ToArray());
+                rightVertex = CreateVetex(parentVertex, parent.RightChild.ChromaticPolinomial.ToArray());
             }
             graph.AddVertex(leftVertex);
             graph.AddVertex(rightVertex);
@@ -219,6 +214,21 @@ namespace ChromaticPolinomialVisualisation
             {
                 AddNodeChilds(graph, (Node)parent.RightChild, rightVertex);
             }
+        }
+
+        private VertexWithComponent CreateVetex(VertexWithComponent parentVertex, int[] chromaticPolinomial)
+        {
+            VertexWithComponent vertex = null;
+            if (parentVertex.Component == Component.TreeRoot)
+            {
+                vertex = new VertexWithComponent(string.Join(",", chromaticPolinomial), Component.TreeRest);
+            }
+            else
+            {
+                vertex = new VertexWithComponent(string.Join(",", chromaticPolinomial), parentVertex.Component);
+            }
+
+            return vertex;
         }
 
         private void AddComponentToGraph(Graph component, DrawGraph graph, Component componentName,
@@ -270,14 +280,7 @@ namespace ChromaticPolinomialVisualisation
 
         private GraphXEdge<VertexWithComponent> FindEdge(List<GraphXEdge<VertexWithComponent>> allEdgesList, GraphXVertex source, GraphXVertex target)
         {
-            foreach (GraphXEdge<VertexWithComponent> edge in allEdgesList)
-            {
-                if (edge.Source.Text.Equals(source.Text) && edge.Target.Text.Equals(target.Text))
-                {
-                    return edge;
-                }
-            }
-            return null;
+            return allEdgesList.Find(x => x.Source.Text.Equals(source.Text) && x.Target.Text.Equals(target.Text));
         }
 
         private void SetVisibility(List<GraphXEdge<VertexWithComponent>> edgesList, System.Windows.Visibility visibility)
