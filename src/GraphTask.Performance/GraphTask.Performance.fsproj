@@ -51,17 +51,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\tests\QuickGraph.Tests\QuickGraph.Tests.csproj">
+    <ProjectReference Include="..\..\tests\QuickGraph.Tests\QuickGraph.Tests.csproj">
       <Name>QuickGraph.Tests</Name>
       <Project>{61df76e1-de2b-4df1-ad5f-89939ab06693}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\GraphTask.RandomGraphGenerator\RandomGraphGenerator\RandomGraphGenerator.fsproj">
+    <ProjectReference Include="..\GraphTask.RandomGraphGenerator\RandomGraphGenerator.fsproj">
       <Name>RandomGraphGenerator</Name>
       <Project>{8d33982d-685b-4bfd-86cb-ac70ccd39fb8}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\QuickGraph\QuickGraph.csproj">
+    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
       <Name>QuickGraph</Name>
       <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
       <Private>True</Private>

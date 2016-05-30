@@ -9,7 +9,7 @@ open QuickGraph.RandomGraphGenerator
 let main argv = 
     let runTest name action samples =
         let benchmark = new Benchmark(name)
-        for i in [1 .. samples] do benchmark.Run(Action (action()))
+        for i in 1 .. samples do benchmark.Run(Action (action()))
         printf "%A, %A on average\n" benchmark (benchmark.Seconds / float benchmark.Samples)
     
     let ``Remove vertex in AdjacencyGraph`` =
