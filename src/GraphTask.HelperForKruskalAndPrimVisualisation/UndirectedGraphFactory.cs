@@ -19,6 +19,7 @@ namespace HelperForKruskalAndPrimVisualisation
     {
         static public UndirectedGraph<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>> GetUnderectedGraphFromDot(string dotSource)
         {
+            var id = 1;
             var vertexFun = VertexFactory.Name;
             var edgeFun = EdgeFactory<GraphXVertex>.Weighted(0);
 
@@ -26,8 +27,10 @@ namespace HelperForKruskalAndPrimVisualisation
             var ugraph = new UndirectedGraph<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>();
             foreach (var i in graph.Vertices)
             {
+                i.ID = id;
                 if (!ugraph.ContainsVertex(i))
                     ugraph.AddVertex(i);
+                id++;
             }
             foreach (var i in graph.Edges)
             {
