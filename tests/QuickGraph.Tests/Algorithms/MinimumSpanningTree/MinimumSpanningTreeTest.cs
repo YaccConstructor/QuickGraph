@@ -38,29 +38,6 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             for (int i = 0; i < vert; i++)
                 for (int j = i + 1; j < vert; j++)
                     graph.AddEdge(new TaggedEdge<string, double>(i.ToString(), j.ToString(), random.Next(100)));
-            //while (trueGraph.EdgeCount < trueGraph.VertexCount - 1)
-            //{
-            //    var ed = graph.Edges.ToList();
-            //    var x = random.Next(graph.EdgeCount);
-            //    var delEdge = graph.Edges.ToList()[x];
-            //    graph.RemoveEdge(delEdge);
-            //    if (ds.AreInSameSet(delEdge.Source, delEdge.Target))
-            //    {
-            //        graph.AddEdge(delEdge);
-            //    }
-            //    {
-            //        ds.Union(delEdge.Source, delEdge.Target);
-            //        trueGraph.AddEdge(delEdge);
-            //    }
-            //}
-            //while (trueGraph.EdgeCount < edges)
-            //{
-            //    var ed = graph.Edges.ToList();
-            //    var x = random.Next(graph.EdgeCount);
-            //    var delEdge = graph.Edges.ToList()[x];
-            //    graph.RemoveEdge(delEdge);
-            //    trueGraph.AddEdge(delEdge);
-            //}
             return graph;
         }
         [TestMethod]
@@ -85,28 +62,18 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
             Console.WriteLine(m);
         }
-        //[TestMethod]
-        //public void Prim300()
-        //{
-        //    string m = "";
-        //    m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
-        //    var graph = GetUndirectedFullGraph(300);
-        //    m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
-        //    MyPrim(graph, x => x.Tag);
-        //    m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
-        //    Console.WriteLine(m);
-        //}
-        //[TestMethod]
-        //public void Prim600()
-        //{
-        //    string m = "";
-        //    m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
-        //    var graph = GetUndirectedFullGraph(600);
-        //    m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
-        //    MyPrim(graph, x => x.Tag);
-        //    m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
-        //    Console.WriteLine(m);
-        //}
+        [TestMethod]
+        public void Prim300()
+        {
+            string m = "";
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            var graph = GetUndirectedFullGraph(300);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            MyPrim(graph, x => x.Tag);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            Console.WriteLine(m);
+        }
+
         [TestMethod]
         public void KruskalMinimumSpanningTreeAll()
         {
@@ -299,18 +266,6 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         [DeploymentItem("GraphML/repro12273.xml", "GraphML")]
         public void Prim12273()
         {
-            //  var doc = new XPathDocument("repro12273.xml");
-
-            //var ug = doc.DeserializeFromXml(
-            //    "graph", "node", "edge",
-            //    nav => new UndirectedGraph<string, TaggedEdge<string, double>>(),
-            //    nav => nav.GetAttribute("id", ""),
-            //    nav => new TaggedEdge<string, double>(
-            //        nav.GetAttribute("source", ""),
-            //        nav.GetAttribute("target", ""),
-            //        int.Parse(nav.GetAttribute("weight", ""))
-            //        )
-            //    );
             var ug = XmlReader.Create("GraphML/repro12273.xml").DeserializeFromXml(
                 "graph", "node", "edge", "",
                 reader => new UndirectedGraph<string, TaggedEdge<string, double>>(),
@@ -322,7 +277,6 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                     )
                 );
 
-            //MsaglGraphExtensions.ShowMsaglGraph(ug);
             var prim = ug.MinimumSpanningTreePrim(e => e.Tag).ToList();
             var pcost = prim.Sum(e => e.Tag);
             Console.WriteLine("prim cost {0}", pcost);
