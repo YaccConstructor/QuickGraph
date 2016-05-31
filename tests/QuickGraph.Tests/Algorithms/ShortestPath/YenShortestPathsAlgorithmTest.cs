@@ -88,7 +88,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             var input = GenerateNormalInput();
             var yen = new YenShortestPathsAlgorithm<char>(input, '1', '5', 10);
             var result = yen.Execute().ToList();
-
+            input = GenerateNormalInput();
             /*
             Expecting to get 3 paths:
             1. 1-3-4-5
