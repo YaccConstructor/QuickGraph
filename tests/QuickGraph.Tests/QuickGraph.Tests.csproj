@@ -294,6 +294,7 @@
       <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Algorithms\AlgorithmExtensionsTest.cs" />
+    <Compile Include="Algorithms\AssigmentProblem\HungarianAlgorithmTest.cs" />
     <Compile Include="Algorithms\BipartiteDimensionAlgorithmTest.cs" />
     <Compile Include="Algorithms\ChromaticPolinomialAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />

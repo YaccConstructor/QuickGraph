@@ -85,7 +85,7 @@ namespace MainForm
         private void startButton_Click(object sender, EventArgs e)
         {
             var dotSource = _editor.Text;
-            if (string.IsNullOrEmpty(dotSource))
+            if (string.IsNullOrEmpty(dotSource) && _currentAlgorithm.Name != "Hungarian Algorithm (matrix)")
             {
                 MessageBox.Show(Resources.noInputGraph);
                 return;
