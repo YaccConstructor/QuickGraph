@@ -334,6 +334,8 @@
     <Compile Include="Algorithms\StronglyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\TarjanOfflineLeastCommonAncestorAlgorithmTest.cs" />
     <Compile Include="Algorithms\TopologicalSortAlgorithmTest.cs" />
+    <Compile Include="Algorithms\TransitiveClosureAlgorithmTest.cs" />
+    <Compile Include="Algorithms\TransitiveReductionAlgorithmTest.cs" />
     <Compile Include="Algorithms\TSP\TSPTest.cs" />
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />

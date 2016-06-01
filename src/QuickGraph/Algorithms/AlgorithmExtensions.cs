@@ -1213,5 +1213,30 @@ this
             flowPredecessors = flow.Predecessors.TryGetValue;
             return flow.MaxFlow;
         }
+
+
+        /*
+         * Code by Yoad Snapir <yoadsn@gmail.com>
+         * Taken from https://github.com/yoadsn/ArrowDiagramGenerator because PR was not opened
+         * 
+         * */
+
+        public static BidirectionalGraph<TVertex, TEdge> ComputeTransitiveReduction<TVertex, TEdge>(
+            this BidirectionalGraph<TVertex, TEdge> visitedGraph
+            ) where TEdge : IEdge<TVertex>
+        {
+            var algo = new TransitiveReductionAlgorithm<TVertex, TEdge>(visitedGraph);
+            algo.Compute();
+            return algo.TransitiveReduction;
+        }
+
+        public static BidirectionalGraph<TVertex, TEdge> ComputeTransitiveClosure<TVertex, TEdge>(
+            this BidirectionalGraph<TVertex, TEdge> visitedGraph
+            ) where TEdge : IEdge<TVertex>
+        {
+            var algo = new TransitiveClosureAlgorithm<TVertex, TEdge>(visitedGraph);
+            algo.Compute();
+            return algo.TransitiveClosure;
+        }
     }
 }
