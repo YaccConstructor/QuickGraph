@@ -18,7 +18,7 @@ namespace QuickGraph.Algorithms
             TransitiveReduction = new BidirectionalGraph<TVertex, TEdge>();
         }
 
-        public BidirectionalGraph<TVertex, TEdge> TransitiveReduction { get; }
+        public BidirectionalGraph<TVertex, TEdge> TransitiveReduction { get; private set; } //R# will say you do not need this. AppVeyor wants it.
 
         protected override void InternalCompute()
         {

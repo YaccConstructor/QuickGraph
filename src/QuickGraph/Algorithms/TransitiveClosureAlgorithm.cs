@@ -13,7 +13,8 @@ namespace QuickGraph.Algorithms
             TransitiveClosure = new BidirectionalGraph<TVertex, TEdge>();
         }
 
-        public BidirectionalGraph<TVertex, TEdge> TransitiveClosure { get; }
+        
+        public BidirectionalGraph<TVertex, TEdge> TransitiveClosure { get; private set; } //R# will say you do not need this. AppVeyor wants it.
 
         protected override void InternalCompute()
         {
@@ -24,6 +25,7 @@ namespace QuickGraph.Algorithms
             var ancestorsOfVertices = new Dictionary<TVertex, HashSet<TVertex>>();
             foreach (var vertexId in VisitedGraph.TopologicalSort())
             {
+                //TODO think of some heuristic value here. Like (verticesCount / 2) or (verticesCount / 3)
                 var thisVertexPredecessors = new List<TVertex>();
                 var thisVertexAncestors = new HashSet<TVertex>();
                 ancestorsOfVertices[vertexId] = thisVertexAncestors;
