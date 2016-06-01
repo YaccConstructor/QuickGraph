@@ -11,14 +11,8 @@ namespace QuickGraph.Algorithms
         {
             // Create new graph without parallel edges
             var newGraph = new UndirectedGraph<TVertex, UndirectedEdge<TVertex>>(false, graph.EdgeEqualityComparer);
-            foreach (var vertex in graph.Vertices)
-            {
-                newGraph.AddVertex(vertex);
-            }
-            foreach (var edge in graph.Edges)
-            {
-                newGraph.AddEdge(edge);
-            }
+            newGraph.AddVertexRange(graph.Vertices);
+            newGraph.AddEdgeRange(graph.Edges);
             // Remove loops
             EdgePredicate<TVertex, UndirectedEdge<TVertex>> isLoop = e => e.Source.Equals(e.Target);
             newGraph.RemoveEdgeIf(isLoop);
