@@ -35,18 +35,7 @@ namespace QuickGraph.Algorithms
         {
             // Using Dirac's theorem: if |vertices| >= 2 and for any vertex deg(vertex) >= (|vertices| / 2) then graph is Hamiltonian
             int n = graph.VertexCount;
-            if (n == 0)
-            {
-                return false;
-            }
-            else if (n == 1)
-            {
-                return true;
-            }
-            else
-            {
-                return graph.Vertices.All<TVertex>(satisfiesHamiltonianCondition);
-            }
+            return (n != 0) && ((n == 1) || graph.Vertices.All<TVertex>(satisfiesHamiltonianCondition));
         }
     }
 }
