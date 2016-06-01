@@ -102,7 +102,7 @@ namespace IsHamiltonianVisualisation
             var vertex = _graphVertices.ElementAt(_currentVertexIndex);
             vertexVisualisation.Value.Background = new SolidColorBrush(Colors.YellowGreen);
 
-            if ((!_hasOnlyOneVertex) && (!_algo.satisfiesHamiltonianCondition(vertex)))
+            if (!_hasOnlyOneVertex && !_algo.satisfiesHamiltonianCondition(vertex))
             {
                 _isHamiltonian = false;
                 MessageBox.Show($"Vertex {vertexVisualisation.Key} has insufficient count of edges. Graph is not Hamiltonian");

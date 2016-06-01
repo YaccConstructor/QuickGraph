@@ -79,9 +79,7 @@ namespace QuickGraph.Algorithms
                 case ComponentWithEdges.OneComponentWithOneVertex:
                     return true;
                 case ComponentWithEdges.OneComponentWithManyVertices:
-                    {
-                        return graph.Vertices.All<TVertex>(satisfiesEulerianCondition);
-                    }
+                    return graph.Vertices.All<TVertex>(satisfiesEulerianCondition);
                 case ComponentWithEdges.NoComponent:
                 case ComponentWithEdges.ManyComponents:
                 default:
