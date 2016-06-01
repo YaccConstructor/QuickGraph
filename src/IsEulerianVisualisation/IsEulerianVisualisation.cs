@@ -69,7 +69,7 @@ namespace IsEulerianVisualisation
             var graph = UndirectedGraph<GraphXVertex, UndirectedEdge<GraphXVertex>>.LoadDot(dotSource, vertexFun, edgeFun);
             var graphVisualisation = Graph.LoadDot(dotSource, vertexFun, EdgeFactory<GraphXVertex>.Weighted(0));
 
-            if (!graph.Vertices.Any())
+            if (graph.Vertices.Count() == 0)
             {
                 MessageBox.Show("Graph is empty.");
                 return;
