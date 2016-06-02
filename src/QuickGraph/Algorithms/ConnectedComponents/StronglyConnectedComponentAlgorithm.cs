@@ -22,6 +22,10 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 		private Stack<TVertex> stack;
 		int componentCount;
 		int dfsTime;
+        private int[] diffBySteps = new int[100];
+        private int step;
+        private TVertex[] vertices = new TVertex[100];
+        List<BidirectionalGraph<TVertex, TEdge>> graphs;
 
         public StronglyConnectedComponentsAlgorithm(
             IVertexListGraph<TVertex,TEdge> g)
@@ -82,13 +86,41 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 			}
 		}
 
-		private void DiscoverVertex(TVertex v)
+        public TVertex[] Vertices
+        {
+            get
+            {
+                return this.vertices;
+            }
+        }
+
+        public int Steps
+        {
+            get
+            {
+                return step;
+            }
+        }
+        public int[] DiffBySteps
+        {
+            get
+            {
+                return diffBySteps;
+            }
+        }
+
+        private void DiscoverVertex(TVertex v)
 		{
 			this.Roots[v]=v;
 			this.Components[v]=int.MaxValue;
-			this.DiscoverTimes[v]=dfsTime++;
+            
+            this.diffBySteps[step] = componentCount;
+            this.vertices[step] = v;
+            this.step++;
+            
+            this.DiscoverTimes[v]=dfsTime++;
 			this.stack.Push(v);
-		}
+        }
 
 		/// <summary>
 		/// Used internally
@@ -111,10 +143,16 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 				{
 					w = this.stack.Pop(); 
 					this.Components[w] = componentCount;
-				} 
+
+
+                    this.diffBySteps[step] = componentCount;
+                    this.vertices[step] = w;
+                    this.step++;
+                } 
 				while (!w.Equals(v));
 				++componentCount;
-			}	
+                
+            }	
 		}
 
 		private TVertex MinDiscoverTime(TVertex u, TVertex v)
@@ -132,7 +170,38 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 				return v;
 		}
 
-		protected override void InternalCompute()
+        public List<BidirectionalGraph<TVertex, TEdge>> Graphs
+        {
+            get
+            {
+                int i;
+                graphs = new List<BidirectionalGraph<TVertex, TEdge>>(componentCount + 1);
+                for (i = 0; i < componentCount + 1; i++)
+                {
+                    graphs.Add(new BidirectionalGraph<TVertex, TEdge>());
+                }
+                foreach (TVertex componentName in components.Keys)
+                {
+                    graphs[components[componentName]].AddVertex(componentName);
+                }
+
+                foreach (TVertex vertex in VisitedGraph.Vertices)
+                {
+                    foreach (TEdge edge in VisitedGraph.OutEdges(vertex))
+                    {
+
+                        if (components[vertex] == components[edge.Target])
+                        {
+                            graphs[components[vertex]].AddEdge(edge);
+                        }
+                    }
+                }
+                return graphs;
+            }
+
+        }
+
+        protected override void InternalCompute()
 		{
             Contract.Ensures(this.ComponentCount >= 0);
             Contract.Ensures(this.VisitedGraph.VertexCount == 0 || this.ComponentCount > 0); 
