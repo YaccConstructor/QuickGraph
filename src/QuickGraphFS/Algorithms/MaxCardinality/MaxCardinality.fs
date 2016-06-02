@@ -4,7 +4,7 @@ open QuickGraph
 open QuickGraph.Algorithms 
 open System.Collections.Generic 
 
-type public MaxCardinality<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vertex: comparison and 'Edge: equality>(firstGraph : BidirectionalGraph<'Vertex, 'Edge>, secondGraph : BidirectionalGraph<'Vertex, 'Edge>, similarityMat : Dictionary<_,_>, threshold : double) = 
+type public MaxCardinality<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vertex: comparison and 'Edge: equality>(firstGraph : BidirectionalGraph<'Vertex, 'Edge>, secondGraph : BidirectionalGraph<'Vertex, 'Edge>, similarityMat : Dictionary<_,_>, threshold : double, createEdge) = 
     //inherit AlgorithmBase<IVertexAndEdgeListGraph<'Vertex, 'Edge>>(null) /// no double algo base
     
     let trimMatching (v, u) ((H1Prev:Map<'Vertex,Set<'Vertex>>), H1Post) H2 (HGood, HMinus) = 
@@ -112,7 +112,7 @@ type public MaxCardinality<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vert
 
             ) (Map.empty, Map.empty, Map.empty, Map.empty)
             
-        let transClosure = secondGraph.ComputeTransitiveClosure()
+        let transClosure = secondGraph.ComputeTransitiveClosure(createEdge)
 
         let H2 =   
             seq { for x in secondGraph.Vertices do
