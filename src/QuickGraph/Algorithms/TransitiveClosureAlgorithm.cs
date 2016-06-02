@@ -24,35 +24,11 @@ namespace QuickGraph.Algorithms
             // Clone the visited graph
             TransitiveClosure.AddVerticesAndEdgeRange(VisitedGraph.Edges);
 
-            // Iterate in topo order, track indirect ancestors and remove edges from them to the visited vertex
-            var ancestorsOfVertices = new Dictionary<TVertex, HashSet<TVertex>>();
-            foreach (var vertexId in VisitedGraph.TopologicalSort())
+            var algo = new TransitiveAlgorithmHelper<TVertex, TEdge>(TransitiveClosure);
+            algo.InternalCompute((g, u, v, e) =>
             {
-                //TODO think of some heuristic value here. Like (verticesCount / 2) or (verticesCount / 3)
-                var thisVertexPredecessors = new List<TVertex>();
-                var thisVertexAncestors = new HashSet<TVertex>();
-                ancestorsOfVertices[vertexId] = thisVertexAncestors;
-
-                // Get indirect ancestors
-                foreach (var inEdge in VisitedGraph.InEdges(vertexId))
-                {
-                    var predecessor = inEdge.Source;
-                    thisVertexPredecessors.Add(predecessor);
-
-                    // Add all the ancestors of the predeccessors
-                    thisVertexAncestors.UnionWith(ancestorsOfVertices[predecessor]);
-                }
-
-                // Add indirect edges
-                foreach (var indirectAncestor in thisVertexAncestors)
-                {
-                    if (TransitiveClosure.ContainsEdge(indirectAncestor, vertexId)) continue;
-                    TransitiveClosure.AddEdge(_createEdge(indirectAncestor, vertexId));
-                }
-
-                // Add predecessors to ancestors list
-                thisVertexAncestors.UnionWith(thisVertexPredecessors);
-            }
+                if (e == null) g.AddEdge(_createEdge(u, v));
+            });
         }
     }
 }
