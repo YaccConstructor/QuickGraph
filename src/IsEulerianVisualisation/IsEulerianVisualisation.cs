@@ -92,13 +92,7 @@ namespace IsEulerianVisualisation
                         _isEulerian = false;
                         break;
                     }
-                case ComponentWithEdges.OneComponentWithOneVertex:
-                    {
-                        MessageBox.Show($"Graph contains one component with one vertex. Graph is Eulerian");
-                        _isEulerian = true;
-                        break;
-                    }
-                case ComponentWithEdges.OneComponentWithManyVertices:
+                case ComponentWithEdges.OneComponent:
                     {
                         // Check every vertice with NextStep()
                         _isEulerian = true;
@@ -120,7 +114,7 @@ namespace IsEulerianVisualisation
             var vertex = _graphVertices.ElementAt(_currentVertexIndex);
             vertexVisualisation.Value.Background = new SolidColorBrush(Colors.YellowGreen);
 
-            if ((_graphProperty == ComponentWithEdges.OneComponentWithManyVertices) && (!_algo.satisfiesEulerianCondition(vertex)))
+            if (!_algo.satisfiesEulerianCondition(vertex))
             {
                 _isEulerian = false;
                 MessageBox.Show($"Vertex {vertexVisualisation.Key} has odd count of edges. Graph is not Eulerian");
