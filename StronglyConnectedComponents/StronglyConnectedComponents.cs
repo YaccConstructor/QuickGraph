@@ -178,6 +178,6 @@ namespace StronglyConnectedComponents
         }
 
         public bool CanGoBack => step > 0;
-        public bool CanGoFurther => step < steps;
+        public bool CanGoFurther => step < steps - 1;
     }
 }

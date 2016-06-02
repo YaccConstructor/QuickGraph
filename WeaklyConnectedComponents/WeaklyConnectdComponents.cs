@@ -45,7 +45,6 @@ namespace WeaklyConnectedComponents
         private readonly GraphXZoomControl _zoomControl;
         private Stack<List<GraphSerializationData>> _steps;
         private WeaklyConnectedComponentsAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>> notDFS;
-        private int curva;
         private int[] diffBySteps = new int[100];
         private int step;
         private GraphXVertex[] vertices = new GraphXVertex[100];
@@ -94,16 +93,10 @@ namespace WeaklyConnectedComponents
             var dfsUndir = new UndirectedDepthFirstSearchAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>(undirected);
             notDFS = new WeaklyConnectedComponentsAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>(graph);
             notDFS.Compute();
-            curva = 0;
-            step = 0;
+            step = -1;
             steps = notDFS.Steps;
             diffBySteps = notDFS.DiffBySteps;
             vertices = notDFS.Vertices;
-            //sort.Compute();
-            // dfsUndir.StartVertex += new VertexAction<GraphXVertex>(this.StartVertex);
-            //dfsUndir.DiscoverVertex += new VertexAction<GraphXVertex>(this.DiscoverVertex);
-            //dfsUndir.Compute();
-            ++this.curva;
 
             var amountOfComponents = notDFS.ComponentCount;
             var someComponents = notDFS.Components;
@@ -116,19 +109,17 @@ namespace WeaklyConnectedComponents
 
         public void NextStep()
         {
-
+            step++;
             HighlightNextStep();
             if (!graphArea.LogicCore.Graph.Vertices.Any())
             {
                 return;
             }
-            step++;
         }
 
         public void PreviousStep()
         {
             HighlightPrevStep();
-
             step--;
         }
 
@@ -186,6 +177,6 @@ namespace WeaklyConnectedComponents
         }
 
         public bool CanGoBack => step > 0;
-        public bool CanGoFurther => step < steps;
+        public bool CanGoFurther => step < steps - 1;
     }
 }

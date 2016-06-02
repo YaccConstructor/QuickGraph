@@ -126,6 +126,7 @@ namespace ConnectedComponents
 
         public void PreviousStep()
         {
+            
             HighlightPrevStep();
             currState--;
             _hasFinished = false;
@@ -194,7 +195,7 @@ namespace ConnectedComponents
             vertices[step] = v;
             step++;
         }
-        public bool CanGoBack => currState > 0;
-        public bool CanGoFurther => _hasStarted && !_hasFinished;
+        public bool CanGoBack => currState >= 0;
+        public bool CanGoFurther => currState < step - 1;
     }
 }
