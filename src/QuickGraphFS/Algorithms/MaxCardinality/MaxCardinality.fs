@@ -43,7 +43,7 @@ type public MaxCardinality<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vert
     let rec greedyMatch ((H1Prev:Map<'Vertex,Set<'Vertex>>), H1Post) H2 ((HGood:Map<'Vertex,Set<'Vertex>>), HMinus) =         
         if Map.isEmpty HGood && Map.isEmpty HMinus then (Set.empty,Set.empty) else
         
-        let found = HGood |> Map.tryPick (fun k v -> if Set.isEmpty v then None else Some (k,v) ) 
+        let found = HGood |> Map.tryPick (fun k v -> if Set.isEmpty v then None else Some (k,v)) 
         
         if found.IsNone then (Set.empty,Set.empty) else
 
@@ -60,11 +60,11 @@ type public MaxCardinality<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vert
 
         let (HGood, HMinus) = trimMatching (v,u) (H1Prev,H1Post) H2 (HGood,HMinus)
 
-        let HPosGood = HGood |> Map.filter ( fun _ s -> not <| Set.isEmpty s )
+        let HPosGood = HGood |> Map.filter (fun _ s -> not <| Set.isEmpty s)
         let HPosMinus = HPosGood |> Map.map (fun _ _ -> Set.empty) 
 
 
-        let HNegGood = HMinus |> Map.filter ( fun _ s -> not <| Set.isEmpty s )
+        let HNegGood = HMinus |> Map.filter (fun _ s -> not <| Set.isEmpty s)
         let HNegMinus = HNegGood |> Map.map (fun _ _ -> Set.empty) 
 
 
