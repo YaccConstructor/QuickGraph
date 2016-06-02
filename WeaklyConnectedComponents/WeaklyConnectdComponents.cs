@@ -93,6 +93,7 @@ namespace WeaklyConnectedComponents
             var dfsUndir = new UndirectedDepthFirstSearchAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>(undirected);
             notDFS = new WeaklyConnectedComponentsAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>(graph);
             notDFS.Compute();
+            var graphs = notDFS.Graphs;
             step = -1;
             steps = notDFS.Steps;
             diffBySteps = notDFS.DiffBySteps;

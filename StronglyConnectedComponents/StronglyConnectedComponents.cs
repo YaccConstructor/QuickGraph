@@ -94,6 +94,7 @@ namespace StronglyConnectedComponents
             notDFS = new StronglyConnectedComponentsAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>(graph);
             notDFS.Compute();
             step = 0;
+            var graphs = notDFS.Graphs;
             steps = notDFS.Steps;
             diffBySteps = notDFS.DiffBySteps;
             vertices = notDFS.Vertices; 
