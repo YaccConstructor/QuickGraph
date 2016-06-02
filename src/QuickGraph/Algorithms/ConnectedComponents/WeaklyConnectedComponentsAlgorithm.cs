@@ -21,6 +21,9 @@ namespace QuickGraph.Algorithms.ConnectedComponents
         private readonly Dictionary<int, int> componentEquivalences = new Dictionary<int, int>();
         private int componentCount = 0;
         private int currentComponent = 0;
+        private int[] diffBySteps = new int[100];
+        private int step;
+        private TVertex[] vertices = new TVertex[100];
 
         public WeaklyConnectedComponentsAlgorithm(IVertexListGraph<TVertex, TEdge> visitedGraph)
             : this(visitedGraph, new Dictionary<TVertex, int>())
@@ -98,6 +101,29 @@ namespace QuickGraph.Algorithms.ConnectedComponents
             this.componentEquivalences.Clear();
         }
 
+        public TVertex[] Vertices
+        {
+            get
+            {
+                return this.vertices;
+            }
+        }
+
+        public int Steps
+        {
+            get
+            {
+                return step;
+            }
+        }
+        public int[] DiffBySteps
+        {
+            get
+            {
+                return diffBySteps;
+            }
+        }
+
         void dfs_StartVertex(TVertex v)
         {
             // we are looking on a new tree
@@ -105,12 +131,22 @@ namespace QuickGraph.Algorithms.ConnectedComponents
             this.componentEquivalences.Add(this.currentComponent, this.currentComponent);
             this.componentCount++;
             this.components.Add(v, this.currentComponent);
+            //
+            this.diffBySteps[step] = componentCount;
+            this.vertices[step] = v;
+            this.step++;
+            //
         }
 
         void dfs_TreeEdge(TEdge e)
         {
             // new edge, we store with the current component number
             this.components.Add(e.Target, this.currentComponent);
+            //
+            this.diffBySteps[step] = componentCount;
+            this.vertices[step] = e.Target;
+            this.step++;
+            //
         }
 
         private int GetComponentEquivalence(int component)

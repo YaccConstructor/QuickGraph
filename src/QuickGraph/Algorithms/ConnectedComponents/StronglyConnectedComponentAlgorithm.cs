@@ -22,6 +22,9 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 		private Stack<TVertex> stack;
 		int componentCount;
 		int dfsTime;
+        private int[] diffBySteps = new int[100];
+        private int step;
+        private TVertex[] vertices = new TVertex[100];
 
         public StronglyConnectedComponentsAlgorithm(
             IVertexListGraph<TVertex,TEdge> g)
@@ -82,13 +85,41 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 			}
 		}
 
-		private void DiscoverVertex(TVertex v)
+        public TVertex[] Vertices
+        {
+            get
+            {
+                return this.vertices;
+            }
+        }
+
+        public int Steps
+        {
+            get
+            {
+                return step;
+            }
+        }
+        public int[] DiffBySteps
+        {
+            get
+            {
+                return diffBySteps;
+            }
+        }
+
+        private void DiscoverVertex(TVertex v)
 		{
 			this.Roots[v]=v;
 			this.Components[v]=int.MaxValue;
-			this.DiscoverTimes[v]=dfsTime++;
+            
+            this.diffBySteps[step] = componentCount;
+            this.vertices[step] = v;
+            this.step++;
+            
+            this.DiscoverTimes[v]=dfsTime++;
 			this.stack.Push(v);
-		}
+        }
 
 		/// <summary>
 		/// Used internally
@@ -111,10 +142,16 @@ namespace QuickGraph.Algorithms.ConnectedComponents
 				{
 					w = this.stack.Pop(); 
 					this.Components[w] = componentCount;
-				} 
+
+
+                    this.diffBySteps[step] = componentCount;
+                    this.vertices[step] = w;
+                    this.step++;
+                } 
 				while (!w.Equals(v));
 				++componentCount;
-			}	
+                
+            }	
 		}
 
 		private TVertex MinDiscoverTime(TVertex u, TVertex v)
