@@ -2,6 +2,9 @@
 src/DotParser/DotParser.fs
 src/DotParser/DotLexer.fs
 
+# Directory GraphTaskBin
+src/GraphTaskBin/
+
 # FsYard junk
 src/DotParser/epsilons/
 src/DotParser/log.txt
