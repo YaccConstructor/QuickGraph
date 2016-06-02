@@ -17,34 +17,46 @@ using Point = System.Drawing.Point;
 [assembly: Addin]
 [assembly: AddinDependency("GraphTasks", "1.0")]
 
-namespace BFSPlugin
+namespace DijkstraPlugin
 {
+    using QuickGraph.Algorithms.ShortestPath;
     using Graph = BidirectionalGraph<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>;
     using GraphArea = BidirectionalGraphArea<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>;
 
     [Extension]
-    public class BFSPlugin : IAlgorithm
+    public class DijkstraPlugin : IAlgorithm
     {
         private readonly GraphArea _graphArea;
         private readonly GraphXZoomControl _zoomControl;
         private bool _hasStarted;
         private bool _hasFinished;
-        private List<GraphXVertex> states;
-        private BreadthFirstSearchAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>> bfs;
+        private List<State> states;
+        private DijkstraShortestPathAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>> dijkstra;
         private int currState;
 
         byte a = 0xFF, r = 0xE3, g = 0xE3, b = 0xE3;
 
-        public BFSPlugin()
+        private class State {
+            public State(GraphXVertex v, SolidColorBrush c)
+            {
+                this.v = v;
+                this.c = c;
+            }
+            public GraphXVertex v;
+            public SolidColorBrush c;
+        }
+
+
+        public DijkstraPlugin()
         {
             _graphArea = new GraphArea();
             _zoomControl = new GraphXZoomControl { Content = _graphArea };
             Output.Controls.Add(new ElementHost { Dock = DockStyle.Fill, Child = _zoomControl });
         }
 
-        public string Name => "Breadth First Search Plugin";
+        public string Name => "Dijkstra algorithm Plugin";
         public string Author => "Anastasia Sulyagina";
-        public string Description => "This plugin demonstrates how BFS works.\n";
+        public string Description => "This plugin demonstrates how Dijkstra alg works.\n";
 
         public Panel Options { get; } = new Panel { Dock = DockStyle.Fill };
         public Panel Output { get; } = new Panel { Dock = DockStyle.Fill };
@@ -58,58 +70,72 @@ namespace BFSPlugin
             var edgeFun = EdgeFactory<GraphXVertex>.Weighted(0);
             var graph = Graph.LoadDot(dotSource, vertexFun, edgeFun);
 
-            states = new List<GraphXVertex>();
+            states = new List<State>();
 
-            if (!graph.Vertices.Any())
+            if (graph.IsVerticesEmpty)
             {
                 MessageBox.Show("Graph is empty.");
                 return;
             }
 
-            bfs = new BreadthFirstSearchAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>(graph);
+            dijkstra = new DijkstraShortestPathAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>(graph, x=>x.Tag);
 
-            bfs.DiscoverVertex += OnDiscoverVertex;
+            dijkstra.DiscoverVertex += OnDiscoverVertex;
+            dijkstra.FinishVertex += OnStartVertex;
 
             currState = -1;
 
-            bfs.Compute();
+            dijkstra.Compute();
 
             _graphArea.LogicCore.Graph = graph;
             _graphArea.GenerateGraph();
             _zoomControl.ZoomToFill();
-
+            foreach (var e in _graphArea.EdgesList)
+            {
+                e.Value.ShowLabel = true;
+            }
             _hasStarted = true;
             _hasFinished = false;
         }
 
         private void HighlightTraversal()
         {
-            var currNode = states.ElementAt(currState);
-            _graphArea.VertexList[currNode].Background = new SolidColorBrush(Colors.YellowGreen);
-            if (!_hasFinished)
-            {
-                var nextNode = states.ElementAt(currState + 1);
-                _graphArea.VertexList[nextNode].Background = new SolidColorBrush(Color.FromArgb(a, r, g, b));
-            }
+            var currNode = states[currState].v;
+            _graphArea.VertexList[currNode].Background = states[currState].c;
+
         }
 
         public void NextStep()
         {
             currState++;
             _hasFinished = currState == states.Count - 1;
+
             HighlightTraversal();
         }
 
         public void PreviousStep()
         {
-            currState--;
             _hasFinished = false;
-            HighlightTraversal();
+            var currNode = states[currState];
+            if (currNode.c.Color.Equals(Colors.DarkTurquoise))
+            {
+                _graphArea.VertexList[currNode.v].Background = new SolidColorBrush(Colors.YellowGreen);
+            }
+            else
+            {
+                _graphArea.VertexList[currNode.v].Background = new SolidColorBrush(Color.FromArgb(a, r, g, b));
+            }
+            currState--;
         }
 
         private void OnDiscoverVertex(GraphXVertex vertex)
         {
-            states.Add(vertex);
+            states.Add(new State(vertex, new SolidColorBrush(Colors.YellowGreen)));
+        }
+
+        private void OnStartVertex(GraphXVertex vertex)
+        {
+            states.Add(new State(vertex, new SolidColorBrush(Colors.DarkTurquoise)));
         }
     }
 }

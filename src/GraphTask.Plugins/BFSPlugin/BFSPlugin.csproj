@@ -51,43 +51,43 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DotParser\DotParser.fsproj">
+    <ProjectReference Include="..\DotParser\DotParser.fsproj">
       <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
       <Name>DotParser</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GraphTask.Common\GraphTask.Common.fsproj">
+    <ProjectReference Include="..\GraphTask.Common\GraphTask.Common.fsproj">
       <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
       <Name>GraphTask.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
+    <ProjectReference Include="..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
       <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>
       <Name>GraphX.WPF.Controls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GraphX\GraphX.PCL.Common\GraphX.PCL.Common.csproj">
+    <ProjectReference Include="..\GraphX\GraphX.PCL.Common\GraphX.PCL.Common.csproj">
       <Project>{3644d44b-dec0-4b65-bba0-c68e34821aae}</Project>
       <Name>GraphX.PCL.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GraphX\GraphX.PCL.Logic\GraphX.PCL.Logic.csproj">
+    <ProjectReference Include="..\GraphX\GraphX.PCL.Logic\GraphX.PCL.Logic.csproj">
       <Project>{a30d218b-aaa4-483a-99f7-eaeb1b8b4610}</Project>
       <Name>GraphX.PCL.Logic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\QuickGraph.FSA\QuickGraph.FSA.fsproj">
+    <ProjectReference Include="..\QuickGraph.FSA\QuickGraph.FSA.fsproj">
       <Project>{bd5d18de-1c9d-4314-a777-21aa683eeace}</Project>
       <Name>QuickGraph.FSA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\QuickGraph.FST\QuickGraph.FST.fsproj">
+    <ProjectReference Include="..\QuickGraph.FST\QuickGraph.FST.fsproj">
       <Project>{4b220e23-a7e0-4222-83f5-c785f7c66b33}</Project>
       <Name>QuickGraph.FST</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
+    <ProjectReference Include="..\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
       <Project>{595d6322-637a-4a36-97f1-d53f3f9ecea7}</Project>
       <Name>QuickGraph.Graphviz</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj">
+    <ProjectReference Include="..\QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj">
       <Project>{646cfbb0-b998-45e7-8809-991a5538ff36}</Project>
       <Name>QuickGraph.GraphXAdapter</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\QuickGraph\QuickGraph.csproj">
+    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
       <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
       <Name>QuickGraph</Name>
     </ProjectReference>
@@ -104,7 +104,7 @@
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
       <ItemGroup>
         <Reference Include="Mono.Addins">
-          <HintPath>..\..\..\packages\Mono.Addins\lib\net40\Mono.Addins.dll</HintPath>
+          <HintPath>..\..\packages\Mono.Addins\lib\net40\Mono.Addins.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
