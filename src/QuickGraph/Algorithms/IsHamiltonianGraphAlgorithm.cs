@@ -15,8 +15,9 @@ namespace QuickGraph.Algorithms
             list[indexB] = tmp;
         }
 
-        public void GetPermutations(IEnumerable<TVertex> list)
+        public void GetPermutations()
         {
+            IEnumerable<TVertex> list = graph.Vertices;
             GetPermutations(list.ToList(), 0, list.Count() - 1);
         }
 
@@ -66,7 +67,7 @@ namespace QuickGraph.Algorithms
 
         public bool IsHamiltonian()
         {
-            GetPermutations(graph.Vertices);
+            GetPermutations();
             foreach (var path in permutations)
             {
                 if (existsInGraph(path))
