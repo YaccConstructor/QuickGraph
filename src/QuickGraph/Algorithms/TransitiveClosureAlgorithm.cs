@@ -6,15 +6,18 @@ namespace QuickGraph.Algorithms
     public class TransitiveClosureAlgorithm<TVertex, TEdge> : AlgorithmBase<BidirectionalGraph<TVertex, TEdge>> where TEdge : IEdge<TVertex>
     {
         public TransitiveClosureAlgorithm(
-            BidirectionalGraph<TVertex, TEdge> visitedGraph
+            BidirectionalGraph<TVertex, TEdge> visitedGraph,
+            Func<TVertex, TVertex, TEdge> createEdge 
             )
             : base(visitedGraph)
         {
             TransitiveClosure = new BidirectionalGraph<TVertex, TEdge>();
+            _createEdge = createEdge;
         }
-
         
         public BidirectionalGraph<TVertex, TEdge> TransitiveClosure { get; private set; } //R# will say you do not need this. AppVeyor wants it.
+
+        private readonly Func<TVertex, TVertex, TEdge> _createEdge;
 
         protected override void InternalCompute()
         {
@@ -37,28 +40,18 @@ namespace QuickGraph.Algorithms
                     thisVertexPredecessors.Add(predecessor);
 
                     // Add all the ancestors of the predeccessors
-                    foreach (var ancestorId in ancestorsOfVertices[predecessor])
-                    {
-                        thisVertexAncestors.Add(ancestorId);
-                    }
+                    thisVertexAncestors.UnionWith(ancestorsOfVertices[predecessor]);
                 }
 
                 // Add indirect edges
                 foreach (var indirectAncestor in thisVertexAncestors)
                 {
-                    if (!TransitiveClosure.ContainsEdge(indirectAncestor, vertexId))
-                    {
-                        //this is probably not good
-                        TransitiveClosure.AddEdge((TEdge) Activator.CreateInstance(typeof(TEdge), indirectAncestor, vertexId));
-                    }
+                    if (TransitiveClosure.ContainsEdge(indirectAncestor, vertexId)) continue;
+                    TransitiveClosure.AddEdge(_createEdge(indirectAncestor, vertexId));
                 }
-                
 
                 // Add predecessors to ancestors list
-                foreach (var pred in thisVertexPredecessors)
-                {
-                    thisVertexAncestors.Add(pred);
-                }
+                thisVertexAncestors.UnionWith(thisVertexPredecessors);
             }
         }
     }

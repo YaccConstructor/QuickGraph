@@ -41,10 +41,7 @@ namespace QuickGraph.Algorithms
                     thisVertexPredecessors.Add(predecessor);
 
                     // Add all the ancestors of the predeccessors
-                    foreach (var ancestorId in ancestorsOfVertices[predecessor])
-                    {
-                        thisVertexAncestors.Add(ancestorId);
-                    }
+                    thisVertexAncestors.UnionWith(ancestorsOfVertices[predecessor]);
                 }
 
                 // Remove indirect edges
@@ -58,10 +55,7 @@ namespace QuickGraph.Algorithms
                 }
 
                 // Add predecessors to ancestors list
-                foreach (var pred in thisVertexPredecessors)
-                {
-                    thisVertexAncestors.Add(pred);
-                }
+                thisVertexAncestors.UnionWith(thisVertexPredecessors);
             }
         }
     }

@@ -1231,10 +1231,11 @@ this
         }
 
         public static BidirectionalGraph<TVertex, TEdge> ComputeTransitiveClosure<TVertex, TEdge>(
-            this BidirectionalGraph<TVertex, TEdge> visitedGraph
+            this BidirectionalGraph<TVertex, TEdge> visitedGraph,
+            Func<TVertex, TVertex, TEdge> createEdge
             ) where TEdge : IEdge<TVertex>
         {
-            var algo = new TransitiveClosureAlgorithm<TVertex, TEdge>(visitedGraph);
+            var algo = new TransitiveClosureAlgorithm<TVertex, TEdge>(visitedGraph, createEdge);
             algo.Compute();
             return algo.TransitiveClosure;
         }
