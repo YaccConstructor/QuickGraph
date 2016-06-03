@@ -340,7 +340,6 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         public void Prim12240()
         {
             var g = new UndirectedGraph<int, Edge<int>>();
-            // (1,2), (3,2),(3,4),(1,4)
             g.AddVerticesAndEdge(new Edge<int>(1, 2));
             g.AddVerticesAndEdge(new Edge<int>(3, 2));
             g.AddVerticesAndEdge(new Edge<int>(3, 4));
@@ -377,18 +376,6 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         [DeploymentItem("GraphML/repro12273.xml", "GraphML")]
         public void Prim12273()
         {
-            //  var doc = new XPathDocument("repro12273.xml");
-
-            //var ug = doc.DeserializeFromXml(
-            //    "graph", "node", "edge",
-            //    nav => new UndirectedGraph<string, TaggedEdge<string, double>>(),
-            //    nav => nav.GetAttribute("id", ""),
-            //    nav => new TaggedEdge<string, double>(
-            //        nav.GetAttribute("source", ""),
-            //        nav.GetAttribute("target", ""),
-            //        int.Parse(nav.GetAttribute("weight", ""))
-            //        )
-            //    );
             var ug = XmlReader.Create("GraphML/repro12273.xml").DeserializeFromXml(
                 "graph", "node", "edge", "",
                 reader => new UndirectedGraph<string, TaggedEdge<string, double>>(),
@@ -400,7 +387,6 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                     )
                 );
 
-            //MsaglGraphExtensions.ShowMsaglGraph(ug);
             var prim = ug.MinimumSpanningTreePrim(e => e.Tag).ToList();
             var pcost = prim.Sum(e => e.Tag);
             Console.WriteLine("prim cost {0}", pcost);
