@@ -56,7 +56,7 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
         {
             var cancelManager = this.Services.CancelManager;
             var visetedVert = new List<TVertex>();
-            var visetedEdges = new List<TEdge>();
+            var edges = new List<TEdge>();
             var ds = new ForestDisjointSet<TVertex>(this.VisitedGraph.VertexCount);
             foreach (var v in this.VisitedGraph.Vertices)
             {
@@ -67,37 +67,43 @@ namespace QuickGraph.Algorithms.MinimumSpanningTree
 
             if (cancelManager.IsCancelling)
                 return;
-
-            var queue = new BinaryQueue<TEdge, double>(this.edgeWeights);
+            var lastVert = visetedVert[visetedVert.Count - 1];
             foreach (var edge in this.VisitedGraph.Edges)
-                if (!visetedEdges.Contains(edge) && (visetedVert.Contains(edge.Source) || visetedVert.Contains(edge.Target)))
-                {
-                    queue.Enqueue(edge);
-                    visetedEdges.Add(edge);
-                }
+                if ((lastVert.Equals(edge.Source) && !visetedVert.Contains(edge.Target)) || (lastVert.Equals(edge.Target) && !visetedVert.Contains(edge.Source)))
+                    edges.Add(edge);
 
             if (cancelManager.IsCancelling)
                 return;
 
-            while (queue.Count > 0)
+            while (edges.Count > 0 && visetedVert.Count < VisitedGraph.VertexCount)
             {
-                foreach (var edge in this.VisitedGraph.Edges)
-                    if (!visetedEdges.Contains(edge) && (visetedVert.Contains(edge.Source) || visetedVert.Contains(edge.Target)))
-                    {
-                        queue.Enqueue(edge);
-                        visetedEdges.Add(edge);
-                    }
-                var e = queue.Dequeue();
-                this.OnExamineEdge(e);
-                if (!ds.AreInSameSet(e.Source, e.Target))
+                var min = edgeWeights(edges[0]);
+                var mined = edges[0];
+                foreach (var ed in edges)
                 {
-                    this.OnTreeEdge(e);
-                    ds.Union(e.Source, e.Target);
-                    if (visetedVert.Contains(e.Source))
-                        visetedVert.Add(e.Target);
-                    else
-                        visetedVert.Add(e.Source);
+                    if (min > edgeWeights(ed))
+                    {
+                        min = edgeWeights(ed);
+                        mined = ed;
+                    }
                 }
+                this.OnExamineEdge(mined);
+                if (!ds.AreInSameSet(mined.Source, mined.Target))
+                {
+                    this.OnTreeEdge(mined);
+                    ds.Union(mined.Source, mined.Target);
+                    if (visetedVert.Contains(mined.Source))
+                        visetedVert.Add(mined.Target);
+                    else
+                        visetedVert.Add(mined.Source);
+                    edges.Remove(mined);
+                    lastVert = visetedVert[visetedVert.Count - 1];
+                    foreach (var edge in this.VisitedGraph.Edges)
+                        if ((lastVert.Equals(edge.Source) && !visetedVert.Contains(edge.Target)) || (lastVert.Equals(edge.Target) && !visetedVert.Contains(edge.Source)))
+                            edges.Add(edge);
+                }
+                else
+                    edges.Remove(mined);
             }
         }
     }

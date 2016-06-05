@@ -309,26 +309,19 @@ namespace QuickGraph
             }
 
             // iterage over edges and remove each edge touching the vertex
-            var edgeToRemove = new EdgeList<TVertex, TEdge>();
             foreach (var kv in this.vertexEdges)
             {
                 if (kv.Key.Equals(v)) continue; // we've already 
                 // collect edge to remove
-                foreach(var edge in kv.Value)
+                foreach(var edge in kv.Value.Clone())
                 {
                     if (edge.Target.Equals(v))
-                        edgeToRemove.Add(edge);
+                    {
+                        kv.Value.Remove(edge);
+                        this.OnEdgeRemoved(edge);
+                        this.edgeCount--;
+                    }
                 }
-
-                // remove edges
-                foreach (var edge in edgeToRemove)
-                {
-                    kv.Value.Remove(edge);
-                    this.OnEdgeRemoved(edge);
-                }
-                // update count
-                this.edgeCount -= edgeToRemove.Count;
-                edgeToRemove.Clear();
             }
 
             Contract.Assert(this.edgeCount >= 0);

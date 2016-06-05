@@ -45,8 +45,8 @@ NUGET
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (32e262c11174b196dc8af16a577c8c3aa0ab0b2b)
+    modules/Octokit/Octokit.fsx (60acb2f035cb39f2bd40a6c58a4de10d915da248)
       Octokit
   remote: fsprojects/FsUnit
   specs:
-    src/FsUnit.NUnit/FsUnit.fs (43086ca8981c7642c1067ad5e9de80caf73ba4ec)
+    src/FsUnit.NUnit/FsUnit.fs (a56aa15e019b044574b50b95ad14c8815a22716a)
