@@ -22,7 +22,7 @@ namespace MainForm
             Algorithms = AddinManager.GetExtensionObjects<IAlgorithm>().ToDictionary(algorithm => algorithm.Name);
 
             var form = new MainForm();
-            foreach (var algorithm in Algorithms.Values)
+            foreach (var algorithm in Algorithms.Values.OrderBy(algo => algo.Name))
             {
                 form.algorithmPicker.Items.Add(algorithm.Name);
             }

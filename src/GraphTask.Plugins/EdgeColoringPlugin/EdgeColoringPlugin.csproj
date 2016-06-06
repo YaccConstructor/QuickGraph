@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{492FB0FE-9382-4656-974F-9074619C2BB7}</ProjectGuid>
+    <ProjectGuid>{2C971550-BCDE-4CD7-A099-17286D392C2E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VertexColoringPlugin</RootNamespace>
-    <AssemblyName>VertexColoringPlugin</AssemblyName>
+    <RootNamespace>EdgeColoringPlugin</RootNamespace>
+    <AssemblyName>EdgeColoringPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -47,7 +48,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="VertexColoringPlugin.cs" />
+    <Compile Include="EdgeColoringPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,10 +59,6 @@
     <ProjectReference Include="..\..\GraphTask.Common\GraphTask.Common.fsproj">
       <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
       <Name>GraphTask.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphTask.Plugins\PluginsCommon\PluginsCommon.csproj">
-      <Project>{03bb2368-5892-4378-b397-8826fa3323bb}</Project>
-      <Name>PluginsCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
       <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>
@@ -74,10 +71,6 @@
     <ProjectReference Include="..\..\GraphX\GraphX.PCL.Logic\GraphX.PCL.Logic.csproj">
       <Project>{a30d218b-aaa4-483a-99f7-eaeb1b8b4610}</Project>
       <Name>GraphX.PCL.Logic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\QuickGraph.Data\QuickGraph.Data.csproj">
-      <Project>{960c14d1-edbd-40e5-8ae6-25e311551b87}</Project>
-      <Name>QuickGraph.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\QuickGraph.FSA\QuickGraph.FSA.fsproj">
       <Project>{bd5d18de-1c9d-4314-a777-21aa683eeace}</Project>
@@ -95,9 +88,17 @@
       <Project>{646cfbb0-b998-45e7-8809-991a5538ff36}</Project>
       <Name>QuickGraph.GraphXAdapter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\QuickGraphFS\QuickGraphFS.fsproj">
+      <Project>{1ccafd2c-4a61-4f7f-986c-a2f575086344}</Project>
+      <Name>QuickGraphFS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\QuickGraph\QuickGraph.csproj">
       <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
       <Name>QuickGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PluginsCommon\PluginsCommon.csproj">
+      <Project>{03bb2368-5892-4378-b397-8826fa3323bb}</Project>
+      <Name>PluginsCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

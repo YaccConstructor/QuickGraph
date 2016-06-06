@@ -26,5 +26,10 @@ namespace QuickGraph.GraphXAdapter
             return (v1, v2, attrs) =>
                 new GraphXTaggedEdge<TVertex, int>(v1, v2, DotParserAdapter.Common.GetWeight(attrs, defaultWeight));
         }
+        public static Func<TVertex, TVertex, Attributes, TaggedEdge<TVertex, int>> WeightedTaggedEdge(int defaultWeight)
+        {
+            return (v1, v2, attrs) =>
+                new TaggedEdge<TVertex, int>(v1, v2, DotParserAdapter.Common.GetWeight(attrs, defaultWeight));
+        }
     }
 }
