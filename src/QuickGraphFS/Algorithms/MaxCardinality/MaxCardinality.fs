@@ -11,11 +11,7 @@ type public MaxCardinality<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vert
         
         let intersectKeys m1 m2 = Map.fold (fun s k _ -> if Map.containsKey k m1 then Set.add k s else s) Set.empty m2 
         
-        let HKeys = 
-           let keys1 =  Map.fold (fun s k _ -> Set.add k s ) Set.empty HGood
-           //we do not need to go through HMinus keys
-           //Map.fold (fun s k _ -> Set.add k s ) keys1 HMinus
-           keys1
+        let HKeys = Map.fold (fun s k _ -> Set.add k s ) Set.empty HGood
                 
         let prevIntersection = Set.intersect (Map.find v H1Prev) HKeys
         let postIntersection = Set.intersect (Map.find v H1Post) HKeys
@@ -48,10 +44,7 @@ type public MaxCardinality<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vert
         if found.IsNone then (Set.empty,Set.empty) else
 
         let v, G2Vertices = found.Value        
-        let u = 
-           let e = (G2Vertices:>IEnumerable<_>).GetEnumerator()
-           e.MoveNext()
-           e.Current
+        let u = G2Vertices.MaximumElement
         
         let G2Vertices = Set.remove u G2Vertices
         let HMinus_v = Set.union G2Vertices (Map.find v HMinus)
@@ -132,10 +125,9 @@ type public MaxCardinality<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vert
                         (HGood, HMinus)
                     ) (HGood,HMinus)
 
-                if sigma.Count > sigmaM.Count then 
-                    loop sigma (H1Prev, H1Post, H2, HGood, HMinus)
-                else 
-                    loop sigmaM (H1Prev, H1Post, H2, HGood, HMinus)
+                loop
+                    (if sigma.Count > sigmaM.Count then sigma else sigmaM)
+                    (H1Prev, H1Post, H2, HGood, HMinus)
             else
                 sigmaM
 
