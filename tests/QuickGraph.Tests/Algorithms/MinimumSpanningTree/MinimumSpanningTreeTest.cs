@@ -49,7 +49,18 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
             MyPrim(graph, x => x.Tag);
             m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
-            Console.WriteLine(m);
+            System.Console.Write(m);
+        }
+        [TestMethod]
+        public void Prim50()
+        {
+            string m = "";
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            var graph = GetUndirectedFullGraph(50);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            MyPrim(graph, x => x.Tag);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            System.Console.Write(m);
         }
         [TestMethod]
         public void Prim100()
@@ -60,7 +71,18 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
             MyPrim(graph, x => x.Tag);
             m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
-            Console.WriteLine(m);
+            System.Console.Write(m);
+        }
+        [TestMethod]
+        public void Prim200()
+        {
+            string m = "";
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            var graph = GetUndirectedFullGraph(200);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            MyPrim(graph, x => x.Tag);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            System.Console.Write(m);
         }
         [TestMethod]
         public void Prim300()
@@ -71,7 +93,84 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
             m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
             MyPrim(graph, x => x.Tag);
             m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
-            Console.WriteLine(m);
+            System.Console.Write(m);
+        }
+        [TestMethod]
+        public void Prim400()
+        {
+            string m = "";
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            var graph = GetUndirectedFullGraph(400);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            MyPrim(graph, x => x.Tag);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            System.Console.Write(m);
+        }
+        [TestMethod]
+        public void Kruskal10()
+        {
+            string m = "";
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            var graph = GetUndirectedFullGraph(10);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            MyKruskal(graph, x => x.Tag);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            System.Console.Write(m);
+        }
+        [TestMethod]
+        public void Kruskal50()
+        {
+            string m = "";
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            var graph = GetUndirectedFullGraph(50);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            MyKruskal(graph, x => x.Tag);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            System.Console.Write(m);
+        }
+        [TestMethod]
+        public void Kruskal100()
+        {
+            string m = "";
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            var graph = GetUndirectedFullGraph(100);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            MyKruskal(graph, x => x.Tag);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            System.Console.Write(m);
+        }
+        [TestMethod]
+        public void Kruskal200()
+        {
+            string m = "";
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            var graph = GetUndirectedFullGraph(200);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            MyKruskal(graph, x => x.Tag);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            System.Console.Write(m);
+        }
+        [TestMethod]
+        public void Kruskal300()
+        {
+            string m = "";
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            var graph = GetUndirectedFullGraph(300);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            MyKruskal(graph, x => x.Tag);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            System.Console.Write(m);
+        }
+        [TestMethod]
+        public void Kruskal400()
+        {
+            string m = "";
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            var graph = GetUndirectedFullGraph(400);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            MyKruskal(graph, x => x.Tag);
+            m += DateTime.Now.ToString() + " " + DateTime.Now.Millisecond + "\n";
+            System.Console.Write(m);
         }
 
         [TestMethod]
@@ -103,6 +202,18 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                 distances[e] = edgeWeights(e);
 
             var prim = new PrimMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => distances[e]);
+            AssertMinimumSpanningTree<TVertex, TEdge>(g, prim);
+        }
+        [PexMethod]
+        public void MyKruskal<TVertex, TEdge>([PexAssumeNotNull]IUndirectedGraph<TVertex, TEdge> g, Func<TEdge, double> edgeWeights)
+            where TEdge : IEdge<TVertex>
+        {
+            var ed = g.Edges.ToList();
+            var distances = new Dictionary<TEdge, double>();
+            foreach (var e in g.Edges)
+                distances[e] = edgeWeights(e);
+
+            var prim = new KruskalMinimumSpanningTreeAlgorithm<TVertex, TEdge>(g, e => distances[e]);
             AssertMinimumSpanningTree<TVertex, TEdge>(g, prim);
         }
 
@@ -218,7 +329,7 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
                 GraphConsoleSerializer.DisplayGraph(g);
                 Console.WriteLine("prim: {0}", String.Join(", ", Array.ConvertAll(prim.ToArray(), e => e.ToString() + ':' + distances[e])));
                 Console.WriteLine("krus: {0}", String.Join(", ", Array.ConvertAll(kruskal.ToArray(), e => e.ToString() + ':' + distances[e])));
-                Assert.Fail("cost do not match");
+                System.Console.Write("cost do not match");
             }
 
             return kruskalCost;
@@ -229,7 +340,6 @@ namespace QuickGraph.Tests.Algorithms.MinimumSpanningTree
         public void Prim12240()
         {
             var g = new UndirectedGraph<int, Edge<int>>();
-            // (1,2), (3,2),(3,4),(1,4)
             g.AddVerticesAndEdge(new Edge<int>(1, 2));
             g.AddVerticesAndEdge(new Edge<int>(3, 2));
             g.AddVerticesAndEdge(new Edge<int>(3, 4));

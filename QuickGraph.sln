@@ -118,6 +118,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VertexColoringPlugin", "src\GraphTask.Plugins\VertexColoringPlugin\VertexColoringPlugin.csproj", "{492FB0FE-9382-4656-974F-9074619C2BB7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompleteColoringPlugin", "src\GraphTask.Plugins\CompleteColoringPlugin\CompleteColoringPlugin.csproj", "{90B04B29-080C-4132-AD57-E07DE119E3E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YenVisualisation", "src\YenVisualisation\YenVisualisation.csproj", "{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -843,6 +844,26 @@ Global
 		{90B04B29-080C-4132-AD57-E07DE119E3E7}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
 		{90B04B29-080C-4132-AD57-E07DE119E3E7}.ReleaseContractsReferences|x86.ActiveCfg = Release|Any CPU
 		{90B04B29-080C-4132-AD57-E07DE119E3E7}.ReleaseContractsReferences|x86.Build.0 = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Debug|x86.Build.0 = Debug|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.DebugContracts|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.DebugContracts|Any CPU.Build.0 = Debug|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.DebugContracts|x86.ActiveCfg = Debug|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.DebugContracts|x86.Build.0 = Debug|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Release|x86.ActiveCfg = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Release|x86.Build.0 = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Release20|Any CPU.ActiveCfg = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Release20|Any CPU.Build.0 = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Release20|x86.ActiveCfg = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Release20|x86.Build.0 = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.ReleaseContractsReferences|Any CPU.ActiveCfg = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.ReleaseContractsReferences|x86.ActiveCfg = Release|Any CPU
+		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.ReleaseContractsReferences|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
