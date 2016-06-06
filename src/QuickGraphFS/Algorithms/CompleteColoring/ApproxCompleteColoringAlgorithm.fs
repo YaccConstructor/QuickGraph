@@ -10,6 +10,8 @@ open System.Collections.Generic
 open QuickGraph
 
 type private AchromaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vertex: equality>() = 
+    let colored = new Event<_>()
+
     let firstIteration 
         (graph: IUndirectedGraph<'Vertex, 'Edge>)
         (passive: List<'Vertex>)
@@ -28,6 +30,7 @@ type private AchromaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and
             if passive.Contains item then
                 if graph.AdjacentDegree item > a' then
                     Colors.[color].Add item
+                    colored.Trigger(item, color)
                     passive.Remove item |> ignore
                     for edge in graph.AdjacentEdges item do
                         let tmp = if edge.Target = item then edge.Source else edge.Target
@@ -38,6 +41,7 @@ type private AchromaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and
             let vert = passive.[i]
             if Colors.[color].Count = 0 && graph.AdjacentDegree vert > 0 then
                 Colors.[color].Add vert
+                colored.Trigger(vert, color)
                 passive.Remove vert |> ignore
         Colors
         
@@ -217,8 +221,10 @@ type private AchromaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and
         stepThree graph passiveSet activeSet colorPassive colorActive activeDiscard passiveActive passiveRecursive
         stepFour graph passiveSet activePassive activeActive passiveIgnored passiveActive activeSet
         async { return Colors }
-//      Colors
 
+    [<CLIEvent>]
+    member this.Colored = colored.Publish
+//      Colors
     member this.Execute (graph: IUndirectedGraph<'Vertex, 'Edge>) = 
         let Passive = new List<'Vertex>()
         let Active = new List<'Vertex>()
@@ -228,20 +234,28 @@ type private AchromaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and
         async {
             let! res = iteration graph Passive Active d' a'
             col.AddRange res
+            for color in 0..(res.Count - 1) do
+                res.[color].ForEach(fun vert -> colored.Trigger(vert, color))
         } |> Async.RunSynchronously
         col
 
-type ApproxCompleteColoringAlgorithm() =
-    static member Compute(graph: IUndirectedGraph<int, SEdge<int>>) =
+type ApproxCompleteColoringAlgorithm<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and 'Vertex: equality>() =
+    
+    let colored = new Event<_>()
+
+    [<CLIEvent>]
+    member this.Colored = colored.Publish
+
+    member this.Compute(graph: UndirectedGraph<'Vertex, 'Edge>) =
         let noColor = -1
-        let findColor (colors: List<List<int>>) (vert: int) = 
+        let findColor (colors: List<List<'Vertex>>) (vert: 'Vertex) = 
             let mutable toRet = noColor
             for i in 0..(colors.Count - 1) do
                 if colors.[i].Contains vert then
                     toRet <- i
             toRet
-        let fulfilAchromatic (colors: List<List<int>>) =         
-            let addToColorSet (vert: int) = 
+        let fulfilAchromatic (colors: List<List<'Vertex>>) =         
+            let addToColorSet (vert: 'Vertex) = 
                 let neighbours = graph.AdjacentEdges vert
                 let selected = new List<int>()
                 for item in neighbours do
@@ -251,22 +265,25 @@ type ApproxCompleteColoringAlgorithm() =
                         if not <| selected.Contains x then
                             selected.Add x
                 if selected.Count = colors.Count then
-                    let n = new List<int>()
+                    let n = new List<'Vertex>()
                     n.Add vert
                     colors.Add n
+                    colored.Trigger(vert, colors.Count - 1)
                 else
                     let mutable toAdd = -1
                     for i in 0..(colors.Count - 1) do
                         if not <| selected.Contains i then
                             toAdd <- i
                     colors.[toAdd].Add vert
+                    colored.Trigger(vert, toAdd)
                
             for vert in graph.Vertices do
                 let x = findColor colors vert
                 if x = noColor then
                     addToColorSet vert
 
-        let algo = new AchromaticPartition<int, SEdge<int>>()
+        let algo = new AchromaticPartition<'Vertex, 'Edge>()
+        algo.Colored.Add(fun evArgs -> colored.Trigger evArgs)
         let res  = algo.Execute graph
         fulfilAchromatic res
         res
