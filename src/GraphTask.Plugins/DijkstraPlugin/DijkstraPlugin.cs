@@ -78,7 +78,7 @@ namespace DijkstraPlugin
                 return;
             }
 
-            dijkstra = new DijkstraShortestPathAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>(graph, x=>x.Tag);
+            dijkstra = new DijkstraShortestPathAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>(graph, x => x.Tag);
 
             dijkstra.DiscoverVertex += OnDiscoverVertex;
             dijkstra.FinishVertex += OnStartVertex;

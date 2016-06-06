@@ -60,7 +60,7 @@ namespace BFSPlugin
 
             states = new List<GraphXVertex>();
 
-            if (!graph.Vertices.Any())
+            if (graph.IsVerticesEmpty)
             {
                 MessageBox.Show("Graph is empty.");
                 return;

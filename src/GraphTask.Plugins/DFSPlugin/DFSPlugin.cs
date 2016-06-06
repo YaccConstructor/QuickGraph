@@ -63,7 +63,7 @@ namespace DFSPlugin
 
             states = new List<Traversal<GraphXVertex>.Node>();
 
-            if (!graph.Vertices.Any())
+            if (graph.IsVerticesEmpty)
             {
                 MessageBox.Show("Graph is empty.");
                 return;
