@@ -4,7 +4,7 @@ using QuickGraph.Algorithms.ConnectedComponents;
 
 namespace QuickGraph.Algorithms
 {
-    public enum ComponentWithEdges { NoComponent, OneComponentWithOneVertex, OneComponentWithManyVertices, ManyComponents };
+    public enum ComponentWithEdges { NoComponent, OneComponent, ManyComponents };
 
     public class IsEulerianGraphAlgorithm<TVertex, TEdge> where TEdge : IUndirectedEdge<TVertex>
     {
@@ -12,7 +12,12 @@ namespace QuickGraph.Algorithms
 
         public IsEulerianGraphAlgorithm(UndirectedGraph<TVertex, UndirectedEdge<TVertex>> graph)
         {
-            this.graph = graph;
+            var newGraph = new UndirectedGraph<TVertex, UndirectedEdge<TVertex>>(false, graph.EdgeEqualityComparer);
+            newGraph.AddVertexRange(graph.Vertices);
+            newGraph.AddEdgeRange(graph.Edges);
+            EdgePredicate<TVertex, UndirectedEdge<TVertex>> isLoop = e => e.Source.Equals(e.Target);
+            newGraph.RemoveEdgeIf(isLoop);
+            this.graph = newGraph;
         }
 
         private Tuple<int?, int?> firstAndSecondIndexOfTrue(bool[] data)
@@ -58,13 +63,7 @@ namespace QuickGraph.Algorithms
             {
                 return ComponentWithEdges.ManyComponents;
             }
-            // If component contain one vertex with edge (cycle), it is an eulerian component
-            if (componentsAlgo.Components.First(x => x.Value == firstIndex.Value).Key
-                    .Equals(componentsAlgo.Components.Last(x => x.Value == firstIndex.Value).Key))
-            {
-                return ComponentWithEdges.OneComponentWithOneVertex;
-            }
-            return ComponentWithEdges.OneComponentWithManyVertices;
+            return ComponentWithEdges.OneComponent;
         }
 
         public bool satisfiesEulerianCondition(TVertex vertex)
@@ -76,11 +75,10 @@ namespace QuickGraph.Algorithms
         {
             switch (checkComponentsWithEdges())
             {
-                case ComponentWithEdges.OneComponentWithOneVertex:
-                    return true;
-                case ComponentWithEdges.OneComponentWithManyVertices:
+                case ComponentWithEdges.OneComponent:
                     return graph.Vertices.All<TVertex>(satisfiesEulerianCondition);
                 case ComponentWithEdges.NoComponent:
+                    return graph.VertexCount == 1;
                 case ComponentWithEdges.ManyComponents:
                 default:
                     return false;
