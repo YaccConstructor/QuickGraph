@@ -6,6 +6,7 @@ namespace QuickGraph.Algorithms
     public class IsHamiltonianGraphAlgorithm<TVertex, TEdge> where TEdge : IUndirectedEdge<TVertex>
     {
         private UndirectedGraph<TVertex, UndirectedEdge<TVertex>> graph;
+        private double threshold;
         public List<List<TVertex>> permutations;
 
         private void Swap(IList<TVertex> list, int indexA, int indexB)
@@ -46,7 +47,8 @@ namespace QuickGraph.Algorithms
             EdgePredicate<TVertex, UndirectedEdge<TVertex>> isLoop = e => e.Source.Equals(e.Target);
             newGraph.RemoveEdgeIf(isLoop);
             this.graph = newGraph;
-            this.permutations = new List<List<TVertex>>();
+            permutations = new List<List<TVertex>>();
+            threshold = newGraph.VertexCount / 2.0;
         }
 
         private bool existsInGraph(List<TVertex> path)
@@ -65,21 +67,20 @@ namespace QuickGraph.Algorithms
             return true;
         }
 
+        private bool satisfiesDiracsTheorem(TVertex vertex)
+        {
+            // Using Dirac's theorem: if |vertices| >= 3 and for any vertex deg(vertex) >= (|vertices| / 2) then graph is Hamiltonian 
+            return graph.AdjacentEdges(vertex).Count() >= threshold;
+        }
+
         public bool IsHamiltonian()
         {
-            GetPermutations();
-            foreach (var path in permutations)
+            if (graph.VertexCount >= 3 && !graph.Vertices.All<TVertex>(satisfiesDiracsTheorem))
             {
-                if (existsInGraph(path))
-                {
-                    return true;
-                }
+                return false;
             }
-            return false;
-            //return possiblePathes.All<TVertex>(f);
-            // Using Dirac's theorem: if |vertices| >= 2 and for any vertex deg(vertex) >= (|vertices| / 2) then graph is Hamiltonian
-            //int n = graph.VertexCount;
-            //return (n != 0) && ((n == 1) || graph.Vertices.All<TVertex>(satisfiesHamiltonianCondition));
+            GetPermutations();
+            return permutations.Any<List<TVertex>>(existsInGraph);
         }
     }
 }
