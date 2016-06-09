@@ -1,40 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="..\..\packages\Microsoft.Net.Compilers\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\packages\Microsoft.Net.Compilers\build\Microsoft.Net.Compilers.props')" Label="Paket" />
+  <Import Project="..\..\..\packages\Microsoft.Net.Compilers\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\..\packages\Microsoft.Net.Compilers\build\Microsoft.Net.Compilers.props')" Label="Paket" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}</ProjectGuid>
+    <ProjectGuid>{7A3CD47C-DF15-4FC6-A923-DEC16264E79F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IsHamiltonianVisualisation</RootNamespace>
-    <AssemblyName>IsHamiltonianVisualisation</AssemblyName>
+    <RootNamespace>TopologicalSortPlugin</RootNamespace>
+    <AssemblyName>TopologicalSortPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\GraphTaskBin\Debug\</OutputPath>
+    <OutputPath>..\..\..\GraphTaskBin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\GraphTaskBin\Release\</OutputPath>
+    <OutputPath>..\..\..\GraphTaskBin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.GLEE.Drawing">
-      <HintPath>..\external\Glee\Microsoft.GLEE.Drawing.dll</HintPath>
+    <Reference Include="Mono.Addins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Mono.Addins\lib\net40\Mono.Addins.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -42,7 +48,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,45 +59,53 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IsHamiltonian.cs" />
+    <Compile Include="TopologicalSortPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
-      <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>
-      <Name>GraphX.WPF.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphX\GraphX.PCL.Common\GraphX.PCL.Common.csproj">
-      <Project>{3644d44b-dec0-4b65-bba0-c68e34821aae}</Project>
-      <Name>GraphX.PCL.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphX\GraphX.PCL.Logic\GraphX.PCL.Logic.csproj">
-      <Project>{a30d218b-aaa4-483a-99f7-eaeb1b8b4610}</Project>
-      <Name>GraphX.PCL.Logic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QuickGraph.Data\QuickGraph.Data.csproj">
-      <Project>{960c14d1-edbd-40e5-8ae6-25e311551b87}</Project>
-      <Name>QuickGraph.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
-      <Project>{595d6322-637a-4a36-97f1-d53f3f9ecea7}</Project>
-      <Name>QuickGraph.Graphviz</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj">
-      <Project>{646cfbb0-b998-45e7-8809-991a5538ff36}</Project>
-      <Name>QuickGraph.GraphXAdapter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DotParser\DotParser.fsproj">
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DotParser\DotParser.fsproj">
       <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
       <Name>DotParser</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphTask.Common\GraphTask.Common.fsproj">
+    <ProjectReference Include="..\..\GraphTask.Common\GraphTask.Common.fsproj">
       <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
       <Name>GraphTask.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
-      <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
+    <ProjectReference Include="..\..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
+      <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>
+      <Name>GraphX.WPF.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphX\GraphX.PCL.Common\GraphX.PCL.Common.csproj">
+      <Project>{3644d44b-dec0-4b65-bba0-c68e34821aae}</Project>
+      <Name>GraphX.PCL.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphX\GraphX.PCL.Logic\GraphX.PCL.Logic.csproj">
+      <Project>{a30d218b-aaa4-483a-99f7-eaeb1b8b4610}</Project>
+      <Name>GraphX.PCL.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QuickGraph.Data\QuickGraph.Data.csproj">
+      <Project>{960c14d1-edbd-40e5-8ae6-25e311551b87}</Project>
+      <Name>QuickGraph.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
+      <Project>{595d6322-637a-4a36-97f1-d53f3f9ecea7}</Project>
+      <Name>QuickGraph.Graphviz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj">
+      <Project>{646cfbb0-b998-45e7-8809-991a5538ff36}</Project>
+      <Name>QuickGraph.GraphXAdapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QuickGraph\QuickGraph.csproj">
+      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
       <Name>QuickGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PluginsCommon\PluginsCommon.csproj">
+      <Project>{03bb2368-5892-4378-b397-8826fa3323bb}</Project>
+      <Name>PluginsCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -102,16 +116,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Import Project="..\..\.paket\paket.targets" />
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
-      <ItemGroup>
-        <Reference Include="Mono.Addins">
-          <HintPath>..\..\packages\Mono.Addins\lib\net40\Mono.Addins.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
 </Project>

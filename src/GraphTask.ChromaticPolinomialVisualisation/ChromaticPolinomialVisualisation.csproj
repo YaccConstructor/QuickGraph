@@ -5,31 +5,36 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{192EAEFA-3CFF-4FBB-A7E3-5F08DFA35ECC}</ProjectGuid>
+    <ProjectGuid>{7EBC6156-A93B-48FA-B630-C232E6EA1F8E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IsHamiltonianVisualisation</RootNamespace>
-    <AssemblyName>IsHamiltonianVisualisation</AssemblyName>
+    <RootNamespace>ChromaticPolinomialVisualisation</RootNamespace>
+    <AssemblyName>ChromaticPolinomialVisualisation</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\GraphTaskBin\Debug\</OutputPath>
+    <OutputPath>..\GraphTaskBin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\GraphTaskBin\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -53,8 +58,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IsHamiltonian.cs" />
+    <Compile Include="ChromaticPolinomial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VertexWithComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
@@ -77,10 +86,6 @@
       <Project>{595d6322-637a-4a36-97f1-d53f3f9ecea7}</Project>
       <Name>QuickGraph.Graphviz</Name>
     </ProjectReference>
-    <ProjectReference Include="..\QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj">
-      <Project>{646cfbb0-b998-45e7-8809-991a5538ff36}</Project>
-      <Name>QuickGraph.GraphXAdapter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DotParser\DotParser.fsproj">
       <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
       <Name>DotParser</Name>
@@ -89,8 +94,16 @@
       <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
       <Name>GraphTask.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj">
+      <Project>{646cfbb0-b998-45e7-8809-991a5538ff36}</Project>
+      <Name>QuickGraph.GraphXAdapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuickGraphFS\QuickGraphFS.fsproj">
+      <Project>{1ccafd2c-4a61-4f7f-986c-a2f575086344}</Project>
+      <Name>QuickGraphFS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
-      <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
+      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
       <Name>QuickGraph</Name>
     </ProjectReference>
   </ItemGroup>
@@ -102,7 +115,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Import Project="..\..\.paket\paket.targets" />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
       <ItemGroup>

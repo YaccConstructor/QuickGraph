@@ -38,7 +38,13 @@ namespace PrimVisualisation
     public class PrimVisualisation : IAlgorithm
     {
         private readonly CheckBox _countSymbolsCheckBox;
+        private readonly GraphArea _graphArea;
+        private readonly GraphXZoomControl _zoomControl;
+        //private Stack<List<GraphSerializationData>> _steps;
+        private bool _hasStarted;
+        private bool _hasFinished;
         private List<EdgeForVisualisation> edges = new List<EdgeForVisualisation>();
+        private int i = -1;
         private bool canBack;
         private bool canFuther;
 
@@ -46,14 +52,18 @@ namespace PrimVisualisation
         {
             _countSymbolsCheckBox = new CheckBox { Text = "Count symbols when start", Location = new Point(12, 6) };
             Options.Controls.Add(_countSymbolsCheckBox);
+
+            _graphArea = new GraphArea();
+            _zoomControl = new GraphXZoomControl { Content = _graphArea };
+            Output.Controls.Add(new ElementHost { Dock = DockStyle.Fill, Child = _zoomControl });
         }
 
         public string Name => "Prim algorithm";
         public string Author => "Alexander Pihtin";
 
         public string Description =>
-            "THIS VISUALISATION FOR PRIM ALGORITHM.\n" +
-            "OBEY ME AND PREPARE YOUR GRAPH.\n";
+            "This search minimum spanning tree visualisation .\n" +
+            "It used Prim algorithm.\n";
 
         public Panel Options { get; } = new Panel { Dock = DockStyle.Fill };
         public Panel Output { get; } = new Panel { Dock = DockStyle.Fill };
@@ -66,9 +76,11 @@ namespace PrimVisualisation
             prim.TreeEdge += Prim_TreeEdge;
             prim.ExamineEdge += Prim_ExamineEdge;
             prim.Compute();
-            HelperForKruskalAndPrimVisualisation.Run(dotSource, edges);
+            HelperForKruskalAndPrimVisualisation.CanBack -= HelperForKruskalAndPrimVisualisation_CanBack;
+            HelperForKruskalAndPrimVisualisation.CanFuther -= HelperForKruskalAndPrimVisualisation_CanFuther;
             HelperForKruskalAndPrimVisualisation.CanBack += HelperForKruskalAndPrimVisualisation_CanBack;
             HelperForKruskalAndPrimVisualisation.CanFuther += HelperForKruskalAndPrimVisualisation_CanFuther;
+            HelperForKruskalAndPrimVisualisation.Run(dotSource, edges, _graphArea, _zoomControl, _countSymbolsCheckBox);
         }
 
         private void HelperForKruskalAndPrimVisualisation_CanFuther(bool x)
