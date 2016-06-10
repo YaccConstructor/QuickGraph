@@ -80,8 +80,7 @@ namespace IsHamiltonianVisualisation
             }
 
             _algo = new IsHamiltonianGraphAlgorithm<GraphXVertex, UndirectedEdge<GraphXVertex>>(graph);
-            _algo.GetPermutations();
-            _pathes = _algo.permutations;
+            _pathes = _algo.GetPermutations();
             _currentPath = _pathes[0];
             _isHamiltonian = false;
             

@@ -164,10 +164,9 @@ namespace QuickGraph.Tests.Algorithms
                 new Tuple<int, int>(8, 9), new Tuple<int, int>(8, 10), new Tuple<int, int>(9, 10)
             });
             var gAlgo = new QuickGraph.Algorithms.IsHamiltonianGraphAlgorithm<int, UndirectedEdge<int>>(g);
-            gAlgo.IsHamiltonian();
             
             var hashSet = new HashSet<List<int>>(new SequenceComparer<int>());
-            hashSet.UnionWith(gAlgo.permutations);
+            hashSet.UnionWith(gAlgo.GetPermutations());
 
             Assert.AreEqual(hashSet.Count, Factorial(g.VertexCount));
         }

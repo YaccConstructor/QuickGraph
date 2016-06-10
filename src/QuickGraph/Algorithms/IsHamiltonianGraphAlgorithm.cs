@@ -7,7 +7,6 @@ namespace QuickGraph.Algorithms
     {
         private UndirectedGraph<TVertex, UndirectedEdge<TVertex>> graph;
         private double threshold;
-        public List<List<TVertex>> permutations;
 
         private void Swap(IList<TVertex> list, int indexA, int indexB)
         {
@@ -16,13 +15,15 @@ namespace QuickGraph.Algorithms
             list[indexB] = tmp;
         }
 
-        public void GetPermutations()
+        public List<List<TVertex>> GetPermutations()
         {
             IEnumerable<TVertex> list = graph.Vertices;
-            GetPermutations(list.ToList(), 0, list.Count() - 1);
+            List<List<TVertex>> permutations = new List<List<TVertex>>();
+            GetPermutations(list.ToList(), 0, list.Count() - 1, permutations);
+            return permutations;
         }
 
-        private void GetPermutations(List<TVertex> list, int recursionDepth, int maxDepth)
+        private void GetPermutations(List<TVertex> list, int recursionDepth, int maxDepth, List<List<TVertex>> permutations)
         {
             if (recursionDepth == maxDepth)
             {
@@ -32,7 +33,7 @@ namespace QuickGraph.Algorithms
                 for (int i = recursionDepth; i <= maxDepth; i++)
                 {
                     Swap(list, recursionDepth, i);
-                    GetPermutations(list, recursionDepth + 1, maxDepth);
+                    GetPermutations(list, recursionDepth + 1, maxDepth, permutations);
                     Swap(list, recursionDepth, i);
                 }
         }
@@ -47,7 +48,6 @@ namespace QuickGraph.Algorithms
             EdgePredicate<TVertex, UndirectedEdge<TVertex>> isLoop = e => e.Source.Equals(e.Target);
             newGraph.RemoveEdgeIf(isLoop);
             this.graph = newGraph;
-            permutations = new List<List<TVertex>>();
             threshold = newGraph.VertexCount / 2.0;
         }
 
@@ -79,7 +79,7 @@ namespace QuickGraph.Algorithms
             {
                 return true;
             }
-            GetPermutations();  // generate all possible cycles through all vertices 
+            List<List<TVertex>> permutations = GetPermutations();  // generate all possible cycles through all vertices 
             return permutations.Any<List<TVertex>>(existsInGraph);
         }
     }
