@@ -72,7 +72,7 @@ namespace QuickGraph.Tests.Algorithms
             var g = constructGraph(new Tuple<int, int>[] { });
             g.AddVertex(420);
             var gAlgo = new QuickGraph.Algorithms.IsEulerianGraphAlgorithm<int, UndirectedEdge<int>>(g);
-            Assert.IsFalse(gAlgo.isEulerian());
+            Assert.IsTrue(gAlgo.isEulerian());
         }
 
         [TestMethod]
