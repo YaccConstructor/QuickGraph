@@ -35,11 +35,13 @@ namespace IsHamiltonianVisualisation
     {
         private readonly GraphArea _graphArea;
         private readonly GraphXZoomControl _zoomControl;
-        private List<KeyValuePair<GraphXVertex, GraphX.Controls.VertexControl>> _graphVerticesVisualisation;
-        private List<GraphXVertex> _graphVertices;
+        private IDictionary<GraphXVertex, GraphX.Controls.VertexControl> _graphVerticesVisualisation;
+        private UndirectedGraph<GraphXVertex, UndirectedEdge<GraphXVertex>> _graph;
         private int _currentVertexIndex;
+        private int _currentPathIndex;
         private bool _isHamiltonian;
-        private bool _hasOnlyOneVertex;
+        private List<List<GraphXVertex>> _pathes;
+        private List<GraphXVertex> _currentPath;
         private IsHamiltonianGraphAlgorithm<GraphXVertex, UndirectedEdge<GraphXVertex>> _algo;
 
 
@@ -78,48 +80,69 @@ namespace IsHamiltonianVisualisation
             }
 
             _algo = new IsHamiltonianGraphAlgorithm<GraphXVertex, UndirectedEdge<GraphXVertex>>(graph);
-            _isHamiltonian = true;
-            _hasOnlyOneVertex = false;
-
-            if (graph.Vertices.Count() == 1)
-            {
-                _hasOnlyOneVertex = true;
-                MessageBox.Show($"Graph contains one vertex. Graph is Hamiltonian");
-            }
-
+            _algo.GetPermutations();
+            _pathes = _algo.permutations;
+            _currentPath = _pathes[0];
+            _isHamiltonian = false;
+            
             _graphArea.LogicCore.Graph = graphVisualisation;
             _graphArea.GenerateGraph();
             _zoomControl.ZoomToFill();
-            _graphVertices = graph.Vertices.ToList();
-            _graphVerticesVisualisation = _graphArea.VertexList.ToList();
+            _graph = graph;
+            _graphVerticesVisualisation = _graphArea.VertexList;
             
             _currentVertexIndex = 0;
+            _currentPathIndex = 0;
         }
 
         public void NextStep()
         {
-            var vertexVisualisation = _graphVerticesVisualisation.ElementAt(_currentVertexIndex);
-            var vertex = _graphVertices.ElementAt(_currentVertexIndex);
-            vertexVisualisation.Value.Background = new SolidColorBrush(Colors.YellowGreen);
-
-            if (!_hasOnlyOneVertex && !_algo.satisfiesHamiltonianCondition(vertex))
-            {
-                _isHamiltonian = false;
-                MessageBox.Show($"Vertex {vertexVisualisation.Key} has insufficient count of edges. Graph is not Hamiltonian");
+            var currentVertex = _currentPath[_currentVertexIndex];
+            GraphX.Controls.VertexControl vertexVisualisation;
+            _graphVerticesVisualisation.TryGetValue(_graphVerticesVisualisation.Keys.First(a => a.Text.Equals(currentVertex.Text)), out vertexVisualisation);
+            vertexVisualisation.Background = new SolidColorBrush(Colors.YellowGreen);
+            if (_currentVertexIndex > 0) {
+                var previousVertex = _currentPath[_currentVertexIndex - 1];
+                if (!_graph.AdjacentVertices(previousVertex).Contains(currentVertex))
+                {
+                    MessageBox.Show($"This path is not Hamiltonian");
+                    _currentVertexIndex = _currentPath.Count; // Move to next path
+                }
             }
-
-            if (++_currentVertexIndex == _graphVerticesVisualisation.Count)
+            if (_currentVertexIndex + 1 < _currentPath.Count)
+            {
+                _currentVertexIndex++;
+            }
+            else if (_currentPathIndex + 1 < _pathes.Count)
+            {
+                if (_currentVertexIndex == _currentPath.Count - 1)
+                {
+                    MessageBox.Show("This path is hamiltonian and graph is hamiltonian!");
+                    _isHamiltonian = true;
+                }
+                foreach (var vertex in _graphVerticesVisualisation.Values)
+                {
+                    vertex.Background = new SolidColorBrush(Colors.LightGray);
+                }
+                _currentPathIndex++;
+                _currentPath = _pathes[_currentPathIndex];
+                _currentVertexIndex = 0;
+            }
+            else
             {
                 MessageBox.Show($"Finished, " + (_isHamiltonian ? $"graph is Hamiltonian" : $"graph is not Hamiltonian"));
             }
-
+           
             _zoomControl.ZoomToFill();
         }
 
         public void PreviousStep()
         {
-            var vertex = _graphVerticesVisualisation.ElementAt(--_currentVertexIndex);
-            vertex.Value.Background = new SolidColorBrush(Colors.LightGray);
+            var currentVertex = _currentPath[--_currentVertexIndex];
+            GraphX.Controls.VertexControl vertexVisualisation;
+            _graphVerticesVisualisation.TryGetValue(_graphVerticesVisualisation.Keys.First(a => a.Text.Equals(currentVertex.Text)), out vertexVisualisation);
+            vertexVisualisation.Background = new SolidColorBrush(Colors.LightGray);
+
             _zoomControl.ZoomToFill();
         }
 
