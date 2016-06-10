@@ -21,6 +21,7 @@ namespace QuickGraph.Algorithms.ConnectedComponents
         private readonly Dictionary<int, int> componentEquivalences = new Dictionary<int, int>();
         private int componentCount = 0;
         private int currentComponent = 0;
+        private List<BidirectionalGraph<TVertex, TEdge>> graphs;
 
         public WeaklyConnectedComponentsAlgorithm(IVertexListGraph<TVertex, TEdge> visitedGraph)
             : this(visitedGraph, new Dictionary<TVertex, int>())
@@ -59,6 +60,37 @@ namespace QuickGraph.Algorithms.ConnectedComponents
             this.currentComponent = 0;
             this.componentEquivalences.Clear();
             this.components.Clear();
+        }
+
+        public List<BidirectionalGraph<TVertex, TEdge>> Graphs
+        {
+            get
+            {
+                int i;
+                graphs = new List<BidirectionalGraph<TVertex, TEdge>>(componentCount + 1);
+                for (i = 0; i < componentCount; i++)
+                {
+                    graphs.Add(new BidirectionalGraph<TVertex, TEdge>());
+                }
+                foreach (TVertex componentName in components.Keys)
+                {
+                    graphs[components[componentName]].AddVertex(componentName);
+                }
+                
+                foreach (TVertex vertex in VisitedGraph.Vertices)
+                {
+                    foreach (TEdge edge in VisitedGraph.OutEdges(vertex))
+                    {
+
+                            if (components[vertex]  == components[edge.Target])
+                            {
+                                graphs[components[vertex]].AddEdge(edge);
+                            }
+                    }
+                }
+                return graphs;
+            }
+
         }
 
         protected override void  InternalCompute()
