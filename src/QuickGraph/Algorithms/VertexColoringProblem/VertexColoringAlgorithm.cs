@@ -37,22 +37,6 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
                 eh(v);
         }
 
-        public event VertexAction<TVertex> DiscoverVertex;
-        private void OnDiscoverVertex(TVertex v)
-        {
-            var eh = this.DiscoverVertex;
-            if (eh != null)
-                eh(v);
-        }
-
-        public event VertexAction<TVertex> FinishVertex;
-        private void OnFinishVertex(TVertex v)
-        {
-            var eh = this.FinishVertex;
-            if (eh != null)
-                eh(v);
-        }
-
         public OutputModel<TVertex, TEdge> Compute()
         {
             int V = input.Graph.VertexCount;
@@ -68,10 +52,8 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
             }
 
             // Assign the first color to first vertex
-            this.OnDiscoverVertex(firstVertex);
             vertexColor[firstVertex] = 0;
             this.OnColourVertex(firstVertex);
-            this.OnFinishVertex(firstVertex);
 
             /*
             A temporary array to store the available colors. True
@@ -89,7 +71,6 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
             {
                 if (!(vertexOfGraph.Equals(firstVertex)))
                 {
-                    //this.OnDiscoverVertex(vertexOfGraph);
                     // Process all adjacent vertices and flag their colors as unavailable
                     foreach (var edgesOfProcessVertex in input.Graph.AdjacentEdges(vertexOfGraph))
                     {
@@ -97,9 +78,7 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
 
                         if (vertexColor[adjacentVertex].HasValue)
                         {
-                            //this.OnDiscoverVertex(adjacentVertex);
                             available[vertexColor[adjacentVertex].Value] = true;
-                            //this.OnFinishVertex(adjacentVertex);
                         }
                         
                     }
@@ -115,7 +94,7 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
                     // Assign the found color
                     vertexColor[vertexOfGraph] = usingColor;
                     this.OnColourVertex(vertexOfGraph);
-                    //this.OnFinishVertex(vertexOfGraph);
+
                     // Reset the values back to false for the next iteration
                     foreach (var edgesOfProcessVertex in input.Graph.AdjacentEdges(vertexOfGraph))
                     {

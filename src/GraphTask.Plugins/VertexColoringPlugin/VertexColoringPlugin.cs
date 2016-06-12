@@ -59,13 +59,13 @@ namespace VertexColoringPlugin
 
         public void Run(string dotSource)
         {
-            colors = ColorGenerator.genColors();
             var input = GenerateInputModel(dotSource);
             if (!input.Graph.Vertices.Any())
             {
                 MessageBox.Show("Graph is empty.");
                 return;
             }
+            colors = ColorGenerator.genColors(input.Graph.VertexCount);
             coloringAlgorithm = new VertexColoringAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>(input);
 
             states = new List<GraphXVertex>();

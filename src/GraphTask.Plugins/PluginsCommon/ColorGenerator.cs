@@ -4,8 +4,9 @@ namespace PluginsCommon
 {
     public class ColorGenerator
     {
-        public static String[] genColors()
+        public static String[] genColors(int n)
         {
+            if (n > 128) throw new System.ArgumentOutOfRangeException("Number of verticies should be less then 128");
             return new String[128] {
                 "#FFFF00", "#1CE6FF", "#FF34FF", "#FF4A46", "#008941", "#006FA6", "#A30059", "#000000",
                 "#FFDBE5", "#7A4900", "#0000A6", "#63FFAC", "#B79762", "#004D43", "#8FB0FF", "#997D87",
