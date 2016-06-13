@@ -1,11 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-<<<<<<< HEAD
 VisualStudioVersion = 14.0.23107.0
-=======
-VisualStudioVersion = 14.0.25123.0
->>>>>>> refs/remotes/YaccConstructor/GraphTasks
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{FAAD5B1C-1217-48D6-B1EF-7CAC0440D6A4}"
 	ProjectSection(SolutionItems) = preProject
@@ -117,11 +113,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KruskalVisualisation", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimVisualisation", "src\GraphTask.PrimVisualisation\PrimVisualisation.csproj", "{38217CE3-4207-4354-BAF4-B3772798FF06}"
 EndProject
-<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HungarianAlgorithmVisualisation", "src\GraphTask.HungarianAlgorithmVisualisation\HungarianAlgorithmVisualisation.csproj", "{E2039A69-CC9D-4DB6-B9D9-3898DBD08AA1}"
-=======
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YenVisualisation", "src\YenVisualisation\YenVisualisation.csproj", "{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}"
->>>>>>> refs/remotes/YaccConstructor/GraphTasks
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -787,7 +781,6 @@ Global
 		{38217CE3-4207-4354-BAF4-B3772798FF06}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
 		{38217CE3-4207-4354-BAF4-B3772798FF06}.ReleaseContractsReferences|x86.ActiveCfg = Release|Any CPU
 		{38217CE3-4207-4354-BAF4-B3772798FF06}.ReleaseContractsReferences|x86.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{E2039A69-CC9D-4DB6-B9D9-3898DBD08AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2039A69-CC9D-4DB6-B9D9-3898DBD08AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2039A69-CC9D-4DB6-B9D9-3898DBD08AA1}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -808,7 +801,6 @@ Global
 		{E2039A69-CC9D-4DB6-B9D9-3898DBD08AA1}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
 		{E2039A69-CC9D-4DB6-B9D9-3898DBD08AA1}.ReleaseContractsReferences|x86.ActiveCfg = Release|Any CPU
 		{E2039A69-CC9D-4DB6-B9D9-3898DBD08AA1}.ReleaseContractsReferences|x86.Build.0 = Release|Any CPU
-=======
 		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -829,7 +821,6 @@ Global
 		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
 		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.ReleaseContractsReferences|x86.ActiveCfg = Release|Any CPU
 		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}.ReleaseContractsReferences|x86.Build.0 = Release|Any CPU
->>>>>>> refs/remotes/YaccConstructor/GraphTasks
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -869,11 +860,8 @@ Global
 		{61DB192B-ED4F-43F7-BF8E-8D6D1FA05C39} = {0CE1D294-B109-461F-88DC-42AFCA5039E9}
 		{215F0950-0F7C-48A8-B6BF-D2D400E4BC56} = {CBD0EAE9-B336-4359-AC80-E2E0A47FB991}
 		{38217CE3-4207-4354-BAF4-B3772798FF06} = {CBD0EAE9-B336-4359-AC80-E2E0A47FB991}
-<<<<<<< HEAD
 		{E2039A69-CC9D-4DB6-B9D9-3898DBD08AA1} = {CBD0EAE9-B336-4359-AC80-E2E0A47FB991}
-=======
 		{CC103150-DDBF-42D9-9C53-DA5D0915CFD1} = {CBD0EAE9-B336-4359-AC80-E2E0A47FB991}
->>>>>>> refs/remotes/YaccConstructor/GraphTasks
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = QuickGraph1.vsmdi
