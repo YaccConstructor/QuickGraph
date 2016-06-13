@@ -24,15 +24,20 @@ namespace QuickGraph.Algorithms.AssigmentProblem
             this._step = Steps.Init;
         }
 
+        /// <summary>
+        /// Returns assigments without visualisation
+        /// </summary>
+        /// <returns>Array of assigments</returns>
         public int[] Run()
         {
-            while (DoStep() != Steps.End)
-            {
-
-            }
+            while (DoStep() != Steps.End){}
             return AgentsTasks;
         }
 
+        /// <summary>
+        /// Returns iterations that can be used to visualise the algorithm
+        /// </summary>
+        /// <returns>List of iterations of algorithm</returns>
         public List<HungarianIteration> GetIterations()
         {
             var list = new List<HungarianIteration>();
@@ -145,7 +150,6 @@ namespace QuickGraph.Algorithms.AssigmentProblem
 
         private Steps RunStep1(byte[,] masks, bool[] colsCovered, int w, int h)
         {
-            //Search for covered rows
             for (var i = 0; i < h; i++)
             {
                 for (var j = 0; j < w; j++)
@@ -195,16 +199,15 @@ namespace QuickGraph.Algorithms.AssigmentProblem
         {
             var pathIndex = 0;
             path[0] = pathStart;
-            while (true)
+            var row = FindStarInColumn(masks, h, path[pathIndex].Column);
+            while (row != -1)
             {
-                var row = FindStarInColumn(masks, h, path[pathIndex].Column);
-                if (row == -1)
-                    break;
                 pathIndex++;
                 path[pathIndex] = new Location(row, path[pathIndex - 1].Column);
                 var col = FindPrimeInRow(masks, w, path[pathIndex].Row);
                 pathIndex++;
                 path[pathIndex] = new Location(path[pathIndex - 1].Row, col);
+                row = FindStarInColumn(masks, h, path[pathIndex].Column);
             }
             ConvertPath(masks, path, pathIndex + 1);
             ClearCovers(rowsCovered, colsCovered, w, h);

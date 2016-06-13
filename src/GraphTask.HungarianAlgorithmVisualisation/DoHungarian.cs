@@ -218,7 +218,7 @@ namespace GraphTask.HungarianAlgorithmVisualisation
                 {
                     MessageBox.Show("We have found an optimal result. Look at the result textbox for the assigment array.");
                 }
-                SetResult();
+                _resultTextBox.Text = String.Join(" ", _algorithm.AgentsTasks);
                 _canGoFurther = false;
             }
             _iteration++;
@@ -262,18 +262,6 @@ namespace GraphTask.HungarianAlgorithmVisualisation
                 }
             }
         }
-
-        private void SetResult()
-        {
-            var res = _algorithm.AgentsTasks;
-            var str = "";
-            foreach (var x in res)
-            {
-                str += x + " ";
-            }
-            _resultTextBox.Text = str;
-        }
-
 
         private void ApplyState(int key)
         {
