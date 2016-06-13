@@ -2,14 +2,13 @@
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
-using System.Windows.Media;
 using Common;
-using System;
 using Mono.Addins;
+using System;
+using System.Windows.Media;
 using QuickGraph;
-using QuickGraph.Algorithms;
 using QuickGraph.GraphXAdapter;
-using MessageBox = System.Windows.Forms.MessageBox;
+using QuickGraph.Algorithms;
 
 // Read more about plugin system on GitHub.
 // https://github.com/mono/mono-addins/wiki/Architecture-Overview
@@ -25,38 +24,37 @@ using MessageBox = System.Windows.Forms.MessageBox;
 [assembly: Addin]
 [assembly: AddinDependency("GraphTasks", "1.0")]
 
-namespace IsHamiltonianVisualisation
+namespace IsEulerianVisualisation
 {
     using Graph = BidirectionalGraph<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>;
     using GraphArea = BidirectionalGraphArea<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>;
 
     [Extension]
-    public class IsHamiltonian : IAlgorithm
+    public class IsEulerian : IAlgorithm
     {
         private readonly GraphArea _graphArea;
         private readonly GraphXZoomControl _zoomControl;
         private List<KeyValuePair<GraphXVertex, GraphX.Controls.VertexControl>> _graphVerticesVisualisation;
         private List<GraphXVertex> _graphVertices;
         private int _currentVertexIndex;
-        private bool _isHamiltonian;
-        private bool _hasOnlyOneVertex;
-        private IsHamiltonianGraphAlgorithm<GraphXVertex, UndirectedEdge<GraphXVertex>> _algo;
+        private bool _isEulerian;
+        private IsEulerianGraphAlgorithm<GraphXVertex, UndirectedEdge<GraphXVertex>> _algo;
+        private ComponentWithEdges _graphProperty;
 
-
-        public IsHamiltonian()
+        public IsEulerian()
         {
             _graphArea = new GraphArea();
             _zoomControl = new GraphXZoomControl { Content = _graphArea };
             Output.Controls.Add(new ElementHost { Dock = DockStyle.Fill, Child = _zoomControl });
         }
 
-        public string Name => "Is Hamiltonian graph";
+        public string Name => "Is Eulerian graph";
         public string Author => "Roman Fedorov";
 
         public string Description =>
-            "This plugin demonstrates how to determinate is graph a Hamiltonian one. " +
-            "Using Dirac's theorem: if |vertices| >= 2 and " +
-            "for any vertex deg(vertex) >= (|vertices| / 2) then graph is Hamiltonian\n";
+            "This plugin demonstrates how to determinate is graph a Eulerian one. " +
+            "Graph is Eulerian if and only if it contains one connected component, and " +
+            "each vertex in this component has even count of edges.";
 
         public Panel Options { get; } = new Panel { Dock = DockStyle.Fill };
         public Panel Output { get; } = new Panel { Dock = DockStyle.Fill };
@@ -67,7 +65,7 @@ namespace IsHamiltonianVisualisation
         public void Run(string dotSource)
         {
             var vertexFun = VertexFactory.Name;
-
+            
             var graph = UndirectedGraph<GraphXVertex, UndirectedEdge<GraphXVertex>>.LoadDot(dotSource, vertexFun, edgeFun);
             var graphVisualisation = Graph.LoadDot(dotSource, vertexFun, EdgeFactory<GraphXVertex>.Weighted(0));
 
@@ -77,14 +75,35 @@ namespace IsHamiltonianVisualisation
                 return;
             }
 
-            _algo = new IsHamiltonianGraphAlgorithm<GraphXVertex, UndirectedEdge<GraphXVertex>>(graph);
-            _isHamiltonian = true;
-            _hasOnlyOneVertex = false;
+            _algo = new IsEulerianGraphAlgorithm<GraphXVertex, UndirectedEdge<GraphXVertex>>(graph);
+            _graphProperty = _algo.checkComponentsWithEdges();
 
-            if (graph.Vertices.Count() == 1)
+            switch (_graphProperty)
             {
-                _hasOnlyOneVertex = true;
-                MessageBox.Show($"Graph contains one vertex. Graph is Hamiltonian");
+                case ComponentWithEdges.ManyComponents:
+                    {
+                        MessageBox.Show($"Graph contains more than one connected component with edges. Graph is not Eulerian");
+                        _isEulerian = false;
+                        break;
+                    }
+                case ComponentWithEdges.NoComponent:
+                    {
+                        MessageBox.Show($"Graph doesn't contain any edges. Graph is not Eulerian");
+                        _isEulerian = false;
+                        break;
+                    }
+                case ComponentWithEdges.OneComponentWithOneVertex:
+                    {
+                        MessageBox.Show($"Graph contains one component with one vertex. Graph is Eulerian");
+                        _isEulerian = true;
+                        break;
+                    }
+                case ComponentWithEdges.OneComponentWithManyVertices:
+                    {
+                        // Check every vertice with NextStep()
+                        _isEulerian = true;
+                        break;
+                    }
             }
 
             _graphArea.LogicCore.Graph = graphVisualisation;
@@ -92,7 +111,6 @@ namespace IsHamiltonianVisualisation
             _zoomControl.ZoomToFill();
             _graphVertices = graph.Vertices.ToList();
             _graphVerticesVisualisation = _graphArea.VertexList.ToList();
-            
             _currentVertexIndex = 0;
         }
 
@@ -102,15 +120,15 @@ namespace IsHamiltonianVisualisation
             var vertex = _graphVertices.ElementAt(_currentVertexIndex);
             vertexVisualisation.Value.Background = new SolidColorBrush(Colors.YellowGreen);
 
-            if (!_hasOnlyOneVertex && !_algo.satisfiesHamiltonianCondition(vertex))
+            if ((_graphProperty == ComponentWithEdges.OneComponentWithManyVertices) && (!_algo.satisfiesEulerianCondition(vertex)))
             {
-                _isHamiltonian = false;
-                MessageBox.Show($"Vertex {vertexVisualisation.Key} has insufficient count of edges. Graph is not Hamiltonian");
+                _isEulerian = false;
+                MessageBox.Show($"Vertex {vertexVisualisation.Key} has odd count of edges. Graph is not Eulerian");
             }
 
             if (++_currentVertexIndex == _graphVerticesVisualisation.Count)
             {
-                MessageBox.Show($"Finished, " + (_isHamiltonian ? $"graph is Hamiltonian" : $"graph is not Hamiltonian"));
+                MessageBox.Show($"Finished, " + (_isEulerian ? $"graph is Eulerian" : $"graph is not Eulerian"));
             }
 
             _zoomControl.ZoomToFill();

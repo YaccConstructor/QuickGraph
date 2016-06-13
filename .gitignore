@@ -27,6 +27,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+src/GraphTaskBin/
 
 # Roslyn cache directories
 *.ide/

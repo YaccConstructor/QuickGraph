@@ -4,6 +4,8 @@ using QuickGraph.Algorithms.ConnectedComponents;
 
 namespace QuickGraph.Algorithms
 {
+    public enum ComponentWithEdges { NoComponent, OneComponentWithOneVertex, OneComponentWithManyVertices, ManyComponents };
+
     public class IsEulerianGraphAlgorithm<TVertex, TEdge> where TEdge : IUndirectedEdge<TVertex>
     {
         private UndirectedGraph<TVertex, UndirectedEdge<TVertex>> graph;
@@ -35,12 +37,11 @@ namespace QuickGraph.Algorithms
             return new Tuple<int?, int?>(firstIndex, secondIndex);
         }
 
-        public bool isEulerian()
+        public ComponentWithEdges checkComponentsWithEdges()
         {
             var componentsAlgo = new ConnectedComponentsAlgorithm<TVertex, UndirectedEdge<TVertex>>(this.graph);
             componentsAlgo.Compute();
 
-            // Only one component could contain edges
             bool[] hasEdgesInComponent = new bool[componentsAlgo.ComponentCount];
             foreach (var verticeAndComponent in componentsAlgo.Components)
             {
@@ -48,30 +49,41 @@ namespace QuickGraph.Algorithms
             }
             var t = firstAndSecondIndexOfTrue(hasEdgesInComponent);
             int? firstIndex = t.Item1, secondIndex = t.Item2;
-            // No edges at all or More than one component contain edges
-            if (!firstIndex.HasValue || secondIndex.HasValue)
+
+            if (!firstIndex.HasValue)
             {
-                return false;
+                return ComponentWithEdges.NoComponent;
             }
-            else
+            if (secondIndex.HasValue)
             {
-                // Now only one component contains edges, check is it an eulerian component
-                // If component contain one vertex it is an eulerian component
-                if (componentsAlgo.Components.First(x => x.Value == firstIndex.Value).Key
+                return ComponentWithEdges.ManyComponents;
+            }
+            // If component contain one vertex with edge (cycle), it is an eulerian component
+            if (componentsAlgo.Components.First(x => x.Value == firstIndex.Value).Key
                     .Equals(componentsAlgo.Components.Last(x => x.Value == firstIndex.Value).Key))
-                {
+            {
+                return ComponentWithEdges.OneComponentWithOneVertex;
+            }
+            return ComponentWithEdges.OneComponentWithManyVertices;
+        }
+
+        public bool satisfiesEulerianCondition(TVertex vertex)
+        {
+            return graph.AdjacentEdges(vertex).Count() % 2 == 0;
+        }
+
+        public bool isEulerian()
+        {
+            switch (checkComponentsWithEdges())
+            {
+                case ComponentWithEdges.OneComponentWithOneVertex:
                     return true;
-                }
-                foreach (var verticeAndComponent in componentsAlgo.Components)
-                {
-                    // Vertice in selected component and has even count of edges
-                    if (verticeAndComponent.Value == firstIndex.Value &&
-                        graph.AdjacentEdges(verticeAndComponent.Key).Count() % 2 == 1)
-                    {
-                        return false;
-                    }
-                }
-                return true;
+                case ComponentWithEdges.OneComponentWithManyVertices:
+                    return graph.Vertices.All<TVertex>(satisfiesEulerianCondition);
+                case ComponentWithEdges.NoComponent:
+                case ComponentWithEdges.ManyComponents:
+                default:
+                    return false;
             }
         }
     }
