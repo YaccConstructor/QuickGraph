@@ -162,10 +162,8 @@ namespace QuickGraph.Algorithms.ConnectedComponents
                 : Contract.Result<TVertex>().Equals(v)
                 );
 
-            if (this.discoverTimes[u] < this.discoverTimes[v])
-                return u;
-            else
-                return v;
+            TVertex minVertex = this.discoverTimes[u] < this.discoverTimes[v] ? u : v;
+            return minVertex;
         }
 
         public List<BidirectionalGraph<TVertex, TEdge>> Graphs
