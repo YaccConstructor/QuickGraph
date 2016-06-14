@@ -92,26 +92,15 @@ namespace VertexColoringPlugin
         {
             var currState = states.ElementAt(currStateNumber);
             GraphXVertex currVertex = currState.Item1;
-            GraphXVertex vert = null;
-            foreach (var key in _graphArea.VertexList.Keys)
-            {
-                if (key.ID.Equals(currVertex.ID))
-                    vert = key;
-            }
 
             var color = colors[currState.Item2];
-            _graphArea.VertexList[vert].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+            _graphArea.VertexList[currVertex].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
 
             if (currStateNumber + 1 < states.Count)
             {
                 var nextState = states.ElementAt(currStateNumber + 1);
                 GraphXVertex nextVertex = nextState.Item1;
-                foreach (var key in _graphArea.VertexList.Keys)
-                {
-                    if (key.Text.Equals(nextVertex.Text))
-                        vert = key;
-                }
-                _graphArea.VertexList[vert].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE3E3E3"));
+                _graphArea.VertexList[nextVertex].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE3E3E3"));
             }
         }
 
@@ -135,7 +124,7 @@ namespace VertexColoringPlugin
             var edgeFun1 = EdgeFactory<GraphXVertex>.WeightedTaggedEdge(0);
             var edgeFun = EdgeFactory<GraphXVertex>.Weighted(0);
             var graph = UnGraph.LoadDot(dotSource, vertexFun, edgeFun);
-            bigraph = BiGraph.LoadDot(dotSource, vertexFun, edgeFun);
+            bigraph = graph.ToBidirectionalGraph();
 
             return graph;
         }

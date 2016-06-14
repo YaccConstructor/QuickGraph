@@ -33,7 +33,7 @@ namespace VertexColoringPlugin
         private readonly GraphXZoomControl _zoomControl;
         private bool _hasStarted;
         private bool _hasFinished;
-        private List<Tuple<GraphXVertex, GraphXVertex, int>> states;
+        private List<Tuple<GraphXTaggedEdge<GraphXVertex, int>, int>> states;
         private EdgeColoringAlgorithm<GraphXVertex, TaggedEdge<GraphXVertex, int>> coloringAlgorithm;
         private UndirectedGraph<GraphXVertex, TaggedEdge<GraphXVertex, int>> graphWithColoredVertices;
         private BiGraph bigraph;
@@ -68,7 +68,7 @@ namespace VertexColoringPlugin
             colors = ColorGenerator.genColors(input.EdgeCount);
             coloringAlgorithm = new EdgeColoringAlgorithm<GraphXVertex, TaggedEdge<GraphXVertex, int>>();
 
-            states = new List<Tuple<GraphXVertex, GraphXVertex, int>>();
+            states = new List<Tuple<GraphXTaggedEdge<GraphXVertex, int>, int>>();
 
             coloringAlgorithm.Colored += OnColourEdge;
             currStateNumber = -1;
@@ -83,37 +83,29 @@ namespace VertexColoringPlugin
             _hasFinished = false;
         }
 
-        private void OnColourEdge(object sender, Tuple<GraphXVertex, GraphXVertex, int> args)
+        private void OnColourEdge(object sender, TaggedEdge<GraphXVertex, int> edge)
         {
-            states.Add(args);
+            foreach (var graphXEdge in bigraph.Edges)
+            {
+                if ((graphXEdge.Source.Equals(edge.Source)) && (graphXEdge.Target.Equals(edge.Target)))
+                {
+                    states.Add(new Tuple<GraphXTaggedEdge<GraphXVertex, int>, int>(graphXEdge, edge.Tag));
+                }
+            }
         }
 
         private void HighlightTraversal()
         {
             var currState = states.ElementAt(currStateNumber);
-            GraphXVertex source = currState.Item1;
-            GraphXVertex target = currState.Item2;
-            GraphXTaggedEdge<GraphXVertex, int> edge = null;
-            foreach (var key in _graphArea.EdgesList.Keys)
-            {
-                if (key.Source.ID.Equals(source.ID) && key.Target.ID.Equals(target.ID))
-                    edge = key;
-            }
-
-            var color = colors[currState.Item3];
-            _graphArea.EdgesList[edge].Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+            var currEdge = currState.Item1;
+            var currColor = colors[currState.Item2];
+            _graphArea.EdgesList[currEdge].Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(currColor));
 
             if (currStateNumber + 1 < states.Count)
             {
                 var nextState = states.ElementAt(currStateNumber + 1);
-                GraphXVertex nextSource = nextState.Item1;
-                GraphXVertex nextTarget = nextState.Item2;
-                foreach (var key in _graphArea.EdgesList.Keys)
-                {
-                    if (key.Source.Text.Equals(nextSource.Text) && key.Target.Text.Equals(nextTarget.Text))
-                        edge = key;
-                }
-                _graphArea.EdgesList[edge].Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF000000"));
+                var nextEdge = nextState.Item1;
+                _graphArea.EdgesList[nextEdge].Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF000000"));
             }
         }
 
@@ -136,10 +128,21 @@ namespace VertexColoringPlugin
             var vertexFun = VertexFactory.Name;
             var edgeFun1 = EdgeFactory<GraphXVertex>.WeightedTaggedEdge(0);
             var edgeFun = EdgeFactory<GraphXVertex>.Weighted(0);
-            var graph = UnGraph.LoadDot(dotSource, vertexFun, edgeFun1);
-            bigraph = BiGraph.LoadDot(dotSource, vertexFun, edgeFun);
+            var unGraph = UnGraph.LoadDot(dotSource, vertexFun, edgeFun1);
+            bigraph = new BiGraph();
 
-            return graph;
+            bigraph.AddVertexRange(unGraph.Vertices);
+            var edges = unGraph.Edges;
+            var GraphXedges = new List<GraphXTaggedEdge<GraphXVertex, int>>();
+            foreach (var edge in edges)
+            {
+                var newEdge1 = new GraphXTaggedEdge<GraphXVertex, int>(edge.Source, edge.Target, 0);
+                var newEdge2 = new GraphXTaggedEdge<GraphXVertex, int>(edge.Target, edge.Source, 0);
+                bigraph.AddEdge(newEdge1);
+                bigraph.AddEdge(newEdge2);
+            }
+
+            return unGraph;
         }
     }
 }

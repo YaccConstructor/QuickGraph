@@ -85,26 +85,15 @@ namespace VertexColoringPlugin
 
         private void HighlightTraversal()
         {
-            var currState = states.ElementAt(currStateNumber);
-            GraphXVertex vert = currState;
-            foreach (var key in _graphArea.VertexList.Keys)
-            {
-                if (key.ID.Equals(currState.ID))
-                    vert = key;
-            }
-            
-            var color = colors[graphWithColoredVertices.Colors[currState] ?? default(int)];
-            _graphArea.VertexList[vert].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+            var currVert = states.ElementAt(currStateNumber);
+                        
+            var color = colors[graphWithColoredVertices.Colors[currVert] ?? default(int)];
+            _graphArea.VertexList[currVert].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
 
             if (currStateNumber + 1 < states.Count)
             {
-                var nextState = states.ElementAt(currStateNumber + 1);
-                foreach (var key in _graphArea.VertexList.Keys)
-                {
-                    if (key.Text == nextState.Text)
-                        vert = key;
-                }
-                _graphArea.VertexList[vert].Background = new SolidColorBrush(Color.FromArgb(a, r, g, b));
+                var nextVert = states.ElementAt(currStateNumber + 1);
+                _graphArea.VertexList[nextVert].Background = new SolidColorBrush(Color.FromArgb(a, r, g, b));
             }
         }
 
@@ -132,7 +121,7 @@ namespace VertexColoringPlugin
             var vertexFun = VertexFactory.Name;
             var edgeFun = EdgeFactory<GraphXVertex>.Weighted(0);
             var graph = UnGraph.LoadDot(dotSource, vertexFun, edgeFun);
-            bigraph = BiGraph.LoadDot(dotSource, vertexFun, edgeFun);
+            bigraph = graph.ToBidirectionalGraph();
 
             return new InputModel<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>
             {

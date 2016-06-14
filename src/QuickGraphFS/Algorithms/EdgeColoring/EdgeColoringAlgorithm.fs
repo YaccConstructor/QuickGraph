@@ -47,10 +47,10 @@ type EdgeColoringAlgorithm<'Vertex, 'Edge when 'Edge :> TaggedEdge<'Vertex, int>
     let rec shift (listEdges : 'Edge list) =
         match listEdges with
         | e1 :: e2 :: edges -> e1.Tag <- e2.Tag
-                               colored.Trigger(e1.Source, e1.Target, e1.Tag)
+                               colored.Trigger(e1)
                                shift (e2 :: edges) 
         | e1 :: edges -> e1.Tag <- 0
-                         colored.Trigger(e1.Source, e1.Target, e1.Tag)
+                         colored.Trigger(e1)
         | _ -> ()
 
     //take subsezuense of edge seq before current edge
@@ -79,7 +79,7 @@ type EdgeColoringAlgorithm<'Vertex, 'Edge when 'Edge :> TaggedEdge<'Vertex, int>
 
     let inverseColorInComponent (comp : 'Edge list) color1 color2 = 
         Seq.iter (fun (e : 'Edge) -> if e.Tag = color1 then e.Tag <- color2 else e.Tag <- color1
-                                     colored.Trigger(e.Source, e.Target, e.Tag)
+                                     colored.Trigger(e)
                                      ) comp
                
     let ColoringOneEdge (edge : 'Edge) = 
@@ -93,7 +93,7 @@ type EdgeColoringAlgorithm<'Vertex, 'Edge when 'Edge :> TaggedEdge<'Vertex, int>
         match missingColorInBoth with
         | Some c  -> //no conflict
                      edge.Tag <- c
-                     colored.Trigger(edge.Source, edge.Target, edge.Tag)
+                     colored.Trigger(edge)
         | None    -> 
             //conflict
             let fanSeq = makeSequence sourse target [edge]
@@ -120,16 +120,16 @@ type EdgeColoringAlgorithm<'Vertex, 'Edge when 'Edge :> TaggedEdge<'Vertex, int>
                           shift fanVkVj
                           inverseColorInComponent componentVj  sourseMissingColor lastColor
                           lastEdge.Tag <- sourseMissingColor
-                          colored.Trigger(lastEdge.Source, lastEdge.Target, lastEdge.Tag)
+                          colored.Trigger(lastEdge)
                 | _    -> //"case 2.2"
                           inverseColorInComponent componentVk  sourseMissingColor lastColor
                           e.Tag <- sourseMissingColor
-                          colored.Trigger(e.Source, e.Target, e.Tag)
+                          colored.Trigger(e)
                        
             | _      -> //"case 1"
                         shift reverseFanSeq
                         lastEdge.Tag <- lastColor
-                        colored.Trigger(lastEdge.Source, lastEdge.Target, lastEdge.Tag)
+                        colored.Trigger(lastEdge)
 
     List.iter ColoringOneEdge <| Seq.toList graph.Edges
     graph
