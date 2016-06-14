@@ -118,6 +118,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VertexColoringPlugin", "src\GraphTask.Plugins\VertexColoringPlugin\VertexColoringPlugin.csproj", "{492FB0FE-9382-4656-974F-9074619C2BB7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompleteColoringPlugin", "src\GraphTask.Plugins\CompleteColoringPlugin\CompleteColoringPlugin.csproj", "{90B04B29-080C-4132-AD57-E07DE119E3E7}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HungarianAlgorithmVisualisation", "src\GraphTask.HungarianAlgorithmVisualisation\HungarianAlgorithmVisualisation.csproj", "{E2039A69-CC9D-4DB6-B9D9-3898DBD08AA1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YenVisualisation", "src\YenVisualisation\YenVisualisation.csproj", "{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}"
