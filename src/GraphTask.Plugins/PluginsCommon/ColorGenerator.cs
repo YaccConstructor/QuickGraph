@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows.Media;
 
 namespace PluginsCommon
 {
@@ -6,25 +9,162 @@ namespace PluginsCommon
     {
         public static String[] genColors(int n)
         {
-            if (n > 128) throw new System.ArgumentOutOfRangeException("Number of verticies should be less then 128");
-            return new String[128] {
-                "#FFFF00", "#1CE6FF", "#FF34FF", "#FF4A46", "#008941", "#006FA6", "#A30059", "#000000",
-                "#FFDBE5", "#7A4900", "#0000A6", "#63FFAC", "#B79762", "#004D43", "#8FB0FF", "#997D87",
-                "#5A0007", "#809693", "#FEFFE6", "#1B4400", "#4FC601", "#3B5DFF", "#4A3B53", "#FF2F80",
-                "#61615A", "#BA0900", "#6B7900", "#00C2A0", "#FFAA92", "#FF90C9", "#B903AA", "#D16100",
-                "#DDEFFF", "#000035", "#7B4F4B", "#A1C299", "#300018", "#0AA6D8", "#013349", "#00846F",
-                "#372101", "#FFB500", "#C2FFED", "#A079BF", "#CC0744", "#C0B9B2", "#C2FF99", "#001E09",
-                "#00489C", "#6F0062", "#0CBD66", "#EEC3FF", "#456D75", "#B77B68", "#7A87A1", "#788D66",
-                "#885578", "#FAD09F", "#FF8A9A", "#D157A0", "#BEC459", "#456648", "#0086ED", "#886F4C",
-                "#34362D", "#B4A8BD", "#00A6AA", "#452C2C", "#636375", "#A3C8C9", "#FF913F", "#938A81",
-                "#575329", "#00FECF", "#B05B6F", "#8CD0FF", "#3B9700", "#04F757", "#C8A1A1", "#1E6E00",
-                "#7900D7", "#A77500", "#6367A9", "#A05837", "#6B002C", "#772600", "#D790FF", "#9B9700",
-                "#549E79", "#FFF69F", "#201625", "#72418F", "#BC23FF", "#99ADC0", "#3A2465", "#922329",
-                "#5B4534", "#FDE8DC", "#404E55", "#0089A3", "#CB7E98", "#A4E804", "#324E72", "#6A3A4C",
-                "#83AB58", "#001C1E", "#D1F7CE", "#004B28", "#C8D0F6", "#A3A489", "#806C66", "#222800",
-                "#BF5650", "#E83000", "#66796D", "#DA007C", "#FF1A59", "#8ADBB4", "#1E0200", "#5B4E51",
-                "#C895C5", "#320033", "#FF6832", "#66E1D3", "#CFCDAC", "#D0AC94", "#7ED379", "#012C58"
-            };
+            if (n > 896) throw new System.ArgumentOutOfRangeException("Number of verticies should be less then 128");
+
+            var colors = new String[n];
+            IntensityGenerator intensityGenerator = new IntensityGenerator();
+
+            for (int i = 0; i < n; i++)
+            {
+                string color = string.Format(PatternGenerator.NextPattern(i),
+                    intensityGenerator.NextIntensity(i));
+                colors[i] = color;
+            }
+
+            return colors;
+        }
+    }
+
+    public class ColourGenerator
+    {
+
+        private int index = 0;
+        private IntensityGenerator intensityGenerator = new IntensityGenerator();
+
+        public string NextColour()
+        {
+            string colour = string.Format(PatternGenerator.NextPattern(index),
+                intensityGenerator.NextIntensity(index));
+            index++;
+            return colour;
+        }
+    }
+
+    public class PatternGenerator
+    {
+        public static string NextPattern(int index)
+        {
+            switch (index % 7)
+            {
+                case 0: return "#{0}0000";
+                case 1: return "#00{0}00";
+                case 2: return "#0000{0}";
+                case 3: return "#{0}{0}00";
+                case 4: return "#{0}00{0}";
+                case 5: return "#00{0}{0}";
+                case 6: return "#{0}{0}{0}";
+                default: throw new Exception("Math error");
+            }
+        }
+    }
+
+    public class IntensityGenerator
+    {
+        private IntensityValueWalker walker;
+        private int current;
+
+        public string NextIntensity(int index)
+        {
+            if (index == 0)
+            {
+                current = 255;
+            }
+            else if (index % 7 == 0)
+            {
+                if (walker == null)
+                {
+                    walker = new IntensityValueWalker();
+                }
+                else
+                {
+                    walker.MoveNext();
+                }
+                current = walker.Current.Value;
+            }
+            string currentText = current.ToString("X");
+            if (currentText.Length == 1) currentText = "0" + currentText;
+            return currentText;
+        }
+    }
+
+    public class IntensityValue
+    {
+
+        private IntensityValue mChildA;
+        private IntensityValue mChildB;
+
+        public IntensityValue(IntensityValue parent, int value, int level)
+        {
+            if (level > 7) throw new Exception("There are no more colours left");
+            Value = value;
+            Parent = parent;
+            Level = level;
+        }
+
+        public int Level { get; set; }
+        public int Value { get; set; }
+        public IntensityValue Parent { get; set; }
+
+        public IntensityValue ChildA
+        {
+            get
+            {
+                return mChildA ?? (mChildA = new IntensityValue(this, this.Value - (1 << (7 - Level)), Level + 1));
+            }
+        }
+
+        public IntensityValue ChildB
+        {
+            get
+            {
+                return mChildB ?? (mChildB = new IntensityValue(this, Value + (1 << (7 - Level)), Level + 1));
+            }
+        }
+    }
+
+    public class IntensityValueWalker
+    {
+
+        public IntensityValueWalker()
+        {
+            Current = new IntensityValue(null, 1 << 7, 1);
+        }
+
+        public IntensityValue Current { get; set; }
+
+        public void MoveNext()
+        {
+            if (Current.Parent == null)
+            {
+                Current = Current.ChildA;
+            }
+            else if (Current.Parent.ChildA == Current)
+            {
+                Current = Current.Parent.ChildB;
+            }
+            else
+            {
+                int levelsUp = 1;
+                Current = Current.Parent;
+                while (Current.Parent != null && Current == Current.Parent.ChildB)
+                {
+                    Current = Current.Parent;
+                    levelsUp++;
+                }
+                if (Current.Parent != null)
+                {
+                    Current = Current.Parent.ChildB;
+                }
+                else
+                {
+                    levelsUp++;
+                }
+                for (int i = 0; i < levelsUp; i++)
+                {
+                    Current = Current.ChildA;
+                }
+
+            }
         }
     }
 }
