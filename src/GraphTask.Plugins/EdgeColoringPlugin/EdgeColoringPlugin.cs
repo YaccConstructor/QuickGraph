@@ -96,7 +96,7 @@ namespace VertexColoringPlugin
             GraphXTaggedEdge<GraphXVertex, int> edge = null;
             foreach (var key in _graphArea.EdgesList.Keys)
             {
-                if (key.Source.Text.Equals(source.Text) && key.Target.Text.Equals(target.Text))
+                if (key.Source.ID.Equals(source.ID) && key.Target.ID.Equals(target.ID))
                     edge = key;
             }
 

@@ -89,7 +89,7 @@ namespace VertexColoringPlugin
             GraphXVertex vert = currState;
             foreach (var key in _graphArea.VertexList.Keys)
             {
-                if (key.Text == currState.Text)
+                if (key.ID.Equals(currState.ID))
                     vert = key;
             }
             

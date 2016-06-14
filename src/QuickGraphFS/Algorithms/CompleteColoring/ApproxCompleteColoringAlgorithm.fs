@@ -234,8 +234,7 @@ type private AchromaticPartition<'Vertex, 'Edge when 'Edge :> IEdge<'Vertex> and
         async {
             let! res = iteration graph Passive Active d' a'
             col.AddRange res
-            for color in 0..(res.Count - 1) do
-                res.[color].ForEach(fun vert -> colored.Trigger(vert, color))
+            res |> Seq.iteri (fun color (x: List<'Vertex>) -> x.ForEach(fun vert -> colored.Trigger(vert, color)))
         } |> Async.RunSynchronously
         col
 
