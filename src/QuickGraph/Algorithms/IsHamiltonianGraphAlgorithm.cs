@@ -76,12 +76,9 @@ namespace QuickGraph.Algorithms
         public bool IsHamiltonian()
         {
             int n = graph.VertexCount;
-            if ((n == 1) || (n >= 3 && graph.Vertices.All<TVertex>(satisfiesDiracsTheorem)))
-            {
-                return true;
-            }
-            List<List<TVertex>> permutations = GetPermutations();  // generate all possible cycles through all vertices 
-            return permutations.Any<List<TVertex>>(existsInGraph);
+            return n == 1
+                || (n >= 3 && graph.Vertices.All<TVertex>(satisfiesDiracsTheorem))
+                || GetPermutations().Any<List<TVertex>>(existsInGraph);
         }
     }
 }
