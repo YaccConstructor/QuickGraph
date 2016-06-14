@@ -75,7 +75,8 @@ namespace QuickGraph.Algorithms
 
         public bool IsHamiltonian()
         {
-            if (graph.VertexCount >= 3 && graph.Vertices.All<TVertex>(satisfiesDiracsTheorem))
+            int n = graph.VertexCount;
+            if ((n == 1) || (n >= 3 && graph.Vertices.All<TVertex>(satisfiesDiracsTheorem)))
             {
                 return true;
             }
