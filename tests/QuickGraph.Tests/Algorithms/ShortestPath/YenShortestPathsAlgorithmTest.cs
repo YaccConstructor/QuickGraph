@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Management.Instrumentation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QuickGraph.Algorithms.GraphColoring.VertexColoring;
 using QuickGraph.Algorithms.ShortestPath.Yen;
 
 namespace QuickGraph.Tests.Algorithms.ShortestPath
@@ -18,10 +19,10 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
     {
       var graph = new AdjacencyGraph<char, TaggedEquatableEdge<char, double>>(true);
       var yen = new YenShortestPathsAlgorithm<char>(graph, '1', '5', 10);
-      var exeptionWas = true;
+      var exeptionWas = false;
       try
       {
-        var result = yen.Execute().ToList();
+        yen.Execute();
       }
       catch (Exception e)
       {
@@ -41,10 +42,10 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
       var graph = new AdjacencyGraph<char, TaggedEquatableEdge<char, double>>(true);
       graph.AddVertexRange("1");
       var yen = new YenShortestPathsAlgorithm<char>(graph, '1', '1', 10);
-      var exeptionWas = true;
+      var exeptionWas = false;
       try
       {
-        var result = yen.Execute().ToList();
+        yen.Execute();
       }
       catch (Exception e)
       {
@@ -65,10 +66,10 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
       graph.AddVertexRange("1");
       var yen = new YenShortestPathsAlgorithm<char>(graph, '1', '1', 10);
       graph.AddEdge(new TaggedEquatableEdge<char, double>('1', '1', 7));
-      var exeptionWas = true;
+      var exeptionWas = false;
       try
       {
-        var result = yen.Execute().ToList();
+        yen.Execute();
       }
       catch (Exception e)
       {
@@ -81,12 +82,32 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
     [TestMethod]
     public void YenNormalCaseTest()
     {
-      /* generate simple graph
-        like this https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
-        but with directed edgesinput.Graph
-      */
       var input = GenerateNormalInput();
-      var yen = new YenShortestPathsAlgorithm<char> (input, '1', '5', 10);
+
+      // default weight function and default filter function case
+      var yen = new YenShortestPathsAlgorithm<char>(input, '1', '5', 10);
+      YenNormalCaseTestBody(yen, input);
+
+      // custom weight function and default filter function case
+      yen = new YenShortestPathsAlgorithm<char>(input, '1', '5', 10, e => e.Tag);
+      YenNormalCaseTestBody(yen, input);
+
+      // default weight function and custom filter function case
+      yen = new YenShortestPathsAlgorithm<char>(input, '1', '5', 10, null, e => e);
+      YenNormalCaseTestBody(yen, input);
+
+      // custom weight function and custom filter function case
+      yen = new YenShortestPathsAlgorithm<char>(input, '1', '5', 10, e => e.Tag, e => e);
+      YenNormalCaseTestBody(yen, input);
+    }
+
+    private void YenNormalCaseTestBody(YenShortestPathsAlgorithm<char> yen,
+      AdjacencyGraph<char, TaggedEquatableEdge<char, double>> input)
+    {
+      /*  generate simple graph
+          like this https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+          but with directed edgesinput.Graph
+      */
       var result = yen.Execute().ToList();
 
       /*
