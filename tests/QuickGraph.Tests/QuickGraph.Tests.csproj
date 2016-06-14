@@ -294,6 +294,7 @@
       <DependentUpon>AdjacencyGraphTVertexTEdgeTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Algorithms\AlgorithmExtensionsTest.cs" />
+    <Compile Include="Algorithms\AssigmentProblem\HungarianAlgorithmTest.cs" />
     <Compile Include="Algorithms\BipartiteDimensionAlgorithmTest.cs" />
     <Compile Include="Algorithms\ChromaticPolinomialAlgorithmTest.cs" />
     <Compile Include="Algorithms\Condensation\StronglyConnectedCondensationGraphAlgorithmTest.cs" />
@@ -306,6 +307,7 @@
     <Compile Include="Algorithms\InducedPathsTest.cs" />
     <Compile Include="Algorithms\IsEulerianGraphAlgorithmTest.cs" />
     <Compile Include="Algorithms\IsHamiltonianGraphAlgorithmTest.cs" />
+    <Compile Include="Algorithms\MaxCardinalityTest.cs" />
     <Compile Include="Algorithms\MaximumBipartiteMatchingAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\AllVerticesGraphAugmentorAlgorithmTest.cs" />
     <Compile Include="Algorithms\MaximumFlow\EdmondsKarpMaximumFlowAlgorithmTest.cs" />
@@ -334,6 +336,8 @@
     <Compile Include="Algorithms\StronglyConnectedComponentsAlgorithmTest.cs" />
     <Compile Include="Algorithms\TarjanOfflineLeastCommonAncestorAlgorithmTest.cs" />
     <Compile Include="Algorithms\TopologicalSortAlgorithmTest.cs" />
+    <Compile Include="Algorithms\TransitiveClosureAlgorithmTest.cs" />
+    <Compile Include="Algorithms\TransitiveReductionAlgorithmTest.cs" />
     <Compile Include="Algorithms\TSP\TSPTest.cs" />
     <Compile Include="Algorithms\UndirectedFirstTopologicalSortAlgorithmTest.cs" />
     <Compile Include="Algorithms\UndirectedTopologicalSortAlgorithmTest.cs" />

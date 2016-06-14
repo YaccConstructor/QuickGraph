@@ -33,28 +33,6 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Release\QuickGraphFS.XML</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Algorithms\EdgeColoring\EdgeColoringAlgorithm.fs" />
-    <Compile Include="Algorithms\FeedbackArcSet\BergerShorMinimumFeedbackArcSetAlgorithm.fs" />
-    <Compile Include="Algorithms\CompleteColoring\ApproxCompleteColoringAlgorithm.fs" />
-    <Compile Include="Algorithms\CompleteColoring\ChromaticPolynomial\Algorithm.fs" />
-    <Compile Include="Algorithms\DominatingSet\MinimumDominatingSetGeneticAlgorithm.fs" />
-    <Compile Include="Algorithms\IndependentSet\MaximumIndependentSetAlgorithm.fs" />
-    <Compile Include="Algorithms\BipartiteDimension\BipartiteDimensionAlgorithm.fs" />
-    <Compile Include="Algorithms\InducedPaths\InducedPaths.fs" />
-    <Compile Include="Algorithms\DomaticPartition\DomaticPartition.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
-      <Name>QuickGraph</Name>
-      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>
@@ -71,6 +49,27 @@
     </Otherwise>
   </Choose>
   <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <ItemGroup>
+    <Compile Include="Algorithms\EdgeColoring\EdgeColoringAlgorithm.fs" />
+    <Compile Include="Algorithms\FeedbackArcSet\BergerShorMinimumFeedbackArcSetAlgorithm.fs" />
+    <Compile Include="Algorithms\CompleteColoring\ApproxCompleteColoringAlgorithm.fs" />
+    <Compile Include="Algorithms\CompleteColoring\ChromaticPolynomial\Algorithm.fs" />
+    <Compile Include="Algorithms\DominatingSet\MinimumDominatingSetGeneticAlgorithm.fs" />
+    <Compile Include="Algorithms\IndependentSet\MaximumIndependentSetAlgorithm.fs" />
+    <Compile Include="Algorithms\BipartiteDimension\BipartiteDimensionAlgorithm.fs" />
+    <Compile Include="Algorithms\InducedPaths\InducedPaths.fs" />
+    <Compile Include="Algorithms\DomaticPartition\DomaticPartition.fs" />
+    <Compile Include="Algorithms\MaxCardinality\MaxCardinality.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="System" />
+    <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
+      <Name>QuickGraph</Name>
+      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

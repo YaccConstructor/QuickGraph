@@ -5,16 +5,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3AC1E323-82F9-4E8E-BB52-D22FBA2C844F}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{E2039A69-CC9D-4DB6-B9D9-3898DBD08AA1}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MainForm</RootNamespace>
-    <AssemblyName>MainForm</AssemblyName>
+    <RootNamespace>GraphTask.HungarianAlgorithmVisualisation</RootNamespace>
+    <AssemblyName>GraphTask.HungarianAlgorithmVisualisation</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,83 +23,42 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\GraphTaskBin\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.GLEE.Drawing">
+      <HintPath>..\external\Glee\Microsoft.GLEE.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="DoHungarian.cs" />
+    <Compile Include="HungarianState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="paket.references" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\StronglyConnectedComponents\StronglyConnectedComponents.csproj">
-      <Project>{cac7bc69-08ad-4a6c-8024-813e29d4f954}</Project>
-      <Name>StronglyConnectedComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\WeaklyConnectedComponents\WeaklyConnectedComponents.csproj">
-      <Project>{efceb46f-bc83-41d0-8970-ff4ecf897be5}</Project>
-      <Name>WeaklyConnectedComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphTask.Common\GraphTask.Common.fsproj">
-      <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
-      <Name>GraphTask.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
       <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>
       <Name>GraphX.WPF.Controls</Name>
@@ -113,17 +71,33 @@
       <Project>{a30d218b-aaa4-483a-99f7-eaeb1b8b4610}</Project>
       <Name>GraphX.PCL.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QuickGraph.Data\QuickGraph.Data.csproj">
+      <Project>{960c14d1-edbd-40e5-8ae6-25e311551b87}</Project>
+      <Name>QuickGraph.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuickGraph.Graphviz\QuickGraph.Graphviz.csproj">
+      <Project>{595d6322-637a-4a36-97f1-d53f3f9ecea7}</Project>
+      <Name>QuickGraph.Graphviz</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj">
       <Project>{646cfbb0-b998-45e7-8809-991a5538ff36}</Project>
       <Name>QuickGraph.GraphXAdapter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotParser\DotParser.fsproj">
+      <Project>{8826810a-dc59-46e6-8978-21e273db1236}</Project>
+      <Name>DotParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphTask.Common\GraphTask.Common.fsproj">
+      <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
+      <Name>GraphTask.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
-      <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
+      <Project>{A9A5C115-0680-44B3-A87E-5ECF4C93814E}</Project>
       <Name>QuickGraph</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <None Include="paket.references" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -134,26 +108,6 @@
   </Target>
   -->
   <Import Project="..\..\.paket\paket.targets" />
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v3.5'">
-      <ItemGroup>
-        <Reference Include="ICSharpCode.AvalonEdit">
-          <HintPath>..\..\packages\AvalonEdit\lib\Net35\ICSharpCode.AvalonEdit.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
-      <ItemGroup>
-        <Reference Include="ICSharpCode.AvalonEdit">
-          <HintPath>..\..\packages\AvalonEdit\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
       <ItemGroup>
