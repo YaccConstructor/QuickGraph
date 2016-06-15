@@ -29,6 +29,14 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
             this.input = input;
         }
 
+        public event VertexAction<TVertex> ColourVertex;
+        private void OnColourVertex(TVertex v)
+        {
+            var eh = this.ColourVertex;
+            if (eh != null)
+                eh(v);
+        }
+
         public OutputModel<TVertex, TEdge> Compute()
         {
             int V = input.Graph.VertexCount;
@@ -45,6 +53,7 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
 
             // Assign the first color to first vertex
             vertexColor[firstVertex] = 0;
+            this.OnColourVertex(firstVertex);
 
             /*
             A temporary array to store the available colors. True
@@ -65,10 +74,13 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
                     // Process all adjacent vertices and flag their colors as unavailable
                     foreach (var edgesOfProcessVertex in input.Graph.AdjacentEdges(vertexOfGraph))
                     {
-                        if (vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)].HasValue)
+                        var adjacentVertex = edgesOfProcessVertex.GetOtherVertex(vertexOfGraph);
+
+                        if (vertexColor[adjacentVertex].HasValue)
                         {
-                            available[vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)].Value] = true;
+                            available[vertexColor[adjacentVertex].Value] = true;
                         }
+                        
                     }
 
                     // Find the first available color
@@ -81,6 +93,7 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
 
                     // Assign the found color
                     vertexColor[vertexOfGraph] = usingColor;
+                    this.OnColourVertex(vertexOfGraph);
 
                     // Reset the values back to false for the next iteration
                     foreach (var edgesOfProcessVertex in input.Graph.AdjacentEdges(vertexOfGraph))

@@ -13,6 +13,7 @@ using QuickGraph.Algorithms.Search;
 using System;
 using System.ComponentModel;
 using QuickGraph.Algorithms.GraphColoring.VertexColoring;
+using Microsoft.FSharp.Control;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 [assembly: Addin]
@@ -24,6 +25,7 @@ namespace VertexColoringPlugin
     using UnGraph = UndirectedGraph<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>;
     using GraphArea = BidirectionalGraphArea<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>;
     using System.Windows;
+    using QuickGraph.Algorithms;
     [Extension]
     public class VertexColoringPlugin : IAlgorithm
     {
@@ -31,14 +33,12 @@ namespace VertexColoringPlugin
         private readonly GraphXZoomControl _zoomControl;
         private bool _hasStarted;
         private bool _hasFinished;
-        private List<GraphXVertex> states;
-        private VertexColoringAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>> coloringAlgorithm;
-        private OutputModel<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>> graphWithColoredVertices;
+        private List<Tuple<GraphXVertex, int>> states;
+        private ApproxCompleteColoringAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>> coloringAlgorithm;
+        private List<List<GraphXVertex>> coloring;
         private BiGraph bigraph;
         private int currStateNumber;
         private String[] colors;
-
-        byte a = 0xFF, r = 0xE3, g = 0xE3, b = 0xE3;
 
         public VertexColoringPlugin()
         {
@@ -47,9 +47,9 @@ namespace VertexColoringPlugin
             Output.Controls.Add(new ElementHost { Dock = DockStyle.Fill, Child = _zoomControl });
         }
 
-        public string Name => "Vertex Coloring Plugin";
+        public string Name => "Complete Coloring Plugin";
         public string Author => "Alex Rabochiy";
-        public string Description => "This plugin demonstrates how Vertex Coloring works.\n";
+        public string Description => "This plugin demonstrates how Complete Coloring works.\n";
 
         public Panel Options { get; } = new Panel { Dock = DockStyle.Fill };
         public Panel Output { get; } = new Panel { Dock = DockStyle.Fill };
@@ -59,21 +59,21 @@ namespace VertexColoringPlugin
 
         public void Run(string dotSource)
         {
-            var input = GenerateInputModel(dotSource);
-            if (!input.Graph.Vertices.Any())
+            var input = ReadInputGraph(dotSource);
+            if (!input.Vertices.Any())
             {
                 MessageBox.Show("Graph is empty.");
                 return;
             }
-            colors = ColorGenerator.genColors(input.Graph.VertexCount);
-            coloringAlgorithm = new VertexColoringAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>(input);
+            colors = ColorGenerator.genColors(input.VertexCount);
+            coloringAlgorithm = new ApproxCompleteColoringAlgorithm<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>();
 
-            states = new List<GraphXVertex>();
+            states = new List<Tuple<GraphXVertex, int>>();
 
-            coloringAlgorithm.ColourVertex += OnColourVertex;
+            coloringAlgorithm.Colored += OnColourVertex; ;
             currStateNumber = -1;
 
-            graphWithColoredVertices = coloringAlgorithm.Compute();
+            coloring = coloringAlgorithm.Compute(input);
 
             _graphArea.LogicCore.Graph = bigraph;
             _graphArea.GenerateGraph();
@@ -83,17 +83,24 @@ namespace VertexColoringPlugin
             _hasFinished = false;
         }
 
+        private void OnColourVertex(object sender, Tuple<GraphXVertex, int> args)
+        {
+            states.Add(args);
+        }
+
         private void HighlightTraversal()
         {
-            var currVert = states.ElementAt(currStateNumber);
-                        
-            var color = colors[graphWithColoredVertices.Colors[currVert] ?? default(int)];
-            _graphArea.VertexList[currVert].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+            var currState = states.ElementAt(currStateNumber);
+            GraphXVertex currVertex = currState.Item1;
+
+            var color = colors[currState.Item2];
+            _graphArea.VertexList[currVertex].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
 
             if (currStateNumber + 1 < states.Count)
             {
-                var nextVert = states.ElementAt(currStateNumber + 1);
-                _graphArea.VertexList[nextVert].Background = new SolidColorBrush(Color.FromArgb(a, r, g, b));
+                var nextState = states.ElementAt(currStateNumber + 1);
+                GraphXVertex nextVertex = nextState.Item1;
+                _graphArea.VertexList[nextVertex].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE3E3E3"));
             }
         }
 
@@ -111,22 +118,15 @@ namespace VertexColoringPlugin
             _hasFinished = false;
         }
 
-        private void OnColourVertex(GraphXVertex vertex)
-        {
-            states.Add(vertex);
-        }
-
-        private InputModel<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>> GenerateInputModel(string dotSource)
+        private UndirectedGraph<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>> ReadInputGraph(string dotSource)
         {
             var vertexFun = VertexFactory.Name;
+            var edgeFun1 = EdgeFactory<GraphXVertex>.WeightedTaggedEdge(0);
             var edgeFun = EdgeFactory<GraphXVertex>.Weighted(0);
             var graph = UnGraph.LoadDot(dotSource, vertexFun, edgeFun);
             bigraph = graph.ToBidirectionalGraph();
 
-            return new InputModel<GraphXVertex, GraphXTaggedEdge<GraphXVertex, int>>
-            {
-                Graph = graph
-            };
+            return graph;
         }
     }
 }
