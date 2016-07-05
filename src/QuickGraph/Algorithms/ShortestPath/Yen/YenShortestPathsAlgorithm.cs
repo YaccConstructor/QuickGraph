@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Management.Instrumentation;
+﻿using System;
+using System.Collections.Generic;
 using QuickGraph.Algorithms.Observers;
 
 namespace QuickGraph.Algorithms.ShortestPath.Yen
@@ -38,7 +38,7 @@ namespace QuickGraph.Algorithms.ShortestPath.Yen
        */
       if (shortestWay == null)
       {
-        throw new InstanceNotFoundException();
+        throw new NoPathFoundException();
       }
 
       for (var i = 0; i < k - 1; i++)

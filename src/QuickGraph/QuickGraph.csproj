@@ -340,6 +340,7 @@
     <Compile Include="EquatableTermEdge.cs" />
     <Compile Include="IClusteredGraph.cs" />
     <Compile Include="ITermBidirectionalGraph.cs" />
+    <Compile Include="NoPathFoundException.cs" />
     <Compile Include="TermBidirectionalGraph.cs" />
     <Compile Include="TermEdge.cs" />
     <Compile Include="DelegateBidirectionalIncidenceGraph.cs" />

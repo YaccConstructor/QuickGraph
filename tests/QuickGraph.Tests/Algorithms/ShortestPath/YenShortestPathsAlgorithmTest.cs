@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Management.Instrumentation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Algorithms.ShortestPath.Yen;
 
@@ -48,7 +47,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
       }
       catch (Exception e)
       {
-        Assert.AreEqual(true, e is InstanceNotFoundException);
+        Assert.AreEqual(true, e is NoPathFoundException);
         exeptionWas = true;
       }
       Assert.AreEqual(exeptionWas, true);
@@ -72,7 +71,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
       }
       catch (Exception e)
       {
-        Assert.AreEqual(true, e is InstanceNotFoundException);
+        Assert.AreEqual(true, e is NoPathFoundException);
         exeptionWas = true;
       }
       Assert.AreEqual(exeptionWas, true);

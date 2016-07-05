@@ -207,9 +207,8 @@ Target "PublishNuget" (fun _ ->
 // Generate the documentation
 
 Target "GenerateReferenceDocs" (fun _ ->
-    ()
-    //if not <| executeFSIWithArgs "docs/tools" "generate.fsx" ["--define:RELEASE"; "--define:REFERENCE"] [] then
-    //  failwith "generating reference documentation failed"
+    if not <| executeFSIWithArgs "docs/tools" "generate.fsx" ["--define:RELEASE"; "--define:REFERENCE"] [] then
+      failwith "generating reference documentation failed"
 )
 
 let generateHelp' fail debug =
@@ -352,8 +351,8 @@ Target "All" DoNothing
   ==> "RunMSTests"
   ==> "RunNUnitTests"
   ==> "RunDotParserTests"
-  //==> "GenerateReferenceDocs"
-  //==> "GenerateDocs"
+  ==> "GenerateReferenceDocs"
+  ==> "GenerateDocs"
   ==> "All"
   =?> ("ReleaseDocs",isLocalBuild)
 
