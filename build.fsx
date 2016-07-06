@@ -65,6 +65,7 @@ let gitName = "QuickGraph"
 
 // The url for the raw files hosted
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/YaccConstructor"
+
 let MSBuild12 = (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin")
 let MSBuild14 = (ProgramFilesX86 @@ @"\MSBuild\14.0\Bin")
 do setEnvironVar "MSBuild" (if (Directory.Exists(MSBuild12)) then MSBuild12 else MSBuild14)
@@ -161,12 +162,6 @@ Target "RunNUnitTests" (fun _ ->
             DisposeRunners = true
             ProcessModel = SeparateProcessModel })
 )
-
-Target "RunDotParserTests" (fun _ ->
-    !! "tests/DotParser.Tests/bin/Release/DotParser.Tests.dll"
-    |> NUnit3 (fun p -> NUnit3Defaults)
-)
-
 
 #if MONO
 #else
@@ -347,10 +342,9 @@ Target "All" DoNothing
 "Clean"
   ==> "AssemblyInfo"
   ==> "Build"
-  //==> "CopyBinaries"
+  ==> "CopyBinaries"
   ==> "RunMSTests"
   ==> "RunNUnitTests"
-  ==> "RunDotParserTests"
   ==> "GenerateReferenceDocs"
   ==> "GenerateDocs"
   ==> "All"

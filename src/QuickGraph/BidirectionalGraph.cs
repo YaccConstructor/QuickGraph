@@ -6,7 +6,6 @@ using System.Diagnostics.Contracts;
 using QuickGraph.Contracts;
 using QuickGraph.Collections;
 using System.Linq;
-using DotParserProject;
 
 namespace QuickGraph
 {
