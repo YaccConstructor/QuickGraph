@@ -1,1 +1,0 @@
-msbuild quickgraph.build /p:CCNetLabel=3.6.0.0 /p:CCNetListenerFile=buildlog.txt

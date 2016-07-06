@@ -1,6 +1,6 @@
 NUGET
   remote: https://www.nuget.org/api/v2
-    DotNet.Contracts (1.10.10126.4)
+    DotNet.Contracts (1.10.20606.1)
     DotParser (1.0.2)
       FSharp.Core
       FSPowerPack.Core.Community
