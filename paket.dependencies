@@ -1,7 +1,7 @@
 source https://nuget.org/api/v2
 
 nuget DotNet.Contracts
-nuget DotParser
+nuget DotParser >= 1.0.5
 nuget FSharp.Core
 nuget FSharp.Formatting
 nuget FSharpx.Collections

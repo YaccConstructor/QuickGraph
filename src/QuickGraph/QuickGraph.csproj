@@ -532,28 +532,8 @@
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
-        <Reference Include="AST.Common">
-          <HintPath>..\..\packages\DotParser\lib\net45\AST.Common.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
         <Reference Include="DotParser">
           <HintPath>..\..\packages\DotParser\lib\net45\DotParser.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="FsLexYacc.Runtime">
-          <HintPath>..\..\packages\DotParser\lib\net45\FsLexYacc.Runtime.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="YC.RNGLRCommon">
-          <HintPath>..\..\packages\DotParser\lib\net45\YC.RNGLRCommon.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="YC.RNGLRParser">
-          <HintPath>..\..\packages\DotParser\lib\net45\YC.RNGLRParser.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
