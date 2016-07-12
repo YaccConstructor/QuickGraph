@@ -1,9 +1,9 @@
 NUGET
   remote: https://www.nuget.org/api/v2
     DotNet.Contracts (1.10.20606.1)
-    DotParser (1.0.2)
+    DotParser (1.0.4)
       FSharp.Core
-      FSPowerPack.Core.Community
+      FSharpx.Collections.Experimental
     FAKE (4.29.2)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.0.0.1)
@@ -14,7 +14,9 @@ NUGET
       FSharp.Compiler.Service (>= 2.0.0.3)
     FSharpx.Collections (1.15.1)
       FSharp.Core
-    FSPowerPack.Core.Community (3.0)
+    FSharpx.Collections.Experimental (1.15.1)
+      FSharp.Core
+      FSharpx.Collections (>= 1.15.1)
     Microsoft.Bcl (1.1.10) - framework: net10, net11, net20, net30, net35, net40, net40-full
       Microsoft.Bcl.Build (>= 1.0.14)
     Microsoft.Bcl.Build (1.0.21) - import_targets: false, framework: net10, net11, net20, net30, net35, net40, net40-full

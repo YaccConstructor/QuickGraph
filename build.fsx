@@ -146,7 +146,6 @@ Target "RunMSTests" (fun _ ->
     |> MSTest (fun p ->
         { p with            
             TimeOut = TimeSpan.FromMinutes 20.
-            ResultsDir =  "."
              })
 )
 
