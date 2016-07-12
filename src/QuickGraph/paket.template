@@ -1,5 +1,6 @@
 type project
 id YC.QuickGraph
+title YC.QuickGraph
 owners
     YaccConstructor
 authors 

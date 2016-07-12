@@ -2,7 +2,7 @@
 using System.Reflection;
 
 [assembly: AssemblyTitleAttribute("QuickGraph")]
-[assembly: AssemblyProductAttribute("QuickGraph")]
+[assembly: AssemblyProductAttribute("YC.QuickGraph")]
 [assembly: AssemblyDescriptionAttribute("Graph datastructures and algorithms for .NET.")]
 [assembly: AssemblyVersionAttribute("3.7.0")]
 [assembly: AssemblyFileVersionAttribute("3.7.0")]
