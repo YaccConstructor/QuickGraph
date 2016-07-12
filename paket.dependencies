@@ -2,9 +2,9 @@ source https://nuget.org/api/v2
 
 nuget DotNet.Contracts
 nuget DotParser
+nuget FSharp.Core
 nuget FSharp.Formatting
 nuget FSharpx.Collections
-nuget FSPowerPack.Core.Community 3.0.0.0 framework: >= net45
 nuget Microsoft.Net.Compilers
 nuget FAKE
 nuget NUnit
