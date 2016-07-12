@@ -13,25 +13,28 @@ licenseUrl
 requireLicenseAcceptance
     false
 copyright
-    Copyright 2015
+    Copyright 2016
 tags
-    garph .NET datastructures algorithms CSharp QuickGraph
+    graph datastructures algorithms QuickGraph Graphviz
 summary
     Graph datastructures and algorithms for .NET.
 description
     QuickGraph provides generic directed/undirected graph datastructures and algorithms for .NET. QuickGraph comes with algorithms such as depth first seach, breath first search, A* search, shortest path, k-shortest path, maximum flow, etc...
 references
-    QuickGraph.dll
-    QuickGraph.Data.dll
-    QuickGraph.Graphviz.dll
+    YC.QuickGraph.dll
+    YC.QuickGraph.FSA.dll
+    YC.QuickGraph.FST.dll
+    YC.QuickGraph.Data.dll
+    YC.QuickGraph.Glee.dll
+    YC.QuickGraph.Graphviz.dll
+    YC.QuickGraph.Petri.dll
+    YC.QuickGraphFS.dll
 files
-    bin/Release/QuickGraph.dll ==> lib/net35
-    bin/Release/QuickGraph.xml ==> lib/net35
-    bin/Release/Microsoft.Contracts.dll ==> lib/net35
-    ../QuickGraph.Data/bin/Release/QuickGraph.Data.dll ==> lib/net35
-    ../QuickGraph.Data/bin/Release/QuickGraph.Data.xml ==> lib/net35
-    ../QuickGraph.Graphviz/bin/Release/QuickGraph.Graphviz.dll ==> lib/net35
-    ../QuickGraph.Graphviz/bin/Release/QuickGraph.Graphviz.xml ==> lib/net35
-
-
-
+    ../../bin/QuickGraph/YC.QuickGraph.dll ==> lib/net45
+    ../../bin/QuickGraph.Data/YC.QuickGraph.Data.dll ==> lib/net45
+    ../../bin/QuickGraph.FSA/YC.QuickGraph.FSA.dll ==> lib/net45
+    ../../bin/QuickGraph.FST/YC.QuickGraph.FST.dll ==> lib/net45
+    ../../bin/QuickGraph.Glee/YC.QuickGraph.Glee.dll ==> lib/net45
+    ../../bin/QuickGraph.Graphviz/YC.QuickGraph.Graphviz.dll ==> lib/net45
+    ../../bin/QuickGraph.Petri/YC.QuickGraph.Petri.dll ==> lib/net45
+    ../../bin/QuickGraphFS/YC.QuickGraphFS.dll ==> lib/net45

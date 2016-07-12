@@ -1,2 +1,4 @@
-#### 0.0.1-beta - October 24 2013
-* Initial release
+#### 3.7.0 July 05 2016
+* New graph algorithms for graph partition, coloring, searching paths, etc
+* Graphs now can be loaded from DOT
+* Drop Portable Class Library support
