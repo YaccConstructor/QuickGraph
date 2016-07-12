@@ -3,33 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{FAAD5B1C-1217-48D6-B1EF-7CAC0440D6A4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectScaffold", "ProjectScaffold", "{FAAD5B1C-1217-48D6-B1EF-7CAC0440D6A4}"
 	ProjectSection(SolutionItems) = preProject
+		.travis.yml = .travis.yml
+		appveyor.yml = appveyor.yml
+		build.cmd = build.cmd
+		build.fsx = build.fsx
+		build.sh = build.sh
 		paket.dependencies = paket.dependencies
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{6EC5788D-DB36-4094-AB0F-A9E2C0F56B62}"
-	ProjectSection(SolutionItems) = preProject
-		Build\ccnet.config = Build\ccnet.config
-		Build\ccnet.server.config = Build\ccnet.server.config
-		Build\quickgraph.build = Build\quickgraph.build
-		Build\quickgraph.shfb = Build\quickgraph.shfb
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D81E7BA-91B1-473B-B9BB-4DECB1825F66}"
-	ProjectSection(SolutionItems) = preProject
-		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
-		nuspec.xsd = nuspec.xsd
-		quickgraph.nuspec = quickgraph.nuspec
-		QuickGraph.Perf1.psess = QuickGraph.Perf1.psess
-		QuickGraph.vsmdi = QuickGraph.vsmdi
-		QuickGraph1.vsmdi = QuickGraph1.vsmdi
+		paket.lock = paket.lock
+		README.md = README.md
+		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{22937B93-4129-4F68-AB14-F7AFE020BA8F}"
-	ProjectSection(SolutionItems) = preProject
-		dgmlsample.dgml = dgmlsample.dgml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{7A2A3C07-B652-4759-AFC4-49378D764784}"
 EndProject
@@ -46,8 +33,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Glee", "src\QuickGraph.Glee\QuickGraph.Glee.csproj", "{ACDD0973-E5D9-4C2B-9EAF-B5B5DF44EDDD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Petri", "src\QuickGraph.Petri\QuickGraph.Petri.csproj", "{6C49E8BF-82F4-40D0-AB49-8EA8A655A989}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.SeeIt", "src\QuickGraph.SeeIt\QuickGraph.SeeIt.csproj", "{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QuickGraphFS", "src\QuickGraphFS\QuickGraphFS.fsproj", "{1CCAFD2C-4A61-4F7F-986C-A2F575086344}"
 EndProject
@@ -199,26 +184,6 @@ Global
 		{6C49E8BF-82F4-40D0-AB49-8EA8A655A989}.ReleaseContractsReferences|Any CPU.Build.0 = Release20|Any CPU
 		{6C49E8BF-82F4-40D0-AB49-8EA8A655A989}.ReleaseContractsReferences|x86.ActiveCfg = Release20|Any CPU
 		{6C49E8BF-82F4-40D0-AB49-8EA8A655A989}.ReleaseContractsReferences|x86.Build.0 = Release20|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Debug|x86.Build.0 = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.DebugContracts|Any CPU.ActiveCfg = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.DebugContracts|Any CPU.Build.0 = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.DebugContracts|x86.ActiveCfg = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.DebugContracts|x86.Build.0 = Debug|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release|x86.ActiveCfg = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release|x86.Build.0 = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release20|Any CPU.ActiveCfg = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release20|Any CPU.Build.0 = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release20|x86.ActiveCfg = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.Release20|x86.Build.0 = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.ReleaseContractsReferences|Any CPU.ActiveCfg = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.ReleaseContractsReferences|x86.ActiveCfg = Release|Any CPU
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74}.ReleaseContractsReferences|x86.Build.0 = Release|Any CPU
 		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CCAFD2C-4A61-4F7F-986C-A2F575086344}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -370,7 +335,6 @@ Global
 		{595D6322-637A-4A36-97F1-D53F3F9ECEA7} = {7A2A3C07-B652-4759-AFC4-49378D764784}
 		{ACDD0973-E5D9-4C2B-9EAF-B5B5DF44EDDD} = {DD28733B-860A-4FE6-8D68-119EB179F90E}
 		{6C49E8BF-82F4-40D0-AB49-8EA8A655A989} = {DD28733B-860A-4FE6-8D68-119EB179F90E}
-		{52CBCA3C-1C19-4C0C-A4F0-B887E383AD74} = {DD28733B-860A-4FE6-8D68-119EB179F90E}
 		{1CCAFD2C-4A61-4F7F-986C-A2F575086344} = {DD28733B-860A-4FE6-8D68-119EB179F90E}
 		{61DF76E1-DE2B-4DF1-AD5F-89939AB06693} = {22937B93-4129-4F68-AB14-F7AFE020BA8F}
 		{2C35D329-D1F8-4862-8DA2-F2D27E8D4DB7} = {22937B93-4129-4F68-AB14-F7AFE020BA8F}
