@@ -15,7 +15,7 @@ requireLicenseAcceptance
 copyright
     Copyright 2016
 tags
-    graph datastructures algorithms QuickGraph Graphviz
+    graph datastructures algorithms QuickGraph Graphviz .NET CSharp
 summary
     Graph datastructures and algorithms for .NET.
 description
