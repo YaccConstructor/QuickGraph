@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>BundleEdgeRouting<'TVertex, 'TEdge, 'TGraph> - QuickGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Jonathan "Peli" de Halleux"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/QuickGraph/content/style.css" />
+    <script type="text/javascript" src="/QuickGraph/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/YaccConstructor/QuickGraph">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/QuickGraph/index.html">QuickGraph</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>BundleEdgeRouting<'TVertex, 'TEdge, 'TGraph></h1>
+<p>
+  <span>Namespace: GraphX.PCL.Logic.Algorithms.EdgeRouting</span><br />
+</p>
+<div class="xmldoc">
+<p>EdgeBundler class is intended to be used for bundling and straightening of the edges of the graph.
+The goal is to get the layout that is less clutered and more suitable for analiyzing.</p>
+<p>This class is based on the paper "Force-Directed Edge Bundling for Graph Visualization"
+by Danny Holten and Jarke J. van Wijk.
+<a href="http://www.win.tue.nl/~dholten/papers/forcebundles_eurovis.pdf">http://www.win.tue.nl/~dholten/papers/forcebundles_eurovis.pdf</a></p>
+<p>It was implemented and modified by Luka Potkonjak.
+Adapted for GraphX by PantheR.</p>
+
+</div>
+  <h3>Constructors</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Constructor</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '438', 438)" onmouseover="showTip(event, '438', 438)">
+            new(...)
+          </code>
+          <div class="tip" id="438">
+            <strong>Signature:</strong> (graphArea:Rect * graph:&#39;TGraph * vertexPositions:IDictionary&lt;&#39;TVertex,Point&gt; * vertexSizes:IDictionary&lt;&#39;TVertex,Rect&gt; * parameters:IEdgeRoutingParameters) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '439', 439)" onmouseover="showTip(event, '439', 439)">
+            BundleAllEdges(graph, cancellationToken)
+          </code>
+          <div class="tip" id="439">
+            <strong>Signature:</strong> (graph:&#39;TGraph * cancellationToken:CancellationToken) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Bundles edges of the graph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '440', 440)" onmouseover="showTip(event, '440', 440)">
+            BundleEdges(graph, edges)
+          </code>
+          <div class="tip" id="440">
+            <strong>Signature:</strong> (graph:&#39;TGraph * edges:IEnumerable&lt;&#39;TEdge&gt;) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Bundles specified edges. Shapes of all the other edges remain the same,
+so this method is faster than the one for bundling all edges, but also produces less optimal layout.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '441', 441)" onmouseover="showTip(event, '441', 441)">
+            Compute(cancellationToken)
+          </code>
+          <div class="tip" id="441">
+            <strong>Signature:</strong> cancellationToken:CancellationToken -&gt; unit<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '442', 442)" onmouseover="showTip(event, '442', 442)">
+            ComputeSingle(edge)
+          </code>
+          <div class="tip" id="442">
+            <strong>Signature:</strong> edge:&#39;TEdge -&gt; Point []<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '443', 443)" onmouseover="showTip(event, '443', 443)">
+            Iterations()
+          </code>
+          <div class="tip" id="443">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets or sets the number of iterations for moving the control points.
+Default value is 50.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '444', 444)" onmouseover="showTip(event, '444', 444)">
+            RepulseOpposite()
+          </code>
+          <div class="tip" id="444">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets or sets the value indicating whether opposite edges should attracts or repulse each other.
+Default value is false.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '445', 445)" onmouseover="showTip(event, '445', 445)">
+            RepulsionCoefficient()
+          </code>
+          <div class="tip" id="445">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>If repulseOpposite is true, this determines how much will opposite edges repulse eachother.
+From -1 to 0.
+Default is -0.1</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '446', 446)" onmouseover="showTip(event, '446', 446)">
+            SpringConstant()
+          </code>
+          <div class="tip" id="446">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets or sets the value for the spring constant.
+Edges are more easely bent if the value is lower.
+Default value is 10.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '447', 447)" onmouseover="showTip(event, '447', 447)">
+            StraightenEdges(graph, s)
+          </code>
+          <div class="tip" id="447">
+            <strong>Signature:</strong> (graph:&#39;TGraph * s:float32) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Moves the control points of all the edges of the graph closer to their original position on the straight edge</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '448', 448)" onmouseover="showTip(event, '448', 448)">
+            Straightening()
+          </code>
+          <div class="tip" id="448">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets or sets the amount of straightening that will be applied after every bundling.
+This can produce better-looking graphs.
+Default value is 0.15, range is from 0 to 1.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '449', 449)" onmouseover="showTip(event, '449', 449)">
+            SubdivisionPoints()
+          </code>
+          <div class="tip" id="449">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets or sets the number of subdivision points each edge should have.
+Default value is 15.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '450', 450)" onmouseover="showTip(event, '450', 450)">
+            Threshold()
+          </code>
+          <div class="tip" id="450">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets or sets the treshold for the edge compatibility.
+Every pair of edges has the compatibility coefficient assigned to it.
+Range of the coefficient is from 0 to 1.
+Edges that have coefficient lower than the treshold between them are not considered for interaction.
+Default value is 0.2.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '451', 451)" onmouseover="showTip(event, '451', 451)">
+            UseThreading()
+          </code>
+          <div class="tip" id="451">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets or sets the the value that determines if multiple threads should be used for the calculations.
+Default value is true.</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/QuickGraph/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">QuickGraph</li>
+            <li><a href="/QuickGraph/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/QuickGraph">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/YaccConstructor/QuickGraph">Source Code on GitHub</a></li>
+            <li><a href="/QuickGraph/license.html">License</a></li>
+            <li><a href="/QuickGraph/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/QuickGraph/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/QuickGraph/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/YaccConstructor/QuickGraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

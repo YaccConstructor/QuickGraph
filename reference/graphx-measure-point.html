@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Point - QuickGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Jonathan "Peli" de Halleux"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/QuickGraph/content/style.css" />
+    <script type="text/javascript" src="/QuickGraph/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/YaccConstructor/QuickGraph">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/QuickGraph/index.html">QuickGraph</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>Point</h1>
+<p>
+  <span>Namespace: GraphX.Measure</span><br />
+</p>
+<div class="xmldoc">
+<p>Custom PCL implementation of Point class</p>
+
+</div>
+  <h3>Constructors</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Constructor</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '25', 25)" onmouseover="showTip(event, '25', 25)">
+            new(x, y)
+          </code>
+          <div class="tip" id="25">
+            <strong>Signature:</strong> (x:float * y:float) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '26', 26)" onmouseover="showTip(event, '26', 26)">
+            Equals(o)
+          </code>
+          <div class="tip" id="26">
+            <strong>Signature:</strong> o:obj -&gt; bool<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Equals - compares this Point with the passed in object.  In this equality
+Double.NaN is equal to itself, unlike in numeric equality.
+Note that double values can acquire error when operated upon, such that
+an exact comparison between two values which
+are logically equal may fail.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '27', 27)" onmouseover="showTip(event, '27', 27)">
+            Equals(value)
+          </code>
+          <div class="tip" id="27">
+            <strong>Signature:</strong> value:Point -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Equals - compares this Point with the passed in object.  In this equality
+Double.NaN is equal to itself, unlike in numeric equality.
+Note that double values can acquire error when operated upon, such that
+an exact comparison between two values which
+are logically equal may fail.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '28', 28)" onmouseover="showTip(event, '28', 28)">
+            GetHashCode()
+          </code>
+          <div class="tip" id="28">
+            <strong>Signature:</strong> unit -&gt; int<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns the HashCode for this Point</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '29', 29)" onmouseover="showTip(event, '29', 29)">
+            Offset(offsetX, offsetY)
+          </code>
+          <div class="tip" id="29">
+            <strong>Signature:</strong> (offsetX:float * offsetY:float) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
+            ToString()
+          </code>
+          <div class="tip" id="30">
+            <strong>Signature:</strong> unit -&gt; string<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
+            X()
+          </code>
+          <div class="tip" id="31">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '32', 32)" onmouseover="showTip(event, '32', 32)">
+            Y()
+          </code>
+          <div class="tip" id="32">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Static members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '33', 33)" onmouseover="showTip(event, '33', 33)">
+            Equals(point1, point2)
+          </code>
+          <div class="tip" id="33">
+            <strong>Signature:</strong> (point1:Point * point2:Point) -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Compares two Point instances for object equality.  In this equality
+Double.NaN is equal to itself, unlike in numeric equality.
+Note that double values can acquire error when operated upon, such that
+an exact comparison between two values which
+are logically equal may fail.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '34', 34)" onmouseover="showTip(event, '34', 34)">
+            op_Addition(point, vector)
+          </code>
+          <div class="tip" id="34">
+            <strong>Signature:</strong> (point:Point * vector:Vector) -&gt; Point<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '35', 35)" onmouseover="showTip(event, '35', 35)">
+            op_Addition(value1, value2)
+          </code>
+          <div class="tip" id="35">
+            <strong>Signature:</strong> (value1:Point * value2:Point) -&gt; Point<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '36', 36)" onmouseover="showTip(event, '36', 36)">
+            op_Division(value1, value2)
+          </code>
+          <div class="tip" id="36">
+            <strong>Signature:</strong> (value1:Point * value2:float) -&gt; Point<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '37', 37)" onmouseover="showTip(event, '37', 37)">
+            op_Equality(point1, point2)
+          </code>
+          <div class="tip" id="37">
+            <strong>Signature:</strong> (point1:Point * point2:Point) -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Compares two Point instances for exact equality.
+Note that double values can acquire error when operated upon, such that
+an exact comparison between two values which are logically equal may fail.
+Furthermore, using this equality operator, Double.NaN is not equal to itself.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '38', 38)" onmouseover="showTip(event, '38', 38)">
+            op_Explicit(point)
+          </code>
+          <div class="tip" id="38">
+            <strong>Signature:</strong> point:Point -&gt; Size<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '39', 39)" onmouseover="showTip(event, '39', 39)">
+            op_Explicit(point)
+          </code>
+          <div class="tip" id="39">
+            <strong>Signature:</strong> point:Point -&gt; Vector<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '40', 40)" onmouseover="showTip(event, '40', 40)">
+            op_Implicit(size)
+          </code>
+          <div class="tip" id="40">
+            <strong>Signature:</strong> size:Size -&gt; Point<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '41', 41)" onmouseover="showTip(event, '41', 41)">
+            op_Implicit(size)
+          </code>
+          <div class="tip" id="41">
+            <strong>Signature:</strong> size:Vector -&gt; Point<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '42', 42)" onmouseover="showTip(event, '42', 42)">
+            op_Inequality(point1, point2)
+          </code>
+          <div class="tip" id="42">
+            <strong>Signature:</strong> (point1:Point * point2:Point) -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Compares two Point instances for exact inequality.
+Note that double values can acquire error when operated upon, such that
+an exact comparison between two values which are logically equal may fail.
+Furthermore, using this equality operator, Double.NaN is not equal to itself.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '43', 43)" onmouseover="showTip(event, '43', 43)">
+            op_Multiply(value1, value2)
+          </code>
+          <div class="tip" id="43">
+            <strong>Signature:</strong> (value1:float * value2:Point) -&gt; Point<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '44', 44)" onmouseover="showTip(event, '44', 44)">
+            op_Multiply(value1, value2)
+          </code>
+          <div class="tip" id="44">
+            <strong>Signature:</strong> (value1:Point * value2:float) -&gt; Point<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '45', 45)" onmouseover="showTip(event, '45', 45)">
+            op_Subtraction(point, vector)
+          </code>
+          <div class="tip" id="45">
+            <strong>Signature:</strong> (point:Point * vector:Vector) -&gt; Point<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '46', 46)" onmouseover="showTip(event, '46', 46)">
+            op_Subtraction(value1, value2)
+          </code>
+          <div class="tip" id="46">
+            <strong>Signature:</strong> (value1:Point * value2:Point) -&gt; Vector<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+            ARITHMETIC
+        
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '47', 47)" onmouseover="showTip(event, '47', 47)">
+            Zero
+          </code>
+          <div class="tip" id="47">
+            <strong>Signature:</strong> Point<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/QuickGraph/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">QuickGraph</li>
+            <li><a href="/QuickGraph/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/QuickGraph">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/YaccConstructor/QuickGraph">Source Code on GitHub</a></li>
+            <li><a href="/QuickGraph/license.html">License</a></li>
+            <li><a href="/QuickGraph/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/QuickGraph/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/QuickGraph/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/YaccConstructor/QuickGraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

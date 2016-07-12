@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>GraphXExtensions - QuickGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Jonathan "Peli" de Halleux"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/QuickGraph/content/style.css" />
+    <script type="text/javascript" src="/QuickGraph/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/YaccConstructor/QuickGraph">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/QuickGraph/index.html">QuickGraph</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>GraphXExtensions</h1>
+<p>
+  <span>Namespace: GraphX.PCL.Logic.Algorithms</span><br />
+</p>
+<div class="xmldoc">
+</div>
+  <h3>Static members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '280', 280)" onmouseover="showTip(event, '280', 280)">
+            AddEdgeRange(graph, edges)
+          </code>
+          <div class="tip" id="280">
+            <strong>Signature:</strong> (graph:IMutableEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * edges:IEnumerable&lt;&#39;TEdge&gt;) -&gt; unit<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '281', 281)" onmouseover="showTip(event, '281', 281)">
+            Convert(...)
+          </code>
+          <div class="tip" id="281">
+            <strong>Signature:</strong> (oldGraph:IVertexAndEdgeListGraph&lt;&#39;TOldVertex,&#39;TOldEdge&gt; * vertexMapperFunc:Func&lt;&#39;TOldVertex,&#39;TNewVertex&gt; * edgeMapperFunc:Func&lt;&#39;TOldEdge,&#39;TNewEdge&gt;) -&gt; BidirectionalGraph&lt;&#39;TNewVertex,&#39;TNewEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TOldVertex, 'TOldEdge, 'TNewVertex, 'TNewEdge          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '282', 282)" onmouseover="showTip(event, '282', 282)">
+            Convert(oldGraph, edgeMapperFunc)
+          </code>
+          <div class="tip" id="282">
+            <strong>Signature:</strong> (oldGraph:IVertexAndEdgeListGraph&lt;&#39;TOldVertex,&#39;TOldEdge&gt; * edgeMapperFunc:Func&lt;&#39;TOldEdge,&#39;TNewEdge&gt;) -&gt; BidirectionalGraph&lt;&#39;TOldVertex,&#39;TNewEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TOldVertex, 'TOldEdge, 'TNewEdge          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '283', 283)" onmouseover="showTip(event, '283', 283)">
+            Convert(...)
+          </code>
+          <div class="tip" id="283">
+            <strong>Signature:</strong> (oldGraph:IVertexAndEdgeListGraph&lt;&#39;TOldVertex,&#39;TOldEdge&gt; * newGraph:&#39;TNewGraph * vertexMapperFunc:Func&lt;&#39;TOldVertex,&#39;TNewVertex&gt; * edgeMapperFunc:Func&lt;&#39;TOldEdge,&#39;TNewEdge&gt;) -&gt; &#39;TNewGraph<br />
+                          <strong>Type parameters:</strong> 'TOldVertex, 'TOldEdge, 'TNewVertex, 'TNewEdge, 'TNewGraph          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '284', 284)" onmouseover="showTip(event, '284', 284)">
+            Convert(...)
+          </code>
+          <div class="tip" id="284">
+            <strong>Signature:</strong> (oldGraph:IVertexAndEdgeListGraph&lt;&#39;TOldVertex,&#39;TOldEdge&gt; * newGraph:&#39;TNewGraph * edgeMapperFunc:Func&lt;&#39;TOldEdge,&#39;TNewEdge&gt;) -&gt; &#39;TNewGraph<br />
+                          <strong>Type parameters:</strong> 'TOldVertex, 'TOldEdge, 'TNewEdge, 'TNewGraph          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '285', 285)" onmouseover="showTip(event, '285', 285)">
+            Convert(oldGraph, newGraph)
+          </code>
+          <div class="tip" id="285">
+            <strong>Signature:</strong> (oldGraph:IVertexAndEdgeListGraph&lt;&#39;TOldVertex,&#39;TOldEdge&gt; * newGraph:&#39;TNewGraph) -&gt; &#39;TNewGraph<br />
+                          <strong>Type parameters:</strong> 'TOldVertex, 'TOldEdge, 'TNewGraph          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '286', 286)" onmouseover="showTip(event, '286', 286)">
+            CopyToBidirectionalGraph(...)
+          </code>
+          <div class="tip" id="286">
+            <strong>Signature:</strong> (graph:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * includeEmpty:bool) -&gt; BidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '287', 287)" onmouseover="showTip(event, '287', 287)">
+            GetAllEdges(graph, vertex)
+          </code>
+          <div class="tip" id="287">
+            <strong>Signature:</strong> (graph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertex:&#39;TVertex) -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Get all edges associated with the vertex</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '288', 288)" onmouseover="showTip(event, '288', 288)">
+            GetDiameter(g)
+          </code>
+          <div class="tip" id="288">
+            <strong>Signature:</strong> g:&#39;TGraph -&gt; float<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TGraph          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets the diameter of a graph.
+The diameter is the greatest distance between two vertices.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '289', 289)" onmouseover="showTip(event, '289', 289)">
+            GetDiameter(g, distances)
+          </code>
+          <div class="tip" id="289">
+            <strong>Signature:</strong> (g:&#39;TGraph * distances:byref&lt;float [,]&gt;) -&gt; float<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TGraph          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets the diameter of a graph.
+The diameter is the greatest distance between two vertices.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '290', 290)" onmouseover="showTip(event, '290', 290)">
+            GetEdgesBetween(...)
+          </code>
+          <div class="tip" id="290">
+            <strong>Signature:</strong> (g:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * set1:List&lt;&#39;TVertex&gt; * set2:List&lt;&#39;TVertex&gt; * undirected:bool) -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>If the graph g is directed, then returns every edges which source is one of the vertices in the set1
+and the target is one of the vertices in set2.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '291', 291)" onmouseover="showTip(event, '291', 291)">
+            GetInEdges(graph, vertex)
+          </code>
+          <div class="tip" id="291">
+            <strong>Signature:</strong> (graph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertex:&#39;TVertex) -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '292', 292)" onmouseover="showTip(event, '292', 292)">
+            GetInNeighbours(g, vertex)
+          </code>
+          <div class="tip" id="292">
+            <strong>Signature:</strong> (g:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertex:&#39;TVertex) -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '293', 293)" onmouseover="showTip(event, '293', 293)">
+            GetNeighbours(g, vertex)
+          </code>
+          <div class="tip" id="293">
+            <strong>Signature:</strong> (g:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertex:&#39;TVertex) -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns with the adjacent vertices of the vertex.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '294', 294)" onmouseover="showTip(event, '294', 294)">
+            GetOutEdges(graph, vertex)
+          </code>
+          <div class="tip" id="294">
+            <strong>Signature:</strong> (graph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertex:&#39;TVertex) -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '295', 295)" onmouseover="showTip(event, '295', 295)">
+            GetOutNeighbours(g, vertex)
+          </code>
+          <div class="tip" id="295">
+            <strong>Signature:</strong> (g:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertex:&#39;TVertex) -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '296', 296)" onmouseover="showTip(event, '296', 296)">
+            GetSources(g)
+          </code>
+          <div class="tip" id="296">
+            <strong>Signature:</strong> g:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns with the sources in the graph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '297', 297)" onmouseover="showTip(event, '297', 297)">
+            OtherVertex(edge, thisVertex)
+          </code>
+          <div class="tip" id="297">
+            <strong>Signature:</strong> (edge:IEdge&lt;&#39;TVertex&gt; * thisVertex:&#39;TVertex) -&gt; &#39;TVertex<br />
+                          <strong>Type parameters:</strong> 'TVertex          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/QuickGraph/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">QuickGraph</li>
+            <li><a href="/QuickGraph/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/QuickGraph">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/YaccConstructor/QuickGraph">Source Code on GitHub</a></li>
+            <li><a href="/QuickGraph/license.html">License</a></li>
+            <li><a href="/QuickGraph/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/QuickGraph/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/QuickGraph/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/YaccConstructor/QuickGraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

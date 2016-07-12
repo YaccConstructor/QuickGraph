@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>IAlgorithmFactory<'TVertex, 'TEdge, 'TGraph> - QuickGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Jonathan "Peli" de Halleux"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/QuickGraph/content/style.css" />
+    <script type="text/javascript" src="/QuickGraph/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/YaccConstructor/QuickGraph">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/QuickGraph/index.html">QuickGraph</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>IAlgorithmFactory<'TVertex, 'TEdge, 'TGraph></h1>
+<p>
+  <span>Namespace: GraphX.PCL.Common.Interfaces</span><br />
+</p>
+<div class="xmldoc">
+</div>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '147', 147)" onmouseover="showTip(event, '147', 147)">
+            CreateEdgeRoutingAlgorithm(...)
+          </code>
+          <div class="tip" id="147">
+            <strong>Signature:</strong> (newAlgorithmType:EdgeRoutingAlgorithmTypeEnum * graphArea:Rect * iGraph:&#39;TGraph * positions:IDictionary&lt;&#39;TVertex,Point&gt; * rectangles:IDictionary&lt;&#39;TVertex,Rect&gt; * parameters:IEdgeRoutingParameters) -&gt; IExternalEdgeRouting&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '148', 148)" onmouseover="showTip(event, '148', 148)">
+            CreateEdgeRoutingParameters(...)
+          </code>
+          <div class="tip" id="148">
+            <strong>Signature:</strong> algorithmType:EdgeRoutingAlgorithmTypeEnum -&gt; IEdgeRoutingParameters<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '149', 149)" onmouseover="showTip(event, '149', 149)">
+            CreateFSAA(rectangles, horGap, vertGap)
+          </code>
+          <div class="tip" id="149">
+            <strong>Signature:</strong> (rectangles:IDictionary&lt;&#39;T,Rect&gt; * horGap:float32 * vertGap:float32) -&gt; IOverlapRemovalAlgorithm&lt;&#39;T&gt;<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Create and initialize FSAA overlap removal algorithm instance</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '150', 150)" onmouseover="showTip(event, '150', 150)">
+            CreateFSAA(horGap, vertGap)
+          </code>
+          <div class="tip" id="150">
+            <strong>Signature:</strong> (horGap:float32 * vertGap:float32) -&gt; IOverlapRemovalAlgorithm&lt;&#39;T,IOverlapRemovalParameters&gt;<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Create uninitialized FSAA overlap removal algorithm instance</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '151', 151)" onmouseover="showTip(event, '151', 151)">
+            CreateLayoutAlgorithm(...)
+          </code>
+          <div class="tip" id="151">
+            <strong>Signature:</strong> (newAlgorithmType:LayoutAlgorithmTypeEnum * iGraph:&#39;TGraph * positions:IDictionary&lt;&#39;TVertex,Point&gt; * sizes:IDictionary&lt;&#39;TVertex,Size&gt; * parameters:ILayoutParameters) -&gt; ILayoutAlgorithm&lt;&#39;TVertex,&#39;TEdge,&#39;TGraph&gt;<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Generate and initialize layout algorithm</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '152', 152)" onmouseover="showTip(event, '152', 152)">
+            CreateLayoutParameters(algorithmType)
+          </code>
+          <div class="tip" id="152">
+            <strong>Signature:</strong> algorithmType:LayoutAlgorithmTypeEnum -&gt; ILayoutParameters<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates parameters data for layout algorithm</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '153', 153)" onmouseover="showTip(event, '153', 153)">
+            CreateOverlapRemovalAlgorithm(...)
+          </code>
+          <div class="tip" id="153">
+            <strong>Signature:</strong> (newAlgorithmType:OverlapRemovalAlgorithmTypeEnum * rectangles:IDictionary&lt;&#39;TVertex,Rect&gt; * parameters:IOverlapRemovalParameters) -&gt; IOverlapRemovalAlgorithm&lt;&#39;TVertex&gt;<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Create and initializes overlap removal algorithm</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '154', 154)" onmouseover="showTip(event, '154', 154)">
+            CreateOverlapRemovalAlgorithm(...)
+          </code>
+          <div class="tip" id="154">
+            <strong>Signature:</strong> newAlgorithmType:OverlapRemovalAlgorithmTypeEnum -&gt; IOverlapRemovalAlgorithm&lt;&#39;TVertex&gt;<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Create uninitialized overlap removal algorithm</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '155', 155)" onmouseover="showTip(event, '155', 155)">
+            CreateOverlapRemovalParameters(...)
+          </code>
+          <div class="tip" id="155">
+            <strong>Signature:</strong> algorithmType:OverlapRemovalAlgorithmTypeEnum -&gt; IOverlapRemovalParameters<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Create overlap removal algorithm parameters</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '156', 156)" onmouseover="showTip(event, '156', 156)">
+            NeedEdgeRouting(algorithmType)
+          </code>
+          <div class="tip" id="156">
+            <strong>Signature:</strong> algorithmType:LayoutAlgorithmTypeEnum -&gt; bool<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns True if specified layout algorithm ever needs edge routing pass</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '157', 157)" onmouseover="showTip(event, '157', 157)">
+            NeedOverlapRemoval(algorithmType)
+          </code>
+          <div class="tip" id="157">
+            <strong>Signature:</strong> algorithmType:LayoutAlgorithmTypeEnum -&gt; bool<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns True if specified layout algorithm ever needs overlap removal pass</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '158', 158)" onmouseover="showTip(event, '158', 158)">
+            NeedSizes(algorithmType)
+          </code>
+          <div class="tip" id="158">
+            <strong>Signature:</strong> algorithmType:LayoutAlgorithmTypeEnum -&gt; bool<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Returns True if specified layout algorithm needs vertex size data for its calculations</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/QuickGraph/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">QuickGraph</li>
+            <li><a href="/QuickGraph/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/QuickGraph">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/YaccConstructor/QuickGraph">Source Code on GitHub</a></li>
+            <li><a href="/QuickGraph/license.html">License</a></li>
+            <li><a href="/QuickGraph/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/QuickGraph/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/QuickGraph/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/YaccConstructor/QuickGraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>
