@@ -1,4 +1,4 @@
-# QuickGraph 3.6 [![NuGet Status](http://img.shields.io/nuget/v/YC.QuickGraph.svg?style=flat)](https://www.nuget.org/packages/YC.QuickGraph/)
+# QuickGraph [![NuGet Status](http://img.shields.io/nuget/v/YC.QuickGraph.svg?style=flat)](https://www.nuget.org/packages/YC.QuickGraph/)
 
 QuickGraph provides generic directed/undirected graph datastructures and algorithms for .NET.
 
