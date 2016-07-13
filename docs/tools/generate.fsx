@@ -21,7 +21,7 @@ let info =
     "project-author", "Jonathan \"Peli\" de Halleux"
     "project-summary", "Graph datastructures and algorithms for .NET."
     "project-github", githubLink
-    "project-nuget", "http://nuget.org/packages/QuickGraph" ]
+    "project-nuget", "http://nuget.org/packages/YC.QuickGraph" ]
 
 // --------------------------------------------------------------------------------------
 // For typical project, no changes are needed below
