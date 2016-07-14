@@ -15,10 +15,11 @@ GraphTasks | [![GraphTasks .NET Build Status](https://img.shields.io/appveyor/ci
 
 ### Build
 
-Clone repo with `git clone --recursive` to get all external dependencies.
-
-Visual Studio 2013 and F# 3.1 are required for build.
-For Visual Studio 2015 install Build Tools 2013 standalone package.
+* Clone repo with `git clone --recursive` to get all external dependencies.
+* Install Pex from lib/Pex.
+* Install CodeContracts from lib/DotNet.CodeContracts.
+* Use build.cmd for build.
+* Use Visual Studio 2015 for development.
 
 ### Where to go next?
 
