@@ -15,7 +15,7 @@ GraphTasks | [![GraphTasks .NET Build Status](https://img.shields.io/appveyor/ci
 
 ### Build
 
-* Clone repo with `git clone --recursive` to get all external dependencies.
+* Clone this repo.
 * Install Pex from lib/Pex.
 * Install CodeContracts from lib/DotNet.CodeContracts.
 * Use build.cmd for build.
