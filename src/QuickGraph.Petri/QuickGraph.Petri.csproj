@@ -101,6 +101,7 @@
     <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>1591</NoWarn>
+    <DocumentationFile>bin\Release\YC.QuickGraph.Petri.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release20|AnyCPU' ">
     <OutputPath>bin\Release20\</OutputPath>
