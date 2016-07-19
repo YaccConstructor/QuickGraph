@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>FST<'iType, 'oType> - QuickGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Jonathan "Peli" de Halleux"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/QuickGraph/content/style.css" />
+    <script type="text/javascript" src="/QuickGraph/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <!--li><a href="http://fsharp.org">fsharp.org</a></li-->
+          <li><a href="http://github.com/YaccConstructor/QuickGraph">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/QuickGraph/index.html">QuickGraph</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>FST<'iType, 'oType></h1>
+<p>
+  <span>Namespace: QuickGraph.FST</span><br />
+  <span>Parent Module: <a href="quickgraph-fst-graphbasedfst.html">GraphBasedFst</a></span>
+</p>
+<div class="xmldoc">
+</div>
+  <h3>Constructors</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Constructor</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1767', 1767)" onmouseover="showTip(event, '1767', 1767)">
+            new()
+          </code>
+          <div class="tip" id="1767">
+            <strong>Signature:</strong> unit -&gt; FST&lt;&#39;iType,&#39;oType&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L123-123" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>.ctor</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1768', 1768)" onmouseover="showTip(event, '1768', 1768)">
+            new(initial, final, transitions)
+          </code>
+          <div class="tip" id="1768">
+            <strong>Signature:</strong> (initial:ResizeArray&lt;int&gt; * final:ResizeArray&lt;int&gt; * transitions:ResizeArray&lt;int * (Symb&lt;&#39;iType&gt; * Symb&lt;&#39;oType&gt;) * int&gt;) -&gt; FST&lt;&#39;iType,&#39;oType&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L119-119" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>.ctor</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1769', 1769)" onmouseover="showTip(event, '1769', 1769)">
+            new(initial, final, transitions)
+          </code>
+          <div class="tip" id="1769">
+            <strong>Signature:</strong> (initial:ResizeArray&lt;int&gt; * final:ResizeArray&lt;int&gt; * transitions:ResizeArray&lt;EdgeFST&lt;&#39;iType,&#39;oType&gt;&gt;) -&gt; FST&lt;&#39;iType,&#39;oType&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L32-32" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>.ctor</code></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1770', 1770)" onmouseover="showTip(event, '1770', 1770)">
+            CachedEdges
+          </code>
+          <div class="tip" id="1770">
+            <strong>Signature:</strong> ResizeArray&lt;EdgeFST&lt;&#39;iType,&#39;oType&gt;&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L135-135" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>get_CachedEdges</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1771', 1771)" onmouseover="showTip(event, '1771', 1771)">
+            Concat(fst2)
+          </code>
+          <div class="tip" id="1771">
+            <strong>Signature:</strong> fst2:FST&lt;&#39;iType,&#39;oType&gt; -&gt; FST&lt;&#39;iType,&#39;oType&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L129-129" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1772', 1772)" onmouseover="showTip(event, '1772', 1772)">
+            FinalState()
+          </code>
+          <div class="tip" id="1772">
+            <strong>Signature:</strong> unit -&gt; ResizeArray&lt;int&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L127-127" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>set_FinalState</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1773', 1773)" onmouseover="showTip(event, '1773', 1773)">
+            FinalState()
+          </code>
+          <div class="tip" id="1773">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L127-127" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>get_FinalState</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1774', 1774)" onmouseover="showTip(event, '1774', 1774)">
+            InitState()
+          </code>
+          <div class="tip" id="1774">
+            <strong>Signature:</strong> unit -&gt; ResizeArray&lt;int&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L126-126" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>set_InitState</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1775', 1775)" onmouseover="showTip(event, '1775', 1775)">
+            InitState()
+          </code>
+          <div class="tip" id="1775">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L126-126" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>get_InitState</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1776', 1776)" onmouseover="showTip(event, '1776', 1776)">
+            IsEmpty
+          </code>
+          <div class="tip" id="1776">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L133-133" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>get_IsEmpty</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1777', 1777)" onmouseover="showTip(event, '1777', 1777)">
+            PrintToDOT(filePath, printSmb)
+          </code>
+          <div class="tip" id="1777">
+            <strong>Signature:</strong> (filePath:string * printSmb:(&#39;iType -&gt; string) option) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L128-128" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1778', 1778)" onmouseover="showTip(event, '1778', 1778)">
+            RecachEdges()
+          </code>
+          <div class="tip" id="1778">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L136-136" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1779', 1779)" onmouseover="showTip(event, '1779', 1779)">
+            Union(fst2)
+          </code>
+          <div class="tip" id="1779">
+            <strong>Signature:</strong> fst2:FST&lt;&#39;iType,&#39;oType&gt; -&gt; FST&lt;&#39;iType,&#39;oType&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L131-131" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Static members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1780', 1780)" onmouseover="showTip(event, '1780', 1780)">
+            Compose(fst1, fst2, alphabet)
+          </code>
+          <div class="tip" id="1780">
+            <strong>Signature:</strong> (fst1:FST&lt;&#39;?7661,&#39;?7662&gt; * fst2:FST&lt;&#39;?7663,&#39;?7664&gt; * alphabet:HashSet&lt;Symb&lt;&#39;?7662&gt;&gt;) -&gt; Test&lt;FST&lt;&#39;?7661,&#39;?7664&gt;,Symb&lt;&#39;?7661&gt; []&gt;<br />
+                          <strong>Type parameters:</strong> '?7663, '?7664          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L236-236" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1781', 1781)" onmouseover="showTip(event, '1781', 1781)">
+            Concat(fst1, fst2)
+          </code>
+          <div class="tip" id="1781">
+            <strong>Signature:</strong> (fst1:FST&lt;&#39;iType,&#39;oType&gt; * fst2:FST&lt;&#39;iType,&#39;oType&gt;) -&gt; FST&lt;&#39;iType,&#39;oType&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L130-130" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1782', 1782)" onmouseover="showTip(event, '1782', 1782)">
+            FSAtoFST(fsa, transform, smblEOF)
+          </code>
+          <div class="tip" id="1782">
+            <strong>Signature:</strong> (fsa:FSA&lt;&#39;?7650&gt; * transform:(Symb&lt;&#39;?7650&gt; -&gt; Symb&lt;&#39;iType&gt; * Symb&lt;&#39;oType&gt;) * smblEOF:Symb&lt;&#39;?7650&gt;) -&gt; FST&lt;&#39;iType,&#39;oType&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L139-139" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>for FSA, which are not empty</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1783', 1783)" onmouseover="showTip(event, '1783', 1783)">
+            oldCompose(fst1, fst2, alphabet)
+          </code>
+          <div class="tip" id="1783">
+            <strong>Signature:</strong> (fst1:FST&lt;&#39;?7654,&#39;?7655&gt; * fst2:FST&lt;&#39;?7656,&#39;?7657&gt; * alphabet:HashSet&lt;Symb&lt;&#39;?7655&gt;&gt;) -&gt; Test&lt;FST&lt;&#39;?7654,&#39;?7657&gt;,Symb&lt;&#39;?7654&gt; []&gt;<br />
+                          <strong>Type parameters:</strong> '?7656, '?7657          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L155-155" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>for FSTs, which are not empty</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1784', 1784)" onmouseover="showTip(event, '1784', 1784)">
+            Union(fst1, fst2)
+          </code>
+          <div class="tip" id="1784">
+            <strong>Signature:</strong> (fst1:FST&lt;&#39;iType,&#39;oType&gt; * fst2:FST&lt;&#39;iType,&#39;oType&gt;) -&gt; FST&lt;&#39;iType,&#39;oType&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FST/GraphBasedFst.fs#L132-132" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/QuickGraph/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">QuickGraph</li>
+            <li><a href="/QuickGraph/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/YC.QuickGraph">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/YaccConstructor/QuickGraph">Source Code on GitHub</a></li>
+            <li><a href="/QuickGraph/license.html">License</a></li>
+            <li><a href="/QuickGraph/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/QuickGraph/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/QuickGraph/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/YaccConstructor/QuickGraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

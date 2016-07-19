@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>GraphvizAlgorithm<'TVertex, 'TEdge> - QuickGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Jonathan "Peli" de Halleux"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/QuickGraph/content/style.css" />
+    <script type="text/javascript" src="/QuickGraph/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <!--li><a href="http://fsharp.org">fsharp.org</a></li-->
+          <li><a href="http://github.com/YaccConstructor/QuickGraph">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/QuickGraph/index.html">QuickGraph</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>GraphvizAlgorithm<'TVertex, 'TEdge></h1>
+<p>
+  <span>Namespace: QuickGraph.Graphviz</span><br />
+</p>
+<div class="xmldoc">
+<p>An algorithm that renders a graph to the Graphviz DOT format.</p>
+
+</div>
+  <h3>Constructors</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Constructor</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1839', 1839)" onmouseover="showTip(event, '1839', 1839)">
+            new(g)
+          </code>
+          <div class="tip" id="1839">
+            <strong>Signature:</strong> g:IEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1840', 1840)" onmouseover="showTip(event, '1840', 1840)">
+            new(g, path, imageType)
+          </code>
+          <div class="tip" id="1840">
+            <strong>Signature:</strong> (g:IEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * path:string * imageType:GraphvizImageType) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1841', 1841)" onmouseover="showTip(event, '1841', 1841)">
+            CommonEdgeFormat
+          </code>
+          <div class="tip" id="1841">
+            <strong>Signature:</strong> GraphvizEdge<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1842', 1842)" onmouseover="showTip(event, '1842', 1842)">
+            CommonVertexFormat
+          </code>
+          <div class="tip" id="1842">
+            <strong>Signature:</strong> GraphvizVertex<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1843', 1843)" onmouseover="showTip(event, '1843', 1843)">
+            Escape(value)
+          </code>
+          <div class="tip" id="1843">
+            <strong>Signature:</strong> value:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1844', 1844)" onmouseover="showTip(event, '1844', 1844)">
+            FormatCluster
+          </code>
+          <div class="tip" id="1844">
+            <strong>Signature:</strong> IEvent&lt;FormatClusterEventHandler&lt;&#39;TVertex,&#39;TEdge&gt;,FormatClusterEventArgs&lt;&#39;TVertex,&#39;TEdge&gt;&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1845', 1845)" onmouseover="showTip(event, '1845', 1845)">
+            FormatEdge
+          </code>
+          <div class="tip" id="1845">
+            <strong>Signature:</strong> IEvent&lt;FormatEdgeAction&lt;&#39;TVertex,&#39;TEdge&gt;,FormatEdgeEventArgs&lt;&#39;TVertex,&#39;TEdge&gt;&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1846', 1846)" onmouseover="showTip(event, '1846', 1846)">
+            FormatVertex
+          </code>
+          <div class="tip" id="1846">
+            <strong>Signature:</strong> IEvent&lt;FormatVertexEventHandler&lt;&#39;TVertex&gt;,FormatVertexEventArgs&lt;&#39;TVertex&gt;&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1847', 1847)" onmouseover="showTip(event, '1847', 1847)">
+            Generate()
+          </code>
+          <div class="tip" id="1847">
+            <strong>Signature:</strong> unit -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1848', 1848)" onmouseover="showTip(event, '1848', 1848)">
+            Generate(dot, outputFileName)
+          </code>
+          <div class="tip" id="1848">
+            <strong>Signature:</strong> (dot:IDotEngine * outputFileName:string) -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1849', 1849)" onmouseover="showTip(event, '1849', 1849)">
+            GraphFormat
+          </code>
+          <div class="tip" id="1849">
+            <strong>Signature:</strong> GraphvizGraph<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1850', 1850)" onmouseover="showTip(event, '1850', 1850)">
+            ImageType()
+          </code>
+          <div class="tip" id="1850">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Current image output type</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1851', 1851)" onmouseover="showTip(event, '1851', 1851)">
+            Output
+          </code>
+          <div class="tip" id="1851">
+            <strong>Signature:</strong> StringWriter<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Dot output stream.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1852', 1852)" onmouseover="showTip(event, '1852', 1852)">
+            VisitedGraph()
+          </code>
+          <div class="tip" id="1852">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/QuickGraph/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">QuickGraph</li>
+            <li><a href="/QuickGraph/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/YC.QuickGraph">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/YaccConstructor/QuickGraph">Source Code on GitHub</a></li>
+            <li><a href="/QuickGraph/license.html">License</a></li>
+            <li><a href="/QuickGraph/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/QuickGraph/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/QuickGraph/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/YaccConstructor/QuickGraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

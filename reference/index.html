@@ -36,6 +36,2942 @@
 <h1>QuickGraph</h1>
 
 
+  <h2>QuickGraph Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-adjacencygraph-2.html">AdjacencyGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A mutable directed graph data structure efficient for sparse
+graph representation where out-edge need to be enumerated only.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-arrayadjacencygraph-2.html">ArrayAdjacencyGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>An immutable directed graph data structure efficient for large sparse
+graph representation where out-edge need to be enumerated only.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-arraybidirectionalgraph-2.html">ArrayBidirectionalGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>An immutable directed graph data structure efficient for large sparse
+graph representation where out-edge need to be enumerated only.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-arrayequalitycomparer-1.html">ArrayEqualityComparer<'T></a>
+          </td>
+          <td class="xmldoc"><p>Equality comparer for array of T using Equals1 method.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-arrayundirectedgraph-2.html">ArrayUndirectedGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>An immutable undirected graph data structure based on arrays.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-bidirectionadaptergraph-2.html">BidirectionAdapterGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>Wraps a vertex list graph (out-edges only) and caches the in-edge dictionary.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-bidirectionalgraph-2.html">BidirectionalGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A mutable directed graph data structure efficient for sparse
+graph representation where out-edge and in-edges need to be enumerated. Requires
+twice as much memory as the adjacency graph.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-bidirectionalmatrixgraph-1.html">BidirectionalMatrixGraph<'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-clusteredadjacencygraph-2.html">ClusteredAdjacencyGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-compressedsparserowgraph-1.html">CompressedSparseRowGraph<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>Directed graph representation using a Compressed Sparse Row representation
+(<a href="http://www.cs.utk.edu/~dongarra/etemplates/node373.html)">http://www.cs.utk.edu/~dongarra/etemplates/node373.html)</a></p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-createedgedelegate-2.html">CreateEdgeDelegate<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>An edge factory delegate</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-createvertexdelegate-2.html">CreateVertexDelegate<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A vertex factory delegate.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-delegatebidirectionalincidencegraph-2.html">DelegateBidirectionalIncidenceGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A delegate based bidirectional implicit graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-delegateimplicitgraph-2.html">DelegateImplicitGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A delegate-based implicit graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-delegateimplicitundirectedgraph-2.html">DelegateImplicitUndirectedGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A functional implicit undirected graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-delegateincidencegraph-2.html">DelegateIncidenceGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A delegate-based incidence graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-delegateundirectedgraph-2.html">DelegateUndirectedGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A functional implicit undirected graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-delegatevertexandedgelistgraph-2.html">DelegateVertexAndEdgeListGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A delegate-based incidence graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-dotparseradapter.html">DotParserAdapter</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-doubleequalitycomparer.html">DoubleEqualityComparer</a>
+          </td>
+          <td class="xmldoc"><p>IEqualityComparer for floats with user-specified tolerance.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-edge-1.html">Edge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>The default  implementation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-edgeaction-2.html">EdgeAction<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>The handler for events involving edges</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-edgeedgeaction-2.html">EdgeEdgeAction<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>The handler for events involving two edges</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-edgeequalitycomparer-2.html">EdgeEqualityComparer<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-edgeeventargs-2.html">EdgeEventArgs<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>An event involving an edge.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-edgeextensions.html">EdgeExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-edgefactory-2.html">EdgeFactory<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>An edge factory</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-edgeidentity-2.html">EdgeIdentity<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-edgelistgraph-2.html">EdgeListGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-edgepredicate-2.html">EdgePredicate<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-enumerablecontract.html">EnumerableContract</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-equalityextensions.html">EqualityExtensions</a>
+          </td>
+          <td class="xmldoc"><p>Deep equality methods for collections (arrays, dictionaries) implemented as extension methods.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-equatableedge-1.html">EquatableEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>An equatable edge implementation</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-equatabletermedge-1.html">EquatableTermEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>An equatable term edge implementation</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-equategraphs.html">EquateGraphs</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-floatequalitycomparer.html">FloatEqualityComparer</a>
+          </td>
+          <td class="xmldoc"><p>IEqualityComparer for floats with user-specified tolerance.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphcolor.html">GraphColor</a>
+          </td>
+          <td class="xmldoc"><p>Colors used in vertex coloring algorithms</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphextensions.html">GraphExtensions</a>
+          </td>
+          <td class="xmldoc"><p>Extension methods for populating graph datastructures</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-ibidirectionalgraph-2.html">IBidirectionalGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A directed graph datastructure that is efficient
+to traverse both in and out edges.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-ibidirectionalincidencegraph-2.html">IBidirectionalIncidenceGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A directed graph datastructure that is efficient
+to traverse both in and out edges.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-icloneableedge-2.html">ICloneableEdge<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A cloneable edge</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-iclusteredgraph.html">IClusteredGraph</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-iedge-1.html">IEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>A directed edge</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-iedgelistandincidencegraph-2.html">IEdgeListAndIncidenceGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>An incidence graph whose edges can be enumerated</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-iedgelistgraph-2.html">IEdgeListGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A graph whose edges can be enumerated</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-iedgeset-2.html">IEdgeSet<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A set of edges</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-igraph-2.html">IGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A graph with vertices of type
+and edges of type</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-ihierarchy-2.html">IHierarchy<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-ihyperedge-1.html">IHyperEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-iimplicitgraph-2.html">IImplicitGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A implicit directed graph datastructure</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-iimplicitundirectedgraph-2.html">IImplicitUndirectedGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-iimplicitvertexset-1.html">IImplicitVertexSet<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>An implicit set of vertices</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-iincidencegraph-2.html">IIncidenceGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-imutablebidirectionalgraph-2.html">IMutableBidirectionalGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A mutable bidirectional directed graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-imutableedgelistgraph-2.html">IMutableEdgeListGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A mutable edge list graph.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-imutablegraph-2.html">IMutableGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A mutable graph instance</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-imutableincidencegraph-2.html">IMutableIncidenceGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A mutable incidence graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-imutabletermbidirectionalgraph-2.html">IMutableTermBidirectionalGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-imutableundirectedgraph-2.html">IMutableUndirectedGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A mutable indirect graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-imutablevertexandedgelistgraph-2.html">IMutableVertexAndEdgeListGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A mutable vertex and edge list graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-imutablevertexandedgeset-2.html">IMutableVertexAndEdgeSet<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A mutable vertex and edge set</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-imutablevertexlistgraph-2.html">IMutableVertexListGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A mutable vertex list graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-imutablevertexset-1.html">IMutableVertexSet<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>A mutable vertex set</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-itagged-1.html">ITagged<'TTag></a>
+          </td>
+          <td class="xmldoc"><p>An instance holding a tag</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-itermbidirectionalgraph-2.html">ITermBidirectionalGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-itermedge-1.html">ITermEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>A directed edge with terminal indices</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-iundirectededge-1.html">IUndirectedEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>An undirected edge.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-iundirectedgraph-2.html">IUndirectedGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>An undirected graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-ivertexandedgelistgraph-2.html">IVertexAndEdgeListGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A directed graph where vertices and edges can be enumerated efficiently.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-ivertexlistgraph-2.html">IVertexListGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A directed graph datastructure where out-edges can be traversed,
+i.e. a vertex set + implicit graph.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-ivertexset-1.html">IVertexSet<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>A set of vertices</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-identifiableedgefactory-2.html">IdentifiableEdgeFactory<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A factory of identifiable edges.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-identifiablevertexfactory-1.html">IdentifiableVertexFactory<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>A factory of identifiable vertices.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-negativecyclegraphexception.html">NegativeCycleGraphException</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-negativeweightexception.html">NegativeWeightException</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-nopathfoundexception.html">NoPathFoundException</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-nonacyclicgraphexception.html">NonAcyclicGraphException</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-nonstronglyconnectedgraphexception.html">NonStronglyConnectedGraphException</a>
+          </td>
+          <td class="xmldoc"><p>Exception raised when an algorithm detects a non-strongly connected graph.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-paralleledgenotallowedexception.html">ParallelEdgeNotAllowedException</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-quickgraphexception.html">QuickGraphException</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-quickgraphresourcemanager.html">QuickGraphResourceManager</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-referenceequalitycomparer-1.html">ReferenceEqualityComparer<'T></a>
+          </td>
+          <td class="xmldoc"><p>EqualityComparer that uses Object.ReferenceEquals to compare items.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-reversedbidirectionalgraph-2.html">ReversedBidirectionalGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-sedge-1.html">SEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>An struct based  implementation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-sequatableedge-1.html">SEquatableEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>An struct based  implementation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-sequatableundirectededge-1.html">SEquatableUndirectedEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>An struct based  implementation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-sreversededge-2.html">SReversedEdge<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A reversed edge</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-staggededge-2.html">STaggedEdge<'TVertex, 'TTag></a>
+          </td>
+          <td class="xmldoc"><p>A tagged edge as value type.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-staggedequatableedge-2.html">STaggedEquatableEdge<'TVertex, 'TTag></a>
+          </td>
+          <td class="xmldoc"><p>A tagged edge as value type.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-sundirectededge-1.html">SUndirectedEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>An struct based  implementation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-sundirectedtaggededge-2.html">SUndirectedTaggedEdge<'TVertex, 'TTag></a>
+          </td>
+          <td class="xmldoc"><p>An struct based  implementation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-taggededge-2.html">TaggedEdge<'TVertex, 'TTag></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-taggedequatableedge-2.html">TaggedEquatableEdge<'TVertex, 'TTag></a>
+          </td>
+          <td class="xmldoc"><p>An equatable, tagged, edge</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-taggedundirectededge-2.html">TaggedUndirectedEdge<'TVertex, 'TTag></a>
+          </td>
+          <td class="xmldoc"><p>A tagged undirected edge.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-termbidirectionalgraph-2.html">TermBidirectionalGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-termedge-1.html">TermEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>The default  implementation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-tryfunc-5.html">TryFunc<'T1, 'T2, 'T3, 'T4, 'TResult></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-tryfunc-4.html">TryFunc<'T1, 'T2, 'T3, 'TResult></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-tryfunc-3.html">TryFunc<'T1, 'T2, 'TResult></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-tryfunc-2.html">TryFunc<'T, 'TResult></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-undirectedbidirectionalgraph-2.html">UndirectedBidirectionalGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-undirectededge-1.html">UndirectedEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"><p>The default  implementation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-undirectededgeaction-2.html">UndirectedEdgeAction<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-undirectededgeeventargs-2.html">UndirectedEdgeEventArgs<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-undirectedgraph-2.html">UndirectedGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-vertexaction-1.html">VertexAction<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-vertexeventargs-1.html">VertexEventArgs<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-vertexeventhandler-1.html">VertexEventHandler<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-vertexfactory-1.html">VertexFactory<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-vertexidentity-1.html">VertexIdentity<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-vertexindexer-1.html">VertexIndexer<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-vertexpredicate-1.html">VertexPredicate<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-algorithmbase-1.html">AlgorithmBase<'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-algorithmeventhandler-1.html">AlgorithmEventHandler<'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-algorithmextensions.html">AlgorithmExtensions</a>
+          </td>
+          <td class="xmldoc"><p>Various extension methods to build algorithms</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-centralityapproximationalgorithm-2.html">CentralityApproximationAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-computationstate.html">ComputationState</a>
+          </td>
+          <td class="xmldoc"><p>The computation state of a graph algorithm</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-distancerelaxers.html">DistanceRelaxers</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-euleriantrailalgorithm-2.html">EulerianTrailAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-ialgorithm-1.html">IAlgorithm<'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-icomputation.html">IComputation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-iconnectedcomponentalgorithm-3.html">IConnectedComponentAlgorithm<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-idistancerecorderalgorithm-2.html">IDistanceRecorderAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>An algorithm that exposes events to compute a distance map between vertices</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-idistancerelaxer.html">IDistanceRelaxer</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-iedgecolorizeralgorithm-2.html">IEdgeColorizerAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-iedgepredecessorrecorderalgorithm-2.html">IEdgePredecessorRecorderAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-iendpathedgerecorderalgorithm-2.html">IEndPathEdgeRecorderAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-itreebuilderalgorithm-2.html">ITreeBuilderAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-iundirectedtreebuilderalgorithm-2.html">IUndirectedTreeBuilderAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-iundirectedvertexpredecessorrecorderalgorithm-2.html">IUndirectedVertexPredecessorRecorderAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-ivertexcolorizeralgorithm-2.html">IVertexColorizerAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-ivertexpredecessorrecorderalgorithm-2.html">IVertexPredecessorRecorderAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-ivertextimestamperalgorithm-2.html">IVertexTimeStamperAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-iseuleriangraphalgorithm-2.html">IsEulerianGraphAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-ishamiltoniangraphalgorithm-2.html">IsHamiltonianGraphAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-maximumbipartitematchingalgorithm-2.html">MaximumBipartiteMatchingAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-randomgraphfactory.html">RandomGraphFactory</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-rootedalgorithmbase-2.html">RootedAlgorithmBase<'TVertex, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-rootedsearchalgorithmbase-2.html">RootedSearchAlgorithmBase<'TVertex, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-tarjanofflineleastcommonancestoralgorithm-2.html">TarjanOfflineLeastCommonAncestorAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>Offline least common ancestor in a rooted tre</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-approxcompletecoloringalgorithm.html">ApproxCompleteColoringAlgorithm</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-bergershorminimumfeedbackarcsetalgorithm.html">BergerShorMinimumFeedbackArcSetAlgorithm</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-bipartitedimensionalgorithm.html">BipartiteDimensionAlgorithm</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-chromosome.html">Chromosome</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-domaticpartition-2.html">DomaticPartition<'Vertex, 'Edge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-edgecoloringalgorithm.html">EdgeColoringAlgorithm</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-fitness.html">Fitness</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-individual.html">Individual</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-maximumindependentsetalgorithm.html">MaximumIndependentSetAlgorithm</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-minimumdominatingsetgeneticalgorithm.html">MinimumDominatingSetGeneticAlgorithm</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-population.html">Population</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="quickgraph-algorithms-chromaticpolynomial.html">ChromaticPolynomial</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="quickgraph-algorithms-geneticconstants.html">GeneticConstants</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="quickgraph-algorithms-inducedpathalgorithm.html">InducedPathAlgorithm</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.Cliques Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-cliques-maximumcliquealgorithmbase-2.html">MaximumCliqueAlgorithmBase<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.Condensation Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-condensation-condensationgraphalgorithm-3.html">CondensationGraphAlgorithm<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-condensation-condensededge-3.html">CondensedEdge<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-condensation-edgemergecondensationgraphalgorithm-2.html">EdgeMergeCondensationGraphAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-condensation-mergededge-2.html">MergedEdge<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.ConnectedComponents Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-connectedcomponents-connectedcomponentsalgorithm-2.html">ConnectedComponentsAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-connectedcomponents-incrementalconnectedcomponentsalgorithm-2.html">IncrementalConnectedComponentsAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-connectedcomponents-stronglyconnectedcomponentsalgorithm-2.html">StronglyConnectedComponentsAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-connectedcomponents-weaklyconnectedcomponentsalgorithm-2.html">WeaklyConnectedComponentsAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.Exploration Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-exploration-cloneablevertexgraphexploreralgorithm-2.html">CloneableVertexGraphExplorerAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-exploration-itransitionfactory-2.html">ITransitionFactory<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-exploration-transitionfactoryimplicitgraph-2.html">TransitionFactoryImplicitGraph<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.GraphColoring.VertexColoring Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-graphcoloring-vertexcoloring-inputmodel-2.html">InputModel<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-graphcoloring-vertexcoloring-outputmodel-2.html">OutputModel<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-graphcoloring-vertexcoloring-vertexcoloringalgorithm-2.html">VertexColoringAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.KernighanLinAlgoritm Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-kernighanlinalgoritm-kernighanlinalgoritm-2.html">KernighanLinAlgoritm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-kernighanlinalgoritm-partition-1.html">Partition<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.MaximumFlow Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-maximumflow-allverticesgraphaugmentoralgorithm-2.html">AllVerticesGraphAugmentorAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-maximumflow-edmondskarpmaximumflowalgorithm-2.html">EdmondsKarpMaximumFlowAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>Edmond and Karp maximum flow algorithm
+for directed graph with positive capacities and
+flows.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-maximumflow-graphaugmentoralgorithmbase-3.html">GraphAugmentorAlgorithmBase<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-maximumflow-graphbalanceralgorithm-2.html">GraphBalancerAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-maximumflow-maximumflowalgorithm-2.html">MaximumFlowAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>Abstract base class for maximum flow algorithms.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-maximumflow-multisourcesinkgraphaugmentoralgorithm-2.html">MultiSourceSinkGraphAugmentorAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-maximumflow-reversededgeaugmentoralgorithm-2.html">ReversedEdgeAugmentorAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.MinimumSpanningTree Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-minimumspanningtree-iminimumspanningtreealgorithm-2.html">IMinimumSpanningTreeAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-minimumspanningtree-kruskalminimumspanningtreealgorithm-2.html">KruskalMinimumSpanningTreeAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-minimumspanningtree-primminimumspanningtreealgorithm-2.html">PrimMinimumSpanningTreeAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.Observers Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-observers-edgepredecessorrecorderobserver-2.html">EdgePredecessorRecorderObserver<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc">
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-observers-edgerecorderobserver-2.html">EdgeRecorderObserver<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc">
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-observers-iobserver-1.html">IObserver<'TAlgorithm></a>
+          </td>
+          <td class="xmldoc"><p>An algorithm observer</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-observers-undirectedvertexdistancerecorderobserver-2.html">UndirectedVertexDistanceRecorderObserver<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A distance recorder for undirected tree builder algorithms</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-observers-undirectedvertexpredecessorrecorderobserver-2.html">UndirectedVertexPredecessorRecorderObserver<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc">
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-observers-vertexdistancerecorderobserver-2.html">VertexDistanceRecorderObserver<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A distance recorder for directed tree builder algorithms</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-observers-vertexpredecessorpathrecorderobserver-2.html">VertexPredecessorPathRecorderObserver<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc">
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-observers-vertexpredecessorrecorderobserver-2.html">VertexPredecessorRecorderObserver<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc">
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-observers-vertexrecorderobserver-2.html">VertexRecorderObserver<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc">
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-observers-vertextimestamperobserver-2.html">VertexTimeStamperObserver<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc">
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.RandomWalks Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-randomwalks-cyclepoppingrandomtreealgorithm-2.html">CyclePoppingRandomTreeAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>Wilson-Propp Cycle-Popping Algorithm for Random Tree Generation.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-randomwalks-iedgechain-2.html">IEdgeChain<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-randomwalks-imarkovedgechain-2.html">IMarkovEdgeChain<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-randomwalks-markovedgechainbase-2.html">MarkovEdgeChainBase<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-randomwalks-normalizedmarkovedgechain-2.html">NormalizedMarkovEdgeChain<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-randomwalks-randomwalkalgorithm-2.html">RandomWalkAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-randomwalks-roundrobinedgechain-2.html">RoundRobinEdgeChain<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-randomwalks-vanishingweightedmarkovedgechain-2.html">VanishingWeightedMarkovEdgeChain<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-randomwalks-weightedmarkovedgechain-2.html">WeightedMarkovEdgeChain<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-randomwalks-weightedmarkovedgechainbase-2.html">WeightedMarkovEdgeChainBase<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.RankedShortestPath Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-rankedshortestpath-hoffmanpavleyrankedshortestpathalgorithm-2.html">HoffmanPavleyRankedShortestPathAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>Hoffman and Pavley K-shortest path algorithm.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-rankedshortestpath-rankedshortestpathalgorithmbase-3.html">RankedShortestPathAlgorithmBase<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.Ranking Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-ranking-pagerankalgorithm-2.html">PageRankAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.Search Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-search-bestfirstfrontiersearchalgorithm-2.html">BestFirstFrontierSearchAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>Best first frontier search</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-search-bidirectionaldepthfirstsearchalgorithm-2.html">BidirectionalDepthFirstSearchAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A depth and height first search algorithm for directed graphs</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-search-breadthfirstsearchalgorithm-2.html">BreadthFirstSearchAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A breath first search algorithm for directed graphs</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-search-depthfirstsearchalgorithm-2.html">DepthFirstSearchAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A depth first search algorithm for directed graph</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-search-edgedepthfirstsearchalgorithm-2.html">EdgeDepthFirstSearchAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A edge depth first search algorithm for directed graphs</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-search-implicitdepthfirstsearchalgorithm-2.html">ImplicitDepthFirstSearchAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A depth first search algorithm for implicit directed graphs</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-search-implicitedgedepthfirstsearchalgorithm-2.html">ImplicitEdgeDepthFirstSearchAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A edge depth first search algorithm for implicit directed graphs</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-search-undirectedbreadthfirstsearchalgorithm-2.html">UndirectedBreadthFirstSearchAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A breath first search algorithm for undirected graphs</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-search-undirecteddepthfirstsearchalgorithm-2.html">UndirectedDepthFirstSearchAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A depth first search algorithm for directed graph</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.Services Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-services-ialgorithmcomponent.html">IAlgorithmComponent</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-services-ialgorithmservices.html">IAlgorithmServices</a>
+          </td>
+          <td class="xmldoc"><p>Common services available to algorithm instances</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-services-icancelmanager.html">ICancelManager</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-services-iservice.html">IService</a>
+          </td>
+          <td class="xmldoc"><p>Interface implemented by graph services</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.ShortestPath Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-shortestpath-astarshortestpathalgorithm-2.html">AStarShortestPathAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A* single-source shortest path algorithm for directed graph
+with positive distance.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-shortestpath-bellmanfordshortestpathalgorithm-2.html">BellmanFordShortestPathAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>Bellman Ford shortest path algorithm.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-shortestpath-dagshortestpathalgorithm-2.html">DagShortestPathAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A single-source shortest path algorithm for directed acyclic
+graph.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-shortestpath-dijkstrashortestpathalgorithm-2.html">DijkstraShortestPathAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>Dijkstra single-source shortest path algorithm for directed graph
+with positive distance.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-shortestpath-floydwarshallallshortestpathalgorithm-2.html">FloydWarshallAllShortestPathAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>Floyd-Warshall all shortest path algorith,</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-shortestpath-shortestpathalgorithmbase-3.html">ShortestPathAlgorithmBase<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-shortestpath-undirecteddijkstrashortestpathalgorithm-2.html">UndirectedDijkstraShortestPathAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A single-source shortest path algorithm for undirected graph
+with positive distance.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-shortestpath-undirectedshortestpathalgorithmbase-2.html">UndirectedShortestPathAlgorithmBase<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.ShortestPath.Yen Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-shortestpath-yen-yenshortestpathsalgorithm-1.html">YenShortestPathsAlgorithm<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.TSP Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-tsp-tsp-3.html">TSP<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-tsp-taskpriority.html">TaskPriority</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Algorithms.TopologicalSort Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-topologicalsort-sourcefirstbidirectionaltopologicalsortalgorithm-2.html">SourceFirstBidirectionalTopologicalSortAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-topologicalsort-sourcefirsttopologicalsortalgorithm-2.html">SourceFirstTopologicalSortAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-topologicalsort-topologicalsortalgorithm-2.html">TopologicalSortAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-topologicalsort-topologicalsortdirection.html">TopologicalSortDirection</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-topologicalsort-undirectedfirsttopologicalsortalgorithm-2.html">UndirectedFirstTopologicalSortAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-algorithms-topologicalsort-undirectedtopologicalsortalgorithm-2.html">UndirectedTopologicalSortAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Collections Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-binaryheap-2.html">BinaryHeap<'TPriority, 'TValue></a>
+          </td>
+          <td class="xmldoc"><p>Binary heap</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-binaryqueue-2.html">BinaryQueue<'TVertex, 'TDistance></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-edgeedgedictionary-2.html">EdgeEdgeDictionary<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-edgelist-2.html">EdgeList<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-fibonacciheap-2.html">FibonacciHeap<'TPriority, 'TValue></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-fibonacciheapcell-2.html">FibonacciHeapCell<'TPriority, 'TValue></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-fibonacciheaplinkedlist-2.html">FibonacciHeapLinkedList<'TPriority, 'TValue></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-fibonacciqueue-2.html">FibonacciQueue<'TVertex, 'TDistance></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-forestdisjointset-1.html">ForestDisjointSet<'T></a>
+          </td>
+          <td class="xmldoc"><p>Disjoint-set implementation with path compression and union-by-rank optimizations.
+optimization</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-heapdirection.html">HeapDirection</a>
+          </td>
+          <td class="xmldoc"><p>Specifies the order in which a Heap will Dequeue items.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-idisjointset-1.html">IDisjointSet<'T></a>
+          </td>
+          <td class="xmldoc"><p>A disjoint-set data structure</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-iedgelist-2.html">IEdgeList<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A cloneable list of edges</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-ipriorityqueue-1.html">IPriorityQueue<'T></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-iqueue-1.html">IQueue<'T></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-ivertexedgedictionary-2.html">IVertexEdgeDictionary<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A dictionary of vertices to a list of edges</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-queue-1.html">Queue<'T></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-softheap-2.html">SoftHeap<'TKey, 'TValue></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-termedgelist-2.html">TermEdgeList<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-vertexedgedictionary-2.html">VertexEdgeDictionary<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-collections-vertexlist-1.html">VertexList<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Contracts Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-contracts-graphcontract.html">GraphContract</a>
+          </td>
+          <td class="xmldoc"><p>Debug only assertions and assumptions</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Data Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-data-datarelationedge.html">DataRelationEdge</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-data-datasetgraph.html">DataSetGraph</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-data-datasetgraphextensions.html">DataSetGraphExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-data-datasetgraphpopulatoralgorithm.html">DataSetGraphPopulatorAlgorithm</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-data-datasetgraphvizalgorithm.html">DataSetGraphvizAlgorithm</a>
+          </td>
+          <td class="xmldoc"><p>An algorithm that renders a DataSet graph to the Graphviz DOT format.</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.FSA Namespace</h2>
+    <div>
+      <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="quickgraph-fsa-graphbasedfsa.html">GraphBasedFsa</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.FST Namespace</h2>
+    <div>
+      <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="quickgraph-fst-fsttable.html">FstTable</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="quickgraph-fst-graphbasedfst.html">GraphBasedFst</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Glee Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-glee-gleedefaultgraphpopulator-2.html">GleeDefaultGraphPopulator<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-glee-gleeedgeeventargs-2.html">GleeEdgeEventArgs<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-glee-gleeedgeeventhandler-2.html">GleeEdgeEventHandler<'Vertex, 'Edge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-glee-gleegraphextensions.html">GleeGraphExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-glee-gleegraphpopulator-2.html">GleeGraphPopulator<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-glee-gleeindentifiablegraphpopulator-2.html">GleeIndentifiableGraphPopulator<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-glee-gleetostringgraphpopulator-2.html">GleeToStringGraphPopulator<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-glee-gleevertexeventargs-1.html">GleeVertexEventArgs<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-glee-gleevertexnodeeventhandler-1.html">GleeVertexNodeEventHandler<'Vertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Graphviz Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-condensatedgraphrenderer-3.html">CondensatedGraphRenderer<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-edgemergecondensatedgraphrenderer-2.html">EdgeMergeCondensatedGraphRenderer<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-filedotengine.html">FileDotEngine</a>
+          </td>
+          <td class="xmldoc"><p>Default dot engine implementation, writes dot code to disk</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-formatclustereventargs-2.html">FormatClusterEventArgs<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A clustered graph event argument.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-formatclustereventhandler-2.html">FormatClusterEventHandler<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-formatedgeaction-2.html">FormatEdgeAction<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-formatedgeeventargs-2.html">FormatEdgeEventArgs<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-formatvertexeventargs-1.html">FormatVertexEventArgs<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-formatvertexeventhandler-1.html">FormatVertexEventHandler<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-graphrendererbase-2.html">GraphRendererBase<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-graphvizalgorithm-2.html">GraphvizAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>An algorithm that renders a graph to the Graphviz DOT format.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-graphvizextensions.html">GraphvizExtensions</a>
+          </td>
+          <td class="xmldoc"><p>Helper extensions to render graphs to graphviz</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-idotengine.html">IDotEngine</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-svghtmlwrapper.html">SvgHtmlWrapper</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Graphviz.Dot Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizarrow.html">GraphvizArrow</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizarrowclipping.html">GraphvizArrowClipping</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizarrowfilling.html">GraphvizArrowFilling</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizarrowshape.html">GraphvizArrowShape</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizclustermode.html">GraphvizClusterMode</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizedge.html">GraphvizEdge</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizedgedirection.html">GraphvizEdgeDirection</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizedgeextremity.html">GraphvizEdgeExtremity</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizedgelabel.html">GraphvizEdgeLabel</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizedgestyle.html">GraphvizEdgeStyle</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizgraph.html">GraphvizGraph</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizimagetype.html">GraphvizImageType</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizlabeljustification.html">GraphvizLabelJustification</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizlabellocation.html">GraphvizLabelLocation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizlayer.html">GraphvizLayer</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizlayercollection.html">GraphvizLayerCollection</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizoutputmode.html">GraphvizOutputMode</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizpagedirection.html">GraphvizPageDirection</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizrankdirection.html">GraphvizRankDirection</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizratiomode.html">GraphvizRatioMode</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizrecord.html">GraphvizRecord</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizrecordcell.html">GraphvizRecordCell</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizrecordcellcollection.html">GraphvizRecordCellCollection</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizrecordescaper.html">GraphvizRecordEscaper</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizvertex.html">GraphvizVertex</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizvertexshape.html">GraphvizVertexShape</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-graphviz-dot-graphvizvertexstyle.html">GraphvizVertexStyle</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Petri Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-allwaystrueconditionexpression-1.html">AllwaysTrueConditionExpression<'Token></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-iarc-1.html">IArc<'Token></a>
+          </td>
+          <td class="xmldoc"><p>A directed edge of a net which may connect a
+to a  or a  to
+a .</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-iconditionexpression-1.html">IConditionExpression<'Token></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-iexpression-1.html">IExpression<'Token></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-imutablepetrinet-1.html">IMutablePetriNet<'Token></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-ipetrigraph-1.html">IPetriGraph<'Token></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-ipetrinet-1.html">IPetriNet<'Token></a>
+          </td>
+          <td class="xmldoc"><p>A High Level Petri Graph.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-ipetrivertex.html">IPetriVertex</a>
+          </td>
+          <td class="xmldoc"><p>A vertex (node) of a Petri Graph.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-iplace-1.html">IPlace<'Token></a>
+          </td>
+          <td class="xmldoc"><p>A Place in the HLPN framework</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-itransition-1.html">ITransition<'Token></a>
+          </td>
+          <td class="xmldoc"><p>A node of a net, taken from the transition kind.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-identityexpression-1.html">IdentityExpression<'Token></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-petrinet-1.html">PetriNet<'Token></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-petri-petrinetsimulator-1.html">PetriNetSimulator<'Token></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Predicates Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-filteredbidirectionalgraph-3.html">FilteredBidirectionalGraph<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-filterededgelistgraph-3.html">FilteredEdgeListGraph<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-filteredgraph-3.html">FilteredGraph<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-filteredimplicitgraph-3.html">FilteredImplicitGraph<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-filteredimplicitvertexset-3.html">FilteredImplicitVertexSet<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-filteredincidencegraph-3.html">FilteredIncidenceGraph<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-filteredundirectedgraph-3.html">FilteredUndirectedGraph<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-filteredvertexandedgelistgraph-3.html">FilteredVertexAndEdgeListGraph<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-filteredvertexlistgraph-3.html">FilteredVertexListGraph<'TVertex, 'TEdge, 'Graph></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-indictionaryvertexpredicate-2.html">InDictionaryVertexPredicate<'TVertex, 'TValue></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-isolatedvertexpredicate-2.html">IsolatedVertexPredicate<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"><p>A vertex predicate that detects vertex with no in or out edges.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-residualedgepredicate-2.html">ResidualEdgePredicate<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-reversedresidualedgepredicate-2.html">ReversedResidualEdgePredicate<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-predicates-sinkvertexpredicate-2.html">SinkVertexPredicate<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Samples Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-samples-graphcreation.html">GraphCreation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-samples-graphvizsamples.html">GraphvizSamples</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-samples-wikisamples.html">WikiSamples</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Serialization Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphmlalgorithm-2.html">DirectedGraphMLAlgorithm<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphmlextensions.html">DirectedGraphMLExtensions</a>
+          </td>
+          <td class="xmldoc"><p>Directed Graph Markup Language extensions</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-graphmldeserializer-3.html">GraphMLDeserializer<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"><p>A GraphML ( <a href="http://graphml.graphdrawing.org/">http://graphml.graphdrawing.org/</a> ) format deserializer.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-graphmlextensions.html">GraphMLExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-graphmlserializer-3.html">GraphMLSerializer<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"><p>A GraphML ( <a href="http://graphml.graphdrawing.org/">http://graphml.graphdrawing.org/</a> ) format serializer.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-graphmlxmlresolver.html">GraphMLXmlResolver</a>
+          </td>
+          <td class="xmldoc"><p>A resolver that loads graphml DTD and XSD schemas
+from embedded resources.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-serializationextensions.html">SerializationExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-serializerbase-2.html">SerializerBase<'TVertex, 'TEdge></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-xmlreaderextensions.html">XmlReaderExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-xmlserializableedge-1.html">XmlSerializableEdge<'TVertex></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-xmlserializablegraph-3.html">XmlSerializableGraph<'TVertex, 'TEdge, 'TGraph></a>
+          </td>
+          <td class="xmldoc"><p>A base class that creates a proxy to a graph that is xml serializable</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-xmlwriterextensions.html">XmlWriterExtensions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>QuickGraph.Serialization.DirectedGraphML Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-clrboolean.html">ClrBoolean</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraph.html">DirectedGraph</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphalias.html">DirectedGraphAlias</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphcategory.html">DirectedGraphCategory</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphlink.html">DirectedGraphLink</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphlinkcategory.html">DirectedGraphLinkCategory</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphname.html">DirectedGraphName</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphnode.html">DirectedGraphNode</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphnodecategory.html">DirectedGraphNodeCategory</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphpath.html">DirectedGraphPath</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphproperty.html">DirectedGraphProperty</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphstyle.html">DirectedGraphStyle</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphstylecondition.html">DirectedGraphStyleCondition</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-directedgraphstylesetter.html">DirectedGraphStyleSetter</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-fontstyleenum.html">FontStyleEnum</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-fontweightenum.html">FontWeightEnum</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-framekindenum.html">FrameKindEnum</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-graphdirectionenum.html">GraphDirectionEnum</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-groupenum.html">GroupEnum</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-horizontalalignmentenum.html">HorizontalAlignmentEnum</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-layoutenum.html">LayoutEnum</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-propertytype.html">PropertyType</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-targettypeenum.html">TargetTypeEnum</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-verticalalignmentenum.html">VerticalAlignmentEnum</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="quickgraph-serialization-directedgraphml-visibilityenum.html">VisibilityEnum</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>global Namespace</h2>
+    <div>
+      <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="global-helpertypes.html">HelperTypes</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
 
         </div>
         <div class="span3">

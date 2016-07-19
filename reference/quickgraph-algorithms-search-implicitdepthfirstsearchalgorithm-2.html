@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>ImplicitDepthFirstSearchAlgorithm<'TVertex, 'TEdge> - QuickGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Jonathan "Peli" de Halleux"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/QuickGraph/content/style.css" />
+    <script type="text/javascript" src="/QuickGraph/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <!--li><a href="http://fsharp.org">fsharp.org</a></li-->
+          <li><a href="http://github.com/YaccConstructor/QuickGraph">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/QuickGraph/index.html">QuickGraph</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>ImplicitDepthFirstSearchAlgorithm<'TVertex, 'TEdge></h1>
+<p>
+  <span>Namespace: QuickGraph.Algorithms.Search</span><br />
+</p>
+<div class="xmldoc">
+<p>A depth first search algorithm for implicit directed graphs</p>
+
+</div>
+  <h3>Constructors</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Constructor</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1369', 1369)" onmouseover="showTip(event, '1369', 1369)">
+            new(visitedGraph)
+          </code>
+          <div class="tip" id="1369">
+            <strong>Signature:</strong> visitedGraph:IIncidenceGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1370', 1370)" onmouseover="showTip(event, '1370', 1370)">
+            new(host, visitedGraph)
+          </code>
+          <div class="tip" id="1370">
+            <strong>Signature:</strong> (host:IAlgorithmComponent * visitedGraph:IIncidenceGraph&lt;&#39;TVertex,&#39;TEdge&gt;) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1371', 1371)" onmouseover="showTip(event, '1371', 1371)">
+            BackEdge
+          </code>
+          <div class="tip" id="1371">
+            <strong>Signature:</strong> EdgeAction&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Invoked on the back edges in the graph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1372', 1372)" onmouseover="showTip(event, '1372', 1372)">
+            DiscoverVertex
+          </code>
+          <div class="tip" id="1372">
+            <strong>Signature:</strong> VertexAction&lt;&#39;TVertex&gt;<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Invoked when a vertex is encountered for the first time.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1373', 1373)" onmouseover="showTip(event, '1373', 1373)">
+            ExamineEdge
+          </code>
+          <div class="tip" id="1373">
+            <strong>Signature:</strong> EdgeAction&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Invoked on every out-edge of each vertex after it is discovered.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1374', 1374)" onmouseover="showTip(event, '1374', 1374)">
+            FinishVertex
+          </code>
+          <div class="tip" id="1374">
+            <strong>Signature:</strong> VertexAction&lt;&#39;TVertex&gt;<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Invoked on a vertex after all of its out edges have been added to
+the search tree and all of the adjacent vertices have been
+discovered (but before their out-edges have been examined).</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1375', 1375)" onmouseover="showTip(event, '1375', 1375)">
+            ForwardOrCrossEdge
+          </code>
+          <div class="tip" id="1375">
+            <strong>Signature:</strong> EdgeAction&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Invoked on forward or cross edges in the graph.
+(In an undirected graph this method is never called.)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1376', 1376)" onmouseover="showTip(event, '1376', 1376)">
+            MaxDepth()
+          </code>
+          <div class="tip" id="1376">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets or sets the maximum exploration depth, from
+the start vertex.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1377', 1377)" onmouseover="showTip(event, '1377', 1377)">
+            StartVertex
+          </code>
+          <div class="tip" id="1377">
+            <strong>Signature:</strong> VertexAction&lt;&#39;TVertex&gt;<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Invoked on the source vertex once before the start of the search.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1378', 1378)" onmouseover="showTip(event, '1378', 1378)">
+            TreeEdge
+          </code>
+          <div class="tip" id="1378">
+            <strong>Signature:</strong> EdgeAction&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Invoked on each edge as it becomes a member of the edges that form
+the search tree. If you wish to record predecessors, do so at this
+event point.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1379', 1379)" onmouseover="showTip(event, '1379', 1379)">
+            VertexColors
+          </code>
+          <div class="tip" id="1379">
+            <strong>Signature:</strong> IDictionary&lt;&#39;TVertex,GraphColor&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Gets the vertex color map</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/QuickGraph/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">QuickGraph</li>
+            <li><a href="/QuickGraph/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/YC.QuickGraph">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/YaccConstructor/QuickGraph">Source Code on GitHub</a></li>
+            <li><a href="/QuickGraph/license.html">License</a></li>
+            <li><a href="/QuickGraph/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/QuickGraph/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/QuickGraph/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/YaccConstructor/QuickGraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

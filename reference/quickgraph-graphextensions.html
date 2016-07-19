@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>GraphExtensions - QuickGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Jonathan "Peli" de Halleux"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/QuickGraph/content/style.css" />
+    <script type="text/javascript" src="/QuickGraph/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <!--li><a href="http://fsharp.org">fsharp.org</a></li-->
+          <li><a href="http://github.com/YaccConstructor/QuickGraph">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/QuickGraph/index.html">QuickGraph</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>GraphExtensions</h1>
+<p>
+  <span>Namespace: QuickGraph</span><br />
+</p>
+<div class="xmldoc">
+<p>Extension methods for populating graph datastructures</p>
+
+</div>
+  <h3>Static members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '495', 495)" onmouseover="showTip(event, '495', 495)">
+            ToAdjacencyGraph(edges)
+          </code>
+          <div class="tip" id="495">
+            <strong>Signature:</strong> (edges:&#39;TVertex [] []) -&gt; AdjacencyGraph&lt;&#39;TVertex,SEquatableEdge&lt;&#39;TVertex&gt;&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a jagged array of sources and targets into a graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '496', 496)" onmouseover="showTip(event, '496', 496)">
+            ToAdjacencyGraph(...)
+          </code>
+          <div class="tip" id="496">
+            <strong>Signature:</strong> (edges:IEnumerable&lt;&#39;TEdge&gt; * allowParallelEdges:bool) -&gt; AdjacencyGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a set of edges into an adjacency graph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '497', 497)" onmouseover="showTip(event, '497', 497)">
+            ToAdjacencyGraph(edges)
+          </code>
+          <div class="tip" id="497">
+            <strong>Signature:</strong> edges:IEnumerable&lt;&#39;TEdge&gt; -&gt; AdjacencyGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a set of edges into an adjacency graph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '498', 498)" onmouseover="showTip(event, '498', 498)">
+            ToAdjacencyGraph(...)
+          </code>
+          <div class="tip" id="498">
+            <strong>Signature:</strong> (vertices:IEnumerable&lt;&#39;TVertex&gt; * outEdgesFactory:Func&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt; * allowParallelEdges:bool) -&gt; AdjacencyGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a set of vertices into an adjacency graph,
+using an edge factory.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '499', 499)" onmouseover="showTip(event, '499', 499)">
+            ToAdjacencyGraph(...)
+          </code>
+          <div class="tip" id="499">
+            <strong>Signature:</strong> (vertices:IEnumerable&lt;&#39;TVertex&gt; * outEdgesFactory:Func&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; AdjacencyGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a set of vertices into an adjacency graph,
+using an edge factory.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '500', 500)" onmouseover="showTip(event, '500', 500)">
+            ToAdjacencyGraph(vertexPairs)
+          </code>
+          <div class="tip" id="500">
+            <strong>Signature:</strong> vertexPairs:IEnumerable&lt;SEquatableEdge&lt;&#39;TVertex&gt;&gt; -&gt; AdjacencyGraph&lt;&#39;TVertex,SEquatableEdge&lt;&#39;TVertex&gt;&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a sequence of vertex pairs into an adjancency graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '501', 501)" onmouseover="showTip(event, '501', 501)">
+            ToArrayAdjacencyGraph(graph)
+          </code>
+          <div class="tip" id="501">
+            <strong>Signature:</strong> graph:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; ArrayAdjacencyGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates an immutable array adjacency graph from the input graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '502', 502)" onmouseover="showTip(event, '502', 502)">
+            ToArrayBidirectionalGraph(graph)
+          </code>
+          <div class="tip" id="502">
+            <strong>Signature:</strong> graph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; ArrayBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates an immutable array bidirectional graph from the input graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '503', 503)" onmouseover="showTip(event, '503', 503)">
+            ToArrayUndirectedGraph(graph)
+          </code>
+          <div class="tip" id="503">
+            <strong>Signature:</strong> graph:IUndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; ArrayUndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates an immutable array undirected graph from the input graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '504', 504)" onmouseover="showTip(event, '504', 504)">
+            ToBidirectionalGraph(graph)
+          </code>
+          <div class="tip" id="504">
+            <strong>Signature:</strong> graph:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Wraps a adjacency graph (out-edge only) into a bidirectional graph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '505', 505)" onmouseover="showTip(event, '505', 505)">
+            ToBidirectionalGraph(...)
+          </code>
+          <div class="tip" id="505">
+            <strong>Signature:</strong> (edges:IEnumerable&lt;&#39;TEdge&gt; * allowParallelEdges:bool) -&gt; BidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a set of edges into a bidirectional graph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '506', 506)" onmouseover="showTip(event, '506', 506)">
+            ToBidirectionalGraph(edges)
+          </code>
+          <div class="tip" id="506">
+            <strong>Signature:</strong> edges:IEnumerable&lt;&#39;TEdge&gt; -&gt; BidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a set of edges into a bidirectional graph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '507', 507)" onmouseover="showTip(event, '507', 507)">
+            ToBidirectionalGraph(...)
+          </code>
+          <div class="tip" id="507">
+            <strong>Signature:</strong> (vertices:IEnumerable&lt;&#39;TVertex&gt; * outEdgesFactory:Func&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt; * allowParallelEdges:bool) -&gt; BidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a set of vertices into a bidirectional graph,
+using an edge factory.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '508', 508)" onmouseover="showTip(event, '508', 508)">
+            ToBidirectionalGraph(...)
+          </code>
+          <div class="tip" id="508">
+            <strong>Signature:</strong> (vertices:IEnumerable&lt;&#39;TVertex&gt; * outEdgesFactory:Func&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; BidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a set of vertices into a bidirectional graph,
+using an edge factory</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '509', 509)" onmouseover="showTip(event, '509', 509)">
+            ToBidirectionalGraph(vertexPairs)
+          </code>
+          <div class="tip" id="509">
+            <strong>Signature:</strong> vertexPairs:IEnumerable&lt;SEquatableEdge&lt;&#39;TVertex&gt;&gt; -&gt; BidirectionalGraph&lt;&#39;TVertex,SEquatableEdge&lt;&#39;TVertex&gt;&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a sequence of vertex pairs into an bidirectional graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '510', 510)" onmouseover="showTip(event, '510', 510)">
+            ToCompressedRowGraph(visitedGraph)
+          </code>
+          <div class="tip" id="510">
+            <strong>Signature:</strong> visitedGraph:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; CompressedSparseRowGraph&lt;&#39;TVertex&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates an immutable compressed row graph representation of the visited graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '511', 511)" onmouseover="showTip(event, '511', 511)">
+            ToDelegateBidirectionalIncidenceGraph(...)
+          </code>
+          <div class="tip" id="511">
+            <strong>Signature:</strong> (tryGetOutEdges:TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt; * tryGetInEdges:TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; DelegateBidirectionalIncidenceGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates an instance of DelegateIncidenceGraph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '512', 512)" onmouseover="showTip(event, '512', 512)">
+            ToDelegateIncidenceGraph(tryGetOutEdges)
+          </code>
+          <div class="tip" id="512">
+            <strong>Signature:</strong> tryGetOutEdges:TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt; -&gt; DelegateIncidenceGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates an instance of DelegateIncidenceGraph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '513', 513)" onmouseover="showTip(event, '513', 513)">
+            ToDelegateIncidenceGraph(getOutEdges)
+          </code>
+          <div class="tip" id="513">
+            <strong>Signature:</strong> getOutEdges:Func&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt; -&gt; DelegateIncidenceGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates an instance of DelegateIncidenceGraph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '514', 514)" onmouseover="showTip(event, '514', 514)">
+            ToDelegateUndirectedGraph(dictionary)
+          </code>
+          <div class="tip" id="514">
+            <strong>Signature:</strong> dictionary:IDictionary&lt;&#39;TVertex,&#39;TValue&gt; -&gt; DelegateVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TValue          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Wraps a dictionary into an undirected list graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '515', 515)" onmouseover="showTip(event, '515', 515)">
+            ToDelegateUndirectedGraph(...)
+          </code>
+          <div class="tip" id="515">
+            <strong>Signature:</strong> (dictionary:IDictionary&lt;&#39;TVertex,&#39;TValue&gt; * keyValueToOutEdges:Converter&lt;KeyValuePair&lt;&#39;TVertex,&#39;TValue&gt;,IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; DelegateVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TValue          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Wraps a dictionary into an undirected graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '516', 516)" onmouseover="showTip(event, '516', 516)">
+            ToDelegateUndirectedGraph(...)
+          </code>
+          <div class="tip" id="516">
+            <strong>Signature:</strong> (vertices:IEnumerable&lt;&#39;TVertex&gt; * tryGetAdjacentEdges:TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; DelegateUndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates an instance of DelegateIncidenceGraph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '517', 517)" onmouseover="showTip(event, '517', 517)">
+            ToDelegateUndirectedGraph(...)
+          </code>
+          <div class="tip" id="517">
+            <strong>Signature:</strong> (vertices:IEnumerable&lt;&#39;TVertex&gt; * getAdjacentEdges:Func&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; DelegateUndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates an instance of DelegateIncidenceGraph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '518', 518)" onmouseover="showTip(event, '518', 518)">
+            ToDelegateVertexAndEdgeListGraph(...)
+          </code>
+          <div class="tip" id="518">
+            <strong>Signature:</strong> (vertices:IEnumerable&lt;&#39;TVertex&gt; * tryGetOutEdges:TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; DelegateVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates an instance of DelegateIncidenceGraph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '519', 519)" onmouseover="showTip(event, '519', 519)">
+            ToDelegateVertexAndEdgeListGraph(...)
+          </code>
+          <div class="tip" id="519">
+            <strong>Signature:</strong> (vertices:IEnumerable&lt;&#39;TVertex&gt; * getOutEdges:Func&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; DelegateVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Creates an instance of DelegateIncidenceGraph.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '520', 520)" onmouseover="showTip(event, '520', 520)">
+            ToTryFunc(func)
+          </code>
+          <div class="tip" id="520">
+            <strong>Signature:</strong> func:Func&lt;&#39;T,&#39;TResult&gt; -&gt; TryFunc&lt;&#39;T,&#39;TResult&gt;<br />
+                          <strong>Type parameters:</strong> 'T, 'TResult          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a Func that returns a reference type into a tryfunc</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '521', 521)" onmouseover="showTip(event, '521', 521)">
+            ToUndirectedGraph(edges)
+          </code>
+          <div class="tip" id="521">
+            <strong>Signature:</strong> edges:IEnumerable&lt;&#39;TEdge&gt; -&gt; UndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a sequence of edges into an undirected graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '522', 522)" onmouseover="showTip(event, '522', 522)">
+            ToUndirectedGraph(...)
+          </code>
+          <div class="tip" id="522">
+            <strong>Signature:</strong> (edges:IEnumerable&lt;&#39;TEdge&gt; * allowParralelEdges:bool) -&gt; UndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a sequence of edges into an undirected graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '523', 523)" onmouseover="showTip(event, '523', 523)">
+            ToUndirectedGraph(vertexPairs)
+          </code>
+          <div class="tip" id="523">
+            <strong>Signature:</strong> vertexPairs:IEnumerable&lt;SEquatableEdge&lt;&#39;TVertex&gt;&gt; -&gt; UndirectedGraph&lt;&#39;TVertex,SEquatableEdge&lt;&#39;TVertex&gt;&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Converts a sequence of vertex pairs into an bidirectional graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '524', 524)" onmouseover="showTip(event, '524', 524)">
+            ToVertexAndEdgeListGraph(dictionary)
+          </code>
+          <div class="tip" id="524">
+            <strong>Signature:</strong> dictionary:IDictionary&lt;&#39;TVertex,&#39;TValue&gt; -&gt; DelegateVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TValue          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Wraps a dictionary into a vertex and edge list graph</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '525', 525)" onmouseover="showTip(event, '525', 525)">
+            ToVertexAndEdgeListGraph(...)
+          </code>
+          <div class="tip" id="525">
+            <strong>Signature:</strong> (dictionary:IDictionary&lt;&#39;TVertex,&#39;TValue&gt; * keyValueToOutEdges:Converter&lt;KeyValuePair&lt;&#39;TVertex,&#39;TValue&gt;,IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; DelegateVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TValue          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Wraps a dictionary into a vertex and edge list graph</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/QuickGraph/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">QuickGraph</li>
+            <li><a href="/QuickGraph/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/YC.QuickGraph">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/YaccConstructor/QuickGraph">Source Code on GitHub</a></li>
+            <li><a href="/QuickGraph/license.html">License</a></li>
+            <li><a href="/QuickGraph/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/QuickGraph/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/QuickGraph/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/YaccConstructor/QuickGraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

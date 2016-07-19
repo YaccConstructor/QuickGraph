@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>FSA<'a> - QuickGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Jonathan "Peli" de Halleux"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/QuickGraph/content/style.css" />
+    <script type="text/javascript" src="/QuickGraph/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <!--li><a href="http://fsharp.org">fsharp.org</a></li-->
+          <li><a href="http://github.com/YaccConstructor/QuickGraph">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/QuickGraph/index.html">QuickGraph</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>FSA<'a></h1>
+<p>
+  <span>Namespace: QuickGraph.FSA</span><br />
+  <span>Parent Module: <a href="quickgraph-fsa-graphbasedfsa.html">GraphBasedFsa</a></span>
+</p>
+<div class="xmldoc">
+</div>
+  <h3>Constructors</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Constructor</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1702', 1702)" onmouseover="showTip(event, '1702', 1702)">
+            new()
+          </code>
+          <div class="tip" id="1702">
+            <strong>Signature:</strong> unit -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L979-979" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>.ctor</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1703', 1703)" onmouseover="showTip(event, '1703', 1703)">
+            new(initial, final, transitions)
+          </code>
+          <div class="tip" id="1703">
+            <strong>Signature:</strong> (initial:ResizeArray&lt;int&gt; * final:ResizeArray&lt;int&gt; * transitions:ResizeArray&lt;int * Symb&lt;&#39;a&gt; * int&gt;) -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L126-126" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>.ctor</code></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1704', 1704)" onmouseover="showTip(event, '1704', 1704)">
+            Complementation(...)
+          </code>
+          <div class="tip" id="1704">
+            <strong>Signature:</strong> (alphabet:seq&lt;&#39;?7299&gt; * newSmb:(&#39;?7299 -&gt; Symb&lt;&#39;a&gt;) * getChar:(Symb&lt;&#39;a&gt; -&gt; &#39;?7299)) -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L996-996" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1705', 1705)" onmouseover="showTip(event, '1705', 1705)">
+            Concat(fsa2)
+          </code>
+          <div class="tip" id="1705">
+            <strong>Signature:</strong> fsa2:FSA&lt;&#39;a&gt; -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L987-987" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1706', 1706)" onmouseover="showTip(event, '1706', 1706)">
+            FinalState()
+          </code>
+          <div class="tip" id="1706">
+            <strong>Signature:</strong> unit -&gt; ResizeArray&lt;int&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L985-985" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>set_FinalState</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1707', 1707)" onmouseover="showTip(event, '1707', 1707)">
+            FinalState()
+          </code>
+          <div class="tip" id="1707">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L985-985" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>get_FinalState</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1708', 1708)" onmouseover="showTip(event, '1708', 1708)">
+            InitState()
+          </code>
+          <div class="tip" id="1708">
+            <strong>Signature:</strong> unit -&gt; ResizeArray&lt;int&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L984-984" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>set_InitState</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1709', 1709)" onmouseover="showTip(event, '1709', 1709)">
+            InitState()
+          </code>
+          <div class="tip" id="1709">
+            <strong>Signature:</strong> unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L984-984" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>get_InitState</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1710', 1710)" onmouseover="showTip(event, '1710', 1710)">
+            IsEmpty
+          </code>
+          <div class="tip" id="1710">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L998-998" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+              <p>CompiledName: <code>get_IsEmpty</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1711', 1711)" onmouseover="showTip(event, '1711', 1711)">
+            NfaToDfa()
+          </code>
+          <div class="tip" id="1711">
+            <strong>Signature:</strong> unit -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L982-982" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1712', 1712)" onmouseover="showTip(event, '1712', 1712)">
+            PrintToDOT(filePath, printSmb)
+          </code>
+          <div class="tip" id="1712">
+            <strong>Signature:</strong> (filePath:string * printSmb:(&#39;a -&gt; string) option) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L986-986" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1713', 1713)" onmouseover="showTip(event, '1713', 1713)">
+            RemoveExtraPaths()
+          </code>
+          <div class="tip" id="1713">
+            <strong>Signature:</strong> unit -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L983-983" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1714', 1714)" onmouseover="showTip(event, '1714', 1714)">
+            Union(fsa2)
+          </code>
+          <div class="tip" id="1714">
+            <strong>Signature:</strong> fsa2:FSA&lt;&#39;a&gt; -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L989-989" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Static members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1715', 1715)" onmouseover="showTip(event, '1715', 1715)">
+            Concat(fsa1, fsa2)
+          </code>
+          <div class="tip" id="1715">
+            <strong>Signature:</strong> (fsa1:FSA&lt;&#39;a&gt; * fsa2:FSA&lt;&#39;a&gt;) -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L988-988" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1716', 1716)" onmouseover="showTip(event, '1716', 1716)">
+            CreateAnyWordsFsa(fsaParams)
+          </code>
+          <div class="tip" id="1716">
+            <strong>Signature:</strong> fsaParams:FsaParams&lt;&#39;?7309,&#39;a&gt; -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L1007-1007" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Creates FSA accepting any word over the alphabet, passed as a parameter through FsaParams</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1717', 1717)" onmouseover="showTip(event, '1717', 1717)">
+            CustomizableReplace(...)
+          </code>
+          <div class="tip" id="1717">
+            <strong>Signature:</strong> (fsa1:FSA&lt;&#39;a&gt; * fsa2:FSA&lt;&#39;a&gt; * fsa3:FSA&lt;&#39;a&gt; * smb1:&#39;?7296 * smb2:&#39;?7296 * getChar:(Symb&lt;&#39;a&gt; -&gt; &#39;?7296) * newSmb:(&#39;?7296 -&gt; Symb&lt;&#39;a&gt;) * equalSmbl:(&#39;a -&gt; &#39;a -&gt; bool)) -&gt; ReplaceAppetite * ReplaceOrder * ReplaceAmount -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L995-995" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1718', 1718)" onmouseover="showTip(event, '1718', 1718)">
+            GreedyReplace(...)
+          </code>
+          <div class="tip" id="1718">
+            <strong>Signature:</strong> (fsa1:FSA&lt;&#39;a&gt; * fsa2:FSA&lt;&#39;a&gt; * fsa3:FSA&lt;&#39;a&gt; * smb1:&#39;?7290 * smb2:&#39;?7290 * getChar:(Symb&lt;&#39;a&gt; -&gt; &#39;?7290) * newSmb:(&#39;?7290 -&gt; Symb&lt;&#39;a&gt;) * equalSmbl:(&#39;a -&gt; &#39;a -&gt; bool)) -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L993-993" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1719', 1719)" onmouseover="showTip(event, '1719', 1719)">
+            Intersection(fsa1, fsa2, equalSmbl)
+          </code>
+          <div class="tip" id="1719">
+            <strong>Signature:</strong> (fsa1:FSA&lt;&#39;a&gt; * fsa2:FSA&lt;&#39;a&gt; * equalSmbl:(&#39;a -&gt; &#39;a -&gt; bool)) -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L997-997" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1720', 1720)" onmouseover="showTip(event, '1720', 1720)">
+            IsSubFsa(a1, a2, fsaParams)
+          </code>
+          <div class="tip" id="1720">
+            <strong>Signature:</strong> (a1:FSA&lt;&#39;a&gt; * a2:FSA&lt;&#39;a&gt; * fsaParams:FsaParams&lt;&#39;?7306,&#39;a&gt;) -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L1003-1003" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Checks if the language accepted by FSA a1 is a sublanguage
+of the language accepted by FSA a2.
+Expects any fsa</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1721', 1721)" onmouseover="showTip(event, '1721', 1721)">
+            ReluctantReplace(...)
+          </code>
+          <div class="tip" id="1721">
+            <strong>Signature:</strong> (fsa1:FSA&lt;&#39;a&gt; * fsa2:FSA&lt;&#39;a&gt; * fsa3:FSA&lt;&#39;a&gt; * smb1:&#39;?7293 * smb2:&#39;?7293 * getChar:(Symb&lt;&#39;a&gt; -&gt; &#39;?7293) * newSmb:(&#39;?7293 -&gt; Symb&lt;&#39;a&gt;) * equalSmbl:(&#39;a -&gt; &#39;a -&gt; bool)) -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L994-994" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1722', 1722)" onmouseover="showTip(event, '1722', 1722)">
+            Replace(...)
+          </code>
+          <div class="tip" id="1722">
+            <strong>Signature:</strong> (fsa1:FSA&lt;&#39;a&gt; * fsa2:FSA&lt;&#39;a&gt; * fsa3:FSA&lt;&#39;a&gt; * smb1:&#39;?7287 * smb2:&#39;?7287 * getChar:(Symb&lt;&#39;a&gt; -&gt; &#39;?7287) * newSmb:(&#39;?7287 -&gt; Symb&lt;&#39;a&gt;) * equalSmbl:(&#39;a -&gt; &#39;a -&gt; bool)) -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L992-992" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>fsa1 -- original strings; fsa2 -- match strings; fsa3 -- replacement strings, FSAs are not empty</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1723', 1723)" onmouseover="showTip(event, '1723', 1723)">
+            Union(fsa1, fsa2)
+          </code>
+          <div class="tip" id="1723">
+            <strong>Signature:</strong> (fsa1:FSA&lt;&#39;a&gt; * fsa2:FSA&lt;&#39;a&gt;) -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L990-990" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1724', 1724)" onmouseover="showTip(event, '1724', 1724)">
+            Widen(fsa1, fsa2, fsaParams)
+          </code>
+          <div class="tip" id="1724">
+            <strong>Signature:</strong> (fsa1:FSA&lt;&#39;a&gt; * fsa2:FSA&lt;&#39;a&gt; * fsaParams:FsaParams&lt;&#39;?7312,&#39;a&gt;) -&gt; FSA&lt;&#39;a&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraph.FSA/GraphBasedFsa.fs#L1017-1017" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Widening operator for FSA</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/QuickGraph/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">QuickGraph</li>
+            <li><a href="/QuickGraph/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/YC.QuickGraph">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/YaccConstructor/QuickGraph">Source Code on GitHub</a></li>
+            <li><a href="/QuickGraph/license.html">License</a></li>
+            <li><a href="/QuickGraph/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/QuickGraph/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/QuickGraph/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/YaccConstructor/QuickGraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

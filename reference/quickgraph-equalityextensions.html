@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>EqualityExtensions - QuickGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Jonathan "Peli" de Halleux"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/QuickGraph/content/style.css" />
+    <script type="text/javascript" src="/QuickGraph/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <!--li><a href="http://fsharp.org">fsharp.org</a></li-->
+          <li><a href="http://github.com/YaccConstructor/QuickGraph">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/QuickGraph/index.html">QuickGraph</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>EqualityExtensions</h1>
+<p>
+  <span>Namespace: QuickGraph</span><br />
+</p>
+<div class="xmldoc">
+<p>Deep equality methods for collections (arrays, dictionaries) implemented as extension methods.</p>
+
+</div>
+  <h3>Static members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '463', 463)" onmouseover="showTip(event, '463', 463)">
+            Equals1(lhs, rhs, elementEquality)
+          </code>
+          <div class="tip" id="463">
+            <strong>Signature:</strong> (lhs:IList&lt;&#39;T&gt; * rhs:IList&lt;&#39;T&gt; * elementEquality:IEqualityComparer&lt;&#39;T&gt;) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'T          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Element-by-element array equality using a given equality comparer for elements.
+Two arrays are equal iff they are both null,
+or are actually the same reference,
+or they have equal length and elements are equal for each index.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '464', 464)" onmouseover="showTip(event, '464', 464)">
+            Equals1(lhs, rhs)
+          </code>
+          <div class="tip" id="464">
+            <strong>Signature:</strong> (lhs:IList&lt;&#39;T&gt; * rhs:IList&lt;&#39;T&gt;) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'T          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Element-by-element array equality using EqualityComparer(T).Default to equate elements.
+Two arrays are equal iff they are both null,
+or are actually the same reference,
+or they have equal length and elements are equal for each index.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '465', 465)" onmouseover="showTip(event, '465', 465)">
+            Equals1(lhs, rhs, tolerance)
+          </code>
+          <div class="tip" id="465">
+            <strong>Signature:</strong> (lhs:IList&lt;float32&gt; * rhs:IList&lt;float32&gt; * tolerance:float32) -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Specialization of ArrayEquals(T) augmented with tolerance value
+to be used when equating two float values.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '466', 466)" onmouseover="showTip(event, '466', 466)">
+            Equals1(lhs, rhs, tolerance)
+          </code>
+          <div class="tip" id="466">
+            <strong>Signature:</strong> (lhs:IList&lt;float&gt; * rhs:IList&lt;float&gt; * tolerance:float) -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Specialization of ArrayEquals{T} augmented with tolerance value
+to be used when equating two double values.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '467', 467)" onmouseover="showTip(event, '467', 467)">
+            Equals1(lhs, rhs, elementEquality)
+          </code>
+          <div class="tip" id="467">
+            <strong>Signature:</strong> (lhs:&#39;T [] * rhs:&#39;T [] * elementEquality:IEqualityComparer&lt;&#39;T&gt;) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'T          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Element-by-element array equality using a given equality comparer for elements.
+Two arrays are equal iff they are both null,
+or are actually the same reference,
+or they have equal length and elements are equal for each index.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '468', 468)" onmouseover="showTip(event, '468', 468)">
+            Equals1(lhs, rhs)
+          </code>
+          <div class="tip" id="468">
+            <strong>Signature:</strong> (lhs:&#39;T [] * rhs:&#39;T []) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'T          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Element-by-element array equality using EqualityComparer(T).Default to equate elements.
+Two arrays are equal iff they are both null,
+or are actually the same reference,
+or they have equal length and elements are equal for each index.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '469', 469)" onmouseover="showTip(event, '469', 469)">
+            Equals1(lhs, rhs, tolerance)
+          </code>
+          <div class="tip" id="469">
+            <strong>Signature:</strong> (lhs:float32 [] * rhs:float32 [] * tolerance:float32) -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Specialization of ArrayEquals(T) augmented with tolerance value
+to be used when equating two float values.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '470', 470)" onmouseover="showTip(event, '470', 470)">
+            Equals1(lhs, rhs, tolerance)
+          </code>
+          <div class="tip" id="470">
+            <strong>Signature:</strong> (lhs:float [] * rhs:float [] * tolerance:float) -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Specialization of ArrayEquals{T} augmented with tolerance value
+to be used when equating two double values.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '471', 471)" onmouseover="showTip(event, '471', 471)">
+            Equals1(lhs, rhs)
+          </code>
+          <div class="tip" id="471">
+            <strong>Signature:</strong> (lhs:IDictionary&lt;&#39;TKey,&#39;TValue&gt; * rhs:IDictionary&lt;&#39;TKey,&#39;TValue&gt;) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'TKey, 'TValue          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Element-by-element dictionary equality using the default equality comparer for values.
+Two dictionaries are equal iff they are both null,
+or are actually the same reference,
+or they have identical sets of keys and elements are equal for each key.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '472', 472)" onmouseover="showTip(event, '472', 472)">
+            Equals1(lhs, rhs, valueEquality)
+          </code>
+          <div class="tip" id="472">
+            <strong>Signature:</strong> (lhs:IDictionary&lt;&#39;TKey,&#39;TValue&gt; * rhs:IDictionary&lt;&#39;TKey,&#39;TValue&gt; * valueEquality:IEqualityComparer&lt;&#39;TValue&gt;) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'TKey, 'TValue          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Element-by-element dictionary equality using a given equality comparer for values.
+Two dictionaries are equal iff they are both null,
+or are actually the same reference,
+or they have identical sets of keys and elements are equal for each key.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '473', 473)" onmouseover="showTip(event, '473', 473)">
+            Equals2(lhs, rhs)
+          </code>
+          <div class="tip" id="473">
+            <strong>Signature:</strong> (lhs:&#39;T [] [] * rhs:&#39;T [] []) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'T          </div>
+        </td>
+        <td class="xmldoc">
+          <p>2-level deep equality for array of arrays of T using EqualityComparer(T).Default as element equality.
+This has '2' in its name, because one may want to do partially deep equality on multi-dimensional array type.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '474', 474)" onmouseover="showTip(event, '474', 474)">
+            Equals2(lhs, rhs, elementEquality)
+          </code>
+          <div class="tip" id="474">
+            <strong>Signature:</strong> (lhs:&#39;T [] [] * rhs:&#39;T [] [] * elementEquality:IEqualityComparer&lt;&#39;T&gt;) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'T          </div>
+        </td>
+        <td class="xmldoc">
+          <p>2-level deep equality for array of arrays of T using a given element equality comparer.
+This has '2' in its name, because one may want to do partially deep equality on multi-dimensional array type.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '475', 475)" onmouseover="showTip(event, '475', 475)">
+            Equals3(lhs, rhs)
+          </code>
+          <div class="tip" id="475">
+            <strong>Signature:</strong> (lhs:&#39;T [] [] [] * rhs:&#39;T [] [] []) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'T          </div>
+        </td>
+        <td class="xmldoc">
+          <p>3-level deep equality for array of arrays of arrays of T using EqualityComparer(T).Default as element equality.
+This has '3' in its name, because one may want to do partially deep equality on multi-dimensional array type.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '476', 476)" onmouseover="showTip(event, '476', 476)">
+            Equals3(lhs, rhs, elementEquality)
+          </code>
+          <div class="tip" id="476">
+            <strong>Signature:</strong> (lhs:&#39;T [] [] [] * rhs:&#39;T [] [] [] * elementEquality:IEqualityComparer&lt;&#39;T&gt;) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'T          </div>
+        </td>
+        <td class="xmldoc">
+          <p>3-level deep equality for array of arrays of arrays of T using a given element equality comparer.
+This has '3' in its name, because one may want to do partially deep equality on multi-dimensional array type.</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/QuickGraph/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">QuickGraph</li>
+            <li><a href="/QuickGraph/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/YC.QuickGraph">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/YaccConstructor/QuickGraph">Source Code on GitHub</a></li>
+            <li><a href="/QuickGraph/license.html">License</a></li>
+            <li><a href="/QuickGraph/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/QuickGraph/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/QuickGraph/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/YaccConstructor/QuickGraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>SerializationExtensions - QuickGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Jonathan "Peli" de Halleux"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/QuickGraph/content/style.css" />
+    <script type="text/javascript" src="/QuickGraph/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <!--li><a href="http://fsharp.org">fsharp.org</a></li-->
+          <li><a href="http://github.com/YaccConstructor/QuickGraph">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/QuickGraph/index.html">QuickGraph</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>SerializationExtensions</h1>
+<p>
+  <span>Namespace: QuickGraph.Serialization</span><br />
+</p>
+<div class="xmldoc">
+</div>
+  <h3>Static members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2152', 2152)" onmouseover="showTip(event, '2152', 2152)">
+            DeserializeFromBinary(stream)
+          </code>
+          <div class="tip" id="2152">
+            <strong>Signature:</strong> stream:Stream -&gt; &#39;TGraph<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TGraph          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Deserializes a graph instance from a stream that was serialized using the .Net serialization binary format.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2153', 2153)" onmouseover="showTip(event, '2153', 2153)">
+            DeserializeFromXml(...)
+          </code>
+          <div class="tip" id="2153">
+            <strong>Signature:</strong> (doc:IXPathNavigable * graphXPath:string * verticesXPath:string * edgesXPath:string * graphFactory:Func&lt;XPathNavigator,&#39;TGraph&gt; * vertexFactory:Func&lt;XPathNavigator,&#39;TVertex&gt; * edgeFactory:Func&lt;XPathNavigator,&#39;TEdge&gt;) -&gt; &#39;TGraph<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TGraph          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Deserializes a graph from a generic xml stream, using an .</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2154', 2154)" onmouseover="showTip(event, '2154', 2154)">
+            DeserializeFromXml(...)
+          </code>
+          <div class="tip" id="2154">
+            <strong>Signature:</strong> (reader:XmlReader * graphPredicate:Predicate&lt;XmlReader&gt; * vertexPredicate:Predicate&lt;XmlReader&gt; * edgePredicate:Predicate&lt;XmlReader&gt; * graphFactory:Func&lt;XmlReader,&#39;TGraph&gt; * vertexFactory:Func&lt;XmlReader,&#39;TVertex&gt; * edgeFactory:Func&lt;XmlReader,&#39;TEdge&gt;) -&gt; &#39;TGraph<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TGraph          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Deserializes a graph from a generic xml stream, using an .</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2155', 2155)" onmouseover="showTip(event, '2155', 2155)">
+            DeserializeFromXml(...)
+          </code>
+          <div class="tip" id="2155">
+            <strong>Signature:</strong> (reader:XmlReader * graphElementName:string * vertexElementName:string * edgeElementName:string * namespaceUri:string * graphFactory:Func&lt;XmlReader,&#39;TGraph&gt; * vertexFactory:Func&lt;XmlReader,&#39;TVertex&gt; * edgeFactory:Func&lt;XmlReader,&#39;TEdge&gt;) -&gt; &#39;TGraph<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TGraph          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Deserializes a graph from a generic xml stream, using an .</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2156', 2156)" onmouseover="showTip(event, '2156', 2156)">
+            SerializeToBinary(graph, stream)
+          </code>
+          <div class="tip" id="2156">
+            <strong>Signature:</strong> (graph:IGraph&lt;&#39;TVertex,&#39;TEdge&gt; * stream:Stream) -&gt; unit<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Serializes the graph to the stream using the .Net serialization binary format.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2157', 2157)" onmouseover="showTip(event, '2157', 2157)">
+            SerializeToXml(...)
+          </code>
+          <div class="tip" id="2157">
+            <strong>Signature:</strong> (graph:&#39;TGraph * writer:XmlWriter * vertexIdentity:VertexIdentity&lt;&#39;TVertex&gt; * edgeIdentity:EdgeIdentity&lt;&#39;TVertex,&#39;TEdge&gt; * graphElementName:string * vertexElementName:string * edgeElementName:string * namespaceUri:string) -&gt; unit<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TGraph          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Serializes a graph to a generic xml stream, using an .</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2158', 2158)" onmouseover="showTip(event, '2158', 2158)">
+            SerializeToXml(...)
+          </code>
+          <div class="tip" id="2158">
+            <strong>Signature:</strong> (graph:&#39;TGraph * writer:XmlWriter * vertexIdentity:VertexIdentity&lt;&#39;TVertex&gt; * edgeIdentity:EdgeIdentity&lt;&#39;TVertex,&#39;TEdge&gt; * graphElementName:string * vertexElementName:string * edgeElementName:string * namespaceUri:string * writeGraphAttributes:Action&lt;XmlWriter,&#39;TGraph&gt; * writeVertexAttributes:Action&lt;XmlWriter,&#39;TVertex&gt; * writeEdgeAttributes:Action&lt;XmlWriter,&#39;TEdge&gt;) -&gt; unit<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TGraph          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Serializes a graph to a generic xml stream, using an .</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <img src="/QuickGraph/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">QuickGraph</li>
+            <li><a href="/QuickGraph/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/YC.QuickGraph">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/YaccConstructor/QuickGraph">Source Code on GitHub</a></li>
+            <li><a href="/QuickGraph/license.html">License</a></li>
+            <li><a href="/QuickGraph/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/QuickGraph/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/QuickGraph/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/YaccConstructor/QuickGraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>
