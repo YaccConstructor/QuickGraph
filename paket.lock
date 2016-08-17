@@ -1,10 +1,10 @@
 NUGET
   remote: https://www.nuget.org/api/v2
     DotNet.Contracts (1.10.20606.1)
-    DotParser (1.0.5)
+    DotParser (1.0.6)
       FSharp.Core
       FSharpx.Collections.Experimental
-    FAKE (4.30)
+    FAKE (4.37.2)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.14.4)
@@ -38,10 +38,10 @@ NUGET
       NUnit.Extension.NUnitV2ResultWriter (>= 3.4.1)
       NUnit.Extension.TeamCityEventListener (>= 1.0.1)
       NUnit.Extension.VSProjectLoader (>= 3.4.1)
-    Octokit (0.20)
+    Octokit (0.21.1)
       Microsoft.Net.Http  - framework: net10, net11, net20, net30, net35, net40, net40-full
     SourceLink.Fake (1.1)
 GITHUB
   remote: fsharp/FAKE
-    modules/Octokit/Octokit.fsx (d45c7a8c91c96cc25ad14ab017fb84f55befe665)
+    modules/Octokit/Octokit.fsx (cd7849e12cf4a6619863671828ed1b0418e90d7f)
       Octokit (>= 0.20)
