@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
 {
-    public  class InputModel<TVertex, TEdge> 
+    public  class InputModel<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         public UndirectedGraph<TVertex, TEdge> Graph { get; set; }
@@ -16,10 +14,10 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
         : InputModel<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        public Dictionary<TVertex, Nullable<int>> Colors { get; set; }
+        public Dictionary<TVertex, int?> Colors { get; set; }
     }
 
-    public class VertexColoringAlgorithm<TVertex, TEdge> 
+    public class VertexColoringAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         private InputModel<TVertex, TEdge> input;
@@ -27,6 +25,14 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
         public VertexColoringAlgorithm(InputModel<TVertex, TEdge> input)
         {
             this.input = input;
+        }
+
+        public event VertexAction<TVertex> ColourVertex;
+        private void OnColourVertex(TVertex v)
+        {
+            var eh = this.ColourVertex;
+            if (eh != null)
+                eh(v);
         }
 
         public OutputModel<TVertex, TEdge> Compute()
@@ -45,6 +51,7 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
 
             // Assign the first color to first vertex
             vertexColor[firstVertex] = 0;
+            this.OnColourVertex(firstVertex);
 
             /*
             A temporary array to store the available colors. True
@@ -57,7 +64,7 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
                 available[usingColor] = false;
             }
 
-            // Assign colors to remaining V-1 vertices            
+            // Assign colors to remaining V-1 vertices
             foreach (var vertexOfGraph in input.Graph.Vertices)
             {
                 if (!(vertexOfGraph.Equals(firstVertex)))
@@ -65,14 +72,17 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
                     // Process all adjacent vertices and flag their colors as unavailable
                     foreach (var edgesOfProcessVertex in input.Graph.AdjacentEdges(vertexOfGraph))
                     {
-                        if (vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)].HasValue)
+                        var adjacentVertex = edgesOfProcessVertex.GetOtherVertex(vertexOfGraph);
+
+                        if (vertexColor[adjacentVertex].HasValue)
                         {
-                            available[vertexColor[edgesOfProcessVertex.GetOtherVertex(vertexOfGraph)].Value] = true;
+                            available[vertexColor[adjacentVertex].Value] = true;
                         }
+
                     }
 
                     // Find the first available color
-                    int usingColor = new int();
+                    int usingColor;
                     for (usingColor = 0; usingColor < V; usingColor++)
                     {
                         if (!(available[usingColor]))
@@ -81,6 +91,7 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
 
                     // Assign the found color
                     vertexColor[vertexOfGraph] = usingColor;
+                    this.OnColourVertex(vertexOfGraph);
 
                     // Reset the values back to false for the next iteration
                     foreach (var edgesOfProcessVertex in input.Graph.AdjacentEdges(vertexOfGraph))

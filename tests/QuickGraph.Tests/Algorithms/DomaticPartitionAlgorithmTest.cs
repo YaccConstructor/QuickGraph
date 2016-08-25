@@ -3,9 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Algorithms;
 using System.Collections.Generic;
 using System.Linq;
-using System.Diagnostics;
 
-namespace QuickGraph.Tests
+namespace QuickGraph.Tests.Algorithms
 {
     [TestClass]
     public class DomaticPartitionTest
@@ -54,7 +53,7 @@ namespace QuickGraph.Tests
             return tocompare.Count == 0;
         }
 
-        public Tuple<int[], Tuple<int, int>[]> generateGraph(int vertexCount)
+        public Tuple<int[], Tuple<int, int>[]> GenerateGraph(int vertexCount)
         {
             int[] vertices = Enumerable.Range(1, vertexCount + 1).ToArray();
 
@@ -104,9 +103,9 @@ namespace QuickGraph.Tests
                 new Tuple<int, int>(6, 7),
             };
 
-            var tocompare = new List<HashSet<int>>(new HashSet<int>[] 
-            { 
-                new HashSet<int>(new int[] { 3, 5, 6 }), 
+            var tocompare = new List<HashSet<int>>(new HashSet<int>[]
+            {
+                new HashSet<int>(new int[] { 3, 5, 6 }),
                 new HashSet<int>(new int[] { 1, 4 }),
                 new HashSet<int>(new int[] { 2, 7 })
             });
@@ -143,8 +142,8 @@ namespace QuickGraph.Tests
             };
 
             // All possible domatic partitions for a given graph
-            int[,] domatics = 
-            { 
+            int[,] domatics =
+            {
                 { 1, 5, 2, 8, 4, 6, 3, 7 },
                 { 1, 5, 2, 8, 4, 7, 3, 6 },
                 { 1, 5, 2, 6, 4, 8, 3, 7 },
@@ -277,7 +276,7 @@ namespace QuickGraph.Tests
         public void DomaticPartitionTestFullGraph()
         {
             int[] vertices = { 1, 2, 3, 4, 5 };
-            Tuple<int, int>[] edges = 
+            Tuple<int, int>[] edges =
             {
                 new Tuple<int, int>(1, 2),
                 new Tuple<int, int>(1, 3),
@@ -306,7 +305,7 @@ namespace QuickGraph.Tests
                 double meanTime = 0;
                 for (int j = 0; j < statRetriesCount; j++)
                 {
-                    var graph = generateGraph(curVertexCount);
+                    var graph = GenerateGraph(curVertexCount);
                     int[] vertices = graph.Item1;
                     Tuple<int, int>[] edges = graph.Item2;
 

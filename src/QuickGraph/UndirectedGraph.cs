@@ -90,6 +90,14 @@ namespace QuickGraph
                 DotParserAdapter.LoadDot(dotSource, createGraph, vertexFunc, edgeFunc);
         }
 
+        public BidirectionalGraph<TVertex, TEdge> ToBidirectionalGraph()
+        {
+            var newGraph = new BidirectionalGraph<TVertex, TEdge>();
+
+            newGraph.AddVertexRange(this.Vertices);
+            newGraph.AddEdgeRange(this.Edges);
+            return newGraph;
+        }
         #region IGraph<Vertex,Edge> Members
         public bool  IsDirected
         {

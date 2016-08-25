@@ -9,26 +9,27 @@ namespace QuickGraph.Algorithms.TopologicalSort
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public sealed class TopologicalSortAlgorithm<TVertex,TEdge> :
+    public sealed class TopologicalSortAlgorithm<TVertex, TEdge> :
         AlgorithmBase<IVertexListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private IList<TVertex> vertices = new List<TVertex>();
         private bool allowCyclicGraph = false;
 
-        public TopologicalSortAlgorithm(IVertexListGraph<TVertex,TEdge> g)
-            :this(g, new List<TVertex>())
-        {}
+        public TopologicalSortAlgorithm(IVertexListGraph<TVertex, TEdge> g)
+            : this(g, new List<TVertex>())
+        { }
 
         public TopologicalSortAlgorithm(
-            IVertexListGraph<TVertex,TEdge> g, 
+            IVertexListGraph<TVertex, TEdge> g,
             IList<TVertex> vertices)
-            :base(g)
+            : base(g)
         {
             Contract.Requires(vertices != null);
 
             this.vertices = vertices;
         }
+
 
         public IList<TVertex> SortedVertices
         {
@@ -49,10 +50,13 @@ namespace QuickGraph.Algorithms.TopologicalSort
                 throw new NonAcyclicGraphException();
         }
 
-        private void FinishVertex(TVertex v)
+        private void VertexFinished(TVertex v)
         {
             vertices.Insert(0, v);
         }
+
+        public event VertexAction<TVertex> DiscoverVertex;
+        public event VertexAction<TVertex> FinishVertex;
 
         protected override void InternalCompute()
         {
@@ -60,12 +64,14 @@ namespace QuickGraph.Algorithms.TopologicalSort
             try
             {
                 dfs = new DepthFirstSearchAlgorithm<TVertex, TEdge>(
-                    this, 
+                    this,
                     this.VisitedGraph,
                     new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount)
                     );
                 dfs.BackEdge += new EdgeAction<TVertex, TEdge>(this.BackEdge);
-                dfs.FinishVertex += new VertexAction<TVertex>(this.FinishVertex);
+                dfs.FinishVertex += new VertexAction<TVertex>(this.VertexFinished);
+                dfs.DiscoverVertex += DiscoverVertex;
+                dfs.FinishVertex += FinishVertex;
 
                 dfs.Compute();
             }
@@ -74,7 +80,7 @@ namespace QuickGraph.Algorithms.TopologicalSort
                 if (dfs != null)
                 {
                     dfs.BackEdge -= new EdgeAction<TVertex, TEdge>(this.BackEdge);
-                    dfs.FinishVertex -= new VertexAction<TVertex>(this.FinishVertex);
+                    dfs.FinishVertex -= new VertexAction<TVertex>(this.VertexFinished);
                 }
             }
         }

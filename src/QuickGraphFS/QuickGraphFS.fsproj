@@ -47,6 +47,7 @@
     <Compile Include="Algorithms\BipartiteDimension\BipartiteDimensionAlgorithm.fs" />
     <Compile Include="Algorithms\InducedPaths\InducedPaths.fs" />
     <Compile Include="Algorithms\DomaticPartition\DomaticPartition.fs" />
+    <Compile Include="Algorithms\MaxCardinality\MaxCardinality.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickGraph\QuickGraph.csproj">
@@ -71,7 +72,7 @@
     </Otherwise>
   </Choose>
   <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
