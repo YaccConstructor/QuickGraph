@@ -7,6 +7,7 @@ using QuickGraph.Algorithms.TSP;
 using System.IO;
 using QuickGraph;
 using QuickGraph.Algorithms;
+using System.Diagnostics;
 
 namespace QuickGraph.Tests.Algorithms.TSP
 {
@@ -123,6 +124,27 @@ namespace QuickGraph.Tests.Algorithms.TSP
             Assert.AreEqual(tcp.BestCost, 45);
             Assert.IsFalse(tcp.ResultPath.IsDirectedAcyclicGraph());
         }
+
+        //[TestMethod]
+        public void performanceTest()
+        {
+            for (int i = 0; i < 6; ++i)
+            {
+                int repeat = 10;
+                long avg = 0;
+                for (int j = 0; j < repeat; ++j)
+                {
+                    TestCase testCase = TestCase.completeGraphTestCase((i + 1) * 5, 100000000);
+                    var tcp = new TSP<String, EquatableEdge<String>, BidirectionalGraph<String, EquatableEdge<String>>>(testCase.Graph, testCase.GetFuncWeights());
+                    Stopwatch stopWatch = new Stopwatch();
+                    stopWatch.Start();
+                    tcp.Compute();
+                    stopWatch.Stop();
+                    avg += stopWatch.ElapsedMilliseconds;
+                }
+                Trace.WriteLine((i + 1) * 5 + " vertices complete, avg time: " + avg / repeat);
+            }
+        }
     }
 
     public class TestCase
@@ -157,6 +179,24 @@ namespace QuickGraph.Tests.Algorithms.TSP
         public Func<EquatableEdge<String>, double> GetFuncWeights()
         {
             return (edge => WeightsDict[edge]);
+        }
+
+        public static TestCase completeGraphTestCase(int vertices, int maxWeight)
+        {
+            var random = new Random();
+            TestCase testCase = new TestCase();
+            for (int i = 0; i < vertices; ++i)
+            {
+                testCase.AddVertex("n" + i);
+            }
+            foreach (var v1 in testCase.Graph.Vertices)
+            {
+                foreach (var v2 in testCase.Graph.Vertices)
+                {
+                    testCase.AddDirectedEdge(v1, v2, random.Next(maxWeight));
+                }
+            }
+            return testCase;
         }
     }
 

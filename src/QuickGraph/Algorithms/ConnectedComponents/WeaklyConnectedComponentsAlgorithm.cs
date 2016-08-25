@@ -13,14 +13,15 @@ namespace QuickGraph.Algorithms.ConnectedComponents
     [Serializable]
 #endif
     public sealed class WeaklyConnectedComponentsAlgorithm<TVertex, TEdge> :
-        AlgorithmBase<IVertexListGraph<TVertex,TEdge>>,
-        IConnectedComponentAlgorithm<TVertex,TEdge,IVertexListGraph<TVertex,TEdge>>
+        AlgorithmBase<IVertexListGraph<TVertex, TEdge>>,
+        IConnectedComponentAlgorithm<TVertex, TEdge, IVertexListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private readonly IDictionary<TVertex, int> components;
         private readonly Dictionary<int, int> componentEquivalences = new Dictionary<int, int>();
         private int componentCount = 0;
         private int currentComponent = 0;
+        private List<BidirectionalGraph<TVertex, TEdge>> graphs;
 
         public WeaklyConnectedComponentsAlgorithm(IVertexListGraph<TVertex, TEdge> visitedGraph)
             : this(visitedGraph, new Dictionary<TVertex, int>())
@@ -61,7 +62,38 @@ namespace QuickGraph.Algorithms.ConnectedComponents
             this.components.Clear();
         }
 
-        protected override void  InternalCompute()
+        public List<BidirectionalGraph<TVertex, TEdge>> Graphs
+        {
+            get
+            {
+                int i;
+                graphs = new List<BidirectionalGraph<TVertex, TEdge>>(componentCount + 1);
+                for (i = 0; i < componentCount; i++)
+                {
+                    graphs.Add(new BidirectionalGraph<TVertex, TEdge>());
+                }
+                foreach (TVertex componentName in components.Keys)
+                {
+                    graphs[components[componentName]].AddVertex(componentName);
+                }
+
+                foreach (TVertex vertex in VisitedGraph.Vertices)
+                {
+                    foreach (TEdge edge in VisitedGraph.OutEdges(vertex))
+                    {
+
+                        if (components[vertex] == components[edge.Target])
+                        {
+                            graphs[components[vertex]].AddEdge(edge);
+                        }
+                    }
+                }
+                return graphs;
+            }
+
+        }
+
+        protected override void InternalCompute()
         {
             Contract.Ensures(0 <= this.ComponentCount && this.ComponentCount <= this.VisitedGraph.VertexCount);
             Contract.Ensures(Enumerable.All(this.VisitedGraph.Vertices,
@@ -144,7 +176,7 @@ namespace QuickGraph.Algorithms.ConnectedComponents
         {
             // we have touched another tree, updating count and current component
             int otherComponent = this.GetComponentEquivalence(this.components[e.Target]);
-            if(otherComponent != this.currentComponent)
+            if (otherComponent != this.currentComponent)
             {
                 this.componentCount--;
                 Contract.Assert(this.componentCount > 0);
