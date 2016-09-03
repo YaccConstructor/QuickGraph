@@ -83,9 +83,7 @@ namespace QuickGraph.Tests.Algorithms.ShortestPath
             Dictionary<Edge<char>, double> distances,
             char source, char target, double weight)
         {
-            var ac = new Edge<char>(source, target);
-            distances[ac] = weight;
-            g.AddEdge(ac);
+            var ac = new Edge<char>(source, target); distances[ac] = weight; g.AddEdge(ac);
         }
     }
 

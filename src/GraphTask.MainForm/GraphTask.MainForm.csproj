@@ -89,22 +89,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\AStarPlugin\AStarPlugin.csproj">
-      <Project>{59c37eb8-cbb5-49a9-89e7-aa18cf1af12e}</Project>
-      <Name>AStarPlugin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BellmanFordPlugin\BellmanFordPlugin.csproj">
-      <Project>{85b793fe-021c-4f42-a489-e6a1f6007d19}</Project>
-      <Name>BellmanFordPlugin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FloydWarshallVisualization\DagShortestPathPlugin.csproj">
-      <Project>{adb807fd-d0ce-4a78-89c4-5305d36d58a7}</Project>
-      <Name>DagShortestPathPlugin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Floyd\FloydWarshallShortestPathPlugin.csproj">
-      <Project>{4ae67922-4298-4039-86d0-bb2b08493dea}</Project>
-      <Name>FloydWarshallShortestPathPlugin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\StronglyConnectedComponents\StronglyConnectedComponents.csproj">
       <Project>{cac7bc69-08ad-4a6c-8024-813e29d4f954}</Project>
       <Name>StronglyConnectedComponents</Name>
@@ -116,22 +100,6 @@
     <ProjectReference Include="..\GraphTask.Common\GraphTask.Common.fsproj">
       <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
       <Name>GraphTask.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphTask.HelperForKruskalAndPrimVisualisation\HelperForKruskalAndPrimVisualisation.csproj">
-      <Project>{61db192b-ed4f-43f7-bf8e-8d6d1fa05c39}</Project>
-      <Name>HelperForKruskalAndPrimVisualisation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphTask.KruskalVisualisation\KruskalVisualisation.csproj">
-      <Project>{215f0950-0f7c-48a8-b6bf-d2d400e4bc56}</Project>
-      <Name>KruskalVisualisation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphTask.Plugins\PluginsCommon\PluginsCommon.csproj">
-      <Project>{03bb2368-5892-4378-b397-8826fa3323bb}</Project>
-      <Name>PluginsCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphTask.PrimVisualisation\PrimVisualisation.csproj">
-      <Project>{38217ce3-4207-4354-baf4-b3772798ff06}</Project>
-      <Name>PrimVisualisation</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphX\GraphX.Controls\GraphX.WPF.Controls.csproj">
       <Project>{d2e33fee-6689-4bb4-a95c-1b5c327a1e8f}</Project>

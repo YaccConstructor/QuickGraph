@@ -81,7 +81,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             if (eh != null)
                 eh(v);
         }
-        
+
         /// <summary>
         /// Invoked on every edge in the graph |V| times.
         /// </summary>
@@ -156,21 +156,6 @@ namespace QuickGraph.Algorithms.ShortestPath
                 eh(e);
         }
 
-        public event VertexAction<TVertex> StartVertex;
-        private void OnStartVertex(TVertex v)
-        {
-            var eh = this.StartVertex;
-            if (eh != null)
-                eh(v);
-        }
-
-        public event VertexAction<TVertex> FinishVertex;
-        private void OnFinishVertex(TVertex v)
-        {
-            if (FinishVertex != null)
-                FinishVertex(v);
-        }
-
         /// <summary>
         /// Constructed predecessor map
         /// </summary>
@@ -218,12 +203,13 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             // getting the number of 
             int N = this.VisitedGraph.VertexCount;
-            foreach(var v in this.VisitedGraph.Vertices)
+            for (int k = 0; k < N; ++k)
             {
                 bool atLeastOneTreeEdge = false;
                 foreach (var e in this.VisitedGraph.Edges)
                 {
                     this.OnExamineEdge(e);
+
                     if (Relax(e))
                     {
                         atLeastOneTreeEdge = true;
@@ -254,9 +240,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                     return;
                 }
                 else
-                {
                     this.OnEdgeNotMinimized(e);
-                }
             }
             this.foundNegativeCycle = false;
         }
