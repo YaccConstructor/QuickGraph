@@ -217,9 +217,9 @@
     <Compile Include="Algorithms\IUndirectedTreeBuilderAlgorithm.cs" />
     <Compile Include="Algorithms\LengauerTarjanDominatorAlgorithm.cs" />
     <Compile Include="Algorithms\MaximumFlow\BipartiteToMaximumFlowGraphAugmentorAlgorithm.cs" />
-    <Compile Include="Algorithms\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />
-    <Compile Include="Algorithms\MinimumSpanningTree\KruskalMinimumSpanningTreeAlgorithm.cs" />
-    <Compile Include="Algorithms\MinimumSpanningTree\PrimMinimumSpanningTreeAlgorithm.cs" />
+    <Compile Include="Algorithms\MaximumFlow\MinimumSpanningTree\IMinimumSpanningTreeAlgorithm.cs" />
+    <Compile Include="Algorithms\MaximumFlow\MinimumSpanningTree\KruskalMinimumSpanningTreeAlgorithm.cs" />
+    <Compile Include="Algorithms\MaximumFlow\MinimumSpanningTree\PrimMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="Algorithms\ShortestPath\Yen\YenShortestPathsAlgorithm.cs" />
     <Compile Include="Algorithms\TransitiveClosureAlgorithm.cs" />
     <Compile Include="Algorithms\TransitiveAlgorithmHelper.cs" />

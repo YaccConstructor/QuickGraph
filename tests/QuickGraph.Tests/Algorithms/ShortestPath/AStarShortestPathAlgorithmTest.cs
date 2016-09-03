@@ -4,6 +4,9 @@ using QuickGraph.Algorithms.Observers;
 using Microsoft.Pex.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Serialization;
+using System.Xml;
+
+using System.Xml.XPath;
 
 namespace QuickGraph.Algorithms.ShortestPath
 {
@@ -14,6 +17,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         [TestCategory(TestCategories.LongRunning)]
         public void AStartAll()
         {
+
             foreach (var g in TestGraphFactory.GetAdjacencyGraphs())
                 foreach (var root in g.Vertices)
                     this.AStar(g, root);
