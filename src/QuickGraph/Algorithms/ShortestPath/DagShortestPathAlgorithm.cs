@@ -20,11 +20,11 @@ namespace QuickGraph.Algorithms.ShortestPath
     [Serializable]
 #endif
     public sealed class DagShortestPathAlgorithm<TVertex, TEdge> :
-        ShortestPathAlgorithmBase<TVertex,TEdge,IVertexListGraph<TVertex,TEdge>>,
-        IVertexColorizerAlgorithm<TVertex,TEdge>,
-        ITreeBuilderAlgorithm<TVertex,TEdge>,
-        IDistanceRecorderAlgorithm<TVertex,TEdge>,
-        IVertexPredecessorRecorderAlgorithm<TVertex,TEdge>
+        ShortestPathAlgorithmBase<TVertex, TEdge, IVertexListGraph<TVertex, TEdge>>,
+        IVertexColorizerAlgorithm<TVertex, TEdge>,
+        ITreeBuilderAlgorithm<TVertex, TEdge>,
+        IDistanceRecorderAlgorithm<TVertex, TEdge>,
+        IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
         public DagShortestPathAlgorithm(
@@ -45,11 +45,11 @@ namespace QuickGraph.Algorithms.ShortestPath
         public DagShortestPathAlgorithm(
             IAlgorithmComponent host,
             IVertexListGraph<TVertex, TEdge> g,
-            Func<TEdge,double> weights,
+            Func<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
-            :base(host, g,weights, distanceRelaxer)
-        {}
+            : base(host, g, weights, distanceRelaxer)
+        { }
 
         public event VertexAction<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
@@ -62,7 +62,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         private void OnStartVertex(TVertex v)
         {
             var eh = this.StartVertex;
-            if (eh!=null)
+            if (eh != null)
                 eh(v);
         }
 
@@ -80,14 +80,14 @@ namespace QuickGraph.Algorithms.ShortestPath
                 ExamineVertex(v);
         }
 
-        public event EdgeAction<TVertex,TEdge> ExamineEdge;
+        public event EdgeAction<TVertex, TEdge> ExamineEdge;
         private void OnExamineEdge(TEdge e)
         {
             if (ExamineEdge != null)
                 ExamineEdge(e);
         }
 
-        public event EdgeAction<TVertex,TEdge> EdgeNotRelaxed;
+        public event EdgeAction<TVertex, TEdge> EdgeNotRelaxed;
         private void OnEdgeNotRelaxed(TEdge e)
         {
             if (EdgeNotRelaxed != null)
@@ -113,8 +113,8 @@ namespace QuickGraph.Algorithms.ShortestPath
                 this.OnInitializeVertex(u);
             }
         }
-        
-        protected override void  InternalCompute()
+
+        protected override void InternalCompute()
         {
             TVertex rootVertex;
             if (!this.TryGetRootVertex(out rootVertex))
