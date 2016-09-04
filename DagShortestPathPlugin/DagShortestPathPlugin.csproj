@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CAC7BC69-08AD-4A6C-8024-813E29D4F954}</ProjectGuid>
+    <ProjectGuid>{CAC7BC68-08AD-4A6C-8024-813E29D4F954}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StronglyConnectedComponents</RootNamespace>

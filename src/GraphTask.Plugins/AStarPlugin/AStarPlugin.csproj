@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7A3CD47C-DF15-4FC6-A923-DEC16264E79F}</ProjectGuid>
+    <ProjectGuid>{7A3CD46C-DF15-4FC6-A923-DEC16264E79F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AStarPlugin</RootNamespace>

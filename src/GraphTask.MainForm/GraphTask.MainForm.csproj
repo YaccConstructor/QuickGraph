@@ -89,14 +89,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\StronglyConnectedComponents\StronglyConnectedComponents.csproj">
-      <Project>{cac7bc69-08ad-4a6c-8024-813e29d4f954}</Project>
-      <Name>StronglyConnectedComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\WeaklyConnectedComponents\WeaklyConnectedComponents.csproj">
-      <Project>{efceb46f-bc83-41d0-8970-ff4ecf897be5}</Project>
-      <Name>WeaklyConnectedComponents</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GraphTask.Common\GraphTask.Common.fsproj">
       <Project>{e383f190-86fe-454c-8568-1762f8820925}</Project>
       <Name>GraphTask.Common</Name>
