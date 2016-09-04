@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{FAAD5B1C-1217-48D6-B1EF-7CAC0440D6A4}"
 	ProjectSection(SolutionItems) = preProject
@@ -91,7 +91,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginSample", "src\GraphTa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.GraphXAdapter", "src\QuickGraph.GraphXAdapter\QuickGraph.GraphXAdapter.csproj", "{646CFBB0-B998-45E7-8809-991A5538FF36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopologicalSortPlugin", "src\GraphTask.Plugins\TopologicalSortPlugin\TopologicalSortPlugin.csproj", "{7A3CD47C-DF15-4FC6-A923-DEC16264E79F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AStarPlugin", "src\GraphTask.Plugins\AStarPlugin\AStarPlugin.csproj", "{7A3CD47C-DF15-4FC6-A923-DEC16264E79F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{0CE1D294-B109-461F-88DC-42AFCA5039E9}"
 EndProject
@@ -123,11 +123,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HungarianAlgorithmVisualisa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YenVisualisation", "src\YenVisualisation\YenVisualisation.csproj", "{CC103150-DDBF-42D9-9C53-DA5D0915CFD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectedComponents", "ConnectedComponents\ConnectedComponents.csproj", "{FA87B6F5-3CF2-4CE6-9C0F-1FBC3C04AB85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloydWarshallShortestPathPlugin", "FloydWarshallShortestPathPlugin\FloydWarshallShortestPathPlugin.csproj", "{FA87B6F5-3CF2-4CE6-9C0F-1FBC3C04AB85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StronglyConnectedComponents", "StronglyConnectedComponents\StronglyConnectedComponents.csproj", "{CAC7BC69-08AD-4A6C-8024-813E29D4F954}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DagShortestPathPlugin", "DagShortestPathPlugin\DagShortestPathPlugin.csproj", "{CAC7BC69-08AD-4A6C-8024-813E29D4F954}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeaklyConnectedComponents", "WeaklyConnectedComponents\WeaklyConnectedComponents.csproj", "{EFCEB46F-BC83-41D0-8970-FF4ECF897BE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BellmanFordShortestPathPlugin", "BellmanFordShortestPathPlugin\BellmanFordShortestPathPlugin.csproj", "{EFCEB46F-BC83-41D0-8970-FF4ECF897BE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
