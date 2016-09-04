@@ -14,13 +14,41 @@ namespace QuickGraph.Algorithms.ShortestPath
     /// </summary>
     /// <typeparam name="TVertex">type of the vertices</typeparam>
     /// <typeparam name="TEdge">type of the edges</typeparam>
-    public class FloydWarshallAllShortestPathAlgorithm<TVertex, TEdge> 
+    public class FloydWarshallAllShortestPathAlgorithm<TVertex, TEdge>
         : AlgorithmBase<IVertexAndEdgeListGraph<TVertex, TEdge>>
         where TEdge : IEdge<TVertex>
     {
         private readonly Func<TEdge, double> weights;
         private readonly IDistanceRelaxer distanceRelaxer;
         private readonly Dictionary<SEquatableEdge<TVertex>, VertexData> data;
+        public readonly Dictionary<int, distancesVertices> steps;
+        private readonly Dictionary<String, int> matches;
+
+        public struct distancesVertices
+        {
+            public readonly double Distance;
+            public readonly int Source;
+            public readonly int Target;
+            public readonly int Predecessor;
+
+            public distancesVertices(int source, int target, double distance)
+            {
+                this.Distance = distance;
+                this.Source = source;
+                this.Target = target;
+                this.Predecessor = 0;
+            }
+
+            public distancesVertices(int source, int target, double distance, int predecessor)
+            {
+                this.Distance = distance;
+                this.Source = source;
+                this.Target = target;
+                this.Predecessor = predecessor;
+            }
+
+
+        }
 
         struct VertexData
         {
@@ -74,6 +102,7 @@ namespace QuickGraph.Algorithms.ShortestPath
             }
         }
 
+
         public FloydWarshallAllShortestPathAlgorithm(
             IAlgorithmComponent host,
             IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
@@ -88,6 +117,8 @@ namespace QuickGraph.Algorithms.ShortestPath
             this.weights = weights;
             this.distanceRelaxer = distanceRelaxer;
             this.data = new Dictionary<SEquatableEdge<TVertex>, VertexData>();
+            this.steps = new Dictionary<int, distancesVertices>();
+            this.matches = new Dictionary<string, int>();
         }
 
         public FloydWarshallAllShortestPathAlgorithm(
@@ -99,9 +130,12 @@ namespace QuickGraph.Algorithms.ShortestPath
             Contract.Requires(weights != null);
             Contract.Requires(distanceRelaxer != null);
 
-            this.weights =weights;
+            this.weights = weights;
             this.distanceRelaxer = distanceRelaxer;
             this.data = new Dictionary<SEquatableEdge<TVertex>, VertexData>();
+            this.steps = new Dictionary<int, distancesVertices>();
+            this.matches = new Dictionary<string, int>();
+
         }
 
         public FloydWarshallAllShortestPathAlgorithm(
@@ -145,7 +179,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 
 #if DEBUG && !SILVERLIGHT
             var set = new HashSet<TVertex>();
-            set.Add(source); 
+            set.Add(source);
             set.Add(target);
 #endif
 
@@ -194,16 +228,27 @@ namespace QuickGraph.Algorithms.ShortestPath
             path = edges.ToArray();
             return true;
         }
-
+        private double returnCurrValue(double d)
+        {
+            return d;
+        }
         protected override void InternalCompute()
         {
             var cancelManager = this.Services.CancelManager;
             // matrix i,j -> path
+
             this.data.Clear();
+            this.steps.Clear();
 
             var vertices = this.VisitedGraph.Vertices;
             var edges = this.VisitedGraph.Edges;
-
+            var step = 0;
+            var num = 0;
+            foreach (var v in vertices)
+            {
+                matches[v.ToString()] = num;
+                num++;
+            }
             // prepare the matrix with initial costs
             // walk each edge and add entry in cost dictionary
             foreach (var edge in edges)
@@ -212,16 +257,28 @@ namespace QuickGraph.Algorithms.ShortestPath
                 var cost = this.weights(edge);
                 VertexData value;
                 if (!data.TryGetValue(ij, out value))
+                {
+                    Console.WriteLine(ij.Source.ToString() + "   " + ij.Target.ToString());
                     data[ij] = new VertexData(cost, edge);
+                    steps[step] = new distancesVertices(matches[ij.Source.ToString()], matches[ij.Target.ToString()], cost);
+                    step++;
+
+                }
                 else if (cost < value.Distance)
+                {
                     data[ij] = new VertexData(cost, edge);
+                    steps[step] = new distancesVertices(matches[ij.Source.ToString()], matches[ij.Target.ToString()], cost);
+                    step++;
+                }
             }
             if (cancelManager.IsCancelling) return;
 
             // walk each vertices and make sure cost self-cost 0
             foreach (var v in vertices)
+            {
                 data[new SEquatableEdge<TVertex>(v, v)] = new VertexData(0, default(TEdge));
 
+            }
             if (cancelManager.IsCancelling) return;
 
             // iterate k, i, j
@@ -232,12 +289,13 @@ namespace QuickGraph.Algorithms.ShortestPath
                 {
                     var ik = new SEquatableEdge<TVertex>(vi, vk);
                     VertexData pathik;
-                    if(data.TryGetValue(ik, out pathik))
+                    if (data.TryGetValue(ik, out pathik))
                         foreach (var vj in vertices)
                         {
                             var kj = new SEquatableEdge<TVertex>(vk, vj);
 
                             VertexData pathkj;
+
                             if (data.TryGetValue(kj, out pathkj))
                             {
                                 double combined = this.distanceRelaxer.Combine(pathik.Distance, pathkj.Distance);
@@ -246,10 +304,21 @@ namespace QuickGraph.Algorithms.ShortestPath
                                 if (data.TryGetValue(ij, out pathij))
                                 {
                                     if (this.distanceRelaxer.Compare(combined, pathij.Distance) < 0)
+                                    {
                                         data[ij] = new VertexData(combined, vk);
+                                        steps[step] = new distancesVertices(matches[ij.Source.ToString()], matches[ij.Target.ToString()], combined, matches[vk.ToString()]);
+                                        step++;
+
+                                    }
+
                                 }
                                 else
+                                {
                                     data[ij] = new VertexData(combined, vk);
+                                    steps[step] = new distancesVertices(matches[ij.Source.ToString()], matches[ij.Target.ToString()], combined, matches[vk.ToString()]);
+                                    step++;
+
+                                }
                             }
                         }
                 }
@@ -271,10 +340,12 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             writer.WriteLine("data:");
             foreach (var kv in this.data)
-                writer.WriteLine("{0}->{1}: {2}", 
-                    kv.Key.Source, 
-                    kv.Key.Target, 
+                writer.WriteLine("{0}->{1}: {2}",
+                    kv.Key.Source,
+                    kv.Key.Target,
                     kv.Value.ToString());
+
         }
+
     }
 }

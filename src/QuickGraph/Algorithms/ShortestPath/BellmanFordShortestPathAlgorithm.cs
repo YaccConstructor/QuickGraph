@@ -25,13 +25,13 @@ namespace QuickGraph.Algorithms.ShortestPath
     /// <reference-ref
     ///     idref="shi03datastructures"
     ///     />
-    public sealed class BellmanFordShortestPathAlgorithm<TVertex, TEdge> 
-        : ShortestPathAlgorithmBase<TVertex,TEdge
-        , IVertexAndEdgeListGraph<TVertex,TEdge>>
+    public sealed class BellmanFordShortestPathAlgorithm<TVertex, TEdge>
+        : ShortestPathAlgorithmBase<TVertex, TEdge
+        , IVertexAndEdgeListGraph<TVertex, TEdge>>
         , ITreeBuilderAlgorithm<TVertex, TEdge>
         where TEdge : IEdge<TVertex>
     {
-        private readonly Dictionary<TVertex,TVertex> predecessors;
+        private readonly Dictionary<TVertex, TVertex> predecessors;
         private bool foundNegativeCycle;
 
         public BellmanFordShortestPathAlgorithm(
@@ -51,18 +51,18 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         public BellmanFordShortestPathAlgorithm(
             IAlgorithmComponent host,
-            IVertexAndEdgeListGraph<TVertex,TEdge> visitedGraph,
-            Func<TEdge,double> weights,
+            IVertexAndEdgeListGraph<TVertex, TEdge> visitedGraph,
+            Func<TEdge, double> weights,
             IDistanceRelaxer distanceRelaxer
             )
-            :base(host, visitedGraph, weights, distanceRelaxer)
+            : base(host, visitedGraph, weights, distanceRelaxer)
         {
-            this.predecessors = new Dictionary<TVertex,TVertex>();
+            this.predecessors = new Dictionary<TVertex, TVertex>();
         }
 
         public bool FoundNegativeCycle
         {
-            get { return this.foundNegativeCycle;}
+            get { return this.foundNegativeCycle; }
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// <summary>
         /// Invoked on every edge in the graph |V| times.
         /// </summary>
-        public event EdgeAction<TVertex,TEdge> ExamineEdge;
+        public event EdgeAction<TVertex, TEdge> ExamineEdge;
 
         /// <summary>
         /// Raises the <see cref="ExamineEdge"/> event.
@@ -102,7 +102,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         ///  Invoked if the distance label for the target vertex is not 
         ///  decreased.
         /// </summary>
-        public event EdgeAction<TVertex,TEdge> EdgeNotRelaxed;
+        public event EdgeAction<TVertex, TEdge> EdgeNotRelaxed;
 
         /// <summary>
         /// Raises the <see cref="EdgeNotRelaxed"/> event.
@@ -121,7 +121,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         ///  
         ///  If the edge is minimized then this function is invoked.
         /// </summary>
-        public event EdgeAction<TVertex,TEdge> EdgeMinimized;
+        public event EdgeAction<TVertex, TEdge> EdgeMinimized;
 
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace QuickGraph.Algorithms.ShortestPath
         /// If the edge was not minimized, this function is invoked. 
         /// This happens when there is a negative cycle in the graph. 
         /// </summary>
-        public event EdgeAction<TVertex,TEdge> EdgeNotMinimized;
+        public event EdgeAction<TVertex, TEdge> EdgeNotMinimized;
 
 
         /// <summary>
@@ -156,10 +156,25 @@ namespace QuickGraph.Algorithms.ShortestPath
                 eh(e);
         }
 
+        public event VertexAction<TVertex> StartVertex;
+        private void OnStartVertex(TVertex v)
+        {
+            var eh = this.StartVertex;
+            if (eh != null)
+                eh(v);
+        }
+
+        public event VertexAction<TVertex> FinishVertex;
+        private void OnFinishVertex(TVertex v)
+        {
+            if (FinishVertex != null)
+                FinishVertex(v);
+        }
+
         /// <summary>
         /// Constructed predecessor map
         /// </summary>
-        public IDictionary<TVertex,TVertex> Predecessors
+        public IDictionary<TVertex, TVertex> Predecessors
         {
             get
             {
@@ -203,13 +218,12 @@ namespace QuickGraph.Algorithms.ShortestPath
         {
             // getting the number of 
             int N = this.VisitedGraph.VertexCount;
-            for (int k = 0; k < N; ++k)
+            foreach (var v in this.VisitedGraph.Vertices)
             {
                 bool atLeastOneTreeEdge = false;
                 foreach (var e in this.VisitedGraph.Edges)
                 {
                     this.OnExamineEdge(e);
-
                     if (Relax(e))
                     {
                         atLeastOneTreeEdge = true;
@@ -240,7 +254,9 @@ namespace QuickGraph.Algorithms.ShortestPath
                     return;
                 }
                 else
+                {
                     this.OnEdgeNotMinimized(e);
+                }
             }
             this.foundNegativeCycle = false;
         }
