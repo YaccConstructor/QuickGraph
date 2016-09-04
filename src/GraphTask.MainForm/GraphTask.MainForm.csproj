@@ -89,6 +89,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AStarPlugin\AStarPlugin.csproj">
+      <Project>{c949b19d-b583-4a76-b245-4f4790284d70}</Project>
+      <Name>AStarPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BellmanFordPlugin\BellmanFordPlugin.csproj">
+      <Project>{9de27dcf-2b03-46ff-9b63-2b68f2fafd6e}</Project>
+      <Name>BellmanFordPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DagShortestPathPlugin\DagShortestPathPlugin.csproj">
+      <Project>{efcb8bd2-f75d-443d-9475-64b71e96e21f}</Project>
+      <Name>DagShortestPathPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FloydWarshall\FloydWarshallPlugin.csproj">
+      <Project>{787b2521-c23e-4b4f-ae39-7ff6b78f7151}</Project>
+      <Name>FloydWarshallPlugin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\StronglyConnectedComponents\StronglyConnectedComponents.csproj">
       <Project>{cac7bc69-08ad-4a6c-8024-813e29d4f954}</Project>
       <Name>StronglyConnectedComponents</Name>
