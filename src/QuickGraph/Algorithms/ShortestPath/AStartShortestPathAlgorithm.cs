@@ -21,7 +21,7 @@ namespace QuickGraph.Algorithms.ShortestPath
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    public sealed class AStarShortestPathAlgorithm<TVertex, TEdge> 
+    public sealed class AStarShortestPathAlgorithm<TVertex, TEdge>
         : ShortestPathAlgorithmBase<TVertex, TEdge, IVertexListGraph<TVertex, TEdge>>
         , IVertexColorizerAlgorithm<TVertex, TEdge>
         , IVertexPredecessorRecorderAlgorithm<TVertex, TEdge>
@@ -201,7 +201,7 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.ExamineEdge += new EdgeAction<TVertex, TEdge>(this.InternalExamineEdge);
                 bfs.TreeEdge += new EdgeAction<TVertex, TEdge>(this.InternalTreeEdge);
                 bfs.GrayTarget += new EdgeAction<TVertex, TEdge>(this.InternalGrayTarget);
-                bfs.BlackTarget +=new EdgeAction<TVertex,TEdge>(this.InternalBlackTarget);
+                bfs.BlackTarget += new EdgeAction<TVertex, TEdge>(this.InternalBlackTarget);
 
                 bfs.Visit(s);
             }
