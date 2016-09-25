@@ -189,6 +189,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
+    <Reference Include="YC.QuickGraph, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\QuickGraphFS\bin\Debug\YC.QuickGraph.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdjacencyGraph.cs" />
@@ -199,6 +203,7 @@
     <Compile Include="Algorithms\AssigmentProblem\HungarianIteration.cs" />
     <Compile Include="Algorithms\CentralityApproximationAlgorithm.cs" />
     <Compile Include="Algorithms\Cliques\BronKerboshMaximumCliqueAlgorithm.cs" />
+    <Compile Include="Algorithms\Cliques\FindingMaximalCliques.cs" />
     <Compile Include="Algorithms\Cliques\MaximumCliqueAlgorithmBase.cs" />
     <Compile Include="Algorithms\ComputationState.cs" />
     <Compile Include="Algorithms\Condensation\CondensationGraphAlgorithm.cs" />
