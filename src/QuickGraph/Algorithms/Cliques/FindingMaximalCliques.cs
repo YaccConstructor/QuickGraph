@@ -17,7 +17,7 @@ namespace QuickGraph.Algorithms.Cliques
         public FindingMaximalCliques(UndirectedGraph<TEdge, EquatableEdge<TEdge>> g)
         {
             _graph = g;
-            _amountEdges = _graph.EdgeCount;
+            _amountEdges = _graph.Edges.Count();
             _amountVertices = _graph.VertexCount;
             
         }
