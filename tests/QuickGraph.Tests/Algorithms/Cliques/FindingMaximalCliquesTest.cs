@@ -9,49 +9,76 @@ namespace QuickGraph.Tests.Algorithms.Cliques
     [TestClass]
     public class FindingMaximalCliquesTest
     {
-        private Graph GenerateGraph()
-        {
-            var graph = new Graph();
-            graph.Edges = new List<Edge>();
-            graph.Vertexes = new List<char>();
-            graph.Vertexes.AddRange(new[] { 'a', 'b', 'c', 'd', 'e' });
-            graph.Edges.Add(new Edge('a', 'b'));
-            graph.Edges.Add(new Edge('a', 'c'));
-            graph.Edges.Add(new Edge('b', 'c'));
-            graph.Edges.Add(new Edge('b', 'd'));
-            graph.Edges.Add(new Edge('c', 'd'));
-            graph.Edges.Add(new Edge('d', 'e'));
-            return graph;
-        }
-
-        [TestMethod]
-        public void TestFindNeighbors()
-        {
-            var graph = GenerateGraph();
-            FindingMaximalCliques fmc = new FindingMaximalCliques(graph);
-
-            fmc.FindNeighbors();
-
-            var neighbors = fmc.neighbors;
-            Assert.AreEqual(neighbors['a'].ToArray().SequenceEqual(new [] { 'b', 'c'}), true);
-            Assert.AreEqual(neighbors['b'].ToArray().SequenceEqual(new [] { 'a', 'c', 'd' }), true);
-            Assert.AreEqual(neighbors['c'].ToArray().SequenceEqual(new [] { 'a', 'b', 'd' }), true);
-            Assert.AreEqual(neighbors['d'].ToArray().SequenceEqual(new [] { 'b', 'c', 'e' }), true);
-            Assert.AreEqual(neighbors['e'].ToArray().SequenceEqual(new [] { 'd' }), true);
-        }
-
         [TestMethod]
         public void TestFindCliques()
         {
-            var graph = GenerateGraph();
-            FindingMaximalCliques fmc = new FindingMaximalCliques(graph);
-            fmc.FindNeighbors();
-            fmc.Run();
-            var cliques = fmc.cliques;
+            var graph = new UndirectedGraph<char, EquatableEdge<char>>();
+            graph.AddVertexRange(new[] { 'a', 'b', 'c', 'd', 'e' });
+            graph.AddEdge(new EquatableEdge<char>('a', 'b'));
+            graph.AddEdge(new EquatableEdge<char>('a', 'c'));
+            graph.AddEdge(new EquatableEdge<char>('b', 'c'));
+            graph.AddEdge(new EquatableEdge<char>('b', 'd'));
+            graph.AddEdge(new EquatableEdge<char>('c', 'd'));
+            graph.AddEdge(new EquatableEdge<char>('d', 'e'));
+            FindingMaximalCliques<char> fmc = new FindingMaximalCliques<char>(graph);
+            fmc.FindCliques();
+            var cliques = fmc.Cliques;
             Assert.AreEqual(cliques.ElementAt(0).ToArray().SequenceEqual(new[] { 'a', 'b', 'c' }), true);
-            Assert.AreEqual(cliques.ElementAt(0).ToArray().SequenceEqual(new[] { 'c', 'b', 'd' }), true);
-            Assert.AreEqual(cliques.ElementAt(0).ToArray().SequenceEqual(new[] { 'e', 'd' }), true);
+            Assert.AreEqual(cliques.ElementAt(1).ToArray().SequenceEqual(new[] { 'b', 'c', 'd' }), true);
+            Assert.AreEqual(cliques.ElementAt(2).ToArray().SequenceEqual(new[] { 'd', 'e' }), true);
+        }
 
+        [TestMethod]
+        public void TestMultigraph()
+        {
+            var graph = new UndirectedGraph<char, EquatableEdge<char>>(true);
+            graph.AddVertexRange(new[] { 'a', 'b' });
+            graph.AddEdge(new EquatableEdge<char>('a', 'b'));
+            graph.AddEdge(new EquatableEdge<char>('a', 'b'));
+            var fmc = new FindingMaximalCliques<char>(graph);
+            fmc.FindCliques();
+            var cliques = fmc.Cliques;
+            Assert.AreEqual(cliques.Count == 1, true);
+        }
+
+        [TestMethod]
+        public void TestPseudograph()
+        {
+            var graph = new UndirectedGraph<char, EquatableEdge<char>>(true);
+            graph.AddVertexRange(new[] { 'a', 'b' });
+            graph.AddEdge(new EquatableEdge<char>('a', 'a'));
+            graph.AddEdge(new EquatableEdge<char>('a', 'b'));
+            FindingMaximalCliques<char> fmc = new FindingMaximalCliques<char>(graph);
+            fmc.FindCliques();
+            var cliques = fmc.Cliques;
+            Assert.AreEqual(cliques.ElementAt(0).ToArray().SequenceEqual(new[] { 'a', 'b'}), true);
+        }
+
+        [TestMethod]
+        public void TestEmptyGraph()
+        {
+            var graph = new UndirectedGraph<char, EquatableEdge<char>>(true);
+            FindingMaximalCliques<char> fmc = new FindingMaximalCliques<char>(graph);
+            fmc.FindCliques();
+            var cliques = fmc.Cliques;
+            Assert.AreEqual(cliques.Any(), false);
+        }
+
+        [TestMethod]
+        public void TestFullGraph()
+        {
+            var graph = new UndirectedGraph<char, EquatableEdge<char>>(true);
+            graph.AddVertexRange(new[] { 'a', 'b', 'c', 'd' });
+            graph.AddEdge(new EquatableEdge<char>('a', 'b'));
+            graph.AddEdge(new EquatableEdge<char>('a', 'c'));
+            graph.AddEdge(new EquatableEdge<char>('a', 'd'));
+            graph.AddEdge(new EquatableEdge<char>('b', 'c'));
+            graph.AddEdge(new EquatableEdge<char>('b', 'd'));
+            graph.AddEdge(new EquatableEdge<char>('c', 'd'));
+            FindingMaximalCliques<char> fmc = new FindingMaximalCliques<char>(graph);
+            fmc.FindCliques();
+            var cliques = fmc.Cliques;
+            Assert.AreEqual(cliques.Count == 1, true);
         }
     }
 }

@@ -6,82 +6,81 @@ using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.Cliques
 {
-    public class Graph
+    public class FindingMaximalCliques<TEdge>
     {
-        public List<Edge> Edges;
-        public List<char> Vertexes;
-    }
-    public class Edge
-    {
-        public Edge(char _v1, char _v2)
+        private Dictionary<TEdge, List<TEdge>> _neighbors = new Dictionary<TEdge, List<TEdge>>();
+        private readonly int _amountVertices;
+        private readonly int _amountEdges;
+        private readonly UndirectedGraph<TEdge, EquatableEdge<TEdge>> _graph;
+        public readonly List<List<TEdge>> Cliques = new List<List<TEdge>>();
+
+        public FindingMaximalCliques(UndirectedGraph<TEdge, EquatableEdge<TEdge>> g)
         {
-            v1 = _v1;
-            v2 = _v2;
-        }
-        public char v1;
-        public char v2;
-    }
-
-    //class Vertex
-    //{
-    //    public List<Vertex> neighbors;
-    //}
-
-    public class FindingMaximalCliques
-    {
-        public Dictionary<char, List<char>> neighbors = new Dictionary<char, List<char>>();
-        private int amountVertices;
-        private int amountEdges;
-        public Graph graph;
-        public List<List<char>> cliques = new List<List<char>>();
-
-        public FindingMaximalCliques(Graph g)
-        {
-            graph = g;
-            amountEdges = graph.Edges.Count;
-            amountVertices = graph.Vertexes.Count;
+            _graph = g;
+            _amountEdges = _graph.EdgeCount;
+            _amountVertices = _graph.VertexCount;
             
         }
-        public void FindNeighbors()
+        public void FindCliques()
         {
-            for (int i = 0; i < amountVertices; i++)
+            var P = new List<TEdge>(_graph.Vertices);
+
+            for (int i = 0; i < _amountVertices; i++)
             {
-                neighbors.Add(graph.Vertexes[i], new List<char>());
+                _neighbors.Add(_graph.Vertices.ElementAt(i), new List<TEdge>());
             }
 
-            for (int i = 0; i < amountEdges; i++)
+            for (int i = 0; i < _amountEdges; i++)
             {
-                var edge = graph.Edges[i];
-                neighbors[edge.v1].Add(edge.v2);
-                neighbors[edge.v2].Add(edge.v1);
-            }
-            
-        }
-        
-        public void Run()
-        {
-            var R = new List<char>();
-            var P = new List<char>(graph.Vertexes);
-            var X = new List<char>();
-            Compute(R, P, X);
-        }
-
-        public void Compute(List<char> R, List<char> P, List<char> X)
-        {
-            if (!P.Any() && !X.Any()) // Тут или?
-            {
-                cliques.Add(new List<char>(R));
+                var edge = _graph.Edges.ElementAt(i);
+                if (!object.Equals(edge.Source, edge.Target))
+                {
+                    _neighbors[edge.Source].Add(edge.Target);
+                    _neighbors[edge.Target].Add(edge.Source);
+                }
             }
 
-            for (int i = 0; i < P.Count; i++)
-            {
-                var v = P[i];
-                R.Add(v);
-                Compute(R, P.Intersect(neighbors[v]).ToList(), X.Intersect(neighbors[v]).ToList() );
-                R.Remove(v);
-                P.Remove(v);
-                X.Add(v);
-            }
+            Compute(P);
         }
+
+        private void Compute(List<TEdge> P)
+        {
+            Tuple<List<TEdge>, List<TEdge>, List<TEdge>> cur;
+            var R = new List<TEdge>();
+            var X = new List<TEdge>();
+
+            var S = new Stack<Tuple<List<TEdge>, List<TEdge>, List<TEdge>>>();
+            S.Push(Tuple.Create(new List<TEdge>(), P, new List<TEdge>()));
+
+            while (S.Any())
+            {
+                cur = S.Pop();
+                R = cur.Item1;
+                P = cur.Item2;
+                X = cur.Item3;
+                if (!P.Any() && !X.Any() && R.Any())
+                {
+                    Cliques.Add(new List<TEdge>(R));
+                }
+
+                if (P.Any())
+                {
+                    var v = P.First();
+
+                    var pushR = new List<TEdge>(R);
+                    var pushP = new List<TEdge>(P);
+                    pushP.Remove(v);
+                    var pushX = new List<TEdge>(X);
+                    pushX.Add(v);
+                    S.Push(Tuple.Create(pushR, pushP, pushX));
+
+                    pushR = new List<TEdge>(R);
+                    pushR.Add(v);
+                    pushP = P.Intersect(_neighbors[v]).ToList();
+                    pushX = X.Intersect(_neighbors[v]).ToList();
+                    S.Push(Tuple.Create(pushR, pushP, pushX));
+                }
+            }
+        }   
     }
 }
