@@ -9,30 +9,26 @@ namespace QuickGraph.Algorithms.Cliques
     public class FindingMaximalCliques<TEdge>
     {
         private Dictionary<TEdge, List<TEdge>> _neighbors = new Dictionary<TEdge, List<TEdge>>();
-        private readonly int _amountVertices;
-        private readonly int _amountEdges;
         private readonly UndirectedGraph<TEdge, EquatableEdge<TEdge>> _graph;
         public readonly List<List<TEdge>> Cliques = new List<List<TEdge>>();
 
         public FindingMaximalCliques(UndirectedGraph<TEdge, EquatableEdge<TEdge>> g)
         {
             _graph = g;
-            _amountEdges = _graph.Edges.Count();
-            _amountVertices = _graph.VertexCount;
             
         }
-        public void FindCliques()
+        public List<List<TEdge>> FindCliques()
         {
             var P = new List<TEdge>(_graph.Vertices);
-
-            for (int i = 0; i < _amountVertices; i++)
+            _neighbors.Clear();
+            Cliques.Clear();
+            foreach (var v in _graph.Vertices)
             {
-                _neighbors.Add(_graph.Vertices.ElementAt(i), new List<TEdge>());
+                _neighbors.Add(v, new List<TEdge>());
             }
 
-            for (int i = 0; i < _amountEdges; i++)
+            foreach (var edge in _graph.Edges)
             {
-                var edge = _graph.Edges.ElementAt(i);
                 if (!object.Equals(edge.Source, edge.Target))
                 {
                     _neighbors[edge.Source].Add(edge.Target);
@@ -41,6 +37,7 @@ namespace QuickGraph.Algorithms.Cliques
             }
 
             Compute(P);
+            return Cliques;
         }
 
         private void Compute(List<TEdge> P)
@@ -52,18 +49,18 @@ namespace QuickGraph.Algorithms.Cliques
             var S = new Stack<Tuple<List<TEdge>, List<TEdge>, List<TEdge>>>();
             S.Push(Tuple.Create(new List<TEdge>(), P, new List<TEdge>()));
 
-            while (S.Any())
+            while (S.Count > 0)
             {
                 cur = S.Pop();
                 R = cur.Item1;
                 P = cur.Item2;
                 X = cur.Item3;
-                if (!P.Any() && !X.Any() && R.Any())
+                if (P.Count == 0 && X.Count == 0 && R.Count > 0)
                 {
                     Cliques.Add(new List<TEdge>(R));
                 }
 
-                if (P.Any())
+                if (P.Count > 0)
                 {
                     var v = P.First();
 

@@ -21,8 +21,7 @@ namespace QuickGraph.Tests.Algorithms.Cliques
             graph.AddEdge(new EquatableEdge<char>('c', 'd'));
             graph.AddEdge(new EquatableEdge<char>('d', 'e'));
             FindingMaximalCliques<char> fmc = new FindingMaximalCliques<char>(graph);
-            fmc.FindCliques();
-            var cliques = fmc.Cliques;
+            var cliques = fmc.FindCliques();
             Assert.AreEqual(cliques.ElementAt(0).ToArray().SequenceEqual(new[] { 'a', 'b', 'c' }), true);
             Assert.AreEqual(cliques.ElementAt(1).ToArray().SequenceEqual(new[] { 'b', 'c', 'd' }), true);
             Assert.AreEqual(cliques.ElementAt(2).ToArray().SequenceEqual(new[] { 'd', 'e' }), true);
@@ -36,8 +35,7 @@ namespace QuickGraph.Tests.Algorithms.Cliques
             graph.AddEdge(new EquatableEdge<char>('a', 'b'));
             graph.AddEdge(new EquatableEdge<char>('a', 'b'));
             var fmc = new FindingMaximalCliques<char>(graph);
-            fmc.FindCliques();
-            var cliques = fmc.Cliques;
+            var cliques = fmc.FindCliques();
             Assert.AreEqual(cliques.Count == 1, true);
         }
 
@@ -49,8 +47,7 @@ namespace QuickGraph.Tests.Algorithms.Cliques
             graph.AddEdge(new EquatableEdge<char>('a', 'a'));
             graph.AddEdge(new EquatableEdge<char>('a', 'b'));
             FindingMaximalCliques<char> fmc = new FindingMaximalCliques<char>(graph);
-            fmc.FindCliques();
-            var cliques = fmc.Cliques;
+            var cliques = fmc.FindCliques();
             Assert.AreEqual(cliques.ElementAt(0).ToArray().SequenceEqual(new[] { 'a', 'b'}), true);
         }
 
@@ -59,9 +56,8 @@ namespace QuickGraph.Tests.Algorithms.Cliques
         {
             var graph = new UndirectedGraph<char, EquatableEdge<char>>(true);
             FindingMaximalCliques<char> fmc = new FindingMaximalCliques<char>(graph);
-            fmc.FindCliques();
-            var cliques = fmc.Cliques;
-            Assert.AreEqual(cliques.Any(), false);
+            var cliques = fmc.FindCliques();
+            Assert.AreEqual(cliques.Count > 0, false);
         }
 
         [TestMethod]
@@ -76,8 +72,7 @@ namespace QuickGraph.Tests.Algorithms.Cliques
             graph.AddEdge(new EquatableEdge<char>('b', 'd'));
             graph.AddEdge(new EquatableEdge<char>('c', 'd'));
             FindingMaximalCliques<char> fmc = new FindingMaximalCliques<char>(graph);
-            fmc.FindCliques();
-            var cliques = fmc.Cliques;
+            var cliques = fmc.FindCliques();
             Assert.AreEqual(cliques.Count == 1, true);
         }
     }
