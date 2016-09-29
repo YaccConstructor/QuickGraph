@@ -6,28 +6,23 @@ using System.Threading.Tasks;
 
 namespace QuickGraph.Algorithms.Cliques
 {
-    public class FindingMaximalCliques<TEdge>
+    public static class FindingMaximalCliques<TEdge>
     {
-        private Dictionary<TEdge, List<TEdge>> _neighbors = new Dictionary<TEdge, List<TEdge>>();
-        private readonly UndirectedGraph<TEdge, EquatableEdge<TEdge>> _graph;
-        public readonly List<List<TEdge>> Cliques = new List<List<TEdge>>();
+        private static Dictionary<TEdge, List<TEdge>> _neighbors;
+        private static List<List<TEdge>> _сliques;
 
-        public FindingMaximalCliques(UndirectedGraph<TEdge, EquatableEdge<TEdge>> g)
+        public static List<List<TEdge>> FindCliques(UndirectedGraph<TEdge, EquatableEdge<TEdge>> g)
         {
-            _graph = g;
-            
-        }
-        public List<List<TEdge>> FindCliques()
-        {
-            var P = new List<TEdge>(_graph.Vertices);
-            _neighbors.Clear();
-            Cliques.Clear();
-            foreach (var v in _graph.Vertices)
+            _neighbors = new Dictionary<TEdge, List<TEdge>>();
+            _сliques = new List<List<TEdge>>();
+            var P = new List<TEdge>(g.Vertices);
+
+            foreach (var v in g.Vertices)
             {
-                _neighbors.Add(v, new List<TEdge>());
+                    _neighbors.Add(v, new List<TEdge>());
             }
 
-            foreach (var edge in _graph.Edges)
+            foreach (var edge in g.Edges)
             {
                 if (!object.Equals(edge.Source, edge.Target))
                 {
@@ -37,10 +32,10 @@ namespace QuickGraph.Algorithms.Cliques
             }
 
             Compute(P);
-            return Cliques;
+            return _сliques;
         }
 
-        private void Compute(List<TEdge> P)
+        private static void Compute(List<TEdge> P)
         {
             Tuple<List<TEdge>, List<TEdge>, List<TEdge>> cur;
             var R = new List<TEdge>();
@@ -57,7 +52,7 @@ namespace QuickGraph.Algorithms.Cliques
                 X = cur.Item3;
                 if (P.Count == 0 && X.Count == 0 && R.Count > 0)
                 {
-                    Cliques.Add(new List<TEdge>(R));
+                    _сliques.Add(new List<TEdge>(R));
                 }
 
                 if (P.Count > 0)
