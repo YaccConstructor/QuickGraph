@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{FAAD5B1C-1217-48D6-B1EF-7CAC0440D6A4}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{6EC5788D-DB36-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D81E7BA-91B1-473B-B9BB-4DECB1825F66}"
 	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 		nuspec.xsd = nuspec.xsd
 		quickgraph.nuspec = quickgraph.nuspec
