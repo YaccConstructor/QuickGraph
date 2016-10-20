@@ -196,7 +196,7 @@ this
 
             try
             {
-                settings.ValidationEventHandler += new System.Xml.Schema.ValidationEventHandler(ValidationEventHandler);
+                settings.ValidationEventHandler += ValidationEventHandler;
 
                 // reader and validating
                 using (var xreader = XmlReader.Create(reader, settings))
@@ -204,7 +204,7 @@ this
             }
             finally
             {
-                settings.ValidationEventHandler -= new System.Xml.Schema.ValidationEventHandler(ValidationEventHandler);
+                settings.ValidationEventHandler -= ValidationEventHandler;
             }
         }
 

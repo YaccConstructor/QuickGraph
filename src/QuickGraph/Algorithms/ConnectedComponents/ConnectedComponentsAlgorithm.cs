@@ -81,8 +81,8 @@ namespace QuickGraph.Algorithms.ConnectedComponents
                     new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount)
                     );
 
-                dfs.StartVertex += new VertexAction<TVertex>(this.StartVertex);
-                dfs.DiscoverVertex += new VertexAction<TVertex>(this.DiscoverVertex);
+                dfs.StartVertex += StartVertex;
+                dfs.DiscoverVertex += DiscoverVertex;
                 dfs.Compute();
                 ++this.componentCount;
             }
@@ -90,8 +90,8 @@ namespace QuickGraph.Algorithms.ConnectedComponents
             {
                 if (dfs != null)
                 {
-                    dfs.StartVertex -= new VertexAction<TVertex>(this.StartVertex);
-                    dfs.DiscoverVertex -= new VertexAction<TVertex>(this.DiscoverVertex);
+                    dfs.StartVertex -= StartVertex;
+                    dfs.DiscoverVertex -= DiscoverVertex;
                 }
             }
         }

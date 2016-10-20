@@ -40,10 +40,8 @@ namespace QuickGraph.Algorithms.Observers
 
         public IDisposable Attach(ITreeBuilderAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.TreeEdge += new EdgeAction<TVertex, TEdge>(TreeEdge);
-            return new DisposableAction(
-                () => algorithm.TreeEdge -= new EdgeAction<TVertex, TEdge>(TreeEdge)
-                );
+            algorithm.TreeEdge += TreeEdge;
+            return new DisposableAction(() => algorithm.TreeEdge -= TreeEdge);
         }
 
         void TreeEdge(TEdge e)

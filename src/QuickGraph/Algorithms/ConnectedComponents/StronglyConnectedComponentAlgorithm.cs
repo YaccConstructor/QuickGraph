@@ -223,8 +223,8 @@ namespace QuickGraph.Algorithms.ConnectedComponents
                     VisitedGraph,
                     new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount)
                     );
-                dfs.DiscoverVertex += new VertexAction<TVertex>(this.DiscoverVertex);
-                dfs.FinishVertex += new VertexAction<TVertex>(this.FinishVertex);
+                dfs.DiscoverVertex += DiscoverVertex;
+                dfs.FinishVertex += FinishVertex;
 
                 dfs.Compute();
             }
@@ -232,8 +232,8 @@ namespace QuickGraph.Algorithms.ConnectedComponents
             {
                 if (dfs != null)
                 {
-                    dfs.DiscoverVertex -= new VertexAction<TVertex>(this.DiscoverVertex);
-                    dfs.FinishVertex -= new VertexAction<TVertex>(this.FinishVertex);
+                    dfs.DiscoverVertex -= DiscoverVertex;
+                    dfs.FinishVertex -= FinishVertex;
                 }
             }
         }

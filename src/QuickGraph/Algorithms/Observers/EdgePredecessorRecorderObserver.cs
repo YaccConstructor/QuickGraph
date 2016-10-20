@@ -56,14 +56,14 @@ namespace QuickGraph.Algorithms.Observers
 
         public IDisposable Attach(IEdgePredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.DiscoverTreeEdge += new EdgeEdgeAction<TVertex, TEdge>(this.DiscoverTreeEdge);
-            algorithm.FinishEdge += new EdgeAction<TVertex, TEdge>(this.FinishEdge);
+            algorithm.DiscoverTreeEdge += this.DiscoverTreeEdge;
+            algorithm.FinishEdge += this.FinishEdge;
 
             return new DisposableAction(
                 () =>
                 {
-                    algorithm.DiscoverTreeEdge -= new EdgeEdgeAction<TVertex, TEdge>(this.DiscoverTreeEdge);
-                    algorithm.FinishEdge -= new EdgeAction<TVertex, TEdge>(this.FinishEdge);
+                    algorithm.DiscoverTreeEdge -= this.DiscoverTreeEdge;
+                    algorithm.FinishEdge -= this.FinishEdge;
                 });
         }
 

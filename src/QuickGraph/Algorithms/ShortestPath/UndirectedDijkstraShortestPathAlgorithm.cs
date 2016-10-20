@@ -169,8 +169,8 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 
-                bfs.TreeEdge += new UndirectedEdgeAction<TVertex, TEdge>(this.InternalTreeEdge);
-                bfs.GrayTarget += new UndirectedEdgeAction<TVertex, TEdge>(this.InternalGrayTarget);
+                bfs.TreeEdge += this.InternalTreeEdge;
+                bfs.GrayTarget += this.InternalGrayTarget;
 
                 bfs.Visit(s);
             }
@@ -185,8 +185,8 @@ namespace QuickGraph.Algorithms.ShortestPath
                     bfs.ExamineVertex -= this.ExamineVertex;
                     bfs.FinishVertex -= this.FinishVertex;
 
-                    bfs.TreeEdge -= new UndirectedEdgeAction<TVertex, TEdge>(this.InternalTreeEdge);
-                    bfs.GrayTarget -= new UndirectedEdgeAction<TVertex, TEdge>(this.InternalGrayTarget);
+                    bfs.TreeEdge -= this.InternalTreeEdge;
+                    bfs.GrayTarget -= this.InternalGrayTarget;
                 }
             }
         }

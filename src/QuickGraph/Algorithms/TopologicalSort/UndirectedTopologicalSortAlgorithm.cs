@@ -65,8 +65,8 @@ namespace QuickGraph.Algorithms.TopologicalSort
                     VisitedGraph,
                     new Dictionary<TVertex, GraphColor>(this.VisitedGraph.VertexCount)
                     );
-                dfs.BackEdge += new UndirectedEdgeAction<TVertex, TEdge>(this.BackEdge);
-                dfs.FinishVertex += new VertexAction<TVertex>(this.FinishVertex);
+                dfs.BackEdge += BackEdge;
+                dfs.FinishVertex += FinishVertex;
 
                 dfs.Compute();
             }
@@ -74,8 +74,8 @@ namespace QuickGraph.Algorithms.TopologicalSort
             {
                 if (dfs != null)
                 {
-                    dfs.BackEdge -= new UndirectedEdgeAction<TVertex, TEdge>(this.BackEdge);
-                    dfs.FinishVertex -= new VertexAction<TVertex>(this.FinishVertex);
+                    dfs.BackEdge -= BackEdge;
+                    dfs.FinishVertex -= FinishVertex;
                 }
             }
         }
