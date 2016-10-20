@@ -198,10 +198,10 @@ namespace QuickGraph.Algorithms.ShortestPath
                 bfs.ExamineVertex += this.ExamineVertex;
                 bfs.FinishVertex += this.FinishVertex;
 
-                bfs.ExamineEdge += new EdgeAction<TVertex, TEdge>(this.InternalExamineEdge);
-                bfs.TreeEdge += new EdgeAction<TVertex, TEdge>(this.InternalTreeEdge);
-                bfs.GrayTarget += new EdgeAction<TVertex, TEdge>(this.InternalGrayTarget);
-                bfs.BlackTarget +=new EdgeAction<TVertex,TEdge>(this.InternalBlackTarget);
+                bfs.ExamineEdge += this.InternalExamineEdge;
+                bfs.TreeEdge += this.InternalTreeEdge;
+                bfs.GrayTarget += this.InternalGrayTarget;
+                bfs.BlackTarget += this.InternalBlackTarget;
 
                 bfs.Visit(s);
             }
@@ -216,10 +216,10 @@ namespace QuickGraph.Algorithms.ShortestPath
                     bfs.ExamineVertex -= this.ExamineVertex;
                     bfs.FinishVertex -= this.FinishVertex;
 
-                    bfs.ExamineEdge -= new EdgeAction<TVertex, TEdge>(this.InternalExamineEdge);
-                    bfs.TreeEdge -= new EdgeAction<TVertex, TEdge>(this.InternalTreeEdge);
-                    bfs.GrayTarget -= new EdgeAction<TVertex, TEdge>(this.InternalGrayTarget);
-                    bfs.BlackTarget -= new EdgeAction<TVertex, TEdge>(this.InternalBlackTarget);
+                    bfs.ExamineEdge -= this.InternalExamineEdge;
+                    bfs.TreeEdge -= this.InternalTreeEdge;
+                    bfs.GrayTarget -= this.InternalGrayTarget;
+                    bfs.BlackTarget -= this.InternalBlackTarget;
                 }
             }
         }

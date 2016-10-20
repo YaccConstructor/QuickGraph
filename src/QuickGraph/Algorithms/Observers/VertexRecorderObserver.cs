@@ -41,10 +41,8 @@ namespace QuickGraph.Algorithms.Observers
 
         public IDisposable Attach(IVertexTimeStamperAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.DiscoverVertex += new VertexAction<TVertex>(algorithm_DiscoverVertex);
-            return new DisposableAction(
-                () => algorithm.DiscoverVertex -= new VertexAction<TVertex>(algorithm_DiscoverVertex)
-                );
+            algorithm.DiscoverVertex += algorithm_DiscoverVertex;
+            return new DisposableAction(() => algorithm.DiscoverVertex -= algorithm_DiscoverVertex);
         }
 
         void algorithm_DiscoverVertex(TVertex v)

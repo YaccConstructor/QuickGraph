@@ -45,13 +45,13 @@ namespace QuickGraph.Algorithms.Observers
 
         public IDisposable Attach(IVertexPredecessorRecorderAlgorithm<TVertex, TEdge> algorithm)
         {
-            algorithm.TreeEdge += new EdgeAction<TVertex, TEdge>(TreeEdge);
-            algorithm.FinishVertex += new VertexAction<TVertex>(FinishVertex);
+            algorithm.TreeEdge += TreeEdge;
+            algorithm.FinishVertex += FinishVertex;
             return new DisposableAction(
                 () =>
                 {
-                    algorithm.TreeEdge -= new EdgeAction<TVertex, TEdge>(TreeEdge);
-                    algorithm.FinishVertex -= new VertexAction<TVertex>(FinishVertex);
+                    algorithm.TreeEdge -= TreeEdge;
+                    algorithm.FinishVertex -= FinishVertex;
                 });
         }
 
