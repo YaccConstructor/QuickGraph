@@ -50,6 +50,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QuickGraph.FST.Tests", "tes
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QuickGraph.FST", "src\QuickGraph.FST\QuickGraph.FST.fsproj", "{4B220E23-A7E0-4222-83F5-C785F7C66B33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraph.Gunrock", "src\QuickGraph.Gunrock\QuickGraph.Gunrock.csproj", "{EAE554EE-E95D-423D-BBC9-4B80CE746EC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -189,6 +191,16 @@ Global
 		{4B220E23-A7E0-4222-83F5-C785F7C66B33}.Release20|Any CPU.Build.0 = Release|Any CPU
 		{4B220E23-A7E0-4222-83F5-C785F7C66B33}.ReleaseContractsReferences|Any CPU.ActiveCfg = Release|Any CPU
 		{4B220E23-A7E0-4222-83F5-C785F7C66B33}.ReleaseContractsReferences|Any CPU.Build.0 = Release|Any CPU
+		{EAE554EE-E95D-423D-BBC9-4B80CE746EC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE554EE-E95D-423D-BBC9-4B80CE746EC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE554EE-E95D-423D-BBC9-4B80CE746EC3}.DebugContracts|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE554EE-E95D-423D-BBC9-4B80CE746EC3}.DebugContracts|Any CPU.Build.0 = Debug|Any CPU
+		{EAE554EE-E95D-423D-BBC9-4B80CE746EC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE554EE-E95D-423D-BBC9-4B80CE746EC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE554EE-E95D-423D-BBC9-4B80CE746EC3}.Release20|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE554EE-E95D-423D-BBC9-4B80CE746EC3}.Release20|Any CPU.Build.0 = Debug|Any CPU
+		{EAE554EE-E95D-423D-BBC9-4B80CE746EC3}.ReleaseContractsReferences|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE554EE-E95D-423D-BBC9-4B80CE746EC3}.ReleaseContractsReferences|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -207,6 +219,7 @@ Global
 		{3BF3542B-4034-429F-9105-197A60625CA3} = {22937B93-4129-4F68-AB14-F7AFE020BA8F}
 		{6B141FDE-F5DF-4DFD-B21F-C076BC87CCAF} = {22937B93-4129-4F68-AB14-F7AFE020BA8F}
 		{4B220E23-A7E0-4222-83F5-C785F7C66B33} = {2E664E5C-14E3-4AA2-A336-7209544C78F0}
+		{EAE554EE-E95D-423D-BBC9-4B80CE746EC3} = {DD28733B-860A-4FE6-8D68-119EB179F90E}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = QuickGraph1.vsmdi
