@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using QuickGraph;
 
-
-namespace CallC
+namespace QuickGraph.Gunrock
 {
-    public class ConnectedComponents
+    public class ConnectedComponents : GunrockAlgorithmWrapper
     {
-        [DllImport("rungunrock", EntryPoint="run_cc")]
+        [DllImport("gunrockwrapper", EntryPoint="run_cc")]
         public static extern IntPtr run_cc(int nodesNum, int edgesNum, int[] rowOffsets, int[] colIndices);
         
         public static Dictionary<int, int> FindComponents<TEdge, TGraph>(TGraph inputGraph) 
@@ -19,8 +17,9 @@ namespace CallC
             return FindComponents(csrRepresentation);
         }
 
-        public static Dictionary<int, int> FindComponents(
-            Tuple<int[], int[], IEnumerable<int>> csrRepresentation)
+        ///returns component index for each node. 
+        ///Component index is the number of the first node to appear in the component
+        public static Dictionary<int, int> FindComponents(Tuple<int[], int[], int[]> csrRepresentation)
         {
             var rowOffsets = csrRepresentation.Item1;
             var colIndices = csrRepresentation.Item2;
@@ -29,28 +28,10 @@ namespace CallC
             
             IntPtr labelsPtr = run_cc(nodesNum, edgesNum, rowOffsets, colIndices);
             
-            int[] labels = new int[nodesNum];
-            Marshal.Copy(labelsPtr, labels, 0, nodesNum);
-            Util.release_memory(labelsPtr);
+            int[] labels = ConvertToManagedArray(nodesNum, labelsPtr);
 
-            var verticesToLabels = new Dictionary<int, int>();
-            for (int i = 0; i < labels.Length; i++)
-            {
-                verticesToLabels.Add(i, labels[i]);
-            }
+            var verticesToLabels = CreateDictionary(labels);
             return verticesToLabels;
-        } 
-        
-        /*
-        int[] rowOffsets = {0, 3, 6, 9, 11, 14, 15, 15};
-            int[] colIndices = {1, 2, 3, 0, 2, 4, 3, 4, 5, 5, 6, 2, 5, 6, 6};
-            var nodesNum = rowOffsets.Length - 1;
-            var edgesNum = colIndices.Length;
-
-            IntPtr labelsPtr = run_cc_test(nodesNum, edgesNum, rowOffsets, colIndices);
-            int[] labels = new int[nodesNum];
-            Marshal.Copy(labelsPtr, labels, 0, nodesNum);
-            release_memory(labelsPtr);
-        */
+        }
     }
 }

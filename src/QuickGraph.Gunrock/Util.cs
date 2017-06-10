@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.IO.IsolatedStorage;
 using System.Linq;
-using System.Runtime.InteropServices;
-using QuickGraph;
 
-
-namespace CallC
+namespace QuickGraph.Gunrock
 {
     internal class Util
     {
-        [DllImport("rungunrock", EntryPoint = "release_memory")]
-        public static extern void release_memory(IntPtr ptr);
-
         public static void Main(string[] args)
         {
             
@@ -26,14 +18,14 @@ namespace CallC
             string[] graphDatasets = 
             {
                 "/home/alex/gunrock2/dataset/small/chesapeake.mtx", //16K
-                "/home/alex/Downloads/Email-Enron.txt", //3,9M
-                "/home/alex/gunrock2/dataset/large/roadNet-CA/roadNet-CA.mtx", //40M
-                "/home/alex/gunrock2/dataset/large/delaunay_n21/delaunay_n21.mtx", //90M
-                "/home/alex/gunrock2/dataset/large/cit-Patents/cit-Patents.mtx"//250M
+//                "/home/alex/Downloads/Email-Enron.txt", //3,9M
+//                "/home/alex/gunrock2/dataset/large/roadNet-CA/roadNet-CA.mtx", //40M
+//                "/home/alex/gunrock2/dataset/large/delaunay_n21/delaunay_n21.mtx", //90M
+//                "/home/alex/gunrock2/dataset/large/cit-Patents/cit-Patents.mtx"//250M
             };
 //            foreach (var graphDataset in graphDatasets)
 //            {
-//                Test.TestConversionFromQGtoCsrSpeed(graphDataset);
+//                Test.MeasureConversionFromQuickGraphToCsrSpeed(graphDataset);
 //            }
             
             var bfsResults = new List<Tuple<double, double>>();
@@ -42,10 +34,10 @@ namespace CallC
             var conversionResults = new List<double>();
             foreach (var graphDataset in graphDatasets)
             {
-//                bfsResults.Add(Test.RunBFSTests(graphDataset));
+                bfsResults.Add(Test.RunBFSTests(graphDataset));
 //                ccResults.Add(Test.RunCCTests(graphDataset));
-//                ssspResults.Add(Test.RunSSSPTests(graphDataset));
-                conversionResults.Add(Test.TestConversionFromQGtoCsrSpeed(graphDataset));
+                ssspResults.Add(Test.RunSSSPTests(graphDataset));
+                conversionResults.Add(Test.MeasureConversionFromQuickGraphToCsrSpeed(graphDataset));
             }
 //            for (var i = 0; i < graphDatasets.Length; i++)
 //            {
@@ -57,24 +49,24 @@ namespace CallC
 //                Console.WriteLine(ccResults[i]);
 //            }
             Console.WriteLine("QuickGraph, Gunrock");
-//            Console.WriteLine("BFS");
-//            for (var i = 0; i < graphDatasets.Length; i++)
-//            {
-//                Console.WriteLine(graphDatasets[i]);
-//                Console.WriteLine(bfsResults[i].Item1 + ", " + bfsResults[i].Item2);
-//            }
+            Console.WriteLine("BFS");
+            for (var i = 0; i < graphDatasets.Length; i++)
+            {
+                Console.WriteLine(graphDatasets[i]);
+                Console.WriteLine(bfsResults[i].Item1 + ", " + bfsResults[i].Item2);
+            }
 //            Console.WriteLine("CC");
 //            for (var i = 0; i < graphDatasets.Length; i++)
 //            {
 //                Console.WriteLine(graphDatasets[i]);
 //                Console.WriteLine(ccResults[i].Item1 + ", " + ccResults[i].Item2);
 //            }
-//            Console.WriteLine("SSSP");
-//            for (var i = 0; i < graphDatasets.Length; i++)
-//            {
-//                Console.WriteLine(graphDatasets[i]);
-//                Console.WriteLine(ssspResults[i].Item1 + ", " + ssspResults[i].Item2);
-//            }
+            Console.WriteLine("SSSP");
+            for (var i = 0; i < graphDatasets.Length; i++)
+            {
+                Console.WriteLine(graphDatasets[i]);
+                Console.WriteLine(ssspResults[i].Item1 + ", " + ssspResults[i].Item2);
+            }
             Console.WriteLine("Conversion speed");
             for (var i = 0; i < graphDatasets.Length; i++)
             {
@@ -121,7 +113,7 @@ namespace CallC
 //            }
         }
         
-        public static Tuple<int[], int[], IEnumerable<int>> CreateCsrRepresentationFast<TEdge, TGraph>(
+        public static Tuple<int[], int[], int[]> CreateCsrRepresentationFast<TEdge, TGraph>(
             TGraph inputGraph) 
             where TEdge : IEdge<int> 
             where TGraph : IEdgeListGraph<int, TEdge>
@@ -158,11 +150,11 @@ namespace CallC
             Array.Resize(ref colIndices, colIndices.Length - duplicatesNum);
             
             rowOffsets[rowOffsets.Length - 1] = curOffset;
-            return new Tuple<int[], int[], IEnumerable<int>>(rowOffsets, colIndices, new List<int>(colIndices));
+            return new Tuple<int[], int[], int[]>(rowOffsets, colIndices, colIndices);
         }
         
 
-        public static Tuple<int[], int[], IEnumerable<int>> CreateCsrRepresentation<TEdge, TGraph>(
+        public static Tuple<int[], int[], int[]> CreateCsrRepresentation<TEdge, TGraph>(
             TGraph inputGraph) 
             where TEdge : IEdge<int> 
             where TGraph : IVertexListGraph<int, TEdge>
@@ -187,10 +179,10 @@ namespace CallC
                 if (i % 1000 == 0) Console.WriteLine(i);
             }
             rowOffsets[rowOffsets.Length - 1] = rowOffsets[rowOffsets.Length - 2];
-            return new Tuple<int[], int[], IEnumerable<int>>(rowOffsets, colIndices.ToArray(), inputGraph.Vertices);
+            return new Tuple<int[], int[], int[]>(rowOffsets, colIndices.ToArray(), inputGraph.Vertices.ToArray());
         }
 
-        public static Tuple<int[], int[], IEnumerable<int>> CreateCsrRepresentation(string path)
+        public static Tuple<int[], int[], int[]> CreateCsrRepresentation(string path)
         {
             Tuple<Tuple<int, int>[], int, int> edgesAndMetadata = ReadMatrixMarketFileToEdgeList(path);
             var edges = edgesAndMetadata.Item1;
@@ -225,7 +217,7 @@ namespace CallC
             Array.Resize(ref colIndices, colIndices.Length - duplicatesNum);
             
             rowOffsets[rowOffsets.Length - 1] = curOffset;
-            return new Tuple<int[], int[], IEnumerable<int>>(rowOffsets, colIndices, new List<int>(colIndices));
+            return new Tuple<int[], int[], int[]>(rowOffsets, colIndices, colIndices);
         }
 
         private static Tuple<Tuple<int, int>[], int, int> ReadMatrixMarketFileToEdgeList(string path)
@@ -304,7 +296,7 @@ namespace CallC
             return graph;
         }
 
-        internal static void PrintCsrRepresentation(Tuple<int[], int[], IEnumerable<int>> csrRepresentation)
+        internal static void PrintCsrRepresentation(Tuple<int[], int[], int[]> csrRepresentation)
         {
             csrRepresentation.Item1.ToList().ForEach(x => Console.Write(x + " "));
             Console.WriteLine();

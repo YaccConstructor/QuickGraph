@@ -1,21 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO.IsolatedStorage;
 using System.Linq;
-using QuickGraph;
 using QuickGraph.Algorithms;
+using QuickGraph.Algorithms.ConnectedComponents;
 
-namespace CallC
+namespace QuickGraph.Gunrock
 {
     public class Test
     {
-
-        public static double TestConversionFromQGtoCsrSpeed(string path)
+        public static double MeasureConversionFromQuickGraphToCsrSpeed(string path)
         {
             AdjacencyGraph<int, Edge<int>> g = Util.ReadMatrixMarketFileToQuickGraph(path);
             Stopwatch sw = new Stopwatch();
-            Console.WriteLine("started conversion from qg to csr");
             var runNum = 10;
             for (int i = 0; i < runNum; i++)
             {
@@ -23,16 +20,21 @@ namespace CallC
                 var csr = Util.CreateCsrRepresentationFast<Edge<int>, AdjacencyGraph<int, Edge<int>>>(g);
                 sw.Stop();
             }
-
             var averageTime = sw.ElapsedMilliseconds / (double) runNum;
             Console.WriteLine(averageTime);
             return averageTime;
         }
 
-        public static void TestReadRightToCsr(string path)
+        public static void ReadRightToCsrAndPrint(string path)
         {
             var csrRepresentation = Util.CreateCsrRepresentation(path);
-//            Util.PrintCsrRepresentation(csrRepresentation);
+            Util.PrintCsrRepresentation(csrRepresentation);
+        }
+
+        //shows the same type of results as gunrock version - useful for testing
+        public static void RunQuickGraphSsspShowResults(string path)
+        {
+            var csrRepresentation = Util.CreateCsrRepresentation(path);
             Dictionary<int, int> findComponents = ConnectedComponents.FindComponents(csrRepresentation);
             Dictionary<int, int> componentsSizes = new Dictionary<int, int>();
             foreach (var keyValuePair in findComponents)
@@ -41,7 +43,6 @@ namespace CallC
                 if (!componentsSizes.ContainsKey(keyValuePair.Value)) componentsSizes.Add(keyValuePair.Value, 1);
                 else componentsSizes[keyValuePair.Value] += 1;
             }
-
             var keyValuePairs = componentsSizes.Values.ToList();
             keyValuePairs.Sort();
             foreach (var keyValuePair in keyValuePairs)
@@ -74,15 +75,15 @@ namespace CallC
             return new Tuple<double, double>(qg, gunrock);
         }
 
-        public static double MeasureConnectedComponentsQuickGraphSpeed(string path)
+        private static double MeasureQuickGraphAlgorithmSpeed<TVertex, TEdge>(
+            AlgorithmBase<IVertexListGraph<TVertex, TEdge>> algorithm, int iterationNum = 10)
+            where TEdge : IEdge<TVertex>
         {
-            AdjacencyGraph<int, Edge<int>> graph = Util.ReadMatrixMarketFileToQuickGraph(path);
             Stopwatch sw = new Stopwatch();
-            int iterationNum = 10;
             for (int i = 0; i < iterationNum; i++)
             {
                 sw.Start();
-                var weaklyConnectedComponents = graph.WeaklyConnectedComponents(new Dictionary<int, int>());
+                algorithm.Compute();
                 sw.Stop();
                 Console.WriteLine("Iteration " + i);
             }
@@ -91,48 +92,27 @@ namespace CallC
             return elapsedMs;
         }
 
+        public static double MeasureConnectedComponentsQuickGraphSpeed(string path)
+        {
+            AdjacencyGraph<int, Edge<int>> graph = Util.ReadMatrixMarketFileToQuickGraph(path);
+            var algo = new WeaklyConnectedComponentsAlgorithm<int, Edge<int>>(graph, new Dictionary<int, int>());
+            return MeasureQuickGraphAlgorithmSpeed(algo);
+        }
+
         public static double MeasureDijkstraQuickGraphSpeed(string path)
         {
-            Console.WriteLine("started conversion to quickgraph");
             IVertexAndEdgeListGraph<int, Edge<int>> graph = Util.ReadMatrixMarketFileToQuickGraph(path);
-            Console.WriteLine("finished conversion to quickgraph");
             Func<Edge<int>, double> edgeCost = e => 1;
-            int root = 1;
-            Stopwatch sw = new Stopwatch();
-            int iterationNum = 10;
             var dijkstraShortestPathAlgorithm = 
-                new QuickGraph.Algorithms.ShortestPath.DijkstraShortestPathAlgorithm<int, Edge<int>>(graph, edgeCost);
-            
-            for (int i = 0; i < iterationNum; i++)
-            {
-                sw.Start();
-                dijkstraShortestPathAlgorithm.Compute(root);
-                sw.Stop();
-                Console.WriteLine("Iteration " + i);
-            }
-            var elapsedMs = sw.ElapsedMilliseconds / (double) iterationNum;
-            Console.WriteLine("QuickGraph: " + elapsedMs + " ms");
-            return elapsedMs;
+                new Algorithms.ShortestPath.DijkstraShortestPathAlgorithm<int, Edge<int>>(graph, edgeCost);
+            return MeasureQuickGraphAlgorithmSpeed(dijkstraShortestPathAlgorithm);
         }
 
         public static double MeasureBFSQuickGraphSpeed(string path)
         {
             AdjacencyGraph<int, Edge<int>> graph = Util.ReadMatrixMarketFileToQuickGraph(path);
-            var algo = new QuickGraph.Algorithms.Search.BreadthFirstSearchAlgorithm<int,Edge<int>>(graph);
-            int sourceVertex = 1;
-            
-            Stopwatch sw = new Stopwatch();
-            int iterationNum = 10;
-            for (int i = 0; i < iterationNum; i++)
-            {
-                sw.Start();
-                algo.Compute(sourceVertex);
-                sw.Stop();
-                Console.WriteLine("Iteration " + i);
-            }
-            var elapsedMs = sw.ElapsedMilliseconds / (double) iterationNum;
-            Console.WriteLine("QuickGraph: " + elapsedMs + " ms");
-            return elapsedMs;
+            var algo = new Algorithms.Search.BreadthFirstSearchAlgorithm<int,Edge<int>>(graph);
+            return MeasureQuickGraphAlgorithmSpeed(algo);
         }
         
         public static double MeasureConnectedComponentsGunrockSpeed(string path)
@@ -189,15 +169,15 @@ namespace CallC
             return elapsedMs;
         }
         
-        public static void TestCsrConverter()
+        public static void TestGunrockCcSimpleExampleQuickGraphRepresentation()
         {
             int[][] graph = new int[9][];
-            graph[0] = new int[] { 1, 2, 3 };
-            graph[1] = new int[] { 0, 2, 4};
-            graph[2] = new int[] { 3, 4, 5 };
-            graph[3] = new int[] { 5, 6 };
-            graph[4] = new int[] { 2, 5, 6 };
-            graph[5] = new    [] {6};
+            graph[0] = new [] { 1, 2, 3 };
+            graph[1] = new [] { 0, 2, 4};
+            graph[2] = new [] { 3, 4, 5 };
+            graph[3] = new [] { 5, 6 };
+            graph[4] = new [] { 2, 5, 6 };
+            graph[5] = new [] {6};
             graph[6] = new int[] { };
             graph[7] = new int[] { };
             graph[8] = new int[] { };
@@ -209,21 +189,8 @@ namespace CallC
             );
             
             var arrayAdjacencyGraph = g.ToArrayAdjacencyGraph();
-//            var connectedComponentsAlgorithm = new QuickGraph.Algorithms.ConnectedComponents.WeaklyConnectedComponentsAlgorithm<int, SEquatableEdge<int>>(arrayAdjacencyGraph);
-
-            Stopwatch sw = new Stopwatch();
-            Dictionary<int, int> res = null;
-            for (int i = 0; i < 10; i++)
-            {
-                sw.Start();
-                
-                res = ConnectedComponents.FindComponents<SEquatableEdge<int>, IVertexListGraph<int, SEquatableEdge<int>>>(arrayAdjacencyGraph);
-//                var weaklyConnectedComponents = arrayAdjacencyGraph.WeaklyConnectedComponents(new Dictionary<int, int>());
-                sw.Stop();
-                Console.WriteLine(sw.ElapsedMilliseconds);
-            }
+            var res = ConnectedComponents.FindComponents<SEquatableEdge<int>, IVertexListGraph<int, SEquatableEdge<int>>>(arrayAdjacencyGraph);
             
-            Console.WriteLine(sw.ElapsedMilliseconds / 10.0);
             foreach (var keyValuePair in res)
             {
                 Console.WriteLine(keyValuePair.Key + " is in CC #" + keyValuePair.Value);
