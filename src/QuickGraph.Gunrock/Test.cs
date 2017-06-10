@@ -189,7 +189,8 @@ namespace QuickGraph.Gunrock
             );
             
             var arrayAdjacencyGraph = g.ToArrayAdjacencyGraph();
-            var res = ConnectedComponents.FindComponents<SEquatableEdge<int>, IVertexListGraph<int, SEquatableEdge<int>>>(arrayAdjacencyGraph);
+            var res = ConnectedComponents.FindComponents<SEquatableEdge<int>, IEdgeListGraph<int, SEquatableEdge<int>>>(
+                arrayAdjacencyGraph);
             
             foreach (var keyValuePair in res)
             {
