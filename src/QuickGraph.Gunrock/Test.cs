@@ -17,7 +17,7 @@ namespace QuickGraph.Gunrock
             for (int i = 0; i < runNum; i++)
             {
                 sw.Start();
-                var csr = Util.CreateCsrRepresentationFast<Edge<int>, AdjacencyGraph<int, Edge<int>>>(g);
+                var csr = Util.CreateCsrRepresentationFromQuickGraphFast<Edge<int>, AdjacencyGraph<int, Edge<int>>>(g);
                 sw.Stop();
             }
             var averageTime = sw.ElapsedMilliseconds / (double) runNum;

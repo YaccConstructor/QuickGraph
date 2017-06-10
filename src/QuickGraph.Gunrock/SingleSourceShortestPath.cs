@@ -13,9 +13,9 @@ namespace QuickGraph.Gunrock
         
         public static Dictionary<int, int> FindShortestPaths<TEdge, TGraph>(TGraph inputGraph, int src = 1) 
             where TEdge : IEdge<int> 
-            where TGraph : IVertexListGraph<int, TEdge>
+            where TGraph : IEdgeListGraph<int, TEdge>
         {
-            var csrRepresentation = Util.CreateCsrRepresentation<TEdge, TGraph>(inputGraph);
+            var csrRepresentation = Util.CreateCsrRepresentationFromQuickGraphFast<TEdge, TGraph>(inputGraph);
             return FindShortestPaths(csrRepresentation, src);
         }
 

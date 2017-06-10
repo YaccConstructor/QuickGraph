@@ -11,9 +11,9 @@ namespace QuickGraph.Gunrock
         
         public static Dictionary<int, int> RunBreadthFirstSearch<TEdge, TGraph>(TGraph inputGraph) 
             where TEdge : IEdge<int> 
-            where TGraph : IVertexListGraph<int, TEdge>
+            where TGraph : IEdgeListGraph<int, TEdge>
         {
-            var csrRepresentation = Util.CreateCsrRepresentation<TEdge, TGraph>(inputGraph);
+            var csrRepresentation = Util.CreateCsrRepresentationFromQuickGraphFast<TEdge, TGraph>(inputGraph);
             return RunBreadthFirstSearch(csrRepresentation);
         }
         

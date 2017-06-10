@@ -9,25 +9,13 @@ namespace QuickGraph.Gunrock
     {
         public static void Main(string[] args)
         {
-            
-//            Test.TestCsrConverter();
-//            return;
-//            Test.RunSSSPTests("/home/alex/gunrock2/dataset/large/roadNet-CA/roadNet-CA.mtx");
-//            return;
-
-            string[] graphDatasets = 
-            {
+            string[] graphDatasets = {
                 "/home/alex/gunrock2/dataset/small/chesapeake.mtx", //16K
-//                "/home/alex/Downloads/Email-Enron.txt", //3,9M
-//                "/home/alex/gunrock2/dataset/large/roadNet-CA/roadNet-CA.mtx", //40M
-//                "/home/alex/gunrock2/dataset/large/delaunay_n21/delaunay_n21.mtx", //90M
-//                "/home/alex/gunrock2/dataset/large/cit-Patents/cit-Patents.mtx"//250M
+                "/home/alex/Downloads/Email-Enron.txt", //3,9M
+                "/home/alex/gunrock2/dataset/large/roadNet-CA/roadNet-CA.mtx", //40M
+                "/home/alex/gunrock2/dataset/large/delaunay_n21/delaunay_n21.mtx", //90M
+                "/home/alex/gunrock2/dataset/large/cit-Patents/cit-Patents.mtx"//250M
             };
-//            foreach (var graphDataset in graphDatasets)
-//            {
-//                Test.MeasureConversionFromQuickGraphToCsrSpeed(graphDataset);
-//            }
-            
             var bfsResults = new List<Tuple<double, double>>();
             var ccResults = new List<Tuple<double, double>>();
             var ssspResults = new List<Tuple<double, double>>();
@@ -35,19 +23,10 @@ namespace QuickGraph.Gunrock
             foreach (var graphDataset in graphDatasets)
             {
                 bfsResults.Add(Test.RunBFSTests(graphDataset));
-//                ccResults.Add(Test.RunCCTests(graphDataset));
+                ccResults.Add(Test.RunCCTests(graphDataset));
                 ssspResults.Add(Test.RunSSSPTests(graphDataset));
                 conversionResults.Add(Test.MeasureConversionFromQuickGraphToCsrSpeed(graphDataset));
             }
-//            for (var i = 0; i < graphDatasets.Length; i++)
-//            {
-//                Console.WriteLine(graphDatasets[i]);
-//                Console.WriteLine("(QG, Gunrock");
-//                Console.WriteLine("BFS");
-//                Console.WriteLine(bfsResults[i]);
-//                Console.WriteLine("CC");
-//                Console.WriteLine(ccResults[i]);
-//            }
             Console.WriteLine("QuickGraph, Gunrock");
             Console.WriteLine("BFS");
             for (var i = 0; i < graphDatasets.Length; i++)
@@ -55,12 +34,12 @@ namespace QuickGraph.Gunrock
                 Console.WriteLine(graphDatasets[i]);
                 Console.WriteLine(bfsResults[i].Item1 + ", " + bfsResults[i].Item2);
             }
-//            Console.WriteLine("CC");
-//            for (var i = 0; i < graphDatasets.Length; i++)
-//            {
-//                Console.WriteLine(graphDatasets[i]);
-//                Console.WriteLine(ccResults[i].Item1 + ", " + ccResults[i].Item2);
-//            }
+            Console.WriteLine("CC");
+            for (var i = 0; i < graphDatasets.Length; i++)
+            {
+                Console.WriteLine(graphDatasets[i]);
+                Console.WriteLine(ccResults[i].Item1 + ", " + ccResults[i].Item2);
+            }
             Console.WriteLine("SSSP");
             for (var i = 0; i < graphDatasets.Length; i++)
             {
@@ -73,47 +52,9 @@ namespace QuickGraph.Gunrock
                 Console.WriteLine(graphDatasets[i]);
                 Console.WriteLine(conversionResults[i]);
             }
-            
-//            Test.MeasureBFSQuickGraphSpeed("/home/alex/Downloads/Email-Enron.txt");
-//            Test.TestCsrConverter();
-//            Test.MeasureConnectedComponentsQuickGraphSpeed("/home/alex/Downloads/Email-Enron.txt");
-//            Test.MeasureConnectedComponentsGunrockSpeed("/home/alex/Downloads/Email-Enron.txt");
-//            Test.RunCCTests("/home/alex/gunrock2/dataset/large/roadNet-CA/roadNet-CA.mtx");
-//            Test.RunBFSTests("/home/alex/Downloads/Email-Enron.txt");
-//            Test.MeasureConnectedComponentsQuickGraphSpeed("/home/alex/gunrock2/dataset/large/road_usa/road_usa.mtx");
-//           Test.MeasureConnectedComponentsGunrockSpeed("/home/alex/gunrock2/dataset/large/road_usa/road_usa.mtx");
-//            Test.RunCCTests("/home/alex/gunrock2/dataset/large/road_usa/road_usa.mtx");
-//            Test.RunCCTests("/home/alex/gunrock2/dataset/large/delaunay_n21/delaunay_n21.mtx");
-//            ReadMatrixMarketFile("/home/alex/Downloads/roadNet-CA.txt");
-//            ReadMatrixMarketFileToEdgeList("/home/alex/Downloads/roadNet-CA.txt");
-//            Test.TestReadRightToCsr("/home/alex/gunrock2/dataset/small/test_cc.mtx");
-//            Test.TestReadRightToCsr("/home/alex/gunrock2/dataset/large/road_usa/road_usa.mtx");
-//            Test.TestReadRightToCsr("/home/alex/gunrock2/dataset/small/chesapeake.mtx");
-//            Test.TestReadRightToCsr("/home/alex/Downloads/Email-Enron.txt");
-           
-
-//            int nodesNum = 39;
-//            int edgesNum = 340;
-//            IntPtr labelsPtr = ConnectedComponents.run_cc(nodesNum, edgesNum, new int[] { }, new int[] { } );
-//
-//            int[] labels = new int[nodesNum];
-//            Marshal.Copy(labelsPtr, labels, 0, nodesNum);
-//            Util.release_memory(labelsPtr);
-//
-//            var verticesToLabels = new Dictionary<int, int>();
-//            for (int i = 0; i < labels.Length; i++)
-//            {
-//                
-//                verticesToLabels.Add(i, labels[i]);
-//            }
-//            
-//            foreach (var keyValuePair in verticesToLabels)
-//            {
-//                Console.WriteLine(keyValuePair);
-//            }
         }
         
-        public static Tuple<int[], int[], int[]> CreateCsrRepresentationFast<TEdge, TGraph>(
+        public static Tuple<int[], int[], int[]> CreateCsrRepresentationFromQuickGraphFast<TEdge, TGraph>(
             TGraph inputGraph) 
             where TEdge : IEdge<int> 
             where TGraph : IEdgeListGraph<int, TEdge>
@@ -122,9 +63,40 @@ namespace QuickGraph.Gunrock
             var vertexNum = inputGraph.VertexCount;
             var edgeNum = inputGraph.EdgeCount;
             
+            return CreateCsrRepresentationFromEdgeList(vertexNum, edgeNum, edges);
+        }
+        
+        //works horribly slow - left in case someone wants to try such approach
+        public static Tuple<int[], int[], int[]> CreateCsrRepresentationFromQuickGraphSlow<TEdge, TGraph>(
+            TGraph inputGraph) 
+            where TEdge : IEdge<int> 
+            where TGraph : IVertexListGraph<int, TEdge>
+        {
+            int[] rowOffsets = new int[inputGraph.VertexCount + 1];
+            List<int> colIndices = new List<int>();
+            
+            int curOffset = 0;
+            for (int i = 0, cnt = inputGraph.Vertices.Count(); i < cnt; i++)
+            {
+                rowOffsets[i] = curOffset;
+                foreach (var outEdge in inputGraph.OutEdges(inputGraph.Vertices.ElementAt(i)))
+                {
+                    colIndices.Add(outEdge.Target);
+                    curOffset++;
+                }
+                if (i % 100000 == 0) Console.WriteLine(i);
+            }
+            rowOffsets[rowOffsets.Length - 1] = rowOffsets[rowOffsets.Length - 2];
+            return new Tuple<int[], int[], int[]>(rowOffsets, colIndices.ToArray(), inputGraph.Vertices.ToArray());
+        }
+
+        private static Tuple<int[], int[], int[]> CreateCsrRepresentationFromEdgeList<TEdge>(int vertexNum, int edgeNum,
+            TEdge[] edges)
+            where TEdge : IEdge<int> 
+        {
             int[] rowOffsets = new int[vertexNum + 1];
             int[] colIndices = new int[edgeNum];
-            
+
             int curOffset = 0;
             int curEdge = 0;
             int prevEdge = 0;
@@ -144,88 +116,30 @@ namespace QuickGraph.Gunrock
                     curOffset++;
                     prevEdge = curEdge;
                 }
-                
+
                 if (i % 1000000 == 0) Console.WriteLine(i);
             }
             Array.Resize(ref colIndices, colIndices.Length - duplicatesNum);
-            
+
             rowOffsets[rowOffsets.Length - 1] = curOffset;
             return new Tuple<int[], int[], int[]>(rowOffsets, colIndices, colIndices);
-        }
-        
-
-        public static Tuple<int[], int[], int[]> CreateCsrRepresentation<TEdge, TGraph>(
-            TGraph inputGraph) 
-            where TEdge : IEdge<int> 
-            where TGraph : IVertexListGraph<int, TEdge>
-        {
-            int[] rowOffsets = new int[inputGraph.VertexCount + 1];
-            List<int> colIndices = new List<int>();
-            
-            int curOffset = 0;
-            for (int i = 0, cnt = inputGraph.Vertices.Count(); i < cnt; i++)
-            {
-                rowOffsets[i] = curOffset;
-//                var temp = new List<int>();
-                foreach (var outEdge in inputGraph.OutEdges(inputGraph.Vertices.ElementAt(i)))
-                {
-                    colIndices.Add(outEdge.Target);
-//                    temp.Add(outEdge.Target);
-                    
-                    curOffset++;
-                }
-//                temp.Sort();
-//                colIndices.AddRange(temp);
-                if (i % 1000 == 0) Console.WriteLine(i);
-            }
-            rowOffsets[rowOffsets.Length - 1] = rowOffsets[rowOffsets.Length - 2];
-            return new Tuple<int[], int[], int[]>(rowOffsets, colIndices.ToArray(), inputGraph.Vertices.ToArray());
         }
 
         public static Tuple<int[], int[], int[]> CreateCsrRepresentation(string path)
         {
-            Tuple<Tuple<int, int>[], int, int> edgesAndMetadata = ReadMatrixMarketFileToEdgeList(path);
+            Tuple<Edge<int>[], int, int> edgesAndMetadata = ReadMatrixMarketFileToEdgeList(path);
             var edges = edgesAndMetadata.Item1;
             var vertexNum = edgesAndMetadata.Item2;
             var edgeNum = edgesAndMetadata.Item3;
-            
-            int[] rowOffsets = new int[vertexNum + 1];
-            int[] colIndices = new int[edgeNum];
-            
-            int curOffset = 0;
-            int curEdge = 0;
-            int prevEdge = 0;
-            int columnIndex = 0;
-            int duplicatesNum = 0;
-            for (int i = 1; i < vertexNum + 1; i++)
-            {
-                rowOffsets[i - 1] = curOffset;
-                for (; curEdge < edgeNum && edges[curEdge].Item1 == i; curEdge++)
-                {
-                    if (edges[curEdge].Equals(edges[prevEdge]) && curEdge > 0)
-                    {
-                        duplicatesNum++;
-                        continue;
-                    }
-                    colIndices[columnIndex++] = edges[curEdge].Item2 - 1;
-                    curOffset++;
-                    prevEdge = curEdge;
-                }
-                
-                if (i % 10000 == 0) Console.WriteLine(i);
-            }
-            Array.Resize(ref colIndices, colIndices.Length - duplicatesNum);
-            
-            rowOffsets[rowOffsets.Length - 1] = curOffset;
-            return new Tuple<int[], int[], int[]>(rowOffsets, colIndices, colIndices);
+            return CreateCsrRepresentationFromEdgeList(vertexNum, edgeNum, edges);
         }
 
-        private static Tuple<Tuple<int, int>[], int, int> ReadMatrixMarketFileToEdgeList(string path)
+        private static Tuple<Edge<int>[], int, int> ReadMatrixMarketFileToEdgeList(string path)
         {
             bool isSymmetrical = true;
             int edgeNum = -1;
             int vertixNum = -1;
-            List<Tuple<int, int>> coordinatesList = new List<Tuple<int, int>>();
+            List<Edge<int>> coordinatesList = new List<Edge<int>>();
             
             using (var sr = new StreamReader(path))
             {
@@ -245,19 +159,19 @@ namespace QuickGraph.Gunrock
                     }
                     else
                     {
-                        coordinatesList.Add(new Tuple<int, int>(coordinates[0], coordinates[1]));
+                        coordinatesList.Add(new Edge<int>(coordinates[0], coordinates[1]));
                         if (isSymmetrical)
                         {
-                            coordinatesList.Add(new Tuple<int, int>(coordinates[1], coordinates[0]));
+                            coordinatesList.Add(new Edge<int>(coordinates[1], coordinates[0]));
                         }
                     }
                     if (processedLines++ % 100000 == 0) Console.WriteLine(processedLines);
                 }
             }
-            var coordinatesSorted = coordinatesList.AsParallel().OrderBy(x => x.Item1).ToArray();
+            var coordinatesSorted = coordinatesList.AsParallel().OrderBy(x => x.Source).ToArray();
             Console.WriteLine("Sorted!");
             
-            return new Tuple<Tuple<int, int>[], int, int>(coordinatesSorted, vertixNum, edgeNum);
+            return new Tuple<Edge<int>[], int, int>(coordinatesSorted, vertixNum, edgeNum);
         }
 
         /// Can read only sparse integer matrix from .mtx file. Otherwise will fail horribly.
@@ -271,7 +185,8 @@ namespace QuickGraph.Gunrock
             using (var sr = new StreamReader(path))
             {
                 string line = sr.ReadLine(); //header
-//                isSymmetrical = line.Split(' ')[4] == "symmetric";
+                //isSymmetrical = line.Split(' ')[4] == "symmetric";
+                    //above line isn't wrong, but it turns out, gunrock treats all mtx files as symmetric.
                 line = sr.ReadLine();
                 int processedLines = 0;
                 for (; line != null; line = sr.ReadLine())
