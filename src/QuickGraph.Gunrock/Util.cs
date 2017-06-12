@@ -9,45 +9,54 @@ namespace QuickGraph.Gunrock
     {
         public static void Main(string[] args)
         {
-            string[] graphDatasets = {
-                "/home/alex/gunrock2/dataset/small/chesapeake.mtx", //16K
-                "/home/alex/Downloads/Email-Enron.txt", //3,9M
-                "/home/alex/gunrock2/dataset/large/roadNet-CA/roadNet-CA.mtx", //40M
-                "/home/alex/gunrock2/dataset/large/delaunay_n21/delaunay_n21.mtx", //90M
-                "/home/alex/gunrock2/dataset/large/cit-Patents/cit-Patents.mtx"//250M
-            };
+            List<string> graphDatasets = new List<string>();
+            using (var sr = new StreamReader(args[0]))
+            {
+                var line = sr.ReadLine();
+                for (; line != null; line = sr.ReadLine())
+                {
+                    graphDatasets.Add(line.Trim());    
+                }
+            }
+//            string[] graphDatasets = {
+//                "/home/alex/gunrock2/dataset/small/chesapeake.mtx", //16K
+//                "/home/alex/Downloads/Email-Enron.txt", //3,9M
+//                "/home/alex/gunrock2/dataset/large/roadNet-CA/roadNet-CA.mtx", //40M
+//                "/home/alex/gunrock2/dataset/large/delaunay_n21/delaunay_n21.mtx", //90M
+//                "/home/alex/gunrock2/dataset/large/cit-Patents/cit-Patents.mtx"//250M
+//            };
             var bfsResults = new List<Tuple<double, double>>();
             var ccResults = new List<Tuple<double, double>>();
             var ssspResults = new List<Tuple<double, double>>();
             var conversionResults = new List<double>();
             foreach (var graphDataset in graphDatasets)
             {
-                bfsResults.Add(Test.RunBFSTests(graphDataset));
-                ccResults.Add(Test.RunCCTests(graphDataset));
-                ssspResults.Add(Test.RunSSSPTests(graphDataset));
+//                bfsResults.Add(Test.RunBFSTests(graphDataset));
+//                ccResults.Add(Test.RunCCTests(graphDataset));
+//                ssspResults.Add(Test.RunSSSPTests(graphDataset));
                 conversionResults.Add(Test.MeasureConversionFromQuickGraphToCsrSpeed(graphDataset));
             }
             Console.WriteLine("QuickGraph, Gunrock");
-            Console.WriteLine("BFS");
-            for (var i = 0; i < graphDatasets.Length; i++)
-            {
-                Console.WriteLine(graphDatasets[i]);
-                Console.WriteLine(bfsResults[i].Item1 + ", " + bfsResults[i].Item2);
-            }
-            Console.WriteLine("CC");
-            for (var i = 0; i < graphDatasets.Length; i++)
-            {
-                Console.WriteLine(graphDatasets[i]);
-                Console.WriteLine(ccResults[i].Item1 + ", " + ccResults[i].Item2);
-            }
-            Console.WriteLine("SSSP");
-            for (var i = 0; i < graphDatasets.Length; i++)
-            {
-                Console.WriteLine(graphDatasets[i]);
-                Console.WriteLine(ssspResults[i].Item1 + ", " + ssspResults[i].Item2);
-            }
+//            Console.WriteLine("BFS");
+//            for (var i = 0; i < graphDatasets.Count; i++)
+//            {
+//                Console.WriteLine(graphDatasets[i]);
+//                Console.WriteLine(bfsResults[i].Item1 + ", " + bfsResults[i].Item2);
+//            }
+//            Console.WriteLine("CC");
+//            for (var i = 0; i < graphDatasets.Count; i++)
+//            {
+//                Console.WriteLine(graphDatasets[i]);
+//                Console.WriteLine(ccResults[i].Item1 + ", " + ccResults[i].Item2);
+//            }
+//            Console.WriteLine("SSSP");
+//            for (var i = 0; i < graphDatasets.Count; i++)
+//            {
+//                Console.WriteLine(graphDatasets[i]);
+//                Console.WriteLine(ssspResults[i].Item1 + ", " + ssspResults[i].Item2);
+//            }
             Console.WriteLine("Conversion speed");
-            for (var i = 0; i < graphDatasets.Length; i++)
+            for (var i = 0; i < graphDatasets.Count; i++)
             {
                 Console.WriteLine(graphDatasets[i]);
                 Console.WriteLine(conversionResults[i]);
@@ -98,23 +107,25 @@ namespace QuickGraph.Gunrock
             int[] colIndices = new int[edgeNum];
 
             int curOffset = 0;
-            int curEdge = 0;
-            int prevEdge = 0;
+            int curEdgeIndex = 0;
+            int prevEdgeIndex = 0;
             int columnIndex = 0;
             int duplicatesNum = 0;
             for (int i = 1; i < vertexNum + 1; i++)
             {
                 rowOffsets[i - 1] = curOffset;
-                for (; curEdge < edgeNum && edges[curEdge].Source == i; curEdge++)
+                for (; curEdgeIndex < edgeNum && edges[curEdgeIndex].Source == i; curEdgeIndex++)
                 {
-                    if (edges[curEdge].Equals(edges[prevEdge]) && curEdge > 0)
+                    var curEdge = edges[curEdgeIndex];
+                    var prevEdge = edges[prevEdgeIndex];
+                    if (curEdge.Target == prevEdge.Target && curEdge.Source == prevEdge.Source && curEdgeIndex > 0)
                     {
                         duplicatesNum++;
                         continue;
                     }
-                    colIndices[columnIndex++] = edges[curEdge].Target - 1;
+                    colIndices[columnIndex++] = curEdge.Target - 1;
                     curOffset++;
-                    prevEdge = curEdge;
+                    prevEdgeIndex = curEdgeIndex;
                 }
 
                 if (i % 1000000 == 0) Console.WriteLine(i);

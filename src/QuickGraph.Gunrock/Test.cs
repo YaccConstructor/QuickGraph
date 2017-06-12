@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using QuickGraph.Algorithms;
 using QuickGraph.Algorithms.ConnectedComponents;
+using QuickGraph.Algorithms.Search;
+using QuickGraph.Algorithms.ShortestPath;
 
 namespace QuickGraph.Gunrock
 {
@@ -13,7 +15,7 @@ namespace QuickGraph.Gunrock
         {
             AdjacencyGraph<int, Edge<int>> g = Util.ReadMatrixMarketFileToQuickGraph(path);
             Stopwatch sw = new Stopwatch();
-            var runNum = 10;
+            var runNum = 15;
             for (int i = 0; i < runNum; i++)
             {
                 sw.Start();
@@ -104,14 +106,14 @@ namespace QuickGraph.Gunrock
             IVertexAndEdgeListGraph<int, Edge<int>> graph = Util.ReadMatrixMarketFileToQuickGraph(path);
             Func<Edge<int>, double> edgeCost = e => 1;
             var dijkstraShortestPathAlgorithm = 
-                new Algorithms.ShortestPath.DijkstraShortestPathAlgorithm<int, Edge<int>>(graph, edgeCost);
+                new DijkstraShortestPathAlgorithm<int, Edge<int>>(graph, edgeCost);
             return MeasureQuickGraphAlgorithmSpeed(dijkstraShortestPathAlgorithm);
         }
 
         public static double MeasureBFSQuickGraphSpeed(string path)
         {
             AdjacencyGraph<int, Edge<int>> graph = Util.ReadMatrixMarketFileToQuickGraph(path);
-            var algo = new Algorithms.Search.BreadthFirstSearchAlgorithm<int,Edge<int>>(graph);
+            var algo = new BreadthFirstSearchAlgorithm<int,Edge<int>>(graph);
             return MeasureQuickGraphAlgorithmSpeed(algo);
         }
         
@@ -183,9 +185,7 @@ namespace QuickGraph.Gunrock
             graph[8] = new int[] { };
            
 
-            DelegateVertexAndEdgeListGraph<int, SEquatableEdge<int>> g = GraphExtensions.ToDelegateVertexAndEdgeListGraph(
-                Enumerable.Range(0, graph.Length),
-                v => Array.ConvertAll(graph[v], w => new SEquatableEdge<int>(v, w))
+            DelegateVertexAndEdgeListGraph<int, SEquatableEdge<int>> g = Enumerable.Range(0, graph.Length).ToDelegateVertexAndEdgeListGraph(v => Array.ConvertAll(graph[v], w => new SEquatableEdge<int>(v, w))
             );
             
             var arrayAdjacencyGraph = g.ToArrayAdjacencyGraph();
