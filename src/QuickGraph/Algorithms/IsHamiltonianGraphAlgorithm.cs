@@ -19,7 +19,9 @@ namespace QuickGraph.Algorithms
         {
             IEnumerable<TVertex> list = graph.Vertices;
             List<List<TVertex>> permutations = new List<List<TVertex>>();
-            GetPermutations(list.ToList(), 0, list.Count() - 1, permutations);
+
+            List<TVertex> inputList = list.ToList();
+            GetPermutations(inputList, 0, inputList.Count - 1, permutations);
             return permutations;
         }
 
@@ -57,7 +59,7 @@ namespace QuickGraph.Algorithms
             {
                 path.Add(path[0]);      // make cycle, not simple path
             }
-            for (int i = 0; i < path.Count() - 1; i++)
+            for (int i = 0; i < path.Count - 1; i++)
             {
                 if (!graph.AdjacentVertices(path[i]).Contains(path[i + 1]))
                 {
@@ -70,7 +72,7 @@ namespace QuickGraph.Algorithms
         private bool satisfiesDiracsTheorem(TVertex vertex)
         {
             // Using Dirac's theorem: if |vertices| >= 3 and for any vertex deg(vertex) >= (|vertices| / 2) then graph is Hamiltonian 
-            return graph.AdjacentEdges(vertex).Count() >= threshold;
+            return graph.AdjacentDegree(vertex) >= threshold;
         }
 
         public bool IsHamiltonian()

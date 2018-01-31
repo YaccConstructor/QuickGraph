@@ -33,7 +33,7 @@ namespace QuickGraph.Algorithms.TSP
 
         public bool HasTasks()
         {
-            return _tasksQueue.Any();
+            return _tasksQueue.Count > 0 ;
         }
     }
 

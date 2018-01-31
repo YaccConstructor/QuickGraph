@@ -20,7 +20,7 @@ namespace QuickGraph.Algorithms.KernighanLinAlgoritm
         {
             this.g = g;
             this.itersNum = itersNum;
-            this.partitionSize = g.Vertices.Count() / 2;
+            this.partitionSize = g.VertexCount / 2;
         }
 
 
