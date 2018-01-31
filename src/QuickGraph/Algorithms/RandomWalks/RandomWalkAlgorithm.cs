@@ -70,22 +70,25 @@ namespace QuickGraph.Algorithms.RandomWalks
         public event VertexAction<TVertex> StartVertex;
         private void OnStartVertex(TVertex v)
         {
-            if (StartVertex != null)
-                StartVertex(v);
+            var eh = this.StartVertex;
+            if (eh != null)
+                eh(v);
         }
 
         public event VertexAction<TVertex> EndVertex;
         private void OnEndVertex(TVertex v)
         {
-            if (EndVertex != null)
-                EndVertex(v);
+            var eh = this.EndVertex;
+            if (eh != null)
+                eh(v);
         }
 
         public event EdgeAction<TVertex,TEdge> TreeEdge;
         private void OnTreeEdge(TEdge e)
         {
-            if (this.TreeEdge != null)
-                this.TreeEdge(e);
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(e);
         }
 
         private bool TryGetSuccessor(TVertex u, out TEdge successor)

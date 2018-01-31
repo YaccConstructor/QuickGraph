@@ -82,8 +82,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="v">vertex that raised the event</param>
         private void OnStartVertex(TVertex v)
         {
-            if (StartVertex != null)
-                StartVertex(v);
+            var eh = this.StartVertex;
+            if (eh != null)
+                eh(v);
         }
 
         /// <summary>
@@ -98,8 +99,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="v">vertex that raised the event</param>
         private void OnDiscoverVertex(TVertex v)
         {
-            if (DiscoverVertex != null)
-                DiscoverVertex(v);
+            var eh = this.DiscoverVertex;
+            if (eh != null)
+                eh(v);
         }
 
         /// <summary>
@@ -114,8 +116,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="e">edge that raised the event</param>
         private void OnExamineEdge(TEdge e)
         {
-            if (ExamineEdge != null)
-                ExamineEdge(e);
+            var eh = this.ExamineEdge;
+            if (eh != null)
+                eh(e);
         }
 
         /// <summary>
@@ -132,8 +135,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="e">edge that raised the event</param>
         private void OnTreeEdge(TEdge e)
         {
-            if (TreeEdge != null)
-                TreeEdge(e);
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(e);
         }
 
         /// <summary>
@@ -148,8 +152,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="e">edge that raised the event</param>
         private void OnBackEdge(TEdge e)
         {
-            if (BackEdge != null)
-                BackEdge(e);
+            var eh = this.BackEdge;
+            if (eh != null)
+                eh(e);
         }
 
         /// <summary>
@@ -165,8 +170,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="e">edge that raised the event</param>
         private void OnForwardOrCrossEdge(TEdge e)
         {
-            if (ForwardOrCrossEdge != null)
-                ForwardOrCrossEdge(e);
+            var eh = this.ForwardOrCrossEdge;
+            if (eh != null)
+                eh(e);
         }
 
         /// <summary>
@@ -182,8 +188,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="v">vertex that raised the event</param>
         private void OnFinishVertex(TVertex v)
         {
-            if (FinishVertex != null)
-                FinishVertex(v);
+            var eh = this.FinishVertex;
+            if (eh != null)
+                eh(v);
         }
 
         protected override void InternalCompute()

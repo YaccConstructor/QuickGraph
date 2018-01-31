@@ -86,8 +86,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="v"></param>
         private void OnStartVertex(TVertex v)
         {
-            if (this.StartVertex != null)
-                StartVertex(v);
+            var eh = StartVertex;
+            if (eh != null)
+                eh(v);
         }
 
         /// <summary>
@@ -101,8 +102,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="e"></param>
         private void OnStartEdge(TEdge e)
         {
-            if (this.StartEdge != null)
-                StartEdge(e);
+            var eh = StartEdge;
+            if (eh != null)
+                eh(e);
         }
 
         /// <summary>
@@ -135,8 +137,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="e"></param>
         private void OnTreeEdge(TEdge e)
         {
-            if (TreeEdge != null)
-                TreeEdge(e);
+            var eh = this.TreeEdge;
+            if (eh != null)
+                eh(e);
         }
 
         /// <summary>
@@ -150,8 +153,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="e"></param>
         private void OnBackEdge(TEdge e)
         {
-            if (BackEdge != null)
-                BackEdge(e);
+            var eh = this.BackEdge;
+            if (eh != null)
+                eh(e);
         }
 
         /// <summary>
@@ -166,8 +170,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="e"></param>
         private void OnForwardOrCrossEdge(TEdge e)
         {
-            if (this.ForwardOrCrossEdge != null)
-                ForwardOrCrossEdge(e);
+            var eh = ForwardOrCrossEdge;
+            if (eh != null)
+                eh(e);
         }
 
         /// <summary>
@@ -183,8 +188,9 @@ namespace QuickGraph.Algorithms.Search
         /// <param name="e"></param>
         private void OnFinishEdge(TEdge e)
         {
-            if (this.FinishEdge != null)
-                FinishEdge(e);
+            var eh = FinishEdge;
+            if (eh != null)
+                eh(e);
         }
 
         

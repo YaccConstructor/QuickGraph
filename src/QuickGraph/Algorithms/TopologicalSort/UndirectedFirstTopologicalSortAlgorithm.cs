@@ -60,8 +60,9 @@ namespace QuickGraph.Algorithms.TopologicalSort
         public event VertexAction<TVertex> AddVertex;
         private void OnAddVertex(TVertex v)
         {
-            if (this.AddVertex != null)
-                this.AddVertex(v);
+            var eh = AddVertex;
+            if (eh != null)
+                eh(v);
         }
 
         public void Compute(IList<TVertex> vertices)
