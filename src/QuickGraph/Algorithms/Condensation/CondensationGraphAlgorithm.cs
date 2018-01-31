@@ -136,6 +136,11 @@ namespace QuickGraph.Algorithms.Condensation
                     && TargetID == other.TargetID;
             }
 
+            public override bool Equals(object obj)
+            {
+                return obj is EdgeKey && Equals((EdgeKey)obj);
+            }
+
             public override int GetHashCode()
             {
                 return HashCodeHelper.Combine(this.SourceID, this.TargetID);
