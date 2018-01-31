@@ -189,13 +189,12 @@ namespace QuickGraph.Algorithms.Search
             OnDiscoverVertex(u);
 
             var cancelManager = this.Services.CancelManager;
-            TVertex v = default(TVertex);
             foreach (var e in VisitedGraph.OutEdges(u))
             {
                 if (cancelManager.IsCancelling) return;
 
                 OnExamineEdge(e);
-                v = e.Target;
+                var v = e.Target;
                 ProcessEdge(depth, v, e);
             }
 
@@ -204,7 +203,7 @@ namespace QuickGraph.Algorithms.Search
                 if (cancelManager.IsCancelling) return;
 
                 OnExamineEdge(e);
-                v = e.Source;
+                var v = e.Source;
                 ProcessEdge(depth, v, e);
             }
 

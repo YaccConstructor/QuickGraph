@@ -4,7 +4,7 @@ using QuickGraph.Algorithms.ConnectedComponents;
 
 namespace QuickGraph.Algorithms
 {
-    public enum ComponentWithEdges { NoComponent, OneComponent, ManyComponents };
+    public enum ComponentWithEdges { NoComponent, OneComponent, ManyComponents }
 
     public class IsEulerianGraphAlgorithm<TVertex, TEdge> where TEdge : IUndirectedEdge<TVertex>
     {
