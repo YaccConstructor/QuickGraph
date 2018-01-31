@@ -104,8 +104,8 @@ namespace QuickGraph.Algorithms
                     if (flow.ResidualCapacities[edge] == 0)
                     {
                         if (edge.Source.Equals(augmentor.SuperSource) ||
-                            edge.Source.Equals(augmentor.SuperSource) ||
-                            edge.Target.Equals(augmentor.SuperSink) ||
+                            edge.Source.Equals(augmentor.SuperSink) ||
+                            edge.Target.Equals(augmentor.SuperSource) ||
                             edge.Target.Equals(augmentor.SuperSink))
                         {
                             //Skip all edges that connect to SuperSource or SuperSink
