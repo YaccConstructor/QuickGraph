@@ -73,9 +73,9 @@ namespace QuickGraph.Algorithms.Observers
 
             TEdge ec = se;
             path.Insert(0, ec);
-            while (EdgePredecessors.ContainsKey(ec))
+            TEdge e;
+            while (EdgePredecessors.TryGetValue(ec, out e))
             {
-                TEdge e = EdgePredecessors[ec];
                 path.Insert(0, e);
                 ec = e;
             }
@@ -104,9 +104,9 @@ namespace QuickGraph.Algorithms.Observers
                 colors[ec] = GraphColor.Black;
 
             path.Insert(0, ec);
-            while (EdgePredecessors.ContainsKey(ec))
+            TEdge e;
+            while (EdgePredecessors.TryGetValue(ec, out e))
             {
-                TEdge e = EdgePredecessors[ec];
                 c = colors[e];
                 if (c != GraphColor.White)
                     return path;

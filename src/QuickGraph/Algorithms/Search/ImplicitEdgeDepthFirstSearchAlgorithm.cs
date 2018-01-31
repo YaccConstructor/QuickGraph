@@ -248,15 +248,15 @@ namespace QuickGraph.Algorithms.Search
 
                 // check edge is not explored yet,
                 // if not, explore it.
-                if (!this.EdgeColors.ContainsKey(e))
+                GraphColor c;
+                if (!this.EdgeColors.TryGetValue(e, out c))
                 {
                     OnDiscoverTreeEdge(se, e);
                     Visit(e, depth + 1);
                 }
                 else
                 {
-                    GraphColor c = this.EdgeColors[e];
-                    if (EdgeColors[e] == GraphColor.Gray)
+                    if (c == GraphColor.Gray)
                         OnBackEdge(e);
                     else
                         OnForwardOrCrossEdge(e);

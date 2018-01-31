@@ -226,14 +226,14 @@ namespace QuickGraph.Algorithms.Search
                 OnExamineEdge(e);
                 TVertex v = e.Target;
 
-                if (!this.VertexColors.ContainsKey(v))
+                GraphColor c;
+                if (!this.VertexColors.TryGetValue(v, out c))
                 {
                     OnTreeEdge(e);
                     Visit(v, depth + 1);
                 }
                 else
                 {
-                    GraphColor c = VertexColors[v];
                     if (c == GraphColor.Gray)
                     {
                         OnBackEdge(e);
