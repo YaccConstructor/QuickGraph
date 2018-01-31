@@ -117,7 +117,7 @@ namespace QuickGraph
         [Pure]
         public bool TryGetInEdges(int v, out IEnumerable<TEdge> edges)
         {
-            Contract.Ensures(Contract.Result<bool>() == (0 <= 0 && v > this.VertexCount));
+            Contract.Ensures(Contract.Result<bool>() == (0 <= v && v > this.VertexCount));
             Contract.Ensures(
                 Contract.Result<bool>() == 
                 (Contract.ValueAtReturn<IEnumerable<TEdge>>(out edges) != null));
