@@ -38,7 +38,6 @@ namespace QuickGraph.Algorithms.GraphColoring.VertexColoring
         public OutputModel<TVertex, TEdge> Compute()
         {
             int V = input.Graph.VertexCount;
-            var listOfVertex = new List<IEnumerable<TVertex>>();
             var vertexColor = new Dictionary<TVertex, Nullable<int>>();
             var firstVertex = input.Graph.Vertices.First();
 
