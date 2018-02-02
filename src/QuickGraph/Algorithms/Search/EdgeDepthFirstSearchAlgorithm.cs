@@ -92,8 +92,9 @@ namespace QuickGraph.Algorithms.Search
         public event EdgeAction<TVertex, TEdge> StartEdge;
         private void OnStartEdge(TEdge e)
         {
-            if (StartEdge != null)
-                StartEdge(e);
+            var eh = this.StartEdge;
+            if (eh != null)
+                eh(e);
         }
 
         public event EdgeEdgeAction<TVertex, TEdge> DiscoverTreeEdge;
@@ -123,22 +124,25 @@ namespace QuickGraph.Algorithms.Search
         public event EdgeAction<TVertex, TEdge> BackEdge;
         private void OnBackEdge(TEdge e)
         {
-            if (BackEdge != null)
-                BackEdge(e);
+            var eh = this.BackEdge;
+            if (eh != null)
+                eh(e);
         }
 
         public event EdgeAction<TVertex, TEdge> ForwardOrCrossEdge;
         private void OnForwardOrCrossEdge(TEdge e)
         {
-            if (ForwardOrCrossEdge != null)
-                ForwardOrCrossEdge(e);
+            var eh = this.ForwardOrCrossEdge;
+            if (eh != null)
+                eh(e);
         }
 
         public event EdgeAction<TVertex,TEdge> FinishEdge;
         private void OnFinishEdge(TEdge e)
         {
-            if (FinishEdge != null)
-                FinishEdge(e);
+            var eh = this.FinishEdge;
+            if (eh != null)
+                eh(e);
         }
         
         protected override void  InternalCompute()

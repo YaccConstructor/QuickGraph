@@ -102,12 +102,12 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         private void InternalGrayTarget(TEdge e)
         {
-            var target = e.Target;
-
             bool decreased = this.Relax(e);
-            double distance = this.Distances[target];
             if (decreased)
             {
+                var target = e.Target;
+                double distance = this.Distances[target];
+
                 this.costs[target] = this.DistanceRelaxer.Combine(distance, this.costHeuristic(target));
                 this.vertexQueue.Update(target);
                 this.OnTreeEdge(e);
@@ -120,12 +120,12 @@ namespace QuickGraph.Algorithms.ShortestPath
 
         private void InternalBlackTarget(TEdge e)
         {
-            var target = e.Target;
-
             bool decreased = this.Relax(e);
-            double distance = this.Distances[target];
             if (decreased)
             {
+                var target = e.Target;
+                double distance = this.Distances[target];
+
                 this.OnTreeEdge(e);
                 this.costs[target] = this.DistanceRelaxer.Combine(distance, this.costHeuristic(target));
                 this.vertexQueue.Enqueue(target);

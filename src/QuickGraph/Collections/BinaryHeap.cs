@@ -233,7 +233,7 @@ namespace QuickGraph.Collections
 #endif
             if (this.count == 0)
                 throw new InvalidOperationException("heap is empty");
-            if (index < 0 | index >= this.count | index + this.count < this.count)
+            if (index < 0 | index >= this.count)
                 throw new ArgumentOutOfRangeException("index");
 
             this.version++;

@@ -75,7 +75,7 @@ namespace QuickGraph.Algorithms.TSP
         {
             double sum = 0;
 
-            if (_graph.Edges.Count() == 0)
+            if (_graph.IsEdgesEmpty)
             {
                 MinCost = Double.PositiveInfinity;
                 return;
@@ -86,10 +86,15 @@ namespace QuickGraph.Algorithms.TSP
                 IEnumerable<TEdge> outEdges;
                 if (_graph.TryGetOutEdges(v, out outEdges))
                 {
-                    if (outEdges.Count() > 0)
+                    if (outEdges.Any())
                     {
                         double min = outEdges.Min(edge => _weight[edge]);
-                        outEdges.ToList().ForEach(edge => _weight[edge] -= min);
+
+                        foreach (var edge in outEdges)
+                        {
+                            _weight[edge] -= min;
+                        }
+
                         sum += min;
                     }
                 }
@@ -100,10 +105,15 @@ namespace QuickGraph.Algorithms.TSP
                 IEnumerable<TEdge> inEdges;
                 if (_graph.TryGetInEdges(v, out inEdges))
                 {
-                    if (inEdges.Count() > 0)
+                    if (inEdges.Any())
                     {
                         double min = inEdges.Min(edge => _weight[edge]);
-                        inEdges.ToList().ForEach(Edge => _weight[Edge] -= min);
+
+                        foreach (var edge in inEdges)
+                        {
+                            _weight[edge] -= min;
+                        }
+
                         sum += min;
                     }
                 }
@@ -174,8 +184,17 @@ namespace QuickGraph.Algorithms.TSP
             var reverseEdge = new EquatableEdge<TVertex>(edgeForSplit.Target, edgeForSplit.Source);
             weightsTake.Remove(reverseEdge);
             graphTake.RemoveEdgeIf(edge => edge.Equals(reverseEdge));
-            graphTake.OutEdges(v1).ToList().ForEach(edge => weightsTake.Remove(edge));
-            graphTake.InEdges(v2).ToList().ForEach(edge => weightsTake.Remove(edge));
+
+            foreach (var outEdge in graphTake.OutEdges(v1))
+            {
+                weightsTake.Remove(outEdge);
+            }
+
+            foreach (var inEdge in graphTake.InEdges(v2))
+            {
+                weightsTake.Remove(inEdge);
+            }
+
             graphTake.ClearOutEdges(v1);
             graphTake.ClearInEdges(v2);
             var pathTake = new BidirectionalGraph<TVertex, TEdge>(Path);

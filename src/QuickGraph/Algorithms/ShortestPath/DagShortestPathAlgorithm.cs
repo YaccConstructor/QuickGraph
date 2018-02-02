@@ -54,8 +54,9 @@ namespace QuickGraph.Algorithms.ShortestPath
         public event VertexAction<TVertex> InitializeVertex;
         private void OnInitializeVertex(TVertex v)
         {
-            if (InitializeVertex != null)
-                InitializeVertex(v);
+            var eh = this.InitializeVertex;
+            if (eh != null)
+                eh(v);
         }
 
         public event VertexAction<TVertex> StartVertex;
@@ -69,36 +70,41 @@ namespace QuickGraph.Algorithms.ShortestPath
         public event VertexAction<TVertex> DiscoverVertex;
         private void OnDiscoverVertex(TVertex v)
         {
-            if (DiscoverVertex != null)
-                DiscoverVertex(v);
+            var eh = this.DiscoverVertex;
+            if (eh != null)
+                eh(v);
         }
 
         public event VertexAction<TVertex> ExamineVertex;
         private void OnExamineVertex(TVertex v)
         {
-            if (ExamineVertex != null)
-                ExamineVertex(v);
+            var eh = this.ExamineVertex;
+            if (eh != null)
+                eh(v);
         }
 
         public event EdgeAction<TVertex,TEdge> ExamineEdge;
         private void OnExamineEdge(TEdge e)
         {
-            if (ExamineEdge != null)
-                ExamineEdge(e);
+            var eh = this.ExamineEdge;
+            if (eh != null)
+                eh(e);
         }
 
         public event EdgeAction<TVertex,TEdge> EdgeNotRelaxed;
         private void OnEdgeNotRelaxed(TEdge e)
         {
-            if (EdgeNotRelaxed != null)
-                EdgeNotRelaxed(e);
+            var eh = this.EdgeNotRelaxed;
+            if (eh != null)
+                eh(e);
         }
 
         public event VertexAction<TVertex> FinishVertex;
         private void OnFinishVertex(TVertex v)
         {
-            if (FinishVertex != null)
-                FinishVertex(v);
+            var eh = this.FinishVertex;
+            if (eh != null)
+                eh(v);
         }
 
         protected override void Initialize()

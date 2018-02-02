@@ -86,12 +86,13 @@ namespace QuickGraph.Algorithms.Condensation
                     continue;
                 }
 
-                var targets = condensatedVertices[targetID];
                 // at last add edge
                 var edgeKey = new EdgeKey(sourceID, targetID);
                 CondensedEdge<TVertex, TEdge, TGraph> condensatedEdge;
                 if (!condensatedEdges.TryGetValue(edgeKey, out condensatedEdge))
                 {
+                    var targets = condensatedVertices[targetID];
+
                     condensatedEdge = new CondensedEdge<TVertex, TEdge, TGraph>(sources, targets);
                     condensatedEdges.Add(edgeKey, condensatedEdge);
                     this.condensedGraph.AddEdge(condensatedEdge);
@@ -134,6 +135,11 @@ namespace QuickGraph.Algorithms.Condensation
                 return 
                     SourceID == other.SourceID 
                     && TargetID == other.TargetID;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is EdgeKey && Equals((EdgeKey)obj);
             }
 
             public override int GetHashCode()

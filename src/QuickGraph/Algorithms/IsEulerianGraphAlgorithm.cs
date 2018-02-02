@@ -4,7 +4,7 @@ using QuickGraph.Algorithms.ConnectedComponents;
 
 namespace QuickGraph.Algorithms
 {
-    public enum ComponentWithEdges { NoComponent, OneComponent, ManyComponents };
+    public enum ComponentWithEdges { NoComponent, OneComponent, ManyComponents }
 
     public class IsEulerianGraphAlgorithm<TVertex, TEdge> where TEdge : IUndirectedEdge<TVertex>
     {
@@ -50,7 +50,7 @@ namespace QuickGraph.Algorithms
             bool[] hasEdgesInComponent = new bool[componentsAlgo.ComponentCount];
             foreach (var verticeAndComponent in componentsAlgo.Components)
             {
-                hasEdgesInComponent[verticeAndComponent.Value] = graph.AdjacentEdges(verticeAndComponent.Key).Count() > 0;
+                hasEdgesInComponent[verticeAndComponent.Value] = !graph.IsAdjacentEdgesEmpty(verticeAndComponent.Key);
             }
             var t = firstAndSecondIndexOfTrue(hasEdgesInComponent);
             int? firstIndex = t.Item1, secondIndex = t.Item2;
@@ -68,7 +68,7 @@ namespace QuickGraph.Algorithms
 
         public bool satisfiesEulerianCondition(TVertex vertex)
         {
-            return graph.AdjacentEdges(vertex).Count() % 2 == 0;
+            return graph.AdjacentDegree(vertex) % 2 == 0;
         }
 
         public bool isEulerian()

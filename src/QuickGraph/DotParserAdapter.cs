@@ -48,10 +48,11 @@ namespace QuickGraph
 
             public static int GetWeight(Attributes attrs, int defaultValue)
             {
-                if (!attrs.ContainsKey("weight")) return defaultValue;
+                string weightAttribute;
+                if (!attrs.TryGetValue("weight", out weightAttribute)) return defaultValue;
 
                 int weight;
-                return int.TryParse(attrs["weight"], out weight) ? weight : defaultValue;
+                return int.TryParse(weightAttribute, out weight) ? weight : defaultValue;
             }
         }
 

@@ -48,7 +48,7 @@ namespace QuickGraph.Contracts
             IImplicitUndirectedGraph<TVertex, TEdge> ithis = this;
             Contract.Requires(v != null);
             Contract.Requires(ithis.ContainsVertex(v));
-            Contract.Ensures(Contract.Result<int>() == Enumerable.Count(ithis.AdjacentEdges(v)));
+            Contract.Ensures(Contract.Result<int>() == ithis.AdjacentDegree(v));
 
             return default(int);
         }

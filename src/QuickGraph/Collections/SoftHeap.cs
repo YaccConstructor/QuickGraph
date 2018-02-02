@@ -287,6 +287,8 @@ namespace QuickGraph.Collections
                         h.Next.Prev = h.Prev;
                         h = h.Prev;
                     }
+
+                    FixMinLinst(h);
                 }
 
                 h = header.Next.SuffixMin;

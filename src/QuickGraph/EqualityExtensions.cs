@@ -298,12 +298,13 @@ namespace QuickGraph
 
             foreach (var key in lhs.Keys)
             {
-                if (!rhs.ContainsKey(key))
+                TValue rhsValue;
+                if (!rhs.TryGetValue(key, out rhsValue))
                 {
                     return false;
                 }
 
-                if (!valueEquality.Equals(lhs[key], rhs[key]))
+                if (!valueEquality.Equals(lhs[key], rhsValue))
                 {
                     return false;
                 }

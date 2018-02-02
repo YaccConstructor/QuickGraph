@@ -96,7 +96,7 @@ namespace QuickGraph
         /// </returns>
         public override string ToString()
         {
-            return this.Source + " (" + this.SourceTerminal + ")" + " -> " + this.Target + " (" + this.TargetTerminal + ")";
+            return string.Format("{0} ({1}) -> {2} ({3})", this.Source, this.SourceTerminal, this.Target, this.TargetTerminal);
         }
     }
 }

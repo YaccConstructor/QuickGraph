@@ -5,7 +5,7 @@ namespace QuickGraph.Algorithms.AssigmentProblem
 {
     public class HungarianAlgorithm
     {
-        public enum Steps { Init, Step1, Step2, Step3, Step4, End };
+        public enum Steps { Init, Step1, Step2, Step3, Step4, End }
         public int[] AgentsTasks;
 
         private Steps _step;

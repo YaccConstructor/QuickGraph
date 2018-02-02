@@ -33,8 +33,7 @@ namespace QuickGraph
                 this.Source.Equals(other.Source) &&
                 this.Target.Equals(other.Target) &&
                 this.SourceTerminal.Equals(other.SourceTerminal) &&
-                this.TargetTerminal.Equals(other.TargetTerminal) &&
-                true;
+                this.TargetTerminal.Equals(other.TargetTerminal);
         }
 
         public override bool Equals(object obj)
