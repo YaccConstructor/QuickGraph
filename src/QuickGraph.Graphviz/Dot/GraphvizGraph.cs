@@ -2,6 +2,7 @@ namespace QuickGraph.Graphviz.Dot
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.IO;
 
@@ -44,37 +45,31 @@ namespace QuickGraph.Graphviz.Dot
 
         internal string GenerateDot(Hashtable pairs)
         {
-            bool flag = false;
-            StringWriter writer = new StringWriter();
+            List<string> entries = new List<string>(pairs.Count);
             foreach (DictionaryEntry entry in pairs)
             {
-                if (flag)
-                {
-                    writer.Write(", ");
-                }
-                else
-                {
-                    flag = true;
-                }
                 if (entry.Value is string)
                 {
-                    writer.Write("{0}=\"{1}\"", entry.Key.ToString(), entry.Value.ToString());
+                    entries.Add(String.Format("{0}=\"{1}\"", entry.Key.ToString(), entry.Value.ToString()));
                     continue;
                 }
                 if (entry.Value is Color)
                 {
                     Color color = (Color) entry.Value;
-                    writer.Write("{0}=\"#{1}{2}{3}{4}\"", new object[] { entry.Key.ToString(), color.R.ToString("x2").ToUpper(), color.G.ToString("x2").ToUpper(), color.B.ToString("x2").ToUpper(), color.A.ToString("x2").ToUpper() });
+                    entries.Add(String.Format("{0}=\"#{1}{2}{3}{4}\"", new object[] { entry.Key.ToString(), color.R.ToString("x2").ToUpper(), color.G.ToString("x2").ToUpper(), color.B.ToString("x2").ToUpper(), color.A.ToString("x2").ToUpper() }));
                     continue;
                 }
                 if ((entry.Value is GraphvizRankDirection) || (entry.Value is GraphvizPageDirection))
                 {
-                    writer.Write("{0}={1};", entry.Key.ToString(), entry.Value.ToString());
+                    entries.Add(String.Format("{0}={1}", entry.Key.ToString(), entry.Value.ToString()));
                     continue;
                 }
-                writer.Write(" {0}={1}", entry.Key.ToString(), entry.Value.ToString().ToLower());
+                entries.Add(String.Format(" {0}={1}", entry.Key.ToString(), entry.Value.ToString().ToLower()));
             }
-            return writer.ToString();
+            string result = String.Join(";", entries);
+            result = entries.Count > 1 ? result + ";" : result;
+
+            return result;
         }
 
         public string ToDot()
