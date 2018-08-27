@@ -53,10 +53,10 @@ graph representation where out-edge need to be enumerated only.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '99', 99)" onmouseover="showTip(event, '99', 99)">
+          <code onmouseout="hideTip(event, '103', 103)" onmouseover="showTip(event, '103', 103)">
             new(visitedGraph)
           </code>
-          <div class="tip" id="99">
+          <div class="tip" id="103">
             <strong>Signature:</strong> visitedGraph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -78,10 +78,10 @@ IBidirectionalGraph instance</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '100', 100)" onmouseover="showTip(event, '100', 100)">
+          <code onmouseout="hideTip(event, '104', 104)" onmouseover="showTip(event, '104', 104)">
             AllowParallelEdges
           </code>
-          <div class="tip" id="100">
+          <div class="tip" id="104">
             <strong>Signature:</strong> bool<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
@@ -93,10 +93,10 @@ IBidirectionalGraph instance</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '101', 101)" onmouseover="showTip(event, '101', 101)">
+          <code onmouseout="hideTip(event, '105', 105)" onmouseover="showTip(event, '105', 105)">
             Clone()
           </code>
-          <div class="tip" id="101">
+          <div class="tip" id="105">
             <strong>Signature:</strong> unit -&gt; ArrayBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
                       </div>
         </td>
@@ -109,10 +109,10 @@ IBidirectionalGraph instance</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '102', 102)" onmouseover="showTip(event, '102', 102)">
+          <code onmouseout="hideTip(event, '106', 106)" onmouseover="showTip(event, '106', 106)">
             ContainsEdge(source, target)
           </code>
-          <div class="tip" id="102">
+          <div class="tip" id="106">
             <strong>Signature:</strong> (source:&#39;TVertex * target:&#39;TVertex) -&gt; bool<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
@@ -124,10 +124,10 @@ IBidirectionalGraph instance</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '103', 103)" onmouseover="showTip(event, '103', 103)">
+          <code onmouseout="hideTip(event, '107', 107)" onmouseover="showTip(event, '107', 107)">
             ContainsEdge(edge)
           </code>
-          <div class="tip" id="103">
+          <div class="tip" id="107">
             <strong>Signature:</strong> edge:&#39;TEdge -&gt; bool<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
@@ -139,10 +139,10 @@ IBidirectionalGraph instance</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '104', 104)" onmouseover="showTip(event, '104', 104)">
+          <code onmouseout="hideTip(event, '108', 108)" onmouseover="showTip(event, '108', 108)">
             ContainsVertex(vertex)
           </code>
-          <div class="tip" id="104">
+          <div class="tip" id="108">
             <strong>Signature:</strong> vertex:&#39;TVertex -&gt; bool<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
@@ -154,71 +154,11 @@ IBidirectionalGraph instance</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '105', 105)" onmouseover="showTip(event, '105', 105)">
+          <code onmouseout="hideTip(event, '109', 109)" onmouseover="showTip(event, '109', 109)">
             Degree(v)
           </code>
-          <div class="tip" id="105">
-            <strong>Signature:</strong> v:&#39;TVertex -&gt; int<br />
-              <strong>Modifiers:</strong> abstract<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '106', 106)" onmouseover="showTip(event, '106', 106)">
-            EdgeCount
-          </code>
-          <div class="tip" id="106">
-            <strong>Signature:</strong> int<br />
-              <strong>Modifiers:</strong> abstract<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '107', 107)" onmouseover="showTip(event, '107', 107)">
-            Edges
-          </code>
-          <div class="tip" id="107">
-            <strong>Signature:</strong> IEnumerable&lt;&#39;TEdge&gt;<br />
-              <strong>Modifiers:</strong> abstract<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '108', 108)" onmouseover="showTip(event, '108', 108)">
-            InDegree(v)
-          </code>
-          <div class="tip" id="108">
-            <strong>Signature:</strong> v:&#39;TVertex -&gt; int<br />
-              <strong>Modifiers:</strong> abstract<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '109', 109)" onmouseover="showTip(event, '109', 109)">
-            InEdge(v, index)
-          </code>
           <div class="tip" id="109">
-            <strong>Signature:</strong> (v:&#39;TVertex * index:int) -&gt; &#39;TEdge<br />
+            <strong>Signature:</strong> v:&#39;TVertex -&gt; int<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -230,10 +170,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '110', 110)" onmouseover="showTip(event, '110', 110)">
-            InEdges(v)
+            EdgeCount
           </code>
           <div class="tip" id="110">
-            <strong>Signature:</strong> v:&#39;TVertex -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
+            <strong>Signature:</strong> int<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -245,10 +185,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '111', 111)" onmouseover="showTip(event, '111', 111)">
-            IsDirected
+            Edges
           </code>
           <div class="tip" id="111">
-            <strong>Signature:</strong> bool<br />
+            <strong>Signature:</strong> IEnumerable&lt;&#39;TEdge&gt;<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -260,10 +200,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '112', 112)" onmouseover="showTip(event, '112', 112)">
-            IsEdgesEmpty
+            InDegree(v)
           </code>
           <div class="tip" id="112">
-            <strong>Signature:</strong> bool<br />
+            <strong>Signature:</strong> v:&#39;TVertex -&gt; int<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -275,10 +215,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '113', 113)" onmouseover="showTip(event, '113', 113)">
-            IsInEdgesEmpty(v)
+            InEdge(v, index)
           </code>
           <div class="tip" id="113">
-            <strong>Signature:</strong> v:&#39;TVertex -&gt; bool<br />
+            <strong>Signature:</strong> (v:&#39;TVertex * index:int) -&gt; &#39;TEdge<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -290,10 +230,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '114', 114)" onmouseover="showTip(event, '114', 114)">
-            IsOutEdgesEmpty(v)
+            InEdges(v)
           </code>
           <div class="tip" id="114">
-            <strong>Signature:</strong> v:&#39;TVertex -&gt; bool<br />
+            <strong>Signature:</strong> v:&#39;TVertex -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -305,7 +245,7 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '115', 115)" onmouseover="showTip(event, '115', 115)">
-            IsVerticesEmpty
+            IsDirected
           </code>
           <div class="tip" id="115">
             <strong>Signature:</strong> bool<br />
@@ -320,10 +260,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '116', 116)" onmouseover="showTip(event, '116', 116)">
-            OutDegree(v)
+            IsEdgesEmpty
           </code>
           <div class="tip" id="116">
-            <strong>Signature:</strong> v:&#39;TVertex -&gt; int<br />
+            <strong>Signature:</strong> bool<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -335,10 +275,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '117', 117)" onmouseover="showTip(event, '117', 117)">
-            OutEdge(v, index)
+            IsInEdgesEmpty(v)
           </code>
           <div class="tip" id="117">
-            <strong>Signature:</strong> (v:&#39;TVertex * index:int) -&gt; &#39;TEdge<br />
+            <strong>Signature:</strong> v:&#39;TVertex -&gt; bool<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -350,10 +290,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '118', 118)" onmouseover="showTip(event, '118', 118)">
-            OutEdges(v)
+            IsOutEdgesEmpty(v)
           </code>
           <div class="tip" id="118">
-            <strong>Signature:</strong> v:&#39;TVertex -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
+            <strong>Signature:</strong> v:&#39;TVertex -&gt; bool<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -365,10 +305,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '119', 119)" onmouseover="showTip(event, '119', 119)">
-            TryGetEdge(source, target, edge)
+            IsVerticesEmpty
           </code>
           <div class="tip" id="119">
-            <strong>Signature:</strong> (source:&#39;TVertex * target:&#39;TVertex * edge:byref&lt;&#39;TEdge&gt;) -&gt; bool<br />
+            <strong>Signature:</strong> bool<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -380,10 +320,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '120', 120)" onmouseover="showTip(event, '120', 120)">
-            TryGetEdges(source, target, edges)
+            OutDegree(v)
           </code>
           <div class="tip" id="120">
-            <strong>Signature:</strong> (source:&#39;TVertex * target:&#39;TVertex * edges:byref&lt;IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; bool<br />
+            <strong>Signature:</strong> v:&#39;TVertex -&gt; int<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -395,10 +335,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '121', 121)" onmouseover="showTip(event, '121', 121)">
-            TryGetInEdges(v, edges)
+            OutEdge(v, index)
           </code>
           <div class="tip" id="121">
-            <strong>Signature:</strong> (v:&#39;TVertex * edges:byref&lt;IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; bool<br />
+            <strong>Signature:</strong> (v:&#39;TVertex * index:int) -&gt; &#39;TEdge<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -410,10 +350,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '122', 122)" onmouseover="showTip(event, '122', 122)">
-            TryGetOutEdges(v, edges)
+            OutEdges(v)
           </code>
           <div class="tip" id="122">
-            <strong>Signature:</strong> (v:&#39;TVertex * edges:byref&lt;IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; bool<br />
+            <strong>Signature:</strong> v:&#39;TVertex -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -425,10 +365,10 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '123', 123)" onmouseover="showTip(event, '123', 123)">
-            VertexCount
+            TryGetEdge(source, target, edge)
           </code>
           <div class="tip" id="123">
-            <strong>Signature:</strong> int<br />
+            <strong>Signature:</strong> (source:&#39;TVertex * target:&#39;TVertex * edge:byref&lt;&#39;TEdge&gt;) -&gt; bool<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -440,9 +380,69 @@ IBidirectionalGraph instance</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '124', 124)" onmouseover="showTip(event, '124', 124)">
-            Vertices
+            TryGetEdges(source, target, edges)
           </code>
           <div class="tip" id="124">
+            <strong>Signature:</strong> (source:&#39;TVertex * target:&#39;TVertex * edges:byref&lt;IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; bool<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '125', 125)" onmouseover="showTip(event, '125', 125)">
+            TryGetInEdges(v, edges)
+          </code>
+          <div class="tip" id="125">
+            <strong>Signature:</strong> (v:&#39;TVertex * edges:byref&lt;IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; bool<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '126', 126)" onmouseover="showTip(event, '126', 126)">
+            TryGetOutEdges(v, edges)
+          </code>
+          <div class="tip" id="126">
+            <strong>Signature:</strong> (v:&#39;TVertex * edges:byref&lt;IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; bool<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '127', 127)" onmouseover="showTip(event, '127', 127)">
+            VertexCount
+          </code>
+          <div class="tip" id="127">
+            <strong>Signature:</strong> int<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '128', 128)" onmouseover="showTip(event, '128', 128)">
+            Vertices
+          </code>
+          <div class="tip" id="128">
             <strong>Signature:</strong> IEnumerable&lt;&#39;TVertex&gt;<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>

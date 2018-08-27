@@ -52,19 +52,19 @@
     <tbody>
         <tr>
           <td class="type-name">
-            <a href="quickgraph-algorithms-chromaticpolynomial-basenode.html">BaseNode</a>
+            <a href="quickgraph-algorithms-chromaticpolynomial-basenode-2.html">BaseNode<'TVertex, 'TEdge></a>
           </td>
           <td class="xmldoc"></td>
         </tr>
         <tr>
           <td class="type-name">
-            <a href="quickgraph-algorithms-chromaticpolynomial-leaf.html">Leaf</a>
+            <a href="quickgraph-algorithms-chromaticpolynomial-leaf-2.html">Leaf<'TVertex, 'TEdge></a>
           </td>
           <td class="xmldoc"></td>
         </tr>
         <tr>
           <td class="type-name">
-            <a href="quickgraph-algorithms-chromaticpolynomial-node.html">Node</a>
+            <a href="quickgraph-algorithms-chromaticpolynomial-node-2.html">Node<'TVertex, 'TEdge></a>
           </td>
           <td class="xmldoc"></td>
         </tr>
@@ -83,14 +83,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1', 1)" onmouseover="showTip(event, '1', 1)">
-            buildTree graph
+            buildTree graph createEdge
           </code>
           <div class="tip" id="1">
-            <strong>Signature:</strong> graph:UndirectedGraph&lt;obj,UndirectedEdge&lt;obj&gt;&gt; -&gt; BaseNode<br />
-                      </div>
+            <strong>Signature:</strong> graph:UndirectedGraph&lt;&#39;Tvertex,&#39;?8220&gt; -&gt; createEdge:Func&lt;&#39;Tvertex,&#39;Tvertex,&#39;?8220&gt; -&gt; BaseNode&lt;&#39;Tvertex,&#39;?8220&gt;<br />
+                          <strong>Type parameters:</strong> 'Tvertex, '?8220          </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraphFS/Algorithms/CompleteColoring/ChromaticPolynomial/Algorithm.fs#L69-69" class="github-link">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraphFS/Algorithms/CompleteColoring/ChromaticPolynomial/Algorithm.fs#L80-80" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -101,14 +101,86 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '2', 2)" onmouseover="showTip(event, '2', 2)">
-            findChromaticPolynomial graph
+            findChromaticPolynomial graph createEdge
           </code>
           <div class="tip" id="2">
-            <strong>Signature:</strong> graph:UndirectedGraph&lt;obj,UndirectedEdge&lt;obj&gt;&gt; -&gt; int []<br />
-                      </div>
+            <strong>Signature:</strong> graph:UndirectedGraph&lt;&#39;?8236,UndirectedEdge&lt;&#39;?8236&gt;&gt; -&gt; createEdge:Func&lt;&#39;?8236,&#39;?8236,UndirectedEdge&lt;&#39;?8236&gt;&gt; -&gt; int []<br />
+                          <strong>Type parameters:</strong> '?8236          </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraphFS/Algorithms/CompleteColoring/ChromaticPolynomial/Algorithm.fs#L84-84" class="github-link">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraphFS/Algorithms/CompleteColoring/ChromaticPolynomial/Algorithm.fs#L142-142" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '3', 3)" onmouseover="showTip(event, '3', 3)">
+            isFirstNode node
+          </code>
+          <div class="tip" id="3">
+            <strong>Signature:</strong> node:BaseNode&lt;&#39;?8228,&#39;?8229&gt; -&gt; bool<br />
+                          <strong>Type parameters:</strong> '?8228, '?8229          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraphFS/Algorithms/CompleteColoring/ChromaticPolynomial/Algorithm.fs#L122-122" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4', 4)" onmouseover="showTip(event, '4', 4)">
+            isLastNode node
+          </code>
+          <div class="tip" id="4">
+            <strong>Signature:</strong> node:BaseNode&lt;&#39;?8231,&#39;?8232&gt; -&gt; bool<br />
+                          <strong>Type parameters:</strong> '?8231, '?8232          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraphFS/Algorithms/CompleteColoring/ChromaticPolynomial/Algorithm.fs#L127-127" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '5', 5)" onmouseover="showTip(event, '5', 5)">
+            next node
+          </code>
+          <div class="tip" id="5">
+            <strong>Signature:</strong> node:Node&lt;&#39;?8222,&#39;?8223&gt; -&gt; BaseNode&lt;&#39;?8222,&#39;?8223&gt;<br />
+                          <strong>Type parameters:</strong> '?8222, '?8223          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraphFS/Algorithms/CompleteColoring/ChromaticPolynomial/Algorithm.fs#L100-100" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '6', 6)" onmouseover="showTip(event, '6', 6)">
+            prev node
+          </code>
+          <div class="tip" id="6">
+            <strong>Signature:</strong> node:Node&lt;&#39;?8225,&#39;?8226&gt; -&gt; BaseNode&lt;&#39;?8225,&#39;?8226&gt;<br />
+                          <strong>Type parameters:</strong> '?8225, '?8226          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="http://github.com/YaccConstructor/QuickGraph/tree/master/src/QuickGraphFS/Algorithms/CompleteColoring/ChromaticPolynomial/Algorithm.fs#L110-110" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>

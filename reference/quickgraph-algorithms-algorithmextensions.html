@@ -52,10 +52,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '902', 902)" onmouseover="showTip(event, '902', 902)">
+          <code onmouseout="hideTip(event, '912', 912)" onmouseover="showTip(event, '912', 912)">
             Clone(...)
           </code>
-          <div class="tip" id="902">
+          <div class="tip" id="912">
             <strong>Signature:</strong> (g:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertexCloner:Func&lt;&#39;TVertex,&#39;TVertex&gt; * edgeCloner:Func&lt;&#39;TEdge,&#39;TVertex,&#39;TVertex,&#39;TEdge&gt; * clone:IMutableVertexAndEdgeSet&lt;&#39;TVertex,&#39;TEdge&gt;) -&gt; unit<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -68,10 +68,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '903', 903)" onmouseover="showTip(event, '903', 903)">
+          <code onmouseout="hideTip(event, '913', 913)" onmouseover="showTip(event, '913', 913)">
             ComputeDisjointSet(visitedGraph)
           </code>
-          <div class="tip" id="903">
+          <div class="tip" id="913">
             <strong>Signature:</strong> visitedGraph:IUndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IDisjointSet&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -82,10 +82,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '904', 904)" onmouseover="showTip(event, '904', 904)">
+          <code onmouseout="hideTip(event, '914', 914)" onmouseover="showTip(event, '914', 914)">
             ComputePredecessorCost(...)
           </code>
-          <div class="tip" id="904">
+          <div class="tip" id="914">
             <strong>Signature:</strong> (predecessors:IDictionary&lt;&#39;TVertex,&#39;TEdge&gt; * edgeCosts:IDictionary&lt;&#39;TEdge,float&gt; * target:&#39;TVertex) -&gt; float<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -99,10 +99,38 @@ the predecessor cost.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '905', 905)" onmouseover="showTip(event, '905', 905)">
+          <code onmouseout="hideTip(event, '915', 915)" onmouseover="showTip(event, '915', 915)">
+            ComputeTransitiveClosure(...)
+          </code>
+          <div class="tip" id="915">
+            <strong>Signature:</strong> (visitedGraph:BidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; * createEdge:Func&lt;&#39;TVertex,&#39;TVertex,&#39;TEdge&gt;) -&gt; BidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '916', 916)" onmouseover="showTip(event, '916', 916)">
+            ComputeTransitiveReduction(visitedGraph)
+          </code>
+          <div class="tip" id="916">
+            <strong>Signature:</strong> visitedGraph:BidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; BidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt;<br />
+                          <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '917', 917)" onmouseover="showTip(event, '917', 917)">
             CondensateEdges(...)
           </code>
-          <div class="tip" id="905">
+          <div class="tip" id="917">
             <strong>Signature:</strong> (visitedGraph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertexPredicate:VertexPredicate&lt;&#39;TVertex&gt;) -&gt; IMutableBidirectionalGraph&lt;&#39;TVertex,MergedEdge&lt;&#39;TVertex,&#39;TEdge&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -113,10 +141,10 @@ the predecessor cost.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '906', 906)" onmouseover="showTip(event, '906', 906)">
+          <code onmouseout="hideTip(event, '918', 918)" onmouseover="showTip(event, '918', 918)">
             CondensateStronglyConnected(g)
           </code>
-          <div class="tip" id="906">
+          <div class="tip" id="918">
             <strong>Signature:</strong> g:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IMutableBidirectionalGraph&lt;&#39;TGraph,CondensedEdge&lt;&#39;TVertex,&#39;TEdge,&#39;TGraph&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TGraph          </div>
         </td>
@@ -129,10 +157,10 @@ the predecessor cost.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '907', 907)" onmouseover="showTip(event, '907', 907)">
+          <code onmouseout="hideTip(event, '919', 919)" onmouseover="showTip(event, '919', 919)">
             CondensateWeaklyConnected(g)
           </code>
-          <div class="tip" id="907">
+          <div class="tip" id="919">
             <strong>Signature:</strong> g:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IMutableBidirectionalGraph&lt;&#39;TGraph,CondensedEdge&lt;&#39;TVertex,&#39;TEdge,&#39;TGraph&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge, 'TGraph          </div>
         </td>
@@ -145,10 +173,10 @@ the predecessor cost.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '908', 908)" onmouseover="showTip(event, '908', 908)">
+          <code onmouseout="hideTip(event, '920', 920)" onmouseover="showTip(event, '920', 920)">
             ConnectedComponents(g, components)
           </code>
-          <div class="tip" id="908">
+          <div class="tip" id="920">
             <strong>Signature:</strong> (g:IUndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt; * components:IDictionary&lt;&#39;TVertex,int&gt;) -&gt; int<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -161,10 +189,10 @@ the predecessor cost.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '909', 909)" onmouseover="showTip(event, '909', 909)">
+          <code onmouseout="hideTip(event, '921', 921)" onmouseover="showTip(event, '921', 921)">
             GetEdgeIdentity(graph)
           </code>
-          <div class="tip" id="909">
+          <div class="tip" id="921">
             <strong>Signature:</strong> graph:IEdgeSet&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; EdgeIdentity&lt;&#39;TVertex,&#39;TEdge&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -177,10 +205,10 @@ the predecessor cost.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '910', 910)" onmouseover="showTip(event, '910', 910)">
+          <code onmouseout="hideTip(event, '922', 922)" onmouseover="showTip(event, '922', 922)">
             GetIndexer(dictionary)
           </code>
-          <div class="tip" id="910">
+          <div class="tip" id="922">
             <strong>Signature:</strong> dictionary:Dictionary&lt;&#39;TKey,&#39;TValue&gt; -&gt; Func&lt;&#39;TKey,&#39;TValue&gt;<br />
                           <strong>Type parameters:</strong> 'TKey, 'TValue          </div>
         </td>
@@ -193,10 +221,10 @@ the predecessor cost.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '911', 911)" onmouseover="showTip(event, '911', 911)">
+          <code onmouseout="hideTip(event, '923', 923)" onmouseover="showTip(event, '923', 923)">
             GetVertexIdentity(graph)
           </code>
-          <div class="tip" id="911">
+          <div class="tip" id="923">
             <strong>Signature:</strong> graph:IVertexSet&lt;&#39;TVertex&gt; -&gt; VertexIdentity&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex          </div>
         </td>
@@ -209,10 +237,10 @@ the predecessor cost.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '912', 912)" onmouseover="showTip(event, '912', 912)">
+          <code onmouseout="hideTip(event, '924', 924)" onmouseover="showTip(event, '924', 924)">
             IncrementalConnectedComponents(g)
           </code>
-          <div class="tip" id="912">
+          <div class="tip" id="924">
             <strong>Signature:</strong> g:IMutableVertexAndEdgeSet&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; Func&lt;KeyValuePair&lt;int,IDictionary&lt;&#39;TVertex,int&gt;&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -227,10 +255,10 @@ is shared accross multiple calls of the method.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '913', 913)" onmouseover="showTip(event, '913', 913)">
+          <code onmouseout="hideTip(event, '925', 925)" onmouseover="showTip(event, '925', 925)">
             IsDirectedAcyclicGraph(g)
           </code>
-          <div class="tip" id="913">
+          <div class="tip" id="925">
             <strong>Signature:</strong> g:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; bool<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -243,10 +271,10 @@ is shared accross multiple calls of the method.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '914', 914)" onmouseover="showTip(event, '914', 914)">
+          <code onmouseout="hideTip(event, '926', 926)" onmouseover="showTip(event, '926', 926)">
             IsolatedVertices(visitedGraph)
           </code>
-          <div class="tip" id="914">
+          <div class="tip" id="926">
             <strong>Signature:</strong> visitedGraph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -259,10 +287,10 @@ is shared accross multiple calls of the method.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '915', 915)" onmouseover="showTip(event, '915', 915)">
+          <code onmouseout="hideTip(event, '927', 927)" onmouseover="showTip(event, '927', 927)">
             MaximumFlowEdmondsKarp(...)
           </code>
-          <div class="tip" id="915">
+          <div class="tip" id="927">
             <strong>Signature:</strong> (visitedGraph:IMutableVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * edgeCapacities:Func&lt;&#39;TEdge,float&gt; * source:&#39;TVertex * sink:&#39;TVertex * flowPredecessors:byref&lt;TryFunc&lt;&#39;TVertex,&#39;TEdge&gt;&gt; * edgeFactory:EdgeFactory&lt;&#39;TVertex,&#39;TEdge&gt;) -&gt; float<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -277,10 +305,10 @@ flows.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '916', 916)" onmouseover="showTip(event, '916', 916)">
+          <code onmouseout="hideTip(event, '928', 928)" onmouseover="showTip(event, '928', 928)">
             MinimumSpanningTreeKruskal(...)
           </code>
-          <div class="tip" id="916">
+          <div class="tip" id="928">
             <strong>Signature:</strong> (visitedGraph:IUndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt; * weights:Func&lt;&#39;TEdge,float&gt;) -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -293,10 +321,10 @@ flows.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '917', 917)" onmouseover="showTip(event, '917', 917)">
+          <code onmouseout="hideTip(event, '929', 929)" onmouseover="showTip(event, '929', 929)">
             MinimumSpanningTreePrim(...)
           </code>
-          <div class="tip" id="917">
+          <div class="tip" id="929">
             <strong>Signature:</strong> (visitedGraph:IUndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt; * weights:Func&lt;&#39;TEdge,float&gt;) -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -310,10 +338,10 @@ Prim's algorithm is simply implemented by calling Dijkstra shortest path.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '918', 918)" onmouseover="showTip(event, '918', 918)">
+          <code onmouseout="hideTip(event, '930', 930)" onmouseover="showTip(event, '930', 930)">
             OddVertices(g)
           </code>
-          <div class="tip" id="918">
+          <div class="tip" id="930">
             <strong>Signature:</strong> g:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; List&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -326,10 +354,10 @@ Prim's algorithm is simply implemented by calling Dijkstra shortest path.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '919', 919)" onmouseover="showTip(event, '919', 919)">
+          <code onmouseout="hideTip(event, '931', 931)" onmouseover="showTip(event, '931', 931)">
             OfflineLeastCommonAncestorTarjan(...)
           </code>
-          <div class="tip" id="919">
+          <div class="tip" id="931">
             <strong>Signature:</strong> (visitedGraph:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * root:&#39;TVertex * pairs:IEnumerable&lt;SEquatableEdge&lt;&#39;TVertex&gt;&gt;) -&gt; TryFunc&lt;SEquatableEdge&lt;&#39;TVertex&gt;,&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -343,10 +371,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '920', 920)" onmouseover="showTip(event, '920', 920)">
+          <code onmouseout="hideTip(event, '932', 932)" onmouseover="showTip(event, '932', 932)">
             RankedShortestPathHoffmanPavley(...)
           </code>
-          <div class="tip" id="920">
+          <div class="tip" id="932">
             <strong>Signature:</strong> (visitedGraph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; * edgeWeights:Func&lt;&#39;TEdge,float&gt; * source:&#39;TVertex * target:&#39;TVertex * pathCount:int) -&gt; IEnumerable&lt;IEnumerable&lt;&#39;TEdge&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -359,10 +387,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '921', 921)" onmouseover="showTip(event, '921', 921)">
+          <code onmouseout="hideTip(event, '933', 933)" onmouseover="showTip(event, '933', 933)">
             Roots(visitedGraph)
           </code>
-          <div class="tip" id="921">
+          <div class="tip" id="933">
             <strong>Signature:</strong> visitedGraph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -375,10 +403,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '922', 922)" onmouseover="showTip(event, '922', 922)">
+          <code onmouseout="hideTip(event, '934', 934)" onmouseover="showTip(event, '934', 934)">
             Roots(visitedGraph)
           </code>
-          <div class="tip" id="922">
+          <div class="tip" id="934">
             <strong>Signature:</strong> visitedGraph:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -391,10 +419,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '923', 923)" onmouseover="showTip(event, '923', 923)">
+          <code onmouseout="hideTip(event, '935', 935)" onmouseover="showTip(event, '935', 935)">
             ShortestPathsAStar(...)
           </code>
-          <div class="tip" id="923">
+          <div class="tip" id="935">
             <strong>Signature:</strong> (visitedGraph:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * edgeWeights:Func&lt;&#39;TEdge,float&gt; * costHeuristic:Func&lt;&#39;TVertex,float&gt; * source:&#39;TVertex) -&gt; TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -405,10 +433,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '924', 924)" onmouseover="showTip(event, '924', 924)">
+          <code onmouseout="hideTip(event, '936', 936)" onmouseover="showTip(event, '936', 936)">
             ShortestPathsBellmanFord(...)
           </code>
-          <div class="tip" id="924">
+          <div class="tip" id="936">
             <strong>Signature:</strong> (visitedGraph:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * edgeWeights:Func&lt;&#39;TEdge,float&gt; * source:&#39;TVertex) -&gt; TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -419,10 +447,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '925', 925)" onmouseover="showTip(event, '925', 925)">
+          <code onmouseout="hideTip(event, '937', 937)" onmouseover="showTip(event, '937', 937)">
             ShortestPathsDag(...)
           </code>
-          <div class="tip" id="925">
+          <div class="tip" id="937">
             <strong>Signature:</strong> (visitedGraph:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * edgeWeights:Func&lt;&#39;TEdge,float&gt; * source:&#39;TVertex) -&gt; TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -433,10 +461,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '926', 926)" onmouseover="showTip(event, '926', 926)">
+          <code onmouseout="hideTip(event, '938', 938)" onmouseover="showTip(event, '938', 938)">
             ShortestPathsDijkstra(...)
           </code>
-          <div class="tip" id="926">
+          <div class="tip" id="938">
             <strong>Signature:</strong> (visitedGraph:IUndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt; * edgeWeights:Func&lt;&#39;TEdge,float&gt; * source:&#39;TVertex) -&gt; TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -447,10 +475,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '927', 927)" onmouseover="showTip(event, '927', 927)">
+          <code onmouseout="hideTip(event, '939', 939)" onmouseover="showTip(event, '939', 939)">
             ShortestPathsDijkstra(...)
           </code>
-          <div class="tip" id="927">
+          <div class="tip" id="939">
             <strong>Signature:</strong> (visitedGraph:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * edgeWeights:Func&lt;&#39;TEdge,float&gt; * source:&#39;TVertex) -&gt; TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -461,10 +489,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '928', 928)" onmouseover="showTip(event, '928', 928)">
+          <code onmouseout="hideTip(event, '940', 940)" onmouseover="showTip(event, '940', 940)">
             Sinks(visitedGraph)
           </code>
-          <div class="tip" id="928">
+          <div class="tip" id="940">
             <strong>Signature:</strong> visitedGraph:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -477,10 +505,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '929', 929)" onmouseover="showTip(event, '929', 929)">
+          <code onmouseout="hideTip(event, '941', 941)" onmouseover="showTip(event, '941', 941)">
             SourceFirstBidirectionalTopologicalSort(...)
           </code>
-          <div class="tip" id="929">
+          <div class="tip" id="941">
             <strong>Signature:</strong> (visitedGraph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; * direction:TopologicalSortDirection) -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -491,10 +519,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '930', 930)" onmouseover="showTip(event, '930', 930)">
+          <code onmouseout="hideTip(event, '942', 942)" onmouseover="showTip(event, '942', 942)">
             SourceFirstBidirectionalTopologicalSort(...)
           </code>
-          <div class="tip" id="930">
+          <div class="tip" id="942">
             <strong>Signature:</strong> visitedGraph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -505,10 +533,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '931', 931)" onmouseover="showTip(event, '931', 931)">
+          <code onmouseout="hideTip(event, '943', 943)" onmouseover="showTip(event, '943', 943)">
             SourceFirstBidirectionalTopologicalSort(...)
           </code>
-          <div class="tip" id="931">
+          <div class="tip" id="943">
             <strong>Signature:</strong> (visitedGraph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertices:IList&lt;&#39;TVertex&gt; * direction:TopologicalSortDirection) -&gt; unit<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -519,10 +547,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '932', 932)" onmouseover="showTip(event, '932', 932)">
+          <code onmouseout="hideTip(event, '944', 944)" onmouseover="showTip(event, '944', 944)">
             SourceFirstBidirectionalTopologicalSort(...)
           </code>
-          <div class="tip" id="932">
+          <div class="tip" id="944">
             <strong>Signature:</strong> (visitedGraph:IBidirectionalGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertices:IList&lt;&#39;TVertex&gt;) -&gt; unit<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -533,10 +561,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '933', 933)" onmouseover="showTip(event, '933', 933)">
+          <code onmouseout="hideTip(event, '945', 945)" onmouseover="showTip(event, '945', 945)">
             SourceFirstTopologicalSort(visitedGraph)
           </code>
-          <div class="tip" id="933">
+          <div class="tip" id="945">
             <strong>Signature:</strong> visitedGraph:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -547,10 +575,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '934', 934)" onmouseover="showTip(event, '934', 934)">
+          <code onmouseout="hideTip(event, '946', 946)" onmouseover="showTip(event, '946', 946)">
             SourceFirstTopologicalSort(...)
           </code>
-          <div class="tip" id="934">
+          <div class="tip" id="946">
             <strong>Signature:</strong> (visitedGraph:IVertexAndEdgeListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertices:IList&lt;&#39;TVertex&gt;) -&gt; unit<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -561,10 +589,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '935', 935)" onmouseover="showTip(event, '935', 935)">
+          <code onmouseout="hideTip(event, '947', 947)" onmouseover="showTip(event, '947', 947)">
             StronglyConnectedComponents(...)
           </code>
-          <div class="tip" id="935">
+          <div class="tip" id="947">
             <strong>Signature:</strong> (g:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * components:byref&lt;IDictionary&lt;&#39;TVertex,int&gt;&gt;) -&gt; int<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -577,10 +605,10 @@ using Tarjan algorithm.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '936', 936)" onmouseover="showTip(event, '936', 936)">
+          <code onmouseout="hideTip(event, '948', 948)" onmouseover="showTip(event, '948', 948)">
             TopologicalSort(visitedGraph)
           </code>
-          <div class="tip" id="936">
+          <div class="tip" id="948">
             <strong>Signature:</strong> visitedGraph:IUndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -594,10 +622,10 @@ acyclic graph.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '937', 937)" onmouseover="showTip(event, '937', 937)">
+          <code onmouseout="hideTip(event, '949', 949)" onmouseover="showTip(event, '949', 949)">
             TopologicalSort(visitedGraph, vertices)
           </code>
-          <div class="tip" id="937">
+          <div class="tip" id="949">
             <strong>Signature:</strong> (visitedGraph:IUndirectedGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertices:IList&lt;&#39;TVertex&gt;) -&gt; unit<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -611,10 +639,10 @@ acyclic graph.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '938', 938)" onmouseover="showTip(event, '938', 938)">
+          <code onmouseout="hideTip(event, '950', 950)" onmouseover="showTip(event, '950', 950)">
             TopologicalSort(visitedGraph)
           </code>
-          <div class="tip" id="938">
+          <div class="tip" id="950">
             <strong>Signature:</strong> visitedGraph:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; -&gt; IEnumerable&lt;&#39;TVertex&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -628,10 +656,10 @@ acyclic graph.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '939', 939)" onmouseover="showTip(event, '939', 939)">
+          <code onmouseout="hideTip(event, '951', 951)" onmouseover="showTip(event, '951', 951)">
             TopologicalSort(visitedGraph, vertices)
           </code>
-          <div class="tip" id="939">
+          <div class="tip" id="951">
             <strong>Signature:</strong> (visitedGraph:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * vertices:IList&lt;&#39;TVertex&gt;) -&gt; unit<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -645,10 +673,10 @@ acyclic graph.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '940', 940)" onmouseover="showTip(event, '940', 940)">
+          <code onmouseout="hideTip(event, '952', 952)" onmouseover="showTip(event, '952', 952)">
             TreeBreadthFirstSearch(...)
           </code>
-          <div class="tip" id="940">
+          <div class="tip" id="952">
             <strong>Signature:</strong> (visitedGraph:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * root:&#39;TVertex) -&gt; TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -659,10 +687,10 @@ acyclic graph.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '941', 941)" onmouseover="showTip(event, '941', 941)">
+          <code onmouseout="hideTip(event, '953', 953)" onmouseover="showTip(event, '953', 953)">
             TreeCyclePoppingRandom(...)
           </code>
-          <div class="tip" id="941">
+          <div class="tip" id="953">
             <strong>Signature:</strong> (visitedGraph:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * root:&#39;TVertex) -&gt; TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -673,10 +701,10 @@ acyclic graph.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '942', 942)" onmouseover="showTip(event, '942', 942)">
+          <code onmouseout="hideTip(event, '954', 954)" onmouseover="showTip(event, '954', 954)">
             TreeCyclePoppingRandom(...)
           </code>
-          <div class="tip" id="942">
+          <div class="tip" id="954">
             <strong>Signature:</strong> (visitedGraph:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * root:&#39;TVertex * edgeChain:IMarkovEdgeChain&lt;&#39;TVertex,&#39;TEdge&gt;) -&gt; TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -687,10 +715,10 @@ acyclic graph.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '943', 943)" onmouseover="showTip(event, '943', 943)">
+          <code onmouseout="hideTip(event, '955', 955)" onmouseover="showTip(event, '955', 955)">
             TreeDepthFirstSearch(visitedGraph, root)
           </code>
-          <div class="tip" id="943">
+          <div class="tip" id="955">
             <strong>Signature:</strong> (visitedGraph:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * root:&#39;TVertex) -&gt; TryFunc&lt;&#39;TVertex,IEnumerable&lt;&#39;TEdge&gt;&gt;<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>
@@ -703,10 +731,10 @@ acyclic graph.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '944', 944)" onmouseover="showTip(event, '944', 944)">
+          <code onmouseout="hideTip(event, '956', 956)" onmouseover="showTip(event, '956', 956)">
             WeaklyConnectedComponents(g, components)
           </code>
-          <div class="tip" id="944">
+          <div class="tip" id="956">
             <strong>Signature:</strong> (g:IVertexListGraph&lt;&#39;TVertex,&#39;TEdge&gt; * components:IDictionary&lt;&#39;TVertex,int&gt;) -&gt; int<br />
                           <strong>Type parameters:</strong> 'TVertex, 'TEdge          </div>
         </td>

@@ -50,11 +50,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1513', 1513)" onmouseover="showTip(event, '1513', 1513)">
-            new(graph, s, t, k)
+          <code onmouseout="hideTip(event, '1556', 1556)" onmouseover="showTip(event, '1556', 1556)">
+            new(graph, s, t, k, weights, filter)
           </code>
-          <div class="tip" id="1513">
-            <strong>Signature:</strong> (graph:AdjacencyGraph&lt;&#39;TVertex,TaggedEquatableEdge&lt;&#39;TVertex,float&gt;&gt; * s:&#39;TVertex * t:&#39;TVertex * k:int) -&gt; unit<br />
+          <div class="tip" id="1556">
+            <strong>Signature:</strong> (graph:AdjacencyGraph&lt;&#39;TVertex,TaggedEquatableEdge&lt;&#39;TVertex,float&gt;&gt; * s:&#39;TVertex * t:&#39;TVertex * k:int * weights:Func&lt;TaggedEquatableEdge&lt;&#39;TVertex,float&gt;,float&gt; * filter:Func&lt;IEnumerable&lt;IEnumerable&lt;TaggedEquatableEdge&lt;&#39;TVertex,float&gt;&gt;&gt;,IEnumerable&lt;IEnumerable&lt;TaggedEquatableEdge&lt;&#39;TVertex,float&gt;&gt;&gt;&gt;) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -72,11 +72,25 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1514', 1514)" onmouseover="showTip(event, '1514', 1514)">
+          <code onmouseout="hideTip(event, '1557', 1557)" onmouseover="showTip(event, '1557', 1557)">
             Execute()
           </code>
-          <div class="tip" id="1514">
+          <div class="tip" id="1557">
             <strong>Signature:</strong> unit -&gt; IEnumerable&lt;IEnumerable&lt;TaggedEquatableEdge&lt;&#39;TVertex,float&gt;&gt;&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1558', 1558)" onmouseover="showTip(event, '1558', 1558)">
+            RemovedEdges()
+          </code>
+          <div class="tip" id="1558">
+            <strong>Signature:</strong> unit -&gt; List&lt;TaggedEquatableEdge&lt;&#39;TVertex,float&gt;&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">

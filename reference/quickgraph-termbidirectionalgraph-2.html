@@ -50,10 +50,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '740', 740)" onmouseover="showTip(event, '740', 740)">
+          <code onmouseout="hideTip(event, '744', 744)" onmouseover="showTip(event, '744', 744)">
             new()
           </code>
-          <div class="tip" id="740">
+          <div class="tip" id="744">
             <strong>Signature:</strong> unit -&gt; unit<br />
                       </div>
         </td>
@@ -72,71 +72,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '741', 741)" onmouseover="showTip(event, '741', 741)">
+          <code onmouseout="hideTip(event, '745', 745)" onmouseover="showTip(event, '745', 745)">
             InDegreeAt(v, terminal)
           </code>
-          <div class="tip" id="741">
-            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int) -&gt; int<br />
-              <strong>Modifiers:</strong> abstract<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '742', 742)" onmouseover="showTip(event, '742', 742)">
-            InEdgesAt(v, terminal)
-          </code>
-          <div class="tip" id="742">
-            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int) -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
-              <strong>Modifiers:</strong> abstract<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '743', 743)" onmouseover="showTip(event, '743', 743)">
-            InTerminalCount(v)
-          </code>
-          <div class="tip" id="743">
-            <strong>Signature:</strong> v:&#39;TVertex -&gt; int<br />
-              <strong>Modifiers:</strong> abstract<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '744', 744)" onmouseover="showTip(event, '744', 744)">
-            IsInEdgesEmptyAt(v, terminal)
-          </code>
-          <div class="tip" id="744">
-            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int) -&gt; bool<br />
-              <strong>Modifiers:</strong> abstract<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '745', 745)" onmouseover="showTip(event, '745', 745)">
-            IsOutEdgesEmptyAt(v, terminal)
-          </code>
           <div class="tip" id="745">
-            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int) -&gt; bool<br />
+            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int) -&gt; int<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -148,24 +88,9 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '746', 746)" onmouseover="showTip(event, '746', 746)">
-            OutDegreeAt(v, terminal)
+            InEdgesAt(v, terminal)
           </code>
           <div class="tip" id="746">
-            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int) -&gt; int<br />
-              <strong>Modifiers:</strong> abstract<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '747', 747)" onmouseover="showTip(event, '747', 747)">
-            OutEdgesAt(v, terminal)
-          </code>
-          <div class="tip" id="747">
             <strong>Signature:</strong> (v:&#39;TVertex * terminal:int) -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
@@ -177,10 +102,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '748', 748)" onmouseover="showTip(event, '748', 748)">
-            OutTerminalCount(v)
+          <code onmouseout="hideTip(event, '747', 747)" onmouseover="showTip(event, '747', 747)">
+            InTerminalCount(v)
           </code>
-          <div class="tip" id="748">
+          <div class="tip" id="747">
             <strong>Signature:</strong> v:&#39;TVertex -&gt; int<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
@@ -192,11 +117,26 @@
       <tr>
         <td class="member-name">
 
+          <code onmouseout="hideTip(event, '748', 748)" onmouseover="showTip(event, '748', 748)">
+            IsInEdgesEmptyAt(v, terminal)
+          </code>
+          <div class="tip" id="748">
+            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int) -&gt; bool<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
           <code onmouseout="hideTip(event, '749', 749)" onmouseover="showTip(event, '749', 749)">
-            TryGetInEdgesAt(v, terminal, edges)
+            IsOutEdgesEmptyAt(v, terminal)
           </code>
           <div class="tip" id="749">
-            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int * edges:byref&lt;IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; bool<br />
+            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int) -&gt; bool<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>
         </td>
@@ -208,9 +148,69 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '750', 750)" onmouseover="showTip(event, '750', 750)">
-            TryGetOutEdgesAt(v, terminal, edges)
+            OutDegreeAt(v, terminal)
           </code>
           <div class="tip" id="750">
+            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int) -&gt; int<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '751', 751)" onmouseover="showTip(event, '751', 751)">
+            OutEdgesAt(v, terminal)
+          </code>
+          <div class="tip" id="751">
+            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int) -&gt; IEnumerable&lt;&#39;TEdge&gt;<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '752', 752)" onmouseover="showTip(event, '752', 752)">
+            OutTerminalCount(v)
+          </code>
+          <div class="tip" id="752">
+            <strong>Signature:</strong> v:&#39;TVertex -&gt; int<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '753', 753)" onmouseover="showTip(event, '753', 753)">
+            TryGetInEdgesAt(v, terminal, edges)
+          </code>
+          <div class="tip" id="753">
+            <strong>Signature:</strong> (v:&#39;TVertex * terminal:int * edges:byref&lt;IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; bool<br />
+              <strong>Modifiers:</strong> abstract<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '754', 754)" onmouseover="showTip(event, '754', 754)">
+            TryGetOutEdgesAt(v, terminal, edges)
+          </code>
+          <div class="tip" id="754">
             <strong>Signature:</strong> (v:&#39;TVertex * terminal:int * edges:byref&lt;IEnumerable&lt;&#39;TEdge&gt;&gt;) -&gt; bool<br />
               <strong>Modifiers:</strong> abstract<br />
                       </div>

@@ -52,83 +52,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '463', 463)" onmouseover="showTip(event, '463', 463)">
-            Equals1(lhs, rhs, elementEquality)
-          </code>
-          <div class="tip" id="463">
-            <strong>Signature:</strong> (lhs:IList&lt;&#39;T&gt; * rhs:IList&lt;&#39;T&gt; * elementEquality:IEqualityComparer&lt;&#39;T&gt;) -&gt; bool<br />
-                          <strong>Type parameters:</strong> 'T          </div>
-        </td>
-        <td class="xmldoc">
-          <p>Element-by-element array equality using a given equality comparer for elements.
-Two arrays are equal iff they are both null,
-or are actually the same reference,
-or they have equal length and elements are equal for each index.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '464', 464)" onmouseover="showTip(event, '464', 464)">
-            Equals1(lhs, rhs)
-          </code>
-          <div class="tip" id="464">
-            <strong>Signature:</strong> (lhs:IList&lt;&#39;T&gt; * rhs:IList&lt;&#39;T&gt;) -&gt; bool<br />
-                          <strong>Type parameters:</strong> 'T          </div>
-        </td>
-        <td class="xmldoc">
-          <p>Element-by-element array equality using EqualityComparer(T).Default to equate elements.
-Two arrays are equal iff they are both null,
-or are actually the same reference,
-or they have equal length and elements are equal for each index.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '465', 465)" onmouseover="showTip(event, '465', 465)">
-            Equals1(lhs, rhs, tolerance)
-          </code>
-          <div class="tip" id="465">
-            <strong>Signature:</strong> (lhs:IList&lt;float32&gt; * rhs:IList&lt;float32&gt; * tolerance:float32) -&gt; bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          <p>Specialization of ArrayEquals(T) augmented with tolerance value
-to be used when equating two float values.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '466', 466)" onmouseover="showTip(event, '466', 466)">
-            Equals1(lhs, rhs, tolerance)
-          </code>
-          <div class="tip" id="466">
-            <strong>Signature:</strong> (lhs:IList&lt;float&gt; * rhs:IList&lt;float&gt; * tolerance:float) -&gt; bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-          <p>Specialization of ArrayEquals{T} augmented with tolerance value
-to be used when equating two double values.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '467', 467)" onmouseover="showTip(event, '467', 467)">
             Equals1(lhs, rhs, elementEquality)
           </code>
           <div class="tip" id="467">
-            <strong>Signature:</strong> (lhs:&#39;T [] * rhs:&#39;T [] * elementEquality:IEqualityComparer&lt;&#39;T&gt;) -&gt; bool<br />
+            <strong>Signature:</strong> (lhs:IList&lt;&#39;T&gt; * rhs:IList&lt;&#39;T&gt; * elementEquality:IEqualityComparer&lt;&#39;T&gt;) -&gt; bool<br />
                           <strong>Type parameters:</strong> 'T          </div>
         </td>
         <td class="xmldoc">
@@ -147,7 +75,7 @@ or they have equal length and elements are equal for each index.</p>
             Equals1(lhs, rhs)
           </code>
           <div class="tip" id="468">
-            <strong>Signature:</strong> (lhs:&#39;T [] * rhs:&#39;T []) -&gt; bool<br />
+            <strong>Signature:</strong> (lhs:IList&lt;&#39;T&gt; * rhs:IList&lt;&#39;T&gt;) -&gt; bool<br />
                           <strong>Type parameters:</strong> 'T          </div>
         </td>
         <td class="xmldoc">
@@ -166,7 +94,7 @@ or they have equal length and elements are equal for each index.</p>
             Equals1(lhs, rhs, tolerance)
           </code>
           <div class="tip" id="469">
-            <strong>Signature:</strong> (lhs:float32 [] * rhs:float32 [] * tolerance:float32) -&gt; bool<br />
+            <strong>Signature:</strong> (lhs:IList&lt;float32&gt; * rhs:IList&lt;float32&gt; * tolerance:float32) -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -183,7 +111,7 @@ to be used when equating two float values.</p>
             Equals1(lhs, rhs, tolerance)
           </code>
           <div class="tip" id="470">
-            <strong>Signature:</strong> (lhs:float [] * rhs:float [] * tolerance:float) -&gt; bool<br />
+            <strong>Signature:</strong> (lhs:IList&lt;float&gt; * rhs:IList&lt;float&gt; * tolerance:float) -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -197,9 +125,81 @@ to be used when equating two double values.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '471', 471)" onmouseover="showTip(event, '471', 471)">
-            Equals1(lhs, rhs)
+            Equals1(lhs, rhs, elementEquality)
           </code>
           <div class="tip" id="471">
+            <strong>Signature:</strong> (lhs:&#39;T [] * rhs:&#39;T [] * elementEquality:IEqualityComparer&lt;&#39;T&gt;) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'T          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Element-by-element array equality using a given equality comparer for elements.
+Two arrays are equal iff they are both null,
+or are actually the same reference,
+or they have equal length and elements are equal for each index.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '472', 472)" onmouseover="showTip(event, '472', 472)">
+            Equals1(lhs, rhs)
+          </code>
+          <div class="tip" id="472">
+            <strong>Signature:</strong> (lhs:&#39;T [] * rhs:&#39;T []) -&gt; bool<br />
+                          <strong>Type parameters:</strong> 'T          </div>
+        </td>
+        <td class="xmldoc">
+          <p>Element-by-element array equality using EqualityComparer(T).Default to equate elements.
+Two arrays are equal iff they are both null,
+or are actually the same reference,
+or they have equal length and elements are equal for each index.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '473', 473)" onmouseover="showTip(event, '473', 473)">
+            Equals1(lhs, rhs, tolerance)
+          </code>
+          <div class="tip" id="473">
+            <strong>Signature:</strong> (lhs:float32 [] * rhs:float32 [] * tolerance:float32) -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Specialization of ArrayEquals(T) augmented with tolerance value
+to be used when equating two float values.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '474', 474)" onmouseover="showTip(event, '474', 474)">
+            Equals1(lhs, rhs, tolerance)
+          </code>
+          <div class="tip" id="474">
+            <strong>Signature:</strong> (lhs:float [] * rhs:float [] * tolerance:float) -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+          <p>Specialization of ArrayEquals{T} augmented with tolerance value
+to be used when equating two double values.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '475', 475)" onmouseover="showTip(event, '475', 475)">
+            Equals1(lhs, rhs)
+          </code>
+          <div class="tip" id="475">
             <strong>Signature:</strong> (lhs:IDictionary&lt;&#39;TKey,&#39;TValue&gt; * rhs:IDictionary&lt;&#39;TKey,&#39;TValue&gt;) -&gt; bool<br />
                           <strong>Type parameters:</strong> 'TKey, 'TValue          </div>
         </td>
@@ -215,10 +215,10 @@ or they have identical sets of keys and elements are equal for each key.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '472', 472)" onmouseover="showTip(event, '472', 472)">
+          <code onmouseout="hideTip(event, '476', 476)" onmouseover="showTip(event, '476', 476)">
             Equals1(lhs, rhs, valueEquality)
           </code>
-          <div class="tip" id="472">
+          <div class="tip" id="476">
             <strong>Signature:</strong> (lhs:IDictionary&lt;&#39;TKey,&#39;TValue&gt; * rhs:IDictionary&lt;&#39;TKey,&#39;TValue&gt; * valueEquality:IEqualityComparer&lt;&#39;TValue&gt;) -&gt; bool<br />
                           <strong>Type parameters:</strong> 'TKey, 'TValue          </div>
         </td>
@@ -234,10 +234,10 @@ or they have identical sets of keys and elements are equal for each key.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '473', 473)" onmouseover="showTip(event, '473', 473)">
+          <code onmouseout="hideTip(event, '477', 477)" onmouseover="showTip(event, '477', 477)">
             Equals2(lhs, rhs)
           </code>
-          <div class="tip" id="473">
+          <div class="tip" id="477">
             <strong>Signature:</strong> (lhs:&#39;T [] [] * rhs:&#39;T [] []) -&gt; bool<br />
                           <strong>Type parameters:</strong> 'T          </div>
         </td>
@@ -251,10 +251,10 @@ This has '2' in its name, because one may want to do partially deep equality on 
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '474', 474)" onmouseover="showTip(event, '474', 474)">
+          <code onmouseout="hideTip(event, '478', 478)" onmouseover="showTip(event, '478', 478)">
             Equals2(lhs, rhs, elementEquality)
           </code>
-          <div class="tip" id="474">
+          <div class="tip" id="478">
             <strong>Signature:</strong> (lhs:&#39;T [] [] * rhs:&#39;T [] [] * elementEquality:IEqualityComparer&lt;&#39;T&gt;) -&gt; bool<br />
                           <strong>Type parameters:</strong> 'T          </div>
         </td>
@@ -268,10 +268,10 @@ This has '2' in its name, because one may want to do partially deep equality on 
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '475', 475)" onmouseover="showTip(event, '475', 475)">
+          <code onmouseout="hideTip(event, '479', 479)" onmouseover="showTip(event, '479', 479)">
             Equals3(lhs, rhs)
           </code>
-          <div class="tip" id="475">
+          <div class="tip" id="479">
             <strong>Signature:</strong> (lhs:&#39;T [] [] [] * rhs:&#39;T [] [] []) -&gt; bool<br />
                           <strong>Type parameters:</strong> 'T          </div>
         </td>
@@ -285,10 +285,10 @@ This has '3' in its name, because one may want to do partially deep equality on 
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '476', 476)" onmouseover="showTip(event, '476', 476)">
+          <code onmouseout="hideTip(event, '480', 480)" onmouseover="showTip(event, '480', 480)">
             Equals3(lhs, rhs, elementEquality)
           </code>
-          <div class="tip" id="476">
+          <div class="tip" id="480">
             <strong>Signature:</strong> (lhs:&#39;T [] [] [] * rhs:&#39;T [] [] [] * elementEquality:IEqualityComparer&lt;&#39;T&gt;) -&gt; bool<br />
                           <strong>Type parameters:</strong> 'T          </div>
         </td>
