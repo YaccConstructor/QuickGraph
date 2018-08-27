@@ -4,11 +4,11 @@ using System.Reflection;
 [assembly: AssemblyTitleAttribute("QuickGraph.Samples")]
 [assembly: AssemblyProductAttribute("YC.QuickGraph")]
 [assembly: AssemblyDescriptionAttribute("Graph datastructures and algorithms for .NET.")]
-[assembly: AssemblyVersionAttribute("3.7.3")]
-[assembly: AssemblyFileVersionAttribute("3.7.3")]
+[assembly: AssemblyVersionAttribute("3.7.4")]
+[assembly: AssemblyFileVersionAttribute("3.7.4")]
 namespace System {
     internal static class AssemblyVersionInformation {
-        internal const string Version = "3.7.3";
-        internal const string InformationalVersion = "3.7.3";
+        internal const string Version = "3.7.4";
+        internal const string InformationalVersion = "3.7.4";
     }
 }

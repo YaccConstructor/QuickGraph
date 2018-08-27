@@ -1,3 +1,8 @@
+#### 3.7.4 August 27 2018
+* More algorithms (TransitiveClosure, YenShortestPaths, etc.)
+* Code cleanup 
+* Minor fixes
+
 #### 3.7.3 August 23 2016
 * Minor fix in packet dependences specification
 
