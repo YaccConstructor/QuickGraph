@@ -38,7 +38,12 @@ namespace QuickGraph.Algorithms.MaximumFlow
             EdgeFactory<TVertex, TEdge> edgeFactory
 			)
             : base(host, g, capacities, edgeFactory)
-		{}
+		{
+		    var reversedEdgeAugmentorAlgorithm = new ReversedEdgeAugmentorAlgorithm<TVertex, TEdge>(g, edgeFactory);
+
+		    reversedEdgeAugmentorAlgorithm.AddReversedEdges();
+		    ReversedEdges = reversedEdgeAugmentorAlgorithm.ReversedEdges;
+		}
 	
 		private IVertexListGraph<TVertex,TEdge> ResidualGraph
 		{
