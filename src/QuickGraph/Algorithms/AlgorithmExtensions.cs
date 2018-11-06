@@ -1191,7 +1191,8 @@ this
             TVertex source,
             TVertex sink,
             out TryFunc<TVertex, TEdge> flowPredecessors,
-            EdgeFactory<TVertex, TEdge> edgeFactory
+            EdgeFactory<TVertex, TEdge> edgeFactory,
+            ReversedEdgeAugmentorAlgorithm<TVertex, TEdge> reversedEdgeAugmentorAlgorithm
             )
             where TEdge : IEdge<TVertex>
         {
@@ -1207,7 +1208,8 @@ this
             var flow = new EdmondsKarpMaximumFlowAlgorithm<TVertex, TEdge>(
                 visitedGraph,
                 edgeCapacities,
-                edgeFactory
+                edgeFactory,
+                reversedEdgeAugmentorAlgorithm
                 );
             flow.Compute(source, sink);
             flowPredecessors = flow.Predecessors.TryGetValue;

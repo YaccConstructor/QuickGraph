@@ -26,22 +26,22 @@ namespace QuickGraph.Algorithms.MaximumFlow
         public EdmondsKarpMaximumFlowAlgorithm(
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> g,
             Func<TEdge, double> capacities,
-            EdgeFactory<TVertex, TEdge> edgeFactory
+            EdgeFactory<TVertex, TEdge> edgeFactory,
+            ReversedEdgeAugmentorAlgorithm<TVertex, TEdge> reversedEdgeAugmentorAlgorithm
             )
-            : this(null, g, capacities, edgeFactory)
+            : this(null, g, capacities, edgeFactory, reversedEdgeAugmentorAlgorithm)
         { }
 
 		public EdmondsKarpMaximumFlowAlgorithm(
             IAlgorithmComponent host,
             IMutableVertexAndEdgeListGraph<TVertex, TEdge> g,
 			Func<TEdge,double> capacities,
-            EdgeFactory<TVertex, TEdge> edgeFactory
-			)
+            EdgeFactory<TVertex, TEdge> edgeFactory,
+            ReversedEdgeAugmentorAlgorithm<TVertex, TEdge> reversedEdgeAugmentorAlgorithm
+
+            )
             : base(host, g, capacities, edgeFactory)
 		{
-		    var reversedEdgeAugmentorAlgorithm = new ReversedEdgeAugmentorAlgorithm<TVertex, TEdge>(g, edgeFactory);
-
-		    reversedEdgeAugmentorAlgorithm.AddReversedEdges();
 		    ReversedEdges = reversedEdgeAugmentorAlgorithm.ReversedEdges;
 		}
 	

@@ -89,7 +89,8 @@ namespace QuickGraph.Algorithms
                     this,
                     this.VisitedGraph,
                     e => 1,
-                    this.EdgeFactory
+                    this.EdgeFactory,
+                    reverser
                     );
 
                 flow.Compute(augmentor.SuperSource, augmentor.SuperSink);
