@@ -81,6 +81,13 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 eh(e);
         }
 
+        /// <summary>
+        /// Augments the graph with reversed edges to calculate residual flows.
+        /// </summary>
+        /// <remarks>
+        /// Will throw an exception if TEdge is a value type, e.g. <see cref="SEdge{TVertex}"/>.
+        /// <seealso href="https://github.com/YaccConstructor/QuickGraph/issues/183#issue-377613647"/>.
+        /// </remarks>
         public void AddReversedEdges()
         {
             if (this.Augmented)

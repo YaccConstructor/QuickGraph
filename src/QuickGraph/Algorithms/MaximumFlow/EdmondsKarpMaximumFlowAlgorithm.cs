@@ -10,12 +10,16 @@ using System.Diagnostics.Contracts;
 namespace QuickGraph.Algorithms.MaximumFlow
 {
     /// <summary>
-    /// Edmond and Karp maximum flow algorithm
-    /// for directed graph with positive capacities and
-    /// flows.
+    /// Edmond and Karp maximum flow algorithm for directed graph with positive capacities and flows.
     /// </summary>
     /// <typeparam name="TVertex">type of a vertex</typeparam>
     /// <typeparam name="TEdge">type of an edge</typeparam>
+    /// <remarks>
+    /// <remarks>
+    /// Will throw an exception in <see cref="ReversedEdgeAugmentorAlgorithm{TVertex, TEdge}.AddReversedEdges"/> if TEdge is a value type,
+    /// e.g. <see cref="SEdge{TVertex}"/>.
+    /// <seealso href="https://github.com/YaccConstructor/QuickGraph/issues/183#issue-377613647"/>.
+    /// </remarks>
 #if !SILVERLIGHT
     [Serializable]
 #endif
