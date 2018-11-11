@@ -1,6 +1,7 @@
 ﻿using Microsoft.Pex.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickGraph.Algorithms;
+using QuickGraph.Algorithms.MaximumFlow;
 using QuickGraph.Serialization;
 
 namespace QuickGraph.Tests.Algorithms.MaximumFlow
@@ -38,14 +39,20 @@ namespace QuickGraph.Tests.Algorithms.MaximumFlow
 
         private static double RunMaxFlowAlgorithm<TVertex, TEdge>(IMutableVertexAndEdgeListGraph<TVertex, TEdge> g, EdgeFactory<TVertex, TEdge> edgeFactory, TVertex source, TVertex sink) where TEdge : IEdge<TVertex>
         {
+            var reversedEdgeAugmentorAlgorithm = new ReversedEdgeAugmentorAlgorithm<TVertex, TEdge>(g, edgeFactory);
+            reversedEdgeAugmentorAlgorithm.AddReversedEdges();
+
             TryFunc<TVertex, TEdge> flowPredecessors;
             var flow = AlgorithmExtensions.MaximumFlowEdmondsKarp<TVertex, TEdge>(
                 g,
                 e => 1,
                 source, sink,
                 out flowPredecessors,
-                edgeFactory
+                edgeFactory,
+                reversedEdgeAugmentorAlgorithm
                 );
+
+            reversedEdgeAugmentorAlgorithm.RemoveReversedEdges();
 
             return flow;
         }

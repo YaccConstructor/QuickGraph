@@ -5,6 +5,18 @@ using System.Diagnostics.Contracts;
 
 namespace QuickGraph.Algorithms.MaximumFlow
 {
+    /// <summary>
+    /// Routines to add and remove auxiliary edges when using <see cref="EdmondsKarpMaximumFlowAlgorithm{TVertex, TEdge}"/> 
+    /// or <see cref="MaximumBipartiteMatchingAlgorithm{TVertex, TEdge}.InternalCompute()"/>. 
+    /// Remember to call <see cref="RemoveReversedEdges()"/> to remove auxiliary edges.
+    /// </summary>
+    /// <typeparam name="TVertex">The type of vertex.</typeparam>
+    /// <typeparam name="TEdge">The type of edge.</typeparam>
+    /// <remarks>
+    /// Will throw an exception in <see cref="ReversedEdgeAugmentorAlgorithm{TVertex, TEdge}.AddReversedEdges"/> if TEdge is a value type,
+    /// e.g. <see cref="SEdge{TVertex}"/>.
+    /// <seealso href="https://github.com/YaccConstructor/QuickGraph/issues/183#issue-377613647"/>.
+    /// </remarks>
 #if !SILVERLIGHT
     [Serializable]
 #endif
@@ -81,6 +93,13 @@ namespace QuickGraph.Algorithms.MaximumFlow
                 eh(e);
         }
 
+        /// <summary>
+        /// Adds auxiliary edges to <see cref="VisitedGraph"/> to store residual flows.
+        /// </summary>
+        /// <remarks>
+        /// Will throw an exception if TEdge is a value type, e.g. <see cref="SEdge{TVertex}"/>.
+        /// <seealso href="https://github.com/YaccConstructor/QuickGraph/issues/183#issue-377613647"/>.
+        /// </remarks>
         public void AddReversedEdges()
         {
             if (this.Augmented)

@@ -1170,18 +1170,21 @@ this
         }
 
         /// <summary>
-        /// Computes the Edmonds-Karp maximums flow 
-        /// for a graph with positive capacities and
-        /// flows.
+        /// Computes the Edmonds-Karp maximums flow for a graph with positive capacities and flows.
         /// </summary>
         /// <typeparam name="TVertex">The type of the vertex.</typeparam>
         /// <typeparam name="TEdge">The type of the edge.</typeparam>
         /// <param name="visitedGraph">The visited graph.</param>
-        /// <param name="edgeCapacities">The edge capacities.</param>
+        /// <param name="edgeCapacities">The edge capacity delegate.</param>
         /// <param name="source">The source.</param>
         /// <param name="sink">The sink.</param>
         /// <param name="flowPredecessors">The flow predecessors.</param>
-        /// <returns></returns>
+        /// <returns>The maximum flow.</returns>
+        /// <remarks>
+        /// Will throw an exception in <see cref="ReversedEdgeAugmentorAlgorithm{TVertex, TEdge}.AddReversedEdges"/> if TEdge is a value type,
+        /// e.g. <see cref="SEdge{TVertex}"/>.
+        /// <seealso href="https://github.com/YaccConstructor/QuickGraph/issues/183#issue-377613647"/>.
+        /// </remarks>
         public static double MaximumFlowEdmondsKarp<TVertex, TEdge>(
 #if !NET20
 this 
@@ -1191,7 +1194,8 @@ this
             TVertex source,
             TVertex sink,
             out TryFunc<TVertex, TEdge> flowPredecessors,
-            EdgeFactory<TVertex, TEdge> edgeFactory
+            EdgeFactory<TVertex, TEdge> edgeFactory,
+            ReversedEdgeAugmentorAlgorithm<TVertex, TEdge> reversedEdgeAugmentorAlgorithm
             )
             where TEdge : IEdge<TVertex>
         {
@@ -1207,7 +1211,8 @@ this
             var flow = new EdmondsKarpMaximumFlowAlgorithm<TVertex, TEdge>(
                 visitedGraph,
                 edgeCapacities,
-                edgeFactory
+                edgeFactory,
+                reversedEdgeAugmentorAlgorithm
                 );
             flow.Compute(source, sink);
             flowPredecessors = flow.Predecessors.TryGetValue;
