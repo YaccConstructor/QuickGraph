@@ -17,25 +17,26 @@ namespace QuickGraph
             Func<string, Attributes, TVertex> vertexFunc,
             Func<TVertex, TVertex, Attributes, TEdge> edgeFunc) where TEdge : IEdge<TVertex>
         {
-            var graphData = DotParser.parse(dotSource);
-            var graph = createGraph(!graphData.IsStrict);
+            //var graphData = DotParser.parse(dotSource);
+            //var graph = createGraph(!graphData.IsStrict);
 
-            var vertices = graphData.Nodes.ToDictionary(v => v.Key, v => vertexFunc(v.Key, v.Value));
-            graph.AddVertexRange(vertices.Values);
+            //var vertices = graphData.Nodes.ToDictionary(v => v.Key, v => vertexFunc(v.Key, v.Value));
+            //graph.AddVertexRange(vertices.Values);
 
-            foreach (var parallelEdges in graphData.Edges)
-            {
-                var edgeVertices = parallelEdges.Key;
-                foreach (var attr in parallelEdges.Value)
-                {
-                    graph.AddEdge(edgeFunc(vertices[edgeVertices.Item1], vertices[edgeVertices.Item2], attr));
-                    if (graph.IsDirected && !graphData.IsDirected)
-                    {
-                        graph.AddEdge(edgeFunc(vertices[edgeVertices.Item2], vertices[edgeVertices.Item1], attr));
-                    }
-                }
-            }
-            return graph;
+            //foreach (var parallelEdges in graphData.Edges)
+            //{
+            //    var edgeVertices = parallelEdges.Key;
+            //    foreach (var attr in parallelEdges.Value)
+            //    {
+            //        graph.AddEdge(edgeFunc(vertices[edgeVertices.Item1], vertices[edgeVertices.Item2], attr));
+            //        if (graph.IsDirected && !graphData.IsDirected)
+            //        {
+            //            graph.AddEdge(edgeFunc(vertices[edgeVertices.Item2], vertices[edgeVertices.Item1], attr));
+            //        }
+            //    }
+            //}
+            //return graph;
+            throw new NotImplementedException();
         }
 
         public class Common
