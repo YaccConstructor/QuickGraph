@@ -68,7 +68,7 @@ namespace QuickGraph.Tests.Algorithms
             dictionary[Tuple.Create(4, 3)] = 1.0;
             dictionary[Tuple.Create(5, 4)] = 1.0;
 
-            var algo = new MaxCardinality<int, Edge<int>>(g1, g2, dictionary, 0.5, (u, v) => new Edge<int>(u, v));
+            var algo = new QuickGraph.Algorithms.MaxCardinality<int, Edge<int>>(g1, g2, dictionary, 0.5, (u, v) => new Edge<int>(u, v));
             var res = algo.compMaxCardinality();
 
             var correctResult =
