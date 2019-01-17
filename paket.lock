@@ -1,7 +1,7 @@
 NUGET
   remote: https://www.nuget.org/api/v2
     DotNet.Contracts (1.10.20606.1)
-    FAKE (4.37.2)
+    FAKE (5.8.4)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.5.4)
       System.Collections (>= 4.0.11) - restriction: && (< net45) (>= netstandard1.6) (< netstandard2.0)

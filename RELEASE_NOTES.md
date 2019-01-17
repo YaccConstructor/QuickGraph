@@ -1,3 +1,8 @@
+#### 3.7.5-deta January 17 2019
+* Code cleanup 
+* Minor fixes
+* DotParser is turned off
+
 #### 3.7.4 August 27 2018
 * More algorithms (TransitiveClosure, YenShortestPaths, etc.)
 * Code cleanup 

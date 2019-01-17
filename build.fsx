@@ -340,10 +340,10 @@ Target "All" DoNothing
   ==> "CopyBinaries"
   ==> "RunMSTests"
   ==> "RunNUnitTests"
-  ==> "GenerateReferenceDocs"
-  ==> "GenerateDocs"
+  //==> "GenerateReferenceDocs"
+  //==> "GenerateDocs"
   ==> "All"
-  =?> ("ReleaseDocs",isLocalBuild)
+  //=?> ("ReleaseDocs",isLocalBuild)
 
 "All" 
 #if MONO
