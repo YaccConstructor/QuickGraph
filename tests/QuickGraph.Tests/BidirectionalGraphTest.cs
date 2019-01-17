@@ -96,14 +96,14 @@ namespace QuickGraph.Tests
             Assert.AreEqual(3, g.EdgeCount);
         }
 
-         [TestMethod()]
-        public void LoadGraphFromDot()
-         {
-             const string dotSource = "digraph { a -> b }";
-             var vertexFunc = DotParserAdapter.VertexFactory.Name;
-             var edgeFunc = DotParserAdapter.EdgeFactory<string>.VerticesOnly;
-             var graph = BidirectionalGraph<string, SEdge<string>>.LoadDot(dotSource, vertexFunc, edgeFunc);
-             Assert.IsNotNull(graph);
-         }
+        // [TestMethod()]
+        //public void LoadGraphFromDot()
+        // {
+        //     const string dotSource = "digraph { a -> b }";
+        //     var vertexFunc = DotParserAdapter.VertexFactory.Name;
+        //     var edgeFunc = DotParserAdapter.EdgeFactory<string>.VerticesOnly;
+        //     var graph = BidirectionalGraph<string, SEdge<string>>.LoadDot(dotSource, vertexFunc, edgeFunc);
+        //     Assert.IsNotNull(graph);
+        // }
     }
 }

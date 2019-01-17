@@ -80,11 +80,6 @@
       <Project>{a9a5c115-0680-44b3-a87e-5ecf4c93814e}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\QuickGraph.FSA.Tests\QuickGraph.FSA.Tests.fsproj">
-      <Name>QuickGraph.FSA.Tests</Name>
-      <Project>{3bf3542b-4034-429f-9105-197a60625ca3}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
