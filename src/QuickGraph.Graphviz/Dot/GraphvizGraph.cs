@@ -4,6 +4,7 @@ namespace QuickGraph.Graphviz.Dot
     using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Globalization;
     using System.IO;
 
     public class GraphvizGraph
@@ -51,6 +52,18 @@ namespace QuickGraph.Graphviz.Dot
                 if (entry.Value is string)
                 {
                     entries.Add(String.Format("{0}=\"{1}\"", entry.Key.ToString(), entry.Value.ToString()));
+                    continue;
+                }
+                if (entry.Value is float)
+                {
+                    float floatValue = (float)entry.Value;
+                    entries.Add(String.Format("{0}={1}", entry.Key.ToString(), floatValue.ToString(CultureInfo.InvariantCulture)));
+                    continue;
+                }
+                if (entry.Value is double)
+                {
+                    double doubleValue = (double)entry.Value;
+                    entries.Add(String.Format("{0}={1}", entry.Key.ToString(), doubleValue.ToString(CultureInfo.InvariantCulture)));
                     continue;
                 }
                 if (entry.Value is Color)
