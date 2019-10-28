@@ -478,6 +478,7 @@
     <Compile Include="GraphExtensionsTest.ToAdjacencyGraph04.g.cs">
       <DependentUpon>GraphExtensionsTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="GraphVizTests.cs" />
     <Compile Include="MutableVertexAndEdgeListGraphTest.cs" />
     <Compile Include="Properties\PexAssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
