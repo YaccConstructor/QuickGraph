@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace QuickGraph.Algorithms.Search
 {
@@ -122,12 +123,12 @@ namespace QuickGraph.Algorithms.Search
             algo = new ParallelBreadthFirstSearchAlgorithm<int, Edge<int>, int>(g);
             try
             {
-                algo.InitializeVertex += new VertexEventHandler<int>(this.InitializeVertex);
-                algo.DiscoverVertex += new ParallelVertexEventHandler<int,int>(this.DiscoverVertex);
-                algo.ExamineVertex += new ParallelVertexEventHandler<int, int>(this.ExamineVertex);
-                algo.TreeEdge += new ParallelEdgeAction<int, Edge<int>, int>(this.TreeEdge);
-                algo.NextLevel += new EventHandler(algo_NextLevel);
-                algo.FinishVertex += new ParallelVertexEventHandler<int,int>(this.FinishVertex);
+                algo.InitializeVertex += this.InitializeVertex;
+                algo.DiscoverVertex += this.DiscoverVertex;
+                algo.ExamineVertex += this.ExamineVertex;
+                algo.TreeEdge += this.TreeEdge;
+                algo.NextLevel += this.algo_NextLevel;
+                algo.FinishVertex += this.FinishVertex;
 
                 parents.Clear();
                 distances.Clear();
@@ -145,11 +146,12 @@ namespace QuickGraph.Algorithms.Search
             }
             finally
             {
-                algo.InitializeVertex -= new VertexEventHandler<int>(this.InitializeVertex);
-                algo.DiscoverVertex -= new ParallelVertexEventHandler<int,int>(this.DiscoverVertex);
-                algo.ExamineVertex -= new ParallelVertexEventHandler<int,int>(this.ExamineVertex);
-                algo.TreeEdge -= new ParallelEdgeAction<int, Edge<int>,int>(this.TreeEdge);
-                algo.FinishVertex -= new ParallelVertexEventHandler<int,int>(this.FinishVertex);
+                algo.InitializeVertex -= this.InitializeVertex;
+                algo.DiscoverVertex -= this.DiscoverVertex;
+                algo.ExamineVertex -= this.ExamineVertex;
+                algo.TreeEdge -= this.TreeEdge;
+                algo.NextLevel -= this.algo_NextLevel;
+                algo.FinishVertex -= this.FinishVertex;
             }
         }
 

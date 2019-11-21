@@ -17,8 +17,8 @@ namespace QuickGraph.Graphviz
         protected override void Initialize()
         {
             base.Initialize();
-            this.Graphviz.FormatVertex+=new FormatVertexEventHandler<TGraph>(Graphviz_FormatVertex);
-            this.Graphviz.FormatEdge += new FormatEdgeAction<TGraph, CondensedEdge<TVertex, TEdge, TGraph>>(Graphviz_FormatEdge);
+            this.Graphviz.FormatVertex += Graphviz_FormatVertex;
+            this.Graphviz.FormatEdge += Graphviz_FormatEdge;
         }
 
 

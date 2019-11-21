@@ -33,10 +33,10 @@ namespace QuickGraph.Algorithms.ConnectedComponents
                 this.ds.Union(e.Source, e.Target);
 
             // unhook/hook to graph event
-            this.VisitedGraph.EdgeAdded += new EdgeAction<TVertex, TEdge>(VisitedGraph_EdgeAdded);
-            this.VisitedGraph.EdgeRemoved += new EdgeAction<TVertex, TEdge>(VisitedGraph_EdgeRemoved);
-            this.VisitedGraph.VertexAdded += new VertexAction<TVertex>(VisitedGraph_VertexAdded);
-            this.VisitedGraph.VertexRemoved += new VertexAction<TVertex>(VisitedGraph_VertexRemoved);
+            this.VisitedGraph.EdgeAdded += VisitedGraph_EdgeAdded;
+            this.VisitedGraph.EdgeRemoved += VisitedGraph_EdgeRemoved;
+            this.VisitedGraph.VertexAdded += VisitedGraph_VertexAdded;
+            this.VisitedGraph.VertexRemoved += VisitedGraph_VertexRemoved;
         }
 
         public int ComponentCount
