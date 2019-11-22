@@ -33,8 +33,8 @@ namespace QuickGraph.Data
 
         private void InitializeFormat()
         {
-            this.FormatVertex += new FormatVertexEventHandler<DataTable>(FormatTable);
-            this.FormatEdge += new FormatEdgeAction<DataTable, DataRelationEdge>(FormatRelationEdge);
+            this.FormatVertex += FormatTable;
+            this.FormatEdge += FormatRelationEdge;
 
             this.CommonVertexFormat.Style = GraphvizVertexStyle.Solid;
             this.CommonVertexFormat.Shape = GraphvizVertexShape.Record;
