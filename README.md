@@ -23,7 +23,7 @@ GraphTasks | [![GraphTasks .NET Build Status](https://img.shields.io/appveyor/ci
 
 ### Where to go next?
 
-* [Documentation](https://quickgraph.codeplex.com/documentation)
+* [Documentation](https://yaccconstructor.github.io/QuickGraph/)
 
 ### Maintainer(s)
 
